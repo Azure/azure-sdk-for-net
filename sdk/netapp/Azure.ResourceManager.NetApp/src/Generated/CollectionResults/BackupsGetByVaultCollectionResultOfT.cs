@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 BackupsList result = BackupsList.FromResponse(response);
-                yield return Page<NetAppBackupData>.FromValues((IReadOnlyList<NetAppBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetAppBackupData>.FromValues((IReadOnlyList<NetAppBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

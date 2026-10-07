@@ -14,6 +14,6 @@ namespace Azure.Provisioning.MySql
     {
         /// <summary> Full. </summary>
         [DataMember(Name = "FULL")]
-        Full
+        Full = 0
     }
 }

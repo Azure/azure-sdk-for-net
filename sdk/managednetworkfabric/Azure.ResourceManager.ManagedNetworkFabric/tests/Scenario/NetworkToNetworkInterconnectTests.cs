@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -52,10 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 {
                     Mtu = 1500
                 },
-                OptionBLayer3Configuration = new NetworkToNetworkInterconnectOptionBLayer3Configuration()
+                OptionBLayer3Settings = new OptionBLayer3Configuration(61234, 1234)
                 {
-                    PeerAsn = 61234,
-                    VlanId = 1234,
                     PrimaryIPv4Prefix = "10.0.0.12/30",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
                     SecondaryIPv4Prefix = "40.0.0.14/30",

@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string hciVmInstanceApiVersion);
             _hciVmInstancesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _hciVmInstancesRestClient = new HciVmInstances(_hciVmInstancesClientDiagnostics, Pipeline, Endpoint, hciVmInstanceApiVersion ?? "2024-05-01");
+            _hciVmInstancesRestClient = new HciVmInstances(_hciVmInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmInstanceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

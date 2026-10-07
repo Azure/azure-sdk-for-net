@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Batch.Mocking
 
         private ClientDiagnostics BatchAccountClientDiagnostics => _batchAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BatchAccount BatchAccountRestClient => _batchAccountRestClient ??= new BatchAccount(BatchAccountClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private BatchAccount BatchAccountRestClient => _batchAccountRestClient ??= new BatchAccount(BatchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         /// <summary>
         /// Gets information about the Batch accounts associated with the subscription.

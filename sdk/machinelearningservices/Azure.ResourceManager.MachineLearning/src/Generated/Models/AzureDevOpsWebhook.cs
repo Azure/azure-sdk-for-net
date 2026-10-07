@@ -14,18 +14,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AzureDevOpsWebhook : MachineLearningWebhook
     {
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsWebhook"/>. </summary>
-        public AzureDevOpsWebhook()
+        public AzureDevOpsWebhook() : base(WebhookType.AzureDevOps)
         {
-            WebhookType = MachineLearningWebhookType.AzureDevOps;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsWebhook"/>. </summary>
-        /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
         /// <param name="eventType"> Send callback on a specified notification event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureDevOpsWebhook(MachineLearningWebhookType webhookType, string eventType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(webhookType, eventType, serializedAdditionalRawData)
+        /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsWebhook(string eventType, WebhookType webhookType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(eventType, webhookType, additionalBinaryDataProperties)
         {
-            WebhookType = webhookType;
         }
     }
 }

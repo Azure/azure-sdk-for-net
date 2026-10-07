@@ -12,7 +12,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The DataConnectionPayload.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LogAnalyticsDataConnectionPayload"/> and <see cref="AzureDataExplorerDataConnectionPayload"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureDataExplorerDataConnectionPayload"/> and <see cref="LogAnalyticsDataConnectionPayload"/>.
     /// </summary>
     public abstract partial class DataConnectionPayload
     {

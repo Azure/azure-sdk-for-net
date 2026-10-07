@@ -13,12 +13,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// The creation time of the file or directory.
         /// </summary>
-        public DateTimeOffset? CreationTime { get; internal set; }
+        public DateTimeOffset? CreatedOn { get; internal set; }
 
         /// <summary>
         /// The last modified time of the file or directory.
         /// </summary>
-        public DateTimeOffset? LastModifiedTime { get; internal set; }
+        public DateTimeOffset? LastModifiedOn { get; internal set; }
 
         /// <summary>
         /// The eTag of the file or directory.

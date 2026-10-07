@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class WinRMListenerProtocolTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WinRMListenerProtocolType value) => value switch
         {
             WinRMListenerProtocolType.Http => "Http",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WinRMListenerProtocolType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WinRMListenerProtocolType ToWinRMListenerProtocolType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Http")) return WinRMListenerProtocolType.Http;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Https")) return WinRMListenerProtocolType.Https;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Http"))
+            {
+                return WinRMListenerProtocolType.Http;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Https"))
+            {
+                return WinRMListenerProtocolType.Https;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WinRMListenerProtocolType value.");
         }
     }

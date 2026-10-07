@@ -6,10 +6,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class EvaluationTaxonomiesGetAllAsyncCollectionResultOfT : AsyncCollectionResult<EvaluationTaxonomy>
     {
         private readonly EvaluationTaxonomies _client;
@@ -82,7 +84,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
-            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EvaluationTaxonomies.GetAll");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

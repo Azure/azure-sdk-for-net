@@ -50,6 +50,9 @@ namespace Azure.Storage.Blobs.Specialized
         public static RequestFailedException InvalidResponse(ClientDiagnostics clientDiagnostics, Response response, Exception innerException) =>
             new RequestFailedException(response, innerException, new BatchRequestFailedDetailsParser());
 
+        public static ArgumentException HeaderValueCannotContainCrlf(string headerName) =>
+            new ArgumentException($"The value of header '{headerName}' cannot contain CR or LF characters.");
+
         private class BatchRequestFailedDetailsParser : RequestFailedDetailsParser
         {
             public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)

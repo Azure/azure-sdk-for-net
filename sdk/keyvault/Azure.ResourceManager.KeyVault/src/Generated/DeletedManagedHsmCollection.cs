@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(DeletedManagedHsmResource.ResourceType, out string deletedManagedHsmApiVersion);
             _deletedManagedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedManagedHsmResource.ResourceType.Namespace, Diagnostics);
-            _deletedManagedHsmsRestClient = new DeletedManagedHsms(_deletedManagedHsmsClientDiagnostics, Pipeline, Endpoint, deletedManagedHsmApiVersion ?? "2026-02-01");
+            _deletedManagedHsmsRestClient = new DeletedManagedHsms(_deletedManagedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedManagedHsmApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

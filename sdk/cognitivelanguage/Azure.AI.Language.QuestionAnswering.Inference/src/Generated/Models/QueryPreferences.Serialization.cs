@@ -125,7 +125,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             {
                 return null;
             }
-            Scorer? scorer = default;
+            QuestionAnsweringScorer? scorer = default;
             MatchingPolicy matchingPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     {
                         continue;
                     }
-                    scorer = new Scorer(prop.Value.GetString());
+                    scorer = new QuestionAnsweringScorer(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("matchingPolicy"u8))
@@ -150,7 +150,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new QueryPreferences(scorer, matchingPolicy, additionalBinaryDataProperties);

@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Container App session pool resource specific properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SessionPoolProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SessionPoolProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Container App session pool resource specific properties. </summary>
@@ -164,16 +164,6 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> The template status of the session pool, showing active template, or desired template during session pool update. This is only available if the containerType is CustomContainer. </summary>
-        [WirePath("properties.templateUpdateStatus")]
-        public TemplateUpdateStatus TemplateUpdateStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TemplateUpdateStatus;
-            }
-        }
-
         /// <summary> The endpoint to manage the pool. </summary>
         [WirePath("properties.poolManagementEndpoint")]
         public Uri PoolManagementEndpoint
@@ -205,24 +195,6 @@ namespace Azure.ResourceManager.AppContainers
                     Properties = new SessionPoolProperties();
                 }
                 return Properties.ManagedIdentitySettings;
-            }
-        }
-
-        /// <summary> The MCP (Model Context Protocol) server settings of the session pool. </summary>
-        [WirePath("properties.mcpServerSettings")]
-        public McpServerSettings McpServerSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.McpServerSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SessionPoolProperties();
-                }
-                Properties.McpServerSettings = value;
             }
         }
 

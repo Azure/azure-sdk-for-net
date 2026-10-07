@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string multiFlattenTestApiVersion);
             _multiFlattenOpsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _multiFlattenOpsRestClient = new MultiFlattenOps(_multiFlattenOpsClientDiagnostics, Pipeline, Endpoint, multiFlattenTestApiVersion ?? "2024-05-01");
+            _multiFlattenOpsRestClient = new MultiFlattenOps(_multiFlattenOpsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, multiFlattenTestApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -227,7 +227,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _multiFlattenOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MultiFlattenTestData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<MultiFlattenTestResource> operation = new TestsArmOperation<MultiFlattenTestResource>(
-                    new MultiFlattenTestOperationSource(Client),
+                    new MultiFlattenTestResourceOperationSource(Client),
                     _multiFlattenOpsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _multiFlattenOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MultiFlattenTestData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<MultiFlattenTestResource> operation = new TestsArmOperation<MultiFlattenTestResource>(
-                    new MultiFlattenTestOperationSource(Client),
+                    new MultiFlattenTestResourceOperationSource(Client),
                     _multiFlattenOpsClientDiagnostics,
                     Pipeline,
                     message.Request,

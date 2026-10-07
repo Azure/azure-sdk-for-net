@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2026-09-10)
+
+### Features Added
+
+- Upgraded the API version to 2026-05-01.
+
+### Other Changes
+
+- Upgraded Azure.Core to 1.62.0.
+- Upgraded Azure.ResourceManager to 1.14.0.
+
+## 1.4.1 (2026-06-15)
+
+### Bugs Fixed
+
+- Fixed `JobRunProperties` deserialization to handle empty-string `AgentResourceId`, `SourceResourceId`, and `TargetResourceId` values returned by the service (for example, for cloud-to-cloud jobs that have no agent, or resources in transient states). These previously threw an `ArgumentException` while polling job runs.
+
+### Other Changes
+
+- Added model factory methods in `ArmStorageMoverModelFactory` for existing models (for example, `JobDefinitionPatch`, `ScheduleRecurrence`, `StorageMoverCredentials`, and the endpoint update-property models) to support mocking.
 
 ## 1.4.0 (2026-04-17)
 

@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.EventHubs
                     yield break;
                 }
                 EHNamespaceListResult result = EHNamespaceListResult.FromResponse(response);
-                yield return Page<EventHubsNamespaceData>.FromValues((IReadOnlyList<EventHubsNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventHubsNamespaceData>.FromValues((IReadOnlyList<EventHubsNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

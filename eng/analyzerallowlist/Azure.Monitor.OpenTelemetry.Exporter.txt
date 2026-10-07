@@ -1,0 +1,13 @@
+# Azure.Monitor.OpenTelemetry.Exporter approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# SYSLIB1100 / SYSLIB1101 are emitted by the .NET configuration binding source
+# generator for options properties that cannot be bound from configuration —
+# for example, the `Credential` (`TokenCredential`) and `Transport` properties
+# that come in via `Azure.Core.ClientOptions`. These properties are intentionally
+# never set via `IConfiguration` (they're constructed in code), so the
+# diagnostics flag an expected, safe pattern for any Azure client library that
+# turns on the configuration binding generator. The generator does not provide
+# a per-property opt-out, so the suppression has to apply at the assembly level.
+nowarn:SYSLIB1100
+nowarn:SYSLIB1101

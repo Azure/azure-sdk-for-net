@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string dataBoxEdgeShareApiVersion);
             _sharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _sharesRestClient = new Shares(_sharesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeShareApiVersion ?? "2023-12-01");
+            _sharesRestClient = new Shares(_sharesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeShareApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _sharesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataBoxEdgeShareData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeShareResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeShareResource>(
-                    new DataBoxEdgeShareOperationSource(Client),
+                    new DataBoxEdgeShareResourceOperationSource(Client),
                     _sharesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _sharesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataBoxEdgeShareData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeShareResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeShareResource>(
-                    new DataBoxEdgeShareOperationSource(Client),
+                    new DataBoxEdgeShareResourceOperationSource(Client),
                     _sharesClientDiagnostics,
                     Pipeline,
                     message.Request,

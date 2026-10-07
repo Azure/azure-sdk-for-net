@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ProviderHub
                     yield break;
                 }
                 ProviderRegistrationListResult result = ProviderRegistrationListResult.FromResponse(response);
-                yield return Page<ProviderRegistrationData>.FromValues((IReadOnlyList<ProviderRegistrationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ProviderRegistrationData>.FromValues((IReadOnlyList<ProviderRegistrationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

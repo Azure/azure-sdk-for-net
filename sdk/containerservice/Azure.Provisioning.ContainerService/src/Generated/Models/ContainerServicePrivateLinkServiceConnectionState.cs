@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _status = DefineProperty<ContainerServicePrivateLinkServiceConnectionStatus>(nameof(Status), new string[] { "status" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServicePrivateLinkServiceConnectionState that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

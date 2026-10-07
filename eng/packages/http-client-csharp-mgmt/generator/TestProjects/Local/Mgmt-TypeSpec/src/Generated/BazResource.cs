@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string bazApiVersion);
             _bazsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _bazsRestClient = new Bazs(_bazsClientDiagnostics, Pipeline, Endpoint, bazApiVersion ?? "2024-05-01");
+            _bazsRestClient = new Bazs(_bazsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bazApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
-                    new BazOperationSource(Client),
+                    new BazResourceOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
-                    new BazOperationSource(Client),
+                    new BazResourceOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
                     message.Request,

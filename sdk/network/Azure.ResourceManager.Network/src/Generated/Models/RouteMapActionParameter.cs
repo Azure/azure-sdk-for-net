@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters for an Action. </summary>
     public partial class RouteMapActionParameter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RouteMapActionParameter"/>. </summary>
         public RouteMapActionParameter()
@@ -57,21 +29,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routePrefix"> List of route prefixes. </param>
         /// <param name="community"> List of BGP communities. </param>
         /// <param name="asPath"> List of AS paths. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouteMapActionParameter(IList<string> routePrefix, IList<string> community, IList<string> asPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RouteMapActionParameter(IList<string> routePrefix, IList<string> community, IList<string> asPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoutePrefix = routePrefix;
             Community = community;
             AsPath = asPath;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of route prefixes. </summary>
         [WirePath("routePrefix")]
         public IList<string> RoutePrefix { get; }
+
         /// <summary> List of BGP communities. </summary>
         [WirePath("community")]
         public IList<string> Community { get; }
+
         /// <summary> List of AS paths. </summary>
         [WirePath("asPath")]
         public IList<string> AsPath { get; }

@@ -15,6 +15,7 @@ namespace Azure.AI.Projects
     [CodeGenType("AIProjectDataset")]
     public abstract partial class AIProjectDataset
     {
+        /// <summary> Gets or sets the URI that identifies the backing data for this dataset. </summary>
         public Uri DataUri { get; set; }
     }
 }

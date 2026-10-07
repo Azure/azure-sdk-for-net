@@ -9,120 +9,95 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A remote private endpoint connection
-    /// Serialized Name: RemotePrivateEndpointConnection
-    /// </summary>
+    /// <summary> A remote private endpoint connection. </summary>
     public partial class RemotePrivateEndpointConnection : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnection"/>. </summary>
         public RemotePrivateEndpointConnection()
         {
-            IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Serialized Name: RemotePrivateEndpointConnection.properties.provisioningState. </param>
-        /// <param name="privateEndpoint">
-        /// PrivateEndpoint of a remote private endpoint connection
-        /// Serialized Name: RemotePrivateEndpointConnection.properties.privateEndpoint
-        /// </param>
-        /// <param name="privateLinkServiceConnectionState">
-        /// The state of a private link connection
-        /// Serialized Name: RemotePrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="ipAddresses">
-        /// Private IPAddresses mapped to the remote private endpoint
-        /// Serialized Name: RemotePrivateEndpointConnection.properties.ipAddresses
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<IPAddress> ipAddresses, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> RemotePrivateEndpointConnection resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RemotePrivateEndpointConnectionProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            IPAddresses = ipAddresses;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: RemotePrivateEndpointConnection.properties.provisioningState. </summary>
+        /// <summary> RemotePrivateEndpointConnection resource specific properties. </summary>
+        [WirePath("properties")]
+        internal RemotePrivateEndpointConnectionProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+
+        /// <summary> Gets the ProvisioningState. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
-        /// <summary>
-        /// PrivateEndpoint of a remote private endpoint connection
-        /// Serialized Name: RemotePrivateEndpointConnection.properties.privateEndpoint
-        /// </summary>
-        internal SubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets Id. </summary>
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The state of a private link connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
+        public PrivateLinkConnectionState PrivateLinkServiceConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RemotePrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
+            }
+        }
+
+        /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
+        [WirePath("properties.ipAddresses")]
+        public IList<IPAddress> IPAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RemotePrivateEndpointConnectionProperties();
+                }
+                return Properties.IPAddresses;
+            }
+        }
+
+        /// <summary> Gets the Id. </summary>
         [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
         }
-
-        /// <summary>
-        /// The state of a private link connection
-        /// Serialized Name: RemotePrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
-        public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
-        /// <summary>
-        /// Private IPAddresses mapped to the remote private endpoint
-        /// Serialized Name: RemotePrivateEndpointConnection.properties.ipAddresses
-        /// </summary>
-        [WirePath("properties.ipAddresses")]
-        public IList<IPAddress> IPAddresses { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

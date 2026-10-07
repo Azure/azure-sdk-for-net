@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
 
         private ClientDiagnostics DevicesClientDiagnostics => _devicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Devices DevicesRestClient => _devicesRestClient ??= new Devices(DevicesClientDiagnostics, Pipeline, Endpoint, "2023-12-01");
+        private Devices DevicesRestClient => _devicesRestClient ??= new Devices(DevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01");
 
         private ClientDiagnostics AvailableSkusClientDiagnostics => _availableSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableSkus AvailableSkusRestClient => _availableSkusRestClient ??= new AvailableSkus(AvailableSkusClientDiagnostics, Pipeline, Endpoint, "2023-12-01");
+        private AvailableSkus AvailableSkusRestClient => _availableSkusRestClient ??= new AvailableSkus(AvailableSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01");
 
         /// <summary>
         /// Gets all the Data Box Edge/Data Box Gateway devices in a subscription.

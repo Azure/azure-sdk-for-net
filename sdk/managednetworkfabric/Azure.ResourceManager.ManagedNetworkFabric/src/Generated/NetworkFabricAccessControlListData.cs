@@ -13,153 +13,227 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkFabricAccessControlList data model.
-    /// The Access Control List resource definition.
-    /// </summary>
+    /// <summary> The Access Control List resource definition. </summary>
     public partial class NetworkFabricAccessControlListData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="configurationType"> Input method to configure Access Control List. </param>
-        public NetworkFabricAccessControlListData(AzureLocation location, NetworkFabricConfigurationType? configurationType) : base(location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The Access ControlList properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccessControlListProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ConfigurationType = configurationType;
-            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
-            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
-            NetworkFabricIds = new ChangeTrackingList<ResourceIdentifier>();
-            ControlPlaneAclConfiguration = new ChangeTrackingList<ControlPlaneAclProperties>();
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="configurationType"> Input method to configure Access Control List. </param>
-        /// <param name="aclsUri"> Access Control List file URL. </param>
-        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
-        /// <param name="matchConfigurations"> List of match configurations. </param>
-        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
-        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
-        /// <param name="aclType"> Access Control List (ACL) Type. </param>
-        /// <param name="deviceRole"> Device Role. </param>
-        /// <param name="globalAccessControlListActions"> Global Access Control List (ACL) actions. </param>
-        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
-        /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
-        /// <param name="controlPlaneAclConfiguration"> Access Control List (ACL) configurations. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricAclType? aclType, NetworkFabricDeviceRole? deviceRole, GlobalAccessControlListActionProperties globalAccessControlListActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<ControlPlaneAclProperties> controlPlaneAclConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
-        {
-            Annotation = annotation;
-            ConfigurationType = configurationType;
-            AclsUri = aclsUri;
-            DefaultAction = defaultAction;
-            MatchConfigurations = matchConfigurations;
-            DynamicMatchConfigurations = dynamicMatchConfigurations;
-            LastSyncedOn = lastSyncedOn;
-            AclType = aclType;
-            DeviceRole = deviceRole;
-            GlobalAccessControlListActions = globalAccessControlListActions;
-            LastOperation = lastOperation;
-            NetworkFabricIds = networkFabricIds;
-            ControlPlaneAclConfiguration = controlPlaneAclConfiguration;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/> for deserialization. </summary>
-        internal NetworkFabricAccessControlListData()
-        {
-        }
+        /// <summary> The Access ControlList properties. </summary>
+        internal AccessControlListProperties Properties { get; set; }
 
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> Access Control List file URL. </summary>
-        public Uri AclsUri { get; set; }
-        /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
-        public CommunityActionType? DefaultAction { get; set; }
-        /// <summary> List of match configurations. </summary>
-        public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; }
-        /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
-        /// <summary> The last synced timestamp. </summary>
-        public DateTimeOffset? LastSyncedOn { get; }
-        /// <summary> Access Control List (ACL) Type. </summary>
-        public NetworkFabricAclType? AclType { get; set; }
-        /// <summary> Device Role. </summary>
-        public NetworkFabricDeviceRole? DeviceRole { get; set; }
-        /// <summary> Global Access Control List (ACL) actions. </summary>
-        internal GlobalAccessControlListActionProperties GlobalAccessControlListActions { get; set; }
-        /// <summary> Configuration to enable or disable ACL action count. </summary>
-        public NetworkFabricBooleanValue? GlobalAccessControlListActionsEnableCount
+        public string Annotation
         {
-            get => GlobalAccessControlListActions is null ? default : GlobalAccessControlListActions.EnableCount;
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
             set
             {
-                if (GlobalAccessControlListActions is null)
-                    GlobalAccessControlListActions = new GlobalAccessControlListActionProperties();
-                GlobalAccessControlListActions.EnableCount = value;
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                Properties.Annotation = value;
             }
         }
 
-        /// <summary> Details of the last operation performed on the resource. </summary>
-        internal LastOperationProperties LastOperation { get; }
-        /// <summary> Details status of the last operation performed on the resource. </summary>
-        public string LastOperationDetails
+        /// <summary> Access Control List file URL. </summary>
+        public Uri AclsUri
         {
-            get => LastOperation?.Details;
+            get
+            {
+                return Properties is null ? default : Properties.AclsUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                Properties.AclsUri = value;
+            }
+        }
+
+        /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
+        public CommunityActionType? DefaultAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                Properties.DefaultAction = value;
+            }
+        }
+
+        /// <summary> List of match configurations. </summary>
+        public IList<AccessControlListMatchConfiguration> MatchConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                return Properties.MatchConfigurations;
+            }
+        }
+
+        /// <summary> List of dynamic match configurations. </summary>
+        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                return Properties.DynamicMatchConfigurations;
+            }
+        }
+
+        /// <summary> The last synced timestamp. </summary>
+        public DateTimeOffset? LastSyncedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastSyncedOn;
+            }
+        }
+
+        /// <summary> Access Control List (ACL) Type. </summary>
+        public NetworkFabricAclType? AclType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AclType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                Properties.AclType = value;
+            }
+        }
+
+        /// <summary> Device Role. </summary>
+        public NetworkFabricDeviceRole? DeviceRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeviceRole;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                Properties.DeviceRole = value;
+            }
         }
 
         /// <summary> Associated Network Fabric Resource IDs. </summary>
-        public IReadOnlyList<ResourceIdentifier> NetworkFabricIds { get; }
+        public IReadOnlyList<ResourceIdentifier> NetworkFabricIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                return Properties.NetworkFabricIds;
+            }
+        }
+
         /// <summary> Access Control List (ACL) configurations. </summary>
-        public IList<ControlPlaneAclProperties> ControlPlaneAclConfiguration { get; }
+        public IList<ControlPlaneAclProperties> ControlPlaneAclConfiguration
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                return Properties.ControlPlaneAclConfiguration;
+            }
+        }
+
         /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
+        /// <summary> Configuration to enable or disable ACL action count. </summary>
+        public NetworkFabricBooleanValue? GlobalAccessControlListActionsEnableCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GlobalAccessControlListActionsEnableCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessControlListProperties();
+                }
+                Properties.GlobalAccessControlListActionsEnableCount = value;
+            }
+        }
+
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
     }
 }

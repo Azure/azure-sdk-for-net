@@ -48,27 +48,27 @@ namespace Azure.ResourceManager.Advisor.Mocking
 
         private ClientDiagnostics AdvisorClientClientDiagnostics => _advisorClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AdvisorClient AdvisorClientRestClient => _advisorClientRestClient ??= new AdvisorClient(AdvisorClientClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private AdvisorClient AdvisorClientRestClient => _advisorClientRestClient ??= new AdvisorClient(AdvisorClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Configurations ConfigurationsRestClient => _configurationsRestClient ??= new Configurations(ConfigurationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Configurations ConfigurationsRestClient => _configurationsRestClient ??= new Configurations(ConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics RecommendationsOperationGroupClientDiagnostics => _recommendationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RecommendationsOperationGroup RecommendationsOperationGroupRestClient => _recommendationsOperationGroupRestClient ??= new RecommendationsOperationGroup(RecommendationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private RecommendationsOperationGroup RecommendationsOperationGroupRestClient => _recommendationsOperationGroupRestClient ??= new RecommendationsOperationGroup(RecommendationsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics SuppressionsOperationGroupClientDiagnostics => _suppressionsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SuppressionsOperationGroup SuppressionsOperationGroupRestClient => _suppressionsOperationGroupRestClient ??= new SuppressionsOperationGroup(SuppressionsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private SuppressionsOperationGroup SuppressionsOperationGroupRestClient => _suppressionsOperationGroupRestClient ??= new SuppressionsOperationGroup(SuppressionsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics AssessmentTypesOperationGroupClientDiagnostics => _assessmentTypesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AssessmentTypesOperationGroup AssessmentTypesOperationGroupRestClient => _assessmentTypesOperationGroupRestClient ??= new AssessmentTypesOperationGroup(AssessmentTypesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private AssessmentTypesOperationGroup AssessmentTypesOperationGroupRestClient => _assessmentTypesOperationGroupRestClient ??= new AssessmentTypesOperationGroup(AssessmentTypesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics WorkloadsOperationGroupClientDiagnostics => _workloadsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WorkloadsOperationGroup WorkloadsOperationGroupRestClient => _workloadsOperationGroupRestClient ??= new WorkloadsOperationGroup(WorkloadsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private WorkloadsOperationGroup WorkloadsOperationGroupRestClient => _workloadsOperationGroupRestClient ??= new WorkloadsOperationGroup(WorkloadsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         /// <summary> Gets a collection of AdvisorScoreEntities in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of AdvisorScoreEntities and their operations over a AdvisorScoreEntityResource. </returns>

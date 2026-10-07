@@ -208,6 +208,126 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         public static Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmCollection GetDedicatedHsms(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource> GetDedicatedHsms(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource> GetDedicatedHsmsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> GetPaymentHsmCluster(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> GetPaymentHsmClusterAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource GetPaymentHsmClusterPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource GetPaymentHsmClusterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterCollection GetPaymentHsmClusters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> GetPaymentHsmClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> GetPaymentHsmClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PaymentHsmClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>, System.Collections.IEnumerable
+    {
+        protected PaymentHsmClusterCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string paymentHsmClusterName, Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string paymentHsmClusterName, Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> Get(string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> GetAll(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> GetAllAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> GetAsync(string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> GetIfExists(string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> GetIfExistsAsync(string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class PaymentHsmClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>
+    {
+        public PaymentHsmClusterData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku Sku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PaymentHsmClusterPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>, System.Collections.IEnumerable
+    {
+        protected PaymentHsmClusterPrivateEndpointConnectionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string peConnectionName, Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> Get(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>> GetAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> GetIfExists(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>> GetIfExistsAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class PaymentHsmClusterPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>
+    {
+        public PaymentHsmClusterPrivateEndpointConnectionData() { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PaymentHsmClusterPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected PaymentHsmClusterPrivateEndpointConnectionResource() { }
+        public virtual Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string paymentHsmClusterName, string peConnectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PaymentHsmClusterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected PaymentHsmClusterResource() { }
+        public virtual Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string paymentHsmClusterName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData> GetByPaymentHsmCluster(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData> GetByPaymentHsmClusterAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource> GetPaymentHsmClusterPrivateEndpointConnection(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource>> GetPaymentHsmClusterPrivateEndpointConnectionAsync(string peConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionCollection GetPaymentHsmClusterPrivateEndpointConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
@@ -218,6 +338,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         public virtual Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionResource GetCloudHsmClusterPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource GetCloudHsmClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource GetDedicatedHsmResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionResource GetPaymentHsmClusterPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource GetPaymentHsmClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableHardwareSecurityModulesResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -228,6 +350,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource> GetDedicatedHsm(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource>> GetDedicatedHsmAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmCollection GetDedicatedHsms() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> GetPaymentHsmCluster(string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource>> GetPaymentHsmClusterAsync(string paymentHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterCollection GetPaymentHsmClusters() { throw null; }
     }
     public partial class MockableHardwareSecurityModulesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -236,6 +361,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource> GetCloudHsmClustersAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource> GetDedicatedHsms(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource> GetDedicatedHsmsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> GetPaymentHsmClusters(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterResource> GetPaymentHsmClustersAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
@@ -253,9 +380,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties CloudHsmClusterPrivateEndpointConnectionProperties(Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProvisioningState?), System.Collections.Generic.IEnumerable<string> groupIds = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkData CloudHsmClusterPrivateLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkResourceProperties CloudHsmClusterPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateLinkServiceConnectionState CloudHsmClusterPrivateLinkServiceConnectionState(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointServiceConnectionStatus? status = default(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointServiceConnectionStatus?), string description = null, string actionsRequired = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProperties CloudHsmClusterProperties(Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState? activationState = default(Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState?), Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties> hsms = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState? provisioningState = default(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState?), Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess?), string statusMessage = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreContent CloudHsmClusterRestoreContent(System.Uri azureStorageBlobContainerUri = null, string token = null, string backupId = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterRestoreResult CloudHsmClusterRestoreResult(Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreBaseResultProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSku CloudHsmClusterSku(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuFamily family = default(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuFamily), Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuName name = Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterSkuName.StandardB1, int? capacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties CloudHsmProperties(string fqdn = null, string state = null, string stateMessage = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData DedicatedHsmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? skuName = default(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmData DedicatedHsmData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? skuName, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties properties = null) { throw null; }
@@ -266,6 +395,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile DedicatedHsmNetworkProfile(Azure.Core.ResourceIdentifier subnetResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface> networkInterfaces = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch DedicatedHsmPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties DedicatedHsmProperties(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile networkProfile = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile managementNetworkProfile = null, string stampId = null, string statusMessage = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType? provisioningState = default(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType?)) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSku DedicatedHsmSku(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? name = default(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName?)) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterData PaymentHsmClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties properties = null, Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku sku = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch PaymentHsmClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData PaymentHsmClusterPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPrivateEndpointConnectionProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties PaymentHsmClusterProperties(Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState? activationState = default(Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState?), Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties> hsms = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState? provisioningState = default(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState?), Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess?), string statusMessage = null, string applicationTrustedIssuer = null, string managementTrustedIssuer = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku PaymentHsmClusterSku(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily family = default(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily), Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName name = default(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName), int? capacity = default(int?)) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties PaymentHsmProperties(string appFqdn = null, string mgmtFqdn = null, Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState? state = default(Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState?), string stateMessage = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutoGeneratedDomainNameLabelScope : System.IEquatable<Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope>
@@ -620,6 +756,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     {
         StandardB1 = 0,
         StandardB10 = 1,
+        StandardB1v2 = 2,
+        StandardB5v2 = 3,
+        StandardB10v2 = 4,
+        StandardB15v2 = 5,
+        StandardB20v2 = 6,
     }
     public partial class CloudHsmProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmProperties>
     {
@@ -803,6 +944,135 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName left, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmSkuName right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HardwareSecurityModuleState : System.IEquatable<Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HardwareSecurityModuleState(string value) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState ConfiguringSlb { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState Degraded { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState DelayedDeletion { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState DeletingSlbEntry { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState Deploying { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState Failed { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState InitialProvisioning { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState Relocating { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState Started { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState Starting { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState Unknown { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState left, Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState left, Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PaymentHsmClusterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch>
+    {
+        public PaymentHsmClusterPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PaymentHsmClusterProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties>
+    {
+        public PaymentHsmClusterProperties(string applicationTrustedIssuer, string managementTrustedIssuer) { }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState? ActivationState { get { throw null; } }
+        public string ApplicationTrustedIssuer { get { throw null; } set { } }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.AutoGeneratedDomainNameLabelScope? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties> Hsms { get { throw null; } }
+        public string ManagementTrustedIssuer { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public string StatusMessage { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PaymentHsmClusterSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku>
+    {
+        public PaymentHsmClusterSku(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily family, Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName name) { }
+        public int? Capacity { get { throw null; } set { } }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily Family { get { throw null; } set { } }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PaymentHsmClusterSkuFamily : System.IEquatable<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PaymentHsmClusterSkuFamily(string value) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily B { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily left, Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily left, Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuFamily right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PaymentHsmClusterSkuName : System.IEquatable<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PaymentHsmClusterSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName PaymentsV2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName left, Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName left, Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmClusterSkuName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PaymentHsmProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties>
+    {
+        internal PaymentHsmProperties() { }
+        public string AppFqdn { get { throw null; } }
+        public string MgmtFqdn { get { throw null; } }
+        public Azure.ResourceManager.HardwareSecurityModules.Models.HardwareSecurityModuleState? State { get { throw null; } }
+        public string StateMessage { get { throw null; } }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.PaymentHsmProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityDomainActivationState : System.IEquatable<Azure.ResourceManager.HardwareSecurityModules.Models.SecurityDomainActivationState>

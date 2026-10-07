@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.RecoveryServices
                     yield break;
                 }
                 VaultUsageList result = VaultUsageList.FromResponse(response);
-                yield return Page<VaultUsage>.FromValues((IReadOnlyList<VaultUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<VaultUsage>.FromValues((IReadOnlyList<VaultUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

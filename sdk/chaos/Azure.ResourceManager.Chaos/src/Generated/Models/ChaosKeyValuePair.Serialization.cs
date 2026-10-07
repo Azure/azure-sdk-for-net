@@ -13,7 +13,7 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> A map to describe the settings of an action. </summary>
+    /// <summary> A key-value pair used to describe parameters for actions or configurations. </summary>
     public partial class ChaosKeyValuePair : IJsonModel<ChaosKeyValuePair>
     {
         /// <summary> Initializes a new instance of <see cref="ChaosKeyValuePair"/> for deserialization. </summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ChaosKeyValuePair(key, value, additionalBinaryDataProperties);

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             TryGetApiVersion(ResourceType, out string policySetDefinitionApiVersion);
             _policySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", ResourceType.Namespace, Diagnostics);
-            _policySetDefinitionsRestClient = new PolicySetDefinitions(_policySetDefinitionsClientDiagnostics, Pipeline, Endpoint, policySetDefinitionApiVersion ?? "2025-12-01-preview");
+            _policySetDefinitionsRestClient = new PolicySetDefinitions(_policySetDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policySetDefinitionApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

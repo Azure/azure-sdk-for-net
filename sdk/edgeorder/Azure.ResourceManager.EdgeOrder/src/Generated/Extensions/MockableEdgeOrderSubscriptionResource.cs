@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
 
         private ClientDiagnostics AddressResourcesClientDiagnostics => _addressResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AddressResources AddressResourcesRestClient => _addressResourcesRestClient ??= new AddressResources(AddressResourcesClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private AddressResources AddressResourcesRestClient => _addressResourcesRestClient ??= new AddressResources(AddressResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics OrderItemResourcesClientDiagnostics => _orderItemResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OrderItemResources OrderItemResourcesRestClient => _orderItemResourcesRestClient ??= new OrderItemResources(OrderItemResourcesClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private OrderItemResources OrderItemResourcesRestClient => _orderItemResourcesRestClient ??= new OrderItemResources(OrderItemResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics ProductsAndConfigurationsOperationGroupClientDiagnostics => _productsAndConfigurationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProductsAndConfigurationsOperationGroup ProductsAndConfigurationsOperationGroupRestClient => _productsAndConfigurationsOperationGroupRestClient ??= new ProductsAndConfigurationsOperationGroup(ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private ProductsAndConfigurationsOperationGroup ProductsAndConfigurationsOperationGroupRestClient => _productsAndConfigurationsOperationGroupRestClient ??= new ProductsAndConfigurationsOperationGroup(ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics OrdersOperationGroup2ClientDiagnostics => _ordersOperationGroup2ClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OrdersOperationGroup2 OrdersOperationGroup2RestClient => _ordersOperationGroup2RestClient ??= new OrdersOperationGroup2(OrdersOperationGroup2ClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private OrdersOperationGroup2 OrdersOperationGroup2RestClient => _ordersOperationGroup2RestClient ??= new OrdersOperationGroup2(OrdersOperationGroup2ClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         /// <summary>
         /// List all the addresses available under the subscription.

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct TemplateType : IEquatable<TemplateType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TemplateType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TemplateType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string ArmTemplateValue = "ArmTemplate";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TemplateType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static TemplateType Unknown { get; } = new TemplateType(UnknownValue);
-        /// <summary> ArmTemplate. </summary>
+
+        /// <summary> Gets the ArmTemplate. </summary>
         public static TemplateType ArmTemplate { get; } = new TemplateType(ArmTemplateValue);
+
         /// <summary> Determines if two <see cref="TemplateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TemplateType left, TemplateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TemplateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TemplateType left, TemplateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TemplateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TemplateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TemplateType(string value) => new TemplateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TemplateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TemplateType?(string value) => value == null ? null : new TemplateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TemplateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TemplateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

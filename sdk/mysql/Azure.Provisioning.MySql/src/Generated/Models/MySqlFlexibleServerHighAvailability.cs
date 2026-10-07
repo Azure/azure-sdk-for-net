@@ -69,6 +69,10 @@ namespace Azure.Provisioning.MySql
             _mode = DefineProperty<MySqlFlexibleServerHighAvailabilityMode>(nameof(Mode), new string[] { "mode" });
             _state = DefineProperty<MySqlFlexibleServerHighAvailabilityState>(nameof(State), new string[] { "state" }, isOutput: true);
             _standbyAvailabilityZone = DefineProperty<string>(nameof(StandbyAvailabilityZone), new string[] { "standbyAvailabilityZone" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MySqlFlexibleServerHighAvailability that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

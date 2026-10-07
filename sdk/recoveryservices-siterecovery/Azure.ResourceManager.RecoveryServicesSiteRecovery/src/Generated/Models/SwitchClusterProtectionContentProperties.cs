@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Switch cluster protection input properties. </summary>
     public partial class SwitchClusterProtectionContentProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SwitchClusterProtectionContentProperties"/>. </summary>
         public SwitchClusterProtectionContentProperties()
@@ -52,26 +23,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="SwitchClusterProtectionContentProperties"/>. </summary>
         /// <param name="replicationProtectionClusterName"> The unique replication protection cluster name. </param>
-        /// <param name="providerSpecificDetails">
-        /// Provider specific switch protection input.
-        /// Please note <see cref="SwitchClusterProtectionProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2ASwitchClusterProtectionContent"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SwitchClusterProtectionContentProperties(string replicationProtectionClusterName, SwitchClusterProtectionProviderSpecificContent providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="providerSpecificDetails"> Provider specific switch protection input. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SwitchClusterProtectionContentProperties(string replicationProtectionClusterName, SwitchClusterProtectionProviderSpecificContent providerSpecificDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReplicationProtectionClusterName = replicationProtectionClusterName;
             ProviderSpecificDetails = providerSpecificDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique replication protection cluster name. </summary>
         public string ReplicationProtectionClusterName { get; set; }
-        /// <summary>
-        /// Provider specific switch protection input.
-        /// Please note <see cref="SwitchClusterProtectionProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2ASwitchClusterProtectionContent"/>.
-        /// </summary>
+
+        /// <summary> Provider specific switch protection input. </summary>
         public SwitchClusterProtectionProviderSpecificContent ProviderSpecificDetails { get; set; }
     }
 }

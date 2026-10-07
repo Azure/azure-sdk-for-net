@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistryAssetEndpointProfileApiVersion);
             _assetEndpointProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _assetEndpointProfilesRestClient = new AssetEndpointProfiles(_assetEndpointProfilesClientDiagnostics, Pipeline, Endpoint, deviceRegistryAssetEndpointProfileApiVersion ?? "2026-03-01-preview");
+            _assetEndpointProfilesRestClient = new AssetEndpointProfiles(_assetEndpointProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryAssetEndpointProfileApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _assetEndpointProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeviceRegistryAssetEndpointProfilePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<DeviceRegistryAssetEndpointProfileResource> operation = new DeviceRegistryArmOperation<DeviceRegistryAssetEndpointProfileResource>(
-                    new DeviceRegistryAssetEndpointProfileOperationSource(Client),
+                    new DeviceRegistryAssetEndpointProfileResourceOperationSource(Client),
                     _assetEndpointProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _assetEndpointProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeviceRegistryAssetEndpointProfilePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<DeviceRegistryAssetEndpointProfileResource> operation = new DeviceRegistryArmOperation<DeviceRegistryAssetEndpointProfileResource>(
-                    new DeviceRegistryAssetEndpointProfileOperationSource(Client),
+                    new DeviceRegistryAssetEndpointProfileResourceOperationSource(Client),
                     _assetEndpointProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,

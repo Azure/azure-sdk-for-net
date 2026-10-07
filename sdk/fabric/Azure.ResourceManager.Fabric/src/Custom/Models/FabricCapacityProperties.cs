@@ -17,24 +17,8 @@ namespace Azure.ResourceManager.Fabric.Models
         {
             Argument.AssertNotNull(administration, nameof(administration));
 
+            Overage = new CapacityOverageProperties();
             Administration = administration;
-        }
-
-        /// <summary> An array of administrator user identities. </summary>
-        public IList<string> AdministrationMembers
-        {
-            get
-            {
-                if (Administration is null)
-                {
-                    Administration = new FabricCapacityAdministration();
-                }
-                return Administration.Members;
-            }
-            set
-            {
-                Administration = new FabricCapacityAdministration(value);
-            }
         }
     }
 }

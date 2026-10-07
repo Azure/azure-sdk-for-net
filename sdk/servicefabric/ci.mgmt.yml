@@ -1,6 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
+    - sdk/servicefabric/Azure.Provisioning.ServiceFabric
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -9,3 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ServiceFabric
       safeName: AzureResourceManagerServiceFabric
+    - name: Azure.Provisioning.ServiceFabric
+      safeName: AzureProvisioningServiceFabric

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(FrontDoorCustomDomainResource.ResourceType, out string frontDoorCustomDomainApiVersion);
             _afdCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            _afdCustomDomainsRestClient = new AFDCustomDomains(_afdCustomDomainsClientDiagnostics, Pipeline, Endpoint, frontDoorCustomDomainApiVersion ?? "2025-09-01-preview");
+            _afdCustomDomainsRestClient = new AFDCustomDomains(_afdCustomDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorCustomDomainApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _afdCustomDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, FrontDoorCustomDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorCustomDomainResource> operation = new CdnArmOperation<FrontDoorCustomDomainResource>(
-                    new FrontDoorCustomDomainOperationSource(Client),
+                    new FrontDoorCustomDomainResourceOperationSource(Client),
                     _afdCustomDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _afdCustomDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, FrontDoorCustomDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorCustomDomainResource> operation = new CdnArmOperation<FrontDoorCustomDomainResource>(
-                    new FrontDoorCustomDomainOperationSource(Client),
+                    new FrontDoorCustomDomainResourceOperationSource(Client),
                     _afdCustomDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,

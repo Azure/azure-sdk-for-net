@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Storage.Models
         // operators/conversions partial, breaking the build. Re-declare the missing members
         // here. Remove once the upstream fix lands in a new mgmt-emitter alpha.
         private readonly string _value;
-        private const string KerbValue = "kerb";
 
         /// <summary> Initializes a new instance of <see cref="ListKeysRequestExpand"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -31,9 +30,6 @@ namespace Azure.ResourceManager.Storage.Models
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
-
-        /// <summary> Gets the Kerb. </summary>
-        public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -47,13 +43,15 @@ namespace Azure.ResourceManager.Storage.Models
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        // Backward-compatible: Converts to StorageListKeyExpand.
+        /// <summary> Implicit conversion between the two equivalent extensible-enum representations. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageListKeyExpand(ListKeysRequestExpand value) => new StorageListKeyExpand(value._value);
-        // Backward-compatible: Converts from StorageListKeyExpand.
+        /// <summary> Implicit conversion between the two equivalent extensible-enum representations. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ListKeysRequestExpand(StorageListKeyExpand value) => new ListKeysRequestExpand(value.ToString());
     }
 
-    // Backward-compatible alias for ListKeysRequestExpand.
+    /// <summary> Specifies the type of key to list. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct StorageListKeyExpand : IEquatable<StorageListKeyExpand>
     {

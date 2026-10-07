@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devBoxDefinitionApiVersion);
             _devBoxDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _devBoxDefinitionsRestClient = new DevBoxDefinitions(_devBoxDefinitionsClientDiagnostics, Pipeline, Endpoint, devBoxDefinitionApiVersion ?? "2026-01-01-preview");
+            _devBoxDefinitionsRestClient = new DevBoxDefinitions(_devBoxDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devBoxDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _devBoxDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevBoxDefinitionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevBoxDefinitionResource> operation = new DevCenterArmOperation<DevBoxDefinitionResource>(
-                    new DevBoxDefinitionOperationSource(Client),
+                    new DevBoxDefinitionResourceOperationSource(Client),
                     _devBoxDefinitionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _devBoxDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevBoxDefinitionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevBoxDefinitionResource> operation = new DevCenterArmOperation<DevBoxDefinitionResource>(
-                    new DevBoxDefinitionOperationSource(Client),
+                    new DevBoxDefinitionResourceOperationSource(Client),
                     _devBoxDefinitionsClientDiagnostics,
                     Pipeline,
                     message.Request,

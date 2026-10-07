@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,33 +18,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public LinkedIntegrationRuntimeRbacAuthorization(ResourceIdentifier resourceId)
+        public LinkedIntegrationRuntimeRbacAuthorization(ResourceIdentifier resourceId) : base("RBAC")
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
-            AuthorizationType = "RBAC";
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId, DataFactoryCredentialReference credential) : base(authorizationType, serializedAdditionalRawData)
+        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier resourceId, DataFactoryCredentialReference credential) : base(authorizationType, additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             Credential = credential;
-            AuthorizationType = authorizationType ?? "RBAC";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/> for deserialization. </summary>
-        internal LinkedIntegrationRuntimeRbacAuthorization()
-        {
         }
 
         /// <summary> The resource identifier of the integration runtime to be shared. </summary>
         public ResourceIdentifier ResourceId { get; set; }
+
         /// <summary> The credential reference containing authentication information. </summary>
         public DataFactoryCredentialReference Credential { get; set; }
     }

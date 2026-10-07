@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabDiskResource.ResourceType, out string devTestLabDiskApiVersion);
             _disksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabDiskResource.ResourceType.Namespace, Diagnostics);
-            _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Endpoint, devTestLabDiskApiVersion ?? "2018-09-15");
+            _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabDiskApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabDiskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabDiskResource> operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(
-                    new DevTestLabDiskOperationSource(Client),
+                    new DevTestLabDiskResourceOperationSource(Client),
                     _disksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabDiskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabDiskResource> operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(
-                    new DevTestLabDiskOperationSource(Client),
+                    new DevTestLabDiskResourceOperationSource(Client),
                     _disksClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </summary>
     public partial class ResourceHealthAvailabilityStateRecentlyResolved
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStateRecentlyResolved"/>. </summary>
         internal ResourceHealthAvailabilityStateRecentlyResolved()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="unavailableOccuredOn"> Timestamp for when the availabilityState changed to Unavailable. </param>
         /// <param name="resolvedOn"> Timestamp when the availabilityState changes to Available. </param>
         /// <param name="unavailableSummary"> Brief description of cause of the resource becoming unavailable. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthAvailabilityStateRecentlyResolved(DateTimeOffset? unavailableOccuredOn, DateTimeOffset? resolvedOn, string unavailableSummary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthAvailabilityStateRecentlyResolved(DateTimeOffset? unavailableOccuredOn, DateTimeOffset? resolvedOn, string unavailableSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UnavailableOccuredOn = unavailableOccuredOn;
             ResolvedOn = resolvedOn;
             UnavailableSummary = unavailableSummary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Timestamp for when the availabilityState changed to Unavailable. </summary>
         public DateTimeOffset? UnavailableOccuredOn { get; }
+
         /// <summary> Timestamp when the availabilityState changes to Available. </summary>
         public DateTimeOffset? ResolvedOn { get; }
+
         /// <summary> Brief description of cause of the resource becoming unavailable. </summary>
         public string UnavailableSummary { get; }
     }

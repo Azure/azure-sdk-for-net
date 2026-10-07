@@ -11,14 +11,14 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerHighAvailabilityState
     {
         /// <summary> NotEnabled. </summary>
-        NotEnabled,
+        NotEnabled = 0,
         /// <summary> CreatingStandby. </summary>
-        CreatingStandby,
+        CreatingStandby = 1,
         /// <summary> Healthy. </summary>
-        Healthy,
+        Healthy = 2,
         /// <summary> FailingOver. </summary>
-        FailingOver,
+        FailingOver = 3,
         /// <summary> RemovingStandby. </summary>
-        RemovingStandby
+        RemovingStandby = 4
     }
 }

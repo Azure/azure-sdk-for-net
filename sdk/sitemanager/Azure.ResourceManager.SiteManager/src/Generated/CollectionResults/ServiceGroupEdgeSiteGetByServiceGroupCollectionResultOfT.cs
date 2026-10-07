@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.SiteManager
                     yield break;
                 }
                 SiteListResult result = SiteListResult.FromResponse(response);
-                yield return Page<EdgeSiteData>.FromValues((IReadOnlyList<EdgeSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeSiteData>.FromValues((IReadOnlyList<EdgeSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

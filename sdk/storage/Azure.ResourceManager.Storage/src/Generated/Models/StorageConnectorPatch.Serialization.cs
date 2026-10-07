@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.Storage.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             StorageConnectorPropertiesPatch properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StorageConnectorPatch(
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties,
                 properties);
         }
     }

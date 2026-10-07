@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CertificateRegistration;
 using Azure.ResourceManager.Models;
@@ -56,11 +55,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && certificateProductType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderProperties(
-                    certificates,
+                    certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
                     distinguishedName,
                     domainVerificationToken,
                     validityInYears,
@@ -80,8 +78,9 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
                     nextAutoRenewOn,
                     contact,
-                    null),
-                kind);
+                    default),
+                kind,
+                default);
         }
 
         /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.AppServiceCertificateProperties"/> instance for mocking. </returns>
         public static AppServiceCertificateProperties AppServiceCertificateProperties(ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default)
         {
-            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, additionalBinaryDataProperties: null);
+            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default);
         }
 
         /// <summary> SSL certificate details. </summary>
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 signatureAlgorithm,
                 issuer,
                 rawData,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The CertificateOrderContact. </summary>
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.CertificateOrderContact"/> instance for mocking. </returns>
         public static CertificateOrderContact CertificateOrderContact(string email = default, string nameFirst = default, string nameLast = default, string phone = default)
         {
-            return new CertificateOrderContact(email, nameFirst, nameLast, phone, additionalBinaryDataProperties: null);
+            return new CertificateOrderContact(email, nameFirst, nameLast, phone, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -164,9 +163,8 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && certificateProductType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderPatchResourceProperties(
-                    certificates,
+                    certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
                     distinguishedName,
                     domainVerificationToken,
                     validityInYears,
@@ -186,8 +184,9 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
                     nextAutoRenewOn,
                     contact,
-                    null),
-                kind);
+                    default),
+                kind,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -207,9 +206,9 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                keySize is null && delayExistingRevokeInHours is null && csr is null && isPrivateKeyExternal is null ? default : new ReissueCertificateOrderRequestProperties(keySize, delayExistingRevokeInHours, csr, isPrivateKeyExternal, null),
-                kind);
+                keySize is null && delayExistingRevokeInHours is null && csr is null && isPrivateKeyExternal is null ? default : new ReissueCertificateOrderRequestProperties(keySize, delayExistingRevokeInHours, csr, isPrivateKeyExternal, default),
+                kind,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -228,9 +227,26 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                keySize is null && csr is null && isPrivateKeyExternal is null ? default : new RenewCertificateOrderRequestProperties(keySize, csr, isPrivateKeyExternal, null),
-                kind);
+                keySize is null && csr is null && isPrivateKeyExternal is null ? default : new RenewCertificateOrderRequestProperties(keySize, csr, isPrivateKeyExternal, default),
+                kind,
+                default);
+        }
+
+        /// <summary> Identifies an object. </summary>
+        /// <param name="name"> Name of the object. </param>
+        /// <returns> A new <see cref="Models.AppServiceDomainNameIdentifier"/> instance for mocking. </returns>
+        public static AppServiceDomainNameIdentifier AppServiceDomainNameIdentifier(string name = default)
+        {
+            return new AppServiceDomainNameIdentifier(name, default);
+        }
+
+        /// <summary> Site seal request. </summary>
+        /// <param name="isLightTheme"> If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme. </param>
+        /// <param name="locale"> Locale of site seal. </param>
+        /// <returns> A new <see cref="Models.SiteSealContent"/> instance for mocking. </returns>
+        public static SiteSealContent SiteSealContent(bool? isLightTheme = default, string locale = default)
+        {
+            return new SiteSealContent(isLightTheme, locale, default);
         }
 
         /// <summary> Site seal. </summary>
@@ -238,7 +254,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.SiteSeal"/> instance for mocking. </returns>
         public static SiteSeal SiteSeal(string html = default)
         {
-            return new SiteSeal(html, additionalBinaryDataProperties: null);
+            return new SiteSeal(html, default);
         }
 
         /// <summary> Certificate order action. </summary>
@@ -247,7 +263,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.CertificateOrderAction"/> instance for mocking. </returns>
         public static CertificateOrderAction CertificateOrderAction(CertificateOrderActionType? actionType = default, DateTimeOffset? createdOn = default)
         {
-            return new CertificateOrderAction(actionType, createdOn, additionalBinaryDataProperties: null);
+            return new CertificateOrderAction(actionType, createdOn, default);
         }
 
         /// <summary> SSL certificate email. </summary>
@@ -256,7 +272,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
         public static AppServiceCertificateEmail AppServiceCertificateEmail(string emailId = default, DateTimeOffset? sentOn = default)
         {
-            return new AppServiceCertificateEmail(emailId, sentOn, additionalBinaryDataProperties: null);
+            return new AppServiceCertificateEmail(emailId, sentOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -279,11 +295,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, null),
-                kind);
+                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default),
+                kind,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -302,9 +318,9 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, null),
-                kind);
+                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default),
+                kind,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -325,15 +341,15 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 metadata is null && dataset is null && status is null && dataProvidersMetadata is null && suggestedUtterances is null ? default : new DetectorResponseProperties(
                     metadata,
                     (dataset ?? new ChangeTrackingList<DiagnosticDataset>()).ToList(),
                     status,
                     (dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>()).ToList(),
                     suggestedUtterances,
-                    null),
-                kind);
+                    default),
+                kind,
+                default);
         }
 
         /// <summary> Definition of Detector. </summary>
@@ -358,11 +374,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 description,
                 author,
                 category,
-                supportTopicList.ToList(),
-                analysisType.ToList(),
+                (supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>()).ToList(),
+                (analysisType ?? new ChangeTrackingList<string>()).ToList(),
                 @type,
                 score,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Defines a unique Support Topic. </summary>
@@ -371,7 +387,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.DetectorSupportTopic"/> instance for mocking. </returns>
         public static DetectorSupportTopic DetectorSupportTopic(string id = default, ResourceIdentifier pesId = default)
         {
-            return new DetectorSupportTopic(id, pesId, additionalBinaryDataProperties: null);
+            return new DetectorSupportTopic(id, pesId, default);
         }
 
         /// <summary> Set of data with rendering instructions. </summary>
@@ -380,7 +396,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.DiagnosticDataset"/> instance for mocking. </returns>
         public static DiagnosticDataset DiagnosticDataset(DiagnosticDataTableObject table = default, DiagnosticDataRendering renderingProperties = default)
         {
-            return new DiagnosticDataset(table, renderingProperties, additionalBinaryDataProperties: null);
+            return new DiagnosticDataset(table, renderingProperties, default);
         }
 
         /// <summary> Data Table which defines columns and raw row values. </summary>
@@ -393,7 +409,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             columns ??= new ChangeTrackingList<DiagnosticDataTableColumn>();
             rows ??= new ChangeTrackingList<IList<string>>();
 
-            return new DiagnosticDataTableObject(tableName, columns.ToList(), rows.ToList(), additionalBinaryDataProperties: null);
+            return new DiagnosticDataTableObject(tableName, (columns ?? new ChangeTrackingList<DiagnosticDataTableColumn>()).ToList(), (rows ?? new ChangeTrackingList<IList<string>>()).ToList(), default);
         }
 
         /// <summary> Column definition. </summary>
@@ -403,7 +419,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.DiagnosticDataTableColumn"/> instance for mocking. </returns>
         public static DiagnosticDataTableColumn DiagnosticDataTableColumn(string columnName = default, string dataType = default, string columnType = default)
         {
-            return new DiagnosticDataTableColumn(columnName, dataType, columnType, additionalBinaryDataProperties: null);
+            return new DiagnosticDataTableColumn(columnName, dataType, columnType, default);
         }
 
         /// <summary> Instructions for rendering the data. </summary>
@@ -413,7 +429,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.DiagnosticDataRendering"/> instance for mocking. </returns>
         public static DiagnosticDataRendering DiagnosticDataRendering(DiagnosticDataRenderingType? @type = default, string title = default, string description = default)
         {
-            return new DiagnosticDataRendering(@type, title, description, additionalBinaryDataProperties: null);
+            return new DiagnosticDataRendering(@type, title, description, default);
         }
 
         /// <summary> Identify the status of the most severe insight generated by the detector. </summary>
@@ -422,7 +438,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.DetectorStatusInfo"/> instance for mocking. </returns>
         public static DetectorStatusInfo DetectorStatusInfo(string message = default, DetectorInsightStatus? statusId = default)
         {
-            return new DetectorStatusInfo(message, statusId, additionalBinaryDataProperties: null);
+            return new DetectorStatusInfo(message, statusId, default);
         }
 
         /// <summary> Additional configuration for a data providers. </summary>
@@ -433,7 +449,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             propertyBag ??= new ChangeTrackingList<DataProviderKeyValuePair>();
 
-            return new DataProviderMetadata(providerName, propertyBag.ToList(), additionalBinaryDataProperties: null);
+            return new DataProviderMetadata(providerName, (propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>()).ToList(), default);
         }
 
         /// <summary> The DataProviderKeyValuePair. </summary>
@@ -444,7 +460,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             value ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DataProviderKeyValuePair(key, value, additionalBinaryDataProperties: null);
+            return new DataProviderKeyValuePair(key, value ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Suggested utterances where the detector can be applicable. </summary>
@@ -455,7 +471,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             results ??= new ChangeTrackingList<QueryUtterancesResult>();
 
-            return new QueryUtterancesResults(query, results.ToList(), additionalBinaryDataProperties: null);
+            return new QueryUtterancesResults(query, (results ?? new ChangeTrackingList<QueryUtterancesResult>()).ToList(), default);
         }
 
         /// <summary> Result for utterances query. </summary>
@@ -464,7 +480,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.QueryUtterancesResult"/> instance for mocking. </returns>
         public static QueryUtterancesResult QueryUtterancesResult(SampleUtterance sampleUtterance = default, float? score = default)
         {
-            return new QueryUtterancesResult(sampleUtterance, score, additionalBinaryDataProperties: null);
+            return new QueryUtterancesResult(sampleUtterance, score, default);
         }
 
         /// <summary> Sample utterance. </summary>
@@ -476,7 +492,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             links ??= new ChangeTrackingList<string>();
 
-            return new SampleUtterance(text, links.ToList(), qid, additionalBinaryDataProperties: null);
+            return new SampleUtterance(text, (links ?? new ChangeTrackingList<string>()).ToList(), qid, default);
         }
     }
 }

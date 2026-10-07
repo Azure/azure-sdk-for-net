@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(AttachedNetworkConnectionResource.ResourceType, out string attachedNetworkConnectionApiVersion);
             _attachedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", AttachedNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
-            _attachedNetworksRestClient = new AttachedNetworks(_attachedNetworksClientDiagnostics, Pipeline, Endpoint, attachedNetworkConnectionApiVersion ?? "2026-01-01-preview");
+            _attachedNetworksRestClient = new AttachedNetworks(_attachedNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, attachedNetworkConnectionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _attachedNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, AttachedNetworkConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<AttachedNetworkConnectionResource> operation = new DevCenterArmOperation<AttachedNetworkConnectionResource>(
-                    new AttachedNetworkConnectionOperationSource(Client),
+                    new AttachedNetworkConnectionResourceOperationSource(Client),
                     _attachedNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _attachedNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, AttachedNetworkConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<AttachedNetworkConnectionResource> operation = new DevCenterArmOperation<AttachedNetworkConnectionResource>(
-                    new AttachedNetworkConnectionOperationSource(Client),
+                    new AttachedNetworkConnectionResourceOperationSource(Client),
                     _attachedNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

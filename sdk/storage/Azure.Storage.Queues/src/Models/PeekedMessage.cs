@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -34,11 +35,13 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// The time the Message was inserted into the Queue.
         /// </summary>
+        [CodeGenMember("InsertionTime")]
         public System.DateTimeOffset? InsertedOn { get; internal set; }
 
         /// <summary>
         /// The time that the Message will expire and be automatically deleted.
         /// </summary>
+        [CodeGenMember("ExpirationTime")]
         public System.DateTimeOffset? ExpiresOn { get; internal set; }
 
         /// <summary>
@@ -52,15 +55,15 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         internal PeekedMessage() { }
 
-        internal static PeekedMessage ToPeekedMessage(PeekedMessageItem peekedMessageItem, QueueMessageEncoding messageEncoding)
+        internal static PeekedMessage ToPeekedMessage(PeekedMessage message, QueueMessageEncoding messageEncoding)
         {
             return new PeekedMessage()
             {
-                MessageId = peekedMessageItem.MessageId,
-                DequeueCount = peekedMessageItem.DequeueCount,
-                Body = QueueMessageCodec.DecodeMessageBody(peekedMessageItem.MessageText, messageEncoding),
-                ExpiresOn = peekedMessageItem.ExpirationTime,
-                InsertedOn = peekedMessageItem.InsertionTime,
+                MessageId = message.MessageId,
+                DequeueCount = message.DequeueCount,
+                Body = QueueMessageCodec.DecodeMessageBody(message.MessageText, messageEncoding),
+                ExpiresOn = message.ExpiresOn,
+                InsertedOn = message.InsertedOn,
             };
         }
     }

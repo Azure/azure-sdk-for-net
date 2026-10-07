@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="serverLabel"></param>
         /// <param name="serverUrl"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="serverUrl"/> is null. </exception>
-        public VoiceLiveMcpServerDefinition(string serverLabel, string serverUrl) : base(ToolType.Mcp)
+        public VoiceLiveMcpServerDefinition(string serverLabel, Uri serverUrl) : base(ToolType.Mcp)
         {
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
             Argument.AssertNotNull(serverUrl, nameof(serverUrl));
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
         /// <param name="requireApproval"></param>
-        internal VoiceLiveMcpServerDefinition(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string serverUrl, string authorization, IDictionary<string, string> headers, IList<string> allowedTools, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
+        internal VoiceLiveMcpServerDefinition(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, IDictionary<string, string> headers, IList<string> allowedTools, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
         public string ServerLabel { get; set; }
 
         /// <summary> Gets or sets the ServerUrl. </summary>
-        public string ServerUrl { get; set; }
+        public Uri ServerUrl { get; set; }
 
         /// <summary> Gets or sets the Authorization. </summary>
         public string Authorization { get; set; }

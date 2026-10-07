@@ -186,7 +186,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.IsDeleted, data2.IsDeleted);
-            Assert.AreEqual(data1.Source, data2.Source);
             Assert.AreEqual(data1.TenantId, data2.TenantId);
             Assert.AreEqual(data1.Provider, data2.Provider);
         }
@@ -196,7 +195,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             {
                 DisplayName = "SDK Test",
                 Provider = "SDK Test",
-                Source = "sdktest",
                 ItemsSearchKey = "ipaddress"
             };
             return data;

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Long Term Retention Backup Operation Resource Properties. </param>
-        internal PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, LtrBackupOperationResponseProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LtrBackupOperationResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Long Term Retention Backup Operation Resource Properties. </summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.Status;
+                return Properties is null ? (PostgreSqlExecutionStatus?)default : Properties.Status;
             }
             set
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.StartsOn;
             }
             set
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         Properties = new LtrBackupOperationResponseProperties();
                     }
-                    Properties.StartOn = value.Value;
+                    Properties.StartsOn = value.Value;
                 }
             }
         }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new LtrBackupOperationResponseProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

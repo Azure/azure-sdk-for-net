@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabServiceFabricResource.ResourceType, out string devTestLabServiceFabricApiVersion);
             _serviceFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabServiceFabricResource.ResourceType.Namespace, Diagnostics);
-            _serviceFabricsRestClient = new ServiceFabrics(_serviceFabricsClientDiagnostics, Pipeline, Endpoint, devTestLabServiceFabricApiVersion ?? "2018-09-15");
+            _serviceFabricsRestClient = new ServiceFabrics(_serviceFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabServiceFabricApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _serviceFabricsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabServiceFabricData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabServiceFabricResource> operation = new DevTestLabsArmOperation<DevTestLabServiceFabricResource>(
-                    new DevTestLabServiceFabricOperationSource(Client),
+                    new DevTestLabServiceFabricResourceOperationSource(Client),
                     _serviceFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _serviceFabricsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabServiceFabricData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabServiceFabricResource> operation = new DevTestLabsArmOperation<DevTestLabServiceFabricResource>(
-                    new DevTestLabServiceFabricOperationSource(Client),
+                    new DevTestLabServiceFabricResourceOperationSource(Client),
                     _serviceFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -41,6 +41,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "id" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ApiEntityReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

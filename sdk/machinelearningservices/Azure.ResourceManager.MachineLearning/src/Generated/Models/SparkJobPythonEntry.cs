@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="SparkJobPythonEntry"/>. </summary>
         /// <param name="file"> [Required] Relative python file path for job entry point. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        public SparkJobPythonEntry(string file)
+        public SparkJobPythonEntry(string @file) : base(SparkJobEntryType.SparkJobPythonEntry)
         {
-            Argument.AssertNotNull(file, nameof(file));
+            Argument.AssertNotNull(@file, nameof(@file));
 
-            File = file;
-            SparkJobEntryType = SparkJobEntryType.SparkJobPythonEntry;
+            File = @file;
         }
 
         /// <summary> Initializes a new instance of <see cref="SparkJobPythonEntry"/>. </summary>
         /// <param name="sparkJobEntryType"> [Required] Type of the job's entry point. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="file"> [Required] Relative python file path for job entry point. </param>
-        internal SparkJobPythonEntry(SparkJobEntryType sparkJobEntryType, IDictionary<string, BinaryData> serializedAdditionalRawData, string file) : base(sparkJobEntryType, serializedAdditionalRawData)
+        internal SparkJobPythonEntry(SparkJobEntryType sparkJobEntryType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string @file) : base(sparkJobEntryType, additionalBinaryDataProperties)
         {
-            File = file;
-            SparkJobEntryType = sparkJobEntryType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SparkJobPythonEntry"/> for deserialization. </summary>
-        internal SparkJobPythonEntry()
-        {
+            File = @file;
         }
 
         /// <summary> [Required] Relative python file path for job entry point. </summary>

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     internal static partial class QueryTagOperatorExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this QueryTagOperator value) => value switch
         {
             QueryTagOperator.All => "All",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Automation.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryTagOperator value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static QueryTagOperator ToQueryTagOperator(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return QueryTagOperator.All;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Any")) return QueryTagOperator.Any;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All"))
+            {
+                return QueryTagOperator.All;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Any"))
+            {
+                return QueryTagOperator.Any;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryTagOperator value.");
         }
     }

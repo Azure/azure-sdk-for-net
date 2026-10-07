@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 SkuList result = SkuList.FromResponse(response);
-                yield return Page<HciSkuData>.FromValues((IReadOnlyList<HciSkuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HciSkuData>.FromValues((IReadOnlyList<HciSkuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

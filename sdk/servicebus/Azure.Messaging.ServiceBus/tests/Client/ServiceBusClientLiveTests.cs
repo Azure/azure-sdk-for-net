@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
@@ -338,6 +340,147 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 await using var client = CreateClient();
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, "");
                 Assert.AreEqual("", receiver.SessionId);
+            }
+        }
+
+        [Test]
+        public async Task GetMessageSessions_Queue_ReturnsActiveSessions()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(
+                    TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+
+                await using var sender = client.CreateSender(scope.QueueName);
+                var sessionIds = new[] { "list-test-1", "list-test-2", "list-test-3" };
+
+                foreach (var sessionId in sessionIds)
+                {
+                    await sender.SendMessageAsync(new ServiceBusMessage($"msg for {sessionId}")
+                    {
+                        SessionId = sessionId
+                    });
+                }
+
+                var result = new List<string>();
+                await foreach (var s in client.GetMessageSessionsAsync(scope.QueueName))
+                {
+                    result.Add(s);
+                }
+
+                Assert.IsNotNull(result);
+                foreach (var id in sessionIds)
+                {
+                    Assert.That(result, Does.Contain(id));
+                }
+            }
+        }
+
+        [Test]
+        public async Task GetMessageSessions_Queue_EmptyReturnsEmpty()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(
+                    TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+
+                var result = new List<string>();
+                await foreach (var s in client.GetMessageSessionsAsync(scope.QueueName))
+                {
+                    result.Add(s);
+                }
+
+                Assert.IsNotNull(result);
+                Assert.IsEmpty(result);
+            }
+        }
+
+        [Test]
+        public async Task GetMessageSessions_Subscription_ReturnsActiveSessions()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithTopic(
+                enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(
+                    TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+
+                await using var sender = client.CreateSender(scope.TopicName);
+                var sessionIds = new[] { "sub-session-1", "sub-session-2" };
+
+                foreach (var sessionId in sessionIds)
+                {
+                    await sender.SendMessageAsync(new ServiceBusMessage($"msg for {sessionId}")
+                    {
+                        SessionId = sessionId
+                    });
+                }
+
+                var result = new List<string>();
+                await foreach (var s in client.GetMessageSessionsAsync(
+                    scope.TopicName, scope.SubscriptionNames.First()))
+                {
+                    result.Add(s);
+                }
+
+                Assert.IsNotNull(result);
+                foreach (var id in sessionIds)
+                {
+                    Assert.That(result, Does.Contain(id));
+                }
+            }
+        }
+
+        [Test]
+        public async Task GetMessageSessions_WithSessionStateUpdatedAfter()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(
+                    TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+
+                var beforeSend = DateTimeOffset.UtcNow.AddMinutes(-1);
+                var sessionId = "time-filter-session";
+
+                await using var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(new ServiceBusMessage("time-filtered msg")
+                {
+                    SessionId = sessionId
+                });
+
+                await using (ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(
+                    scope.QueueName, sessionId))
+                {
+                    await receiver.SetSessionStateAsync(new BinaryData("updated-state"));
+                }
+
+                // Query with a timestamp BEFORE the state update: the session's state was
+                // updated after this time, so it must be returned.
+                var updatedAfterPast = new List<string>();
+                await foreach (var s in client.GetMessageSessionsAsync(
+                    scope.QueueName, beforeSend))
+                {
+                    updatedAfterPast.Add(s);
+                }
+
+                Assert.That(updatedAfterPast, Does.Contain(sessionId));
+
+                // Discriminating case: query with a FUTURE timestamp. No session's state was
+                // updated after a future time, so the result must be empty -- even though the
+                // session still has an active message. If the service ignored the filter, the
+                // active session would be returned here (as it is under the MaxValue no-filter
+                // overload), and this assertion would fail. This is what proves the
+                // sessionStateUpdatedAfter filter is actually applied.
+                var updatedAfterFuture = new List<string>();
+                await foreach (var s in client.GetMessageSessionsAsync(
+                    scope.QueueName, DateTimeOffset.UtcNow.AddHours(1)))
+                {
+                    updatedAfterFuture.Add(s);
+                }
+
+                Assert.That(updatedAfterFuture, Is.Empty);
             }
         }
     }

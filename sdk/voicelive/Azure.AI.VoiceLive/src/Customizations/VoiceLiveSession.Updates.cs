@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// The method handles WebSocket message fragmentation automatically and ensures that complete
         /// messages are processed before yielding events.
         /// </remarks>
-        public async IAsyncEnumerable<SessionUpdate> GetUpdatesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public virtual async IAsyncEnumerable<SessionUpdate> GetUpdatesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -76,7 +76,7 @@ namespace Azure.AI.VoiceLive
         /// <typeparam name="T">The specific type of server event to filter for.</typeparam>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>An asynchronous enumerable of server events of the specified type.</returns>
-        public async IAsyncEnumerable<T> GetUpdatesAsync<T>([EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public virtual async IAsyncEnumerable<T> GetUpdatesAsync<T>([EnumeratorCancellation] CancellationToken cancellationToken = default)
             where T : SessionUpdate
         {
             await foreach (SessionUpdate serverEvent in GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
@@ -94,7 +94,7 @@ namespace Azure.AI.VoiceLive
         /// <typeparam name="T">The type of server event to wait for.</typeparam>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The next server event of the specified type.</returns>
-        public async Task<T> WaitForUpdateAsync<T>(CancellationToken cancellationToken = default)
+        public virtual async Task<T> WaitForUpdateAsync<T>(CancellationToken cancellationToken = default)
             where T : SessionUpdate
         {
             await foreach (T serverEvent in GetUpdatesAsync<T>(cancellationToken).ConfigureAwait(false))

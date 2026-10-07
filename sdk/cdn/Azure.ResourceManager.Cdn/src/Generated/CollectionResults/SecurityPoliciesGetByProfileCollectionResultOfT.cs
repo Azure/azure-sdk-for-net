@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 SecurityPolicyListResult result = SecurityPolicyListResult.FromResponse(response);
-                yield return Page<FrontDoorSecurityPolicyData>.FromValues((IReadOnlyList<FrontDoorSecurityPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FrontDoorSecurityPolicyData>.FromValues((IReadOnlyList<FrontDoorSecurityPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

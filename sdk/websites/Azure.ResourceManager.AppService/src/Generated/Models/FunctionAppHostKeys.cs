@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Functions host level keys.
-    /// Serialized Name: HostKeys
-    /// </summary>
+    /// <summary> Functions host level keys. </summary>
     public partial class FunctionAppHostKeys
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppHostKeys"/>. </summary>
         internal FunctionAppHostKeys()
@@ -56,43 +25,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppHostKeys"/>. </summary>
-        /// <param name="masterKey">
-        /// Secret key.
-        /// Serialized Name: HostKeys.masterKey
-        /// </param>
-        /// <param name="functionKeys">
-        /// Host level function keys.
-        /// Serialized Name: HostKeys.functionKeys
-        /// </param>
-        /// <param name="systemKeys">
-        /// System keys.
-        /// Serialized Name: HostKeys.systemKeys
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppHostKeys(string masterKey, IReadOnlyDictionary<string, string> functionKeys, IReadOnlyDictionary<string, string> systemKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="masterKey"> Secret key. </param>
+        /// <param name="functionKeys"> Host level function keys. </param>
+        /// <param name="systemKeys"> System keys. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppHostKeys(string masterKey, IReadOnlyDictionary<string, string> functionKeys, IReadOnlyDictionary<string, string> systemKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MasterKey = masterKey;
             FunctionKeys = functionKeys;
             SystemKeys = systemKeys;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Secret key.
-        /// Serialized Name: HostKeys.masterKey
-        /// </summary>
+        /// <summary> Secret key. </summary>
         [WirePath("masterKey")]
         public string MasterKey { get; }
-        /// <summary>
-        /// Host level function keys.
-        /// Serialized Name: HostKeys.functionKeys
-        /// </summary>
+
+        /// <summary> Host level function keys. </summary>
         [WirePath("functionKeys")]
         public IReadOnlyDictionary<string, string> FunctionKeys { get; }
-        /// <summary>
-        /// System keys.
-        /// Serialized Name: HostKeys.systemKeys
-        /// </summary>
+
+        /// <summary> System keys. </summary>
         [WirePath("systemKeys")]
         public IReadOnlyDictionary<string, string> SystemKeys { get; }
     }

@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Mocking;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -56,9 +59,9 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var setName = "mySet";
             var vmName = "myVm";
             var setId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, setName);
-            var setData = ArmComputeModelFactory.AvailabilitySetData(setId, setName, platformFaultDomainCount: 10);
+            var setData = ArmComputeModelFactory.AvailabilitySetData(setId, setName, default, default, default, default, (int?)default, platformFaultDomainCount: 10);
             var vmId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            var vmData = ArmComputeModelFactory.VirtualMachineData(vmId, vmName, availabilitySetId: setId);
+            var vmData = ArmComputeModelFactory.VirtualMachineData(id: vmId, name: vmName, hardwareProfile: null, availabilitySetId: setId, interconnectBlockId: null);
             #endregion
 
             #region mocking setup
@@ -112,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var resourceGroupName = "myRg";
             var setName = "mySet";
             var setId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, setName);
-            var setData = ArmComputeModelFactory.AvailabilitySetData(setId, setName, platformFaultDomainCount: 10);
+            var setData = ArmComputeModelFactory.AvailabilitySetData(setId, setName, default, default, default, default, (int?)default, platformFaultDomainCount: 10);
             #endregion
 
             #region mocking setup
@@ -145,8 +148,8 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var setName2 = "mySet2";
             var setId1 = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, setName1);
             var setId2 = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, setName2);
-            var setData1 = ArmComputeModelFactory.AvailabilitySetData(setId1, setName1, platformFaultDomainCount: 10);
-            var setData2 = ArmComputeModelFactory.AvailabilitySetData(setId2, setName2, platformUpdateDomainCount: 20);
+            var setData1 = ArmComputeModelFactory.AvailabilitySetData(setId1, setName1, default, default, default, default, (int?)default, platformFaultDomainCount: 10);
+            var setData2 = ArmComputeModelFactory.AvailabilitySetData(setId2, setName2, default, default, default, default, (int?)20);
             #endregion
 
             #region mocking setup
@@ -201,8 +204,8 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var setName2 = "mySet2";
             var setId1 = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, "myRg1", setName1);
             var setId2 = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, "myRg2", setName2);
-            var setData1 = ArmComputeModelFactory.AvailabilitySetData(setId1, setName1, platformFaultDomainCount: 10);
-            var setData2 = ArmComputeModelFactory.AvailabilitySetData(setId2, setName2, platformUpdateDomainCount: 20);
+            var setData1 = ArmComputeModelFactory.AvailabilitySetData(setId1, setName1, default, default, default, default, (int?)default, platformFaultDomainCount: 10);
+            var setData2 = ArmComputeModelFactory.AvailabilitySetData(setId2, setName2, default, default, default, default, (int?)20);
             #endregion
 
             #region mocking setup
@@ -242,6 +245,40 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
                 }
                 count++;
             }
+        }
+
+        [Test]
+        public async Task Mocking_GetVirtualMachineImagesDoesNotRecurse()
+        {
+            const string subscriptionId = "83aa47df-e3e9-49ff-877b-94304bf3d3ad";
+            var options = new ArmClientOptions
+            {
+                Transport = new MockTransport(
+                    new MockResponse(200).SetContent("[]"),
+                    new MockResponse(200).SetContent("[]"))
+            };
+            var client = new ArmClient(new MockCredential(), subscriptionId, options);
+            var subscription = client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(subscriptionId));
+            var location = new Azure.Core.AzureLocation("eastus");
+
+            var pageable = subscription.GetVirtualMachineImages(
+                location,
+                "MicrosoftWindowsServer",
+                "WindowsServer",
+                "2022-datacenter-azure-edition-smalldisk");
+            Assert.IsEmpty(pageable);
+
+            var asyncPageable = subscription.GetVirtualMachineImagesAsync(
+                location,
+                "MicrosoftWindowsServer",
+                "WindowsServer",
+                "2022-datacenter-azure-edition-smalldisk");
+            var count = 0;
+            await foreach (var image in asyncPageable)
+            {
+                count++;
+            }
+            Assert.AreEqual(0, count);
         }
     }
 }

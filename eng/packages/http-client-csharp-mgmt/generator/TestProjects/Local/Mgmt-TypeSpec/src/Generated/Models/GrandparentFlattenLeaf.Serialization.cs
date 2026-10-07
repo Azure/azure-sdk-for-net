@@ -109,8 +109,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GrandparentFlattenIdentifier identifier = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GrandparentFlattenLeafProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,7 +166,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GrandparentFlattenLeaf(
@@ -174,8 +174,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 identifier,
+                additionalBinaryDataProperties,
                 properties);
         }
     }

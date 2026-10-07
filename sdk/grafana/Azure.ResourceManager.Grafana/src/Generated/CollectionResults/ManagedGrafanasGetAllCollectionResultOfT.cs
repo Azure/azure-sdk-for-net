@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Grafana
                     yield break;
                 }
                 ManagedGrafanaListResponse result = ManagedGrafanaListResponse.FromResponse(response);
-                yield return Page<ManagedGrafanaData>.FromValues((IReadOnlyList<ManagedGrafanaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedGrafanaData>.FromValues((IReadOnlyList<ManagedGrafanaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

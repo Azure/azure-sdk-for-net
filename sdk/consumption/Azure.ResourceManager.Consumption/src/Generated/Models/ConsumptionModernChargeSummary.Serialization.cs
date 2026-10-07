@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ChargeSummaryKind kind = default;
             ETag? eTag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ModernChargeSummaryProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ConsumptionModernChargeSummary(
@@ -179,9 +179,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 kind,
                 eTag,
+                additionalBinaryDataProperties,
                 properties);
         }
     }

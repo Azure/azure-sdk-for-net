@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> List of allowed audience. </summary>
-        public IList<string> Audiences { get; }
+        public IList<string> Audiences { get; } = new ChangeTrackingList<string>();
     }
 }

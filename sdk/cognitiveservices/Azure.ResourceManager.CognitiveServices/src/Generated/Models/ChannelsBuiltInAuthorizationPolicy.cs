@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Represents a built-in authorization policy specific to Azure Bot Service/Channels authentication. </summary>
-    public partial class ChannelsBuiltInAuthorizationPolicy : ApplicationAuthorizationPolicy
+    public partial class ChannelsBuiltInAuthorizationPolicy : CognitiveServicesApplicationAuthorizationPolicy
     {
         /// <summary> Initializes a new instance of <see cref="ChannelsBuiltInAuthorizationPolicy"/>. </summary>
         public ChannelsBuiltInAuthorizationPolicy() : base(BuiltInAuthorizationScheme.Channels)

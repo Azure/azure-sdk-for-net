@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(DatabaseWatcherHealthValidationResource.ResourceType, out string databaseWatcherHealthValidationApiVersion);
             _healthValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherHealthValidationResource.ResourceType.Namespace, Diagnostics);
-            _healthValidationsRestClient = new HealthValidations(_healthValidationsClientDiagnostics, Pipeline, Endpoint, databaseWatcherHealthValidationApiVersion ?? "2025-01-02");
+            _healthValidationsRestClient = new HealthValidations(_healthValidationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherHealthValidationApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
 

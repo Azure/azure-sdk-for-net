@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             TryGetApiVersion(NotificationHubAuthorizationRuleResource.ResourceType, out string notificationHubAuthorizationRuleApiVersion);
             _sharedAccessAuthorizationRuleResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _sharedAccessAuthorizationRuleResourcesRestClient = new SharedAccessAuthorizationRuleResources(_sharedAccessAuthorizationRuleResourcesClientDiagnostics, Pipeline, Endpoint, notificationHubAuthorizationRuleApiVersion ?? "2023-10-01-preview");
+            _sharedAccessAuthorizationRuleResourcesRestClient = new SharedAccessAuthorizationRuleResources(_sharedAccessAuthorizationRuleResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubAuthorizationRuleApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 

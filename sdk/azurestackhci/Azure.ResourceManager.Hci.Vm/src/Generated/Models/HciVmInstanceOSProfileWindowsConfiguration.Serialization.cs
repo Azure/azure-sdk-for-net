@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(ProvisionVmAgent))
+            if (Optional.IsDefined(ShouldProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
-                writer.WriteBooleanValue(ProvisionVmAgent.Value);
+                writer.WriteBooleanValue(ShouldProvisionVmAgent.Value);
             }
-            if (Optional.IsDefined(ProvisionVmConfigAgent))
+            if (Optional.IsDefined(ShouldProvisionVmConfigAgent))
             {
                 writer.WritePropertyName("provisionVMConfigAgent"u8);
-                writer.WriteBooleanValue(ProvisionVmConfigAgent.Value);
+                writer.WriteBooleanValue(ShouldProvisionVmConfigAgent.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             bool? enableAutomaticUpdates = default;
             HciVmOSProfileSshConfiguration ssh = default;
             string timeZone = default;
-            bool? provisionVmAgent = default;
-            bool? provisionVmConfigAgent = default;
+            bool? shouldProvisionVmAgent = default;
+            bool? shouldProvisionVmConfigAgent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisionVmAgent = prop.Value.GetBoolean();
+                    shouldProvisionVmAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisionVMConfigAgent"u8))
@@ -187,20 +187,20 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisionVmConfigAgent = prop.Value.GetBoolean();
+                    shouldProvisionVmConfigAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciVmInstanceOSProfileWindowsConfiguration(
                 enableAutomaticUpdates,
                 ssh,
                 timeZone,
-                provisionVmAgent,
-                provisionVmConfigAgent,
+                shouldProvisionVmAgent,
+                shouldProvisionVmConfigAgent,
                 additionalBinaryDataProperties);
         }
     }

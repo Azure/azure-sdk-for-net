@@ -1,1 +1,0 @@
-CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Redis.WirePathAttribute' exists on 'Azure.ResourceManager.Redis.Models.RedisCommonConfiguration.AdditionalProperties' in the contract but not the implementation.

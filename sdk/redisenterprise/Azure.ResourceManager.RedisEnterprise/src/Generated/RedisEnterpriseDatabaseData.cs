@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Other properties of the database. </param>
-        internal RedisEnterpriseDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DatabaseCreateProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RedisEnterpriseDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseCreateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Other properties of the database. </summary>
@@ -226,6 +226,24 @@ namespace Azure.ResourceManager.RedisEnterprise
                     Properties = new DatabaseCreateProperties();
                 }
                 Properties.AccessKeysAuthentication = value;
+            }
+        }
+
+        /// <summary> Specifies which keyspace events should trigger notifications. Default is an empty string, meaning this feature is disabled. When enabled, at least 'K' (keyspace events) or 'E' (keyevent events) must be present. For example, 'AKE' enables all standard events. See https://redis.io/docs/latest/develop/use/keyspace-notifications/ for the complete list of event types. </summary>
+        [WirePath("properties.notifyKeyspaceEvents")]
+        public string NotifyKeyspaceEvents
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NotifyKeyspaceEvents;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseCreateProperties();
+                }
+                Properties.NotifyKeyspaceEvents = value;
             }
         }
     }

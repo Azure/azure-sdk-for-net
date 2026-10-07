@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,17 +15,16 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMITaskOutputMigrationLevel : MigrateSqlServerSqlMITaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>. </summary>
-        internal MigrateSqlServerSqlMITaskOutputMigrationLevel()
+        internal MigrateSqlServerSqlMITaskOutputMigrationLevel() : base("MigrationLevelOutput")
         {
             OrphanedUsersInfo = new ChangeTrackingList<DataMigrationSqlServerOrphanedUserInfo>();
             ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
-            ResultType = "MigrationLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="status"> Current status of migration. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSqlServerSqlMITaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationStatus? status, DataMigrationState? state, string agentJobs, string logins, string message, string serverRoleResults, IReadOnlyList<DataMigrationSqlServerOrphanedUserInfo> orphanedUsersInfo, string databases, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlMITaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationStatus? status, DataMigrationState? state, string agentJobs, string logins, string message, string serverRoleResults, IReadOnlyList<DataMigrationSqlServerOrphanedUserInfo> orphanedUsersInfo, string databases, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, additionalBinaryDataProperties)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
@@ -57,37 +57,50 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetServerVersion = targetServerVersion;
             TargetServerBrandVersion = targetServerBrandVersion;
             ExceptionsAndWarnings = exceptionsAndWarnings;
-            ResultType = resultType ?? "MigrationLevelOutput";
         }
 
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Current status of migration. </summary>
         public DataMigrationStatus? Status { get; }
+
         /// <summary> Current state of migration. </summary>
         public DataMigrationState? State { get; }
+
         /// <summary> Selected agent jobs as a map from name to id. </summary>
         public string AgentJobs { get; }
+
         /// <summary> Selected logins as a map from name to id. </summary>
         public string Logins { get; }
+
         /// <summary> Migration progress message. </summary>
         public string Message { get; }
+
         /// <summary> Map of server role migration results. </summary>
         public string ServerRoleResults { get; }
+
         /// <summary> List of orphaned users. </summary>
         public IReadOnlyList<DataMigrationSqlServerOrphanedUserInfo> OrphanedUsersInfo { get; }
+
         /// <summary> Selected databases as a map from database name to database id. </summary>
         public string Databases { get; }
+
         /// <summary> Source server version. </summary>
         public string SourceServerVersion { get; }
+
         /// <summary> Source server brand version. </summary>
         public string SourceServerBrandVersion { get; }
+
         /// <summary> Target server version. </summary>
         public string TargetServerVersion { get; }
+
         /// <summary> Target server brand version. </summary>
         public string TargetServerBrandVersion { get; }
+
         /// <summary> Migration exceptions and warnings. </summary>
         public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
     }

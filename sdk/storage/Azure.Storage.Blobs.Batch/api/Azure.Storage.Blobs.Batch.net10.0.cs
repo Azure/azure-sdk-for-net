@@ -1,5 +1,9 @@
 namespace Azure.Storage.Blobs.Batch
 {
+    public partial class AzureStorageBlobsBatchContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        public AzureStorageBlobsBatchContext() { }
+    }
     public partial class BatchDeleteBlobOptions
     {
         public BatchDeleteBlobOptions() { }

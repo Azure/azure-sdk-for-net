@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EdgeZones;
 using Azure.ResourceManager.Models;
@@ -33,8 +31,8 @@ namespace Azure.ResourceManager.EdgeZones.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The properties of an Extended Zone resource. </summary>
@@ -64,7 +62,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
                 longitude,
                 latitude,
                 homeLocation,
-                additionalBinaryDataProperties: null);
+                default);
         }
     }
 }

@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             UsageDetailsKind kind = default;
             ETag? eTag = default;
             IReadOnlyDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ModernUsageDetailProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ConsumptionModernUsageDetail(
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 kind,
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties,
                 properties);
         }
     }

@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Resources.Policy
                     yield break;
                 }
                 DataPolicyManifestListResult result = DataPolicyManifestListResult.FromResponse(response);
-                yield return Page<DataPolicyManifestData>.FromValues((IReadOnlyList<DataPolicyManifestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataPolicyManifestData>.FromValues((IReadOnlyList<DataPolicyManifestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

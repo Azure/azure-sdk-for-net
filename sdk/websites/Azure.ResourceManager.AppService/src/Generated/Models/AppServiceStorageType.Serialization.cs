@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class AppServiceStorageTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AppServiceStorageType value) => value switch
         {
             AppServiceStorageType.AzureFiles => "AzureFiles",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceStorageType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AppServiceStorageType ToAppServiceStorageType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureFiles")) return AppServiceStorageType.AzureFiles;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureBlob")) return AppServiceStorageType.AzureBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureFiles"))
+            {
+                return AppServiceStorageType.AzureFiles;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureBlob"))
+            {
+                return AppServiceStorageType.AzureBlob;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceStorageType value.");
         }
     }

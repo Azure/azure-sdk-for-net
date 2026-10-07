@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerService
             _isKubenetNetworkPluginAllowed = DefineProperty<bool>(nameof(IsKubenetNetworkPluginAllowed), new string[] { "allowNetworkPluginKubenet" });
             _userAssignedIdentities = DefineListProperty<ManagedClusterPodIdentity>(nameof(UserAssignedIdentities), new string[] { "userAssignedIdentities" });
             _userAssignedIdentityExceptions = DefineListProperty<ManagedClusterPodIdentityException>(nameof(UserAssignedIdentityExceptions), new string[] { "userAssignedIdentityExceptions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterPodIdentityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

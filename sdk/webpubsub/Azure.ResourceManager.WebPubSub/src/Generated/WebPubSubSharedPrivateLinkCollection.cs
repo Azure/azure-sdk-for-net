@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(WebPubSubSharedPrivateLinkResource.ResourceType, out string webPubSubSharedPrivateLinkApiVersion);
             _webPubSubSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubSharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _webPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResources(_webPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, webPubSubSharedPrivateLinkApiVersion ?? "2025-08-01-preview");
+            _webPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResources(_webPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubSharedPrivateLinkApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource> operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(
-                    new WebPubSubSharedPrivateLinkOperationSource(Client),
+                    new WebPubSubSharedPrivateLinkResourceOperationSource(Client),
                     _webPubSubSharedPrivateLinkResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource> operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(
-                    new WebPubSubSharedPrivateLinkOperationSource(Client),
+                    new WebPubSubSharedPrivateLinkResourceOperationSource(Client),
                     _webPubSubSharedPrivateLinkResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

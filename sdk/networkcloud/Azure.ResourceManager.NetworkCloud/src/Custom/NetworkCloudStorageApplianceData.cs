@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(rackId, nameof(rackId));
             Argument.AssertNotNull(serialNumber, nameof(serialNumber));
             Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
-            Properties = new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials);
+            Properties = new StorageApplianceProperties(administratorCredentials, rackId, rackSlot, serialNumber, storageApplianceSkuId);
             ExtendedLocation = extendedLocation;
         }
 

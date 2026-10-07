@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingBenefitsConditionalCreditProperties IPersistableModel<BillingBenefitsConditionalCreditProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BillingBenefitsConditionalCreditProperties IPersistableModel<BillingBenefitsConditionalCreditProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BillingBenefitsConditionalCreditProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingBenefitsConditionalCreditProperties IJsonModel<BillingBenefitsConditionalCreditProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BillingBenefitsConditionalCreditProperties IJsonModel<BillingBenefitsConditionalCreditProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -112,8 +118,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             ResourceIdentifier billingAccountResourceId = default;
             ConditionalCreditsProvisioningState? provisioningState = default;
             ConditionalCreditStatus? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string productCode = default;
             ResourceIdentifier benefitResourceId = default;
             ResourceIdentifier resourceId = default;
@@ -163,7 +169,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endAt"u8))
@@ -172,7 +178,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("productCode"u8))
@@ -200,7 +206,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownBillingBenefitsConditionalCreditProperties(
@@ -209,8 +215,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 billingAccountResourceId,
                 provisioningState,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 productCode,
                 benefitResourceId,
                 resourceId,

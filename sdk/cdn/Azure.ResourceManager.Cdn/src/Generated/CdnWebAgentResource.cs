@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string cdnWebAgentApiVersion);
             _webAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _webAgentsRestClient = new WebAgents(_webAgentsClientDiagnostics, Pipeline, Endpoint, cdnWebAgentApiVersion ?? "2025-09-01-preview");
+            _webAgentsRestClient = new WebAgents(_webAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnWebAgentApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _webAgentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnWebAgentPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnWebAgentResource> operation = new CdnArmOperation<CdnWebAgentResource>(
-                    new CdnWebAgentOperationSource(Client),
+                    new CdnWebAgentResourceOperationSource(Client),
                     _webAgentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _webAgentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnWebAgentPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnWebAgentResource> operation = new CdnArmOperation<CdnWebAgentResource>(
-                    new CdnWebAgentOperationSource(Client),
+                    new CdnWebAgentResourceOperationSource(Client),
                     _webAgentsClientDiagnostics,
                     Pipeline,
                     message.Request,

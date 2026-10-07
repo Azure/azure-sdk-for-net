@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvsHostProperties IPersistableModel<AvsHostProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AvsHostProperties IPersistableModel<AvsHostProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsHostProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvsHostProperties IJsonModel<AvsHostProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AvsHostProperties IJsonModel<AvsHostProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -113,6 +119,7 @@ namespace Azure.ResourceManager.Avs.Models
             string fqdn = default;
             AvsHostMaintenance? maintenance = default;
             string faultDomain = default;
+            IList<HostLicense> licenses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,9 +166,23 @@ namespace Azure.ResourceManager.Avs.Models
                     faultDomain = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("licenses"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HostLicense> array = new List<HostLicense>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(HostLicense.DeserializeHostLicense(item, options));
+                    }
+                    licenses = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownAvsHostProperties(
@@ -172,6 +193,7 @@ namespace Azure.ResourceManager.Avs.Models
                 fqdn,
                 maintenance,
                 faultDomain,
+                licenses ?? new ChangeTrackingList<HostLicense>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.KeyVault
                     yield break;
                 }
                 VaultListResult result = VaultListResult.FromResponse(response);
-                yield return Page<KeyVaultData>.FromValues((IReadOnlyList<KeyVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<KeyVaultData>.FromValues((IReadOnlyList<KeyVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,15 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="port"> The TCP port that the Spark server uses to listen for client connections. </param>
         /// <param name="authenticationType"> The authentication method used to access the Spark server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="port"/> is null. </exception>
-        public SparkLinkedService(DataFactoryElement<string> host, DataFactoryElement<int> port, SparkAuthenticationType authenticationType)
+        public SparkLinkedService(DataFactoryElement<string> host, DataFactoryElement<int> port, SparkAuthenticationType authenticationType) : base("Spark")
         {
             Argument.AssertNotNull(host, nameof(host));
             Argument.AssertNotNull(port, nameof(port));
 
-            Host = host;
-            Port = port;
-            AuthenticationType = authenticationType;
-            LinkedServiceType = "Spark";
+            TypeProperties = new SparkLinkedServiceTypeProperties(host, port, authenticationType);
         }
 
         /// <summary> Initializes a new instance of <see cref="SparkLinkedService"/>. </summary>
@@ -37,76 +35,254 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host"> IP address or host name of the Spark server. </param>
-        /// <param name="port"> The TCP port that the Spark server uses to listen for client connections. </param>
-        /// <param name="serverType"> The type of Spark server. </param>
-        /// <param name="thriftTransportProtocol"> The transport protocol to use in the Thrift layer. </param>
-        /// <param name="authenticationType"> The authentication method used to access the Spark server. </param>
-        /// <param name="username"> The user name that you use to access Spark Server. </param>
-        /// <param name="password"> The password corresponding to the user name that you provided in the Username field. </param>
-        /// <param name="httpPath"> The partial URL corresponding to the Spark server. </param>
-        /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
-        /// <param name="enableServerCertificateValidation"> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </param>
-        /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
-        /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
-        /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
-        /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SparkLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, SparkServerType? serverType, SparkThriftTransportProtocol? thriftTransportProtocol, SparkAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> httpPath, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Spark Server linked service properties. </param>
+        /// <param name="password"></param>
+        internal SparkLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SparkLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Host = host;
-            Port = port;
-            ServerType = serverType;
-            ThriftTransportProtocol = thriftTransportProtocol;
-            AuthenticationType = authenticationType;
-            Username = username;
+            TypeProperties = typeProperties;
             Password = password;
-            HttpPath = httpPath;
-            EnableSsl = enableSsl;
-            EnableServerCertificateValidation = enableServerCertificateValidation;
-            TrustedCertPath = trustedCertPath;
-            UseSystemTrustStore = useSystemTrustStore;
-            AllowHostNameCNMismatch = allowHostNameCNMismatch;
-            AllowSelfSignedServerCert = allowSelfSignedServerCert;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Spark";
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkLinkedService"/> for deserialization. </summary>
-        internal SparkLinkedService()
-        {
-        }
+        /// <summary> Spark Server linked service properties. </summary>
+        internal SparkLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> IP address or host name of the Spark server. </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> The TCP port that the Spark server uses to listen for client connections. </summary>
-        public DataFactoryElement<int> Port { get; set; }
+        public DataFactoryElement<int> Port
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Port;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.Port = value;
+            }
+        }
+
         /// <summary> The type of Spark server. </summary>
-        public SparkServerType? ServerType { get; set; }
+        public SparkServerType? ServerType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServerType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServerType = value;
+            }
+        }
+
         /// <summary> The transport protocol to use in the Thrift layer. </summary>
-        public SparkThriftTransportProtocol? ThriftTransportProtocol { get; set; }
+        public SparkThriftTransportProtocol? ThriftTransportProtocol
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ThriftTransportProtocol;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.ThriftTransportProtocol = value;
+            }
+        }
+
         /// <summary> The authentication method used to access the Spark server. </summary>
-        public SparkAuthenticationType AuthenticationType { get; set; }
+        public SparkAuthenticationType AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The user name that you use to access Spark Server. </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> The password corresponding to the user name that you provided in the Username field. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> The partial URL corresponding to the Spark server. </summary>
-        public DataFactoryElement<string> HttpPath { get; set; }
+        public DataFactoryElement<string> HttpPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.HttpPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.HttpPath = value;
+            }
+        }
+
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
-        public DataFactoryElement<bool> EnableSsl { get; set; }
+        public DataFactoryElement<bool> EnableSsl
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnableSsl;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.EnableSsl = value;
+            }
+        }
+
         /// <summary> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </summary>
-        public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
+        public DataFactoryElement<bool> EnableServerCertificateValidation
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnableServerCertificateValidation;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.EnableServerCertificateValidation = value;
+            }
+        }
+
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
-        public DataFactoryElement<string> TrustedCertPath { get; set; }
+        public DataFactoryElement<string> TrustedCertPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TrustedCertPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.TrustedCertPath = value;
+            }
+        }
+
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
-        public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
+        public DataFactoryElement<bool> UseSystemTrustStore
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseSystemTrustStore;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseSystemTrustStore = value;
+            }
+        }
+
         /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </summary>
-        public DataFactoryElement<bool> AllowHostNameCNMismatch { get; set; }
+        public DataFactoryElement<bool> AllowHostNameCNMismatch
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AllowHostNameCNMismatch;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.AllowHostNameCNMismatch = value;
+            }
+        }
+
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
-        public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
+        public DataFactoryElement<bool> AllowSelfSignedServerCert
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AllowSelfSignedServerCert;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.AllowSelfSignedServerCert = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SparkLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

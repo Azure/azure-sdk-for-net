@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.EventHubs
                     yield break;
                 }
                 AuthorizationRuleListResult result = AuthorizationRuleListResult.FromResponse(response);
-                yield return Page<EventHubsAuthorizationRuleData>.FromValues((IReadOnlyList<EventHubsAuthorizationRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventHubsAuthorizationRuleData>.FromValues((IReadOnlyList<EventHubsAuthorizationRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> Subvolume Information properties. </summary>
+    /// <summary>
+    /// Subvolume Information properties
+    /// Deprecated. This resource type will be removed in a future API version.
+    /// </summary>
     public partial class NetAppSubvolumeInfoData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -29,12 +32,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Subvolume Properties. </param>
-        internal NetAppSubvolumeInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SubvolumeProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppSubvolumeInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubvolumeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Subvolume Properties. </summary>

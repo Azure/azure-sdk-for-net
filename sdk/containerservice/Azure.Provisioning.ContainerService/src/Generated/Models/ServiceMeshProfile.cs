@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _mode = DefineProperty<ServiceMeshMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             _istio = DefineModelProperty<IstioServiceMesh>(nameof(Istio), new string[] { "istio" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ServiceMeshProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

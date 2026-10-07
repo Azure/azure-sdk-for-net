@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Managed environment resource specific properties. </param>
         /// <param name="kind"> Kind of the Environment. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ManagedEnvironmentProperties properties, string kind, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedEnvironmentProperties properties, string kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Kind = kind;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Managed environment resource specific properties. </summary>
@@ -141,16 +141,6 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Private Link Default Domain Name for the environment. </summary>
-        [WirePath("properties.privateLinkDefaultDomain")]
-        public string PrivateLinkDefaultDomain
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateLinkDefaultDomain;
-            }
-        }
-
         /// <summary> Static IP of the Environment. </summary>
         [WirePath("properties.staticIp")]
         public IPAddress StaticIP
@@ -212,20 +202,6 @@ namespace Azure.ResourceManager.AppContainers
                     Properties = new ManagedEnvironmentProperties();
                 }
                 Properties.IsZoneRedundant = value;
-            }
-        }
-
-        /// <summary> The list of availability zones to use for managed environment. </summary>
-        [WirePath("properties.availabilityZones")]
-        public IList<string> AvailabilityZones
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedEnvironmentProperties();
-                }
-                return Properties.AvailabilityZones;
             }
         }
 
@@ -304,6 +280,24 @@ namespace Azure.ResourceManager.AppContainers
                     Properties = new ManagedEnvironmentProperties();
                 }
                 Properties.IngressConfiguration = value;
+            }
+        }
+
+        /// <summary> Mode of the environment. Allowed Values: 'ConsumptionOnly', 'WorkloadProfiles', 'Express', 'Archived'. </summary>
+        [WirePath("properties.environmentMode")]
+        public ManagedEnvironmentMode? EnvironmentMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedEnvironmentProperties();
+                }
+                Properties.EnvironmentMode = value;
             }
         }
 
@@ -410,24 +404,6 @@ namespace Azure.ResourceManager.AppContainers
                     Properties = new ManagedEnvironmentProperties();
                 }
                 Properties.IsEnabled = value;
-            }
-        }
-
-        /// <summary> The Key Vault that contains your key to use for disk encryption. The Key Vault must be in the same region as the Managed Environment. </summary>
-        [WirePath("properties.diskEncryptionConfiguration.keyVaultConfiguration")]
-        public DiskEncryptionConfigurationKeyVaultConfiguration DiskEncryptionKeyVaultConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DiskEncryptionKeyVaultConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedEnvironmentProperties();
-                }
-                Properties.DiskEncryptionKeyVaultConfiguration = value;
             }
         }
     }

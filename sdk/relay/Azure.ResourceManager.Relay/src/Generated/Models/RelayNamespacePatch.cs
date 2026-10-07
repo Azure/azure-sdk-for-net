@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> SKU of the namespace. </param>
         /// <param name="properties"> Description of Relay namespace. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RelaySku sku, RelayNamespaceProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, RelayNamespaceProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Sku = sku;
             Properties = properties;
             Tags = tags;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SKU of the namespace. </summary>
@@ -132,6 +132,28 @@ namespace Azure.ResourceManager.Relay.Models
                     Properties = new RelayNamespaceProperties();
                 }
                 Properties.PublicNetworkAccess = value;
+            }
+        }
+
+        /// <summary>
+        /// The minimum TLS version for the namespace.
+        /// Supported values are 1.2 and 1.3.
+        /// The service defaults to 1.2 when the property is omitted.
+        /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
+        /// </summary>
+        public RelayTlsVersion? MinimumTlsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayNamespaceProperties();
+                }
+                Properties.MinimumTlsVersion = value;
             }
         }
     }

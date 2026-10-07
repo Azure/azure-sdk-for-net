@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct JitNetworkAccessPortStatus : IEquatable<JitNetworkAccessPortStatus>
     {
         private readonly string _value;
+        /// <summary> Revoked. </summary>
+        private const string RevokedValue = "Revoked";
+        /// <summary> Initiated. </summary>
+        private const string InitiatedValue = "Initiated";
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPortStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JitNetworkAccessPortStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RevokedValue = "Revoked";
-        private const string InitiatedValue = "Initiated";
+            _value = value;
+        }
 
         /// <summary> Revoked. </summary>
         public static JitNetworkAccessPortStatus Revoked { get; } = new JitNetworkAccessPortStatus(RevokedValue);
+
         /// <summary> Initiated. </summary>
         public static JitNetworkAccessPortStatus Initiated { get; } = new JitNetworkAccessPortStatus(InitiatedValue);
+
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JitNetworkAccessPortStatus left, JitNetworkAccessPortStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JitNetworkAccessPortStatus left, JitNetworkAccessPortStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JitNetworkAccessPortStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JitNetworkAccessPortStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JitNetworkAccessPortStatus(string value) => new JitNetworkAccessPortStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JitNetworkAccessPortStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JitNetworkAccessPortStatus?(string value) => value == null ? null : new JitNetworkAccessPortStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JitNetworkAccessPortStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JitNetworkAccessPortStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

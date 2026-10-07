@@ -43,7 +43,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The pages of DeploymentEnvironmentsClientGetEnvironmentDefinitionsByCatalogCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<EnvironmentDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -52,8 +52,8 @@ namespace Azure.Developer.DevCenter
                     yield break;
                 }
                 PagedEnvironmentDefinition result = (PagedEnvironmentDefinition)response;
-                yield return Page<EnvironmentDefinition>.FromValues((IReadOnlyList<EnvironmentDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EnvironmentDefinition>.FromValues((IReadOnlyList<EnvironmentDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of RecoveryVirtualNetworkCustomDetails. </summary>
     internal partial class UnknownRecoveryVirtualNetworkCustomDetails : RecoveryVirtualNetworkCustomDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRecoveryVirtualNetworkCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRecoveryVirtualNetworkCustomDetails(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, serializedAdditionalRawData)
-        {
-            ResourceType = resourceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryVirtualNetworkCustomDetails"/> for deserialization. </summary>
-        internal UnknownRecoveryVirtualNetworkCustomDetails()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRecoveryVirtualNetworkCustomDetails(string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

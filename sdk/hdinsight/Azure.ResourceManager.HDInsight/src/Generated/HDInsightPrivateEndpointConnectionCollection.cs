@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             TryGetApiVersion(HDInsightPrivateEndpointConnectionResource.ResourceType, out string hdInsightPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, hdInsightPrivateEndpointConnectionApiVersion ?? "2025-01-15-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightPrivateEndpointConnectionApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HDInsightPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource> operation = new HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource>(
-                    new HDInsightPrivateEndpointConnectionOperationSource(Client),
+                    new HDInsightPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HDInsightPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource> operation = new HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource>(
-                    new HDInsightPrivateEndpointConnectionOperationSource(Client),
+                    new HDInsightPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

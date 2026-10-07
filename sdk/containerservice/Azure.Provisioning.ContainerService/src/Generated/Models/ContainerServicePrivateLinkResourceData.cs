@@ -121,6 +121,10 @@ namespace Azure.Provisioning.ContainerService
             _groupId = DefineProperty<string>(nameof(GroupId), new string[] { "groupId" });
             _requiredMembers = DefineListProperty<string>(nameof(RequiredMembers), new string[] { "requiredMembers" });
             _privateLinkServiceId = DefineProperty<ResourceIdentifier>(nameof(PrivateLinkServiceId), new string[] { "privateLinkServiceID" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServicePrivateLinkResourceData that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

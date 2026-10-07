@@ -96,7 +96,7 @@ UseCommonAlertSchema = true,
 TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
 ManagedIdentity = "30fe7a91-cd31-4edf-96ab-52883b3199cd",
 }},
-                IncidentReceivers = {new IncidentReceiver("IncidentAction", new IncidentServiceConnection("IncidentConnection", "8be638e7-1419-42d4-a059-437a5f4f4e4e"), IncidentManagementService.Icm, new Dictionary<string, string>
+                IncidentReceivers = {new MonitorIncidentReceiver("IncidentAction", new MonitorIncidentServiceConnection("IncidentConnection", "8be638e7-1419-42d4-a059-437a5f4f4e4e"), MonitorIncidentManagementService.Icm, new Dictionary<string, string>
 {
 ["icm.automitigationenabled"] = "true",
 ["icm.correlationid"] = "${data.essentials.signalType}://${data.essentials.originAlertId}",

@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class ArmConfigurationDiffOperationResultOperationSource : IOperationSource<ArmConfigurationDiffOperationResult>
+    /// <summary></summary>
+    internal partial class ArmConfigurationDiffOperationResultOperationSource : IOperationSource<ArmConfigurationDiffOperationResult>
     {
-        ArmConfigurationDiffOperationResult IOperationSource<ArmConfigurationDiffOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal ArmConfigurationDiffOperationResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ArmConfigurationDiffOperationResult.DeserializeArmConfigurationDiffOperationResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        ArmConfigurationDiffOperationResult IOperationSource<ArmConfigurationDiffOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return ArmConfigurationDiffOperationResult.DeserializeArmConfigurationDiffOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ArmConfigurationDiffOperationResult> IOperationSource<ArmConfigurationDiffOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ArmConfigurationDiffOperationResult.DeserializeArmConfigurationDiffOperationResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return ArmConfigurationDiffOperationResult.DeserializeArmConfigurationDiffOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

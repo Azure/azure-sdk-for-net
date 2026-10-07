@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="properties"> Properties of VolumeGroup. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedServiceIdentity identity, VolumeGroupProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, VolumeGroupProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Identity = identity;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The identity of the resource. </summary>
@@ -132,6 +132,74 @@ namespace Azure.ResourceManager.ElasticSan
                     Properties = new VolumeGroupProperties();
                 }
                 Properties.EnforceDataIntegrityCheckForIscsi = value;
+            }
+        }
+
+        /// <summary> A boolean indicating whether or not Encryption in Transit is enabled, supported only for ISCSI protocol. </summary>
+        public bool? IsEncryptionInTransitEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEncryptionInTransitEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.IsEncryptionInTransitEnabled = value;
+            }
+        }
+
+        /// <summary> Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </summary>
+        public int? ReservedIops
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedIops;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.ReservedIops = value;
+            }
+        }
+
+        /// <summary> Reserved MBps allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </summary>
+        public int? ReservedMBps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedMBps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.ReservedMBps = value;
+            }
+        }
+
+        /// <summary> Quality of Service tier for the volume group, applicable for ElasticSanVersion V2 only. </summary>
+        public ElasticSanQualityOfService? QualityOfService
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QualityOfService;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.QualityOfService = value;
             }
         }
 

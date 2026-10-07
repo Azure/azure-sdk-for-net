@@ -7,51 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Kind of the endpoint for the data connection. </summary>
-    internal readonly partial struct DataConnectionKind : IEquatable<DataConnectionKind>
+    public readonly partial struct DataConnectionKind : IEquatable<DataConnectionKind>
     {
         private readonly string _value;
+        /// <summary> EventHub. </summary>
+        private const string EventHubValue = "EventHub";
+        /// <summary> EventGrid. </summary>
+        private const string EventGridValue = "EventGrid";
+        /// <summary> IotHub. </summary>
+        private const string IotHubValue = "IotHub";
+        /// <summary> CosmosDb. </summary>
+        private const string CosmosDbValue = "CosmosDb";
+        /// <summary> EventHubWithManagedIdentity. </summary>
+        private const string EventHubWithManagedIdentityValue = "EventHubWithManagedIdentity";
+        /// <summary> EventGridWithManagedIdentity. </summary>
+        private const string EventGridWithManagedIdentityValue = "EventGridWithManagedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="DataConnectionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataConnectionKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EventHubValue = "EventHub";
-        private const string EventGridValue = "EventGrid";
-        private const string IotHubValue = "IotHub";
-        private const string CosmosDBValue = "CosmosDb";
+            _value = value;
+        }
 
         /// <summary> EventHub. </summary>
         public static DataConnectionKind EventHub { get; } = new DataConnectionKind(EventHubValue);
+
         /// <summary> EventGrid. </summary>
         public static DataConnectionKind EventGrid { get; } = new DataConnectionKind(EventGridValue);
+
         /// <summary> IotHub. </summary>
         public static DataConnectionKind IotHub { get; } = new DataConnectionKind(IotHubValue);
+
         /// <summary> CosmosDb. </summary>
-        public static DataConnectionKind CosmosDB { get; } = new DataConnectionKind(CosmosDBValue);
+        public static DataConnectionKind CosmosDb { get; } = new DataConnectionKind(CosmosDbValue);
+
+        /// <summary> EventHubWithManagedIdentity. </summary>
+        public static DataConnectionKind EventHubWithManagedIdentity { get; } = new DataConnectionKind(EventHubWithManagedIdentityValue);
+
+        /// <summary> EventGridWithManagedIdentity. </summary>
+        public static DataConnectionKind EventGridWithManagedIdentity { get; } = new DataConnectionKind(EventGridWithManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="DataConnectionKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataConnectionKind left, DataConnectionKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataConnectionKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataConnectionKind left, DataConnectionKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataConnectionKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataConnectionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataConnectionKind(string value) => new DataConnectionKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataConnectionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataConnectionKind?(string value) => value == null ? null : new DataConnectionKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataConnectionKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataConnectionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -24,5 +26,11 @@ namespace Payload.MultiPart._FormData.HttpParts.NonString
         public virtual Response Float(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Task<Response> FloatAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+
+        [Experimental("SCME0004")]
+        public virtual Response Float(FloatRequest body, CancellationToken cancellationToken = default) => throw null;
+
+        [Experimental("SCME0004")]
+        public virtual Task<Response> FloatAsync(FloatRequest body, CancellationToken cancellationToken = default) => throw null;
     }
 }

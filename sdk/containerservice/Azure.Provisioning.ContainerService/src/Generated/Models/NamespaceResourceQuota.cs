@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerService
             _cpuLimit = DefineProperty<string>(nameof(CpuLimit), new string[] { "cpuLimit" });
             _memoryRequest = DefineProperty<string>(nameof(MemoryRequest), new string[] { "memoryRequest" });
             _memoryLimit = DefineProperty<string>(nameof(MemoryLimit), new string[] { "memoryLimit" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NamespaceResourceQuota that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The pages of DocumentIntelligenceAdministrationClientGetClassifiersCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DocumentClassifierDetails>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -45,8 +45,8 @@ namespace Azure.AI.DocumentIntelligence
                     yield break;
                 }
                 PagedDocumentClassifierDetails result = (PagedDocumentClassifierDetails)response;
-                yield return Page<DocumentClassifierDetails>.FromValues((IReadOnlyList<DocumentClassifierDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DocumentClassifierDetails>.FromValues((IReadOnlyList<DocumentClassifierDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

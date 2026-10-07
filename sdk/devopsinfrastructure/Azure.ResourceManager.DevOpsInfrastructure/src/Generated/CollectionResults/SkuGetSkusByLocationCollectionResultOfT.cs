@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     yield break;
                 }
                 ResourceSkuListResult result = ResourceSkuListResult.FromResponse(response);
-                yield return Page<DevOpsResourceSku>.FromValues((IReadOnlyList<DevOpsResourceSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevOpsResourceSku>.FromValues((IReadOnlyList<DevOpsResourceSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

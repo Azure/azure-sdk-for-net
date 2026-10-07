@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(DisconnectedOperationsArtifactResource.ResourceType, out string disconnectedOperationsArtifactApiVersion);
             _artifactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationsArtifactResource.ResourceType.Namespace, Diagnostics);
-            _artifactsRestClient = new Artifacts(_artifactsClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsArtifactApiVersion ?? "2026-03-15");
+            _artifactsRestClient = new Artifacts(_artifactsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationsArtifactApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

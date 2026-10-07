@@ -65,7 +65,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -137,7 +137,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 IsAutoMitigateEnabled = true,
                 Actions = {new MetricAlertAction
 {
@@ -197,7 +197,7 @@ WebHookProperties =
                 })
             {
                 Description = "This is the description of the rule1",
-                ResolveConfiguration = new ResolveConfiguration(true)
+                ResolveConfiguration = new MetricAlertResolveConfiguration(true)
                 {
                     TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
                 },
@@ -214,7 +214,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
 {
 ["Email.Sujbect"] = "my custom email subject"
 },
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
@@ -273,7 +273,7 @@ IgnoreDataBefore = DateTimeOffset.Parse("2019-04-04T21:00:00.000Z"),
                 })
             {
                 Description = "This is the description of the rule1",
-                ResolveConfiguration = new ResolveConfiguration(true)
+                ResolveConfiguration = new MetricAlertResolveConfiguration(true)
                 {
                     TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
                 },
@@ -290,7 +290,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
 {
 ["Email.Sujbect"] = "my custom email subject"
 },
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
@@ -346,7 +346,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
                 })
             {
                 Description = "This is the description of the rule1",
-                ResolveConfiguration = new ResolveConfiguration(true)
+                ResolveConfiguration = new MetricAlertResolveConfiguration(true)
                 {
                     TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
                 },
@@ -363,7 +363,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
 {
 ["Email.Sujbect"] = "my custom email subject"
 },
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
@@ -419,7 +419,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
                 })
             {
                 Description = "This is the description of the rule1",
-                ResolveConfiguration = new ResolveConfiguration(true)
+                ResolveConfiguration = new MetricAlertResolveConfiguration(true)
                 {
                     TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
                 },
@@ -436,7 +436,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
 {
 ["Email.Sujbect"] = "my custom email subject"
 },
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
@@ -488,7 +488,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
                 new WebtestLocationAvailabilityCriteria(new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789101/resourcegroups/rg-example/providers/microsoft.insights/webtests/component-example"), new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789101/resourcegroups/rg-example/providers/microsoft.insights/components/webtest-name-example"), 2))
             {
                 Description = "Automatically created alert rule for availability test \"component-example\" a",
-                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 Actions = { },
                 Tags =
 {
@@ -546,7 +546,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -610,7 +610,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 IsAutoMitigateEnabled = true,
                 Actions = {new MetricAlertAction
 {
@@ -673,7 +673,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -738,7 +738,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -803,7 +803,7 @@ Dimensions = {new MetricDimension("ActivityName", "Include", new string[]{"*"}),
                 })
             {
                 Description = "This is the description of the rule1",
-                MonitorWindowSize = XmlConvert.ToTimeSpan("P1D"),
+                WindowSize = XmlConvert.ToTimeSpan("P1D"),
                 IsAutoMitigateEnabled = true,
                 Actions = {new MetricAlertAction
 {

@@ -48,7 +48,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <returns> The pages of QuestionAnsweringAuthoringClientGetSynonymsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<WordAlterations>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -57,8 +57,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     yield break;
                 }
                 PagedWordAlterations result = (PagedWordAlterations)response;
-                yield return Page<WordAlterations>.FromValues((IReadOnlyList<WordAlterations>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WordAlterations>.FromValues((IReadOnlyList<WordAlterations>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

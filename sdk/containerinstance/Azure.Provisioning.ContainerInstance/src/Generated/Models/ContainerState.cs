@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ContainerInstance
     public partial class ContainerState : ProvisionableConstruct
     {
         private BicepValue<string> _state;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<int> _exitCode;
         private BicepValue<DateTimeOffset> _finishOn;
         private BicepValue<string> _detailStatus;
@@ -35,13 +35,13 @@ namespace Azure.Provisioning.ContainerInstance
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -80,10 +80,14 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _state = DefineProperty<string>(nameof(State), new string[] { "state" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true);
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, isOutput: true, format: "O");
             _exitCode = DefineProperty<int>(nameof(ExitCode), new string[] { "exitCode" }, isOutput: true);
-            _finishOn = DefineProperty<DateTimeOffset>(nameof(FinishOn), new string[] { "finishTime" }, isOutput: true);
+            _finishOn = DefineProperty<DateTimeOffset>(nameof(FinishOn), new string[] { "finishTime" }, isOutput: true, format: "O");
             _detailStatus = DefineProperty<string>(nameof(DetailStatus), new string[] { "detailStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerState that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ResourceType, out string nestedResourceTypeThirdSkuApiVersion);
             _nestedResourceTypeThirdSkuClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            _nestedResourceTypeThirdSkuRestClient = new NestedResourceTypeThirdSku(_nestedResourceTypeThirdSkuClientDiagnostics, Pipeline, Endpoint, nestedResourceTypeThirdSkuApiVersion ?? "2024-09-01");
+            _nestedResourceTypeThirdSkuRestClient = new NestedResourceTypeThirdSku(_nestedResourceTypeThirdSkuClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nestedResourceTypeThirdSkuApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2026-07-20)
+
+### Features Added
+
+- Upgraded api-version to `2026-03-15`.
+
+### Other Changes
+
+- Migrated from Swagger to TypeSpec-based generation.
+
+## 1.4.1 (2026-06-03)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.4.0 (2025-12-05)
 

@@ -1,356 +1,92 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
 using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a DistributedAvailabilityGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DistributedAvailabilityGroupResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDistributedAvailabilityGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetDistributedAvailabilityGroup method.
+    /// A class representing a distributed availability group.
+    /// Kept for backward compatibility; use <see cref="SqlDistributedAvailabilityGroupResource"/> instead.
     /// </summary>
+    [Obsolete("This type is obsolete and will be removed in a future release. Use SqlDistributedAvailabilityGroupResource instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DistributedAvailabilityGroupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DistributedAvailabilityGroupResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="managedInstanceName"> The managedInstanceName. </param>
-        /// <param name="distributedAvailabilityGroupName"> The distributedAvailabilityGroupName. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}";
-            return new ResourceIdentifier(resourceId);
-        }
+        /// <summary> The resource type for this resource. </summary>
+        public static readonly ResourceType ResourceType = SqlDistributedAvailabilityGroupResource.ResourceType;
 
-        private readonly ClientDiagnostics _distributedAvailabilityGroupClientDiagnostics;
-        private readonly DistributedAvailabilityGroupsRestOperations _distributedAvailabilityGroupRestClient;
-        private readonly DistributedAvailabilityGroupData _data;
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/distributedAvailabilityGroups";
+        private readonly SqlDistributedAvailabilityGroupResource _inner;
 
         /// <summary> Initializes a new instance of the <see cref="DistributedAvailabilityGroupResource"/> class for mocking. </summary>
         protected DistributedAvailabilityGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DistributedAvailabilityGroupResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="data"> The resource that is the target of operations. </param>
-        internal DistributedAvailabilityGroupResource(ArmClient client, DistributedAvailabilityGroupData data) : this(client, data.Id)
-        {
-            HasData = true;
-            _data = data;
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="DistributedAvailabilityGroupResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DistributedAvailabilityGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _distributedAvailabilityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string distributedAvailabilityGroupApiVersion);
-            _distributedAvailabilityGroupRestClient = new DistributedAvailabilityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, distributedAvailabilityGroupApiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
+            _inner = client.GetSqlDistributedAvailabilityGroupResource(id);
         }
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual DistributedAvailabilityGroupData Data
+        internal DistributedAvailabilityGroupResource(ArmClient client, SqlDistributedAvailabilityGroupResource inner) : base(client, inner.Id)
         {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
+            _inner = inner;
         }
 
-        internal static void ValidateResourceId(ResourceIdentifier id)
+        /// <summary> Generates a resource identifier for a distributed availability group. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName)
         {
-            if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            return SqlDistributedAvailabilityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, distributedAvailabilityGroupName);
         }
 
-        /// <summary>
-        /// Gets a distributed availability group info.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<DistributedAvailabilityGroupResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _distributedAvailabilityGroupRestClient.GetOriginalAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        /// <summary> Gets a value indicating whether data is present on this resource. </summary>
+        public virtual bool HasData => _inner?.HasData ?? false;
 
-        /// <summary>
-        /// Gets a distributed availability group info.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <summary> Gets the data of the distributed availability group. </summary>
+        public virtual DistributedAvailabilityGroupData Data => null;
+
+        /// <summary> Gets the distributed availability group. </summary>
         public virtual Response<DistributedAvailabilityGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _distributedAvailabilityGroupRestClient.GetOriginal(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response<SqlDistributedAvailabilityGroupResource> response = _inner.Get(cancellationToken);
+            return Response.FromValue(new DistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
         }
 
-        /// <summary>
-        /// Drops a distributed availability group between Sql On-Prem and Sql Managed Instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <summary> Gets the distributed availability group. </summary>
+        public virtual async Task<Response<DistributedAvailabilityGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _distributedAvailabilityGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response<SqlDistributedAvailabilityGroupResource> response = await _inner.GetAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new DistributedAvailabilityGroupResource(Client, response.Value), response.GetRawResponse());
         }
 
-        /// <summary>
-        /// Drops a distributed availability group between Sql On-Prem and Sql Managed Instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <summary> Deletes the distributed availability group. </summary>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _distributedAvailabilityGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return _inner.Delete(waitUntil, cancellationToken);
         }
 
-        /// <summary>
-        /// Updates a distributed availability group replication mode.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The distributed availability group info. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<DistributedAvailabilityGroupResource>> UpdateAsync(WaitUntil waitUntil, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
+        /// <summary> Deletes the distributed availability group. </summary>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _distributedAvailabilityGroupRestClient.UpdateOriginalAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await _inner.DeleteAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Updates a distributed availability group replication mode.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DistributedAvailabilityGroups_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DistributedAvailabilityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The distributed availability group info. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <summary> Updates a distributed availability group. </summary>
         public virtual ArmOperation<DistributedAvailabilityGroupResource> Update(WaitUntil waitUntil, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            throw new NotSupportedException("Update with DistributedAvailabilityGroupData is no longer supported. Use SqlDistributedAvailabilityGroupResource.Update instead.");
+        }
 
-            using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _distributedAvailabilityGroupRestClient.UpdateOriginal(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<DistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupOperationSource(Client), _distributedAvailabilityGroupClientDiagnostics, Pipeline, _distributedAvailabilityGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+        /// <summary> Updates a distributed availability group. </summary>
+        public virtual Task<ArmOperation<DistributedAvailabilityGroupResource>> UpdateAsync(WaitUntil waitUntil, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("UpdateAsync with DistributedAvailabilityGroupData is no longer supported. Use SqlDistributedAvailabilityGroupResource.UpdateAsync instead.");
         }
     }
 }

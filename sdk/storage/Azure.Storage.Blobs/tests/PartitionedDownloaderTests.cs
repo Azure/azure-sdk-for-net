@@ -1014,7 +1014,43 @@ namespace Azure.Storage.Blobs.Test
 
                 memoryStream.Position = 0;
 
-                return CreateMockResponse(range, memoryStream, contentLength, totalBlobLength: _length);
+                return Response.FromValue(new BlobDownloadStreamingResult()
+                {
+                    Content = memoryStream,
+                    Details = new BlobDownloadDetails()
+                    {
+                        BlobType = BlobType.Page,
+                        ContentLength = contentLength,
+                        ContentType = "test",
+                        ContentHash = new byte[] { 1, 2, 3 },
+                        LastModified = DateTimeOffset.Now,
+                        Metadata = new Dictionary<string, string>() { { "meta", "data" } },
+                        ContentRange = $"bytes {range.Offset}-{Math.Max(1, range.Offset + contentLength - 1)}/{_length}",
+                        ETag = s_etag,
+                        ContentEncoding = "test",
+                        CacheControl = "test",
+                        ContentDisposition = "test",
+                        ContentLanguage = "test",
+                        BlobSequenceNumber = 12,
+                        CopyCompletedOn = DateTimeOffset.Now,
+                        CopyStatusDescription = "test",
+                        CopyId = "test",
+                        CopyProgress = "test",
+                        CopySource = new Uri("http://example.com"),
+                        CopyStatus = CopyStatus.Failed,
+                        LeaseDuration = LeaseDurationType.Fixed,
+                        LeaseState = LeaseState.Expired,
+                        LeaseStatus = LeaseStatus.Unlocked,
+                        AcceptRanges = "test",
+                        BlobCommittedBlockCount = 5,
+                        IsServerEncrypted = true,
+                        EncryptionKeySha256 = "test",
+                        AccessTier = "Hot",
+                        AccessTierInferred = true,
+                        AccessTierChangedOn = DateTimeOffset.Now,
+                        SmartAccessTier = "Cool",
+                    }
+                }, new MockResponse(200));
             }
         }
     }

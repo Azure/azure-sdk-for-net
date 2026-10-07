@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Represents a single IP configuration properties. </summary>
     internal partial class VirtualApplianceIPConfigurationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceIPConfigurationProperties"/>. </summary>
         public VirtualApplianceIPConfigurationProperties()
@@ -51,16 +23,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceIPConfigurationProperties"/>. </summary>
-        /// <param name="isPrimary"> Whether or not this is primary IP configuration of the NIC. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplianceIPConfigurationProperties(bool? isPrimary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="primary"> Whether or not this is primary IP configuration of the NIC. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualApplianceIPConfigurationProperties(bool? primary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsPrimary = isPrimary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Primary = primary;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether or not this is primary IP configuration of the NIC. </summary>
         [WirePath("primary")]
-        public bool? IsPrimary { get; set; }
+        public bool? Primary { get; set; }
     }
 }

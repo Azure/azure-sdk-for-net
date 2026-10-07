@@ -11,6 +11,7 @@ using System.Diagnostics;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal static class ThrowHelper
     {
         internal static void ThrowArgumentNullException(ExceptionArgument argument)

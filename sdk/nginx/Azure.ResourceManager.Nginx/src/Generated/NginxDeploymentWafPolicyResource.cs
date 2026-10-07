@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(ResourceType, out string nginxDeploymentWafPolicyApiVersion);
             _nginxDeploymentWafPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            _nginxDeploymentWafPoliciesRestClient = new NginxDeploymentWafPolicies(_nginxDeploymentWafPoliciesClientDiagnostics, Pipeline, Endpoint, nginxDeploymentWafPolicyApiVersion ?? "2025-11-01");
+            _nginxDeploymentWafPoliciesRestClient = new NginxDeploymentWafPolicies(_nginxDeploymentWafPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nginxDeploymentWafPolicyApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Nginx
                 HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NginxArmOperation<NginxDeploymentWafPolicyResource> operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(
-                    new NginxDeploymentWafPolicyOperationSource(Client),
+                    new NginxDeploymentWafPolicyResourceOperationSource(Client),
                     _nginxDeploymentWafPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Nginx
                 HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NginxArmOperation<NginxDeploymentWafPolicyResource> operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(
-                    new NginxDeploymentWafPolicyOperationSource(Client),
+                    new NginxDeploymentWafPolicyResourceOperationSource(Client),
                     _nginxDeploymentWafPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

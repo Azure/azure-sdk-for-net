@@ -32,14 +32,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
-        internal AcsChatMessageEventInThreadBaseProperties(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version) : base(transactionId, threadId, additionalBinaryDataProperties)
+        internal AcsChatMessageEventInThreadBaseProperties(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, long? sequenceId, DateTimeOffset? composeTime, string @type, long? version) : base(transactionId, threadId, additionalBinaryDataProperties)
         {
             MessageId = messageId;
             SenderCommunicationIdentifier = senderCommunicationIdentifier;
             SenderDisplayName = senderDisplayName;
+            SequenceId = sequenceId;
             ComposeTime = composeTime;
             Type = @type;
             Version = version;
@@ -53,6 +55,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> The display name of the sender. </summary>
         public string SenderDisplayName { get; }
+
+        /// <summary> The Sequence id of the message. </summary>
+        public long? SequenceId { get; }
 
         /// <summary> The original compose time of the message. </summary>
         public DateTimeOffset? ComposeTime { get; }

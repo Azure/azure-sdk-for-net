@@ -1191,10 +1191,13 @@ namespace Azure.Core.Tests
 
                 await ExecuteRequest(request, transport);
 
-                // Now set the client certificate and update the transport
-                options.ClientCertificates.Add(clientCert);
+                // Now set the client certificate and update the transport using a new options instance,
+                // mirroring the real code path where BearerTokenAuthenticationPolicy clones the options.
+                var updatedOptions = new HttpPipelineTransportOptions();
+                updatedOptions.ServerCertificateCustomValidationCallback = args => true;
+                updatedOptions.ClientCertificates.Add(clientCert);
 
-                transport.Update(options);
+                transport.Update(updatedOptions);
                 setClientCertificate = true;
 
                 request = transport.CreateRequest();

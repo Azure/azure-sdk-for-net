@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -13,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -30,7 +32,7 @@ namespace Azure.Generator.Tests
         }
 
         [TestCase(typeof(Guid), ExpectedResult = "writer.WriteStringValue(value);\n")]
-        [TestCase(typeof(IPAddress), ExpectedResult ="writer.WriteStringValue(value.ToString());\n")]
+        [TestCase(typeof(IPAddress), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(ETag), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(AzureLocation), ExpectedResult = "writer.WriteStringValue(value);\n")]
         [TestCase(typeof(ResourceIdentifier), ExpectedResult = "writer.WriteStringValue(value);\n")]
@@ -157,6 +159,12 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ResourceIdentifier))]
         [TestCase(typeof(AzureLocation))]
         [TestCase(typeof(ResponseError))]
+        [TestCase(typeof(ClientDiagnostics))]
+        [TestCase(typeof(RequestConditions))]
+        [TestCase(typeof(DataFactoryElement<>))]
+        [TestCase(typeof(DataFactorySecret))]
+        [TestCase(typeof(DataFactoryLinkedServiceReference))]
+        [TestCase(typeof(DataFactorySecretString))]
         public void CreatesFrameworkType(Type expectedType)
         {
             var factory = new TestTypeFactory();
@@ -286,25 +294,76 @@ namespace Azure.Generator.Tests
                 $"Expected serialization to use WriteObjectValue pattern for DataFactoryElement, but got: {displayString}");
         }
 
-        [Test]
-        public void DataFactoryElementDeserializationUsesDeserializeMethod()
+        [TestCase(typeof(DataFactoryElement<string>), "string", "options")]
+        [TestCase(typeof(DataFactoryElement<string>), "string", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<int>), "int", "options")]
+        [TestCase(typeof(DataFactoryElement<int>), "int", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<bool>), "bool", "options")]
+        [TestCase(typeof(DataFactoryElement<bool>), "bool", "customOptions")]
+        [TestCase(typeof(DataFactoryElement<IList<string>>), "global::System.Collections.Generic.IList<string>", "options")]
+        [TestCase(typeof(DataFactoryElement<IList<string>>), "global::System.Collections.Generic.IList<string>", "customOptions")]
+        public void DataFactoryElementDeserializationUsesDeserializeMethod(Type type, string typeArgument, string optionsName)
         {
-            // Verify that DataFactoryElement<string> uses its deserialize method
-            var type = typeof(DataFactoryElement<string>);
             var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsVariable().As<JsonElement>();
             var data = new ParameterProvider("data", $"", typeof(BinaryData)).AsVariable().As<BinaryData>();
             var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
                 type,
                 element,
                 data,
-                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
+                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), optionsName)),
                 SerializationFormat.Default);
             Assert.IsNotNull(expression);
 
             var displayString = expression.ToDisplayString();
             Assert.AreEqual(
-                "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<string>>(data, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)",
+                $"global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<{typeArgument}>>(data, {optionsName}, global::Samples.SamplesContext.Default)",
                 displayString);
+        }
+
+        [Test]
+        public void ExternalIdentityOnModelResolvesToFrameworkType()
+        {
+            // Simulate @@alternateType(SomeModel, { identity: "Azure.Core.ResourceIdentifier" }, "csharp")
+            // The InputModelType has External.Identity set to a fully-qualified type name.
+            // Without explicit handling, the property would be silently dropped from generated code.
+            var externalType = new InputExternalTypeMetadata("Azure.Core.ResourceIdentifier", null, null);
+            var model = InputFactory.Model("AliasedModel", externalTypeMetadata: externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(model);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsFrameworkType);
+            Assert.AreEqual(typeof(ResourceIdentifier), actual.FrameworkType);
+        }
+
+        [Test]
+        public void ExternalIdentityOnModelResolvesToDataFactoryType()
+        {
+            // Repro from the issue: @@alternateType(SecretBase, { identity: "Azure.Core.Expressions.DataFactory.DataFactorySecret" }, "csharp")
+            // before the fix, this property would be silently dropped from the generated client.
+            var externalType = new InputExternalTypeMetadata(
+                "Azure.Core.Expressions.DataFactory.DataFactorySecret",
+                null,
+                null);
+            var model = InputFactory.Model("SecretBase", externalTypeMetadata: externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(model);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsFrameworkType);
+            Assert.AreEqual(typeof(DataFactorySecret), actual.FrameworkType);
+        }
+
+        [TestCase("Azure.Core.Expressions.DataFactory.DataFactorySecret", typeof(DataFactorySecret))]
+        [TestCase("Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference", typeof(DataFactoryLinkedServiceReference))]
+        [TestCase("Azure.Core.Expressions.DataFactory.DataFactorySecretString", typeof(DataFactorySecretString))]
+        public void DataFactoryFrameworkTypesAreResolvable(string identity, Type expectedType)
+        {
+            var factory = new TestTypeFactory();
+
+            var actual = factory.InvokeCreateFrameworkType(identity);
+
+            Assert.AreEqual(expectedType, actual);
         }
 
         [TestCase(typeof(ETag), false, ExpectedResult = "writer.WriteValue(value.ToString());\n")]

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BotService
         {
             TryGetApiVersion(BotServiceNetworkSecurityPerimeterConfigurationResource.ResourceType, out string botServiceNetworkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotServiceNetworkSecurityPerimeterConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, botServiceNetworkSecurityPerimeterConfigurationApiVersion ?? "2023-09-15-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botServiceNetworkSecurityPerimeterConfigurationApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 

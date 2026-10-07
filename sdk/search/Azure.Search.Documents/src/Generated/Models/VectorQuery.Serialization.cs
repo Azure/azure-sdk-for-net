@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Models
 {
     /// <summary>
     /// The query parameters for vector and hybrid search queries.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorizedQuery"/>, <see cref="VectorizableTextQuery"/>, <see cref="VectorizableImageUrlQuery"/>, and <see cref="VectorizableImageBinaryQuery"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorizableImageBinaryQuery"/>, <see cref="VectorizableImageUrlQuery"/>, <see cref="VectorizableTextQuery"/>, and <see cref="VectorizedQuery"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVectorQuery))]
     public abstract partial class VectorQuery : IJsonModel<VectorQuery>
@@ -102,6 +102,21 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
+            if (Optional.IsDefined(Threshold))
+            {
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteObjectValue(Threshold, options);
+            }
+            if (Optional.IsDefined(FilterOverride))
+            {
+                writer.WritePropertyName("filterOverride"u8);
+                writer.WriteStringValue(FilterOverride);
+            }
+            if (Optional.IsDefined(PerDocumentVectorLimit))
+            {
+                writer.WritePropertyName("perDocumentVectorLimit"u8);
+                writer.WriteNumberValue(PerDocumentVectorLimit.Value);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -150,14 +165,14 @@ namespace Azure.Search.Documents.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "vector":
-                        return VectorizedQuery.DeserializeVectorizedQuery(element, options);
-                    case "text":
-                        return VectorizableTextQuery.DeserializeVectorizableTextQuery(element, options);
-                    case "imageUrl":
-                        return VectorizableImageUrlQuery.DeserializeVectorizableImageUrlQuery(element, options);
                     case "imageBinary":
                         return VectorizableImageBinaryQuery.DeserializeVectorizableImageBinaryQuery(element, options);
+                    case "imageUrl":
+                        return VectorizableImageUrlQuery.DeserializeVectorizableImageUrlQuery(element, options);
+                    case "text":
+                        return VectorizableTextQuery.DeserializeVectorizableTextQuery(element, options);
+                    case "vector":
+                        return VectorizedQuery.DeserializeVectorizedQuery(element, options);
                 }
             }
             return UnknownVectorQuery.DeserializeUnknownVectorQuery(element, options);

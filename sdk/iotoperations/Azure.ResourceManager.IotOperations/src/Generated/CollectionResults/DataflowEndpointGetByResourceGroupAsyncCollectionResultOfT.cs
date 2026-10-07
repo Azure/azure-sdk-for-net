@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.IotOperations
                     yield break;
                 }
                 DataflowEndpointResourceListResult result = DataflowEndpointResourceListResult.FromResponse(response);
-                yield return Page<IotOperationsDataflowEndpointData>.FromValues((IReadOnlyList<IotOperationsDataflowEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IotOperationsDataflowEndpointData>.FromValues((IReadOnlyList<IotOperationsDataflowEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

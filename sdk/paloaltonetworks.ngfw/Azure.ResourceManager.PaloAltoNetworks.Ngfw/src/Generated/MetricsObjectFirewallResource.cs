@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string metricsObjectFirewallApiVersion);
             _metricsObjectFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _metricsObjectFirewallRestClient = new MetricsObjectFirewall(_metricsObjectFirewallClientDiagnostics, Pipeline, Endpoint, metricsObjectFirewallApiVersion ?? "2025-10-08");
+            _metricsObjectFirewallRestClient = new MetricsObjectFirewall(_metricsObjectFirewallClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricsObjectFirewallApiVersion ?? "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, MetricsObjectFirewallData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<MetricsObjectFirewallResource> operation = new NgfwArmOperation<MetricsObjectFirewallResource>(
-                    new MetricsObjectFirewallOperationSource(Client),
+                    new MetricsObjectFirewallResourceOperationSource(Client),
                     _metricsObjectFirewallClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, MetricsObjectFirewallData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<MetricsObjectFirewallResource> operation = new NgfwArmOperation<MetricsObjectFirewallResource>(
-                    new MetricsObjectFirewallOperationSource(Client),
+                    new MetricsObjectFirewallResourceOperationSource(Client),
                     _metricsObjectFirewallClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

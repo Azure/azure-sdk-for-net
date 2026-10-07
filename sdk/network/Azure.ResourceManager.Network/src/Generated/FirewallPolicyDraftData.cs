@@ -9,14 +9,10 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the FirewallPolicyDraft data model.
-    /// FirewallPolicy Resource.
-    /// </summary>
+    /// <summary> FirewallPolicy Resource. </summary>
     public partial class FirewallPolicyDraftData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyDraftData"/>. </summary>
@@ -27,82 +23,180 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyDraftData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="basePolicy"> The parent firewall policy from which rules are inherited. </param>
-        /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
-        /// <param name="threatIntelWhitelist"> ThreatIntel Whitelist for Firewall Policy. </param>
-        /// <param name="insights"> Insights on Firewall Policy. </param>
-        /// <param name="snat"> The private IP addresses/IP ranges to which traffic will not be SNAT. </param>
-        /// <param name="sql"> SQL Settings definition. </param>
-        /// <param name="dnsSettings"> DNS Proxy Settings definition. </param>
-        /// <param name="explicitProxy"> Explicit Proxy Settings definition. </param>
-        /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
-        internal FirewallPolicyDraftData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource basePolicy, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the firewall policy. </param>
+        internal FirewallPolicyDraftData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, FirewallPolicyDraftProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            BasePolicy = basePolicy;
-            ThreatIntelMode = threatIntelMode;
-            ThreatIntelWhitelist = threatIntelWhitelist;
-            Insights = insights;
-            Snat = snat;
-            Sql = sql;
-            DnsSettings = dnsSettings;
-            ExplicitProxy = explicitProxy;
-            IntrusionDetection = intrusionDetection;
+            Properties = properties;
         }
 
-        /// <summary> The parent firewall policy from which rules are inherited. </summary>
-        internal WritableSubResource BasePolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.basePolicy.id")]
-        public ResourceIdentifier BasePolicyId
-        {
-            get => BasePolicy is null ? default : BasePolicy.Id;
-            set
-            {
-                if (BasePolicy is null)
-                    BasePolicy = new WritableSubResource();
-                BasePolicy.Id = value;
-            }
-        }
+        /// <summary> Properties of the firewall policy. </summary>
+        [WirePath("properties")]
+        internal FirewallPolicyDraftProperties Properties { get; set; }
 
         /// <summary> The operation mode for Threat Intelligence. </summary>
         [WirePath("properties.threatIntelMode")]
-        public AzureFirewallThreatIntelMode? ThreatIntelMode { get; set; }
-        /// <summary> ThreatIntel Whitelist for Firewall Policy. </summary>
-        [WirePath("properties.threatIntelWhitelist")]
-        public FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist { get; set; }
-        /// <summary> Insights on Firewall Policy. </summary>
-        [WirePath("properties.insights")]
-        public FirewallPolicyInsights Insights { get; set; }
-        /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
-        [WirePath("properties.snat")]
-        public FirewallPolicySnat Snat { get; set; }
-        /// <summary> SQL Settings definition. </summary>
-        internal FirewallPolicySQL Sql { get; set; }
-        /// <summary> A flag to indicate if SQL Redirect traffic filtering is enabled. Turning on the flag requires no rule using port 11000-11999. </summary>
-        [WirePath("properties.sql.allowSqlRedirect")]
-        public bool? AllowSqlRedirect
+        public AzureFirewallThreatIntelMode? ThreatIntelMode
         {
-            get => Sql is null ? default : Sql.AllowSqlRedirect;
+            get
+            {
+                return Properties is null ? default : Properties.ThreatIntelMode;
+            }
             set
             {
-                if (Sql is null)
-                    Sql = new FirewallPolicySQL();
-                Sql.AllowSqlRedirect = value;
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyDraftProperties();
+                }
+                Properties.ThreatIntelMode = value;
+            }
+        }
+
+        /// <summary> ThreatIntel Whitelist for Firewall Policy. </summary>
+        [WirePath("properties.threatIntelWhitelist")]
+        public FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThreatIntelWhitelist;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyDraftProperties();
+                }
+                Properties.ThreatIntelWhitelist = value;
+            }
+        }
+
+        /// <summary> Insights on Firewall Policy. </summary>
+        [WirePath("properties.insights")]
+        public FirewallPolicyInsights Insights
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Insights;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyDraftProperties();
+                }
+                Properties.Insights = value;
+            }
+        }
+
+        /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
+        [WirePath("properties.snat")]
+        public FirewallPolicySnat Snat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Snat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyDraftProperties();
+                }
+                Properties.Snat = value;
             }
         }
 
         /// <summary> DNS Proxy Settings definition. </summary>
         [WirePath("properties.dnsSettings")]
-        public DnsSettings DnsSettings { get; set; }
+        public DnsSettings DnsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyDraftProperties();
+                }
+                Properties.DnsSettings = value;
+            }
+        }
+
         /// <summary> Explicit Proxy Settings definition. </summary>
         [WirePath("properties.explicitProxy")]
-        public FirewallPolicyExplicitProxy ExplicitProxy { get; set; }
+        public FirewallPolicyExplicitProxy ExplicitProxy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExplicitProxy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyDraftProperties();
+                }
+                Properties.ExplicitProxy = value;
+            }
+        }
+
         /// <summary> The configuration for Intrusion detection. </summary>
         [WirePath("properties.intrusionDetection")]
-        public FirewallPolicyIntrusionDetection IntrusionDetection { get; set; }
+        public FirewallPolicyIntrusionDetection IntrusionDetection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntrusionDetection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyDraftProperties();
+                }
+                Properties.IntrusionDetection = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.basePolicy.id")]
+        public ResourceIdentifier BasePolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BasePolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyDraftProperties();
+                }
+                Properties.BasePolicyId = value;
+            }
+        }
+
+        /// <summary> A flag to indicate if SQL Redirect traffic filtering is enabled. Turning on the flag requires no rule using port 11000-11999. </summary>
+        [WirePath("properties.sql.allowSqlRedirect")]
+        public bool? AllowSqlRedirect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowSqlRedirect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyDraftProperties();
+                }
+                Properties.AllowSqlRedirect = value;
+            }
+        }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource : IJsonModel<ManagedBackupShortTermRetentionPolicyData>
     {
-        private static ManagedBackupShortTermRetentionPolicyData s_dataDeserializationInstance;
-        private static ManagedBackupShortTermRetentionPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedBackupShortTermRetentionPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedBackupShortTermRetentionPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedBackupShortTermRetentionPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedBackupShortTermRetentionPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedBackupShortTermRetentionPolicyData>)Data).Write(writer, options);
 
-        ManagedBackupShortTermRetentionPolicyData IJsonModel<ManagedBackupShortTermRetentionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedBackupShortTermRetentionPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedBackupShortTermRetentionPolicyData IJsonModel<ManagedBackupShortTermRetentionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedBackupShortTermRetentionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedBackupShortTermRetentionPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedBackupShortTermRetentionPolicyData IPersistableModel<ManagedBackupShortTermRetentionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedBackupShortTermRetentionPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedBackupShortTermRetentionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedBackupShortTermRetentionPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedBackupShortTermRetentionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

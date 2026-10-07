@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Function resource specific properties. </param>
-        internal ContainerAppsFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerAppsFunctionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppsFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppsFunctionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Function resource specific properties. </summary>
@@ -71,13 +71,23 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Indicates whether the function is disabled. </summary>
+        /// <summary> Indicates whether the function is disabled. This property is deprecated; use `state` instead. </summary>
         [WirePath("properties.isDisabled")]
         public bool? IsDisabled
         {
             get
             {
                 return Properties is null ? default : Properties.IsDisabled;
+            }
+        }
+
+        /// <summary> The state of the function. </summary>
+        [WirePath("properties.state")]
+        public ContainerAppsFunctionState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
             }
         }
     }

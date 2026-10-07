@@ -15,7 +15,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> Compute role. </summary>
+    /// <summary>
+    /// Compute role.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/>, and <see cref="MecRole"/>.
+    /// </summary>
     public partial class DataBoxEdgeRoleData : ResourceData, IJsonModel<DataBoxEdgeRoleData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -96,6 +99,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>

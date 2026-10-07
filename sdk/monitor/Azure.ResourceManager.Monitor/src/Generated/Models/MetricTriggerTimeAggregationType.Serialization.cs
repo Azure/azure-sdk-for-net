@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class MetricTriggerTimeAggregationTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MetricTriggerTimeAggregationType value) => value switch
         {
             MetricTriggerTimeAggregationType.Average => "Average",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MetricTriggerTimeAggregationType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MetricTriggerTimeAggregationType ToMetricTriggerTimeAggregationType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Average")) return MetricTriggerTimeAggregationType.Average;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Minimum")) return MetricTriggerTimeAggregationType.Minimum;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Maximum")) return MetricTriggerTimeAggregationType.Maximum;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Total")) return MetricTriggerTimeAggregationType.Total;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count")) return MetricTriggerTimeAggregationType.Count;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Last")) return MetricTriggerTimeAggregationType.Last;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Average"))
+            {
+                return MetricTriggerTimeAggregationType.Average;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Minimum"))
+            {
+                return MetricTriggerTimeAggregationType.Minimum;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Maximum"))
+            {
+                return MetricTriggerTimeAggregationType.Maximum;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Total"))
+            {
+                return MetricTriggerTimeAggregationType.Total;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count"))
+            {
+                return MetricTriggerTimeAggregationType.Count;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Last"))
+            {
+                return MetricTriggerTimeAggregationType.Last;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MetricTriggerTimeAggregationType value.");
         }
     }

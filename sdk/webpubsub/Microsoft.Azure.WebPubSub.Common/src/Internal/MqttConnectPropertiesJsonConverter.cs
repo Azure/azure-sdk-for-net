@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -34,19 +34,19 @@ internal class MqttConnectPropertiesJsonConverter : JsonConverter<MqttConnectPro
                 switch (propertyName)
                 {
                     case MqttConnectProperties.ProtocolVersionProperty:
-                        protocolVersion = JsonSerializer.Deserialize<MqttProtocolVersion>(ref reader, options);
+                        protocolVersion = (MqttProtocolVersion)reader.GetInt32();
                         break;
 
                     case MqttConnectProperties.UsernameProperty:
-                        username = reader.GetString();
+                        username = reader.TokenType == JsonTokenType.Null ? null : reader.GetString();
                         break;
 
                     case MqttConnectProperties.PasswordProperty:
-                        password = reader.GetString();
+                        password = reader.TokenType == JsonTokenType.Null ? null : reader.GetString();
                         break;
 
                     case MqttConnectProperties.UserPropertiesProperty:
-                        userProperties = JsonSerializer.Deserialize<IReadOnlyList<MqttUserProperty>>(ref reader, options);
+                        userProperties = ReadUserProperties(ref reader);
                         break;
 
                     default:
@@ -68,18 +68,66 @@ internal class MqttConnectPropertiesJsonConverter : JsonConverter<MqttConnectPro
     public override void Write(Utf8JsonWriter writer, MqttConnectProperties value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
-        writer.WritePropertyName(MqttConnectProperties.ProtocolVersionProperty);
-        writer.WriteNumberValue((int)value.ProtocolVersion);
-
-        writer.WritePropertyName(MqttConnectProperties.UsernameProperty);
-        writer.WriteStringValue(value.Username);
-
-        writer.WritePropertyName(MqttConnectProperties.PasswordProperty);
-        writer.WriteStringValue(value.Password);
+        writer.WriteNumber(MqttConnectProperties.ProtocolVersionProperty, (int)value.ProtocolVersion);
+        writer.WriteString(MqttConnectProperties.UsernameProperty, value.Username);
+        writer.WriteString(MqttConnectProperties.PasswordProperty, value.Password);
 
         writer.WritePropertyName(MqttConnectProperties.UserPropertiesProperty);
-        JsonSerializer.Serialize(writer, value.UserProperties, options);
+        WriteUserProperties(writer, value.UserProperties);
 
         writer.WriteEndObject();
+    }
+
+    private static IReadOnlyList<MqttUserProperty>? ReadUserProperties(ref Utf8JsonReader reader)
+    {
+        using var jsonDocument = JsonDocument.ParseValue(ref reader);
+        JsonElement element = jsonDocument.RootElement;
+
+        if (element.ValueKind == JsonValueKind.Null)
+        {
+            return null;
+        }
+
+        List<MqttUserProperty> result = new();
+        foreach (JsonElement property in element.EnumerateArray())
+        {
+            string? name = null;
+            string? value = null;
+
+            foreach (JsonProperty item in property.EnumerateObject())
+            {
+                if (item.NameEquals(MqttUserProperty.NamePropertyName))
+                {
+                    name = item.Value.GetString();
+                }
+                else if (item.NameEquals(MqttUserProperty.ValuePropertyName))
+                {
+                    value = item.Value.GetString();
+                }
+            }
+
+            result.Add(new MqttUserProperty(name!, value!));
+        }
+
+        return result;
+    }
+
+    private static void WriteUserProperties(Utf8JsonWriter writer, IReadOnlyList<MqttUserProperty>? userProperties)
+    {
+        if (userProperties == null)
+        {
+            writer.WriteNullValue();
+            return;
+        }
+
+        writer.WriteStartArray();
+        foreach (MqttUserProperty property in userProperties)
+        {
+            writer.WriteStartObject();
+            writer.WriteString(MqttUserProperty.NamePropertyName, property.Name);
+            writer.WriteString(MqttUserProperty.ValuePropertyName, property.Value);
+            writer.WriteEndObject();
+        }
+        writer.WriteEndArray();
     }
 }

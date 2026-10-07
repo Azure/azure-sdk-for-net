@@ -125,6 +125,10 @@ namespace Azure.Provisioning.ContainerService
             _startDate = DefineProperty<string>(nameof(StartDate), new string[] { "startDate" });
             _startTime = DefineProperty<string>(nameof(StartTime), new string[] { "startTime" }, isRequired: true);
             _notAllowedDates = DefineListProperty<ContainerServiceDateSpan>(nameof(NotAllowedDates), new string[] { "notAllowedDates" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceMaintenanceWindow that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

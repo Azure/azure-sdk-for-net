@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,53 +19,87 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="P2SConnectionConfiguration"/>. </summary>
         public P2SConnectionConfiguration()
         {
-            ConfigurationPolicyGroups = new ChangeTrackingList<WritableSubResource>();
-            PreviousConfigurationPolicyGroupAssociations = new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="P2SConnectionConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
-        /// <param name="configurationPolicyGroups"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
-        /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
-        /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
-        internal P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VirtualNetworkAddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IList<WritableSubResource> configurationPolicyGroups, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the P2S connection configuration. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal P2SConnectionConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, P2SConnectionConfigurationProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            VpnClientAddressPool = vpnClientAddressPool;
-            RoutingConfiguration = routingConfiguration;
-            EnableInternetSecurity = enableInternetSecurity;
-            ConfigurationPolicyGroups = configurationPolicyGroups;
-            PreviousConfigurationPolicyGroupAssociations = previousConfigurationPolicyGroupAssociations;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the P2S connection configuration. </summary>
+        [WirePath("properties")]
+        internal P2SConnectionConfigurationProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
         [WirePath("properties.vpnClientAddressPool")]
-        public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
-        /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
-        [WirePath("properties.routingConfiguration")]
-        public RoutingConfiguration RoutingConfiguration { get; set; }
+        public VirtualNetworkAddressSpace VpnClientAddressPool
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnClientAddressPool;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SConnectionConfigurationProperties();
+                }
+                Properties.VpnClientAddressPool = value;
+            }
+        }
+
         /// <summary> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </summary>
         [WirePath("properties.enableInternetSecurity")]
-        public bool? EnableInternetSecurity { get; set; }
-        /// <summary> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </summary>
-        [WirePath("properties.configurationPolicyGroupAssociations")]
-        public IList<WritableSubResource> ConfigurationPolicyGroups { get; }
+        public bool? EnableInternetSecurity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableInternetSecurity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SConnectionConfigurationProperties();
+                }
+                Properties.EnableInternetSecurity = value;
+            }
+        }
+
         /// <summary> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </summary>
         [WirePath("properties.previousConfigurationPolicyGroupAssociations")]
-        public IReadOnlyList<VpnServerConfigurationPolicyGroupData> PreviousConfigurationPolicyGroupAssociations { get; }
+        public IReadOnlyList<VpnServerConfigurationPolicyGroupData> PreviousConfigurationPolicyGroupAssociations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SConnectionConfigurationProperties();
+                }
+                return Properties.PreviousConfigurationPolicyGroupAssociations;
+            }
+        }
+
         /// <summary> The provisioning state of the P2SConnectionConfiguration resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

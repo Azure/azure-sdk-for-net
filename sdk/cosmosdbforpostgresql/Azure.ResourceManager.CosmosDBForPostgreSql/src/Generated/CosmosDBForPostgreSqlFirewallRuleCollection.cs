@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             TryGetApiVersion(CosmosDBForPostgreSqlFirewallRuleResource.ResourceType, out string cosmosDBForPostgreSqlFirewallRuleApiVersion);
             _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlFirewallRuleApiVersion ?? "2023-03-02-preview");
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlFirewallRuleApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, CosmosDBForPostgreSqlFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(
-                    new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client),
+                    new CosmosDBForPostgreSqlFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, CosmosDBForPostgreSqlFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(
-                    new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client),
+                    new CosmosDBForPostgreSqlFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

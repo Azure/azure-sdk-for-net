@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProviderHub
                     yield break;
                 }
                 CustomRolloutListResult result = CustomRolloutListResult.FromResponse(response);
-                yield return Page<CustomRolloutData>.FromValues((IReadOnlyList<CustomRolloutData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CustomRolloutData>.FromValues((IReadOnlyList<CustomRolloutData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

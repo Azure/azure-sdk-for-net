@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the legacy Microsoft Account provider.
-    /// Serialized Name: LegacyMicrosoftAccount
-    /// </summary>
+    /// <summary> The configuration settings of the legacy Microsoft Account provider. </summary>
     public partial class LegacyMicrosoftAccount
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LegacyMicrosoftAccount"/>. </summary>
         public LegacyMicrosoftAccount()
@@ -54,80 +23,60 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LegacyMicrosoftAccount"/>. </summary>
-        /// <param name="isEnabled">
-        /// &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: LegacyMicrosoftAccount.enabled
-        /// </param>
-        /// <param name="registration">
-        /// The configuration settings of the app registration for the legacy Microsoft Account provider.
-        /// Serialized Name: LegacyMicrosoftAccount.registration
-        /// </param>
-        /// <param name="login">
-        /// The configuration settings of the login flow.
-        /// Serialized Name: LegacyMicrosoftAccount.login
-        /// </param>
-        /// <param name="validation">
-        /// The configuration settings of the legacy Microsoft Account provider token validation flow.
-        /// Serialized Name: LegacyMicrosoftAccount.validation
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LegacyMicrosoftAccount(bool? isEnabled, ClientRegistration registration, LoginScopes login, AllowedAudiencesValidation validation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="registration"> The configuration settings of the app registration for the legacy Microsoft Account provider. </param>
+        /// <param name="login"> The configuration settings of the login flow. </param>
+        /// <param name="validation"> The configuration settings of the legacy Microsoft Account provider token validation flow. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LegacyMicrosoftAccount(bool? isEnabled, ClientRegistration registration, LoginScopes login, AllowedAudiencesValidation validation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
             Validation = validation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: LegacyMicrosoftAccount.enabled
-        /// </summary>
+        /// <summary> &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The configuration settings of the app registration for the legacy Microsoft Account provider.
-        /// Serialized Name: LegacyMicrosoftAccount.registration
-        /// </summary>
+
+        /// <summary> The configuration settings of the app registration for the legacy Microsoft Account provider. </summary>
         [WirePath("registration")]
         public ClientRegistration Registration { get; set; }
-        /// <summary>
-        /// The configuration settings of the login flow.
-        /// Serialized Name: LegacyMicrosoftAccount.login
-        /// </summary>
+
+        /// <summary> The configuration settings of the login flow. </summary>
+        [WirePath("login")]
         internal LoginScopes Login { get; set; }
-        /// <summary>
-        /// A list of the scopes that should be requested while authenticating.
-        /// Serialized Name: LoginScopes.scopes
-        /// </summary>
+
+        /// <summary> The configuration settings of the legacy Microsoft Account provider token validation flow. </summary>
+        [WirePath("validation")]
+        internal AllowedAudiencesValidation Validation { get; set; }
+
+        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
         [WirePath("login.scopes")]
         public IList<string> LoginScopes
         {
             get
             {
                 if (Login is null)
+                {
                     Login = new LoginScopes();
+                }
                 return Login.Scopes;
             }
         }
 
-        /// <summary>
-        /// The configuration settings of the legacy Microsoft Account provider token validation flow.
-        /// Serialized Name: LegacyMicrosoftAccount.validation
-        /// </summary>
-        internal AllowedAudiencesValidation Validation { get; set; }
-        /// <summary>
-        /// The configuration settings of the allowed list of audiences from which to validate the JWT token.
-        /// Serialized Name: AllowedAudiencesValidation.allowedAudiences
-        /// </summary>
+        /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>
         [WirePath("validation.allowedAudiences")]
         public IList<string> ValidationAllowedAudiences
         {
             get
             {
                 if (Validation is null)
+                {
                     Validation = new AllowedAudiencesValidation();
+                }
                 return Validation.AllowedAudiences;
             }
         }

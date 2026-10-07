@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 domainName is null && targetDnsServers is null && metadata is null && dnsForwardingRuleState is null && provisioningState is null
                     ? default
                     : new ForwardingRuleProperties(
@@ -42,7 +41,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         dnsForwardingRuleState,
                         provisioningState,
                         null),
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 dnsResolverOutboundEndpoints is null && provisioningState is null && resourceGuid is null
@@ -69,7 +68,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         resourceGuid,
                         null),
                 name,
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -79,24 +79,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(WritableSubResource virtualNetwork)
         {
             return new DnsForwardingRulesetVirtualNetworkLinkData(virtualNetwork);
-        }
-
-        /// <summary>
-        /// Creates a <see cref="Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier virtualNetworkId, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState)
-        {
-            return new DnsForwardingRulesetVirtualNetworkLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                metadata is null && provisioningState is null && virtualNetworkId is null
-                    ? default
-                    : new VirtualNetworkLinkProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), metadata, provisioningState, null),
-                etag);
         }
 
         /// <summary>
@@ -121,13 +103,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 dnsResolverState is null && provisioningState is null && resourceGuid is null && virtualNetworkId is null
                     ? default
                     : new DnsResolverProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), dnsResolverState, provisioningState, resourceGuid, null),
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -143,13 +125,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 domains is null && domainsUri is null && provisioningState is null && resourceGuid is null
                     ? default
                     : new DnsResolverDomainListProperties((domains ?? new ChangeTrackingList<string>()).ToList(), domainsUri, provisioningState, resourceGuid, null),
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -165,13 +147,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 ipConfigurations is null && provisioningState is null && resourceGuid is null
                     ? default
                     : new InboundEndpointProperties((ipConfigurations ?? new ChangeTrackingList<InboundEndpointIPConfiguration>()).ToList(), provisioningState, resourceGuid, null),
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -196,13 +178,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 provisioningState is null && resourceGuid is null && subnetId is null
                     ? default
                     : new OutboundEndpointProperties(subnetId is null ? default : new SubResource(subnetId, null), provisioningState, resourceGuid, null),
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -218,11 +200,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 provisioningState is null && resourceGuid is null ? default : new DnsResolverPolicyProperties(provisioningState, resourceGuid, null),
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -247,11 +229,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 provisioningState is null && virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), provisioningState, null),
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -267,7 +249,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 new DnsSecurityRuleProperties(
@@ -278,7 +259,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     dnsSecurityRuleState,
                     provisioningState,
                     null),
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
     }
 }

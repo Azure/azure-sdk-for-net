@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The FileShareTokenIntent. </summary>
+    /// <summary> The file share token intent types. </summary>
     public readonly partial struct FileShareTokenIntent : IEquatable<FileShareTokenIntent>
     {
         private readonly string _value;
+        /// <summary> The file share token intent is backup. </summary>
+        private const string BackupValue = "backup";
 
         /// <summary> Initializes a new instance of <see cref="FileShareTokenIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FileShareTokenIntent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BackupValue = "backup";
-
-        /// <summary> backup. </summary>
+        /// <summary> The file share token intent is backup. </summary>
         public static FileShareTokenIntent Backup { get; } = new FileShareTokenIntent(BackupValue);
+
         /// <summary> Determines if two <see cref="FileShareTokenIntent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FileShareTokenIntent left, FileShareTokenIntent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FileShareTokenIntent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FileShareTokenIntent left, FileShareTokenIntent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FileShareTokenIntent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FileShareTokenIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FileShareTokenIntent(string value) => new FileShareTokenIntent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FileShareTokenIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FileShareTokenIntent?(string value) => value == null ? null : new FileShareTokenIntent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FileShareTokenIntent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FileShareTokenIntent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The effective route configured on the virtual hub or specified resource. </summary>
     public partial class VirtualHubEffectiveRoute
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualHubEffectiveRoute"/>. </summary>
         internal VirtualHubEffectiveRoute()
@@ -58,29 +30,33 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="nextHopType"> The type of the next hop. </param>
         /// <param name="asPath"> The ASPath of this route. </param>
         /// <param name="routeOrigin"> The origin of this route. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHubEffectiveRoute(IReadOnlyList<string> addressPrefixes, IReadOnlyList<string> nextHops, string nextHopType, string asPath, string routeOrigin, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualHubEffectiveRoute(IReadOnlyList<string> addressPrefixes, IReadOnlyList<string> nextHops, string nextHopType, string asPath, string routeOrigin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefixes = addressPrefixes;
             NextHops = nextHops;
             NextHopType = nextHopType;
             AsPath = asPath;
             RouteOrigin = routeOrigin;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of address prefixes. </summary>
         [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
+
         /// <summary> The list of next hops. </summary>
         [WirePath("nextHops")]
         public IReadOnlyList<string> NextHops { get; }
+
         /// <summary> The type of the next hop. </summary>
         [WirePath("nextHopType")]
         public string NextHopType { get; }
+
         /// <summary> The ASPath of this route. </summary>
         [WirePath("asPath")]
         public string AsPath { get; }
+
         /// <summary> The origin of this route. </summary>
         [WirePath("routeOrigin")]
         public string RouteOrigin { get; }

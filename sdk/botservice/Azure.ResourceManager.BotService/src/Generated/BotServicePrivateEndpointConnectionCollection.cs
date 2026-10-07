@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BotService
         {
             TryGetApiVersion(BotServicePrivateEndpointConnectionResource.ResourceType, out string botServicePrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotServicePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, botServicePrivateEndpointConnectionApiVersion ?? "2023-09-15-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botServicePrivateEndpointConnectionApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 

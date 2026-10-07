@@ -21,6 +21,10 @@ namespace Azure.AI.VoiceLive
         private const string McpCallValue = "mcp_call";
         private const string McpApprovalRequestValue = "mcp_approval_request";
         private const string McpApprovalResponseValue = "mcp_approval_response";
+        /// <summary> Web search call item. </summary>
+        private const string WebSearchCallValue = "web_search_call";
+        /// <summary> File search call item. </summary>
+        private const string FileSearchCallValue = "file_search_call";
 
         /// <summary> Initializes a new instance of <see cref="ItemType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -52,6 +56,12 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the McpApprovalResponse. </summary>
         public static ItemType McpApprovalResponse { get; } = new ItemType(McpApprovalResponseValue);
+
+        /// <summary> Web search call item. </summary>
+        public static ItemType WebSearchCall { get; } = new ItemType(WebSearchCallValue);
+
+        /// <summary> File search call item. </summary>
+        public static ItemType FileSearchCall { get; } = new ItemType(FileSearchCallValue);
 
         /// <summary> Determines if two <see cref="ItemType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -1,8 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,10 +11,10 @@ using Azure.AI.Projects.Memory;
 namespace Azure.AI.Projects;
 
 [Experimental("AAIP001")]
-[CodeGenSuppress("GetGenerationJobs", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(DataGenerationJobScenario?), typeof(IEnumerable<DataGenerationJobKind>), typeof(CancellationToken))]
-[CodeGenSuppress("GetGenerationJobsAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(DataGenerationJobScenario?), typeof(IEnumerable<DataGenerationJobKind>), typeof(CancellationToken))]
-[CodeGenSuppress("GetGenerationJobs", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<DataGenerationJobKind>), typeof(RequestOptions))]
-[CodeGenSuppress("GetGenerationJobsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<DataGenerationJobKind>), typeof(RequestOptions))]
+[CodeGenSuppress("GetGenerationJobs", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetGenerationJobsAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetGenerationJobs", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetGenerationJobsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class DataGenerationJobs
 {
     /// <summary> Gets the details of a data generation job by its ID. </summary>
@@ -23,7 +23,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<DataGenerationJob> GetGenerationJob(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult<DataGenerationJob> Get(string jobId, CancellationToken cancellationToken = default)
     {
         return GetGenerationJob(
             jobId: jobId,
@@ -37,7 +37,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<DataGenerationJob>> GetGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<DataGenerationJob>> GetAsync(string jobId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -66,11 +66,9 @@ public partial class DataGenerationJobs
     /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
-    /// <param name="scenario"> Filter data generation jobs by their scenario. </param>
-    /// <param name="kind"> Filter data generation jobs by their type. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<DataGenerationJob> GetGenerationJobs(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, DataGenerationJobScenario? scenario = default, IEnumerable<DataGenerationJobKind> kind = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<DataGenerationJob> GetAll(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAICollectionResultOfT<DataGenerationJob>(
             Pipeline,
@@ -81,11 +79,9 @@ public partial class DataGenerationJobs
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
-                    scenario: localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
-                    type: kind,
                     options: localRequestOptions),
             dataItemDeserializer: DataGenerationJob.DeserializeDataGenerationJob,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [scenario?.ToString(), kind.ToString()]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
             cancellationToken.ToRequestOptions());
     }
 
@@ -108,11 +104,9 @@ public partial class DataGenerationJobs
     /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
-    /// <param name="scenario"> Filter data generation jobs by their scenario. </param>
-    /// <param name="kind"> Filter data generation jobs by their type. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<DataGenerationJob> GetGenerationJobsAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, DataGenerationJobScenario? scenario = default, IEnumerable<DataGenerationJobKind> kind = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<DataGenerationJob> GetAllAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAIAsyncCollectionResultOfT<DataGenerationJob>(
             Pipeline,
@@ -123,11 +117,9 @@ public partial class DataGenerationJobs
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
-                    scenario: localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
-                    type: kind,
                     options: localRequestOptions),
             dataItemDeserializer: DataGenerationJob.DeserializeDataGenerationJob,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [scenario?.ToString()]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
             cancellationToken.ToRequestOptions());
     }
 
@@ -137,13 +129,29 @@ public partial class DataGenerationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<DataGenerationJob> CreateGenerationJob(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<DataGenerationJob> Create(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    {
+        OperationResult operation = Create(false, job, operationId, cancellationToken);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
+    }
+
+    /// <summary> Creates a data generation job. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="job"> The job to create. </param>
+    /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
+    public virtual OperationResult Create(bool waitUntilCompleted, DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         return CreateGenerationJob(
-            job: job,
-            foundryFeatures: default,
+            waitUntilCompleted: waitUntilCompleted,
+            content: job,
+            foundryFeatures: default(string),
             operationId: operationId,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         );
     }
 
@@ -153,13 +161,29 @@ public partial class DataGenerationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<DataGenerationJob>> CreateGenerationJobAsync(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<DataGenerationJob>> CreateAsync(DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    {
+        OperationResult operation = await CreateAsync(false, job, operationId, cancellationToken).ConfigureAwait(false);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
+    }
+
+    /// <summary> Creates a data generation job. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="job"> The job to create. </param>
+    /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
+    public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         return await CreateGenerationJobAsync(
-            job: job,
-            foundryFeatures: default,
+            waitUntilCompleted: waitUntilCompleted,
+            content: job,
+            foundryFeatures: default(string),
             operationId: operationId,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         ).ConfigureAwait(false);
     }
 
@@ -169,7 +193,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<DataGenerationJob> CancelGenerationJob(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult<DataGenerationJob> Cancel(string jobId, CancellationToken cancellationToken = default)
     {
         return CancelGenerationJob(
             jobId: jobId,
@@ -184,7 +208,7 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public async virtual Task<ClientResult<DataGenerationJob>> CancelGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
+    public async virtual Task<ClientResult<DataGenerationJob>> CancelAsync(string jobId, CancellationToken cancellationToken = default)
     {
         return await CancelGenerationJobAsync(
             jobId: jobId,
@@ -199,9 +223,9 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual void DeleteGenerationJob(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult Delete(string jobId, CancellationToken cancellationToken = default)
     {
-        DeleteGenerationJob(
+        return DeleteGenerationJob(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken);
@@ -213,9 +237,9 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public async virtual Task DeleteGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
+    public async virtual Task<ClientResult> DeleteAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        await DeleteGenerationJobAsync(
+        return await DeleteGenerationJobAsync(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken).ConfigureAwait(false);

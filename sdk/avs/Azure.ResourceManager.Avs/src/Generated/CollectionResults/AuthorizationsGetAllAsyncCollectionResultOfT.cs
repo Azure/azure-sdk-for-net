@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 ExpressRouteAuthorizationList result = ExpressRouteAuthorizationList.FromResponse(response);
-                yield return Page<ExpressRouteAuthorizationData>.FromValues((IReadOnlyList<ExpressRouteAuthorizationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExpressRouteAuthorizationData>.FromValues((IReadOnlyList<ExpressRouteAuthorizationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct AdministrativeEnableState : IEquatable<AdministrativeEnableState>
     {
         private readonly string _value;
+        /// <summary> AdministrativeState Enable. </summary>
+        private const string EnableValue = "Enable";
+        /// <summary> AdministrativeState Disable. </summary>
+        private const string DisableValue = "Disable";
+        /// <summary> AdministrativeState UnderMaintenance. </summary>
+        private const string UnderMaintenanceValue = "UnderMaintenance";
 
         /// <summary> Initializes a new instance of <see cref="AdministrativeEnableState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AdministrativeEnableState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnableValue = "Enable";
-        private const string DisableValue = "Disable";
-        private const string UnderMaintenanceValue = "UnderMaintenance";
+            _value = value;
+        }
 
         /// <summary> AdministrativeState Enable. </summary>
         public static AdministrativeEnableState Enable { get; } = new AdministrativeEnableState(EnableValue);
+
         /// <summary> AdministrativeState Disable. </summary>
         public static AdministrativeEnableState Disable { get; } = new AdministrativeEnableState(DisableValue);
+
         /// <summary> AdministrativeState UnderMaintenance. </summary>
         public static AdministrativeEnableState UnderMaintenance { get; } = new AdministrativeEnableState(UnderMaintenanceValue);
+
         /// <summary> Determines if two <see cref="AdministrativeEnableState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AdministrativeEnableState left, AdministrativeEnableState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AdministrativeEnableState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AdministrativeEnableState left, AdministrativeEnableState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AdministrativeEnableState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AdministrativeEnableState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AdministrativeEnableState(string value) => new AdministrativeEnableState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AdministrativeEnableState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AdministrativeEnableState?(string value) => value == null ? null : new AdministrativeEnableState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AdministrativeEnableState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AdministrativeEnableState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

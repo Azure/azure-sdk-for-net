@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct EsuEligibility : IEquatable<EsuEligibility>
     {
         private readonly string _value;
+        /// <summary> Eligible. </summary>
+        private const string EligibleValue = "Eligible";
+        /// <summary> Ineligible. </summary>
+        private const string IneligibleValue = "Ineligible";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="EsuEligibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EsuEligibility(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EligibleValue = "Eligible";
-        private const string IneligibleValue = "Ineligible";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> Eligible. </summary>
         public static EsuEligibility Eligible { get; } = new EsuEligibility(EligibleValue);
+
         /// <summary> Ineligible. </summary>
         public static EsuEligibility Ineligible { get; } = new EsuEligibility(IneligibleValue);
+
         /// <summary> Unknown. </summary>
         public static EsuEligibility Unknown { get; } = new EsuEligibility(UnknownValue);
+
         /// <summary> Determines if two <see cref="EsuEligibility"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EsuEligibility left, EsuEligibility right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EsuEligibility"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EsuEligibility left, EsuEligibility right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EsuEligibility"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EsuEligibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EsuEligibility(string value) => new EsuEligibility(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EsuEligibility"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EsuEligibility?(string value) => value == null ? null : new EsuEligibility(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EsuEligibility other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EsuEligibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

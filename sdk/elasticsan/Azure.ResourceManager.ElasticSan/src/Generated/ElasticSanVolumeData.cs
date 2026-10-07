@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of Volume. </param>
-        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VolumeProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VolumeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of Volume. </summary>
@@ -95,29 +95,25 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
+        /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
+        public IList<ElasticSanManagedByInfo> ManagedBy
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                return Properties.ManagedBy;
+            }
+        }
+
         /// <summary> State of the operation on the resource. </summary>
         public ElasticSanProvisioningState? ProvisioningState
         {
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
-        public ResourceIdentifier ManagedByResourceId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagedByResourceId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.ManagedByResourceId = value;
             }
         }
     }

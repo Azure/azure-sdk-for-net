@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> The VmGuestPatchClassificationLinux. </summary>
+    /// <summary></summary>
     public readonly partial struct VmGuestPatchClassificationLinux : IEquatable<VmGuestPatchClassificationLinux>
     {
         private readonly string _value;
+        /// <summary> Critical. </summary>
+        private const string CriticalValue = "Critical";
+        /// <summary> Security. </summary>
+        private const string SecurityValue = "Security";
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="VmGuestPatchClassificationLinux"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VmGuestPatchClassificationLinux(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CriticalValue = "Critical";
-        private const string SecurityValue = "Security";
-        private const string OtherValue = "Other";
+            _value = value;
+        }
 
         /// <summary> Critical. </summary>
         public static VmGuestPatchClassificationLinux Critical { get; } = new VmGuestPatchClassificationLinux(CriticalValue);
+
         /// <summary> Security. </summary>
         public static VmGuestPatchClassificationLinux Security { get; } = new VmGuestPatchClassificationLinux(SecurityValue);
+
         /// <summary> Other. </summary>
         public static VmGuestPatchClassificationLinux Other { get; } = new VmGuestPatchClassificationLinux(OtherValue);
+
         /// <summary> Determines if two <see cref="VmGuestPatchClassificationLinux"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VmGuestPatchClassificationLinux left, VmGuestPatchClassificationLinux right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VmGuestPatchClassificationLinux"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VmGuestPatchClassificationLinux left, VmGuestPatchClassificationLinux right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VmGuestPatchClassificationLinux"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VmGuestPatchClassificationLinux"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VmGuestPatchClassificationLinux(string value) => new VmGuestPatchClassificationLinux(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VmGuestPatchClassificationLinux"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VmGuestPatchClassificationLinux?(string value) => value == null ? null : new VmGuestPatchClassificationLinux(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VmGuestPatchClassificationLinux other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VmGuestPatchClassificationLinux other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

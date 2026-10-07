@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk details for E2A provider. </summary>
     public partial class SiteRecoveryVmDiskDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmDiskDetails"/>. </summary>
         internal SiteRecoveryVmDiskDetails()
@@ -62,8 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lunId"> Ordinal\LunId of the disk for the Azure VM. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
         /// <param name="customTargetDiskName"> The custom target Azure disk name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryVmDiskDetails(string vhdType, string vhdId, string diskId, string vhdName, string maxSizeMB, string targetDiskLocation, string targetDiskName, string lunId, ResourceIdentifier diskEncryptionSetId, string customTargetDiskName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryVmDiskDetails(string vhdType, string vhdId, string diskId, string vhdName, string maxSizeMB, string targetDiskLocation, string targetDiskName, string lunId, ResourceIdentifier diskEncryptionSetId, string customTargetDiskName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VhdType = vhdType;
             VhdId = vhdId;
@@ -75,27 +46,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LunId = lunId;
             DiskEncryptionSetId = diskEncryptionSetId;
             CustomTargetDiskName = customTargetDiskName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> VHD type. </summary>
         public string VhdType { get; }
+
         /// <summary> The VHD id. </summary>
         public string VhdId { get; }
+
         /// <summary> The disk resource id. </summary>
         public string DiskId { get; }
+
         /// <summary> VHD name. </summary>
         public string VhdName { get; }
+
         /// <summary> Max side in MB. </summary>
         public string MaxSizeMB { get; }
+
         /// <summary> Blob uri of the Azure disk. </summary>
         public string TargetDiskLocation { get; }
+
         /// <summary> The target Azure disk name. </summary>
         public string TargetDiskName { get; }
+
         /// <summary> Ordinal\LunId of the disk for the Azure VM. </summary>
         public string LunId { get; }
+
         /// <summary> The DiskEncryptionSet ARM ID. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; }
+
         /// <summary> The custom target Azure disk name. </summary>
         public string CustomTargetDiskName { get; }
     }

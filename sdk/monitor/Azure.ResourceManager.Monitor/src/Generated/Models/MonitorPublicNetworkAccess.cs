@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MonitorPublicNetworkAccess : IEquatable<MonitorPublicNetworkAccess>
     {
         private readonly string _value;
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> SecuredByPerimeter. </summary>
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Initializes a new instance of <see cref="MonitorPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorPublicNetworkAccess(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
+            _value = value;
+        }
 
         /// <summary> Enabled. </summary>
         public static MonitorPublicNetworkAccess Enabled { get; } = new MonitorPublicNetworkAccess(EnabledValue);
+
         /// <summary> Disabled. </summary>
         public static MonitorPublicNetworkAccess Disabled { get; } = new MonitorPublicNetworkAccess(DisabledValue);
+
         /// <summary> SecuredByPerimeter. </summary>
         public static MonitorPublicNetworkAccess SecuredByPerimeter { get; } = new MonitorPublicNetworkAccess(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="MonitorPublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorPublicNetworkAccess left, MonitorPublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorPublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorPublicNetworkAccess left, MonitorPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorPublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorPublicNetworkAccess(string value) => new MonitorPublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorPublicNetworkAccess?(string value) => value == null ? null : new MonitorPublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorPublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

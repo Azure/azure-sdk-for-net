@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of Volume Snapshot. </param>
-        internal ElasticSanSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SnapshotProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of Volume Snapshot. </summary>
@@ -69,6 +69,24 @@ namespace Azure.ResourceManager.ElasticSan
             get
             {
                 return Properties is null ? default : Properties.VolumeName;
+            }
+        }
+
+        /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
+        public SnapshotAccessState? SnapshotAccessState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SnapshotAccessState;
+            }
+        }
+
+        /// <summary> Percentage complete for the background copy of the snapshot when a snapshot is in InstantAccess state. </summary>
+        public float? CompletionPercent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CompletionPercent;
             }
         }
     }

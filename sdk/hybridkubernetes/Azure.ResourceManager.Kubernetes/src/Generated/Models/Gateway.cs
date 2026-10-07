@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Gateway"/>. </summary>
-        /// <param name="enabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
+        /// <param name="isGatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Gateway(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Gateway(bool? isGatewayEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsGatewayEnabled = isGatewayEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsGatewayEnabled { get; set; }
     }
 }

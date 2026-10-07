@@ -19,12 +19,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private const string HealthyValue = "Healthy";
         /// <summary> Degraded status. </summary>
         private const string DegradedValue = "Degraded";
-        /// <summary> Error status (Unhealthy). </summary>
-        private const string ErrorValue = "Error";
+        /// <summary> Unhealthy status. </summary>
+        private const string UnhealthyValue = "Unhealthy";
         /// <summary> Unknown status. </summary>
         private const string UnknownValue = "Unknown";
-        /// <summary> Deleted status. </summary>
-        private const string DeletedValue = "Deleted";
 
         /// <summary> Initializes a new instance of <see cref="EntityHealthState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -42,14 +40,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Degraded status. </summary>
         public static EntityHealthState Degraded { get; } = new EntityHealthState(DegradedValue);
 
-        /// <summary> Error status (Unhealthy). </summary>
-        public static EntityHealthState Error { get; } = new EntityHealthState(ErrorValue);
+        /// <summary> Unhealthy status. </summary>
+        public static EntityHealthState Unhealthy { get; } = new EntityHealthState(UnhealthyValue);
 
         /// <summary> Unknown status. </summary>
         public static EntityHealthState Unknown { get; } = new EntityHealthState(UnknownValue);
-
-        /// <summary> Deleted status. </summary>
-        public static EntityHealthState Deleted { get; } = new EntityHealthState(DeletedValue);
 
         /// <summary> Determines if two <see cref="EntityHealthState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

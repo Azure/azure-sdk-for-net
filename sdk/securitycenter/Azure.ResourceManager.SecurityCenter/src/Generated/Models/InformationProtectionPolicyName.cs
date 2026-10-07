@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The InformationProtectionPolicyName. </summary>
+    /// <summary></summary>
     public readonly partial struct InformationProtectionPolicyName : IEquatable<InformationProtectionPolicyName>
     {
         private readonly string _value;
+        /// <summary> effective. </summary>
+        private const string EffectiveValue = "effective";
+        /// <summary> custom. </summary>
+        private const string CustomValue = "custom";
 
         /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InformationProtectionPolicyName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EffectiveValue = "effective";
-        private const string CustomValue = "custom";
+            _value = value;
+        }
 
         /// <summary> effective. </summary>
         public static InformationProtectionPolicyName Effective { get; } = new InformationProtectionPolicyName(EffectiveValue);
+
         /// <summary> custom. </summary>
         public static InformationProtectionPolicyName Custom { get; } = new InformationProtectionPolicyName(CustomValue);
+
         /// <summary> Determines if two <see cref="InformationProtectionPolicyName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InformationProtectionPolicyName left, InformationProtectionPolicyName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InformationProtectionPolicyName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InformationProtectionPolicyName left, InformationProtectionPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InformationProtectionPolicyName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InformationProtectionPolicyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InformationProtectionPolicyName(string value) => new InformationProtectionPolicyName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InformationProtectionPolicyName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InformationProtectionPolicyName?(string value) => value == null ? null : new InformationProtectionPolicyName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InformationProtectionPolicyName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InformationProtectionPolicyName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

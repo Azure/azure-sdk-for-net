@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 DiskList result = DiskList.FromResponse(response);
-                yield return Page<DevTestLabDiskData>.FromValues((IReadOnlyList<DevTestLabDiskData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevTestLabDiskData>.FromValues((IReadOnlyList<DevTestLabDiskData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

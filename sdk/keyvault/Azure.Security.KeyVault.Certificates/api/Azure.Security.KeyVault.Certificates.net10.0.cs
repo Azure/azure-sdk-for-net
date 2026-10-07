@@ -8,7 +8,13 @@ namespace Azure.Security.KeyVault.Certificates
         public string LastName { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
     }
-    public partial class CertificateClient
+    public partial class AzureSecurityKeyVaultCertificatesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureSecurityKeyVaultCertificatesContext() { }
+        public static Azure.Security.KeyVault.Certificates.AzureSecurityKeyVaultCertificatesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
+    public partial class CertificateClient : System.IDisposable
     {
         protected CertificateClient() { }
         public CertificateClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
@@ -22,6 +28,7 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateContact>>> DeleteContactsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Certificates.CertificateIssuer> DeleteIssuer(string issuerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.CertificateIssuer>> DeleteIssuerAsync(string issuerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual void Dispose() { }
         public virtual Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2> DownloadCertificate(Azure.Security.KeyVault.Certificates.DownloadCertificateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2> DownloadCertificate(string certificateName, string version = null, Azure.Security.KeyVault.Certificates.CertificateContentType? outContentType = default(Azure.Security.KeyVault.Certificates.CertificateContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2> DownloadCertificate(string certificateName, string version, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -77,7 +84,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V2025_07_01) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V2026_03_01_Preview) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -90,6 +97,7 @@ namespace Azure.Security.KeyVault.Certificates
             V7_5 = 5,
             V7_6 = 6,
             V2025_07_01 = 7,
+            V2026_03_01_Preview = 8,
         }
     }
     public partial class CertificateContact
@@ -266,6 +274,7 @@ namespace Azure.Security.KeyVault.Certificates
         public Azure.Security.KeyVault.Certificates.CertificateKeyType? KeyType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateKeyUsage> KeyUsage { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.LifetimeAction> LifetimeActions { get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.PlatformManaged PlatformManaged { get { throw null; } set { } }
         public bool? ReuseKey { get { throw null; } set { } }
         public string Subject { get { throw null; } }
         public Azure.Security.KeyVault.Certificates.SubjectAlternativeNames SubjectAlternativeNames { get { throw null; } }
@@ -285,6 +294,7 @@ namespace Azure.Security.KeyVault.Certificates
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.KeyVault.Certificates.CertificatePolicyAction left, Azure.Security.KeyVault.Certificates.CertificatePolicyAction right) { throw null; }
         public static implicit operator Azure.Security.KeyVault.Certificates.CertificatePolicyAction (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Certificates.CertificatePolicyAction? (string value) { throw null; }
         public static bool operator !=(Azure.Security.KeyVault.Certificates.CertificatePolicyAction left, Azure.Security.KeyVault.Certificates.CertificatePolicyAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -400,6 +410,21 @@ namespace Azure.Security.KeyVault.Certificates
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IEnumerable<byte[]> X509Certificates { get { throw null; } }
     }
+    public partial class PlatformManaged : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Certificates.PlatformManaged>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Certificates.PlatformManaged>
+    {
+        public PlatformManaged(string certificateUsage) { }
+        public string CertificateUsage { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Metadata { get { throw null; } }
+        protected virtual Azure.Security.KeyVault.Certificates.PlatformManaged JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Security.KeyVault.Certificates.PlatformManaged PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.KeyVault.Certificates.PlatformManaged System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Certificates.PlatformManaged>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Certificates.PlatformManaged>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Certificates.PlatformManaged System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Certificates.PlatformManaged>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Certificates.PlatformManaged>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Certificates.PlatformManaged>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RecoverDeletedCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>
     {
         protected RecoverDeletedCertificateOperation() { }
@@ -426,6 +451,13 @@ namespace Azure.Security.KeyVault.Certificates
     {
         public const string Self = "Self";
         public const string Unknown = "Unknown";
+    }
+}
+namespace Azure.Security.KeyVault.Certificates.Models
+{
+    public static partial class KeyVaultCertificatesModelFactory
+    {
+        public static Azure.Security.KeyVault.Certificates.PlatformManaged PlatformManaged(string certificateUsage = null, System.Collections.Generic.IDictionary<string, System.BinaryData> metadata = null) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

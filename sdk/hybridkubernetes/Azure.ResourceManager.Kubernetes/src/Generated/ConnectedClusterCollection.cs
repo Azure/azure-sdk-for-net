@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             TryGetApiVersion(ConnectedClusterResource.ResourceType, out string connectedClusterApiVersion);
             _connectedClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kubernetes", ConnectedClusterResource.ResourceType.Namespace, Diagnostics);
-            _connectedClusterRestClient = new ConnectedCluster(_connectedClusterClientDiagnostics, Pipeline, Endpoint, connectedClusterApiVersion ?? "2025-12-01-preview");
+            _connectedClusterRestClient = new ConnectedCluster(_connectedClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Kubernetes
                 HttpMessage message = _connectedClusterRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ConnectedClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KubernetesArmOperation<ConnectedClusterResource> operation = new KubernetesArmOperation<ConnectedClusterResource>(
-                    new ConnectedClusterOperationSource(Client),
+                    new ConnectedClusterResourceOperationSource(Client),
                     _connectedClusterClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Kubernetes
                 HttpMessage message = _connectedClusterRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ConnectedClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KubernetesArmOperation<ConnectedClusterResource> operation = new KubernetesArmOperation<ConnectedClusterResource>(
-                    new ConnectedClusterOperationSource(Client),
+                    new ConnectedClusterResourceOperationSource(Client),
                     _connectedClusterClientDiagnostics,
                     Pipeline,
                     message.Request,

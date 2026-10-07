@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct AutoImportJobPropertiesAdminStatus : IEquatable<AutoImportJobPropertiesAdminStatus>
     {
         private readonly string _value;
+        /// <summary> Enable. </summary>
+        private const string EnableValue = "Enable";
+        /// <summary> Disable. </summary>
+        private const string DisableValue = "Disable";
 
         /// <summary> Initializes a new instance of <see cref="AutoImportJobPropertiesAdminStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoImportJobPropertiesAdminStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnableValue = "Enable";
-        private const string DisableValue = "Disable";
+            _value = value;
+        }
 
         /// <summary> Enable. </summary>
         public static AutoImportJobPropertiesAdminStatus Enable { get; } = new AutoImportJobPropertiesAdminStatus(EnableValue);
+
         /// <summary> Disable. </summary>
         public static AutoImportJobPropertiesAdminStatus Disable { get; } = new AutoImportJobPropertiesAdminStatus(DisableValue);
+
         /// <summary> Determines if two <see cref="AutoImportJobPropertiesAdminStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoImportJobPropertiesAdminStatus left, AutoImportJobPropertiesAdminStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoImportJobPropertiesAdminStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoImportJobPropertiesAdminStatus left, AutoImportJobPropertiesAdminStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoImportJobPropertiesAdminStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoImportJobPropertiesAdminStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoImportJobPropertiesAdminStatus(string value) => new AutoImportJobPropertiesAdminStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoImportJobPropertiesAdminStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoImportJobPropertiesAdminStatus?(string value) => value == null ? null : new AutoImportJobPropertiesAdminStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoImportJobPropertiesAdminStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoImportJobPropertiesAdminStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

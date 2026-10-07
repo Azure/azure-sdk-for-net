@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class DdosProtectionPlanResource : IJsonModel<DdosProtectionPlanData>
     {
-        private static DdosProtectionPlanData s_dataDeserializationInstance;
-        private static DdosProtectionPlanData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DdosProtectionPlanData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DdosProtectionPlanData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DdosProtectionPlanData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DdosProtectionPlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DdosProtectionPlanData>)Data).Write(writer, options);
 
-        DdosProtectionPlanData IJsonModel<DdosProtectionPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DdosProtectionPlanData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DdosProtectionPlanData IJsonModel<DdosProtectionPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DdosProtectionPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DdosProtectionPlanData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DdosProtectionPlanData IPersistableModel<DdosProtectionPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DdosProtectionPlanData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<DdosProtectionPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DdosProtectionPlanData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DdosProtectionPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

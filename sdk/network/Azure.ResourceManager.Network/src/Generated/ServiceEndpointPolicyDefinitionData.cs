@@ -7,56 +7,85 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ServiceEndpointPolicyDefinition data model.
-    /// Service Endpoint policy definitions.
-    /// </summary>
+    /// <summary> Service Endpoint policy definitions. </summary>
     public partial class ServiceEndpointPolicyDefinitionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionData"/>. </summary>
         public ServiceEndpointPolicyDefinitionData()
         {
-            ServiceResources = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
-        /// <param name="service"> Service endpoint name. </param>
-        /// <param name="serviceResources"> A list of service resources. </param>
-        /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
-        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string description, string service, IList<ResourceIdentifier> serviceResources, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the service endpoint policy definition. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ServiceEndpointPolicyDefinitionPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            Description = description;
-            Service = service;
-            ServiceResources = serviceResources;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the service endpoint policy definition. </summary>
+        [WirePath("properties")]
+        internal ServiceEndpointPolicyDefinitionPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceEndpointPolicyDefinitionPropertiesFormat();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Service endpoint name. </summary>
         [WirePath("properties.service")]
-        public string Service { get; set; }
-        /// <summary> A list of service resources. </summary>
-        [WirePath("properties.serviceResources")]
-        public IList<ResourceIdentifier> ServiceResources { get; }
+        public string Service
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Service;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceEndpointPolicyDefinitionPropertiesFormat();
+                }
+                Properties.Service = value;
+            }
+        }
+
         /// <summary> The provisioning state of the service endpoint policy definition resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

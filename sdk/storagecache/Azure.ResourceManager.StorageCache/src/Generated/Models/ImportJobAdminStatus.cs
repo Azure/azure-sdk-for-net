@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct ImportJobAdminStatus : IEquatable<ImportJobAdminStatus>
     {
         private readonly string _value;
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Cancel. </summary>
+        private const string CancelValue = "Cancel";
 
         /// <summary> Initializes a new instance of <see cref="ImportJobAdminStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImportJobAdminStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string CancelValue = "Cancel";
+            _value = value;
+        }
 
         /// <summary> Active. </summary>
         public static ImportJobAdminStatus Active { get; } = new ImportJobAdminStatus(ActiveValue);
+
         /// <summary> Cancel. </summary>
         public static ImportJobAdminStatus Cancel { get; } = new ImportJobAdminStatus(CancelValue);
+
         /// <summary> Determines if two <see cref="ImportJobAdminStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImportJobAdminStatus left, ImportJobAdminStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImportJobAdminStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImportJobAdminStatus left, ImportJobAdminStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImportJobAdminStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImportJobAdminStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImportJobAdminStatus(string value) => new ImportJobAdminStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImportJobAdminStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImportJobAdminStatus?(string value) => value == null ? null : new ImportJobAdminStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImportJobAdminStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImportJobAdminStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

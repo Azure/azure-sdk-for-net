@@ -7,18 +7,60 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    /// <summary>
+    /// The DataQualityMetricThresholdBase.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CategoricalDataQualityMetricThreshold"/> and <see cref="NumericalDataQualityMetricThreshold"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownDataQualityMetricThresholdBase))]
-    public partial class DataQualityMetricThresholdBase : IUtf8JsonSerializable, IJsonModel<DataQualityMetricThresholdBase>
+    public abstract partial class DataQualityMetricThresholdBase : IJsonModel<DataQualityMetricThresholdBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataQualityMetricThresholdBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataQualityMetricThresholdBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataQualityMetricThresholdBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataQualityMetricThresholdBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataQualityMetricThresholdBase IPersistableModel<DataQualityMetricThresholdBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataQualityMetricThresholdBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataQualityMetricThresholdBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,35 +72,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
             if (Optional.IsDefined(Threshold))
             {
-                if (Threshold != null)
-                {
-                    writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue(Threshold, options);
-                }
-                else
-                {
-                    writer.WriteNull("threshold");
-                }
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteObjectValue(Threshold, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,113 +101,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        DataQualityMetricThresholdBase IJsonModel<DataQualityMetricThresholdBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataQualityMetricThresholdBase IJsonModel<DataQualityMetricThresholdBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataQualityMetricThresholdBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataQualityMetricThresholdBase(document.RootElement, options);
         }
 
-        internal static DataQualityMetricThresholdBase DeserializeDataQualityMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataQualityMetricThresholdBase DeserializeDataQualityMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("dataType", out JsonElement discriminator))
+            if (element.TryGetProperty("dataType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Categorical": return CategoricalDataQualityMetricThreshold.DeserializeCategoricalDataQualityMetricThreshold(element, options);
-                    case "Numerical": return NumericalDataQualityMetricThreshold.DeserializeNumericalDataQualityMetricThreshold(element, options);
+                    case "Categorical":
+                        return CategoricalDataQualityMetricThreshold.DeserializeCategoricalDataQualityMetricThreshold(element, options);
+                    case "Numerical":
+                        return NumericalDataQualityMetricThreshold.DeserializeNumericalDataQualityMetricThreshold(element, options);
                 }
             }
             return UnknownDataQualityMetricThresholdBase.DeserializeUnknownDataQualityMetricThresholdBase(element, options);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dataType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  dataType: ");
-                builder.AppendLine($"'{DataType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ThresholdValue", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  threshold: ");
-                builder.AppendLine("{");
-                builder.Append("    value: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Threshold))
-                {
-                    builder.Append("  threshold: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Threshold, options, 2, false, "  threshold: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DataQualityMetricThresholdBase>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataQualityMetricThresholdBase IPersistableModel<DataQualityMetricThresholdBase>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataQualityMetricThresholdBase(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataQualityMetricThresholdBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

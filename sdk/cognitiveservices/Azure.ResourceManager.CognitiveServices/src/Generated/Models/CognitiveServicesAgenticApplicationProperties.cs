@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="trafficRoutingPolicy"> Gets or sets the traffic routing policy for the application's deployments. </param>
         /// <param name="provisioningState"> Provisioning state of the application. </param>
         /// <param name="isEnabled"> Enabledstate of the application. </param>
-        internal CognitiveServicesAgenticApplicationProperties(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string baseUri, IList<CognitiveServicesAgentReferenceProperties> agents, CognitiveServicesAssignedIdentity agentIdentityBlueprint, CognitiveServicesAssignedIdentity defaultInstanceIdentity, ApplicationAuthorizationPolicy authorizationPolicy, ApplicationTrafficRoutingPolicy trafficRoutingPolicy, CognitiveServicesAgenticApplicationProvisioningState? provisioningState, bool? isEnabled) : base(description, tags, additionalBinaryDataProperties)
+        internal CognitiveServicesAgenticApplicationProperties(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string baseUri, IList<CognitiveServicesAgentReferenceProperties> agents, CognitiveServicesAssignedIdentity agentIdentityBlueprint, CognitiveServicesAssignedIdentity defaultInstanceIdentity, CognitiveServicesApplicationAuthorizationPolicy authorizationPolicy, CognitiveServicesApplicationTrafficRoutingPolicy trafficRoutingPolicy, CognitiveServicesAgenticApplicationProvisioningState? provisioningState, bool? isEnabled) : base(description, tags, additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             BaseUri = baseUri;
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets or sets the authorization policy associated with this agentic application instance. </summary>
         [WirePath("authorizationPolicy")]
-        public ApplicationAuthorizationPolicy AuthorizationPolicy { get; set; }
+        public CognitiveServicesApplicationAuthorizationPolicy AuthorizationPolicy { get; set; }
 
         /// <summary> Gets or sets the traffic routing policy for the application's deployments. </summary>
         [WirePath("trafficRoutingPolicy")]
-        public ApplicationTrafficRoutingPolicy TrafficRoutingPolicy { get; set; }
+        public CognitiveServicesApplicationTrafficRoutingPolicy TrafficRoutingPolicy { get; set; }
 
         /// <summary> Provisioning state of the application. </summary>
         [WirePath("provisioningState")]

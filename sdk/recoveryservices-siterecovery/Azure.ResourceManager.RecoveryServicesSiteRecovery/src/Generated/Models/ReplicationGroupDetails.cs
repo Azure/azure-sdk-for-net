@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ReplicationGroupDetails : SiteRecoveryReplicationProviderSettings
     {
         /// <summary> Initializes a new instance of <see cref="ReplicationGroupDetails"/>. </summary>
-        internal ReplicationGroupDetails()
+        internal ReplicationGroupDetails() : base("ReplicationGroupDetails")
         {
-            InstanceType = "ReplicationGroupDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="ReplicationGroupDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationGroupDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationGroupDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType, additionalBinaryDataProperties)
         {
-            InstanceType = instanceType ?? "ReplicationGroupDetails";
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayClientRevocationOption : IEquatable<ApplicationGatewayClientRevocationOption>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> OCSP. </summary>
+        private const string OcspValue = "OCSP";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientRevocationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayClientRevocationOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string OcspValue = "OCSP";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static ApplicationGatewayClientRevocationOption None { get; } = new ApplicationGatewayClientRevocationOption(NoneValue);
+
         /// <summary> OCSP. </summary>
         public static ApplicationGatewayClientRevocationOption Ocsp { get; } = new ApplicationGatewayClientRevocationOption(OcspValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayClientRevocationOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayClientRevocationOption left, ApplicationGatewayClientRevocationOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayClientRevocationOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayClientRevocationOption left, ApplicationGatewayClientRevocationOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayClientRevocationOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayClientRevocationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayClientRevocationOption(string value) => new ApplicationGatewayClientRevocationOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayClientRevocationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayClientRevocationOption?(string value) => value == null ? null : new ApplicationGatewayClientRevocationOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayClientRevocationOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayClientRevocationOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

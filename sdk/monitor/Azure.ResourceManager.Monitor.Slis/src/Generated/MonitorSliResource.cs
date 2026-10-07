@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Slis
         {
             TryGetApiVersion(ResourceType, out string monitorSliApiVersion);
             _sliOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Slis", ResourceType.Namespace, Diagnostics);
-            _sliOperationsRestClient = new SliOperations(_sliOperationsClientDiagnostics, Pipeline, Endpoint, monitorSliApiVersion ?? "2025-03-01-preview");
+            _sliOperationsRestClient = new SliOperations(_sliOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorSliApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

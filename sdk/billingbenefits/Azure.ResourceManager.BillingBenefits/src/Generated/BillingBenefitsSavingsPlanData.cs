@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Savings plan properties. </param>
         /// <param name="sku"> Savings plan SKU. </param>
-        internal BillingBenefitsSavingsPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SavingsPlanModelProperties properties, ResourceSku sku) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SavingsPlanModelProperties properties, ResourceSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Savings plan properties. </summary>
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary> Expiry date time. </summary>
-        public DateTimeOffset? ExpireOn
+        public DateTimeOffset? ExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 
@@ -247,11 +247,11 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary> This is the DateTime when the savings plan benefit started. </summary>
-        public DateTimeOffset? BenefitStartOn
+        public DateTimeOffset? BenefitStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.BenefitStartOn;
+                return Properties is null ? default : Properties.BenefitStartsOn;
             }
             set
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new SavingsPlanModelProperties();
                 }
-                Properties.BenefitStartOn = value;
+                Properties.BenefitStartsOn = value;
             }
         }
 

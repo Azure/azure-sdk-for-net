@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiscountTypeCustomPrice IPersistableModel<DiscountTypeCustomPrice>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownDiscountTypeCustomPrice)PersistableModelCreateCore(data, options);
+        DiscountTypeCustomPrice IPersistableModel<DiscountTypeCustomPrice>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (DiscountTypeCustomPrice)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DiscountTypeCustomPrice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiscountTypeCustomPrice IJsonModel<DiscountTypeCustomPrice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownDiscountTypeCustomPrice)JsonModelCreateCore(ref reader, options);
+        DiscountTypeCustomPrice IJsonModel<DiscountTypeCustomPrice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (DiscountTypeCustomPrice)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -196,7 +202,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownDiscountTypeCustomPrice(

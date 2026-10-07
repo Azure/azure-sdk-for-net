@@ -21,6 +21,7 @@ using OpenAI.VectorStores;
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
 #pragma warning disable AAIP001
+#pragma warning disable AAIP002
 
 public class AgentsTestBase : ProjectsClientTestBase
 {
@@ -45,17 +46,21 @@ public class AgentsTestBase : ProjectsClientTestBase
         MCP,
         MCPConnection,
         MCPToolbox,
+        MCPToolboxWithPreview,
         OpenAPI,
         OpenAPIConnection,
         A2A,
         A2ASpecialConnection,
         BrowserAutomation,
+        BrowserAutomationGA,
         MicrosoftFabric,
         FabricIQ,
         Sharepoint,
         ConnectedAgent,
         DeepResearch,
         AzureFunctionTool,
+        WorkIQTool,
+        WebIQ,
     }
 
     public Dictionary<ToolType, string> ToolPrompts = new()
@@ -86,6 +91,12 @@ public class AgentsTestBase : ProjectsClientTestBase
                 "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
                 "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
                 "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
+        {ToolType.BrowserAutomationGA, "Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+                "To do that, go to the website finance.yahoo.com.\n" +
+                "At the top of the page, you will find a search bar.\n" +
+                "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+                "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+                "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
         {ToolType.MicrosoftFabric, "Tell me about the weather in Texas."},
         {ToolType.FabricIQ, "Tell me weather history in London, Ohio."},
         {ToolType.Sharepoint, "What is Contoso whistleblower policy?"},
@@ -94,9 +105,12 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
         {ToolType.MCPToolbox, "What tools are available?"},
+        {ToolType.MCPToolboxWithPreview, "What tools are available?"},
         {ToolType.A2A, "What can the secondary agent do?"},
         {ToolType.A2ASpecialConnection, "What can the secondary agent do?"},
         {ToolType.AzureFunctionTool, "What is the most prevalent element in the universe? What would foo say?"},
+        {ToolType.WorkIQTool, "What meetings do I have scheduled today?"},
+        {ToolType.WebIQ, "Tell me weather history in Centralia, Pennsylvania." },
     };
 
     public Dictionary<ToolType, string> ToolInstructions = new()
@@ -121,6 +135,9 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.BrowserAutomation, "You are an Agent helping with browser automation tasks.\n" +
             "You can answer questions, provide information, and assist with various tasks\n" +
             "related to web browsing using the Browser Automation tool available to you." },
+        {ToolType.BrowserAutomationGA, "You are an Agent helping with browser automation tasks.\n" +
+            "You can answer questions, provide information, and assist with various tasks\n" +
+            "related to web browsing using the Browser Automation tool available to you." },
         {ToolType.MicrosoftFabric, "You are helpful agent."},
         {ToolType.FabricIQ, "Use the available Fabric IQ tools to answer questions and perform tasks."},
         {ToolType.Sharepoint, "You are helpful agent."},
@@ -129,8 +146,11 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPToolbox, "You are a helpful assistant." },
+        {ToolType.MCPToolboxWithPreview, "You are a helpful assistant." },
         {ToolType.A2A, "You are a helpful assistant."},
         {ToolType.A2ASpecialConnection, "You are a helpful assistant."},
+        {ToolType.WorkIQTool, "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions." },
+        {ToolType.WebIQ, "Use the available Web IQ tools to answer questions and perform tasks."},
     };
 
     public Dictionary<ToolType, string> ExpectedOutput = new()
@@ -194,11 +214,14 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.OpenAPI, "openapi_call"},
         {ToolType.OpenAPIConnection, "openapi_call"},
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
+        {ToolType.BrowserAutomationGA, "browser_automation_call"},
         {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
         {ToolType.MicrosoftFabric, "fabric_dataagent_preview_call_output"},
         {ToolType.FabricIQ, "mcp_call"},
         {ToolType.A2A, "a2a_preview_call_output"},
         {ToolType.A2ASpecialConnection, "a2a_preview_call_output"},
+        {ToolType.WorkIQTool, "a2a_preview_call_output"},
+        {ToolType.WebIQ, "mcp_call"},
     };
     #endregion
 
@@ -207,12 +230,16 @@ public class AgentsTestBase : ProjectsClientTestBase
     protected const string HOSTED_AGENT = "cs-e2e-tests-hosted";
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
+    protected const string CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-conversation";
+    protected const string LIFECYCLE_AGENT_NAME = "cs-e2e-tests-voice-lifecycle";
+    protected const string AUDIO_CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-audio";
+    protected const string TOOLCALL_AGENT_NAME = "cs-e2e-tests-voice-toolcall";
     private readonly List<string> _conversationIDs = [];
-    private readonly List<string> _memoryStoreNames = [];
     private ProjectConversationsClient _conversations = null;
-    private AIProjectMemoryStores _stores = null;
+    protected readonly string MEMORY_STORE_NAME = "test-memory-store";
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
     protected readonly string TOOLBOX_NAME = "ToolBoxForTest";
+    protected readonly int PAGE_SIZE = 3;
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
@@ -300,12 +327,14 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         try
         {
-            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: MEMORY_STORE_NAME);
         }
         catch { }
-        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME);
-        memoryDefinitions.Options = new(true, true);
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME)
+        {
+            Options = new(true, true)
+        };
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: MEMORY_STORE_NAME, definition: memoryDefinitions, description: "Test memory store.");
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("My favorite animal is Plagiarus praepotens.");
         int pollingInterval = Mode != RecordedTestMode.Playback ? 500 : 0;
         MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
@@ -317,19 +346,18 @@ public class AgentsTestBase : ProjectsClientTestBase
             },
             pollingInterval: pollingInterval);
         Assert.That(updateResult.Status, Is.EqualTo(MemoryStoreUpdateStatus.Completed), $"Unexpected memory store update status: {updateResult.Status}, error details: {updateResult.ErrorDetails}.");
-        _memoryStoreNames.Add(store.Name);
         return store;
     }
 
-    private AzureAISearchToolIndex GetAISearchIndex()
+    private global::Azure.AI.Extensions.OpenAI.AzureAISearchToolIndex GetAISearchIndex()
     {
-        AzureAISearchToolIndex index = new()
+        global::Azure.AI.Extensions.OpenAI.AzureAISearchToolIndex index = new()
         {
             ProjectConnectionId = TestEnvironment.AI_SEARCH_CONNECTION_NAME,
             IndexName = "sample_index",
             TopK = 5,
             Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryType.Simple
+            QueryType = AzureAISearchQueryKind.Simple
         };
         return index;
     }
@@ -339,66 +367,66 @@ public class AgentsTestBase : ProjectsClientTestBase
         McpTool tool = ResponseTool.CreateMcpTool(
             serverLabel: "api-specs",
             serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
         ));
         tool.ProjectConnectionId = TestEnvironment.MCP_PROJECT_CONNECTION_NAME;
         return tool;
     }
 
-    private OpenAPITool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
+    private global::Azure.AI.Extensions.OpenAI.OpenApiTool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
     {
-        OpenApiAuthenticationDetails auth;
+        global::Azure.AI.Extensions.OpenAI.OpenApiAuthenticationDetails auth;
         string filePath;
         if (withConnection)
         {
-            auth = new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
+            auth = new global::Azure.AI.Extensions.OpenAI.OpenApiProjectConnectionAuthenticationDetails(new global::Azure.AI.Extensions.OpenAI.OpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: TestEnvironment.OPENAPI_PROJECT_CONNECTION_ID
             ));
             filePath = GetAgentTestFile(name: "tripadvisor_openapi.json");
         }
         else
         {
-            auth = new OpenAPIAnonymousAuthenticationDetails();
+            auth = new global::Azure.AI.Extensions.OpenAI.OpenApiAnonymousAuthenticationDetails();
             filePath = GetAgentTestFile(name: "weather_openapi.json");
         }
-        OpenApiFunctionDefinition functionDefinition = new OpenApiFunctionDefinition(
+        global::Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition functionDefinition = new global::Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition(
             name: withConnection ? "tripadvisor" : "get_weather",
-            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+            specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
             authentication: auth
         );
         functionDefinition.Description = withConnection ? "Trip Advisor API to get travel information." : "Retrieve weather information for a location.";
         return new(functionDefinition);
     }
 
-    private SharepointPreviewTool GetSharepointTool(AIProjectClient projectClient)
+    private SharePointPreviewTool GetSharepointTool(AIProjectClient projectClient)
     {
-        SharePointGroundingToolOptions sharepointToolOption = new()
+        global::Azure.AI.Extensions.OpenAI.SharePointGroundingToolOptions sharepointToolOption = new()
         {
-            ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
+            ProjectConnections = { new global::Azure.AI.Extensions.OpenAI.ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
         };
-        return new SharepointPreviewTool(sharepointToolOption);
+        return new global::Azure.AI.Extensions.OpenAI.SharePointPreviewTool(sharepointToolOption);
     }
 
-    private MicrosoftFabricPreviewTool GetMicrosoftFabricAgentTool()
+    private global::Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool GetMicrosoftFabricAgentTool()
     {
-        FabricDataAgentToolOptions fabricToolOption = new()
+        global::Azure.AI.Extensions.OpenAI.FabricDataAgentToolOptions fabricToolOption = new()
         {
-            ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.FABRIC_CONNECTION_ID) }
+            ProjectConnections = { new global::Azure.AI.Extensions.OpenAI.ToolProjectConnection(projectConnectionId: TestEnvironment.FABRIC_CONNECTION_ID) }
         };
         return new(fabricToolOption);
     }
 
-    private FabricIQPreviewTool GetFabricIQAgentTool()
+    private global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool GetFabricIQAgentTool()
     {
-        FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
+        global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
         {
-            RequireApproval = BinaryData.FromObjectAsJson("never"),
+            RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         return fabricIQTool;
     }
-    private A2APreviewTool GetA2ATool(bool useRemoteA2AConnection)
+    private global::Azure.AI.Extensions.OpenAI.A2APreviewTool GetA2ATool(bool useRemoteA2AConnection)
     {
-        A2APreviewTool a2aTool = new()
+        global::Azure.AI.Extensions.OpenAI.A2APreviewTool a2aTool = new()
         {
             ProjectConnectionId = useRemoteA2AConnection ? TestEnvironment.REMOTE_A2A_CONNECTION_ID : TestEnvironment.A2A_CONNECTION_ID
         };
@@ -409,9 +437,9 @@ public class AgentsTestBase : ProjectsClientTestBase
         return a2aTool;
     }
 
-    private AzureFunctionTool GetFunctionTool()
+    private global::Azure.AI.Extensions.OpenAI.AzureFunctionTool GetFunctionTool()
     {
-        AzureFunctionDefinitionFunction functionDefinition = new(
+        global::Azure.AI.Extensions.OpenAI.AzureFunctionDefinitionFunction functionDefinition = new(
             name: "foo",
             parameters: BinaryData.FromObjectAsJson(
                 new
@@ -432,13 +460,13 @@ public class AgentsTestBase : ProjectsClientTestBase
         {
             Description = "Get answers from the foo bot.",
         };
-        return new AzureFunctionTool(
-            new AzureFunctionDefinition(
+        return new global::Azure.AI.Extensions.OpenAI.AzureFunctionTool(
+            new global::Azure.AI.Extensions.OpenAI.AzureFunctionDefinition(
                 function: functionDefinition,
-                inputBinding: new AzureFunctionBinding(
-                    new AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-foo-input")),
-                outputBinding: new AzureFunctionBinding(
-                    new AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-tool-output"))
+                inputBinding: new global::Azure.AI.Extensions.OpenAI.AzureFunctionBinding(
+                    new global::Azure.AI.Extensions.OpenAI.AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-foo-input")),
+                outputBinding: new global::Azure.AI.Extensions.OpenAI.AzureFunctionBinding(
+                    new global::Azure.AI.Extensions.OpenAI.AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-tool-output"))
                 )
             );
     }
@@ -456,32 +484,45 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         try
         {
-            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteToolboxAsync(name: TOOLBOX_NAME);
+            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteAsync(name: TOOLBOX_NAME);
         }
         catch
         {
             // Nothing here
         }
     }
-    private async Task<McpTool> GetToolBoxAsync(AIProjectClient projectClient)
+    private async Task<McpTool> GetToolBoxAsync(AIProjectClient projectClient, bool usePreview)
     {
         await RemoveToolBoxMayBe(projectClient);
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
-        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
-            new CodeInterpreterToolContainer(
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
+        CodeInterpreterToolboxTool codeInterpreter = new()
+        {
+            Container = new CodeInterpreterToolContainer(
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
-        ).AsAgentTool();
-        ToolboxSearchPreviewTool searchTool = new()
-        {
-            Name = "ToolBoxSearch",
-            Description = "Search for the toolboxes"
         };
-        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateToolboxVersionAsync(
+        ToolboxTool searchTool;
+        if (usePreview)
+        {
+            searchTool = new ToolboxSearchPreviewToolboxTool()
+            {
+                Name = "ToolBoxSearch",
+                Description = "Search for the toolboxes"
+            };
+        }
+        else
+        {
+            searchTool = new ToolSearchToolboxTool()
+            {
+                Name = "ToolBoxSearch",
+                Description = "Search for the toolboxes"
+            };
+        }
+        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateVersionAsync(
             name: TOOLBOX_NAME,
             tools: [mcp, codeInterpreter, searchTool],
             description: "Toolbox for the unit test."
@@ -493,7 +534,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         }
         else
         {
-            authToken = ((DefaultAzureCredential)TestEnvironment.Credential).GetToken(new(scopes: ["https://ai.azure.com/.default"]), cancellationToken: default).Token;
+            authToken = ((AzureCliCredential)GetTestTokenProvider()).GetToken(new(scopes: ["https://ai.azure.com/.default"]), cancellationToken: default).Token;
         }
         return ResponseTool.CreateMcpTool(
             serverLabel: "search-tool",
@@ -569,33 +610,44 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
             ToolType.WebSearchPreview => ResponseTool.CreateWebSearchPreviewTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
             ToolType.WebSearchCustom => GetCustomWebSearch(),
-            ToolType.Memory => new MemorySearchPreviewTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
-            ToolType.AzureAISearch => new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
-            ToolType.BingGrounding => new BingGroundingTool(new BingGroundingSearchToolOptions(
-                searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
+            ToolType.Memory => new global::Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
+            ToolType.AzureAISearch => new global::Azure.AI.Extensions.OpenAI.AzureAISearchTool(new global::Azure.AI.Extensions.OpenAI.AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
+            ToolType.BingGrounding => new global::Azure.AI.Extensions.OpenAI.BingGroundingTool(new global::Azure.AI.Extensions.OpenAI.BingGroundingSearchToolOptions(
+                searchConfigurations: [new global::Azure.AI.Extensions.OpenAI.BingGroundingSearchOptions(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
             )),
-            ToolType.BingGroundingCustom => new BingCustomSearchPreviewTool(new BingCustomSearchToolOptions(
-                searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
+            ToolType.BingGroundingCustom => new global::Azure.AI.Extensions.OpenAI.BingCustomSearchPreviewTool(new global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolOptions(
+                searchConfigurations: [new global::Azure.AI.Extensions.OpenAI.BingCustomSearchOptions(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
             )),
             ToolType.MCP => ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
                 serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
             )),
             ToolType.MCPConnection => GetProjectConnectedMCPTool(),
             ToolType.OpenAPI => GetOpenAPITool(projectClient, false),
             ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
             ToolType.Sharepoint => GetSharepointTool(projectClient),
-            ToolType.BrowserAutomation => new BrowserAutomationPreviewTool(
-            new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+            // TODO: Uncomment this code when the service will be available and BrowserAutomationTool will be generated.
+            //ToolType.BrowserAutomationGA => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationTool(
+            //new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
+            //    new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+            //)),
+            ToolType.BrowserAutomation => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool(
+            new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
+                new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
             ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
             ToolType.FabricIQ => GetFabricIQAgentTool(),
             ToolType.A2A => GetA2ATool(false),
             ToolType.A2ASpecialConnection => GetA2ATool(true),
             ToolType.AzureFunction => GetFunctionTool(),
-            ToolType.MCPToolbox => await GetToolBoxAsync(projectClient),
+            ToolType.MCPToolbox => await GetToolBoxAsync(projectClient, false),
+            ToolType.MCPToolboxWithPreview => await GetToolBoxAsync(projectClient, true),
+            ToolType.WebIQ => new global::Azure.AI.Extensions.OpenAI.WebIQPreviewTool(projectConnectionId: TestEnvironment.WEBIQ_CONNECTION_ID)
+            {
+                RequireApproval = new WebIQPreviewToolRequireApprovalChoice(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
+            },
+            ToolType.WorkIQTool => new global::Azure.AI.Extensions.OpenAI.WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         string instructions;
@@ -626,7 +678,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         if (Mode == RecordedTestMode.Playback)
             return;
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
-        AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
+        AIProjectClient projectClient = new(connectionString, GetTestTokenProvider());
 
         // Remove conversations.
         if (_conversations is not null)
@@ -645,20 +697,21 @@ public class AgentsTestBase : ProjectsClientTestBase
                 }
             }
         }
-        if (_stores != null)
+        List<string> memoryStores = await projectClient.MemoryStores.GetMemoryStoresAsync()
+            .Select(x => x.Name)
+            .Where(x => x.StartsWith(MEMORY_STORE_NAME))
+            .ToListAsync();
+        foreach (string name in memoryStores)
         {
-            foreach (string name in _memoryStoreNames)
+            try
             {
-                try
-                {
-                    await _stores.DeleteMemoryStoreAsync(name: name);
-                }
-                catch (RequestFailedException ex)
-                {
-                    // Throw only if it is the error other then "Not found."
-                    if (ex.Status != 404)
-                        throw;
-                }
+                await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: name);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Throw only if it is the error other then "Not found."
+                if (ex.Status != 404)
+                    throw;
             }
         }
         // Remove Vector stores
@@ -676,10 +729,30 @@ public class AgentsTestBase : ProjectsClientTestBase
         {
             projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: CONVERSATION_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: LIFECYCLE_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AUDIO_CONVERSATION_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: TOOLCALL_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
         List<string> hostedAgents = await projectClient.AgentAdministrationClient.GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(HOSTED_AGENT)).ToListAsync();
         foreach (string hostedAgent in hostedAgents)
         {
-            projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+            try
+            {
+                projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+            }
+            catch { }
         }
         await RemoveToolBoxMayBe(projectClient);
     }

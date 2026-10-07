@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SourceControlContentType : IEquatable<SourceControlContentType>
     {
         private readonly string _value;
+        /// <summary> AnalyticsRule. </summary>
+        private const string AnalyticsRuleValue = "AnalyticsRule";
+        /// <summary> AutomationRule. </summary>
+        private const string AutomationRuleValue = "AutomationRule";
+        /// <summary> HuntingQuery. </summary>
+        private const string HuntingQueryValue = "HuntingQuery";
+        /// <summary> Parser. </summary>
+        private const string ParserValue = "Parser";
+        /// <summary> Playbook. </summary>
+        private const string PlaybookValue = "Playbook";
+        /// <summary> Workbook. </summary>
+        private const string WorkbookValue = "Workbook";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlContentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AnalyticRuleValue = "AnalyticRule";
-        private const string AutomationRuleValue = "AutomationRule";
-        private const string HuntingQueryValue = "HuntingQuery";
-        private const string ParserValue = "Parser";
-        private const string PlaybookValue = "Playbook";
-        private const string WorkbookValue = "Workbook";
+        /// <summary> AnalyticsRule. </summary>
+        public static SourceControlContentType AnalyticsRule { get; } = new SourceControlContentType(AnalyticsRuleValue);
 
-        /// <summary> AnalyticRule. </summary>
-        public static SourceControlContentType AnalyticRule { get; } = new SourceControlContentType(AnalyticRuleValue);
         /// <summary> AutomationRule. </summary>
         public static SourceControlContentType AutomationRule { get; } = new SourceControlContentType(AutomationRuleValue);
+
         /// <summary> HuntingQuery. </summary>
         public static SourceControlContentType HuntingQuery { get; } = new SourceControlContentType(HuntingQueryValue);
+
         /// <summary> Parser. </summary>
         public static SourceControlContentType Parser { get; } = new SourceControlContentType(ParserValue);
+
         /// <summary> Playbook. </summary>
         public static SourceControlContentType Playbook { get; } = new SourceControlContentType(PlaybookValue);
+
         /// <summary> Workbook. </summary>
         public static SourceControlContentType Workbook { get; } = new SourceControlContentType(WorkbookValue);
+
         /// <summary> Determines if two <see cref="SourceControlContentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlContentType left, SourceControlContentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlContentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlContentType left, SourceControlContentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlContentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlContentType(string value) => new SourceControlContentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlContentType?(string value) => value == null ? null : new SourceControlContentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlContentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

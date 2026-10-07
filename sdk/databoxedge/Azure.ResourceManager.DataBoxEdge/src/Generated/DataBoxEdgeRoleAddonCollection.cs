@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeRoleAddonResource.ResourceType, out string dataBoxEdgeRoleAddonApiVersion);
             _addonsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeRoleAddonResource.ResourceType.Namespace, Diagnostics);
-            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeRoleAddonApiVersion ?? "2023-12-01");
+            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeRoleAddonApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, DataBoxEdgeRoleAddonData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(
-                    new DataBoxEdgeRoleAddonOperationSource(Client),
+                    new DataBoxEdgeRoleAddonResourceOperationSource(Client),
                     _addonsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, DataBoxEdgeRoleAddonData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(
-                    new DataBoxEdgeRoleAddonOperationSource(Client),
+                    new DataBoxEdgeRoleAddonResourceOperationSource(Client),
                     _addonsClientDiagnostics,
                     Pipeline,
                     message.Request,

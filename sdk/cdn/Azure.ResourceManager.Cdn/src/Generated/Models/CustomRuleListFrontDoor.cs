@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rules. </summary>
         [WirePath("rules")]
-        public IList<CustomRuleFrontDoor> Rules { get; }
+        public IList<CustomRuleFrontDoor> Rules { get; } = new ChangeTrackingList<CustomRuleFrontDoor>();
     }
 }

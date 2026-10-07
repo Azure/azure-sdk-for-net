@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorAssessmentResource.ResourceType, out string advisorAssessmentApiVersion);
             _assessmentResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorAssessmentResource.ResourceType.Namespace, Diagnostics);
-            _assessmentResultsRestClient = new AssessmentResults(_assessmentResultsClientDiagnostics, Pipeline, Endpoint, advisorAssessmentApiVersion ?? "2025-05-01-preview");
+            _assessmentResultsRestClient = new AssessmentResults(_assessmentResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorAssessmentApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

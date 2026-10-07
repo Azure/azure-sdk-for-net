@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ApiCenter.Models;
 using Azure.ResourceManager.Models;
 
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(MetadataSchemaExportContent))]
     [ModelReaderWriterBuildable(typeof(MetadataSchemaExportResult))]
     [ModelReaderWriterBuildable(typeof(MetadataSchemaListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceListResult))]
     [ModelReaderWriterBuildable(typeof(ServiceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

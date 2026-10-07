@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
@@ -9,8 +11,6 @@ using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.HealthcareApis.Tests
 {
@@ -117,10 +117,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
                     ConsumerGroup = "$Default",
                     FullyQualifiedEventHubNamespace = $"{eventHubName}.servicesbus.windows.net",
                 },
-                DeviceMapping = new HealthcareApisIotMappingProperties()
-                {
-                    Content = BinaryData.FromString("{\"templateType\": \"CollectionContent\",\"template\": []}"),
-                },
+                DeviceMappingContent = BinaryData.FromString("{\"templateType\": \"CollectionContent\",\"template\": []}"),
             };
             var iotConnectorLro = await workspace.GetHealthcareApisIotConnectors().CreateOrUpdateAsync(WaitUntil.Completed, iotConnectorName, data);
             return iotConnectorLro.Value;

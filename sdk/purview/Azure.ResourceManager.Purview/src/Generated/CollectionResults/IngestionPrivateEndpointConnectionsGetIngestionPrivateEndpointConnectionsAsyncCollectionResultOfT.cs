@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Purview
                     yield break;
                 }
                 PrivateEndpointConnectionList result = PrivateEndpointConnectionList.FromResponse(response);
-                yield return Page<PurviewPrivateEndpointConnectionData>.FromValues((IReadOnlyList<PurviewPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PurviewPrivateEndpointConnectionData>.FromValues((IReadOnlyList<PurviewPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

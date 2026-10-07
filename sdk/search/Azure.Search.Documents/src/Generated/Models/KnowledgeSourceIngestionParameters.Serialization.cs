@@ -100,6 +100,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("ingestionSchedule"u8);
                 writer.WriteObjectValue(IngestionSchedule, options);
             }
+            if (Optional.IsCollectionDefined(IngestionPermissionOptions))
+            {
+                writer.WritePropertyName("ingestionPermissionOptions"u8);
+                writer.WriteStartArray();
+                foreach (KnowledgeSourceIngestionPermissionOption item in IngestionPermissionOptions)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(ContentExtractionMode))
             {
                 writer.WritePropertyName("contentExtractionMode"u8);
@@ -109,6 +119,21 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 writer.WritePropertyName("aiServices"u8);
                 writer.WriteObjectValue(AiServices, options);
+            }
+            if (Optional.IsDefined(AssetStore))
+            {
+                writer.WritePropertyName("assetStore"u8);
+                writer.WriteObjectValue(AssetStore, options);
+            }
+            if (Optional.IsDefined(FreshnessPolicy))
+            {
+                writer.WritePropertyName("freshnessPolicy"u8);
+                writer.WriteObjectValue(FreshnessPolicy, options);
+            }
+            if (Optional.IsDefined(NetworkAccessMode))
+            {
+                writer.WritePropertyName("networkAccessMode"u8);
+                writer.WriteStringValue(NetworkAccessMode.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,8 +182,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeBaseModel chatCompletionModel = default;
             bool? disableImageVerbalization = default;
             IndexingSchedule ingestionSchedule = default;
+            IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default;
             KnowledgeSourceContentExtractionMode? contentExtractionMode = default;
             AIServices aiServices = default;
+            AssetStore assetStore = default;
+            FreshnessPolicy freshnessPolicy = default;
+            KnowledgeSourceNetworkAccessMode? networkAccessMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,6 +240,20 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     ingestionSchedule = IndexingSchedule.DeserializeIndexingSchedule(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("ingestionPermissionOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KnowledgeSourceIngestionPermissionOption> array = new List<KnowledgeSourceIngestionPermissionOption>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new KnowledgeSourceIngestionPermissionOption(item.GetString()));
+                    }
+                    ingestionPermissionOptions = array;
+                    continue;
+                }
                 if (prop.NameEquals("contentExtractionMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -231,9 +274,36 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     aiServices = AIServices.DeserializeAIServices(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("assetStore"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assetStore = AssetStore.DeserializeAssetStore(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("freshnessPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    freshnessPolicy = FreshnessPolicy.DeserializeFreshnessPolicy(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("networkAccessMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkAccessMode = new KnowledgeSourceNetworkAccessMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KnowledgeSourceIngestionParameters(
@@ -242,8 +312,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 chatCompletionModel,
                 disableImageVerbalization,
                 ingestionSchedule,
+                ingestionPermissionOptions ?? new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>(),
                 contentExtractionMode,
                 aiServices,
+                assetStore,
+                freshnessPolicy,
+                networkAccessMode,
                 additionalBinaryDataProperties);
         }
     }

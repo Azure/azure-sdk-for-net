@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 HttpRouteConfigCollection result = HttpRouteConfigCollection.FromResponse(response);
-                yield return Page<ContainerAppHttpRouteConfigData>.FromValues((IReadOnlyList<ContainerAppHttpRouteConfigData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerAppHttpRouteConfigData>.FromValues((IReadOnlyList<ContainerAppHttpRouteConfigData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

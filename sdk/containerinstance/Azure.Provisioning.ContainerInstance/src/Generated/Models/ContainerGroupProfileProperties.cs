@@ -359,9 +359,9 @@ namespace Azure.Provisioning.ContainerInstance
             _extensions = DefineListProperty<DeploymentExtensionSpec>(nameof(Extensions), new string[] { "extensions" });
             _imageRegistryCredentials = DefineListProperty<ContainerGroupImageRegistryCredential>(nameof(ImageRegistryCredentials), new string[] { "imageRegistryCredentials" });
             _restartPolicy = DefineProperty<ContainerGroupRestartPolicy>(nameof(RestartPolicy), new string[] { "restartPolicy" });
-            _shutdownGracePeriod = DefineProperty<DateTimeOffset>(nameof(ShutdownGracePeriod), new string[] { "shutdownGracePeriod" });
+            _shutdownGracePeriod = DefineProperty<DateTimeOffset>(nameof(ShutdownGracePeriod), new string[] { "shutdownGracePeriod" }, format: "O");
             _ipAddress = DefineModelProperty<ContainerGroupIPAddress>(nameof(IPAddress), new string[] { "ipAddress" });
-            _timeToLive = DefineProperty<DateTimeOffset>(nameof(TimeToLive), new string[] { "timeToLive" });
+            _timeToLive = DefineProperty<DateTimeOffset>(nameof(TimeToLive), new string[] { "timeToLive" }, format: "O");
             _osType = DefineProperty<ContainerInstanceOperatingSystemType>(nameof(OSType), new string[] { "osType" }, isRequired: true);
             _volumes = DefineListProperty<ContainerVolume>(nameof(Volumes), new string[] { "volumes" });
             _diagnostics = DefineModelProperty<ContainerGroupDiagnostics>(nameof(Diagnostics), new string[] { "diagnostics" });
@@ -371,6 +371,10 @@ namespace Azure.Provisioning.ContainerInstance
             _revision = DefineProperty<int>(nameof(Revision), new string[] { "revision" }, isOutput: true);
             _registeredRevisions = DefineListProperty<int>(nameof(RegisteredRevisions), new string[] { "registeredRevisions" }, isOutput: true);
             _useKrypton = DefineProperty<bool>(nameof(UseKrypton), new string[] { "useKrypton" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

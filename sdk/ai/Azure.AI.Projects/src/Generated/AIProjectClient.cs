@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
@@ -25,35 +26,56 @@ namespace Azure.AI.Projects
             }
         };
         private readonly string _apiVersion;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        private AgentInsightMonitors _cachedAgentInsightMonitors;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
         private AIProjectConnectionsOperations _cachedAIProjectConnectionsOperations;
         private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
         private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private AIProjectModels _cachedAIProjectModels;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
         private AIProjectDeploymentsOperations _cachedAIProjectDeploymentsOperations;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private RedTeams _cachedRedTeams;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
         private EvaluationRules _cachedEvaluationRules;
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private EvaluationTaxonomies _cachedEvaluationTaxonomies;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private ProjectEvaluators _cachedProjectEvaluators;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private EvaluatorGenerationJobs _cachedEvaluatorGenerationJobs;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private ProjectInsights _cachedProjectInsights;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private ProjectSchedules _cachedProjectSchedules;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private AIProjectMemoryStores _cachedAIProjectMemoryStores;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private AIProjectRoutines _cachedAIProjectRoutines;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private DataGenerationJobs _cachedDataGenerationJobs;
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary> Initializes a new instance of AIProjectMemoryStores. </summary>
+        [Experimental("AAIP001")]
         public virtual AIProjectMemoryStores GetAIProjectMemoryStoresClient()
         {
-            return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
-        }
-
-        /// <summary> Initializes a new instance of AIProjectRoutines. </summary>
-        public virtual AIProjectRoutines GetAIProjectRoutinesClient()
-        {
-            return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
+            return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
         }
     }
 }

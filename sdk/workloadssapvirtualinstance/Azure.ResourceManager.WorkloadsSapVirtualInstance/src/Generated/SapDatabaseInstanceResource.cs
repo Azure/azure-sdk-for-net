@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             TryGetApiVersion(ResourceType, out string sapDatabaseInstanceApiVersion);
             _sapDatabaseInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance", ResourceType.Namespace, Diagnostics);
-            _sapDatabaseInstancesRestClient = new SapDatabaseInstances(_sapDatabaseInstancesClientDiagnostics, Pipeline, Endpoint, sapDatabaseInstanceApiVersion ?? "2024-09-01");
+            _sapDatabaseInstancesRestClient = new SapDatabaseInstances(_sapDatabaseInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapDatabaseInstanceApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

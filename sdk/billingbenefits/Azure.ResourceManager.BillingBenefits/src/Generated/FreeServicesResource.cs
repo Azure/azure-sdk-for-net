@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string freeServicesApiVersion);
             _freeServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _freeServicesRestClient = new FreeServices(_freeServicesClientDiagnostics, Pipeline, Endpoint, freeServicesApiVersion ?? "2025-12-01-preview");
+            _freeServicesRestClient = new FreeServices(_freeServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, freeServicesApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _freeServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FreeServicesPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<FreeServicesResource> operation = new BillingBenefitsArmOperation<FreeServicesResource>(
-                    new FreeServicesOperationSource(Client),
+                    new FreeServicesResourceOperationSource(Client),
                     _freeServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _freeServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FreeServicesPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<FreeServicesResource> operation = new BillingBenefitsArmOperation<FreeServicesResource>(
-                    new FreeServicesOperationSource(Client),
+                    new FreeServicesResourceOperationSource(Client),
                     _freeServicesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningUsageUnit : IEquatable<MachineLearningUsageUnit>
     {
         private readonly string _value;
+        private const string CountValue = "Count";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningUsageUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CountValue = "Count";
-
-        /// <summary> Count. </summary>
+        /// <summary> Gets the Count. </summary>
         public static MachineLearningUsageUnit Count { get; } = new MachineLearningUsageUnit(CountValue);
+
         /// <summary> Determines if two <see cref="MachineLearningUsageUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningUsageUnit left, MachineLearningUsageUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningUsageUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningUsageUnit left, MachineLearningUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningUsageUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningUsageUnit(string value) => new MachineLearningUsageUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningUsageUnit?(string value) => value == null ? null : new MachineLearningUsageUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningUsageUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningUsageUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

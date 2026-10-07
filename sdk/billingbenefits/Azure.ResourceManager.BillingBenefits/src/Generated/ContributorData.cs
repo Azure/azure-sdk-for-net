@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> MACC contributor properties. </param>
-        internal ContributorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MaccModelProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContributorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MaccModelProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> MACC contributor properties. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties is null ? default : Properties.MaccEntityType;
+                return Properties is null ? (MaccEntityType?)default : Properties.MaccEntityType;
             }
         }
 
@@ -104,20 +104,20 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary> Must be start of month. Timestamp must be in the ISO date format YYYY-MM-DDT00:00:00Z. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> Must be end of month. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 

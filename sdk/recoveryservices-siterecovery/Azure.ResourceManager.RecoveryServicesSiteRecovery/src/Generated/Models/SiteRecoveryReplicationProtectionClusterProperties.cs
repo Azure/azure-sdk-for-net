@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Replication protection cluster custom data details. </summary>
     public partial class SiteRecoveryReplicationProtectionClusterProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationProtectionClusterProperties"/>. </summary>
         public SiteRecoveryReplicationProtectionClusterProperties()
@@ -84,15 +56,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="areAllClusterNodesRegistered"> A value indicating whether all nodes of the cluster are registered or not. </param>
         /// <param name="clusterRegisteredNodes"> The registered node details. </param>
-        /// <param name="providerSpecificDetails">
-        /// The Replication cluster provider custom settings.
-        /// Please note <see cref="ReplicationClusterProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AReplicationProtectionClusterDetails"/>.
-        /// </param>
+        /// <param name="providerSpecificDetails"> The Replication cluster provider custom settings. </param>
         /// <param name="sharedDiskProperties"> The shared disk properties. </param>
         /// <param name="policyId"> The Policy Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryReplicationProtectionClusterProperties(string protectionClusterType, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, IList<string> allowedOperations, string replicationHealth, IList<SiteRecoveryHealthError> healthErrors, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, string policyFriendlyName, CurrentScenarioDetails currentScenario, ResourceIdentifier recoveryContainerId, string agentClusterId, string clusterFqdn, IList<string> clusterNodeFqdns, IList<ResourceIdentifier> clusterProtectedItemIds, string provisioningState, bool? areAllClusterNodesRegistered, IList<RegisteredClusterNodes> clusterRegisteredNodes, ReplicationClusterProviderSpecificSettings providerSpecificDetails, SharedDiskReplicationItemProperties sharedDiskProperties, ResourceIdentifier policyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryReplicationProtectionClusterProperties(string protectionClusterType, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, IList<string> allowedOperations, string replicationHealth, IList<SiteRecoveryHealthError> healthErrors, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, string policyFriendlyName, CurrentScenarioDetails currentScenario, ResourceIdentifier recoveryContainerId, string agentClusterId, string clusterFqdn, IList<string> clusterNodeFqdns, IList<ResourceIdentifier> clusterProtectedItemIds, string provisioningState, bool? areAllClusterNodesRegistered, IList<RegisteredClusterNodes> clusterRegisteredNodes, ReplicationClusterProviderSpecificSettings providerSpecificDetails, SharedDiskReplicationItemProperties sharedDiskProperties, ResourceIdentifier policyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtectionClusterType = protectionClusterType;
             PrimaryFabricFriendlyName = primaryFabricFriendlyName;
@@ -124,71 +92,96 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
             SharedDiskProperties = sharedDiskProperties;
             PolicyId = policyId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of protection cluster type. </summary>
         public string ProtectionClusterType { get; set; }
+
         /// <summary> The friendly name of the primary fabric. </summary>
         public string PrimaryFabricFriendlyName { get; set; }
+
         /// <summary> The fabric provider of the primary fabric. </summary>
         public string PrimaryFabricProvider { get; set; }
+
         /// <summary> The friendly name of recovery fabric. </summary>
         public string RecoveryFabricFriendlyName { get; set; }
+
         /// <summary> The Arm Id of recovery fabric. </summary>
         public ResourceIdentifier RecoveryFabricId { get; set; }
+
         /// <summary> The name of primary protection container friendly name. </summary>
         public string PrimaryProtectionContainerFriendlyName { get; set; }
+
         /// <summary> The name of recovery container friendly name. </summary>
         public string RecoveryProtectionContainerFriendlyName { get; set; }
+
         /// <summary> The protection status. </summary>
         public string ProtectionState { get; set; }
+
         /// <summary> The protection state description. </summary>
         public string ProtectionStateDescription { get; set; }
+
         /// <summary> The Current active location of the Protection cluster. </summary>
         public string ActiveLocation { get; set; }
+
         /// <summary> The Test failover state. </summary>
         public string TestFailoverState { get; set; }
+
         /// <summary> The Test failover state description. </summary>
         public string TestFailoverStateDescription { get; set; }
+
         /// <summary> The allowed operations on the Replication protection cluster. </summary>
         public IList<string> AllowedOperations { get; }
+
         /// <summary> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration. </summary>
         public string ReplicationHealth { get; set; }
+
         /// <summary> List of health errors. </summary>
         public IList<SiteRecoveryHealthError> HealthErrors { get; }
+
         /// <summary> The last successful failover time. </summary>
         public DateTimeOffset? LastSuccessfulFailoverOn { get; set; }
+
         /// <summary> The last successful test failover time. </summary>
         public DateTimeOffset? LastSuccessfulTestFailoverOn { get; set; }
+
         /// <summary> The name of Policy governing this PE. </summary>
         public string PolicyFriendlyName { get; set; }
+
         /// <summary> The current scenario. </summary>
         public CurrentScenarioDetails CurrentScenario { get; set; }
+
         /// <summary> The recovery container Id. </summary>
         public ResourceIdentifier RecoveryContainerId { get; set; }
+
         /// <summary> The Agent cluster Id. </summary>
         public string AgentClusterId { get; set; }
+
         /// <summary> The cluster FQDN. </summary>
         public string ClusterFqdn { get; set; }
+
         /// <summary> The List of cluster Node FQDNs. </summary>
         public IList<string> ClusterNodeFqdns { get; }
+
         /// <summary> The List of Protected Item Id's. </summary>
         public IList<ResourceIdentifier> ClusterProtectedItemIds { get; }
+
         /// <summary> The provisioning state of the cluster. </summary>
         public string ProvisioningState { get; }
+
         /// <summary> A value indicating whether all nodes of the cluster are registered or not. </summary>
         public bool? AreAllClusterNodesRegistered { get; set; }
+
         /// <summary> The registered node details. </summary>
         public IList<RegisteredClusterNodes> ClusterRegisteredNodes { get; }
-        /// <summary>
-        /// The Replication cluster provider custom settings.
-        /// Please note <see cref="ReplicationClusterProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AReplicationProtectionClusterDetails"/>.
-        /// </summary>
+
+        /// <summary> The Replication cluster provider custom settings. </summary>
         public ReplicationClusterProviderSpecificSettings ProviderSpecificDetails { get; set; }
+
         /// <summary> The shared disk properties. </summary>
         public SharedDiskReplicationItemProperties SharedDiskProperties { get; set; }
+
         /// <summary> The Policy Id. </summary>
         public ResourceIdentifier PolicyId { get; set; }
     }

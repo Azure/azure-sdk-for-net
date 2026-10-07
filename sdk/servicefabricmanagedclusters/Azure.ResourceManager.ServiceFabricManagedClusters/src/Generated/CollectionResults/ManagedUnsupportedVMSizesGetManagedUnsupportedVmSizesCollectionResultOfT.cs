@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> Initializes a new instance of ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ManagedUnsupportedVMSizes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location for the unsupported VM sizes. This is different from cluster location. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
         public ManagedUnsupportedVMSizesGetManagedUnsupportedVmSizesCollectionResultOfT(ManagedUnsupportedVMSizes client, string subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     yield break;
                 }
                 ServiceFabricManagedUnsupportedVmSizeListResult result = ServiceFabricManagedUnsupportedVmSizeListResult.FromResponse(response);
-                yield return Page<ServiceFabricManagedUnsupportedVmSize>.FromValues((IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceFabricManagedUnsupportedVmSize>.FromValues((IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

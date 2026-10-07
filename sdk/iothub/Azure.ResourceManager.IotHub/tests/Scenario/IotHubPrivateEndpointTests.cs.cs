@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         private ResourceGroupResource _resourceGroup;
         public IotHubPrivateEndpointTests(bool isAsync) : base(isAsync)
         {
+            TestDiagnostics = false;
         }
 
         [OneTimeSetUp]
@@ -75,7 +76,10 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
-            var list = await iothub.GetIotHubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var collection = GetOriginal(iothub).GetIotHubPrivateEndpointConnections();
+            var list = IsAsync
+                ? await collection.GetAllAsync().ToEnumerableAsync()
+                : collection.GetAll().ToList();
             Assert.IsEmpty(list);
         }
     }

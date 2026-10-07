@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _command = DefineListProperty<string>(nameof(Command), new string[] { "command" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerExec that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

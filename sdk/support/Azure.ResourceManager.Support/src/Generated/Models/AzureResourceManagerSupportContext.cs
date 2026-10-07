@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Support.Models;
 
@@ -34,7 +33,6 @@ namespace Azure.ResourceManager.Support
     [ModelReaderWriterBuildable(typeof(ProblemClassificationsClassificationResult))]
     [ModelReaderWriterBuildable(typeof(ProblemClassificationsListResult))]
     [ModelReaderWriterBuildable(typeof(QuotaTicketDetails))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecondaryConsent))]
     [ModelReaderWriterBuildable(typeof(SecondaryConsentEnabled))]
     [ModelReaderWriterBuildable(typeof(ServiceProperties))]

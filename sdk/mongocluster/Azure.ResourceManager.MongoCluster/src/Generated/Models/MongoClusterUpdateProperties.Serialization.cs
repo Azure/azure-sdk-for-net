@@ -139,6 +139,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
+            if (Optional.IsDefined(NetworkBypassMode))
+            {
+                writer.WritePropertyName("networkBypassMode"u8);
+                writer.WriteStringValue(NetworkBypassMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -193,6 +198,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             IList<MongoClusterPreviewFeature> previewFeatures = default;
             AuthConfigProperties authConfig = default;
             EncryptionProperties encryption = default;
+            MongoClusterNetworkBypassMode? networkBypassMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -305,9 +311,18 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     encryption = EncryptionProperties.DeserializeEncryptionProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("networkBypassMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkBypassMode = new MongoClusterNetworkBypassMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MongoClusterUpdateProperties(
@@ -323,6 +338,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>(),
                 authConfig,
                 encryption,
+                networkBypassMode,
                 additionalBinaryDataProperties);
         }
     }

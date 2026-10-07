@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of the database full schema. </summary>
     public partial class SyncFullSchemaProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SyncFullSchemaProperties"/>. </summary>
         internal SyncFullSchemaProperties()
@@ -54,17 +26,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="SyncFullSchemaProperties"/>. </summary>
         /// <param name="tables"> List of tables in the database full schema. </param>
         /// <param name="lastUpdateOn"> Last update time of the database schema. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SyncFullSchemaProperties(IReadOnlyList<SyncFullSchemaTable> tables, DateTimeOffset? lastUpdateOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SyncFullSchemaProperties(IReadOnlyList<SyncFullSchemaTable> tables, DateTimeOffset? lastUpdateOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tables = tables;
             LastUpdateOn = lastUpdateOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of tables in the database full schema. </summary>
         [WirePath("tables")]
         public IReadOnlyList<SyncFullSchemaTable> Tables { get; }
+
         /// <summary> Last update time of the database schema. </summary>
         [WirePath("lastUpdateTime")]
         public DateTimeOffset? LastUpdateOn { get; }

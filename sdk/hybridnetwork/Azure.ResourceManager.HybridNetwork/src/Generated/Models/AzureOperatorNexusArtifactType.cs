@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     internal readonly partial struct AzureOperatorNexusArtifactType : IEquatable<AzureOperatorNexusArtifactType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArtifactType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AzureOperatorNexusArtifactType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string ImageFileValue = "ImageFile";
         private const string ArmTemplateValue = "ArmTemplate";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArtifactType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AzureOperatorNexusArtifactType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static AzureOperatorNexusArtifactType Unknown { get; } = new AzureOperatorNexusArtifactType(UnknownValue);
-        /// <summary> ImageFile. </summary>
+
+        /// <summary> Gets the ImageFile. </summary>
         public static AzureOperatorNexusArtifactType ImageFile { get; } = new AzureOperatorNexusArtifactType(ImageFileValue);
-        /// <summary> ArmTemplate. </summary>
+
+        /// <summary> Gets the ArmTemplate. </summary>
         public static AzureOperatorNexusArtifactType ArmTemplate { get; } = new AzureOperatorNexusArtifactType(ArmTemplateValue);
+
         /// <summary> Determines if two <see cref="AzureOperatorNexusArtifactType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureOperatorNexusArtifactType left, AzureOperatorNexusArtifactType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureOperatorNexusArtifactType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureOperatorNexusArtifactType left, AzureOperatorNexusArtifactType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureOperatorNexusArtifactType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureOperatorNexusArtifactType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureOperatorNexusArtifactType(string value) => new AzureOperatorNexusArtifactType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureOperatorNexusArtifactType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureOperatorNexusArtifactType?(string value) => value == null ? null : new AzureOperatorNexusArtifactType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureOperatorNexusArtifactType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureOperatorNexusArtifactType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

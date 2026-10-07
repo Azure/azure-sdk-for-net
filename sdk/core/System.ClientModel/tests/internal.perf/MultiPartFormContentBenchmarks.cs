@@ -71,12 +71,6 @@ namespace System.ClientModel.Tests.Internal.Perf
         }
 
         [Benchmark]
-        public void Construct_CustomBoundary()
-        {
-            using MultiPartFormContent content = new("----scm-perf-fixed-boundary-0123456789");
-        }
-
-        [Benchmark]
         public void Add_ByteArray()
         {
             using MultiPartFormContent content = new();

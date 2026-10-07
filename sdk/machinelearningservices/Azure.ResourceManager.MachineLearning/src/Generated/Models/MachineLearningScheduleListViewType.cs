@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningScheduleListViewType. </summary>
+    /// <summary></summary>
     public readonly partial struct MachineLearningScheduleListViewType : IEquatable<MachineLearningScheduleListViewType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleListViewType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningScheduleListViewType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledOnlyValue = "EnabledOnly";
         private const string DisabledOnlyValue = "DisabledOnly";
         private const string AllValue = "All";
 
-        /// <summary> EnabledOnly. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleListViewType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningScheduleListViewType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the EnabledOnly. </summary>
         public static MachineLearningScheduleListViewType EnabledOnly { get; } = new MachineLearningScheduleListViewType(EnabledOnlyValue);
-        /// <summary> DisabledOnly. </summary>
+
+        /// <summary> Gets the DisabledOnly. </summary>
         public static MachineLearningScheduleListViewType DisabledOnly { get; } = new MachineLearningScheduleListViewType(DisabledOnlyValue);
-        /// <summary> All. </summary>
+
+        /// <summary> Gets the All. </summary>
         public static MachineLearningScheduleListViewType All { get; } = new MachineLearningScheduleListViewType(AllValue);
+
         /// <summary> Determines if two <see cref="MachineLearningScheduleListViewType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningScheduleListViewType left, MachineLearningScheduleListViewType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningScheduleListViewType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningScheduleListViewType left, MachineLearningScheduleListViewType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningScheduleListViewType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningScheduleListViewType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningScheduleListViewType(string value) => new MachineLearningScheduleListViewType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningScheduleListViewType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningScheduleListViewType?(string value) => value == null ? null : new MachineLearningScheduleListViewType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningScheduleListViewType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningScheduleListViewType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

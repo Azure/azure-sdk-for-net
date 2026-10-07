@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             TryGetApiVersion(ResourceType, out string healthBotApiVersion);
             _botsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthBot", ResourceType.Namespace, Diagnostics);
-            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Endpoint, healthBotApiVersion ?? "2025-11-01");
+            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthBotApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HealthBot
                 HttpMessage message = _botsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HealthBotPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
+                    new HealthBotResourceOperationSource(Client),
                     _botsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HealthBot
                 HttpMessage message = _botsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HealthBotPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
+                    new HealthBotResourceOperationSource(Client),
                     _botsClientDiagnostics,
                     Pipeline,
                     message.Request,

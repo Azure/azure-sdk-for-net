@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Communication
                     yield break;
                 }
                 SuppressionListResourceCollection result = SuppressionListResourceCollection.FromResponse(response);
-                yield return Page<EmailSuppressionListData>.FromValues((IReadOnlyList<EmailSuppressionListData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EmailSuppressionListData>.FromValues((IReadOnlyList<EmailSuppressionListData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

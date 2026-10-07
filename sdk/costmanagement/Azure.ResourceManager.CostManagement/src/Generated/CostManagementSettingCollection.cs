@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(CostManagementSettingResource.ResourceType, out string costManagementSettingApiVersion);
             _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementSettingResource.ResourceType.Namespace, Diagnostics);
-            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Endpoint, costManagementSettingApiVersion ?? "2025-03-01");
+            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementSettingApiVersion ?? "2025-03-01");
         }
 
         /// <summary>

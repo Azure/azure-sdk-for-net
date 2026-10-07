@@ -1,0 +1,24 @@
+# Example pre/post-eval hook (a steps template).
+#
+# Point archetype-eval.yml's `preEvalTemplate` or `postEvalTemplate` at a copy of this file to run
+# repo-specific setup/teardown around each shard's `vally eval` — for example: start a chat bot,
+# start a web server, or start a non-common MCP server that your scenarios need. The hook runs on
+# the shard agent with the MCP artifact already staged under artifacts/mcp/.
+#
+#   - preEvalTemplate  runs BEFORE the eval (setup: start your bot / server / MCP).
+#   - postEvalTemplate runs AFTER  the eval (teardown: stop it, collect logs).
+#
+# The azure-sdk-tools repo does not use a hook: its mock/live MCP is built by the common BuildMcp
+# job, so both eval entrypoints leave preEvalTemplate/postEvalTemplate commented out. A spec or
+# language repo copies this file, replaces the no-op below with real steps, and passes the path via
+# the parameter, e.g.:
+#
+#   extends:
+#     template: /eng/common/pipelines/templates/stages/archetype-eval.yml
+#     parameters:
+#       preEvalTemplate: /eng/pipelines/eval/start-my-bot.yml
+
+steps:
+  # Replace this no-op with your setup (pre) or teardown (post) steps.
+  - script: echo "No eval hook configured — replace this placeholder with repo-specific steps."
+    displayName: 'Eval hook (placeholder — no-op)'

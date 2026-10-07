@@ -9,10 +9,14 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects;
 
+/// <summary> Provides OpenAI client extensions for project client connections. </summary>
 public static partial class ClientConnectionProviderExtensions
 {
     extension(ClientConnectionProvider connectionProvider)
     {
+        /// <summary> Gets a project OpenAI client from the client connection provider. </summary>
+        /// <param name="options"> The options used to configure the project OpenAI client. </param>
+        /// <returns> The project OpenAI client, or null when the provider does not contain a compatible connection. </returns>
         public ProjectOpenAIClient GetProjectOpenAIClient(ProjectOpenAIClientOptions options = null)
         {
             ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.DirectPipelinePassthrough");

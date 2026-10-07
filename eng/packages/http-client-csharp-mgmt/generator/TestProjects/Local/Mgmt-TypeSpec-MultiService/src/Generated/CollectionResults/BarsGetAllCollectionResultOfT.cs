@@ -52,8 +52,8 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                     yield break;
                 }
                 BarListResult result = BarListResult.FromResponse(response);
-                yield return Page<BarData>.FromValues((IReadOnlyList<BarData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BarData>.FromValues((IReadOnlyList<BarData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

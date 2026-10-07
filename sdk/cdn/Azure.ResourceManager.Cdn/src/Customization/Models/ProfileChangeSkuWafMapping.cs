@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ProfileChangeSkuWafMapping
     {
         // Backward compatibility: old API used ctor(string, WritableSubResource)
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ProfileChangeSkuWafMapping(string securityPolicyName, WritableSubResource changeToWafPolicy) : this(securityPolicyName)
         {

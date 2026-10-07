@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.DependencyMap
                     yield break;
                 }
                 MapsResourceListResult result = MapsResourceListResult.FromResponse(response);
-                yield return Page<DependencyMapData>.FromValues((IReadOnlyList<DependencyMapData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DependencyMapData>.FromValues((IReadOnlyList<DependencyMapData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

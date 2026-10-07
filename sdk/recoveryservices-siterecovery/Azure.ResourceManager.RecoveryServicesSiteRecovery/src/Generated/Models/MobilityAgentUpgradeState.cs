@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct MobilityAgentUpgradeState : IEquatable<MobilityAgentUpgradeState>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Started. </summary>
+        private const string StartedValue = "Started";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Commit. </summary>
+        private const string CommitValue = "Commit";
 
         /// <summary> Initializes a new instance of <see cref="MobilityAgentUpgradeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MobilityAgentUpgradeState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string StartedValue = "Started";
-        private const string CompletedValue = "Completed";
-        private const string CommitValue = "Commit";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static MobilityAgentUpgradeState None { get; } = new MobilityAgentUpgradeState(NoneValue);
+
         /// <summary> Started. </summary>
         public static MobilityAgentUpgradeState Started { get; } = new MobilityAgentUpgradeState(StartedValue);
+
         /// <summary> Completed. </summary>
         public static MobilityAgentUpgradeState Completed { get; } = new MobilityAgentUpgradeState(CompletedValue);
+
         /// <summary> Commit. </summary>
         public static MobilityAgentUpgradeState Commit { get; } = new MobilityAgentUpgradeState(CommitValue);
+
         /// <summary> Determines if two <see cref="MobilityAgentUpgradeState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MobilityAgentUpgradeState left, MobilityAgentUpgradeState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MobilityAgentUpgradeState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MobilityAgentUpgradeState left, MobilityAgentUpgradeState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MobilityAgentUpgradeState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MobilityAgentUpgradeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MobilityAgentUpgradeState(string value) => new MobilityAgentUpgradeState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MobilityAgentUpgradeState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MobilityAgentUpgradeState?(string value) => value == null ? null : new MobilityAgentUpgradeState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MobilityAgentUpgradeState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MobilityAgentUpgradeState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

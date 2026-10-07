@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorRecommendationResource.ResourceType, out string advisorRecommendationApiVersion);
             _resourceRecommendationBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorRecommendationResource.ResourceType.Namespace, Diagnostics);
-            _resourceRecommendationBasesRestClient = new ResourceRecommendationBases(_resourceRecommendationBasesClientDiagnostics, Pipeline, Endpoint, advisorRecommendationApiVersion ?? "2025-05-01-preview");
+            _resourceRecommendationBasesRestClient = new ResourceRecommendationBases(_resourceRecommendationBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorRecommendationApiVersion ?? "2025-05-01-preview");
         }
 
         /// <summary>

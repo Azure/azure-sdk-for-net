@@ -13,85 +13,100 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary>
-    /// A class representing the CosmosDBFleetspace data model.
-    /// An Azure Cosmos DB Fleetspace.
-    /// </summary>
+    /// <summary> An Azure Cosmos DB Fleetspace. </summary>
     public partial class CosmosDBFleetspaceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceData"/>. </summary>
         public CosmosDBFleetspaceData()
         {
-            DataRegions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> A provisioning state of the Fleetspace. </param>
-        /// <param name="fleetspaceApiKind"> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </param>
-        /// <param name="serviceTier"> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </param>
-        /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
-        /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBFleetspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBStatus? provisioningState, CosmosDBFleetspaceApiKind? fleetspaceApiKind, CosmosDBFleetspaceServiceTier? serviceTier, IList<AzureLocation> dataRegions, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties to update Azure Cosmos DB Fleetspace. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBFleetspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FleetspaceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            FleetspaceApiKind = fleetspaceApiKind;
-            ServiceTier = serviceTier;
-            DataRegions = dataRegions;
-            ThroughputPoolConfiguration = throughputPoolConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A provisioning state of the Fleetspace. </summary>
-        [WirePath("properties.provisioningState")]
-        public CosmosDBStatus? ProvisioningState { get; set; }
+        /// <summary> Properties to update Azure Cosmos DB Fleetspace. </summary>
+        [WirePath("properties")]
+        internal FleetspaceProperties Properties { get; set; }
+
         /// <summary> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </summary>
         [WirePath("properties.fleetspaceApiKind")]
-        public CosmosDBFleetspaceApiKind? FleetspaceApiKind { get; set; }
+        public CosmosDBFleetspaceApiKind? FleetspaceApiKind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FleetspaceApiKind;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceProperties();
+                }
+                Properties.FleetspaceApiKind = value;
+            }
+        }
+
         /// <summary> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </summary>
         [WirePath("properties.serviceTier")]
-        public CosmosDBFleetspaceServiceTier? ServiceTier { get; set; }
+        public CosmosDBFleetspaceServiceTier? ServiceTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceTier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceProperties();
+                }
+                Properties.ServiceTier = value;
+            }
+        }
+
         /// <summary> List of data regions assigned to the fleetspace. Eg [westus2]. </summary>
         [WirePath("properties.dataRegions")]
-        public IList<AzureLocation> DataRegions { get; }
+        public IList<AzureLocation> DataRegions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceProperties();
+                }
+                return Properties.DataRegions;
+            }
+        }
+
         /// <summary> Configuration for throughput pool in the fleetspace. </summary>
         [WirePath("properties.throughputPoolConfiguration")]
-        public CosmosDBFleetspaceThroughputPoolConfiguration ThroughputPoolConfiguration { get; set; }
+        public CosmosDBFleetspaceThroughputPoolConfiguration ThroughputPoolConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThroughputPoolConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceProperties();
+                }
+                Properties.ThroughputPoolConfiguration = value;
+            }
+        }
     }
 }

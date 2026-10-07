@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LoadTesting
             TryGetApiVersion(LoadTestingQuotaResource.ResourceType, out string loadTestingQuotaApiVersion);
             _location = location;
             _quotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingQuotaResource.ResourceType.Namespace, Diagnostics);
-            _quotasRestClient = new Quotas(_quotasClientDiagnostics, Pipeline, Endpoint, loadTestingQuotaApiVersion ?? "2024-12-01-preview");
+            _quotasRestClient = new Quotas(_quotasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestingQuotaApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 

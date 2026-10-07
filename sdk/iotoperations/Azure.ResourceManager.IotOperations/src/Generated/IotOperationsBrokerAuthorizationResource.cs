@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(ResourceType, out string iotOperationsBrokerAuthorizationApiVersion);
             _brokerAuthorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _brokerAuthorizationRestClient = new BrokerAuthorization(_brokerAuthorizationClientDiagnostics, Pipeline, Endpoint, iotOperationsBrokerAuthorizationApiVersion ?? "2025-10-01");
+            _brokerAuthorizationRestClient = new BrokerAuthorization(_brokerAuthorizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsBrokerAuthorizationApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerAuthorizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(
-                    new IotOperationsBrokerAuthorizationOperationSource(Client),
+                    new IotOperationsBrokerAuthorizationResourceOperationSource(Client),
                     _brokerAuthorizationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerAuthorizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(
-                    new IotOperationsBrokerAuthorizationOperationSource(Client),
+                    new IotOperationsBrokerAuthorizationResourceOperationSource(Client),
                     _brokerAuthorizationClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct EventGridSku : IEquatable<EventGridSku>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Premium. </summary>
+        private const string PremiumValue = "Premium";
 
         /// <summary> Initializes a new instance of <see cref="EventGridSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventGridSku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string PremiumValue = "Premium";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static EventGridSku Basic { get; } = new EventGridSku(BasicValue);
+
         /// <summary> Premium. </summary>
         public static EventGridSku Premium { get; } = new EventGridSku(PremiumValue);
+
         /// <summary> Determines if two <see cref="EventGridSku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventGridSku left, EventGridSku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventGridSku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventGridSku left, EventGridSku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridSku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventGridSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventGridSku(string value) => new EventGridSku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventGridSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventGridSku?(string value) => value == null ? null : new EventGridSku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventGridSku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventGridSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

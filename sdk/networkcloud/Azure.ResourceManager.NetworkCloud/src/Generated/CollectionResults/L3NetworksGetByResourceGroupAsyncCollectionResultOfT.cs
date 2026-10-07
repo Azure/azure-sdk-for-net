@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 L3NetworkList result = L3NetworkList.FromResponse(response);
-                yield return Page<NetworkCloudL3NetworkData>.FromValues((IReadOnlyList<NetworkCloudL3NetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudL3NetworkData>.FromValues((IReadOnlyList<NetworkCloudL3NetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

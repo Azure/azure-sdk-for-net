@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> An AML file system update instance. </summary>
     public partial class AmlFileSystemPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AmlFileSystemPatch"/>. </summary>
         public AmlFileSystemPatch()
@@ -53,38 +25,70 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Initializes a new instance of <see cref="AmlFileSystemPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="encryptionSettings"> Specifies encryption settings of the AML file system. </param>
-        /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
-        /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmlFileSystemPatch(IDictionary<string, string> tags, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemUpdatePropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemRootSquashSettings rootSquashSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the AML file system. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemPatch(IDictionary<string, string> tags, AmlFilesystemUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
-            EncryptionSettings = encryptionSettings;
-            MaintenanceWindow = maintenanceWindow;
-            RootSquashSettings = rootSquashSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Specifies encryption settings of the AML file system. </summary>
-        internal AmlFileSystemEncryptionSettings EncryptionSettings { get; set; }
-        /// <summary> Specifies the location of the encryption key in Key Vault. </summary>
-        public StorageCacheEncryptionKeyVaultKeyReference KeyEncryptionKey
+
+        /// <summary> Properties of the AML file system. </summary>
+        internal AmlFilesystemUpdateProperties Properties { get; set; }
+
+        /// <summary> Start time of a 30-minute weekly maintenance window. </summary>
+        public AmlFileSystemUpdatePropertiesMaintenanceWindow MaintenanceWindow
         {
-            get => EncryptionSettings is null ? default : EncryptionSettings.KeyEncryptionKey;
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceWindow;
+            }
             set
             {
-                if (EncryptionSettings is null)
-                    EncryptionSettings = new AmlFileSystemEncryptionSettings();
-                EncryptionSettings.KeyEncryptionKey = value;
+                if (Properties is null)
+                {
+                    Properties = new AmlFilesystemUpdateProperties();
+                }
+                Properties.MaintenanceWindow = value;
             }
         }
 
-        /// <summary> Start time of a 30-minute weekly maintenance window. </summary>
-        public AmlFileSystemUpdatePropertiesMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> Specifies root squash settings of the AML file system. </summary>
-        public AmlFileSystemRootSquashSettings RootSquashSettings { get; set; }
+        public AmlFileSystemRootSquashSettings RootSquashSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RootSquashSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AmlFilesystemUpdateProperties();
+                }
+                Properties.RootSquashSettings = value;
+            }
+        }
+
+        /// <summary> Specifies the location of the encryption key in Key Vault. </summary>
+        public StorageCacheEncryptionKeyVaultKeyReference KeyEncryptionKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyEncryptionKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AmlFilesystemUpdateProperties();
+                }
+                Properties.KeyEncryptionKey = value;
+            }
+        }
     }
 }

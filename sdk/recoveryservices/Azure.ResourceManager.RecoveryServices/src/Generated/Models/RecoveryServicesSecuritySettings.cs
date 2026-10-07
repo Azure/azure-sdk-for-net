@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Immutability Settings of a vault. </summary>
-        internal ImmutabilitySettings ImmutabilitySettings { get; set; }
+        public ImmutabilitySettings ImmutabilitySettings { get; set; }
 
         /// <summary> Soft delete Settings of a vault. </summary>
         public RecoveryServicesSoftDeleteSettings SoftDeleteSettings { get; set; }
@@ -47,22 +47,5 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Source scan configuration of vault. </summary>
         public SourceScanConfiguration SourceScanConfiguration { get; set; }
-
-        /// <summary> Gets or sets the State. </summary>
-        public ImmutabilityState? ImmutabilityState
-        {
-            get
-            {
-                return ImmutabilitySettings is null ? default : ImmutabilitySettings.State;
-            }
-            set
-            {
-                if (ImmutabilitySettings is null)
-                {
-                    ImmutabilitySettings = new ImmutabilitySettings();
-                }
-                ImmutabilitySettings.State = value;
-            }
-        }
     }
 }

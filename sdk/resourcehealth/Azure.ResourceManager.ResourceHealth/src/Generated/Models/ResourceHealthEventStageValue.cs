@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     public readonly partial struct ResourceHealthEventStageValue : IEquatable<ResourceHealthEventStageValue>
     {
         private readonly string _value;
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Resolve. </summary>
+        private const string ResolveValue = "Resolve";
+        /// <summary> Archived. </summary>
+        private const string ArchivedValue = "Archived";
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthEventStageValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceHealthEventStageValue(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string ResolveValue = "Resolve";
-        private const string ArchivedValue = "Archived";
+            _value = value;
+        }
 
         /// <summary> Active. </summary>
         public static ResourceHealthEventStageValue Active { get; } = new ResourceHealthEventStageValue(ActiveValue);
+
         /// <summary> Resolve. </summary>
         public static ResourceHealthEventStageValue Resolve { get; } = new ResourceHealthEventStageValue(ResolveValue);
+
         /// <summary> Archived. </summary>
         public static ResourceHealthEventStageValue Archived { get; } = new ResourceHealthEventStageValue(ArchivedValue);
+
         /// <summary> Determines if two <see cref="ResourceHealthEventStageValue"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceHealthEventStageValue left, ResourceHealthEventStageValue right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceHealthEventStageValue"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceHealthEventStageValue left, ResourceHealthEventStageValue right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthEventStageValue"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceHealthEventStageValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceHealthEventStageValue(string value) => new ResourceHealthEventStageValue(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceHealthEventStageValue"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceHealthEventStageValue?(string value) => value == null ? null : new ResourceHealthEventStageValue(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceHealthEventStageValue other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceHealthEventStageValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

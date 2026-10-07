@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         /* Partition merge is not supported in API version 2025-10-15.
-        [Test]
         [RecordedTest]
         public async Task SqlDatabasePartitionMerge()
         {

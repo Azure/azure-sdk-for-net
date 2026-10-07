@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string contributorApiVersion);
             _contributorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _contributorsRestClient = new Contributors(_contributorsClientDiagnostics, Pipeline, Endpoint, contributorApiVersion ?? "2025-12-01-preview");
+            _contributorsRestClient = new Contributors(_contributorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, contributorApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

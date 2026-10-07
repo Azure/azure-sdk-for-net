@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         {
             TryGetApiVersion(SecretSyncResource.ResourceType, out string secretSyncApiVersion);
             _secretSyncsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", SecretSyncResource.ResourceType.Namespace, Diagnostics);
-            _secretSyncsRestClient = new SecretSyncs(_secretSyncsClientDiagnostics, Pipeline, Endpoint, secretSyncApiVersion ?? "2024-08-21-preview");
+            _secretSyncsRestClient = new SecretSyncs(_secretSyncsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, secretSyncApiVersion ?? "2026-09-25-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
-                    new SecretSyncOperationSource(Client),
+                    new SecretSyncResourceOperationSource(Client),
                     _secretSyncsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
-                    new SecretSyncOperationSource(Client),
+                    new SecretSyncResourceOperationSource(Client),
                     _secretSyncsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

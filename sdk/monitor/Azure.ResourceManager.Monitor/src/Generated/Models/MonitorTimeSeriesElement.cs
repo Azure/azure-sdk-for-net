@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A time series result type. The discriminator value is always TimeSeries in this case. </summary>
     public partial class MonitorTimeSeriesElement
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorTimeSeriesElement"/>. </summary>
         internal MonitorTimeSeriesElement()
@@ -53,18 +25,19 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorTimeSeriesElement"/>. </summary>
-        /// <param name="metadatavalues"> the metadata values returned if $filter was specified in the call. </param>
+        /// <param name="metadatavalues"> The metadata values returned if $filter was specified in the call. </param>
         /// <param name="data"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorTimeSeriesElement(IReadOnlyList<MonitorMetadataValue> metadatavalues, IReadOnlyList<MonitorMetricValue> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorTimeSeriesElement(IReadOnlyList<MonitorMetadataValue> metadatavalues, IReadOnlyList<MonitorMetricValue> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadatavalues = metadatavalues;
             Data = data;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> the metadata values returned if $filter was specified in the call. </summary>
+        /// <summary> The metadata values returned if $filter was specified in the call. </summary>
         public IReadOnlyList<MonitorMetadataValue> Metadatavalues { get; }
+
         /// <summary> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </summary>
         public IReadOnlyList<MonitorMetricValue> Data { get; }
     }

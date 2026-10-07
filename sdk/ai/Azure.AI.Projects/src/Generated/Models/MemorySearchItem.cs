@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> A retrieved memory item from memory search. </summary>
+    [Experimental("AAIP001")]
     public partial class MemorySearchItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

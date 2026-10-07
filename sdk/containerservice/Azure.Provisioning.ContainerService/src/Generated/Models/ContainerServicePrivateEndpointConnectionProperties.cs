@@ -87,6 +87,10 @@ namespace Azure.Provisioning.ContainerService
             _provisioningState = DefineProperty<ContainerServicePrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" });
             _connectionState = DefineModelProperty<ContainerServicePrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServicePrivateEndpointConnectionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

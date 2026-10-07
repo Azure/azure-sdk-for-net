@@ -12,8 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourcesModelFactory
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="tags"> Deployment tags. </param>
-        /// <returns> A new <see cref="Resources.ArmDeploymentData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Deployments.ArmDeploymentData"/> instance for mocking. </returns>
         public static ArmDeploymentData ArmDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ArmDeploymentPropertiesExtended properties = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -36,10 +37,10 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
                 location,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
@@ -78,22 +79,22 @@ namespace Azure.ResourceManager.Resources.Models
                 timestamp,
                 duration,
                 outputs,
-                providers.ToList(),
-                dependencies.ToList(),
+                (providers ?? new ChangeTrackingList<ResourceProviderData>()).ToList(),
+                (dependencies ?? new ChangeTrackingList<ArmDependency>()).ToList(),
                 templateLink,
                 parameters,
                 parametersLink,
-                extensions.ToList(),
+                (extensions ?? new ChangeTrackingList<ArmDeploymentExtensionDefinition>()).ToList(),
                 mode,
-                debugSettingDetailLevel is null ? default : new DebugSetting(debugSettingDetailLevel, null),
+                debugSettingDetailLevel is null ? default : new DebugSetting(debugSettingDetailLevel, default),
                 errorDeployment,
                 templateHash,
-                outputResourceDetails.ToList(),
-                validatedResourceDetails.ToList(),
+                (outputResourceDetails ?? new ChangeTrackingList<ArmResourceReference>()).ToList(),
+                (validatedResourceDetails ?? new ChangeTrackingList<ArmResourceReference>()).ToList(),
                 error,
-                diagnostics.ToList(),
+                (diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>()).ToList(),
                 validationLevel,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Deployment dependency information. </summary>
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             dependsOn ??= new ChangeTrackingList<BasicArmDependency>();
 
-            return new ArmDependency(dependsOn.ToList(), id, resourceType, resourceName, additionalBinaryDataProperties: null);
+            return new ArmDependency((dependsOn ?? new ChangeTrackingList<BasicArmDependency>()).ToList(), id, resourceType, resourceName, default);
         }
 
         /// <summary> Deployment dependency information. </summary>
@@ -116,7 +117,34 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.BasicArmDependency"/> instance for mocking. </returns>
         public static BasicArmDependency BasicArmDependency(string id = default, ResourceType? resourceType = default, string resourceName = default)
         {
-            return new BasicArmDependency(id, resourceType, resourceName, additionalBinaryDataProperties: null);
+            return new BasicArmDependency(id, resourceType, resourceName, default);
+        }
+
+        /// <summary> Entity representing the reference to the template. </summary>
+        /// <param name="uri"> The URI of the template to deploy. Use either the uri or id property, but not both. </param>
+        /// <param name="id"> The resource id of a Template Spec. Use either the id or uri property, but not both. </param>
+        /// <param name="relativePath"> The relativePath property can be used to deploy a linked template at a location relative to the parent. If the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs. </param>
+        /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
+        /// <param name="queryString"> The query string (for example, a SAS token) to be used with the templateLink URI. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentTemplateLink"/> instance for mocking. </returns>
+        public static ArmDeploymentTemplateLink ArmDeploymentTemplateLink(Uri uri = default, string id = default, string relativePath = default, string contentVersion = default, string queryString = default)
+        {
+            return new ArmDeploymentTemplateLink(
+                uri,
+                id,
+                relativePath,
+                contentVersion,
+                queryString,
+                default);
+        }
+
+        /// <summary> Entity representing the reference to the deployment parameters. </summary>
+        /// <param name="uri"> The URI of the parameters file. </param>
+        /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentParametersLink"/> instance for mocking. </returns>
+        public static ArmDeploymentParametersLink ArmDeploymentParametersLink(Uri uri = default, string contentVersion = default)
+        {
+            return new ArmDeploymentParametersLink(uri, contentVersion, default);
         }
 
         /// <summary> The ArmDeploymentExtensionDefinition. </summary>
@@ -135,8 +163,8 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 version,
                 configId,
-                config,
-                additionalBinaryDataProperties: null);
+                config ?? new ChangeTrackingDictionary<string, ArmDeploymentExtensionConfigItem>(),
+                default);
         }
 
         /// <summary> The ArmDeploymentExtensionConfigItem. </summary>
@@ -146,7 +174,17 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentExtensionConfigItem"/> instance for mocking. </returns>
         public static ArmDeploymentExtensionConfigItem ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType = default, BinaryData value = default, KeyVaultParameterReference keyVaultReference = default)
         {
-            return new ArmDeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, additionalBinaryDataProperties: null);
+            return new ArmDeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, default);
+        }
+
+        /// <param name="keyVaultId"> Azure Key Vault resource id. </param>
+        /// <param name="secretName"> Azure Key Vault secret name. </param>
+        /// <param name="secretVersion"> Azure Key Vault secret version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultId"/> is null. </exception>
+        /// <returns> A new <see cref="Models.KeyVaultParameterReference"/> instance for mocking. </returns>
+        public static KeyVaultParameterReference KeyVaultParameterReference(ResourceIdentifier keyVaultId = default, string secretName = default, string secretVersion = default)
+        {
+            return new KeyVaultParameterReference(keyVaultId is null ? default : new KeyVaultReference(keyVaultId, default), secretName, secretVersion, default);
         }
 
         /// <summary> Deployment on error behavior with additional details. </summary>
@@ -156,7 +194,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ErrorDeploymentExtended"/> instance for mocking. </returns>
         public static ErrorDeploymentExtended ErrorDeploymentExtended(string provisioningState = default, ErrorDeploymentType? deploymentType = default, string deploymentName = default)
         {
-            return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName, additionalBinaryDataProperties: null);
+            return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName, default);
         }
 
         /// <summary> The resource Id model. </summary>
@@ -174,7 +212,7 @@ namespace Azure.ResourceManager.Resources.Models
                 resourceType,
                 identifiers,
                 apiVersion,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The resource management error additional info. </summary>
@@ -183,7 +221,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
         public static ErrorAdditionalInfo ErrorAdditionalInfo(string errorAdditionalInfoType = default, BinaryData info = default)
         {
-            return new ErrorAdditionalInfo(errorAdditionalInfoType, info, additionalBinaryDataProperties: null);
+            return new ErrorAdditionalInfo(errorAdditionalInfoType, info, default);
         }
 
         /// <summary> The DeploymentDiagnosticsDefinition. </summary>
@@ -202,8 +240,8 @@ namespace Azure.ResourceManager.Resources.Models
                 code,
                 message,
                 target,
-                additionalInfo.ToList(),
-                additionalBinaryDataProperties: null);
+                (additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>()).ToList(),
+                default);
         }
 
         /// <summary> Deployment operation parameters. </summary>
@@ -216,7 +254,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ArmDeploymentContent(location, properties, tags, identity, additionalBinaryDataProperties: null);
+            return new ArmDeploymentContent(location, properties, tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
         /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
@@ -242,17 +280,27 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentProperties(
                 template,
                 templateLink,
-                deploymentParameters,
-                externalInputs,
-                externalInputDefinitions,
+                deploymentParameters ?? new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>(),
+                externalInputs ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInput>(),
+                externalInputDefinitions ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInputDefinition>(),
                 parametersLink,
-                extensionConfigs,
+                extensionConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>(),
                 mode,
-                debugSettingDetailLevel is null ? default : new DebugSetting(debugSettingDetailLevel, null),
+                debugSettingDetailLevel is null ? default : new DebugSetting(debugSettingDetailLevel, default),
                 errorDeployment,
-                expressionEvaluationScope is null ? default : new ExpressionEvaluationOptions(expressionEvaluationScope, null),
+                expressionEvaluationScope is null ? default : new ExpressionEvaluationOptions(expressionEvaluationScope, default),
                 validationLevel,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Deployment parameter for the template. </summary>
+        /// <param name="value"> Input value to the parameter . </param>
+        /// <param name="reference"> Azure Key Vault parameter reference. </param>
+        /// <param name="expression"> Input expression to the parameter. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentParameterValue"/> instance for mocking. </returns>
+        public static ArmDeploymentParameterValue ArmDeploymentParameterValue(BinaryData value = default, KeyVaultParameterReference reference = default, string expression = default)
+        {
+            return new ArmDeploymentParameterValue(value, reference, expression, default);
         }
 
         /// <summary> Deployment external input for parameterization. </summary>
@@ -260,7 +308,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentExternalInput"/> instance for mocking. </returns>
         public static ArmDeploymentExternalInput ArmDeploymentExternalInput(BinaryData value = default)
         {
-            return new ArmDeploymentExternalInput(value, additionalBinaryDataProperties: null);
+            return new ArmDeploymentExternalInput(value, default);
         }
 
         /// <summary> Deployment external input definition for parameterization. </summary>
@@ -269,7 +317,16 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentExternalInputDefinition"/> instance for mocking. </returns>
         public static ArmDeploymentExternalInputDefinition ArmDeploymentExternalInputDefinition(string kind = default, BinaryData config = default)
         {
-            return new ArmDeploymentExternalInputDefinition(kind, config, additionalBinaryDataProperties: null);
+            return new ArmDeploymentExternalInputDefinition(kind, config, default);
+        }
+
+        /// <summary> Deployment on error behavior. </summary>
+        /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
+        /// <param name="deploymentName"> The deployment to be used on error case. </param>
+        /// <returns> A new <see cref="Models.ErrorDeployment"/> instance for mocking. </returns>
+        public static ErrorDeployment ErrorDeployment(ErrorDeploymentType? deploymentType = default, string deploymentName = default)
+        {
+            return new ErrorDeployment(deploymentType, deploymentName, default);
         }
 
         /// <summary> Information from validate template deployment response. </summary>
@@ -287,9 +344,9 @@ namespace Azure.ResourceManager.Resources.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 error,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The deployment export result. </summary>
@@ -297,7 +354,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentExportResult"/> instance for mocking. </returns>
         public static ArmDeploymentExportResult ArmDeploymentExportResult(BinaryData template = default)
         {
-            return new ArmDeploymentExportResult(template, additionalBinaryDataProperties: null);
+            return new ArmDeploymentExportResult(template, default);
         }
 
         /// <summary> Deployment operation information. </summary>
@@ -307,7 +364,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentOperation"/> instance for mocking. </returns>
         public static ArmDeploymentOperation ArmDeploymentOperation(string id = default, string operationId = default, ArmDeploymentOperationProperties properties = default)
         {
-            return new ArmDeploymentOperation(id, operationId, properties, additionalBinaryDataProperties: null);
+            return new ArmDeploymentOperation(id, operationId, properties, default);
         }
 
         /// <param name="provisioningOperation"> The name of the current provisioning operation. </param>
@@ -332,9 +389,9 @@ namespace Azure.ResourceManager.Resources.Models
                 statusCode,
                 statusMessage,
                 targetResource,
-                requestContent is null ? default : new HttpMessage(requestContent, null),
-                responseContent is null ? default : new HttpMessage(responseContent, null),
-                additionalBinaryDataProperties: null);
+                requestContent is null ? default : new HttpMessage(requestContent, default),
+                responseContent is null ? default : new HttpMessage(responseContent, default),
+                default);
         }
 
         /// <summary> Operation status message object. </summary>
@@ -343,7 +400,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.StatusMessage"/> instance for mocking. </returns>
         public static StatusMessage StatusMessage(string status = default, ResponseError error = default)
         {
-            return new StatusMessage(status, error, additionalBinaryDataProperties: null);
+            return new StatusMessage(status, error, default);
         }
 
         /// <summary> Target resource. </summary>
@@ -365,7 +422,7 @@ namespace Azure.ResourceManager.Resources.Models
                 identifiers,
                 apiVersion,
                 symbolicName,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Deployment What-if operation parameters. </summary>
@@ -374,7 +431,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentWhatIfContent"/> instance for mocking. </returns>
         public static ArmDeploymentWhatIfContent ArmDeploymentWhatIfContent(AzureLocation? location = default, ArmDeploymentWhatIfProperties properties = default)
         {
-            return new ArmDeploymentWhatIfContent(location, properties, additionalBinaryDataProperties: null);
+            return new ArmDeploymentWhatIfContent(location, properties, default);
         }
 
         /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
@@ -401,18 +458,18 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentWhatIfProperties(
                 template,
                 templateLink,
-                deploymentParameters,
-                externalInputs,
-                externalInputDefinitions,
+                deploymentParameters ?? new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>(),
+                externalInputs ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInput>(),
+                externalInputDefinitions ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInputDefinition>(),
                 parametersLink,
-                extensionConfigs,
+                extensionConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>(),
                 mode,
-                debugSettingDetailLevel is null ? default : new DebugSetting(debugSettingDetailLevel, null),
+                debugSettingDetailLevel is null ? default : new DebugSetting(debugSettingDetailLevel, default),
                 errorDeployment,
-                expressionEvaluationScope is null ? default : new ExpressionEvaluationOptions(expressionEvaluationScope, null),
+                expressionEvaluationScope is null ? default : new ExpressionEvaluationOptions(expressionEvaluationScope, default),
                 validationLevel,
-                additionalBinaryDataProperties: null,
-                whatIfResultFormat is null ? default : new ArmDeploymentWhatIfSettings(whatIfResultFormat, null));
+                default,
+                whatIfResultFormat is null ? default : new ArmDeploymentWhatIfSettings(whatIfResultFormat, default));
         }
 
         /// <param name="status"> Status of the What-If operation. </param>
@@ -423,7 +480,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.WhatIfOperationResult"/> instance for mocking. </returns>
         public static WhatIfOperationResult WhatIfOperationResult(string status = default, IEnumerable<WhatIfChange> changes = default, IEnumerable<WhatIfChange> potentialChanges = default, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = default, ResponseError error = default)
         {
-            return new WhatIfOperationResult(status, changes is null && potentialChanges is null && diagnostics is null ? default : new WhatIfOperationProperties((changes ?? new ChangeTrackingList<WhatIfChange>()).ToList(), (potentialChanges ?? new ChangeTrackingList<WhatIfChange>()).ToList(), (diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>()).ToList(), null), error, additionalBinaryDataProperties: null);
+            return new WhatIfOperationResult(status, changes is null && potentialChanges is null && diagnostics is null ? default : new WhatIfOperationProperties((changes ?? new ChangeTrackingList<WhatIfChange>()).ToList(), (potentialChanges ?? new ChangeTrackingList<WhatIfChange>()).ToList(), (diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>()).ToList(), default), error, default);
         }
 
         /// <summary> Information about a single resource change predicted by What-If operation. </summary>
@@ -452,8 +509,8 @@ namespace Azure.ResourceManager.Resources.Models
                 unsupportedReason,
                 before,
                 after,
-                delta.ToList(),
-                additionalBinaryDataProperties: null);
+                (delta ?? new ChangeTrackingList<WhatIfPropertyChange>()).ToList(),
+                default);
         }
 
         /// <summary> The predicted change to the resource property. </summary>
@@ -472,8 +529,8 @@ namespace Azure.ResourceManager.Resources.Models
                 propertyChangeType,
                 before,
                 after,
-                children.ToList(),
-                additionalBinaryDataProperties: null);
+                (children ?? new ChangeTrackingList<WhatIfPropertyChange>()).ToList(),
+                default);
         }
 
         /// <summary> Result of the request to calculate template hash. It contains a string of minified template and its hash. </summary>
@@ -482,7 +539,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.TemplateHashResult"/> instance for mocking. </returns>
         public static TemplateHashResult TemplateHashResult(string minifiedTemplate = default, string templateHash = default)
         {
-            return new TemplateHashResult(minifiedTemplate, templateHash, additionalBinaryDataProperties: null);
+            return new TemplateHashResult(minifiedTemplate, templateHash, default);
         }
     }
 }

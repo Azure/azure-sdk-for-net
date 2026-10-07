@@ -1,12 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { CreateSdkContextOptions } from "@azure-tools/typespec-client-generator-core";
 import {
+  CreateSdkContextOptions,
   DecoratorInfo,
-  getClientNameOverride
+  getClientOptions,
+  getClientNameOverride,
+  SdkHttpOperation,
+  SdkMethod
 } from "@azure-tools/typespec-client-generator-core";
-import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
+import type { CodeModel, CSharpEmitterContext } from "./code-model-types.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armprovidernamespace
@@ -46,6 +49,18 @@ const armResourceCreateOrUpdateRegex =
 export const armResourceAction = "Azure.ResourceManager.@armResourceAction";
 export const armResourceActionName = "@armResourceAction";
 const armResourceActionRegex = "Azure\\.ResourceManager\\.@armResourceAction";
+
+export const resourceOperationKindKey = "resource-operation-kind";
+const collectionActionKind = "CollectionAction";
+
+export function isResourceCollectionAction(
+  method: SdkMethod<SdkHttpOperation> | undefined
+): boolean {
+  return method
+    ? getClientOptions(method, resourceOperationKindKey) ===
+        collectionActionKind
+    : false;
+}
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceList
 export const armResourceList = "Azure.ResourceManager.@armResourceList";
@@ -131,6 +146,7 @@ export const hasClientNameOverrideDecorator =
 // Propagated onto InputModelType.Decorators so the management generator can read
 // per-model opt-outs (e.g. "disable-safe-flatten") that aren't consumed during
 // resource detection in the emitter.
+export const clientOption = "Azure.ClientGenerator.Core.@clientOption";
 const clientOptionRegex = "Azure\\.ClientGenerator\\.Core\\.@clientOption";
 
 // TypeSpec validation decorators for resource name constraints

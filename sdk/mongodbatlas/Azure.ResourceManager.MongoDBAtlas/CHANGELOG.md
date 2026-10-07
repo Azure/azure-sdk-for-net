@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2026-07-12)
+
+### Features Added
+
+- Added support for API version `2026-03-01-preview`.
+- Added `MongoDBAtlasProjectResource`, `MongoDBAtlasProjectCollection`, and related models for managing MongoDB Atlas projects.
+- Added `MongoDBAtlasClusterResource`, `MongoDBAtlasClusterCollection`, and related models for managing MongoDB Atlas clusters.
+- Added `GetClusterTierRegions` and `TierLimitReached` operations on `MongoDBAtlasProjectResource`.
+
+### Breaking Changes
+
+- Renamed model `ProjectLimitStatus` to `MongoDBAtlasProjectLimitStatus`.
+- Renamed model `RegionsByTierResponse` to `MongoDBAtlasRegionsByTierResult`.
+- Renamed model `TierLimitReachedResponse` to `MongoDBAtlasTierLimitReachedResult`.
+- Renamed model `TierRegions` to `MongoDBAtlasTierRegions`.
+- Renamed property `Backups` to `IsBackupsEnabled` in `MongoDBAtlasClusterProperties`.
+- Renamed property `FREE` to `Free` in `MongoDBAtlasClusterTier`.
+- Renamed property `FLEX` to `Flex` in `MongoDBAtlasClusterTier`.
 
 ## 1.0.1 (2026-04-28)
 

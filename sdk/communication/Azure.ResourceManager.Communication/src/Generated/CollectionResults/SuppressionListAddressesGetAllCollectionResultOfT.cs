@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Communication
                     yield break;
                 }
                 SuppressionListAddressResourceCollection result = SuppressionListAddressResourceCollection.FromResponse(response);
-                yield return Page<EmailSuppressionListAddressData>.FromValues((IReadOnlyList<EmailSuppressionListAddressData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EmailSuppressionListAddressData>.FromValues((IReadOnlyList<EmailSuppressionListAddressData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

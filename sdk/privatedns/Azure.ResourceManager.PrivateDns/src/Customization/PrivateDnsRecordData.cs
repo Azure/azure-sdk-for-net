@@ -3,120 +3,141 @@
 
 #nullable disable
 
+// TypeSpec generates PrivateDnsRecordData with prefixed record-list properties; these members preserve the shipped unprefixed aggregate record API.
+
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
-
-[assembly: CodeGenSuppressType("PrivateDnsRecordData")]
+using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the RecordSet data model. </summary>
+    /// <summary> A class representing the Record data model. </summary>
+    [CodeGenSuppressAttribute("_additionalBinaryDataProperties")]
+    [CodeGenSuppressAttribute("Properties")]
+    [CodeGenSuppressAttribute("ETag")]
+    [CodeGenSuppressAttribute("Metadata")]
+    [CodeGenSuppressAttribute("TtlInSeconds")]
+    [CodeGenSuppressAttribute("Fqdn")]
+    [CodeGenSuppressAttribute("IsAutoRegistered")]
+    [CodeGenSuppressAttribute("PrivateDnsARecords")]
+    [CodeGenSuppressAttribute("PrivateDnsAaaaRecords")]
+    [CodeGenSuppressAttribute("PrivateDnsMXRecords")]
+    [CodeGenSuppressAttribute("PrivateDnsPtrRecords")]
+    [CodeGenSuppressAttribute("PrivateDnsSoaRecord")]
+    [CodeGenSuppressAttribute("PrivateDnsSrvRecords")]
+    [CodeGenSuppressAttribute("PrivateDnsTxtRecords")]
+    [CodeGenSuppressAttribute("Cname")]
+    [CodeGenSuppressAttribute("Name")]
+    [CodeGenSuppressAttribute("PrivateDnsRecordData", typeof(IDictionary<string, BinaryData>))]
     public partial class PrivateDnsRecordData : PrivateDnsBaseRecordData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-        /// <summary> Initializes a new instance of RecordSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordData"/>. </summary>
         public PrivateDnsRecordData()
         {
-            ARecords = new ChangeTrackingList<PrivateDnsARecordInfo>();
-            AaaaRecords = new ChangeTrackingList<PrivateDnsAaaaRecordInfo>();
-            MXRecords = new ChangeTrackingList<PrivateDnsMXRecordInfo>();
-            PtrRecords = new ChangeTrackingList<PrivateDnsPtrRecordInfo>();
-            SrvRecords = new ChangeTrackingList<PrivateDnsSrvRecordInfo>();
-            TxtRecords = new ChangeTrackingList<PrivateDnsTxtRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of RecordSetData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the record set. </param>
-        /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
-        /// <param name="aRecords"> The list of A records in the record set. </param>
-        /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
-        /// <param name="privateDnsCnameRecordInfo"> The CNAME record in the record set. </param>
-        /// <param name="mxRecords"> The list of MX records in the record set. </param>
-        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
-        /// <param name="privateDnsSoaRecordInfo"> The SOA record in the record set. </param>
-        /// <param name="srvRecords"> The list of SRV records in the record set. </param>
-        /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<PrivateDnsARecordInfo> aRecords, IList<PrivateDnsAaaaRecordInfo> aaaaRecords, PrivateDnsCnameRecordInfo privateDnsCnameRecordInfo, IList<PrivateDnsMXRecordInfo> mxRecords, IList<PrivateDnsPtrRecordInfo> ptrRecords, PrivateDnsSoaRecordInfo privateDnsSoaRecordInfo, IList<PrivateDnsSrvRecordInfo> srvRecords, IList<PrivateDnsTxtRecordInfo> txtRecords, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered, serializedAdditionalRawData)
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordData"/>. </summary>
+        internal PrivateDnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateDnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
         {
-            ARecords = aRecords;
-            AaaaRecords = aaaaRecords;
-            PrivateDnsCnameRecordInfo = privateDnsCnameRecordInfo;
-            MXRecords = mxRecords;
-            PtrRecords = ptrRecords;
-            PrivateDnsSoaRecordInfo = privateDnsSoaRecordInfo;
-            SrvRecords = srvRecords;
-            TxtRecords = txtRecords;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
         /// <summary> The list of A records in the record set. </summary>
-        public IList<PrivateDnsARecordInfo> ARecords { get; }
+        public IList<PrivateDnsARecordInfo> ARecords => EnsureProperties().PrivateDnsARecords;
+
         /// <summary> The list of AAAA records in the record set. </summary>
-        public IList<PrivateDnsAaaaRecordInfo> AaaaRecords { get; }
-        /// <summary> The CNAME record in the record set. </summary>
-        internal PrivateDnsCnameRecordInfo PrivateDnsCnameRecordInfo { get; set; }
+        public IList<PrivateDnsAaaaRecordInfo> AaaaRecords => EnsureProperties().PrivateDnsAaaaRecords;
+
         /// <summary> The canonical name for this CNAME record. </summary>
         public string Cname
         {
-            get => PrivateDnsCnameRecordInfo is null ? default : PrivateDnsCnameRecordInfo.Cname;
-            set
-            {
-                if (PrivateDnsCnameRecordInfo is null)
-                    PrivateDnsCnameRecordInfo = new PrivateDnsCnameRecordInfo();
-                PrivateDnsCnameRecordInfo.Cname = value;
-            }
+            get => Properties is null ? default : Properties.Cname;
+            set => EnsureProperties().Cname = value;
         }
 
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<PrivateDnsMXRecordInfo> MXRecords { get; }
+        public IList<PrivateDnsMXRecordInfo> MXRecords => EnsureProperties().PrivateDnsMXRecords;
+
         /// <summary> The list of PTR records in the record set. </summary>
-        public IList<PrivateDnsPtrRecordInfo> PtrRecords { get; }
+        public IList<PrivateDnsPtrRecordInfo> PtrRecords => EnsureProperties().PrivateDnsPtrRecords;
+
         /// <summary> The SOA record in the record set. </summary>
-        public PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo { get; set; }
+        public PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo
+        {
+            get => Properties is null ? default : Properties.PrivateDnsSoaRecord;
+            set => EnsureProperties().PrivateDnsSoaRecord = value;
+        }
+
         /// <summary> The list of SRV records in the record set. </summary>
-        public IList<PrivateDnsSrvRecordInfo> SrvRecords { get; }
+        public IList<PrivateDnsSrvRecordInfo> SrvRecords => EnsureProperties().PrivateDnsSrvRecords;
+
         /// <summary> The list of TXT records in the record set. </summary>
-        public IList<PrivateDnsTxtRecordInfo> TxtRecords { get; }
+        public IList<PrivateDnsTxtRecordInfo> TxtRecords => EnsureProperties().PrivateDnsTxtRecords;
+
+        /// <summary> The PrivateDnsRecordType in the record set. </summary>
+        public PrivateDnsRecordType RecordType
+        {
+            get
+            {
+                string resourceTypeString = base.ResourceType.Type.Split('/').Where(part => !string.IsNullOrEmpty(part)).LastOrDefault();
+                return PrivateDnsRecordTypeExtensions.ToPrivateDnsRecordType(resourceTypeString);
+            }
+        }
+
+        internal static AsyncPageable<TResource> GetAllAsync<TResource>(RecordSets recordSetsRestClient, ArmClient client, ResourceIdentifier zoneId, string recordType, int? top, string recordsetnamesuffix, CancellationToken cancellationToken, string diagnosticScope, Func<ArmClient, PrivateDnsRecordData, TResource> createResource)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+
+            return new AsyncPageableWrapper<PrivateDnsRecordData, TResource>(
+                new RecordSetsGetByTypeAsyncCollectionResultOfT(recordSetsRestClient, zoneId.SubscriptionId, zoneId.ResourceGroupName, zoneId.Name, recordType, top, recordsetnamesuffix, context, diagnosticScope),
+                data => createResource(client, data));
+        }
+
+        internal static Pageable<TResource> GetAll<TResource>(RecordSets recordSetsRestClient, ArmClient client, ResourceIdentifier zoneId, string recordType, int? top, string recordsetnamesuffix, CancellationToken cancellationToken, string diagnosticScope, Func<ArmClient, PrivateDnsRecordData, TResource> createResource)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+
+            return new PageableWrapper<PrivateDnsRecordData, TResource>(
+                new RecordSetsGetByTypeCollectionResultOfT(recordSetsRestClient, zoneId.SubscriptionId, zoneId.ResourceGroupName, zoneId.Name, recordType, top, recordsetnamesuffix, context, diagnosticScope),
+                data => createResource(client, data));
+        }
+
+        internal PrivateDnsARecordData ToARecordData() => new PrivateDnsARecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+
+        internal PrivateDnsAaaaRecordData ToAaaaRecordData() => new PrivateDnsAaaaRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+
+        internal PrivateDnsCnameRecordData ToCnameRecordData() => new PrivateDnsCnameRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+
+        internal PrivateDnsMXRecordData ToMXRecordData() => new PrivateDnsMXRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+
+        internal PrivateDnsPtrRecordData ToPtrRecordData() => new PrivateDnsPtrRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+
+        internal PrivateDnsSoaRecordData ToSoaRecordData() => new PrivateDnsSoaRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+
+        internal PrivateDnsSrvRecordData ToSrvRecordData() => new PrivateDnsSrvRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+
+        internal PrivateDnsTxtRecordData ToTxtRecordData() => new PrivateDnsTxtRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+
+        private PrivateDnsRecordSetProperties EnsureProperties()
+        {
+            if (Properties is null)
+            {
+                Properties = new PrivateDnsRecordSetProperties();
+            }
+            return Properties;
+        }
     }
 }

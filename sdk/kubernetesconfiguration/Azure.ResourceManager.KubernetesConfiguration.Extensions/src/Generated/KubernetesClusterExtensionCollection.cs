@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
         {
             TryGetApiVersion(KubernetesClusterExtensionResource.ResourceType, out string kubernetesClusterExtensionApiVersion);
             _extensionsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.Extensions", KubernetesClusterExtensionResource.ResourceType.Namespace, Diagnostics);
-            _extensionsInterfaceRestClient = new ExtensionsInterface(_extensionsInterfaceClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
+            _extensionsInterfaceRestClient = new ExtensionsInterface(_extensionsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
                 HttpMessage message = _extensionsInterfaceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionName, KubernetesClusterExtensionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ExtensionsArmOperation<KubernetesClusterExtensionResource> operation = new ExtensionsArmOperation<KubernetesClusterExtensionResource>(
-                    new KubernetesClusterExtensionOperationSource(Client),
+                    new KubernetesClusterExtensionResourceOperationSource(Client),
                     _extensionsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
                 HttpMessage message = _extensionsInterfaceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionName, KubernetesClusterExtensionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ExtensionsArmOperation<KubernetesClusterExtensionResource> operation = new ExtensionsArmOperation<KubernetesClusterExtensionResource>(
-                    new KubernetesClusterExtensionOperationSource(Client),
+                    new KubernetesClusterExtensionResourceOperationSource(Client),
                     _extensionsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,

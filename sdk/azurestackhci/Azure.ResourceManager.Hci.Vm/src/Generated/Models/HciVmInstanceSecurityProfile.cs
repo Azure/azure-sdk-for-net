@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmSecurityType? SecurityType { get; set; }
 
         /// <summary> Specifies whether secure boot should be enabled on the virtual machine instance. </summary>
-        public bool? SecureBootEnabled
+        public bool? IsSecureBootEnabled
         {
             get
             {
-                return UefiSettings is null ? default : UefiSettings.SecureBootEnabled;
+                return UefiSettings is null ? default : UefiSettings.IsSecureBootEnabled;
             }
             set
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 {
                     UefiSettings = new VirtualMachineInstancePropertiesSecurityProfileUefiSettings();
                 }
-                UefiSettings.SecureBootEnabled = value;
+                UefiSettings.IsSecureBootEnabled = value;
             }
         }
     }

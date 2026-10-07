@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -19,6 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName) : base(triggerName)
         {
             Argument.AssertNotNull(triggerName, nameof(triggerName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlTriggerResourceInfo"/>. </summary>
@@ -26,28 +29,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="body"> Body of the Trigger. </param>
         /// <param name="triggerType"> Type of the Trigger. </param>
         /// <param name="triggerOperation"> The operation the trigger is associated with. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName, string body, CosmosDBSqlTriggerType? triggerType, CosmosDBSqlTriggerOperation? triggerOperation, IDictionary<string, BinaryData> serializedAdditionalRawData, string rid, float? timestamp, ETag? etag) : base(triggerName, body, triggerType, triggerOperation, serializedAdditionalRawData)
+        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName, string body, CosmosDBSqlTriggerType? triggerType, CosmosDBSqlTriggerOperation? triggerOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, ETag? eTag) : base(triggerName, body, triggerType, triggerOperation, additionalBinaryDataProperties)
         {
             Rid = rid;
             Timestamp = timestamp;
-            ETag = etag;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlTriggerResourceInfo"/> for deserialization. </summary>
-        internal ExtendedCosmosDBSqlTriggerResourceInfo()
-        {
+            ETag = eTag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
         [WirePath("_rid")]
         public string Rid { get; }
+
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         [WirePath("_ts")]
         public float? Timestamp { get; }
+
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         [WirePath("_etag")]
         public ETag? ETag { get; }

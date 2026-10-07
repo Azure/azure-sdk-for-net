@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _faultDomainCount = DefineProperty<int>(nameof(FaultDomainCount), new string[] { "faultDomainCount" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PlacementProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

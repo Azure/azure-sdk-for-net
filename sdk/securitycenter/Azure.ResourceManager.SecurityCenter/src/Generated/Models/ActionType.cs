@@ -7,48 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The type of the action that will be triggered by the Automation. </summary>
+    /// <summary> Enum. Indicates the action type. </summary>
     internal readonly partial struct ActionType : IEquatable<ActionType>
     {
         private readonly string _value;
+        /// <summary> LogicApp. </summary>
+        private const string LogicAppValue = "LogicApp";
+        /// <summary> EventHub. </summary>
+        private const string EventHubValue = "EventHub";
+        /// <summary> Workspace. </summary>
+        private const string WorkspaceValue = "Workspace";
+        /// <summary> Internal. </summary>
+        private const string InternalValue = "Internal";
 
         /// <summary> Initializes a new instance of <see cref="ActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LogicAppValue = "LogicApp";
-        private const string EventHubValue = "EventHub";
-        private const string WorkspaceValue = "Workspace";
+            _value = value;
+        }
 
         /// <summary> LogicApp. </summary>
         public static ActionType LogicApp { get; } = new ActionType(LogicAppValue);
+
         /// <summary> EventHub. </summary>
         public static ActionType EventHub { get; } = new ActionType(EventHubValue);
+
         /// <summary> Workspace. </summary>
         public static ActionType Workspace { get; } = new ActionType(WorkspaceValue);
+
+        /// <summary> Internal. </summary>
+        public static ActionType Internal { get; } = new ActionType(InternalValue);
+
         /// <summary> Determines if two <see cref="ActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ActionType left, ActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ActionType left, ActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ActionType(string value) => new ActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ActionType?(string value) => value == null ? null : new ActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

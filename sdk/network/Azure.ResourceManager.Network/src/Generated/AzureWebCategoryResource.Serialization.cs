@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class AzureWebCategoryResource : IJsonModel<AzureWebCategoryData>
     {
-        private static AzureWebCategoryData s_dataDeserializationInstance;
-        private static AzureWebCategoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AzureWebCategoryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AzureWebCategoryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AzureWebCategoryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureWebCategoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureWebCategoryData>)Data).Write(writer, options);
 
-        AzureWebCategoryData IJsonModel<AzureWebCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureWebCategoryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureWebCategoryData IJsonModel<AzureWebCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AzureWebCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureWebCategoryData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AzureWebCategoryData IPersistableModel<AzureWebCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureWebCategoryData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<AzureWebCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureWebCategoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureWebCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

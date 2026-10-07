@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerService
             _components = DefineModelProperty<IstioComponents>(nameof(Components), new string[] { "components" });
             _certificateAuthority = DefineModelProperty<IstioCertificateAuthority>(nameof(CertificateAuthority), new string[] { "certificateAuthority" });
             _revisions = DefineListProperty<string>(nameof(Revisions), new string[] { "revisions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for IstioServiceMesh that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

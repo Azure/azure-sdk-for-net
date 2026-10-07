@@ -92,6 +92,10 @@ namespace Azure.Provisioning.ContainerInstance
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" }, isRequired: true);
             _settings = DefineProperty<BinaryData>(nameof(Settings), new string[] { "settings" });
             _protectedSettings = DefineProperty<BinaryData>(nameof(ProtectedSettings), new string[] { "protectedSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeploymentExtensionSpecProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

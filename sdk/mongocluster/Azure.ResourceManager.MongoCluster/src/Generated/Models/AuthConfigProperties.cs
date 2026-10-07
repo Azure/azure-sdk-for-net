@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> Allowed authentication modes for data access on the cluster. </summary>
-        public IList<MongoClusterAuthenticationMode> AllowedModes { get; }
+        public IList<MongoClusterAuthenticationMode> AllowedModes { get; } = new ChangeTrackingList<MongoClusterAuthenticationMode>();
     }
 }

@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluation task for the schedule. </summary>
+    [Experimental("AAIP001")]
     public partial class EvaluationScheduleTask : ProjectsScheduleTask
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationScheduleTask"/>. </summary>

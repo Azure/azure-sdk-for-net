@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the export run. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportRunProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the export run. </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingStartOn;
+                return Properties is null ? default : Properties.ProcessingStartsOn;
             }
             set
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingStartOn = value;
+                Properties.ProcessingStartsOn = value;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingEndOn;
+                return Properties is null ? default : Properties.ProcessingEndsOn;
             }
             set
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingEndOn = value;
+                Properties.ProcessingEndsOn = value;
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

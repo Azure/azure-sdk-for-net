@@ -1,0 +1,49 @@
+name: Verify Links
+
+on:
+  pull_request:
+    branches:
+      - main
+      - release/*
+      - hotfix/*
+
+permissions:
+  contents: read
+
+jobs:
+  verify-links:
+    name: Verify Links
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 2
+
+      - name: Link verification check
+        shell: pwsh
+        run: |
+          . ./eng/common/scripts/Helpers/git-helpers.ps1
+          $urls = Get-ChangedFiles -SourceCommittish HEAD -TargetCommittish HEAD^ -DiffPath '*.md'
+          
+          if (-not $urls -or $urls.Count -eq 0) {
+            Write-Host "No changed markdown files; nothing to verify."
+            exit 0
+          }
+
+          $sourceRepoUri  = '${{ github.event.pull_request.head.repo.html_url }}'
+          $defaultBranch  = '${{ github.event.repository.default_branch }}'
+          $branchReplaceRegex = "^($sourceRepoUri(?:\.git)?/(?:blob|tree)/)$defaultBranch(/.*)$"
+
+          ./eng/common/scripts/Verify-Links.ps1 `
+            -urls $urls `
+            -rootUrl "file://$env:GITHUB_WORKSPACE/" `
+            -recursive:$false `
+            -ignoreLinksFile "$env:GITHUB_WORKSPACE/eng/ignore-links.txt" `
+            -branchReplaceRegex $branchReplaceRegex `
+            -branchReplacementName '${{ github.event.pull_request.head.sha }}' `
+            -checkLinkGuidance:$true `
+            -localBuildRepoName '${{ github.repository }}' `
+            -localBuildRepoPath $env:GITHUB_WORKSPACE `
+            -inputCacheFile "https://azuresdkartifacts.blob.core.windows.net/verify-links-cache/verify-links-cache.txt" `
+            -allowRelativeLinksFile "$env:GITHUB_WORKSPACE/eng/common/scripts/allow-relative-links.txt"

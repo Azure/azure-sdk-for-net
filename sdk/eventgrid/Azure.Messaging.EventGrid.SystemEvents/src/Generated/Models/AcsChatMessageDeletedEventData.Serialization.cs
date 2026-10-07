@@ -120,6 +120,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string messageId = default;
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string senderDisplayName = default;
+            long? sequenceId = default;
             DateTimeOffset? composeTime = default;
             string @type = default;
             long? version = default;
@@ -156,6 +157,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     senderDisplayName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("sequenceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sequenceId = prop.Value.GetInt64();
+                    continue;
+                }
                 if (prop.NameEquals("composeTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -190,7 +200,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AcsChatMessageDeletedEventData(
@@ -201,6 +211,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,

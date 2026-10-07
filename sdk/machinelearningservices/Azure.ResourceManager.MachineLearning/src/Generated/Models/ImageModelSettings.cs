@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -17,37 +18,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImageModelSettings"/>. </summary>
         public ImageModelSettings()
@@ -55,14 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageModelSettings"/>. </summary>
-        /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
+        /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
         /// <param name="beta2"> Value of 'beta2' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
         /// <param name="checkpointFrequency"> Frequency to store model checkpoints. Must be a positive integer. </param>
-        /// <param name="checkpointRunId"> The id of a previous run that has a pretrained checkpoint for incremental training. </param>
         /// <param name="checkpointModel"> The pretrained checkpoint model for incremental training. </param>
+        /// <param name="checkpointRunId"> The id of a previous run that has a pretrained checkpoint for incremental training. </param>
         /// <param name="distributed"> Whether to use distributed training. </param>
         /// <param name="earlyStopping"> Enable early stopping logic during training. </param>
         /// <param name="earlyStoppingDelay">
@@ -73,8 +45,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
         /// </param>
-        /// <param name="evaluationFrequency"> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </param>
         /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
+        /// <param name="evaluationFrequency"> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </param>
         /// <param name="gradientAccumulationStep">
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using
@@ -87,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// see: https://docs.microsoft.com/en-us/azure/machine-learning/how-to-auto-train-image-models.
         /// </param>
         /// <param name="learningRate"> Initial learning rate. Must be a float in the range [0, 1]. </param>
-        /// <param name="learningRateScheduler"> Type of learning rate scheduler. Must be 'warmup_cosine' or 'step'. </param>
+        /// <param name="learningRateScheduler"> Learning rate scheduler enum. </param>
         /// <param name="modelName">
         /// Name of the model to use for training.
         /// For more information on the available models please visit the official documentation:
@@ -97,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nesterov"> Enable nesterov when optimizer is 'sgd'. </param>
         /// <param name="numberOfEpochs"> Number of training epochs. Must be a positive integer. </param>
         /// <param name="numberOfWorkers"> Number of data loader workers. Must be a non-negative integer. </param>
-        /// <param name="optimizer"> Type of optimizer. </param>
+        /// <param name="optimizer"> Stochastic optimizer for image models. </param>
         /// <param name="randomSeed"> Random seed to be used when using deterministic training. </param>
         /// <param name="stepLRGamma"> Value of gamma when learning rate scheduler is 'step'. Must be a float in the range [0, 1]. </param>
         /// <param name="stepLRStepSize"> Value of step size when learning rate scheduler is 'step'. Must be a positive integer. </param>
@@ -106,23 +78,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="warmupCosineLRCycles"> Value of cosine cycle when learning rate scheduler is 'warmup_cosine'. Must be a float in the range [0, 1]. </param>
         /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </param>
         /// <param name="weightDecay"> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageModelSettings(bool? amsGradient, string advancedSettings, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, string checkpointRunId, MachineLearningFlowModelJobInput checkpointModel, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, int? evaluationFrequency, bool? enableOnnxNormalization, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImageModelSettings(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AmsGradient = amsGradient;
             AdvancedSettings = advancedSettings;
+            AmsGradient = amsGradient;
             Augmentations = augmentations;
             Beta1 = beta1;
             Beta2 = beta2;
             CheckpointFrequency = checkpointFrequency;
-            CheckpointRunId = checkpointRunId;
             CheckpointModel = checkpointModel;
+            CheckpointRunId = checkpointRunId;
             Distributed = distributed;
             EarlyStopping = earlyStopping;
             EarlyStoppingDelay = earlyStoppingDelay;
             EarlyStoppingPatience = earlyStoppingPatience;
-            EvaluationFrequency = evaluationFrequency;
             EnableOnnxNormalization = enableOnnxNormalization;
+            EvaluationFrequency = evaluationFrequency;
             GradientAccumulationStep = gradientAccumulationStep;
             LayersToFreeze = layersToFreeze;
             LearningRate = learningRate;
@@ -141,57 +113,71 @@ namespace Azure.ResourceManager.MachineLearning.Models
             WarmupCosineLRCycles = warmupCosineLRCycles;
             WarmupCosineLRWarmupEpochs = warmupCosineLRWarmupEpochs;
             WeightDecay = weightDecay;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Settings for advanced scenarios. </summary>
+        [WirePath("advancedSettings")]
+        public string AdvancedSettings { get; set; }
 
         /// <summary> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </summary>
         [WirePath("amsGradient")]
         public bool? AmsGradient { get; set; }
-        /// <summary> Settings for advanced scenarios. </summary>
-        [WirePath("advancedSettings")]
-        public string AdvancedSettings { get; set; }
+
         /// <summary> Settings for using Augmentations. </summary>
         [WirePath("augmentations")]
         public string Augmentations { get; set; }
+
         /// <summary> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </summary>
         [WirePath("beta1")]
         public float? Beta1 { get; set; }
+
         /// <summary> Value of 'beta2' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </summary>
         [WirePath("beta2")]
         public float? Beta2 { get; set; }
+
         /// <summary> Frequency to store model checkpoints. Must be a positive integer. </summary>
         [WirePath("checkpointFrequency")]
         public int? CheckpointFrequency { get; set; }
-        /// <summary> The id of a previous run that has a pretrained checkpoint for incremental training. </summary>
-        [WirePath("checkpointRunId")]
-        public string CheckpointRunId { get; set; }
+
         /// <summary> The pretrained checkpoint model for incremental training. </summary>
         [WirePath("checkpointModel")]
         public MachineLearningFlowModelJobInput CheckpointModel { get; set; }
+
+        /// <summary> The id of a previous run that has a pretrained checkpoint for incremental training. </summary>
+        [WirePath("checkpointRunId")]
+        public string CheckpointRunId { get; set; }
+
         /// <summary> Whether to use distributed training. </summary>
         [WirePath("distributed")]
         public bool? Distributed { get; set; }
+
         /// <summary> Enable early stopping logic during training. </summary>
         [WirePath("earlyStopping")]
         public bool? EarlyStopping { get; set; }
+
         /// <summary>
         /// Minimum number of epochs or validation evaluations to wait before primary metric improvement
         /// is tracked for early stopping. Must be a positive integer.
         /// </summary>
         [WirePath("earlyStoppingDelay")]
         public int? EarlyStoppingDelay { get; set; }
+
         /// <summary>
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
         /// </summary>
         [WirePath("earlyStoppingPatience")]
         public int? EarlyStoppingPatience { get; set; }
-        /// <summary> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </summary>
-        [WirePath("evaluationFrequency")]
-        public int? EvaluationFrequency { get; set; }
+
         /// <summary> Enable normalization when exporting ONNX model. </summary>
         [WirePath("enableOnnxNormalization")]
         public bool? EnableOnnxNormalization { get; set; }
+
+        /// <summary> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </summary>
+        [WirePath("evaluationFrequency")]
+        public int? EvaluationFrequency { get; set; }
+
         /// <summary>
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using
@@ -199,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         [WirePath("gradientAccumulationStep")]
         public int? GradientAccumulationStep { get; set; }
+
         /// <summary>
         /// Number of layers to freeze for the model. Must be a positive integer.
         /// For instance, passing 2 as value for 'seresnext' means
@@ -207,12 +194,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         [WirePath("layersToFreeze")]
         public int? LayersToFreeze { get; set; }
+
         /// <summary> Initial learning rate. Must be a float in the range [0, 1]. </summary>
         [WirePath("learningRate")]
         public float? LearningRate { get; set; }
-        /// <summary> Type of learning rate scheduler. Must be 'warmup_cosine' or 'step'. </summary>
+
+        /// <summary> Learning rate scheduler enum. </summary>
         [WirePath("learningRateScheduler")]
         public LearningRateScheduler? LearningRateScheduler { get; set; }
+
         /// <summary>
         /// Name of the model to use for training.
         /// For more information on the available models please visit the official documentation:
@@ -220,42 +210,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         [WirePath("modelName")]
         public string ModelName { get; set; }
+
         /// <summary> Value of momentum when optimizer is 'sgd'. Must be a float in the range [0, 1]. </summary>
         [WirePath("momentum")]
         public float? Momentum { get; set; }
+
         /// <summary> Enable nesterov when optimizer is 'sgd'. </summary>
         [WirePath("nesterov")]
         public bool? Nesterov { get; set; }
+
         /// <summary> Number of training epochs. Must be a positive integer. </summary>
         [WirePath("numberOfEpochs")]
         public int? NumberOfEpochs { get; set; }
+
         /// <summary> Number of data loader workers. Must be a non-negative integer. </summary>
         [WirePath("numberOfWorkers")]
         public int? NumberOfWorkers { get; set; }
-        /// <summary> Type of optimizer. </summary>
+
+        /// <summary> Stochastic optimizer for image models. </summary>
         [WirePath("optimizer")]
         public StochasticOptimizer? Optimizer { get; set; }
+
         /// <summary> Random seed to be used when using deterministic training. </summary>
         [WirePath("randomSeed")]
         public int? RandomSeed { get; set; }
+
         /// <summary> Value of gamma when learning rate scheduler is 'step'. Must be a float in the range [0, 1]. </summary>
         [WirePath("stepLRGamma")]
         public float? StepLRGamma { get; set; }
+
         /// <summary> Value of step size when learning rate scheduler is 'step'. Must be a positive integer. </summary>
         [WirePath("stepLRStepSize")]
         public int? StepLRStepSize { get; set; }
+
         /// <summary> Training batch size. Must be a positive integer. </summary>
         [WirePath("trainingBatchSize")]
         public int? TrainingBatchSize { get; set; }
+
         /// <summary> Validation batch size. Must be a positive integer. </summary>
         [WirePath("validationBatchSize")]
         public int? ValidationBatchSize { get; set; }
+
         /// <summary> Value of cosine cycle when learning rate scheduler is 'warmup_cosine'. Must be a float in the range [0, 1]. </summary>
         [WirePath("warmupCosineLRCycles")]
         public float? WarmupCosineLRCycles { get; set; }
+
         /// <summary> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </summary>
         [WirePath("warmupCosineLRWarmupEpochs")]
         public int? WarmupCosineLRWarmupEpochs { get; set; }
+
         /// <summary> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </summary>
         [WirePath("weightDecay")]
         public float? WeightDecay { get; set; }

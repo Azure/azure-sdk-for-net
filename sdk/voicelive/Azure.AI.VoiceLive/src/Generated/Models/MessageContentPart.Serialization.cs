@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any message content part; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputTextContentPart"/>, <see cref="InputAudioContentPart"/>, and <see cref="OutputTextContentPart"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputAudioContentPart"/>, <see cref="InputTextContentPart"/>, and <see cref="OutputTextContentPart"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMessageContentPart))]
     public abstract partial class MessageContentPart : IJsonModel<MessageContentPart>
@@ -129,10 +129,10 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "input_text":
-                        return InputTextContentPart.DeserializeInputTextContentPart(element, options);
                     case "input_audio":
                         return InputAudioContentPart.DeserializeInputAudioContentPart(element, options);
+                    case "input_text":
+                        return InputTextContentPart.DeserializeInputTextContentPart(element, options);
                     case "text":
                         return OutputTextContentPart.DeserializeOutputTextContentPart(element, options);
                 }

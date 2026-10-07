@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Attestation
         {
             TryGetApiVersion(ResourceType, out string attestationProviderApiVersion);
             _attestationProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", ResourceType.Namespace, Diagnostics);
-            _attestationProvidersRestClient = new AttestationProviders(_attestationProvidersClientDiagnostics, Pipeline, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
+            _attestationProvidersRestClient = new AttestationProviders(_attestationProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
             ValidateResourceId(id);
         }
 

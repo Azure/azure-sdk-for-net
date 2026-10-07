@@ -1,97 +1,102 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    public partial class SmartGroupCollection
+    /// <summary> A class representing a collection of <see cref="SmartGroupResource"/> and their operations. </summary>
+    [Obsolete("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class SmartGroupCollection : ArmCollection, IEnumerable<SmartGroupResource>, IAsyncEnumerable<SmartGroupResource>
     {
-        /// <summary>
-        /// List all the Smart Groups within a specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SmartGroups_GetAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
-        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
-        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
-        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either &apos;Fired&apos; or &apos;Resolved&apos;. Default value is to select all. </param>
-        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
-        /// <param name="smartGroupState"> Filter by state of the smart group. Default value is to select all. </param>
-        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the &quot;includeContent&quot;  filter is selected, maximum value allowed is 25. Default value is 25. </param>
-        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by &apos;lastModifiedDateTime&apos;. </param>
-        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default)
-        {
-            SmartGroupCollectionGetAllOptions options = new SmartGroupCollectionGetAllOptions();
-            options.TargetResource = targetResource;
-            options.TargetResourceGroup = targetResourceGroup;
-            options.TargetResourceType = targetResourceType;
-            options.MonitorService = monitorService;
-            options.MonitorCondition = monitorCondition;
-            options.Severity = severity;
-            options.SmartGroupState = smartGroupState;
-            options.TimeRange = timeRange;
-            options.PageCount = pageCount;
-            options.SortBy = sortBy;
-            options.SortOrder = sortOrder;
-            return GetAllAsync(options, cancellationToken);
-        }
+        /// <summary> Initializes a new instance for mocking. </summary>
+        protected SmartGroupCollection() { }
 
-        /// <summary>
-        /// List all the Smart Groups within a specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SmartGroups_GetAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
-        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
-        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
-        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either &apos;Fired&apos; or &apos;Resolved&apos;. Default value is to select all. </param>
-        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
-        /// <param name="smartGroupState"> Filter by state of the smart group. Default value is to select all. </param>
-        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the &quot;includeContent&quot;  filter is selected, maximum value allowed is 25. Default value is 25. </param>
-        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by &apos;lastModifiedDateTime&apos;. </param>
-        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SmartGroupResource> GetAll(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default)
-        {
-            SmartGroupCollectionGetAllOptions options = new SmartGroupCollectionGetAllOptions();
-            options.TargetResource = targetResource;
-            options.TargetResourceGroup = targetResourceGroup;
-            options.TargetResourceType = targetResourceType;
-            options.MonitorService = monitorService;
-            options.MonitorCondition = monitorCondition;
-            options.Severity = severity;
-            options.SmartGroupState = smartGroupState;
-            options.TimeRange = timeRange;
-            options.PageCount = pageCount;
-            options.SortBy = sortBy;
-            options.SortOrder = sortOrder;
-            return GetAll(options, cancellationToken);
-        }
+        /// <summary> Checks if exists. </summary>
+        /// <param name="smartGroupId"> The smart group ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Response<bool> Exists(Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Checks if exists async. </summary>
+        /// <param name="smartGroupId"> The smart group ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Task<Response<bool>> ExistsAsync(Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Gets a resource. </summary>
+        /// <param name="smartGroupId"> The smart group ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Response<SmartGroupResource> Get(Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Gets a resource async. </summary>
+        /// <param name="smartGroupId"> The smart group ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Task<Response<SmartGroupResource>> GetAsync(Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Gets all with options. </summary>
+        /// <param name="options"> The options. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Pageable<SmartGroupResource> GetAll(SmartGroupCollectionGetAllOptions options, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Gets all with parameters. </summary>
+        /// <param name="targetResource"> Target resource. </param>
+        /// <param name="targetResourceGroup"> Target resource group. </param>
+        /// <param name="targetResourceType"> Target resource type. </param>
+        /// <param name="monitorService"> Monitor service. </param>
+        /// <param name="monitorCondition"> Monitor condition. </param>
+        /// <param name="severity"> Severity. </param>
+        /// <param name="smartGroupState"> Smart group state. </param>
+        /// <param name="timeRange"> Time range. </param>
+        /// <param name="pageCount"> Page count. </param>
+        /// <param name="sortBy"> Sort by. </param>
+        /// <param name="sortOrder"> Sort order. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Pageable<SmartGroupResource> GetAll(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Gets all with options async. </summary>
+        /// <param name="options"> The options. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(SmartGroupCollectionGetAllOptions options, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Gets all with parameters async. </summary>
+        /// <param name="targetResource"> Target resource. </param>
+        /// <param name="targetResourceGroup"> Target resource group. </param>
+        /// <param name="targetResourceType"> Target resource type. </param>
+        /// <param name="monitorService"> Monitor service. </param>
+        /// <param name="monitorCondition"> Monitor condition. </param>
+        /// <param name="severity"> Severity. </param>
+        /// <param name="smartGroupState"> Smart group state. </param>
+        /// <param name="timeRange"> Time range. </param>
+        /// <param name="pageCount"> Page count. </param>
+        /// <param name="sortBy"> Sort by. </param>
+        /// <param name="sortOrder"> Sort order. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Gets if exists. </summary>
+        /// <param name="smartGroupId"> The smart group ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual NullableResponse<SmartGroupResource> GetIfExists(Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Gets if exists async. </summary>
+        /// <param name="smartGroupId"> The smart group ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Task<NullableResponse<SmartGroupResource>> GetIfExistsAsync(Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(); }
+
+        /// <summary> Gets the async enumerator. </summary>
+        IAsyncEnumerator<SmartGroupResource> IAsyncEnumerable<SmartGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken) { throw new NotSupportedException(); }
+        /// <summary> Gets the enumerator. </summary>
+        IEnumerator<SmartGroupResource> IEnumerable<SmartGroupResource>.GetEnumerator() { throw new NotSupportedException(); }
+        /// <summary> Gets the enumerator. </summary>
+        IEnumerator IEnumerable.GetEnumerator() { throw new NotSupportedException(); }
     }
 }

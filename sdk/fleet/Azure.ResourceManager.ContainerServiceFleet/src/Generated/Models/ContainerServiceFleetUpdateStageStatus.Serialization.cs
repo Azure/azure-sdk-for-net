@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format != "W" && Optional.IsDefined(FailureCount))
+            {
+                writer.WritePropertyName("failureCount"u8);
+                writer.WriteNumberValue(FailureCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxAllowedFailures))
+            {
+                writer.WritePropertyName("maxAllowedFailures"u8);
+                writer.WriteNumberValue(MaxAllowedFailures.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(MaxConcurrency))
             {
                 writer.WritePropertyName("maxConcurrency"u8);
@@ -103,7 +113,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 writer.WritePropertyName("beforeGates"u8);
                 writer.WriteStartArray();
-                foreach (UpdateRunGateStatus item in BeforeGates)
+                foreach (ContainerServiceFleetUpdateRunGateStatus item in BeforeGates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,7 +123,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 writer.WritePropertyName("afterGates"u8);
                 writer.WriteStartArray();
-                foreach (UpdateRunGateStatus item in AfterGates)
+                foreach (ContainerServiceFleetUpdateRunGateStatus item in AfterGates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -168,10 +178,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             ContainerServiceFleetUpdateStatus status = default;
             string name = default;
+            int? failureCount = default;
+            int? maxAllowedFailures = default;
             int? maxConcurrency = default;
             IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups = default;
-            IReadOnlyList<UpdateRunGateStatus> beforeGates = default;
-            IReadOnlyList<UpdateRunGateStatus> afterGates = default;
+            IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> beforeGates = default;
+            IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> afterGates = default;
             ContainerServiceFleetWaitStatus afterStageWaitStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,6 +200,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("failureCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failureCount = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("maxAllowedFailures"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxAllowedFailures = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrency"u8))
@@ -219,10 +249,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<UpdateRunGateStatus> array = new List<UpdateRunGateStatus>();
+                    List<ContainerServiceFleetUpdateRunGateStatus> array = new List<ContainerServiceFleetUpdateRunGateStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UpdateRunGateStatus.DeserializeUpdateRunGateStatus(item, options));
+                        array.Add(ContainerServiceFleetUpdateRunGateStatus.DeserializeContainerServiceFleetUpdateRunGateStatus(item, options));
                     }
                     beforeGates = array;
                     continue;
@@ -233,10 +263,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<UpdateRunGateStatus> array = new List<UpdateRunGateStatus>();
+                    List<ContainerServiceFleetUpdateRunGateStatus> array = new List<ContainerServiceFleetUpdateRunGateStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UpdateRunGateStatus.DeserializeUpdateRunGateStatus(item, options));
+                        array.Add(ContainerServiceFleetUpdateRunGateStatus.DeserializeContainerServiceFleetUpdateRunGateStatus(item, options));
                     }
                     afterGates = array;
                     continue;
@@ -252,16 +282,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerServiceFleetUpdateStageStatus(
                 status,
                 name,
+                failureCount,
+                maxAllowedFailures,
                 maxConcurrency,
                 groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>(),
-                beforeGates ?? new ChangeTrackingList<UpdateRunGateStatus>(),
-                afterGates ?? new ChangeTrackingList<UpdateRunGateStatus>(),
+                beforeGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>(),
+                afterGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>(),
                 afterStageWaitStatus,
                 additionalBinaryDataProperties);
         }

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ContainerService
     public enum AgentPoolMode
     {
         /// <summary> System agent pools are primarily for hosting critical system pods such as CoreDNS and metrics-server. System agent pools osType must be Linux. System agent pools VM SKU must have at least 2vCPUs and 4GB of memory. </summary>
-        System,
+        System = 0,
         /// <summary> User agent pools are primarily for hosting your application pods. </summary>
-        User,
+        User = 1,
         /// <summary> Gateway agent pools are dedicated to providing static egress IPs to pods. For more details, see https://aka.ms/aks/static-egress-gateway. </summary>
-        Gateway
+        Gateway = 2
     }
 }

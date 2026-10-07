@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Speech.Transcription
@@ -69,6 +70,7 @@ namespace Azure.AI.Speech.Transcription
                 Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of TranscriptionClient. </summary>
@@ -99,6 +101,9 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
         /// [Protocol Method] Transcribes the provided audio stream.
         /// <list type="bullet">
@@ -114,8 +119,18 @@ namespace Azure.AI.Speech.Transcription
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Transcribe(BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TranscriptionClient.Transcribe");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -133,8 +148,42 @@ namespace Azure.AI.Speech.Transcription
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> TranscribeAsync(BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TranscriptionClient.Transcribe");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Transcribes the provided audio stream. </summary>
+        /// <param name="body"> The body of the multipart request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        internal virtual ClientResult<TranscriptionResult> Transcribe(TranscriptionContent body, CancellationToken cancellationToken = default)
+        {
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            ClientResult result = Transcribe(content, content.MediaType, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TranscriptionResult)result, result.GetRawResponse());
+        }
+
+        /// <summary> Transcribes the provided audio stream. </summary>
+        /// <param name="body"> The body of the multipart request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        internal virtual async Task<ClientResult<TranscriptionResult>> TranscribeAsync(TranscriptionContent body, CancellationToken cancellationToken = default)
+        {
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            ClientResult result = await TranscribeAsync(content, content.MediaType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TranscriptionResult)result, result.GetRawResponse());
         }
     }
 }

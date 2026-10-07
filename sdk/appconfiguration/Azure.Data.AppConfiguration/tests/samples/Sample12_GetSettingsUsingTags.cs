@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
@@ -12,10 +13,10 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public async Task GetSettingsUsingTags()
         {
-            var connectionString = TestEnvironment.ConnectionString;
+            var endpoint = TestEnvironment.Endpoint;
 
             #region Snippet:AzConfigSample12_CreateConfigurationClient
-            var client = new ConfigurationClient(connectionString);
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:AzConfigSample12_CreateConfigurationSettingAsync

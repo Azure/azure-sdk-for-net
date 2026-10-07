@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Azure Active Directory Application. </summary>
     public partial class DataMigrationAadApp
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationAadApp"/>. </summary>
         public DataMigrationAadApp()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="appKey"> Key used to authenticate to the Azure Active Directory Application. </param>
         /// <param name="tenantId"> Tenant id of the customer. </param>
         /// <param name="doesIgnoreAzurePermissions"> Ignore checking azure permissions on the AAD app. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationAadApp(string applicationId, string appKey, Guid? tenantId, bool? doesIgnoreAzurePermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationAadApp(string applicationId, string appKey, Guid? tenantId, bool? doesIgnoreAzurePermissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationId = applicationId;
             AppKey = appKey;
             TenantId = tenantId;
             DoesIgnoreAzurePermissions = doesIgnoreAzurePermissions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Application ID of the Azure Active Directory Application. </summary>
         public string ApplicationId { get; set; }
+
         /// <summary> Key used to authenticate to the Azure Active Directory Application. </summary>
         public string AppKey { get; set; }
+
         /// <summary> Tenant id of the customer. </summary>
         public Guid? TenantId { get; set; }
+
         /// <summary> Ignore checking azure permissions on the AAD app. </summary>
         public bool? DoesIgnoreAzurePermissions { get; set; }
     }

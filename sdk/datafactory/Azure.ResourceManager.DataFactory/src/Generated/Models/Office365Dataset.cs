@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,13 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
-        public Office365Dataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : base(linkedServiceName)
+        public Office365Dataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : base("Office365Table", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(tableName, nameof(tableName));
 
-            TableName = tableName;
-            DatasetType = "Office365Table";
+            TypeProperties = new Office365DatasetTypeProperties(tableName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Office365Dataset"/>. </summary>
@@ -36,24 +36,48 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
-        /// <param name="predicate"> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </param>
-        internal Office365Dataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> predicate) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Office365 dataset properties. </param>
+        internal Office365Dataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, Office365DatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            TableName = tableName;
-            Predicate = predicate;
-            DatasetType = datasetType ?? "Office365Table";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Office365Dataset"/> for deserialization. </summary>
-        internal Office365Dataset()
-        {
-        }
+        /// <summary> Office365 dataset properties. </summary>
+        internal Office365DatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> TableName { get; set; }
+        public DataFactoryElement<string> TableName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Office365DatasetTypeProperties();
+                }
+                TypeProperties.TableName = value;
+            }
+        }
+
         /// <summary> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Predicate { get; set; }
+        public DataFactoryElement<string> Predicate
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Predicate;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Office365DatasetTypeProperties();
+                }
+                TypeProperties.Predicate = value;
+            }
+        }
     }
 }

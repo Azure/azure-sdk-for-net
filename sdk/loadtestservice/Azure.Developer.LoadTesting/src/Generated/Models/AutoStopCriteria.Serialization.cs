@@ -86,7 +86,7 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(ErrorRateTimeWindow))
             {
                 writer.WritePropertyName("errorRateTimeWindowInSeconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(ErrorRateTimeWindow.Value.TotalSeconds));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(ErrorRateTimeWindow.Value.TotalSeconds)));
             }
             if (Optional.IsDefined(MaximumVirtualUsersPerEngine))
             {
@@ -180,7 +180,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AutoStopCriteria(autoStopDisabled, errorRate, errorRateTimeWindow, maximumVirtualUsersPerEngine, additionalBinaryDataProperties);

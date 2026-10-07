@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 globalParameters is null && insights is null && acceptedOn is null && provisioningState is null && diagnostics is null ? default : new DiagnosticResourceProperties(
-                    globalParameters,
+                    globalParameters ?? new ChangeTrackingDictionary<string, string>(),
                     (insights ?? new ChangeTrackingList<SelfHelpDiagnosticInvocation>()).ToList(),
                     acceptedOn,
                     provisioningState,
                     (diagnostics ?? new ChangeTrackingList<SelfHelpDiagnosticInfo>()).ToList(),
-                    null));
+                    default),
+                default);
         }
 
         /// <summary> Solution Invocation with additional params needed for invocation. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             additionalParameters ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SelfHelpDiagnosticInvocation(solutionId, additionalParameters, additionalBinaryDataProperties: null);
+            return new SelfHelpDiagnosticInvocation(solutionId, additionalParameters ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Properties returned with in an insight. </summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             insights ??= new ChangeTrackingList<SelfHelpDiagnosticInsight>();
 
-            return new SelfHelpDiagnosticInfo(solutionId, status, insights.ToList(), error, additionalBinaryDataProperties: null);
+            return new SelfHelpDiagnosticInfo(solutionId, status, (insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>()).ToList(), error, default);
         }
 
         /// <summary> Detailed insights(s) obtained via the invocation of an insight diagnostic. </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.SelfHelpDiagnosticInsight"/> instance for mocking. </returns>
         public static SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string id = default, string title = default, string results = default, SelfHelpImportanceLevel? insightImportanceLevel = default)
         {
-            return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel, additionalBinaryDataProperties: null);
+            return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel, default);
         }
 
         /// <summary> Error definition. </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             details ??= new ChangeTrackingList<SelfHelpError>();
 
-            return new SelfHelpError(code, errorType, message, details.ToList(), additionalBinaryDataProperties: null);
+            return new SelfHelpError(code, errorType, message, (details ?? new ChangeTrackingList<SelfHelpError>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -114,17 +114,26 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 triggerCriteria is null && parameters is null && solutionId is null && provisioningState is null && title is null && content is null && replacementMaps is null && sections is null ? default : new SolutionResourceProperties(
                     (triggerCriteria ?? new ChangeTrackingList<SolutionTriggerCriterion>()).ToList(),
-                    parameters,
+                    parameters ?? new ChangeTrackingDictionary<string, string>(),
                     solutionId,
                     provisioningState,
                     title,
                     content,
                     replacementMaps,
                     (sections ?? new ChangeTrackingList<SelfHelpSection>()).ToList(),
-                    null));
+                    default),
+                default);
+        }
+
+        /// <summary> Solution request trigger criterion. SolutionId/ProblemClassificationId is the only supported trigger type for Solution PUT request. ReplacementKey is the only supported trigger type for Solution PATCH request. </summary>
+        /// <param name="name"> Trigger criterion name. </param>
+        /// <param name="value"> Trigger criterion value. </param>
+        /// <returns> A new <see cref="Models.SolutionTriggerCriterion"/> instance for mocking. </returns>
+        public static SolutionTriggerCriterion SolutionTriggerCriterion(SelfHelpName? name = default, string value = default)
+        {
+            return new SolutionTriggerCriterion(name, value, default);
         }
 
         /// <summary> Solution replacement maps. </summary>
@@ -145,13 +154,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             videoGroups ??= new ChangeTrackingList<VideoGroupDetail>();
 
             return new SolutionReplacementMaps(
-                webResults.ToList(),
-                diagnostics.ToList(),
-                troubleshooters.ToList(),
-                metricsBasedCharts.ToList(),
-                videos.ToList(),
-                videoGroups.ToList(),
-                additionalBinaryDataProperties: null);
+                (webResults ?? new ChangeTrackingList<KBWebResult>()).ToList(),
+                (diagnostics ?? new ChangeTrackingList<SolutionsDiagnostic>()).ToList(),
+                (troubleshooters ?? new ChangeTrackingList<SolutionsTroubleshooters>()).ToList(),
+                (metricsBasedCharts ?? new ChangeTrackingList<MetricsBasedChart>()).ToList(),
+                (videos ?? new ChangeTrackingList<SelfHelpVideo>()).ToList(),
+                (videoGroups ?? new ChangeTrackingList<VideoGroupDetail>()).ToList(),
+                default);
         }
 
         /// <summary> AzureKB web result. </summary>
@@ -162,7 +171,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             searchResults ??= new ChangeTrackingList<KBSearchResult>();
 
-            return new KBWebResult(replacementKey, searchResults.ToList(), additionalBinaryDataProperties: null);
+            return new KBWebResult(replacementKey, (searchResults ?? new ChangeTrackingList<KBSearchResult>()).ToList(), default);
         }
 
         /// <summary> Details of an AzureKB search result. </summary>
@@ -186,7 +195,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 resultType,
                 rank,
                 link,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Solutions Diagnostic. </summary>
@@ -209,9 +218,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 statusDetails,
                 replacementKey,
                 estimatedCompletionTime,
-                requiredParameters.ToList(),
-                insights.ToList(),
-                additionalBinaryDataProperties: null);
+                (requiredParameters ?? new ChangeTrackingList<string>()).ToList(),
+                (insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>()).ToList(),
+                default);
         }
 
         /// <summary> Troubleshooters in Solutions. </summary>
@@ -221,7 +230,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.SolutionsTroubleshooters"/> instance for mocking. </returns>
         public static SolutionsTroubleshooters SolutionsTroubleshooters(string solutionId = default, string title = default, string summary = default)
         {
-            return new SolutionsTroubleshooters(solutionId, title, summary, additionalBinaryDataProperties: null);
+            return new SolutionsTroubleshooters(solutionId, title, summary, default);
         }
 
         /// <param name="name"> Chart name. </param>
@@ -238,9 +247,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 aggregationType,
                 timeSpanDuration,
                 title,
-                filter is null ? default : new ChartFilterGroup((filter ?? new ChangeTrackingList<SelfHelpFilter>()).ToList(), null),
+                filter is null ? default : new ChartFilterGroup((filter ?? new ChangeTrackingList<SelfHelpFilter>()).ToList(), default),
                 replacementKey,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Filter criterion. </summary>
@@ -250,7 +259,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.SelfHelpFilter"/> instance for mocking. </returns>
         public static SelfHelpFilter SelfHelpFilter(string name = default, string values = default, string @operator = default)
         {
-            return new SelfHelpFilter(name, values, @operator, additionalBinaryDataProperties: null);
+            return new SelfHelpFilter(name, values, @operator, default);
         }
 
         /// <summary> Video detail. </summary>
@@ -260,7 +269,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.SelfHelpVideo"/> instance for mocking. </returns>
         public static SelfHelpVideo SelfHelpVideo(string src = default, string title = default, string replacementKey = default)
         {
-            return new SelfHelpVideo(src, title, additionalBinaryDataProperties: null, replacementKey);
+            return new SelfHelpVideo(src, title, default, replacementKey);
         }
 
         /// <summary> VideoGroup video detail. </summary>
@@ -269,7 +278,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.VideoGroupVideo"/> instance for mocking. </returns>
         public static VideoGroupVideo VideoGroupVideo(string src = default, string title = default)
         {
-            return new VideoGroupVideo(src, title, additionalBinaryDataProperties: null);
+            return new VideoGroupVideo(src, title, default);
         }
 
         /// <summary> Video group detail. </summary>
@@ -280,7 +289,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             videos ??= new ChangeTrackingList<VideoGroupVideo>();
 
-            return new VideoGroupDetail(videos.ToList(), replacementKey, additionalBinaryDataProperties: null);
+            return new VideoGroupDetail((videos ?? new ChangeTrackingList<VideoGroupVideo>()).ToList(), replacementKey, default);
         }
 
         /// <summary> Part of the solution and are dividers in the solution rendering. </summary>
@@ -290,7 +299,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.SelfHelpSection"/> instance for mocking. </returns>
         public static SelfHelpSection SelfHelpSection(string title = default, string content = default, SolutionReplacementMaps replacementMaps = default)
         {
-            return new SelfHelpSection(title, content, replacementMaps, additionalBinaryDataProperties: null);
+            return new SelfHelpSection(title, content, replacementMaps, default);
+        }
+
+        /// <param name="triggerCriteria"> Solution request trigger criteria. </param>
+        /// <param name="parameters"> Client input parameters to run Solution. </param>
+        /// <param name="solutionId"> Solution Id to identify single solution. </param>
+        /// <param name="provisioningState"> Status of solution provisioning. </param>
+        /// <param name="title"> The title. </param>
+        /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
+        /// <param name="replacementMaps"> Solution replacement maps. </param>
+        /// <param name="sections"> List of section object. </param>
+        /// <returns> A new <see cref="Models.SelfHelpSolutionPatch"/> instance for mocking. </returns>
+        public static SelfHelpSolutionPatch SelfHelpSolutionPatch(IEnumerable<SolutionTriggerCriterion> triggerCriteria = default, IDictionary<string, string> parameters = default, string solutionId = default, SolutionProvisioningState? provisioningState = default, string title = default, string content = default, SolutionReplacementMaps replacementMaps = default, IEnumerable<SelfHelpSection> sections = default)
+        {
+            return new SelfHelpSolutionPatch(triggerCriteria is null && parameters is null && solutionId is null && provisioningState is null && title is null && content is null && replacementMaps is null && sections is null ? default : new SolutionResourceProperties(
+                (triggerCriteria ?? new ChangeTrackingList<SolutionTriggerCriterion>()).ToList(),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                solutionId,
+                provisioningState,
+                title,
+                content,
+                replacementMaps,
+                (sections ?? new ChangeTrackingList<SelfHelpSection>()).ToList(),
+                default), default);
         }
 
         /// <summary> Solution WarmUpRequest body. </summary>
@@ -300,7 +332,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             parameters ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SolutionWarmUpContent(parameters, additionalBinaryDataProperties: null);
+            return new SolutionWarmUpContent(parameters ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -321,15 +353,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 solutionId is null && parameters is null && title is null && appendix is null && content is null && provisioningState is null ? default : new SimplifiedSolutionsResourceProperties(
                     solutionId,
-                    parameters,
+                    parameters ?? new ChangeTrackingDictionary<string, string>(),
                     title,
-                    appendix,
+                    appendix ?? new ChangeTrackingDictionary<string, string>(),
                     content,
                     provisioningState,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -348,8 +380,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                solutionId is null && parameters is null && provisioningState is null && steps is null ? default : new TroubleshooterInstanceProperties(solutionId, parameters, provisioningState, (steps ?? new ChangeTrackingList<SelfHelpStep>()).ToList(), null));
+                solutionId is null && parameters is null && provisioningState is null && steps is null ? default : new TroubleshooterInstanceProperties(solutionId, parameters ?? new ChangeTrackingDictionary<string, string>(), provisioningState, (steps ?? new ChangeTrackingList<SelfHelpStep>()).ToList(), default),
+                default);
         }
 
         /// <summary> Troubleshooter step. </summary>
@@ -380,11 +412,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 executionStatusDescription,
                 stepType,
                 isLastStep,
-                inputs.ToList(),
+                (inputs ?? new ChangeTrackingList<TroubleshooterStepInput>()).ToList(),
                 automatedCheckResults,
-                insights.ToList(),
+                (insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>()).ToList(),
                 error,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Details of step input. </summary>
@@ -413,8 +445,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 recommendedOption,
                 selectedOptionValue,
                 responseValidationProperties,
-                responseOptions.ToList(),
-                additionalBinaryDataProperties: null);
+                (responseOptions ?? new ChangeTrackingList<ResponseConfig>()).ToList(),
+                default);
         }
 
         /// <summary> Troubleshooter step input response validation properties. </summary>
@@ -432,7 +464,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 isRequired,
                 validationErrorMessage,
                 maxLength,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The status of the resource. </summary>
@@ -441,7 +473,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.ResponseConfig"/> instance for mocking. </returns>
         public static ResponseConfig ResponseConfig(string key = default, string value = default)
         {
-            return new ResponseConfig(key, value, additionalBinaryDataProperties: null);
+            return new ResponseConfig(key, value, default);
         }
 
         /// <summary> Only for AutomatedStep type. </summary>
@@ -452,7 +484,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.AutomatedCheckResult"/> instance for mocking. </returns>
         public static AutomatedCheckResult AutomatedCheckResult(string version = default, string status = default, string result = default, AutomatedCheckResultType? resultType = default)
         {
-            return new AutomatedCheckResult(version, status, result, resultType, additionalBinaryDataProperties: null);
+            return new AutomatedCheckResult(version, status, result, resultType, default);
         }
 
         /// <summary> Troubleshooter ContinueRequest body. </summary>
@@ -463,7 +495,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             responses ??= new ChangeTrackingList<TroubleshooterResult>();
 
-            return new TroubleshooterContinueContent(stepId, responses.ToList(), additionalBinaryDataProperties: null);
+            return new TroubleshooterContinueContent(stepId, (responses ?? new ChangeTrackingList<TroubleshooterResult>()).ToList(), default);
+        }
+
+        /// <summary> User Response for Troubleshooter continue request. </summary>
+        /// <param name="questionId"> id of the question. </param>
+        /// <param name="questionType"> Type of Question. </param>
+        /// <param name="response"> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </param>
+        /// <returns> A new <see cref="Models.TroubleshooterResult"/> instance for mocking. </returns>
+        public static TroubleshooterResult TroubleshooterResult(string questionId = default, TroubleshooterQuestionType? questionType = default, string response = default)
+        {
+            return new TroubleshooterResult(questionId, questionType, response, default);
         }
 
         /// <summary> Troubleshooter restart response. </summary>
@@ -471,7 +513,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.RestartTroubleshooterResult"/> instance for mocking. </returns>
         public static RestartTroubleshooterResult RestartTroubleshooterResult(string troubleshooterResourceName = default)
         {
-            return new RestartTroubleshooterResult(troubleshooterResourceName, additionalBinaryDataProperties: null);
+            return new RestartTroubleshooterResult(troubleshooterResourceName, default);
         }
 
         /// <summary> Discover NLP request. </summary>
@@ -482,7 +524,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.DiscoveryNlpContent"/> instance for mocking. </returns>
         public static DiscoveryNlpContent DiscoveryNlpContent(string issueSummary = default, string resourceId = default, string serviceId = default, string additionalContext = default)
         {
-            return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, additionalBinaryDataProperties: null);
+            return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -503,7 +545,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 problemTitle is null && problemDescription is null && serviceId is null && problemClassificationId is null && solutions is null && relatedServices is null ? default : new NlpSolutions(
                     problemTitle,
                     problemDescription,
@@ -511,7 +552,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     problemClassificationId,
                     (solutions ?? new ChangeTrackingList<SolutionMetadataProperties>()).ToList(),
                     (relatedServices ?? new ChangeTrackingList<ClassificationService>()).ToList(),
-                    null));
+                    default),
+                default);
         }
 
         /// <summary> Metadata Properties. </summary>
@@ -524,7 +566,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             requiredInputs ??= new ChangeTrackingList<string>();
 
-            return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs.ToList(), additionalBinaryDataProperties: null);
+            return new SolutionMetadataProperties(solutionId, solutionType, description, (requiredInputs ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Service Classification result object. </summary>
@@ -536,7 +578,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             resourceTypes ??= new ChangeTrackingList<string>();
 
-            return new ClassificationService(serviceId, displayName, resourceTypes.ToList(), additionalBinaryDataProperties: null);
+            return new ClassificationService(serviceId, displayName, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -556,14 +598,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 solutionId is null && title is null && content is null && replacementMaps is null && sections is null ? default : new SolutionsResourcePropertiesSelfHelp(
                     solutionId,
                     title,
                     content,
                     replacementMaps,
                     (sections ?? new ChangeTrackingList<SolutionSection>()).ToList(),
-                    null));
+                    default),
+                default);
         }
 
         /// <summary> Solution replacement maps. </summary>
@@ -577,7 +619,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             videos ??= new ChangeTrackingList<SelfHelpVideo>();
             videoGroups ??= new ChangeTrackingList<VideoGroupDetail>();
 
-            return new ReplacementMapsResult(webResults.ToList(), videos.ToList(), videoGroups.ToList(), additionalBinaryDataProperties: null);
+            return new ReplacementMapsResult((webResults ?? new ChangeTrackingList<KBWebResult>()).ToList(), (videos ?? new ChangeTrackingList<SelfHelpVideo>()).ToList(), (videoGroups ?? new ChangeTrackingList<VideoGroupDetail>()).ToList(), default);
         }
 
         /// <summary> Part of the solution and are dividers in the solution rendering. </summary>
@@ -587,7 +629,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.SolutionSection"/> instance for mocking. </returns>
         public static SolutionSection SolutionSection(string title = default, string content = default, ReplacementMapsResult replacementMaps = default)
         {
-            return new SolutionSection(title, content, replacementMaps, additionalBinaryDataProperties: null);
+            return new SolutionSection(title, content, replacementMaps, default);
+        }
+
+        /// <summary> The check availability request body. </summary>
+        /// <param name="resourceName"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityContent"/> instance for mocking. </returns>
+        public static SelfHelpNameAvailabilityContent SelfHelpNameAvailabilityContent(string resourceName = default, ResourceType? resourceType = default)
+        {
+            return new SelfHelpNameAvailabilityContent(resourceName, resourceType, default);
         }
 
         /// <summary> Response for whether the requested resource name is available or not. </summary>
@@ -597,7 +648,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityResult"/> instance for mocking. </returns>
         public static SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = default, string reason = default, string message = default)
         {
-            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -613,8 +664,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                solutions is null ? default : new SelfhelpSolutions((solutions ?? new ChangeTrackingList<SolutionMetadataProperties>()).ToList(), null));
+                solutions is null ? default : new SelfhelpSolutions((solutions ?? new ChangeTrackingList<SolutionMetadataProperties>()).ToList(), default),
+                default);
         }
     }
 }

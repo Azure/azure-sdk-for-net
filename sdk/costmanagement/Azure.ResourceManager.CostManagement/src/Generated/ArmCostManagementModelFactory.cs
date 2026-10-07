@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                expiryOn is null && validTill is null && downloadUri is null ? default : new DownloadURL(expiryOn, validTill, downloadUri, null),
-                statusValue is null ? default : new ReportOperationStatus(statusValue, null),
+                expiryOn is null && validTill is null && downloadUri is null ? default : new DownloadURL(expiryOn, validTill, downloadUri, default),
+                statusValue is null ? default : new ReportOperationStatus(statusValue, default),
                 startTime,
                 endTime,
-                error);
+                error,
+                default);
         }
 
         /// <summary> The URL to download the generated report. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.DownloadURL"/> instance for mocking. </returns>
         public static DownloadURL DownloadURL(DateTimeOffset? expiryOn = default, DateTimeOffset? validTill = default, Uri downloadUri = default)
         {
-            return new DownloadURL(expiryOn, validTill, downloadUri, additionalBinaryDataProperties: null);
+            return new DownloadURL(expiryOn, validTill, downloadUri, default);
         }
 
         /// <summary> The details of the error. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ExportRunErrorDetails"/> instance for mocking. </returns>
         public static ExportRunErrorDetails ExportRunErrorDetails(string code = default, string message = default)
         {
-            return new ExportRunErrorDetails(code, message, additionalBinaryDataProperties: null);
+            return new ExportRunErrorDetails(code, message, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -119,7 +119,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
                     category.GetValueOrDefault(),
                     amount,
@@ -127,10 +126,32 @@ namespace Azure.ResourceManager.CostManagement.Models
                     timePeriod,
                     filter,
                     currentSpend,
-                    notifications,
+                    notifications ?? new ChangeTrackingDictionary<string, BudgetNotification>(),
                     forecastSpend,
-                    null),
-                etag);
+                    default),
+                etag,
+                default);
+        }
+
+        /// <summary>
+        /// The time period that defines the active period of the budget. The budget will evaluate data on or after the startDate and will expire on the endDate.
+        /// Supported for CategoryType(s): Cost, ReservationUtilization.
+        /// Required for CategoryType(s): Cost, ReservationUtilization.
+        /// </summary>
+        /// <param name="startOn">
+        /// The start date for the budget.
+        /// <list type="bullet"><item><description>Constraints for <b>CategoryType: Cost</b> - Must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period.</description></item></list>
+        /// <list type="bullet"><item><description>Constraints for <b>CategoryType: ReservationUtilization</b> - Must be on or after the current date and less than the end date.</description></item></list>
+        /// </param>
+        /// <param name="endOn">
+        /// The end date for the budget.
+        /// <list type="bullet"><item><description>Constraints for <b>CategoryType: Cost</b> - No constraints. If not provided, we default this to 10 years from the start date.</description></item></list>
+        /// <list type="bullet"><item><description>Constraints for <b>CategoryType: ReservationUtilization</b> - End date cannot be more than 3 years after the start date.</description></item></list>
+        /// </param>
+        /// <returns> A new <see cref="Models.BudgetTimePeriod"/> instance for mocking. </returns>
+        public static BudgetTimePeriod BudgetTimePeriod(DateTimeOffset startOn = default, DateTimeOffset? endOn = default)
+        {
+            return new BudgetTimePeriod(startOn, endOn, default);
         }
 
         /// <summary>
@@ -156,7 +177,27 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             @and ??= new ChangeTrackingList<BudgetFilterProperties>();
 
-            return new BudgetFilter(@and.ToList(), dimensions, tags, additionalBinaryDataProperties: null);
+            return new BudgetFilter((@and ?? new ChangeTrackingList<BudgetFilterProperties>()).ToList(), dimensions, tags, default);
+        }
+
+        /// <summary>
+        /// The Dimensions or Tags to filter a budget by.
+        /// Supported for CategoryType(s): Cost, ReservationUtilization.
+        /// </summary>
+        /// <param name="dimensions">
+        /// Has comparison expression for a dimension.
+        /// Supported for CategoryType(s): Cost, ReservationUtilization.
+        /// Supported dimension names for <b>CategoryType: ReservationUtilization</b>
+        /// <list type="bullet"><item><description>ReservationId</description></item><item><description>ReservedResourceType</description></item></list>
+        /// </param>
+        /// <param name="tags">
+        /// Has comparison expression for a tag.
+        /// Supported for CategoryType(s): Cost.
+        /// </param>
+        /// <returns> A new <see cref="Models.BudgetFilterProperties"/> instance for mocking. </returns>
+        public static BudgetFilterProperties BudgetFilterProperties(BudgetComparisonExpression dimensions = default, BudgetComparisonExpression tags = default)
+        {
+            return new BudgetFilterProperties(dimensions, tags, default);
         }
 
         /// <summary> The comparison expression to be used in the budgets. </summary>
@@ -168,7 +209,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new BudgetComparisonExpression(name, @operator, values.ToList(), additionalBinaryDataProperties: null);
+            return new BudgetComparisonExpression(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary>
@@ -180,7 +221,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.CurrentSpend"/> instance for mocking. </returns>
         public static CurrentSpend CurrentSpend(float? amount = default, string unit = default)
         {
-            return new CurrentSpend(amount, unit, additionalBinaryDataProperties: null);
+            return new CurrentSpend(amount, unit, default);
         }
 
         /// <summary>
@@ -241,12 +282,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 @operator,
                 threshold,
                 frequency,
-                contactEmails.ToList(),
-                contactRoles.ToList(),
-                contactGroups.ToList(),
+                (contactEmails ?? new ChangeTrackingList<string>()).ToList(),
+                (contactRoles ?? new ChangeTrackingList<string>()).ToList(),
+                (contactGroups ?? new ChangeTrackingList<string>()).ToList(),
                 thresholdType,
                 locale,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary>
@@ -258,7 +299,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ForecastSpend"/> instance for mocking. </returns>
         public static ForecastSpend ForecastSpend(float? amount = default, string unit = default)
         {
-            return new ForecastSpend(amount, unit, additionalBinaryDataProperties: null);
+            return new ForecastSpend(amount, unit, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -287,23 +328,23 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                format is null && definition is null && partitionData is null && dataOverwriteBehavior is null && compressionMode is null && exportDescription is null && nextRunTimeEstimate is null && systemSuspensionContext is null && deliveryInfoDestination is null && runHistoryValue is null && schedule is null ? default : new ExportProperties(
+                format is null && deliveryInfoDestination is null && definition is null && runHistoryValue is null && partitionData is null && dataOverwriteBehavior is null && compressionMode is null && exportDescription is null && nextRunTimeEstimate is null && systemSuspensionContext is null && schedule is null ? default : new ExportProperties(
                     format,
-                    new ExportDeliveryInfo(deliveryInfoDestination, null),
+                    new ExportDeliveryInfo(deliveryInfoDestination, default),
                     definition,
-                    new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), null),
+                    runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
                     partitionData,
                     dataOverwriteBehavior,
                     compressionMode,
                     exportDescription,
                     nextRunTimeEstimate,
                     systemSuspensionContext,
-                    null,
+                    default,
                     schedule),
                 identity,
                 location,
-                etag);
+                etag,
+                default);
         }
 
         /// <param name="format"> The format of the export being delivered. </param>
@@ -322,17 +363,36 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             return new ExportProperties(
                 format,
-                new ExportDeliveryInfo(deliveryInfoDestination, null),
+                deliveryInfoDestination is null ? default : new ExportDeliveryInfo(deliveryInfoDestination, default),
                 definition,
-                runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), null),
+                runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
                 partitionData,
                 dataOverwriteBehavior,
                 compressionMode,
                 exportDescription,
                 nextRunTimeEstimate,
                 systemSuspensionContext,
-                additionalBinaryDataProperties: null,
+                default,
                 schedule);
+        }
+
+        /// <summary> The schedule associated with the export. </summary>
+        /// <param name="status"> The status of the export's schedule. If 'Inactive', the export's schedule is paused. To enable export set the status to be Active and then make a PUT request. </param>
+        /// <param name="recurrence"> The schedule recurrence. </param>
+        /// <param name="recurrencePeriod"> Has start and end date of the recurrence. The start date must be in future. If present, the end date must be greater than start date. </param>
+        /// <returns> A new <see cref="Models.ExportSchedule"/> instance for mocking. </returns>
+        public static ExportSchedule ExportSchedule(ExportScheduleStatusType? status = default, ExportScheduleRecurrenceType? recurrence = default, ExportRecurrencePeriod recurrencePeriod = default)
+        {
+            return new ExportSchedule(status, recurrence, recurrencePeriod, default);
+        }
+
+        /// <summary> The start and end date for recurrence schedule. </summary>
+        /// <param name="from"> The start date of recurrence. </param>
+        /// <param name="to"> The end date of recurrence. </param>
+        /// <returns> A new <see cref="Models.ExportRecurrencePeriod"/> instance for mocking. </returns>
+        public static ExportRecurrencePeriod ExportRecurrencePeriod(DateTimeOffset @from = default, DateTimeOffset? to = default)
+        {
+            return new ExportRecurrencePeriod(@from, to, default);
         }
 
         /// <param name="format"> The format of the export being delivered. </param>
@@ -350,16 +410,83 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             return new CommonExportProperties(
                 format,
-                new ExportDeliveryInfo(deliveryInfoDestination, null),
+                deliveryInfoDestination is null ? default : new ExportDeliveryInfo(deliveryInfoDestination, default),
                 definition,
-                runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), null),
+                runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
                 partitionData,
                 dataOverwriteBehavior,
                 compressionMode,
                 exportDescription,
                 nextRunTimeEstimate,
                 systemSuspensionContext,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> The delivery information associated with a export. </summary>
+        /// <param name="destination"> Has destination for the export being delivered. </param>
+        /// <returns> A new <see cref="Models.ExportDeliveryInfo"/> instance for mocking. </returns>
+        public static ExportDeliveryInfo ExportDeliveryInfo(ExportDeliveryDestination destination = default)
+        {
+            return new ExportDeliveryInfo(destination, default);
+        }
+
+        /// <summary> This represents the blob storage account location where exports of costs will be delivered. There are two ways to configure the destination. The approach recommended for most customers is to specify the resourceId of the storage account. This requires a one-time registration of the account's subscription with the Microsoft.CostManagementExports resource provider in order to give Cost Management services access to the storage. When creating an export in the Azure portal this registration is performed automatically but API users may need to register the subscription explicitly (for more information see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-supported-services ). Another way to configure the destination is available ONLY to Partners with a Microsoft Partner Agreement plan who are global admins of their billing account. These Partners, instead of specifying the resourceId of a storage account, can specify the storage account name along with a SAS token for the account. This allows exports of costs to a storage account in any tenant. The SAS token should be created for the blob service with Service/Container/Object resource types and with Read/Write/Delete/List/Add/Create permissions (for more information see https://docs.microsoft.com/en-us/azure/cost-management-billing/costs/export-cost-data-storage-account-sas-key ). </summary>
+        /// <param name="type"> The export delivery destination type. Currently only 'AzureBlob' is supported. </param>
+        /// <param name="resourceId"> The resource id of the storage account where exports will be delivered. This is not required if a sasToken and storageAccount are specified. </param>
+        /// <param name="container"> The name of the container where exports will be uploaded. If the container does not exist it will be created. </param>
+        /// <param name="rootFolderPath"> The name of the directory where exports will be uploaded. </param>
+        /// <param name="sasToken"> A SAS token for the storage account. For a restricted set of Azure customers this together with storageAccount can be specified instead of resourceId. Note: the value returned by the API for this property will always be obfuscated. Returning this same obfuscated value will not result in the SAS token being updated. To update this value a new SAS token must be specified. </param>
+        /// <param name="storageAccount"> The storage account where exports will be uploaded. For a restricted set of Azure customers this together with sasToken can be specified instead of resourceId. </param>
+        /// <returns> A new <see cref="Models.ExportDeliveryDestination"/> instance for mocking. </returns>
+        public static ExportDeliveryDestination ExportDeliveryDestination(DestinationType? @type = default, ResourceIdentifier resourceId = default, string container = default, string rootFolderPath = default, string sasToken = default, string storageAccount = default)
+        {
+            return new ExportDeliveryDestination(
+                @type,
+                resourceId,
+                container,
+                rootFolderPath,
+                sasToken,
+                storageAccount,
+                default);
+        }
+
+        /// <summary> The definition of an export. </summary>
+        /// <param name="exportType"> The type of the export. Note that 'Usage' is equivalent to 'ActualCost' and is applicable to exports that do not yet provide data for charges or amortization for service reservations. </param>
+        /// <param name="timeframe"> The time frame for pulling data for the export. If custom, then a specific time period must be provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the export. </param>
+        /// <param name="dataSet"> The definition for data in the export. </param>
+        /// <returns> A new <see cref="Models.ExportDefinition"/> instance for mocking. </returns>
+        public static ExportDefinition ExportDefinition(ExportType exportType = default, TimeframeType timeframe = default, ExportTimePeriod timePeriod = default, ExportDataset dataSet = default)
+        {
+            return new ExportDefinition(exportType, timeframe, timePeriod, dataSet, default);
+        }
+
+        /// <summary> The date range for data in the export. This should only be specified with timeFrame set to 'Custom'. The maximum date range is 1 calendar month. </summary>
+        /// <param name="from"> The start date for export data. </param>
+        /// <param name="to"> The end date for export data. </param>
+        /// <returns> A new <see cref="Models.ExportTimePeriod"/> instance for mocking. </returns>
+        public static ExportTimePeriod ExportTimePeriod(DateTimeOffset @from = default, DateTimeOffset to = default)
+        {
+            return new ExportTimePeriod(@from, to, default);
+        }
+
+        /// <param name="granularity"> The granularity of rows in the export. Currently 'Daily' is supported for most cases. </param>
+        /// <param name="columns"> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </param>
+        /// <param name="dataVersion"> The data version for the selected for the export. If not provided then the export will default to latest data version. </param>
+        /// <param name="filters"> Filters associated with the data sets. </param>
+        /// <returns> A new <see cref="Models.ExportDataset"/> instance for mocking. </returns>
+        public static ExportDataset ExportDataset(GranularityType? granularity = default, IEnumerable<string> columns = default, string dataVersion = default, IEnumerable<FilterItems> filters = default)
+        {
+            return new ExportDataset(granularity, columns is null && dataVersion is null && filters is null ? default : new ExportDatasetConfiguration((columns ?? new ChangeTrackingList<string>()).ToList(), dataVersion, (filters ?? new ChangeTrackingList<FilterItems>()).ToList(), default), default);
+        }
+
+        /// <summary> Will contain the filter name and value to operate on. This is currently only supported for Export Definition type of ReservationRecommendations. </summary>
+        /// <param name="name"> The name of the filter. This is currently only supported for Export Definition type of ReservationRecommendations. Supported names are ['ReservationScope', 'LookBackPeriod', 'ResourceType']. </param>
+        /// <param name="value"> Value to filter by. Currently values supported per name are, for 'ReservationScope' supported values are ['Single', 'Shared'], for 'LookBackPeriod' supported values are ['Last7Days', 'Last30Days', 'Last60Days'] and for 'ResourceType' supported values are ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple']. </param>
+        /// <returns> A new <see cref="Models.FilterItems"/> instance for mocking. </returns>
+        public static FilterItems FilterItems(FilterItemNames? name = default, string value = default)
+        {
+            return new FilterItems(name, value, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -387,7 +514,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 executionType is null && status is null && submittedBy is null && submittedOn is null && processingStartOn is null && processingEndOn is null && startOn is null && endOn is null && fileName is null && manifestFile is null && runSettings is null && error is null ? default : new ExportRunProperties(
                     executionType,
                     status,
@@ -401,8 +527,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                     manifestFile,
                     runSettings,
                     error,
-                    null),
-                etag);
+                    default),
+                etag,
+                default);
         }
 
         /// <summary> The properties of the export run. This is not populated currently. </summary>
@@ -412,7 +539,15 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ExportSuspensionContext"/> instance for mocking. </returns>
         public static ExportSuspensionContext ExportSuspensionContext(string suspensionCode = default, string suspensionReason = default, DateTimeOffset? suspensionOn = default)
         {
-            return new ExportSuspensionContext(suspensionCode, suspensionReason, suspensionOn, additionalBinaryDataProperties: null);
+            return new ExportSuspensionContext(suspensionCode, suspensionReason, suspensionOn, default);
+        }
+
+        /// <summary> The export run request. </summary>
+        /// <param name="timePeriod"> Has time period for pulling data for the export. </param>
+        /// <returns> A new <see cref="Models.ExportRunContent"/> instance for mocking. </returns>
+        public static ExportRunContent ExportRunContent(ExportTimePeriod timePeriod = default)
+        {
+            return new ExportRunContent(timePeriod, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -430,8 +565,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                expiryOn is null && validTill is null && downloadUri is null ? default : new DownloadURL(expiryOn, validTill, downloadUri, null));
+                expiryOn is null && validTill is null && downloadUri is null ? default : new DownloadURL(expiryOn, validTill, downloadUri, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -463,28 +598,37 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                displayName is null && scope is null && createdOn is null && modifiedOn is null && dateRange is null && currency is null && chart is null && accumulated is null && metric is null && kpis is null && pivots is null && typePropertiesQueryType is null && timeframe is null && timePeriod is null && dataSet is null && includeMonetaryCommitment is null ? default : new ViewProperties(
+                displayName is null && scope is null && createdOn is null && modifiedOn is null && dateRange is null && currency is null && typePropertiesQueryType is null && timeframe is null && timePeriod is null && dataSet is null && includeMonetaryCommitment is null && chart is null && accumulated is null && metric is null && kpis is null && pivots is null ? default : new ViewProperties(
                     displayName,
                     scope,
                     createdOn,
                     modifiedOn,
                     dateRange,
                     currency,
-                    new ReportConfigDefinition(
+                    typePropertiesQueryType is null && timeframe is null && timePeriod is null && dataSet is null && includeMonetaryCommitment is null ? default : new ReportConfigDefinition(
                         typePropertiesQueryType,
                         timeframe,
                         timePeriod,
                         dataSet,
                         includeMonetaryCommitment,
-                        null),
+                        default),
                     chart,
                     accumulated,
                     metric,
                     (kpis ?? new ChangeTrackingList<ViewKpiProperties>()).ToList(),
                     (pivots ?? new ChangeTrackingList<ViewPivotProperties>()).ToList(),
-                    null),
-                etag);
+                    default),
+                etag,
+                default);
+        }
+
+        /// <summary> The start and end date for pulling data for the report. </summary>
+        /// <param name="from"> The start date to pull data from. </param>
+        /// <param name="to"> The end date to pull data to. </param>
+        /// <returns> A new <see cref="Models.ReportConfigTimePeriod"/> instance for mocking. </returns>
+        public static ReportConfigTimePeriod ReportConfigTimePeriod(DateTimeOffset @from = default, DateTimeOffset to = default)
+        {
+            return new ReportConfigTimePeriod(@from, to, default);
         }
 
         /// <param name="granularity"> The granularity of rows in the report. </param>
@@ -502,12 +646,39 @@ namespace Azure.ResourceManager.CostManagement.Models
 
             return new ReportConfigDataset(
                 granularity,
-                columns is null ? default : new ReportConfigDatasetConfiguration((columns ?? new ChangeTrackingList<string>()).ToList(), null),
-                aggregation,
-                grouping.ToList(),
-                sorting.ToList(),
+                columns is null ? default : new ReportConfigDatasetConfiguration((columns ?? new ChangeTrackingList<string>()).ToList(), default),
+                aggregation ?? new ChangeTrackingDictionary<string, ReportConfigAggregation>(),
+                (grouping ?? new ChangeTrackingList<ReportConfigGrouping>()).ToList(),
+                (sorting ?? new ChangeTrackingList<ReportConfigSorting>()).ToList(),
                 filter,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> The aggregation expression to be used in the report. </summary>
+        /// <param name="name"> The name of the column to aggregate. </param>
+        /// <param name="function"> The name of the aggregation function to use. </param>
+        /// <returns> A new <see cref="Models.ReportConfigAggregation"/> instance for mocking. </returns>
+        public static ReportConfigAggregation ReportConfigAggregation(string name = default, FunctionType function = default)
+        {
+            return new ReportConfigAggregation(name, function, default);
+        }
+
+        /// <summary> The group by expression to be used in the report. </summary>
+        /// <param name="queryColumnType"> Has type of the column to group. </param>
+        /// <param name="name"> The name of the column to group. This version supports subscription lowest possible grain. </param>
+        /// <returns> A new <see cref="Models.ReportConfigGrouping"/> instance for mocking. </returns>
+        public static ReportConfigGrouping ReportConfigGrouping(QueryColumnType queryColumnType = default, string name = default)
+        {
+            return new ReportConfigGrouping(queryColumnType, name, default);
+        }
+
+        /// <summary> The order by expression to be used in the report. </summary>
+        /// <param name="direction"> Direction of sort. </param>
+        /// <param name="name"> The name of the column to sort. </param>
+        /// <returns> A new <see cref="Models.ReportConfigSorting"/> instance for mocking. </returns>
+        public static ReportConfigSorting ReportConfigSorting(ReportConfigSortingType? direction = default, string name = default)
+        {
+            return new ReportConfigSorting(direction, name, default);
         }
 
         /// <summary> The filter expression to be used in the report. </summary>
@@ -521,7 +692,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             @and ??= new ChangeTrackingList<ReportConfigFilter>();
             @or ??= new ChangeTrackingList<ReportConfigFilter>();
 
-            return new ReportConfigFilter(@and.ToList(), @or.ToList(), dimensions, tags, additionalBinaryDataProperties: null);
+            return new ReportConfigFilter((@and ?? new ChangeTrackingList<ReportConfigFilter>()).ToList(), (@or ?? new ChangeTrackingList<ReportConfigFilter>()).ToList(), dimensions, tags, default);
         }
 
         /// <summary> The comparison expression to be used in the report. </summary>
@@ -533,7 +704,26 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new ReportConfigComparisonExpression(name, @operator, values.ToList(), additionalBinaryDataProperties: null);
+            return new ReportConfigComparisonExpression(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Each KPI must contain a 'type' and 'enabled' key. </summary>
+        /// <param name="kpiType"> KPI type (Forecast, Budget). </param>
+        /// <param name="id"> ID of resource related to metric (budget). </param>
+        /// <param name="isEnabled"> show the KPI in the UI?. </param>
+        /// <returns> A new <see cref="Models.ViewKpiProperties"/> instance for mocking. </returns>
+        public static ViewKpiProperties ViewKpiProperties(ViewKpiType? kpiType = default, ResourceIdentifier id = default, bool? isEnabled = default)
+        {
+            return new ViewKpiProperties(kpiType, id, isEnabled, default);
+        }
+
+        /// <summary> Each pivot must contain a 'type' and 'name'. </summary>
+        /// <param name="pivotType"> Data type to show in view. </param>
+        /// <param name="name"> Data field to show in view. </param>
+        /// <returns> A new <see cref="Models.ViewPivotProperties"/> instance for mocking. </returns>
+        public static ViewPivotProperties ViewPivotProperties(ViewPivotType? pivotType = default, string name = default)
+        {
+            return new ViewPivotProperties(pivotType, name, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -560,7 +750,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 definition is null && description is null && source is null && details is null && costEntityId is null && status is null && createdOn is null && closeOn is null && modifiedOn is null && statusModificationUserName is null && statusModifiedOn is null ? default : new AlertProperties(
                     definition,
                     description,
@@ -573,8 +762,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                     modifiedOn,
                     statusModificationUserName,
                     statusModifiedOn,
-                    null),
-                etag);
+                    default),
+                etag,
+                default);
+        }
+
+        /// <summary> defines the type of alert. </summary>
+        /// <param name="alertType"> type of alert. </param>
+        /// <param name="category"> Alert category. </param>
+        /// <param name="criteria"> Criteria that triggered alert. </param>
+        /// <returns> A new <see cref="Models.AlertPropertiesDefinition"/> instance for mocking. </returns>
+        public static AlertPropertiesDefinition AlertPropertiesDefinition(CostManagementAlertType? alertType = default, CostManagementAlertCategory? category = default, AlertCriterion? criteria = default)
+        {
+            return new AlertPropertiesDefinition(alertType, category, criteria, default);
         }
 
         /// <summary> Alert details. </summary>
@@ -614,18 +814,18 @@ namespace Azure.ResourceManager.CostManagement.Models
                 timeGrainType,
                 periodStartDate,
                 triggeredBy,
-                resourceGroupFilter.ToList(),
-                resourceFilter.ToList(),
-                meterFilter.ToList(),
+                (resourceGroupFilter ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                (resourceFilter ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                (meterFilter ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 tagFilter,
                 threshold,
                 @operator,
                 amount,
                 unit,
                 currentSpend,
-                contactEmails.ToList(),
-                contactGroups.ToList(),
-                contactRoles.ToList(),
+                (contactEmails ?? new ChangeTrackingList<string>()).ToList(),
+                (contactGroups ?? new ChangeTrackingList<string>()).ToList(),
+                (contactRoles ?? new ChangeTrackingList<string>()).ToList(),
                 overridingAlert,
                 departmentName,
                 companyName,
@@ -633,7 +833,36 @@ namespace Azure.ResourceManager.CostManagement.Models
                 enrollmentStartDate,
                 enrollmentEndDate,
                 invoicingThreshold,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="definition"> defines the type of alert. </param>
+        /// <param name="description"> Alert description. </param>
+        /// <param name="source"> Source of alert. </param>
+        /// <param name="details"> Alert details. </param>
+        /// <param name="costEntityId"> related budget. </param>
+        /// <param name="status"> alert status. </param>
+        /// <param name="createdOn"> dateTime in which alert was created. </param>
+        /// <param name="closeOn"> dateTime in which alert was closed. </param>
+        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
+        /// <param name="statusModificationUserName"> User who last modified the alert. </param>
+        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
+        /// <returns> A new <see cref="Models.CostManagementAlertPatch"/> instance for mocking. </returns>
+        public static CostManagementAlertPatch CostManagementAlertPatch(AlertPropertiesDefinition definition = default, string description = default, CostManagementAlertSource? source = default, AlertPropertiesDetails details = default, string costEntityId = default, CostManagementAlertStatus? status = default, DateTimeOffset? createdOn = default, DateTimeOffset? closeOn = default, DateTimeOffset? modifiedOn = default, string statusModificationUserName = default, DateTimeOffset? statusModifiedOn = default)
+        {
+            return new CostManagementAlertPatch(definition is null && description is null && source is null && details is null && costEntityId is null && status is null && createdOn is null && closeOn is null && modifiedOn is null && statusModificationUserName is null && statusModifiedOn is null ? default : new AlertProperties(
+                definition,
+                description,
+                source,
+                details,
+                costEntityId,
+                status,
+                createdOn,
+                closeOn,
+                modifiedOn,
+                statusModificationUserName,
+                statusModifiedOn,
+                default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -658,19 +887,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                displayName is null && notification is null && notificationEmail is null && schedule is null && scope is null && status is null && viewId is null && fileFormats is null ? default : new ScheduledActionProperties(
+                displayName is null && fileFormats is null && notification is null && notificationEmail is null && schedule is null && scope is null && status is null && viewId is null ? default : new ScheduledActionProperties(
                     displayName,
-                    new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), null),
+                    fileFormats is null ? default : new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
                     notification,
                     notificationEmail,
                     schedule,
                     scope,
                     status,
                     viewId,
-                    null),
+                    default),
                 etag,
-                kind);
+                kind,
+                default);
         }
 
         /// <summary> The properties of the scheduled action notification. </summary>
@@ -685,12 +914,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             to ??= new ChangeTrackingList<string>();
 
             return new NotificationProperties(
-                to.ToList(),
+                (to ?? new ChangeTrackingList<string>()).ToList(),
                 language,
                 message,
                 regionalFormat,
                 subject,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The properties of the schedule. </summary>
@@ -710,12 +939,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ScheduleProperties(
                 frequency,
                 hourOfDay,
-                daysOfWeek.ToList(),
-                weeksOfMonth.ToList(),
+                (daysOfWeek ?? new ChangeTrackingList<ScheduledActionDaysOfWeek>()).ToList(),
+                (weeksOfMonth ?? new ChangeTrackingList<ScheduledActionWeeksOfMonth>()).ToList(),
                 dayOfMonth,
                 startOn,
                 endOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The details of the error. </summary>
@@ -724,7 +953,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ErrorDetailsWithNestedDetails"/> instance for mocking. </returns>
         public static ErrorDetailsWithNestedDetails ErrorDetailsWithNestedDetails(string code = default, string message = default)
         {
-            return new ErrorDetailsWithNestedDetails(code, message, additionalBinaryDataProperties: null);
+            return new ErrorDetailsWithNestedDetails(code, message, default);
+        }
+
+        /// <summary> The check availability request body. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.CostManagementNameAvailabilityContent"/> instance for mocking. </returns>
+        public static CostManagementNameAvailabilityContent CostManagementNameAvailabilityContent(string name = default, string resourceType = default)
+        {
+            return new CostManagementNameAvailabilityContent(name, resourceType, default);
         }
 
         /// <summary> The check availability result. </summary>
@@ -734,7 +972,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.CostManagementNameAvailabilityResult"/> instance for mocking. </returns>
         public static CostManagementNameAvailabilityResult CostManagementNameAvailabilityResult(bool? nameAvailable = default, CostManagementUnavailabilityReason? reason = default, string message = default)
         {
-            return new CostManagementNameAvailabilityResult(nameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new CostManagementNameAvailabilityResult(nameAvailable, reason, message, default);
         }
 
         /// <summary>
@@ -754,8 +992,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                new SettingsKind(kind));
+                default,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -771,9 +1009,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                SettingsKind.Taginheritance,
-                preferContainerTags is null ? default : new TagInheritanceProperties(preferContainerTags.GetValueOrDefault(), null));
+                default,
+                default,
+                preferContainerTags is null ? default : new TagInheritanceProperties(preferContainerTags.GetValueOrDefault(), default));
         }
 
         /// <param name="id"> The id of the long running operation. </param>
@@ -798,18 +1036,38 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 @type,
                 status,
-                manifestVersion is null && dataFormat is null && byteCount is null && blobCount is null && compressData is null && blobs is null && requestScope is null && requestBody is null ? default : new ReportManifest(
+                manifestVersion is null && dataFormat is null && byteCount is null && blobCount is null && compressData is null && requestScope is null && requestBody is null && blobs is null ? default : new ReportManifest(
                     manifestVersion,
                     dataFormat,
                     byteCount,
                     blobCount,
                     compressData,
-                    new RequestContext(requestScope, requestBody, null),
+                    requestScope is null && requestBody is null ? default : new RequestContext(requestScope, requestBody, default),
                     (blobs ?? new ChangeTrackingList<ExportBlobInfo>()).ToList(),
-                    null),
+                    default),
                 validTill,
                 error,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> The definition of a cost detailed report. </summary>
+        /// <param name="metric"> The type of the detailed report. By default ActualCost is provided. </param>
+        /// <param name="timePeriod"> The specific date range of cost details requested for the report. This parameter cannot be used alongside either the invoiceId or billingPeriod parameters. If a timePeriod, invoiceId or billingPeriod parameter is not provided in the request body the API will return the current month's cost. API only allows data to be pulled for 1 month or less and no older than 13 months. If no timePeriod or billingPeriod or invoiceId is provided the API defaults to the open month time period. </param>
+        /// <param name="billingPeriod"> This parameter can be used only by Enterprise Agreement customers. Use the YearMonth(e.g. 202008) format. This parameter cannot be used alongside either the invoiceId or timePeriod parameters. If a timePeriod, invoiceId or billingPeriod parameter is not provided in the request body the API will return the current month's cost. </param>
+        /// <param name="invoiceId"> This parameter can only be used by Microsoft Customer Agreement customers. Additionally, it can only be used at the Billing Profile or Customer scope. This parameter cannot be used alongside either the billingPeriod or timePeriod parameters. If a timePeriod, invoiceId or billingPeriod parameter is not provided in the request body the API will return the current month's cost. </param>
+        /// <returns> A new <see cref="Models.GenerateCostDetailsReportContent"/> instance for mocking. </returns>
+        public static GenerateCostDetailsReportContent GenerateCostDetailsReportContent(CostDetailsMetricType? metric = default, CostDetailsTimePeriod timePeriod = default, string billingPeriod = default, string invoiceId = default)
+        {
+            return new GenerateCostDetailsReportContent(metric, timePeriod, billingPeriod, invoiceId, default);
+        }
+
+        /// <summary> The start and end date for pulling data for the cost detailed report. API only allows data to be pulled for 1 month or less and no older than 13 months. </summary>
+        /// <param name="start"> The start date to pull data from. example format 2020-03-15. </param>
+        /// <param name="end"> The end date to pull data to. example format 2020-03-15. </param>
+        /// <returns> A new <see cref="Models.CostDetailsTimePeriod"/> instance for mocking. </returns>
+        public static CostDetailsTimePeriod CostDetailsTimePeriod(string start = default, string end = default)
+        {
+            return new CostDetailsTimePeriod(start, end, default);
         }
 
         /// <summary> The blob information generated by this operation. </summary>
@@ -818,7 +1076,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ExportBlobInfo"/> instance for mocking. </returns>
         public static ExportBlobInfo ExportBlobInfo(string blobLink = default, long? byteCount = default)
         {
-            return new ExportBlobInfo(blobLink, byteCount, additionalBinaryDataProperties: null);
+            return new ExportBlobInfo(blobLink, byteCount, default);
         }
 
         /// <summary> The cost allocation rule model definition. </summary>
@@ -835,8 +1093,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The properties of a cost allocation rule. </summary>
@@ -854,7 +1112,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 status,
                 createdOn,
                 updatedOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Resource details of the cost allocation rule. </summary>
@@ -866,7 +1124,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             sourceResources ??= new ChangeTrackingList<SourceCostAllocationEntity>();
             targetResources ??= new ChangeTrackingList<TargetCostAllocationEntity>();
 
-            return new CostAllocationRuleDetails(sourceResources.ToList(), targetResources.ToList(), additionalBinaryDataProperties: null);
+            return new CostAllocationRuleDetails((sourceResources ?? new ChangeTrackingList<SourceCostAllocationEntity>()).ToList(), (targetResources ?? new ChangeTrackingList<TargetCostAllocationEntity>()).ToList(), default);
         }
 
         /// <summary> Source resources for cost allocation. </summary>
@@ -878,7 +1136,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new SourceCostAllocationEntity(resourceType, name, additionalBinaryDataProperties: null, values.ToList());
+            return new SourceCostAllocationEntity(resourceType, name, default, (values ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Common values for resources for cost allocation. </summary>
+        /// <param name="resourceType"> Type of resources contained in this cost allocation rule. </param>
+        /// <param name="name"> If resource type is dimension, this must be either ResourceGroupName or SubscriptionId. If resource type is tag, this must be a valid Azure tag. </param>
+        /// <returns> A new <see cref="Models.CostAllocationEntity"/> instance for mocking. </returns>
+        public static CostAllocationEntity CostAllocationEntity(CostAllocationResourceType resourceType = default, string name = default)
+        {
+            return new CostAllocationEntity(resourceType, name, default);
         }
 
         /// <summary> Target resources for cost allocation. </summary>
@@ -891,7 +1158,25 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             values ??= new ChangeTrackingList<CostAllocationProportion>();
 
-            return new TargetCostAllocationEntity(resourceType, name, additionalBinaryDataProperties: null, values.ToList(), policyType);
+            return new TargetCostAllocationEntity(resourceType, name, default, (values ?? new ChangeTrackingList<CostAllocationProportion>()).ToList(), policyType);
+        }
+
+        /// <summary> Target resources and allocation. </summary>
+        /// <param name="name"> Target resource for cost allocation. </param>
+        /// <param name="percentage"> Percentage of source cost to allocate to this resource. This value can be specified to two decimal places and the total percentage of all resources in this rule must sum to 100.00. </param>
+        /// <returns> A new <see cref="Models.CostAllocationProportion"/> instance for mocking. </returns>
+        public static CostAllocationProportion CostAllocationProportion(string name = default, float percentage = default)
+        {
+            return new CostAllocationProportion(name, percentage, default);
+        }
+
+        /// <summary> The cost allocation rule check name availability request. </summary>
+        /// <param name="name"> Rule name. </param>
+        /// <param name="type"> Resource type. This is expected to be Microsoft.CostManagement/costAllocationRules. </param>
+        /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityRequest"/> instance for mocking. </returns>
+        public static CostAllocationRuleCheckNameAvailabilityRequest CostAllocationRuleCheckNameAvailabilityRequest(string name = default, string @type = default)
+        {
+            return new CostAllocationRuleCheckNameAvailabilityRequest(name, @type, default);
         }
 
         /// <summary> The cost allocation rule check name availability response. </summary>
@@ -901,12 +1186,32 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.CostAllocationRuleCheckNameAvailabilityResponse"/> instance for mocking. </returns>
         public static CostAllocationRuleCheckNameAvailabilityResponse CostAllocationRuleCheckNameAvailabilityResponse(bool? nameAvailable = default, CostAllocationRuleCheckNameAvailabilityReason? reason = default, string message = default)
         {
-            return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new CostAllocationRuleCheckNameAvailabilityResponse(nameAvailable, reason, message, default);
+        }
+
+        /// <summary> benefit plan recommendation details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Reservation or SavingsPlan. </param>
+        /// <param name="properties"> The properties of the benefit recommendations. </param>
+        /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>
+        public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind? kind, BenefitRecommendationProperties properties)
+        {
+            return new BenefitRecommendationModel(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                default,
+                properties);
         }
 
         /// <summary>
         /// The properties of the benefit recommendations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SingleScopeBenefitRecommendationProperties"/> and <see cref="Models.SharedScopeBenefitRecommendationProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SharedScopeBenefitRecommendationProperties"/> and <see cref="Models.SingleScopeBenefitRecommendationProperties"/>.
         /// </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
@@ -937,8 +1242,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 costWithoutBenefit,
                 recommendationDetails,
                 allRecommendationDetails,
-                new BenefitRecommendationScope(scope),
-                additionalBinaryDataProperties: null);
+                default,
+                default);
         }
 
         /// <summary> On-demand charges between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </summary>
@@ -949,7 +1254,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             charges ??= new ChangeTrackingList<decimal>();
 
-            return new RecommendationUsageDetails(usageGrain, charges.ToList(), additionalBinaryDataProperties: null);
+            return new RecommendationUsageDetails(usageGrain, (charges ?? new ChangeTrackingList<decimal>()).ToList(), default);
         }
 
         /// <summary> Benefit recommendation details. </summary>
@@ -975,7 +1280,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 commitmentAmount,
                 averageUtilizationPercentage,
                 wastageCost,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The list of all benefit recommendations with the recommendation details. </summary>
@@ -986,7 +1291,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             value ??= new ChangeTrackingList<AllSavingsBenefitDetails>();
 
-            return new AllSavingsList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+            return new AllSavingsList((value ?? new ChangeTrackingList<AllSavingsBenefitDetails>()).ToList(), nextLink, default);
         }
 
         /// <summary> The properties of the benefit recommendations when scope is 'Single'. </summary>
@@ -1020,8 +1325,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 costWithoutBenefit,
                 recommendationDetails,
                 allRecommendationDetails,
-                BenefitRecommendationScope.Single,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 subscriptionId,
                 resourceGroup);
         }
@@ -1055,8 +1360,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 costWithoutBenefit,
                 recommendationDetails,
                 allRecommendationDetails,
-                BenefitRecommendationScope.Shared,
-                additionalBinaryDataProperties: null);
+                default,
+                default);
         }
 
         /// <summary> The benefit resource model definition. </summary>
@@ -1073,11 +1378,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                kind);
+                kind,
+                default);
         }
 
-        /// <summary> Benefit utilization summary resource. </summary>
+        /// <summary>
+        /// Benefit utilization summary resource.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.IncludedQuantityUtilizationSummary"/> and <see cref="Models.SavingsPlanUtilizationSummary"/>.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1091,8 +1399,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                new BillingAccountBenefitKind(kind));
+                default,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1113,15 +1421,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                BillingAccountBenefitKind.IncludedQuantity,
+                default,
+                default,
                 armSkuName is null && benefitId is null && benefitOrderId is null && benefitType is null && usageOn is null && utilizationPercentage is null ? default : new IncludedQuantityUtilizationSummaryProperties(
                     armSkuName,
                     benefitId,
                     benefitOrderId,
                     benefitType,
                     usageOn,
-                    null,
+                    default,
                     utilizationPercentage));
         }
 
@@ -1145,18 +1453,42 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                BillingAccountBenefitKind.SavingsPlan,
+                default,
+                default,
                 armSkuName is null && benefitId is null && benefitOrderId is null && benefitType is null && usageOn is null && avgUtilizationPercentage is null && minUtilizationPercentage is null && maxUtilizationPercentage is null ? default : new SavingsPlanUtilizationSummaryProperties(
                     armSkuName,
                     benefitId,
                     benefitOrderId,
                     benefitType,
                     usageOn,
-                    null,
+                    default,
                     avgUtilizationPercentage,
                     minUtilizationPercentage,
                     maxUtilizationPercentage));
+        }
+
+        /// <summary> Properties of an async benefit utilization summaries request. </summary>
+        /// <param name="billingAccountId"> Billing account the benefit utilization summaries report is for. Required for billing account and billing profile scopes. Not supported for any benefit scopes. </param>
+        /// <param name="billingProfileId"> Billing profile id the benefit utilization summaries report is for. Required for billing profile scope. Not supported for billing account or any benefit scopes. </param>
+        /// <param name="benefitOrderId"> Benefit order id the benefit utilization summaries report is for. Required for benefit order and benefit id scopes. Not supported for any billing scopes. </param>
+        /// <param name="benefitId"> Benefit id the benefit utilization summaries report is for. Required for benefit id scope. Not supported for benefit order or any billing scopes. </param>
+        /// <param name="grain"> The grain the summaries data is served at in the report. Accepted values are 'Daily' or 'Monthly'. </param>
+        /// <param name="startOn"> The start date of the summaries data that will be served in the report. </param>
+        /// <param name="endOn"> The end date of the summaries data that will be served in the report. </param>
+        /// <param name="kind"> The type of benefit data requested. Required for billing account and billing profile scopes. Implied and not to be passed at benefit scopes. Supported values are Reservation and SavingsPlan. </param>
+        /// <returns> A new <see cref="Models.BenefitUtilizationSummariesContent"/> instance for mocking. </returns>
+        public static BenefitUtilizationSummariesContent BenefitUtilizationSummariesContent(string billingAccountId = default, string billingProfileId = default, string benefitOrderId = default, string benefitId = default, BenefitRecommendationUsageGrain grain = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default, BillingAccountBenefitKind? kind = default)
+        {
+            return new BenefitUtilizationSummariesContent(
+                billingAccountId,
+                billingProfileId,
+                benefitOrderId,
+                benefitId,
+                grain,
+                startOn,
+                endOn,
+                kind,
+                default);
         }
 
         /// <summary> Status of a benefit utilization summaries report. Provides Async Benefit Utilization Summaries Request input, status, and report sas url. </summary>
@@ -1166,7 +1498,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.BenefitUtilizationSummariesOperationStatus"/> instance for mocking. </returns>
         public static BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesContent input = default, OperationStatusType? status = default, AsyncOperationStatusProperties properties = default)
         {
-            return new BenefitUtilizationSummariesOperationStatus(input, status, properties, additionalBinaryDataProperties: null);
+            return new BenefitUtilizationSummariesOperationStatus(input, status, properties, default);
         }
 
         /// <summary> Object representing the report url and valid until date of the async report generated. </summary>
@@ -1176,7 +1508,25 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.AsyncOperationStatusProperties"/> instance for mocking. </returns>
         public static AsyncOperationStatusProperties AsyncOperationStatusProperties(BenefitUtilizationSummaryReportSchema? reportUri = default, BenefitUtilizationSummaryReportSchema? secondaryReportUri = default, DateTimeOffset? validUntil = default)
         {
-            return new AsyncOperationStatusProperties(reportUri, secondaryReportUri, validUntil, additionalBinaryDataProperties: null);
+            return new AsyncOperationStatusProperties(reportUri, secondaryReportUri, validUntil, default);
+        }
+
+        /// <summary> The definition of a cost detailed report. </summary>
+        /// <param name="metric"> The type of the detailed report. By default ActualCost is provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the cost detailed report. Can only have one of either timePeriod or invoiceId or billingPeriod parameters. If none provided current month cost is provided. </param>
+        /// <param name="billingPeriod"> Billing period in YearMonth(e.g. 202008) format. Only for legacy enterprise customers can use this. Can only have one of either timePeriod or invoiceId or billingPeriod parameters. If none provided current month cost is provided. </param>
+        /// <param name="invoiceId"> Invoice ID for Pay-as-you-go and Microsoft Customer Agreement scopes. Can only have one of either timePeriod or invoiceId or billingPeriod parameters. If none provided current month cost is provided. </param>
+        /// <param name="customerId"> Customer ID for Microsoft Customer Agreement scopes (Invoice Id is also required for this). </param>
+        /// <returns> A new <see cref="Models.GenerateDetailedCostReportContent"/> instance for mocking. </returns>
+        public static GenerateDetailedCostReportContent GenerateDetailedCostReportContent(GenerateDetailedCostReportMetricType? metric = default, GenerateDetailedCostReportTimePeriod timePeriod = default, string billingPeriod = default, string invoiceId = default, string customerId = default)
+        {
+            return new GenerateDetailedCostReportContent(
+                metric,
+                timePeriod,
+                billingPeriod,
+                invoiceId,
+                customerId,
+                default);
         }
 
         /// <summary> The start and end date for pulling data for the cost detailed report. </summary>
@@ -1185,7 +1535,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.GenerateDetailedCostReportTimePeriod"/> instance for mocking. </returns>
         public static GenerateDetailedCostReportTimePeriod GenerateDetailedCostReportTimePeriod(string start = default, string end = default)
         {
-            return new GenerateDetailedCostReportTimePeriod(start, end, additionalBinaryDataProperties: null);
+            return new GenerateDetailedCostReportTimePeriod(start, end, default);
         }
 
         /// <summary> The definition of a forecast. </summary>
@@ -1205,7 +1555,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 dataset,
                 includeActualCost,
                 includeFreshPartialCost,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Has time period for pulling data for the forecast. </summary>
@@ -1214,7 +1564,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ForecastTimePeriod"/> instance for mocking. </returns>
         public static ForecastTimePeriod ForecastTimePeriod(DateTimeOffset @from = default, DateTimeOffset to = default)
         {
-            return new ForecastTimePeriod(@from, to, additionalBinaryDataProperties: null);
+            return new ForecastTimePeriod(@from, to, default);
         }
 
         /// <param name="granularity"> The granularity of rows in the forecast. </param>
@@ -1226,7 +1576,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             aggregation ??= new ChangeTrackingDictionary<string, ForecastAggregation>();
 
-            return new ForecastDataset(granularity, columns is null ? default : new ForecastDatasetConfiguration((columns ?? new ChangeTrackingList<string>()).ToList(), null), aggregation, filter, additionalBinaryDataProperties: null);
+            return new ForecastDataset(granularity, columns is null ? default : new ForecastDatasetConfiguration((columns ?? new ChangeTrackingList<string>()).ToList(), default), aggregation ?? new ChangeTrackingDictionary<string, ForecastAggregation>(), filter, default);
         }
 
         /// <summary> The aggregation expression to be used in the forecast. </summary>
@@ -1235,7 +1585,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ForecastAggregation"/> instance for mocking. </returns>
         public static ForecastAggregation ForecastAggregation(FunctionName name = default, FunctionType function = default)
         {
-            return new ForecastAggregation(name, function, additionalBinaryDataProperties: null);
+            return new ForecastAggregation(name, function, default);
         }
 
         /// <summary> The filter expression to be used in the export. </summary>
@@ -1249,7 +1599,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             @and ??= new ChangeTrackingList<ForecastFilter>();
             @or ??= new ChangeTrackingList<ForecastFilter>();
 
-            return new ForecastFilter(@and.ToList(), @or.ToList(), dimensions, tags, additionalBinaryDataProperties: null);
+            return new ForecastFilter((@and ?? new ChangeTrackingList<ForecastFilter>()).ToList(), (@or ?? new ChangeTrackingList<ForecastFilter>()).ToList(), dimensions, tags, default);
         }
 
         /// <summary> The comparison expression to be used in the forecast. </summary>
@@ -1261,7 +1611,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new ForecastComparisonExpression(name, @operator, values.ToList(), additionalBinaryDataProperties: null);
+            return new ForecastComparisonExpression(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1285,12 +1635,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                nextLink is null && columns is null && rows is null ? default : new ForecastProperties(nextLink, (columns ?? new ChangeTrackingList<ForecastColumn>()).ToList(), (rows ?? new ChangeTrackingList<IList<BinaryData>>()).ToList(), null),
+                nextLink is null && columns is null && rows is null ? default : new ForecastProperties(nextLink, (columns ?? new ChangeTrackingList<ForecastColumn>()).ToList(), (rows ?? new ChangeTrackingList<IList<BinaryData>>()).ToList(), default),
                 location,
                 sku,
                 etag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <summary> Forecast column properties. </summary>
@@ -1299,7 +1649,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ForecastColumn"/> instance for mocking. </returns>
         public static ForecastColumn ForecastColumn(string name = default, string forecastColumnType = default)
         {
-            return new ForecastColumn(name, forecastColumnType, additionalBinaryDataProperties: null);
+            return new ForecastColumn(name, forecastColumnType, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1329,7 +1679,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 description is null && isFilterEnabled is null && isGroupingEnabled is null && data is null && total is null && category is null && usageStart is null && usageEnd is null && nextLink is null ? default : new DimensionProperties(
                     description,
                     isFilterEnabled,
@@ -1340,11 +1689,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                     usageStart,
                     usageEnd,
                     nextLink,
-                    null),
+                    default),
                 location,
                 sku,
                 etag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <summary> The definition of a query. </summary>
@@ -1355,7 +1705,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.QueryDefinition"/> instance for mocking. </returns>
         public static QueryDefinition QueryDefinition(ExportType exportType = default, TimeframeType timeframe = default, QueryTimePeriod timePeriod = default, QueryDataset dataset = default)
         {
-            return new QueryDefinition(exportType, timeframe, timePeriod, dataset, additionalBinaryDataProperties: null);
+            return new QueryDefinition(exportType, timeframe, timePeriod, dataset, default);
         }
 
         /// <summary> The start and end date for pulling data for the query. </summary>
@@ -1364,7 +1714,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.QueryTimePeriod"/> instance for mocking. </returns>
         public static QueryTimePeriod QueryTimePeriod(DateTimeOffset @from = default, DateTimeOffset to = default)
         {
-            return new QueryTimePeriod(@from, to, additionalBinaryDataProperties: null);
+            return new QueryTimePeriod(@from, to, default);
         }
 
         /// <param name="granularity"> The granularity of rows in the query. </param>
@@ -1380,11 +1730,11 @@ namespace Azure.ResourceManager.CostManagement.Models
 
             return new QueryDataset(
                 granularity,
-                columns is null ? default : new QueryDatasetConfiguration((columns ?? new ChangeTrackingList<string>()).ToList(), null),
-                aggregation,
-                grouping.ToList(),
+                columns is null ? default : new QueryDatasetConfiguration((columns ?? new ChangeTrackingList<string>()).ToList(), default),
+                aggregation ?? new ChangeTrackingDictionary<string, QueryAggregation>(),
+                (grouping ?? new ChangeTrackingList<QueryGrouping>()).ToList(),
                 filter,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The aggregation expression to be used in the query. </summary>
@@ -1393,7 +1743,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.QueryAggregation"/> instance for mocking. </returns>
         public static QueryAggregation QueryAggregation(string name = default, FunctionType function = default)
         {
-            return new QueryAggregation(name, function, additionalBinaryDataProperties: null);
+            return new QueryAggregation(name, function, default);
         }
 
         /// <summary> The group by expression to be used in the query. </summary>
@@ -1402,7 +1752,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.QueryGrouping"/> instance for mocking. </returns>
         public static QueryGrouping QueryGrouping(QueryColumnType columnType = default, string name = default)
         {
-            return new QueryGrouping(columnType, name, additionalBinaryDataProperties: null);
+            return new QueryGrouping(columnType, name, default);
         }
 
         /// <summary> The filter expression to be used in the export. </summary>
@@ -1416,7 +1766,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             @and ??= new ChangeTrackingList<QueryFilter>();
             @or ??= new ChangeTrackingList<QueryFilter>();
 
-            return new QueryFilter(@and.ToList(), @or.ToList(), dimensions, tags, additionalBinaryDataProperties: null);
+            return new QueryFilter((@and ?? new ChangeTrackingList<QueryFilter>()).ToList(), (@or ?? new ChangeTrackingList<QueryFilter>()).ToList(), dimensions, tags, default);
         }
 
         /// <summary> The comparison expression to be used in the query. </summary>
@@ -1428,7 +1778,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new QueryComparisonExpression(name, @operator, values.ToList(), additionalBinaryDataProperties: null);
+            return new QueryComparisonExpression(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1452,12 +1802,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                nextLink is null && columns is null && rows is null ? default : new QueryProperties(nextLink, (columns ?? new ChangeTrackingList<QueryColumn>()).ToList(), (rows ?? new ChangeTrackingList<IList<BinaryData>>()).ToList(), null),
+                nextLink is null && columns is null && rows is null ? default : new QueryProperties(nextLink, (columns ?? new ChangeTrackingList<QueryColumn>()).ToList(), (rows ?? new ChangeTrackingList<IList<BinaryData>>()).ToList(), default),
                 location,
                 sku,
                 etag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <summary> QueryColumn properties. </summary>
@@ -1466,7 +1816,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.QueryColumn"/> instance for mocking. </returns>
         public static QueryColumn QueryColumn(string name = default, string queryColumnType = default)
         {
-            return new QueryColumn(name, queryColumnType, additionalBinaryDataProperties: null);
+            return new QueryColumn(name, queryColumnType, default);
         }
 
         /// <param name="status"> The status of the long running operation. </param>
@@ -1475,7 +1825,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
         public static OperationStatus OperationStatus(OperationStatusType? status = default, ReservationReportSchema? reportUri = default, DateTimeOffset? validUntil = default)
         {
-            return new OperationStatus(status, reportUri is null && validUntil is null ? default : new ReportURL(reportUri, validUntil, null), additionalBinaryDataProperties: null);
+            return new OperationStatus(status, reportUri is null && validUntil is null ? default : new ReportURL(reportUri, validUntil, default), default);
         }
 
         /// <summary> The URL to download the generated report. </summary>
@@ -1485,7 +1835,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.PriceSheetDownloadProperties"/> instance for mocking. </returns>
         public static PriceSheetDownloadProperties PriceSheetDownloadProperties(DateTimeOffset? expiryOn = default, string downloadUri = default, McaPriceSheetProperties downloadFileProperties = default)
         {
-            return new PriceSheetDownloadProperties(expiryOn, downloadUri, downloadFileProperties, additionalBinaryDataProperties: null);
+            return new PriceSheetDownloadProperties(expiryOn, downloadUri, downloadFileProperties, default);
         }
 
         /// <summary> The properties of the price sheet. </summary>
@@ -1561,21 +1911,18 @@ namespace Azure.ResourceManager.CostManagement.Models
                 billingCurrency,
                 term,
                 priceType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BenefitRecommendationModel"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The properties of the benefit recommendations.
-        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///                         The available derived classes include  and .
-        /// </param>
+        /// <summary> benefit plan recommendation details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the benefit recommendations. </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BenefitRecommendationProperties properties = default, BillingAccountBenefitKind? kind = default)
         {
             return new BenefitRecommendationModel(
@@ -1583,21 +1930,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 kind,
+                default,
                 properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CostManagement.CostManagementExportData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
-        /// <param name="deliveryInfoDestination"> Has delivery information for the export. </param>
+        /// <summary> An export resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="format"> The format of the export being delivered. </param>
+        /// <param name="deliveryInfoDestination"> Has destination for the export being delivered. </param>
         /// <param name="definition"> Has the definition for the export. </param>
-        /// <param name="runHistoryValue"> If requested, has the most recent run history for the export. </param>
-        /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. Note: this option is currently available only for Microsoft Customer Agreement commerce scopes. </param>
+        /// <param name="runHistoryValue"> A list of export runs. </param>
+        /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. </param>
         /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
         /// <param name="schedule"> Has schedule information for the export. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
@@ -1605,18 +1952,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CostManagementExportData CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag)
         {
-
             return new CostManagementExportData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 format is null && deliveryInfoDestination is null && definition is null && runHistoryValue is null && partitionData is null && nextRunTimeEstimate is null && schedule is null ? default : new ExportProperties(
                     format,
                     new ExportDeliveryInfo(deliveryInfoDestination, default),
                     definition,
-                    new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
+                    runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
                     partitionData,
                     default,
                     default,
@@ -1627,34 +1972,46 @@ namespace Azure.ResourceManager.CostManagement.Models
                     schedule),
                 default,
                 default,
-                eTag);
+                eTag,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CommonExportProperties"/>. </summary>
-        /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
-        /// <param name="deliveryInfoDestination"> Has delivery information for the export. </param>
+        /// <summary> The common properties of the export. </summary>
+        /// <param name="format"> The format of the export being delivered. </param>
+        /// <param name="deliveryInfoDestination"> Has destination for the export being delivered. </param>
         /// <param name="definition"> Has the definition for the export. </param>
-        /// <param name="runHistoryValue"> If requested, has the most recent run history for the export. </param>
-        /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. Note: this option is currently available only for Microsoft Customer Agreement commerce scopes. </param>
+        /// <param name="runHistoryValue"> A list of export runs. </param>
+        /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. </param>
         /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
         /// <returns> A new <see cref="Models.CommonExportProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommonExportProperties CommonExportProperties(ExportFormatType? format, ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition, IEnumerable<ExportRun> runHistoryValue, bool? partitionData, DateTimeOffset? nextRunTimeEstimate)
         {
-            return CommonExportProperties(format: format, deliveryInfoDestination: deliveryInfoDestination, definition: definition, runHistoryValue: runHistoryValue, partitionData: partitionData, dataOverwriteBehavior: default, compressionMode: default, exportDescription: default, nextRunTimeEstimate: nextRunTimeEstimate, systemSuspensionContext: default);
+            return new CommonExportProperties(
+                format,
+                deliveryInfoDestination is null ? default : new ExportDeliveryInfo(deliveryInfoDestination, default),
+                definition,
+                runHistoryValue is null ? default : new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
+                partitionData,
+                default,
+                default,
+                default,
+                nextRunTimeEstimate,
+                default,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportRun"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> An export run. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="executionType"> The type of the export run. </param>
         /// <param name="status"> The last known status of the export run. </param>
         /// <param name="submittedBy"> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </param>
         /// <param name="submittedOn"> The time when export was queued to be run. </param>
-        /// <param name="processingStartOn"> The time when export was picked up to be run. </param>
-        /// <param name="processingEndOn"> The time when the export run finished. </param>
+        /// <param name="processingStartOn"></param>
+        /// <param name="processingEndOn"></param>
         /// <param name="fileName"> The name of the exported file. </param>
         /// <param name="runSettings"> The export settings that were in effect for this run. </param>
         /// <param name="error"> The details of any error. </param>
@@ -1668,14 +2025,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                executionType is null && status is null && submittedBy is null && submittedOn is null && processingStartOn is null && processingEndOn is null && fileName is null && runSettings is null && error is null ? default : new ExportRunProperties(
+                executionType is null && status is null && submittedBy is null && submittedOn is null && fileName is null && runSettings is null && error is null ? default : new ExportRunProperties(
                     executionType,
                     status,
                     submittedBy,
                     submittedOn,
-                    processingStartOn,
-                    processingEndOn,
+                    default,
+                    default,
                     default,
                     default,
                     fileName,
@@ -1683,20 +2039,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                     runSettings,
                     error,
                     default),
-                eTag);
+                eTag,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CostManagement.ScheduledActionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Scheduled action definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> Scheduled action name. </param>
-        /// <param name="fileFormats"> Destination format of the view data. This is optional. </param>
+        /// <param name="fileFormats"> Destination of the view data. Currently only CSV format is supported. </param>
         /// <param name="notification"> Notification properties based on scheduled action kind. </param>
         /// <param name="notificationEmail"> Email address of the point of contact that should get the unsubscribe requests and notification emails. </param>
         /// <param name="schedule"> Schedule of the scheduled action. </param>
-        /// <param name="scope"> Cost Management scope like 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
+        /// <param name="scope"> For private scheduled action(Create or Update), scope will be empty.&lt;br /&gt; For shared scheduled action(Create or Update By Scope), Cost Management scope can be 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
         /// <param name="status"> Status of the scheduled action. </param>
         /// <param name="viewId"> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </param>
         /// <param name="eTag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </param>
@@ -1705,16 +2062,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScheduledActionData ScheduledActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IEnumerable<ScheduledActionFileFormat> fileFormats, NotificationProperties notification, string notificationEmail, ScheduleProperties schedule, ResourceIdentifier scope, ScheduledActionStatus? status, ResourceIdentifier viewId, ETag? eTag, ScheduledActionKind? kind)
         {
-
             return new ScheduledActionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 displayName is null && fileFormats is null && notification is null && notificationEmail is null && schedule is null && scope is null && status is null && viewId is null ? default : new ScheduledActionProperties(
                     displayName,
-                    new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
+                    fileFormats is null ? default : new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
                     notification,
                     notificationEmail,
                     schedule,
@@ -1723,7 +2078,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                     viewId,
                     default),
                 eTag,
-                kind);
+                kind,
+                default);
         }
     }
 }

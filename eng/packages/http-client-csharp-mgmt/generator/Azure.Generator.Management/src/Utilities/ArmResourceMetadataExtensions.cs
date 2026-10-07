@@ -117,6 +117,16 @@ namespace Azure.Generator.Management.Utilities
                             // actions should all go to the resource
                             methodsInResource.Add(method);
                             break;
+                        case ResourceOperationKind.CollectionAction:
+                            if (isSingleton)
+                            {
+                                methodsInResource.Add(method);
+                            }
+                            else
+                            {
+                                methodsInCollection.Add(method);
+                            }
+                            break;
                         case ResourceOperationKind.List:
                             // list method goes to resource if the method's resource scope matches the resource's ID pattern
                             // This handles cases like listByParent where we list children of a specific parent instance

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     internal readonly partial struct OrganizationMembershipType : IEquatable<OrganizationMembershipType>
     {
         private readonly string _value;
+        /// <summary> Member. </summary>
+        private const string MemberValue = "Member";
+        /// <summary> Organization. </summary>
+        private const string OrganizationValue = "Organization";
 
         /// <summary> Initializes a new instance of <see cref="OrganizationMembershipType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OrganizationMembershipType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MemberValue = "Member";
-        private const string OrganizationValue = "Organization";
+            _value = value;
+        }
 
         /// <summary> Member. </summary>
         public static OrganizationMembershipType Member { get; } = new OrganizationMembershipType(MemberValue);
+
         /// <summary> Organization. </summary>
         public static OrganizationMembershipType Organization { get; } = new OrganizationMembershipType(OrganizationValue);
+
         /// <summary> Determines if two <see cref="OrganizationMembershipType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OrganizationMembershipType left, OrganizationMembershipType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OrganizationMembershipType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OrganizationMembershipType left, OrganizationMembershipType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OrganizationMembershipType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OrganizationMembershipType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OrganizationMembershipType(string value) => new OrganizationMembershipType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OrganizationMembershipType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OrganizationMembershipType?(string value) => value == null ? null : new OrganizationMembershipType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OrganizationMembershipType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OrganizationMembershipType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

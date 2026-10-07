@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(SupportTicketCommunicationResource.ResourceType, out string supportTicketCommunicationApiVersion);
             _supportTicketCommunicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketCommunicationResource.ResourceType.Namespace, Diagnostics);
-            _supportTicketCommunicationRestClient = new SupportTicketCommunication(_supportTicketCommunicationClientDiagnostics, Pipeline, Endpoint, supportTicketCommunicationApiVersion ?? "2025-06-01-preview");
+            _supportTicketCommunicationRestClient = new SupportTicketCommunication(_supportTicketCommunicationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketCommunicationApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _supportTicketCommunicationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, communicationName, SupportTicketCommunicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SupportArmOperation<SupportTicketCommunicationResource> operation = new SupportArmOperation<SupportTicketCommunicationResource>(
-                    new SupportTicketCommunicationOperationSource(Client),
+                    new SupportTicketCommunicationResourceOperationSource(Client),
                     _supportTicketCommunicationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _supportTicketCommunicationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, communicationName, SupportTicketCommunicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SupportArmOperation<SupportTicketCommunicationResource> operation = new SupportArmOperation<SupportTicketCommunicationResource>(
-                    new SupportTicketCommunicationOperationSource(Client),
+                    new SupportTicketCommunicationResourceOperationSource(Client),
                     _supportTicketCommunicationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

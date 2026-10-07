@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> Compute role. </summary>
+    /// <summary>
+    /// Compute role.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/>, and <see cref="MecRole"/>.
+    /// </summary>
     public partial class DataBoxEdgeRoleData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,12 +34,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Role type. </param>
-        internal DataBoxEdgeRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataBoxEdgeRoleType kind) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Role type. </summary>

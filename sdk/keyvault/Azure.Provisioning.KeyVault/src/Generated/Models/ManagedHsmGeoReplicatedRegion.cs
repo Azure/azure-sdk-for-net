@@ -69,6 +69,10 @@ namespace Azure.Provisioning.KeyVault
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _provisioningState = DefineProperty<ManagedHsmGeoReplicatedRegionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _isPrimary = DefineProperty<bool>(nameof(IsPrimary), new string[] { "isPrimary" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedHsmGeoReplicatedRegion that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

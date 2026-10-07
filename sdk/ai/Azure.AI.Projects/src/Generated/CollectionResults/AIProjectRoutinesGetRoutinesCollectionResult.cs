@@ -14,41 +14,27 @@ namespace Azure.AI.Projects
         private readonly AIProjectRoutines _client;
         private readonly string _foundryFeatures;
         private readonly int? _limit;
-        private readonly string _order;
         private readonly string _after;
-        private readonly string _before;
+        private readonly string _order;
         private readonly RequestOptions _options;
 
         /// <summary> Initializes a new instance of AIProjectRoutinesGetRoutinesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AIProjectRoutines client used to send requests. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
+        /// <param name="limit"> The maximum number of routines to return. </param>
+        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
         /// <param name="order">
         /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
         /// for descending order.
         /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AIProjectRoutinesGetRoutinesCollectionResult(AIProjectRoutines client, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        public AIProjectRoutinesGetRoutinesCollectionResult(AIProjectRoutines client, string foundryFeatures, int? limit, string after, string order, RequestOptions options)
         {
             _client = client;
             _foundryFeatures = foundryFeatures;
             _limit = limit;
-            _order = order;
             _after = after;
-            _before = before;
+            _order = order;
             _options = options;
         }
 
@@ -56,19 +42,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetRoutinesRequest(_foundryFeatures, _limit, _order, _after, _before, _options);
-            string nextToken = null;
+            PipelineMessage message = _client.CreateGetRoutinesRequest(_foundryFeatures, _limit, _after, _order, _options);
+            Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = GetNextResponse(message);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultRoutine)result).LastId;
-                if (string.IsNullOrEmpty(nextToken))
+                nextPageUri = ((PagedResultWithNextLinkRoutine)result).NextLink;
+                if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateGetRoutinesRequest(_foundryFeatures, _limit, _order, nextToken, _before, _options);
+                message = _client.CreateNextGetRoutinesRequest(nextPageUri, _foundryFeatures, _limit, _after, _order, _options);
             }
         }
 
@@ -77,10 +63,10 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultRoutine)page).LastId;
-            if (!string.IsNullOrEmpty(nextPage))
+            Uri nextPage = ((PagedResultWithNextLinkRoutine)page).NextLink;
+            if (nextPage != null)
             {
-                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));
+                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
             }
             else
             {
@@ -92,7 +78,17 @@ namespace Azure.AI.Projects
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private ClientResult GetNextResponse(PipelineMessage message)
         {
-            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutines");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

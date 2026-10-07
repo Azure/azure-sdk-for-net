@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0 (2026-09-17)
+
+### Features Added
+
+- Upgraded the service API version to `2026-03-01`.
+- Added host licensing and maintenance scheduling support.
+
+## 1.6.1 (2026-06-02)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.6.0 (2026-01-16)
 

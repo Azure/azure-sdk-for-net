@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(DeletedKeyVaultResource.ResourceType, out string deletedKeyVaultApiVersion);
             _deletedVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedKeyVaultResource.ResourceType.Namespace, Diagnostics);
-            _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Endpoint, deletedKeyVaultApiVersion ?? "2026-02-01");
+            _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedKeyVaultApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

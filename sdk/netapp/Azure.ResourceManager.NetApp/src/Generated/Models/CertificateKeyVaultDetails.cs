@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -24,11 +25,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="CertificateKeyVaultDetails"/>. </summary>
         /// <param name="certificateKeyVaultUri"> The base URI of the Azure Key Vault that is used when retrieving the bucket certificate. </param>
         /// <param name="certificateName"> The name of the bucket server certificate stored in the Azure Key Vault. </param>
+        /// <param name="userAssignedIdentity"> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateKeyVaultDetails(Uri certificateKeyVaultUri, string certificateName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateKeyVaultDetails(Uri certificateKeyVaultUri, string certificateName, ResourceIdentifier userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateKeyVaultUri = certificateKeyVaultUri;
             CertificateName = certificateName;
+            UserAssignedIdentity = userAssignedIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +40,8 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The name of the bucket server certificate stored in the Azure Key Vault. </summary>
         public string CertificateName { get; set; }
+
+        /// <summary> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </summary>
+        public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

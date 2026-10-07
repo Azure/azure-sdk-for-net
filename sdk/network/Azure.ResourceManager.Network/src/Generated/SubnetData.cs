@@ -7,185 +7,346 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the Subnet data model.
-    /// Subnet in a virtual network resource.
-    /// </summary>
+    /// <summary> Subnet in a virtual network resource. </summary>
     public partial class SubnetData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of <see cref="SubnetData"/>. </summary>
         public SubnetData()
         {
-            AddressPrefixes = new ChangeTrackingList<string>();
-            ServiceEndpoints = new ChangeTrackingList<ServiceEndpointProperties>();
-            ServiceEndpointPolicies = new ChangeTrackingList<ServiceEndpointPolicyData>();
-            PrivateEndpoints = new ChangeTrackingList<PrivateEndpointData>();
-            IPConfigurations = new ChangeTrackingList<NetworkIPConfiguration>();
-            IPConfigurationProfiles = new ChangeTrackingList<NetworkIPConfigurationProfile>();
-            IPAllocations = new ChangeTrackingList<WritableSubResource>();
-            ResourceNavigationLinks = new ChangeTrackingList<ResourceNavigationLink>();
-            ServiceAssociationLinks = new ChangeTrackingList<ServiceAssociationLink>();
-            Delegations = new ChangeTrackingList<ServiceDelegation>();
-            ApplicationGatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
-            IpamPoolPrefixAllocations = new ChangeTrackingList<IpamPoolPrefixAllocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubnetData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="addressPrefix"> The address prefix for the subnet. </param>
-        /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>
-        /// <param name="networkSecurityGroup"> The reference to the NetworkSecurityGroup resource. </param>
-        /// <param name="routeTable"> The reference to the RouteTable resource. </param>
-        /// <param name="natGateway"> Nat gateway associated with this subnet. </param>
-        /// <param name="serviceEndpoints"> An array of service endpoints. </param>
-        /// <param name="serviceEndpointPolicies"> An array of service endpoint policies. </param>
-        /// <param name="privateEndpoints"> An array of references to private endpoints. </param>
-        /// <param name="ipConfigurations"> An array of references to the network interface IP configurations using subnet. </param>
-        /// <param name="ipConfigurationProfiles"> Array of IP configuration profiles which reference this subnet. </param>
-        /// <param name="ipAllocations"> Array of IpAllocation which reference this subnet. </param>
-        /// <param name="resourceNavigationLinks"> An array of references to the external resources using subnet. </param>
-        /// <param name="serviceAssociationLinks"> An array of references to services injecting into this subnet. </param>
-        /// <param name="delegations"> An array of references to the delegations on the subnet. </param>
-        /// <param name="purpose"> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </param>
-        /// <param name="provisioningState"> The provisioning state of the subnet resource. </param>
-        /// <param name="privateEndpointNetworkPolicy"> Enable or Disable apply network policies on private end point in the subnet. </param>
-        /// <param name="privateLinkServiceNetworkPolicy"> Enable or Disable apply network policies on private link service in the subnet. </param>
-        /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
-        /// <param name="sharingScope"> Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty. </param>
-        /// <param name="defaultOutboundAccess"> Set this property to false to disable default outbound connectivity for all VMs in the subnet. </param>
-        /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools for allocating IP address prefixes. </param>
-        /// <param name="serviceGateway"> Reference to an existing service gateway. </param>
-        internal SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, WritableSubResource serviceGateway) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the subnet. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal SubnetData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, SubnetPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
-            ETag = etag;
-            AddressPrefix = addressPrefix;
-            AddressPrefixes = addressPrefixes;
-            NetworkSecurityGroup = networkSecurityGroup;
-            RouteTable = routeTable;
-            NatGateway = natGateway;
-            ServiceEndpoints = serviceEndpoints;
-            ServiceEndpointPolicies = serviceEndpointPolicies;
-            PrivateEndpoints = privateEndpoints;
-            IPConfigurations = ipConfigurations;
-            IPConfigurationProfiles = ipConfigurationProfiles;
-            IPAllocations = ipAllocations;
-            ResourceNavigationLinks = resourceNavigationLinks;
-            ServiceAssociationLinks = serviceAssociationLinks;
-            Delegations = delegations;
-            Purpose = purpose;
-            ProvisioningState = provisioningState;
-            PrivateEndpointNetworkPolicy = privateEndpointNetworkPolicy;
-            PrivateLinkServiceNetworkPolicy = privateLinkServiceNetworkPolicy;
-            ApplicationGatewayIPConfigurations = applicationGatewayIPConfigurations;
-            SharingScope = sharingScope;
-            DefaultOutboundAccess = defaultOutboundAccess;
-            IpamPoolPrefixAllocations = ipamPoolPrefixAllocations;
-            ServiceGateway = serviceGateway;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the subnet. </summary>
+        [WirePath("properties")]
+        internal SubnetPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The address prefix for the subnet. </summary>
         [WirePath("properties.addressPrefix")]
-        public string AddressPrefix { get; set; }
-        /// <summary> List of address prefixes for the subnet. </summary>
-        [WirePath("properties.addressPrefixes")]
-        public IList<string> AddressPrefixes { get; }
-        /// <summary> The reference to the NetworkSecurityGroup resource. </summary>
-        [WirePath("properties.networkSecurityGroup")]
-        public NetworkSecurityGroupData NetworkSecurityGroup { get; set; }
-        /// <summary> The reference to the RouteTable resource. </summary>
-        [WirePath("properties.routeTable")]
-        public RouteTableData RouteTable { get; set; }
-        /// <summary> Nat gateway associated with this subnet. </summary>
-        internal WritableSubResource NatGateway { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.natGateway.id")]
-        public ResourceIdentifier NatGatewayId
+        public string AddressPrefix
         {
-            get => NatGateway is null ? default : NatGateway.Id;
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefix;
+            }
             set
             {
-                if (NatGateway is null)
-                    NatGateway = new WritableSubResource();
-                NatGateway.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.AddressPrefix = value;
+            }
+        }
+
+        /// <summary> List of address prefixes for the subnet. </summary>
+        [WirePath("properties.addressPrefixes")]
+        public IList<string> AddressPrefixes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.AddressPrefixes;
+            }
+        }
+
+        /// <summary> The reference to the NetworkSecurityGroup resource. </summary>
+        [WirePath("properties.networkSecurityGroup")]
+        public NetworkSecurityGroupData NetworkSecurityGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkSecurityGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.NetworkSecurityGroup = value;
+            }
+        }
+
+        /// <summary> The reference to the RouteTable resource. </summary>
+        [WirePath("properties.routeTable")]
+        public RouteTableData RouteTable
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RouteTable;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.RouteTable = value;
             }
         }
 
         /// <summary> An array of service endpoints. </summary>
         [WirePath("properties.serviceEndpoints")]
-        public IList<ServiceEndpointProperties> ServiceEndpoints { get; }
+        public IList<ServiceEndpointProperties> ServiceEndpoints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.ServiceEndpoints;
+            }
+        }
+
         /// <summary> An array of service endpoint policies. </summary>
         [WirePath("properties.serviceEndpointPolicies")]
-        public IList<ServiceEndpointPolicyData> ServiceEndpointPolicies { get; }
+        public IList<ServiceEndpointPolicyData> ServiceEndpointPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.ServiceEndpointPolicies;
+            }
+        }
+
         /// <summary> An array of references to private endpoints. </summary>
         [WirePath("properties.privateEndpoints")]
-        public IReadOnlyList<PrivateEndpointData> PrivateEndpoints { get; }
-        /// <summary> An array of references to the network interface IP configurations using subnet. </summary>
-        [WirePath("properties.ipConfigurations")]
-        public IReadOnlyList<NetworkIPConfiguration> IPConfigurations { get; }
-        /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
-        [WirePath("properties.ipConfigurationProfiles")]
-        public IReadOnlyList<NetworkIPConfigurationProfile> IPConfigurationProfiles { get; }
-        /// <summary> Array of IpAllocation which reference this subnet. </summary>
-        [WirePath("properties.ipAllocations")]
-        public IList<WritableSubResource> IPAllocations { get; }
+        public IReadOnlyList<PrivateEndpointData> PrivateEndpoints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.PrivateEndpoints;
+            }
+        }
+
         /// <summary> An array of references to the external resources using subnet. </summary>
         [WirePath("properties.resourceNavigationLinks")]
-        public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks { get; }
+        public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.ResourceNavigationLinks;
+            }
+        }
+
         /// <summary> An array of references to services injecting into this subnet. </summary>
         [WirePath("properties.serviceAssociationLinks")]
-        public IReadOnlyList<ServiceAssociationLink> ServiceAssociationLinks { get; }
+        public IReadOnlyList<ServiceAssociationLink> ServiceAssociationLinks
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.ServiceAssociationLinks;
+            }
+        }
+
         /// <summary> An array of references to the delegations on the subnet. </summary>
         [WirePath("properties.delegations")]
-        public IList<ServiceDelegation> Delegations { get; }
+        public IList<ServiceDelegation> Delegations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.Delegations;
+            }
+        }
+
         /// <summary> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </summary>
         [WirePath("properties.purpose")]
-        public string Purpose { get; }
+        public string Purpose
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Purpose;
+            }
+        }
+
         /// <summary> The provisioning state of the subnet resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Enable or Disable apply network policies on private end point in the subnet. </summary>
         [WirePath("properties.privateEndpointNetworkPolicies")]
-        public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicy { get; set; }
+        public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicies
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointNetworkPolicies;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.PrivateEndpointNetworkPolicies = value;
+            }
+        }
+
         /// <summary> Enable or Disable apply network policies on private link service in the subnet. </summary>
         [WirePath("properties.privateLinkServiceNetworkPolicies")]
-        public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicy { get; set; }
+        public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicies
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceNetworkPolicies;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.PrivateLinkServiceNetworkPolicies = value;
+            }
+        }
+
         /// <summary> Application gateway IP configurations of virtual network resource. </summary>
         [WirePath("properties.applicationGatewayIPConfigurations")]
-        public IList<ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations { get; }
+        public IList<ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.ApplicationGatewayIPConfigurations;
+            }
+        }
+
         /// <summary> Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty. </summary>
         [WirePath("properties.sharingScope")]
-        public SharingScope? SharingScope { get; set; }
+        public SharingScope? SharingScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SharingScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.SharingScope = value;
+            }
+        }
+
         /// <summary> Set this property to false to disable default outbound connectivity for all VMs in the subnet. </summary>
         [WirePath("properties.defaultOutboundAccess")]
-        public bool? DefaultOutboundAccess { get; set; }
+        public bool? DefaultOutboundAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultOutboundAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.DefaultOutboundAccess = value;
+            }
+        }
+
         /// <summary> A list of IPAM Pools for allocating IP address prefixes. </summary>
         [WirePath("properties.ipamPoolPrefixAllocations")]
-        public IList<IpamPoolPrefixAllocation> IpamPoolPrefixAllocations { get; }
-        /// <summary> Reference to an existing service gateway. </summary>
-        internal WritableSubResource ServiceGateway { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        public IList<IpamPoolPrefixAllocation> IpamPoolPrefixAllocations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                return Properties.IpamPoolPrefixAllocations;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.natGateway.id")]
+        public ResourceIdentifier NatGatewayId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NatGatewayId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.NatGatewayId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.serviceGateway.id")]
         public ResourceIdentifier ServiceGatewayId
         {
-            get => ServiceGateway is null ? default : ServiceGateway.Id;
+            get
+            {
+                return Properties is null ? default : Properties.ServiceGatewayId;
+            }
             set
             {
-                if (ServiceGateway is null)
-                    ServiceGateway = new WritableSubResource();
-                ServiceGateway.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.ServiceGatewayId = value;
             }
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct StorageCacheProvisioningStateType : IEquatable<StorageCacheProvisioningStateType>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheProvisioningStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageCacheProvisioningStateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static StorageCacheProvisioningStateType Succeeded { get; } = new StorageCacheProvisioningStateType(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static StorageCacheProvisioningStateType Failed { get; } = new StorageCacheProvisioningStateType(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static StorageCacheProvisioningStateType Canceled { get; } = new StorageCacheProvisioningStateType(CanceledValue);
+
         /// <summary> Creating. </summary>
         public static StorageCacheProvisioningStateType Creating { get; } = new StorageCacheProvisioningStateType(CreatingValue);
+
         /// <summary> Deleting. </summary>
         public static StorageCacheProvisioningStateType Deleting { get; } = new StorageCacheProvisioningStateType(DeletingValue);
+
         /// <summary> Updating. </summary>
         public static StorageCacheProvisioningStateType Updating { get; } = new StorageCacheProvisioningStateType(UpdatingValue);
+
         /// <summary> Determines if two <see cref="StorageCacheProvisioningStateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageCacheProvisioningStateType left, StorageCacheProvisioningStateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageCacheProvisioningStateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageCacheProvisioningStateType left, StorageCacheProvisioningStateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheProvisioningStateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageCacheProvisioningStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageCacheProvisioningStateType(string value) => new StorageCacheProvisioningStateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageCacheProvisioningStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageCacheProvisioningStateType?(string value) => value == null ? null : new StorageCacheProvisioningStateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageCacheProvisioningStateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageCacheProvisioningStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

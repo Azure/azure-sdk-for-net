@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow provisioning state.
-    /// Serialized Name: WorkflowProvisioningState
-    /// </summary>
+    /// <summary> The workflow provisioning state. </summary>
     public readonly partial struct WorkflowProvisioningState : IEquatable<WorkflowProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WorkflowProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkflowProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string AcceptedValue = "Accepted";
         private const string RunningValue = "Running";
@@ -48,133 +38,112 @@ namespace Azure.ResourceManager.AppService.Models
         private const string WaitingValue = "Waiting";
         private const string InProgressValue = "InProgress";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: WorkflowProvisioningState.NotSpecified
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WorkflowProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static WorkflowProvisioningState NotSpecified { get; } = new WorkflowProvisioningState(NotSpecifiedValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: WorkflowProvisioningState.Accepted
-        /// </summary>
+
+        /// <summary> Gets the Accepted. </summary>
         public static WorkflowProvisioningState Accepted { get; } = new WorkflowProvisioningState(AcceptedValue);
-        /// <summary>
-        /// Running
-        /// Serialized Name: WorkflowProvisioningState.Running
-        /// </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static WorkflowProvisioningState Running { get; } = new WorkflowProvisioningState(RunningValue);
-        /// <summary>
-        /// Ready
-        /// Serialized Name: WorkflowProvisioningState.Ready
-        /// </summary>
+
+        /// <summary> Gets the Ready. </summary>
         public static WorkflowProvisioningState Ready { get; } = new WorkflowProvisioningState(ReadyValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: WorkflowProvisioningState.Creating
-        /// </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static WorkflowProvisioningState Creating { get; } = new WorkflowProvisioningState(CreatingValue);
-        /// <summary>
-        /// Created
-        /// Serialized Name: WorkflowProvisioningState.Created
-        /// </summary>
+
+        /// <summary> Gets the Created. </summary>
         public static WorkflowProvisioningState Created { get; } = new WorkflowProvisioningState(CreatedValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: WorkflowProvisioningState.Deleting
-        /// </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static WorkflowProvisioningState Deleting { get; } = new WorkflowProvisioningState(DeletingValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: WorkflowProvisioningState.Deleted
-        /// </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static WorkflowProvisioningState Deleted { get; } = new WorkflowProvisioningState(DeletedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: WorkflowProvisioningState.Canceled
-        /// </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static WorkflowProvisioningState Canceled { get; } = new WorkflowProvisioningState(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: WorkflowProvisioningState.Failed
-        /// </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static WorkflowProvisioningState Failed { get; } = new WorkflowProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: WorkflowProvisioningState.Succeeded
-        /// </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static WorkflowProvisioningState Succeeded { get; } = new WorkflowProvisioningState(SucceededValue);
-        /// <summary>
-        /// Moving
-        /// Serialized Name: WorkflowProvisioningState.Moving
-        /// </summary>
+
+        /// <summary> Gets the Moving. </summary>
         public static WorkflowProvisioningState Moving { get; } = new WorkflowProvisioningState(MovingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: WorkflowProvisioningState.Updating
-        /// </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static WorkflowProvisioningState Updating { get; } = new WorkflowProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Registering
-        /// Serialized Name: WorkflowProvisioningState.Registering
-        /// </summary>
+
+        /// <summary> Gets the Registering. </summary>
         public static WorkflowProvisioningState Registering { get; } = new WorkflowProvisioningState(RegisteringValue);
-        /// <summary>
-        /// Registered
-        /// Serialized Name: WorkflowProvisioningState.Registered
-        /// </summary>
+
+        /// <summary> Gets the Registered. </summary>
         public static WorkflowProvisioningState Registered { get; } = new WorkflowProvisioningState(RegisteredValue);
-        /// <summary>
-        /// Unregistering
-        /// Serialized Name: WorkflowProvisioningState.Unregistering
-        /// </summary>
+
+        /// <summary> Gets the Unregistering. </summary>
         public static WorkflowProvisioningState Unregistering { get; } = new WorkflowProvisioningState(UnregisteringValue);
-        /// <summary>
-        /// Unregistered
-        /// Serialized Name: WorkflowProvisioningState.Unregistered
-        /// </summary>
+
+        /// <summary> Gets the Unregistered. </summary>
         public static WorkflowProvisioningState Unregistered { get; } = new WorkflowProvisioningState(UnregisteredValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: WorkflowProvisioningState.Completed
-        /// </summary>
+
+        /// <summary> Gets the Completed. </summary>
         public static WorkflowProvisioningState Completed { get; } = new WorkflowProvisioningState(CompletedValue);
-        /// <summary>
-        /// Renewing
-        /// Serialized Name: WorkflowProvisioningState.Renewing
-        /// </summary>
+
+        /// <summary> Gets the Renewing. </summary>
         public static WorkflowProvisioningState Renewing { get; } = new WorkflowProvisioningState(RenewingValue);
-        /// <summary>
-        /// Pending
-        /// Serialized Name: WorkflowProvisioningState.Pending
-        /// </summary>
+
+        /// <summary> Gets the Pending. </summary>
         public static WorkflowProvisioningState Pending { get; } = new WorkflowProvisioningState(PendingValue);
-        /// <summary>
-        /// Waiting
-        /// Serialized Name: WorkflowProvisioningState.Waiting
-        /// </summary>
+
+        /// <summary> Gets the Waiting. </summary>
         public static WorkflowProvisioningState Waiting { get; } = new WorkflowProvisioningState(WaitingValue);
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: WorkflowProvisioningState.InProgress
-        /// </summary>
+
+        /// <summary> Gets the InProgress. </summary>
         public static WorkflowProvisioningState InProgress { get; } = new WorkflowProvisioningState(InProgressValue);
+
         /// <summary> Determines if two <see cref="WorkflowProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkflowProvisioningState left, WorkflowProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkflowProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkflowProvisioningState left, WorkflowProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkflowProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkflowProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkflowProvisioningState(string value) => new WorkflowProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkflowProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkflowProvisioningState?(string value) => value == null ? null : new WorkflowProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkflowProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkflowProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

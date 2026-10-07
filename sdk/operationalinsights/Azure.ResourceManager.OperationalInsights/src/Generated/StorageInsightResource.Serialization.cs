@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
+    /// <summary></summary>
     public partial class StorageInsightResource : IJsonModel<StorageInsightData>
     {
-        private static StorageInsightData s_dataDeserializationInstance;
-        private static StorageInsightData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageInsightData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageInsightData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageInsightData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageInsightData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageInsightData>)Data).Write(writer, options);
 
-        StorageInsightData IJsonModel<StorageInsightData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageInsightData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageInsightData IJsonModel<StorageInsightData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageInsightData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageInsightData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageInsightData IPersistableModel<StorageInsightData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageInsightData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<StorageInsightData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageInsightData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageInsightData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

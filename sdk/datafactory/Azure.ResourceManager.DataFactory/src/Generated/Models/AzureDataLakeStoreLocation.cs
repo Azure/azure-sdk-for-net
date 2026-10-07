@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureDataLakeStoreLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLocation"/>. </summary>
-        public AzureDataLakeStoreLocation()
+        public AzureDataLakeStoreLocation() : base("AzureDataLakeStoreLocation")
         {
-            DatasetLocationType = "AzureDataLakeStoreLocation";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal AzureDataLakeStoreLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
-            DatasetLocationType = datasetLocationType ?? "AzureDataLakeStoreLocation";
         }
     }
 }

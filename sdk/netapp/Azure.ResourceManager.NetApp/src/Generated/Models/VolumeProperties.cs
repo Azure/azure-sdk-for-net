@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
         /// </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
@@ -105,7 +108,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
-        /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="largeVolumeType">
@@ -204,7 +210,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Set of export policy rules. </summary>
         internal NetAppVolumeExportPolicy ExportPolicy { get; set; }
 
-        /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
+        /// <summary>
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </summary>
         public IList<string> ProtocolTypes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Azure lifecycle management. </summary>
@@ -356,7 +365,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Application specific placement rules for the particular volume. </summary>
         public IList<NetAppVolumePlacementRule> PlacementRules { get; } = new ChangeTrackingList<NetAppVolumePlacementRule>();
 
-        /// <summary> Flag indicating whether subvolume operations are enabled on the volume. </summary>
+        /// <summary>
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </summary>
         public EnableNetAppSubvolume? EnableSubvolumes { get; set; }
 
         /// <summary> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </summary>

@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(ResourceType, out string frontDoorNetworkExperimentProfileApiVersion);
             _networkExperimentProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
+            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
             _preconfiguredEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _preconfiguredEndpointsRestClient = new PreconfiguredEndpoints(_preconfiguredEndpointsClientDiagnostics, Pipeline, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
+            _preconfiguredEndpointsRestClient = new PreconfiguredEndpoints(_preconfiguredEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _networkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorNetworkExperimentProfilePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource> operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(
-                    new FrontDoorNetworkExperimentProfileOperationSource(Client),
+                    new FrontDoorNetworkExperimentProfileResourceOperationSource(Client),
                     _networkExperimentProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _networkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorNetworkExperimentProfilePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource> operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(
-                    new FrontDoorNetworkExperimentProfileOperationSource(Client),
+                    new FrontDoorNetworkExperimentProfileResourceOperationSource(Client),
                     _networkExperimentProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,

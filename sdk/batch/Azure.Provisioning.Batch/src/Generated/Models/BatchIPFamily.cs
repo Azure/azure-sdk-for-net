@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchIPFamily
     {
         /// <summary> IPv4 is available to the pool. </summary>
-        IPv4,
+        IPv4 = 0,
         /// <summary> IPv6 is available to the pool. </summary>
-        IPv6
+        IPv6 = 1
     }
 }

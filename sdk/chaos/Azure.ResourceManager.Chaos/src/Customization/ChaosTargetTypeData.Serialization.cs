@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerChaosContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

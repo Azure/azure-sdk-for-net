@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _elasticSanName;
+        private readonly string _accessSoftDeletedResources;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -28,14 +29,16 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volume groups if set to true. If set to false or if not specified, returns only active volume groups. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public VolumeGroupsGetByElasticSanCollectionResultOfT(VolumeGroups client, string subscriptionId, string resourceGroupName, string elasticSanName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public VolumeGroupsGetByElasticSanCollectionResultOfT(VolumeGroups client, string subscriptionId, string resourceGroupName, string elasticSanName, string accessSoftDeletedResources, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _elasticSanName = elasticSanName;
+            _accessSoftDeletedResources = accessSoftDeletedResources;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -55,8 +58,8 @@ namespace Azure.ResourceManager.ElasticSan
                     yield break;
                 }
                 ElasticSanVolumeGroupList result = ElasticSanVolumeGroupList.FromResponse(response);
-                yield return Page<ElasticSanVolumeGroupData>.FromValues((IReadOnlyList<ElasticSanVolumeGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ElasticSanVolumeGroupData>.FromValues((IReadOnlyList<ElasticSanVolumeGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByElasticSanRequest(nextLink, _subscriptionId, _resourceGroupName, _elasticSanName, _context) : _client.CreateGetByElasticSanRequest(_subscriptionId, _resourceGroupName, _elasticSanName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByElasticSanRequest(nextLink, _subscriptionId, _resourceGroupName, _elasticSanName, _accessSoftDeletedResources, _context) : _client.CreateGetByElasticSanRequest(_subscriptionId, _resourceGroupName, _elasticSanName, _accessSoftDeletedResources, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

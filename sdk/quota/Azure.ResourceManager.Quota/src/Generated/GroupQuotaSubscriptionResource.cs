@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string groupQuotaSubscriptionApiVersion);
             _groupQuotaSubscriptionIdsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _groupQuotaSubscriptionIdsRestClient = new GroupQuotaSubscriptionIds(_groupQuotaSubscriptionIdsClientDiagnostics, Pipeline, Endpoint, groupQuotaSubscriptionApiVersion ?? "2025-09-01");
+            _groupQuotaSubscriptionIdsRestClient = new GroupQuotaSubscriptionIds(_groupQuotaSubscriptionIdsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaSubscriptionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionOperationSource(Client),
+                    new GroupQuotaSubscriptionResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionOperationSource(Client),
+                    new GroupQuotaSubscriptionResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,

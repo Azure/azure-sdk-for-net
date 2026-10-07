@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown version of IntegrationRuntime. </summary>
     internal partial class UnknownIntegrationRuntime : DataFactoryIntegrationRuntimeProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownIntegrationRuntime"/>. </summary>
         /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties) : base(integrationRuntimeType, description, additionalProperties)
-        {
-            IntegrationRuntimeType = integrationRuntimeType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownIntegrationRuntime"/> for deserialization. </summary>
-        internal UnknownIntegrationRuntime()
+        /// <param name="additionalProperties"></param>
+        internal UnknownIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties) : base(integrationRuntimeType != default ? integrationRuntimeType : "unknown", description, additionalProperties)
         {
         }
     }

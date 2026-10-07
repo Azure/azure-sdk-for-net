@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string mySqlFlexibleServerMaintenanceApiVersion);
             _maintenancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _maintenancesRestClient = new Maintenances(_maintenancesClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerMaintenanceApiVersion ?? "2024-12-30");
+            _maintenancesRestClient = new Maintenances(_maintenancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerMaintenanceApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _maintenancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerMaintenancePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource>(
-                    new MySqlFlexibleServerMaintenanceOperationSource(Client),
+                    new MySqlFlexibleServerMaintenanceResourceOperationSource(Client),
                     _maintenancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _maintenancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerMaintenancePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource>(
-                    new MySqlFlexibleServerMaintenanceOperationSource(Client),
+                    new MySqlFlexibleServerMaintenanceResourceOperationSource(Client),
                     _maintenancesClientDiagnostics,
                     Pipeline,
                     message.Request,

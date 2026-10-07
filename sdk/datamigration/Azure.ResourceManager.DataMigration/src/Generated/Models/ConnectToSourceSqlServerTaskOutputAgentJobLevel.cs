@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,16 +15,15 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ConnectToSourceSqlServerTaskOutputAgentJobLevel : ConnectToSourceSqlServerTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>. </summary>
-        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel()
+        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel() : base("AgentJobLevelOutput")
         {
             ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
-            ResultType = "AgentJobLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Agent Job name. </param>
         /// <param name="jobCategory"> The type of Agent Job. </param>
         /// <param name="isEnabled"> The state of the original Agent Job. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="lastExecutedOn"> UTC Date and time when the Agent Job was last executed. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="migrationEligibility"> Information about eligibility of agent job for migration. </param>
-        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string jobCategory, bool? isEnabled, string jobOwner, DateTimeOffset? lastExecutedOn, IReadOnlyList<DataMigrationReportableException> validationErrors, MigrationEligibilityInfo migrationEligibility) : base(id, resultType, serializedAdditionalRawData)
+        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string jobCategory, bool? isEnabled, string jobOwner, DateTimeOffset? lastExecutedOn, IReadOnlyList<DataMigrationReportableException> validationErrors, MigrationEligibilityInfo migrationEligibility) : base(id, resultType, additionalBinaryDataProperties)
         {
             Name = name;
             JobCategory = jobCategory;
@@ -40,21 +40,26 @@ namespace Azure.ResourceManager.DataMigration.Models
             LastExecutedOn = lastExecutedOn;
             ValidationErrors = validationErrors;
             MigrationEligibility = migrationEligibility;
-            ResultType = resultType ?? "AgentJobLevelOutput";
         }
 
         /// <summary> Agent Job name. </summary>
         public string Name { get; }
+
         /// <summary> The type of Agent Job. </summary>
         public string JobCategory { get; }
+
         /// <summary> The state of the original Agent Job. </summary>
         public bool? IsEnabled { get; }
+
         /// <summary> The owner of the Agent Job. </summary>
         public string JobOwner { get; }
+
         /// <summary> UTC Date and time when the Agent Job was last executed. </summary>
         public DateTimeOffset? LastExecutedOn { get; }
+
         /// <summary> Validation errors. </summary>
         public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
+
         /// <summary> Information about eligibility of agent job for migration. </summary>
         public MigrationEligibilityInfo MigrationEligibility { get; }
     }

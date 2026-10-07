@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct JobExecutionLifecycle : IEquatable<JobExecutionLifecycle>
     {
         private readonly string _value;
+        /// <summary> Created. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> WaitingForChildJobExecutions. </summary>
+        private const string WaitingForChildJobExecutionsValue = "WaitingForChildJobExecutions";
+        /// <summary> WaitingForRetry. </summary>
+        private const string WaitingForRetryValue = "WaitingForRetry";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> SucceededWithSkipped. </summary>
+        private const string SucceededWithSkippedValue = "SucceededWithSkipped";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> TimedOut. </summary>
+        private const string TimedOutValue = "TimedOut";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Skipped. </summary>
+        private const string SkippedValue = "Skipped";
 
         /// <summary> Initializes a new instance of <see cref="JobExecutionLifecycle"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobExecutionLifecycle(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatedValue = "Created";
-        private const string InProgressValue = "InProgress";
-        private const string WaitingForChildJobExecutionsValue = "WaitingForChildJobExecutions";
-        private const string WaitingForRetryValue = "WaitingForRetry";
-        private const string SucceededValue = "Succeeded";
-        private const string SucceededWithSkippedValue = "SucceededWithSkipped";
-        private const string FailedValue = "Failed";
-        private const string TimedOutValue = "TimedOut";
-        private const string CanceledValue = "Canceled";
-        private const string SkippedValue = "Skipped";
+            _value = value;
+        }
 
         /// <summary> Created. </summary>
         public static JobExecutionLifecycle Created { get; } = new JobExecutionLifecycle(CreatedValue);
+
         /// <summary> InProgress. </summary>
         public static JobExecutionLifecycle InProgress { get; } = new JobExecutionLifecycle(InProgressValue);
+
         /// <summary> WaitingForChildJobExecutions. </summary>
         public static JobExecutionLifecycle WaitingForChildJobExecutions { get; } = new JobExecutionLifecycle(WaitingForChildJobExecutionsValue);
+
         /// <summary> WaitingForRetry. </summary>
         public static JobExecutionLifecycle WaitingForRetry { get; } = new JobExecutionLifecycle(WaitingForRetryValue);
+
         /// <summary> Succeeded. </summary>
         public static JobExecutionLifecycle Succeeded { get; } = new JobExecutionLifecycle(SucceededValue);
+
         /// <summary> SucceededWithSkipped. </summary>
         public static JobExecutionLifecycle SucceededWithSkipped { get; } = new JobExecutionLifecycle(SucceededWithSkippedValue);
+
         /// <summary> Failed. </summary>
         public static JobExecutionLifecycle Failed { get; } = new JobExecutionLifecycle(FailedValue);
+
         /// <summary> TimedOut. </summary>
         public static JobExecutionLifecycle TimedOut { get; } = new JobExecutionLifecycle(TimedOutValue);
+
         /// <summary> Canceled. </summary>
         public static JobExecutionLifecycle Canceled { get; } = new JobExecutionLifecycle(CanceledValue);
+
         /// <summary> Skipped. </summary>
         public static JobExecutionLifecycle Skipped { get; } = new JobExecutionLifecycle(SkippedValue);
+
         /// <summary> Determines if two <see cref="JobExecutionLifecycle"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobExecutionLifecycle left, JobExecutionLifecycle right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobExecutionLifecycle"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobExecutionLifecycle left, JobExecutionLifecycle right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobExecutionLifecycle"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobExecutionLifecycle"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobExecutionLifecycle(string value) => new JobExecutionLifecycle(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobExecutionLifecycle"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobExecutionLifecycle?(string value) => value == null ? null : new JobExecutionLifecycle(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobExecutionLifecycle other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobExecutionLifecycle other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

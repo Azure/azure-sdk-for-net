@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.DomainRegistration
                     yield break;
                 }
                 AppServiceDomainListResult result = AppServiceDomainListResult.FromResponse(response);
-                yield return Page<AppServiceDomainData>.FromValues((IReadOnlyList<AppServiceDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppServiceDomainData>.FromValues((IReadOnlyList<AppServiceDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

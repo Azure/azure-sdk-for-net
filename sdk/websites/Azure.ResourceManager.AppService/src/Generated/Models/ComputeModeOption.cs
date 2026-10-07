@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Shared/dedicated workers.
-    /// Serialized Name: ComputeModeOptions
-    /// </summary>
+    /// <summary> Shared/dedicated workers. </summary>
     public enum ComputeModeOption
     {
-        /// <summary>
-        /// Shared
-        /// Serialized Name: ComputeModeOptions.Shared
-        /// </summary>
+        /// <summary> Shared. </summary>
         Shared,
-        /// <summary>
-        /// Dedicated
-        /// Serialized Name: ComputeModeOptions.Dedicated
-        /// </summary>
+        /// <summary> Dedicated. </summary>
         Dedicated,
-        /// <summary>
-        /// Dynamic
-        /// Serialized Name: ComputeModeOptions.Dynamic
-        /// </summary>
+        /// <summary> Dynamic. </summary>
         Dynamic
     }
 }

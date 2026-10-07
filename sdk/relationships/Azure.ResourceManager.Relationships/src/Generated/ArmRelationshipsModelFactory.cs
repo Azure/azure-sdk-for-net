@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Relationships;
@@ -33,8 +31,8 @@ namespace Azure.ResourceManager.Relationships.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> dependencyOf relationship properties. </summary>
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.Relationships.Models
                 originInformation,
                 metadata,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Provides information about the origin of a relationship. </summary>
@@ -63,7 +61,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <returns> A new <see cref="Models.RelationshipOriginInformation"/> instance for mocking. </returns>
         public static RelationshipOriginInformation RelationshipOriginInformation(RelationshipOriginType relationshipOriginType = default, string discoveryEngine = default)
         {
-            return new RelationshipOriginInformation(relationshipOriginType, discoveryEngine, additionalBinaryDataProperties: null);
+            return new RelationshipOriginInformation(relationshipOriginType, discoveryEngine, default);
         }
 
         /// <summary> Provides information about the relationship properties. </summary>
@@ -72,7 +70,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <returns> A new <see cref="Models.RelationshipMetadata"/> instance for mocking. </returns>
         public static RelationshipMetadata RelationshipMetadata(ResourceType sourceType = default, ResourceType targetType = default)
         {
-            return new RelationshipMetadata(sourceType, targetType, additionalBinaryDataProperties: null);
+            return new RelationshipMetadata(sourceType, targetType, default);
         }
 
         /// <summary> Defines a ServiceGroupMember relationship resource. </summary>
@@ -89,8 +87,8 @@ namespace Azure.ResourceManager.Relationships.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> ServiceGroupMember relationship properties. </summary>
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.Relationships.Models
                 originInformation,
                 metadata,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
     }
 }

@@ -7,66 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Database type (e.g. SqlAzure / MySql).
-    /// Serialized Name: DatabaseType
-    /// </summary>
+    /// <summary> Database type (e.g. SqlAzure / MySql). </summary>
     public readonly partial struct AppServiceDatabaseType : IEquatable<AppServiceDatabaseType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppServiceDatabaseType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SqlAzureValue = "SqlAzure";
         private const string MySqlValue = "MySql";
         private const string LocalMySqlValue = "LocalMySql";
         private const string PostgreSqlValue = "PostgreSql";
 
-        /// <summary>
-        /// SqlAzure
-        /// Serialized Name: DatabaseType.SqlAzure
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppServiceDatabaseType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SqlAzure. </summary>
         public static AppServiceDatabaseType SqlAzure { get; } = new AppServiceDatabaseType(SqlAzureValue);
-        /// <summary>
-        /// MySql
-        /// Serialized Name: DatabaseType.MySql
-        /// </summary>
+
+        /// <summary> Gets the MySql. </summary>
         public static AppServiceDatabaseType MySql { get; } = new AppServiceDatabaseType(MySqlValue);
-        /// <summary>
-        /// LocalMySql
-        /// Serialized Name: DatabaseType.LocalMySql
-        /// </summary>
+
+        /// <summary> Gets the LocalMySql. </summary>
         public static AppServiceDatabaseType LocalMySql { get; } = new AppServiceDatabaseType(LocalMySqlValue);
-        /// <summary>
-        /// PostgreSql
-        /// Serialized Name: DatabaseType.PostgreSql
-        /// </summary>
+
+        /// <summary> Gets the PostgreSql. </summary>
         public static AppServiceDatabaseType PostgreSql { get; } = new AppServiceDatabaseType(PostgreSqlValue);
+
         /// <summary> Determines if two <see cref="AppServiceDatabaseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceDatabaseType left, AppServiceDatabaseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceDatabaseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceDatabaseType left, AppServiceDatabaseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceDatabaseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceDatabaseType(string value) => new AppServiceDatabaseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceDatabaseType?(string value) => value == null ? null : new AppServiceDatabaseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceDatabaseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceDatabaseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

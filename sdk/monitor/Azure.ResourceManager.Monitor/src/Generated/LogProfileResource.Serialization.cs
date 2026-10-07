@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor
 {
+    /// <summary></summary>
     public partial class LogProfileResource : IJsonModel<LogProfileData>
     {
-        private static LogProfileData s_dataDeserializationInstance;
-        private static LogProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LogProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LogProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LogProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogProfileData>)Data).Write(writer, options);
 
-        LogProfileData IJsonModel<LogProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogProfileData IJsonModel<LogProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LogProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogProfileData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LogProfileData IPersistableModel<LogProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogProfileData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<LogProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LogProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

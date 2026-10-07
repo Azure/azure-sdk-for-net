@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Subscription;
@@ -33,8 +32,8 @@ namespace Azure.ResourceManager.Subscription.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Put subscription creation result properties. </summary>
@@ -72,8 +71,32 @@ namespace Azure.ResourceManager.Subscription.Models
                 subscriptionOwnerId,
                 managementGroupId,
                 createdOn,
-                tags,
-                additionalBinaryDataProperties: null);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="workload"> The workload type of the subscription. It can be either Production or DevTest. </param>
+        /// <param name="billingScope">
+        /// Billing scope of the subscription.
+        /// For CustomerLed and FieldLed - /billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}
+        /// For PartnerLed - /billingAccounts/{billingAccountName}/customers/{customerName}
+        /// For Legacy EA - /billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}
+        /// </param>
+        /// <param name="subscriptionId"> This parameter can be used to create alias for existing subscription Id. </param>
+        /// <param name="resellerId"> Reseller Id. </param>
+        /// <param name="additionalProperties"> Put alias request additional properties. </param>
+        /// <returns> A new <see cref="Models.SubscriptionAliasCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static SubscriptionAliasCreateOrUpdateContent SubscriptionAliasCreateOrUpdateContent(string displayName = default, SubscriptionWorkload? workload = default, string billingScope = default, string subscriptionId = default, string resellerId = default, SubscriptionAliasAdditionalProperties additionalProperties = default)
+        {
+            return new SubscriptionAliasCreateOrUpdateContent(displayName is null && workload is null && billingScope is null && subscriptionId is null && resellerId is null && additionalProperties is null ? default : new PutAliasRequestProperties(
+                displayName,
+                workload,
+                billingScope,
+                subscriptionId,
+                resellerId,
+                additionalProperties,
+                default), default);
         }
 
         /// <summary> Put subscription additional properties. </summary>
@@ -86,7 +109,7 @@ namespace Azure.ResourceManager.Subscription.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SubscriptionAliasAdditionalProperties(managementGroupId, subscriptionTenantId, subscriptionOwnerId, tags, additionalBinaryDataProperties: null);
+            return new SubscriptionAliasAdditionalProperties(managementGroupId, subscriptionTenantId, subscriptionOwnerId, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Tenant policy Information. </summary>
@@ -103,8 +126,8 @@ namespace Azure.ResourceManager.Subscription.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Tenant policy. </summary>
@@ -117,7 +140,7 @@ namespace Azure.ResourceManager.Subscription.Models
         {
             exemptedPrincipals ??= new ChangeTrackingList<Guid>();
 
-            return new TenantPolicyProperties(policyId, blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, exemptedPrincipals.ToList(), additionalBinaryDataProperties: null);
+            return new TenantPolicyProperties(policyId, blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, (exemptedPrincipals ?? new ChangeTrackingList<Guid>()).ToList(), default);
         }
 
         /// <summary> Put tenant policy request properties. </summary>
@@ -129,7 +152,7 @@ namespace Azure.ResourceManager.Subscription.Models
         {
             exemptedPrincipals ??= new ChangeTrackingList<Guid>();
 
-            return new TenantPolicyCreateOrUpdateContent(blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, exemptedPrincipals.ToList(), additionalBinaryDataProperties: null);
+            return new TenantPolicyCreateOrUpdateContent(blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, (exemptedPrincipals ?? new ChangeTrackingList<Guid>()).ToList(), default);
         }
 
         /// <summary> Billing account policies information. </summary>
@@ -146,8 +169,8 @@ namespace Azure.ResourceManager.Subscription.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Put billing account policies response properties. </summary>
@@ -158,7 +181,7 @@ namespace Azure.ResourceManager.Subscription.Models
         {
             serviceTenants ??= new ChangeTrackingList<ServiceTenant>();
 
-            return new BillingAccountPolicyProperties(serviceTenants.ToList(), allowTransfers, additionalBinaryDataProperties: null);
+            return new BillingAccountPolicyProperties((serviceTenants ?? new ChangeTrackingList<ServiceTenant>()).ToList(), allowTransfers, default);
         }
 
         /// <summary> Billing account service tenant. </summary>
@@ -167,7 +190,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <returns> A new <see cref="Models.ServiceTenant"/> instance for mocking. </returns>
         public static ServiceTenant ServiceTenant(Guid? tenantId = default, string tenantName = default)
         {
-            return new ServiceTenant(tenantId, tenantName, additionalBinaryDataProperties: null);
+            return new ServiceTenant(tenantId, tenantName, default);
         }
 
         /// <summary> Subscription Response for Changed Target Directory. </summary>
@@ -184,8 +207,8 @@ namespace Azure.ResourceManager.Subscription.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Properties of subscription Response for Changed Target Directory. </summary>
@@ -213,7 +236,24 @@ namespace Azure.ResourceManager.Subscription.Models
                 sourceTenantId,
                 status,
                 expiresOn,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Subscription Request for Changed Target Directory. </summary>
+        /// <param name="properties"> Target Directory request properties. </param>
+        /// <returns> A new <see cref="Models.TargetDirectoryContent"/> instance for mocking. </returns>
+        public static TargetDirectoryContent TargetDirectoryContent(TargetDirectoryProperties properties = default)
+        {
+            return new TargetDirectoryContent(properties, default);
+        }
+
+        /// <summary> Properties of subscription Request for Changed Target Directory. </summary>
+        /// <param name="destinationOwnerId"> The destination OwnerId, can be object id or email address. </param>
+        /// <param name="destinationTenantId"> The destination Tenant id where subscription needs to be accepted. </param>
+        /// <returns> A new <see cref="Models.TargetDirectoryProperties"/> instance for mocking. </returns>
+        public static TargetDirectoryProperties TargetDirectoryProperties(Guid? destinationOwnerId = default, Guid? destinationTenantId = default)
+        {
+            return new TargetDirectoryProperties(destinationOwnerId, destinationTenantId, default);
         }
 
         /// <summary> The ID of the canceled subscription. </summary>
@@ -221,7 +261,15 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <returns> A new <see cref="Models.CanceledSubscriptionId"/> instance for mocking. </returns>
         public static CanceledSubscriptionId CanceledSubscriptionId(string subscriptionId = default)
         {
-            return new CanceledSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
+            return new CanceledSubscriptionId(subscriptionId, default);
+        }
+
+        /// <summary> The new name of the subscription. </summary>
+        /// <param name="subscriptionNameValue"> New subscription name. </param>
+        /// <returns> A new <see cref="Models.SubscriptionName"/> instance for mocking. </returns>
+        public static SubscriptionName SubscriptionName(string subscriptionNameValue = default)
+        {
+            return new SubscriptionName(subscriptionNameValue, default);
         }
 
         /// <summary> The ID of the subscriptions that is being renamed. </summary>
@@ -229,7 +277,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <returns> A new <see cref="Models.RenamedSubscriptionId"/> instance for mocking. </returns>
         public static RenamedSubscriptionId RenamedSubscriptionId(string subscriptionId = default)
         {
-            return new RenamedSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
+            return new RenamedSubscriptionId(subscriptionId, default);
         }
 
         /// <summary> The ID of the subscriptions that is being enabled. </summary>
@@ -237,7 +285,15 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <returns> A new <see cref="Models.EnabledSubscriptionId"/> instance for mocking. </returns>
         public static EnabledSubscriptionId EnabledSubscriptionId(string subscriptionId = default)
         {
-            return new EnabledSubscriptionId(subscriptionId, additionalBinaryDataProperties: null);
+            return new EnabledSubscriptionId(subscriptionId, default);
+        }
+
+        /// <summary> The parameters required to accept subscription ownership. </summary>
+        /// <param name="properties"> Accept subscription ownership request properties. </param>
+        /// <returns> A new <see cref="Models.AcceptOwnershipContent"/> instance for mocking. </returns>
+        public static AcceptOwnershipContent AcceptOwnershipContent(AcceptOwnershipRequestProperties properties = default)
+        {
+            return new AcceptOwnershipContent(properties, default);
         }
 
         /// <summary> Accept subscription ownership request properties. </summary>
@@ -249,7 +305,7 @@ namespace Azure.ResourceManager.Subscription.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AcceptOwnershipRequestProperties(displayName, managementGroupId, tags, additionalBinaryDataProperties: null);
+            return new AcceptOwnershipRequestProperties(displayName, managementGroupId, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Subscription Accept Ownership Response. </summary>
@@ -272,8 +328,8 @@ namespace Azure.ResourceManager.Subscription.Models
                 billingOwner,
                 subscriptionTenantId,
                 displayName,
-                tags,
-                additionalBinaryDataProperties: null);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
     }
 }

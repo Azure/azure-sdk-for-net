@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> An SOA record. </summary>
     public partial class DnsSoaRecordInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsSoaRecordInfo"/>. </summary>
         public DnsSoaRecordInfo()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="retryTimeInSeconds"> The retry time for this SOA record. </param>
         /// <param name="expireTimeInSeconds"> The expire time for this SOA record. </param>
         /// <param name="minimumTtlInSeconds"> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsSoaRecordInfo(string host, string email, long? serialNumber, long? refreshTimeInSeconds, long? retryTimeInSeconds, long? expireTimeInSeconds, long? minimumTtlInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DnsSoaRecordInfo(string host, string email, long? serialNumber, long? refreshTimeInSeconds, long? retryTimeInSeconds, long? expireTimeInSeconds, long? minimumTtlInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Email = email;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.Dns.Models
             RetryTimeInSeconds = retryTimeInSeconds;
             ExpireTimeInSeconds = expireTimeInSeconds;
             MinimumTtlInSeconds = minimumTtlInSeconds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The domain name of the authoritative name server for this SOA record. </summary>
         public string Host { get; set; }
+
         /// <summary> The email contact for this SOA record. </summary>
         public string Email { get; set; }
+
         /// <summary> The serial number for this SOA record. </summary>
         public long? SerialNumber { get; set; }
+
         /// <summary> The refresh value for this SOA record. </summary>
         public long? RefreshTimeInSeconds { get; set; }
+
         /// <summary> The retry time for this SOA record. </summary>
         public long? RetryTimeInSeconds { get; set; }
+
         /// <summary> The expire time for this SOA record. </summary>
         public long? ExpireTimeInSeconds { get; set; }
+
         /// <summary> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </summary>
         public long? MinimumTtlInSeconds { get; set; }
     }

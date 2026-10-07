@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ContainerInstance
     public enum ContainerGroupIdentityAccessLevel
     {
         /// <summary> All. </summary>
-        All,
+        All = 0,
         /// <summary> System. </summary>
-        System,
+        System = 1,
         /// <summary> User. </summary>
-        User
+        User = 2
     }
 }

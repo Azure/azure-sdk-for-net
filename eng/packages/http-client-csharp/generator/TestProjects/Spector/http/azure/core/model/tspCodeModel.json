@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.Versions",
       "valueType": {
         "$id": "2",
@@ -29,7 +32,8 @@
             "$ref": "1"
           },
           "doc": "The version 2022-12-01-preview.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Core.Model",
@@ -37,7 +41,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -55,7 +60,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
@@ -71,7 +77,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -87,7 +94,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -103,7 +111,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -111,6 +120,9 @@
       "$id": "12",
       "kind": "model",
       "name": "AzureEmbeddingModel",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Model",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureEmbeddingModel",
       "usage": "Input,Output,Json",
@@ -120,11 +132,15 @@
           "name": "AzureEmbeddingModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "13",
           "kind": "property",
           "name": "embedding",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "embedding",
           "type": {
             "$id": "14",
@@ -151,7 +167,8 @@
               "name": "embedding"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -161,6 +178,7 @@
       "$id": "16",
       "kind": "client",
       "name": "ModelClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.Core.Model",
       "methods": [],
       "parameters": [
@@ -192,7 +210,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -206,12 +225,14 @@
           "$id": "20",
           "kind": "client",
           "name": "AzureCoreEmbeddingVector",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.Core.Model",
           "methods": [
             {
               "$id": "21",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -220,6 +241,7 @@
               "operation": {
                 "$id": "22",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "AzureCoreEmbeddingVector",
                 "doc": "get an embedding vector",
                 "accessibility": "public",
@@ -255,9 +277,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -309,6 +333,7 @@
               "$id": "25",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -317,6 +342,7 @@
               "operation": {
                 "$id": "26",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "AzureCoreEmbeddingVector",
                 "doc": "put an embedding vector",
                 "accessibility": "public",
@@ -354,9 +380,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "29",
@@ -394,9 +422,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -445,6 +475,7 @@
               "$id": "31",
               "kind": "basic",
               "name": "post",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -453,6 +484,7 @@
               "operation": {
                 "$id": "32",
                 "name": "post",
+                "isExactName": false,
                 "resourceName": "AzureCoreEmbeddingVector",
                 "doc": "post a model which has an embeddingVector property",
                 "accessibility": "public",
@@ -490,9 +522,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.post.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "35",
@@ -525,9 +559,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.post.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "37",
@@ -565,9 +601,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.post.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -659,7 +697,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

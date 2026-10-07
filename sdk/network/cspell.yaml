@@ -5,8 +5,19 @@ overrides:
     words:
       - dscp
       - fqdns
+      - gbps
       - ipam
+      - lacp
       - snat
       - vnets
       - vxlan
       - quic
+  - filename: '**/sdk/network/Azure.ResourceManager.Network/api/*.cs'
+    words:
+      - lacp
+      - TLSDHEDSSWITH
+      - TLSDHEDSSWITHAES
+      - TLSDHERSAWITHAES
+      - TLSECDHEECDSAWITHAES
+      - TLSECDHERSAWITHAES
+      - TLSRSAWITHAES

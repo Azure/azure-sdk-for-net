@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class GovernanceRuleResource : IJsonModel<GovernanceRuleData>
     {
-        private static GovernanceRuleData s_dataDeserializationInstance;
-        private static GovernanceRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GovernanceRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GovernanceRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GovernanceRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GovernanceRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceRuleData>)Data).Write(writer, options);
 
-        GovernanceRuleData IJsonModel<GovernanceRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GovernanceRuleData IJsonModel<GovernanceRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GovernanceRuleData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GovernanceRuleData IPersistableModel<GovernanceRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GovernanceRuleData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<GovernanceRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GovernanceRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GovernanceRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

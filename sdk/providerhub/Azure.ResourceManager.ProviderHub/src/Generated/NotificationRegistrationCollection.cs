@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(NotificationRegistrationResource.ResourceType, out string notificationRegistrationApiVersion);
             _notificationRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", NotificationRegistrationResource.ResourceType.Namespace, Diagnostics);
-            _notificationRegistrationsRestClient = new NotificationRegistrations(_notificationRegistrationsClientDiagnostics, Pipeline, Endpoint, notificationRegistrationApiVersion ?? "2024-09-01");
+            _notificationRegistrationsRestClient = new NotificationRegistrations(_notificationRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notificationRegistrationApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppConfiguration
                     yield break;
                 }
                 ConfigurationStoreListResult result = ConfigurationStoreListResult.FromResponse(response);
-                yield return Page<AppConfigurationStoreData>.FromValues((IReadOnlyList<AppConfigurationStoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppConfigurationStoreData>.FromValues((IReadOnlyList<AppConfigurationStoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

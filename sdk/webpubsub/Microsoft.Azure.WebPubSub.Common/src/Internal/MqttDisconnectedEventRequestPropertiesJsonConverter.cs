@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -35,7 +36,7 @@ internal class MqttDisconnectedEventRequestPropertiesJsonConverter : JsonConvert
                         break;
 
                     case MqttDisconnectedEventRequestProperties.DisconnectPacketProperty:
-                        disconnectPacket = JsonSerializer.Deserialize<MqttDisconnectPacketProperties>(ref reader, options);
+                        disconnectPacket = ReadDisconnectPacket(ref reader);
                         break;
 
                     default:
@@ -58,15 +59,103 @@ internal class MqttDisconnectedEventRequestPropertiesJsonConverter : JsonConvert
     {
         writer.WriteStartObject();
 
-        writer.WritePropertyName(MqttDisconnectedEventRequestProperties.InitiatedByClientProperty);
-        writer.WriteBooleanValue(value.InitiatedByClient);
+        writer.WriteBoolean(MqttDisconnectedEventRequestProperties.InitiatedByClientProperty, value.InitiatedByClient);
 
         if (value.DisconnectPacket != null)
         {
             writer.WritePropertyName(MqttDisconnectedEventRequestProperties.DisconnectPacketProperty);
-            JsonSerializer.Serialize(writer, value.DisconnectPacket, options);
+            WriteDisconnectPacket(writer, value.DisconnectPacket);
         }
 
         writer.WriteEndObject();
+    }
+
+    private static MqttDisconnectPacketProperties? ReadDisconnectPacket(ref Utf8JsonReader reader)
+    {
+        using var jsonDocument = JsonDocument.ParseValue(ref reader);
+        JsonElement element = jsonDocument.RootElement;
+
+        if (element.ValueKind == JsonValueKind.Null)
+        {
+            return null;
+        }
+
+        MqttDisconnectReasonCode? code = null;
+        IReadOnlyList<MqttUserProperty>? userProperties = null;
+
+        if (element.TryGetProperty(MqttDisconnectPacketProperties.CodeProperty, out JsonElement codeElement))
+        {
+            code = (MqttDisconnectReasonCode)codeElement.GetInt32();
+        }
+
+        if (element.TryGetProperty(MqttDisconnectPacketProperties.UserPropertiesProperty, out JsonElement userPropertiesElement))
+        {
+            userProperties = ReadUserProperties(userPropertiesElement);
+        }
+
+        if (code == null)
+        {
+            throw new JsonException($"Missing required property '{MqttDisconnectPacketProperties.CodeProperty}'.");
+        }
+
+        return new MqttDisconnectPacketProperties(code.Value, userProperties);
+    }
+
+    private static IReadOnlyList<MqttUserProperty>? ReadUserProperties(JsonElement element)
+    {
+        if (element.ValueKind == JsonValueKind.Null)
+        {
+            return null;
+        }
+
+        List<MqttUserProperty> result = new();
+        foreach (JsonElement property in element.EnumerateArray())
+        {
+            string? name = null;
+            string? value = null;
+
+            foreach (JsonProperty item in property.EnumerateObject())
+            {
+                if (item.NameEquals(MqttUserProperty.NamePropertyName))
+                {
+                    name = item.Value.GetString();
+                }
+                else if (item.NameEquals(MqttUserProperty.ValuePropertyName))
+                {
+                    value = item.Value.GetString();
+                }
+            }
+
+            result.Add(new MqttUserProperty(name!, value!));
+        }
+
+        return result;
+    }
+
+    private static void WriteDisconnectPacket(Utf8JsonWriter writer, MqttDisconnectPacketProperties disconnectPacket)
+    {
+        writer.WriteStartObject();
+        writer.WriteNumber(MqttDisconnectPacketProperties.CodeProperty, (int)disconnectPacket.Code);
+
+        if (disconnectPacket.UserProperties != null)
+        {
+            writer.WritePropertyName(MqttDisconnectPacketProperties.UserPropertiesProperty);
+            WriteUserProperties(writer, disconnectPacket.UserProperties);
+        }
+
+        writer.WriteEndObject();
+    }
+
+    private static void WriteUserProperties(Utf8JsonWriter writer, IReadOnlyList<MqttUserProperty> userProperties)
+    {
+        writer.WriteStartArray();
+        foreach (MqttUserProperty property in userProperties)
+        {
+            writer.WriteStartObject();
+            writer.WriteString(MqttUserProperty.NamePropertyName, property.Name);
+            writer.WriteString(MqttUserProperty.ValuePropertyName, property.Value);
+            writer.WriteEndObject();
+        }
+        writer.WriteEndArray();
     }
 }

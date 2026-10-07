@@ -37,7 +37,7 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsCollectionResultOfT as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::Samples.Models.Cat>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken, global::System.UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);
@@ -46,13 +46,13 @@ namespace Samples
                     yield break;
                 }
                 global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
-                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)result.Cats), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextCat;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new global::System.Uri(nextPageString, global::System.UriKind.RelativeOrAbsolute);
+                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)result.Cats), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if ((nextPage == null))
                 {
                     yield break;
                 }
-                nextPage = new global::System.Uri(nextPageString, global::System.UriKind.RelativeOrAbsolute);
             }
         }
 

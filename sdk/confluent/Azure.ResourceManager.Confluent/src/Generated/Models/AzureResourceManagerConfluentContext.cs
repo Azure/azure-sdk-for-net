@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Models;
 
@@ -25,6 +24,7 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(AccessInvitationRecord))]
     [ModelReaderWriterBuildable(typeof(AccessInvitedUserDetails))]
     [ModelReaderWriterBuildable(typeof(AccessListContent))]
+    [ModelReaderWriterBuildable(typeof(AccessPointResourceListResult))]
     [ModelReaderWriterBuildable(typeof(AccessRoleBindingCreateContent))]
     [ModelReaderWriterBuildable(typeof(AccessRoleBindingListResult))]
     [ModelReaderWriterBuildable(typeof(AccessRoleBindingNameListResult))]
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(AccessServiceAccountRecord))]
     [ModelReaderWriterBuildable(typeof(AccessUserListResult))]
     [ModelReaderWriterBuildable(typeof(AccessUserRecord))]
+    [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterContent))]
     [ModelReaderWriterBuildable(typeof(ApiKeyOwnerEntity))]
     [ModelReaderWriterBuildable(typeof(APIKeyProperties))]
     [ModelReaderWriterBuildable(typeof(ApiKeyResourceEntity))]
@@ -49,6 +50,9 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(ClusterProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterSpecEntity))]
     [ModelReaderWriterBuildable(typeof(ClusterStatusEntity))]
+    [ModelReaderWriterBuildable(typeof(ConfluentAccessPointData))]
+    [ModelReaderWriterBuildable(typeof(ConfluentAccessPointProperties))]
+    [ModelReaderWriterBuildable(typeof(ConfluentAccessPointResource))]
     [ModelReaderWriterBuildable(typeof(ConfluentAgreement))]
     [ModelReaderWriterBuildable(typeof(ConfluentAgreementListResult))]
     [ModelReaderWriterBuildable(typeof(ConfluentAgreementProperties))]
@@ -56,7 +60,11 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(ConfluentApiKeyRecord))]
     [ModelReaderWriterBuildable(typeof(ConfluentConnectorData))]
     [ModelReaderWriterBuildable(typeof(ConfluentConnectorResource))]
+    [ModelReaderWriterBuildable(typeof(ConfluentKeyValuePair))]
     [ModelReaderWriterBuildable(typeof(ConfluentListMetadata))]
+    [ModelReaderWriterBuildable(typeof(ConfluentNetworkGatewayData))]
+    [ModelReaderWriterBuildable(typeof(ConfluentNetworkGatewayProperties))]
+    [ModelReaderWriterBuildable(typeof(ConfluentNetworkGatewayResource))]
     [ModelReaderWriterBuildable(typeof(ConfluentOfferDetail))]
     [ModelReaderWriterBuildable(typeof(ConfluentOrganizationData))]
     [ModelReaderWriterBuildable(typeof(ConfluentOrganizationPatch))]
@@ -64,6 +72,7 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(ConfluentOrganizationValidationResult))]
     [ModelReaderWriterBuildable(typeof(ConfluentRegionListResult))]
     [ModelReaderWriterBuildable(typeof(ConfluentRegionRecord))]
+    [ModelReaderWriterBuildable(typeof(ConfluentSaaSInfo))]
     [ModelReaderWriterBuildable(typeof(ConfluentUserDetail))]
     [ModelReaderWriterBuildable(typeof(ConnectorInfoBase))]
     [ModelReaderWriterBuildable(typeof(ConnectorResourceProperties))]
@@ -75,18 +84,20 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(KafkaAzureCosmosDBSinkConnectorInfo))]
     [ModelReaderWriterBuildable(typeof(KafkaAzureCosmosDBSourceConnectorInfo))]
     [ModelReaderWriterBuildable(typeof(KafkaAzureSynapseAnalyticsSinkConnectorInfo))]
+    [ModelReaderWriterBuildable(typeof(LatestLinkedSaaSResult))]
     [ModelReaderWriterBuildable(typeof(LinkOrganization))]
     [ModelReaderWriterBuildable(typeof(ListClustersSuccessResponse))]
     [ModelReaderWriterBuildable(typeof(ListConnectorsSuccessResponse))]
     [ModelReaderWriterBuildable(typeof(ListSchemaRegistryClustersResponse))]
     [ModelReaderWriterBuildable(typeof(ListTopicsSuccessResponse))]
     [ModelReaderWriterBuildable(typeof(MetadataEntity))]
+    [ModelReaderWriterBuildable(typeof(NetworkGatewayResourceListResult))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceProperties))]
     [ModelReaderWriterBuildable(typeof(PartnerInfoBase))]
     [ModelReaderWriterBuildable(typeof(RegionProperties))]
     [ModelReaderWriterBuildable(typeof(RegionSpecEntity))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SaaSResourceDetailsResult))]
     [ModelReaderWriterBuildable(typeof(SCClusterByokEntity))]
     [ModelReaderWriterBuildable(typeof(SCClusterNetworkEnvironmentEntity))]
     [ModelReaderWriterBuildable(typeof(SCClusterRecordData))]
@@ -110,6 +121,7 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(TopicsRelatedLink))]
     [ModelReaderWriterBuildable(typeof(UnknownConnectorServiceTypeInfoBase))]
     [ModelReaderWriterBuildable(typeof(UnknownPartnerInfoBase))]
+    [ModelReaderWriterBuildable(typeof(VNetInjectionDetails))]
     public partial class AzureResourceManagerConfluentContext : ModelReaderWriterContext
     {
     }

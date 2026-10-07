@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -231,6 +232,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     Properties = new ServerPropertiesForPatch();
                 }
                 Properties.CreateMode = value;
+            }
+        }
+
+        /// <summary> Identifier of the server to be used as the source of the new server. </summary>
+        [WirePath("properties.sourceServerResourceId")]
+        public ResourceIdentifier SourceServerResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceServerResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerPropertiesForPatch();
+                }
+                Properties.SourceServerResourceId = value;
             }
         }
 

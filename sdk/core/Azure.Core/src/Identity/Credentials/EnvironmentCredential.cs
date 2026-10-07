@@ -44,16 +44,9 @@ namespace Azure.Identity
     /// <item><term>AZURE_CLIENT_SEND_CERTIFICATE_CHAIN</term><description>(Optional) Specifies whether an authentication request will include an x5c header to support subject name / issuer based authentication. When set to `true` or `1`, authentication requests include the x5c header.</description></item>
     /// </list>
     ///
-    /// <b>Username and password:</b>
-    /// <list type="table">
-    /// <listheader><term>Variable</term><description>Description</description></listheader>
-    /// <item><term>AZURE_TENANT_ID</term><description>The Microsoft Entra tenant (directory) ID.</description></item>
-    /// <item><term>AZURE_CLIENT_ID</term><description>The client (application) ID of an App Registration in the tenant.</description></item>
-    /// </list>
-    ///
-    /// This credential ultimately uses a <see cref="ClientSecretCredential"/> or <see cref="ClientCertificateCredential"/> to
-    /// perform the authentication using these details. Please consult the
-    /// documentation of those classes for more details.
+    /// This credential uses the configuration above to create a credential for authentication (for example,
+    /// <see cref="ClientSecretCredential"/> or <see cref="ClientCertificateCredential"/>). Please consult the documentation of the selected
+    /// credential for more details.
     /// </summary>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     [UnsupportedOSPlatform("browser")]

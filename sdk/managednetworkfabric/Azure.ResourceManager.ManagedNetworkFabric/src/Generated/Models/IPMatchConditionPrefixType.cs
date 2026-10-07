@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct IPMatchConditionPrefixType : IEquatable<IPMatchConditionPrefixType>
     {
         private readonly string _value;
+        /// <summary> PrefixType Prefix. </summary>
+        private const string PrefixValue = "Prefix";
+        /// <summary> PrefixType LongestPrefix. </summary>
+        private const string LongestPrefixValue = "LongestPrefix";
 
         /// <summary> Initializes a new instance of <see cref="IPMatchConditionPrefixType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IPMatchConditionPrefixType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrefixValue = "Prefix";
-        private const string LongestPrefixValue = "LongestPrefix";
+            _value = value;
+        }
 
         /// <summary> PrefixType Prefix. </summary>
         public static IPMatchConditionPrefixType Prefix { get; } = new IPMatchConditionPrefixType(PrefixValue);
+
         /// <summary> PrefixType LongestPrefix. </summary>
         public static IPMatchConditionPrefixType LongestPrefix { get; } = new IPMatchConditionPrefixType(LongestPrefixValue);
+
         /// <summary> Determines if two <see cref="IPMatchConditionPrefixType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IPMatchConditionPrefixType left, IPMatchConditionPrefixType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IPMatchConditionPrefixType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IPMatchConditionPrefixType left, IPMatchConditionPrefixType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IPMatchConditionPrefixType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IPMatchConditionPrefixType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IPMatchConditionPrefixType(string value) => new IPMatchConditionPrefixType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IPMatchConditionPrefixType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IPMatchConditionPrefixType?(string value) => value == null ? null : new IPMatchConditionPrefixType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IPMatchConditionPrefixType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IPMatchConditionPrefixType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

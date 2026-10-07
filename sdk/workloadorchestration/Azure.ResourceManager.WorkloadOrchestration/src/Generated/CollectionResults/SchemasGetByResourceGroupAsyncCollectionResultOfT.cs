@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 SchemaListResult result = SchemaListResult.FromResponse(response);
-                yield return Page<EdgeSchemaData>.FromValues((IReadOnlyList<EdgeSchemaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeSchemaData>.FromValues((IReadOnlyList<EdgeSchemaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

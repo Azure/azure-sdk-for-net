@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(GroupQuotaEntityResource.ResourceType, out string groupQuotaEntityApiVersion);
             _groupQuotasEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaEntityResource.ResourceType.Namespace, Diagnostics);
-            _groupQuotasEntitiesRestClient = new GroupQuotasEntities(_groupQuotasEntitiesClientDiagnostics, Pipeline, Endpoint, groupQuotaEntityApiVersion ?? "2025-09-01");
+            _groupQuotasEntitiesRestClient = new GroupQuotasEntities(_groupQuotasEntitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaEntityApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
-                    new GroupQuotaEntityOperationSource(Client),
+                    new GroupQuotaEntityResourceOperationSource(Client),
                     _groupQuotasEntitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
-                    new GroupQuotaEntityOperationSource(Client),
+                    new GroupQuotaEntityResourceOperationSource(Client),
                     _groupQuotasEntitiesClientDiagnostics,
                     Pipeline,
                     message.Request,

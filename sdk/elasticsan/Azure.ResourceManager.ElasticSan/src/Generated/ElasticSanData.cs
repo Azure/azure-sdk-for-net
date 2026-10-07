@@ -22,14 +22,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> resource sku. </param>
-        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
-        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ElasticSanData(AzureLocation location, ElasticSanSku sku, long baseSizeTiB, long extendedCapacitySizeTiB) : base(location)
+        public ElasticSanData(AzureLocation location, ElasticSanSku sku) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
-            Properties = new ElasticSanProperties(sku, baseSizeTiB, extendedCapacitySizeTiB);
+            Properties = new ElasticSanProperties(sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
@@ -37,14 +35,25 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of ElasticSan. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ElasticSanProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> resource sku. </param>
+        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
+        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
+        public ElasticSanData(AzureLocation location, ElasticSanSku sku, long baseSizeTiB, long extendedCapacitySizeTiB) : this(location, sku)
+        {
+            BaseSizeTiB = baseSizeTiB;
+            ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
         }
 
         /// <summary> Properties of ElasticSan. </summary>
@@ -94,7 +103,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             get
             {
-                return Properties is null ? default : Properties.BaseSizeTiB;
+                return Properties is null ? default : Properties.BaseSizeTiB.GetValueOrDefault();
             }
             set
             {
@@ -111,7 +120,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             get
             {
-                return Properties is null ? default : Properties.ExtendedCapacitySizeTiB;
+                return Properties is null ? default : Properties.ExtendedCapacitySizeTiB.GetValueOrDefault();
             }
             set
             {
@@ -141,30 +150,54 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        /// <summary> Total Provisioned IOPS of the Elastic San appliance. </summary>
+        /// <summary> Total Provisioned IOPS of the Elastic San appliance. Settable only for ElasticSanVersion V2, where it is required; read-only for V1. </summary>
         public long? TotalIops
         {
             get
             {
                 return Properties is null ? default : Properties.TotalIops;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticSanProperties();
+                }
+                Properties.TotalIops = value;
+            }
         }
 
-        /// <summary> Total Provisioned MBps Elastic San appliance. </summary>
+        /// <summary> Total Provisioned MBps Elastic San appliance. Settable only for ElasticSanVersion V2, where it is required; read-only for V1. </summary>
         public long? TotalMbps
         {
             get
             {
                 return Properties is null ? default : Properties.TotalMbps;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticSanProperties();
+                }
+                Properties.TotalMbps = value;
+            }
         }
 
-        /// <summary> Total size of the Elastic San appliance in TB. </summary>
+        /// <summary> Total size of the Elastic San appliance in TB. Settable only for ElasticSanVersion V2, where it is required; read-only for V1. </summary>
         public long? TotalSizeTiB
         {
             get
             {
                 return Properties is null ? default : Properties.TotalSizeTiB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticSanProperties();
+                }
+                Properties.TotalSizeTiB = value;
             }
         }
 
@@ -195,6 +228,50 @@ namespace Azure.ResourceManager.ElasticSan
                     Properties = new ElasticSanProperties();
                 }
                 Properties.PublicNetworkAccess = value;
+            }
+        }
+
+        /// <summary> Elastic San appliance version. Defaults to V1 if not specified. </summary>
+        public ElasticSanVersion? Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ElasticSanProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
+        /// <summary> Used capacity in GiB. </summary>
+        public long? UsedCapacityGiB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsedCapacityGiB;
+            }
+        }
+
+        /// <summary> Total IOPS reserved by all the volume groups under an ElasticSan. </summary>
+        public int? TotalReservedIops
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalReservedIops;
+            }
+        }
+
+        /// <summary> Total MBps reserved by all the volume groups under an ElasticSan. </summary>
+        public int? TotalReservedMBps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalReservedMBps;
             }
         }
 

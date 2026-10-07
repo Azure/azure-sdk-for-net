@@ -11,8 +11,8 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerPatchStrategy
     {
         /// <summary> Regular. </summary>
-        Regular,
+        Regular = 0,
         /// <summary> VirtualCanary. </summary>
-        VirtualCanary
+        VirtualCanary = 1
     }
 }

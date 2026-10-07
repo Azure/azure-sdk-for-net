@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Batch
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _imds = DefineModelProperty<BatchHostEndpointSettings>(nameof(Imds), new string[] { "imds" });
             _wireServer = DefineModelProperty<BatchHostEndpointSettings>(nameof(WireServer), new string[] { "wireServer" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchProxyAgentSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

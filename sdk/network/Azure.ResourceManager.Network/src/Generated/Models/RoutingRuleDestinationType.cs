@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct RoutingRuleDestinationType : IEquatable<RoutingRuleDestinationType>
     {
         private readonly string _value;
+        /// <summary> Destination specified as an IP address prefix (CIDR). </summary>
+        private const string AddressPrefixValue = "AddressPrefix";
+        /// <summary> Destination specified as an Azure service tag. </summary>
+        private const string ServiceTagValue = "ServiceTag";
 
         /// <summary> Initializes a new instance of <see cref="RoutingRuleDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoutingRuleDestinationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AddressPrefixValue = "AddressPrefix";
-        private const string ServiceTagValue = "ServiceTag";
+            _value = value;
+        }
 
         /// <summary> Destination specified as an IP address prefix (CIDR). </summary>
         public static RoutingRuleDestinationType AddressPrefix { get; } = new RoutingRuleDestinationType(AddressPrefixValue);
+
         /// <summary> Destination specified as an Azure service tag. </summary>
         public static RoutingRuleDestinationType ServiceTag { get; } = new RoutingRuleDestinationType(ServiceTagValue);
+
         /// <summary> Determines if two <see cref="RoutingRuleDestinationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoutingRuleDestinationType left, RoutingRuleDestinationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoutingRuleDestinationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoutingRuleDestinationType left, RoutingRuleDestinationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingRuleDestinationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoutingRuleDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoutingRuleDestinationType(string value) => new RoutingRuleDestinationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoutingRuleDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoutingRuleDestinationType?(string value) => value == null ? null : new RoutingRuleDestinationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoutingRuleDestinationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoutingRuleDestinationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

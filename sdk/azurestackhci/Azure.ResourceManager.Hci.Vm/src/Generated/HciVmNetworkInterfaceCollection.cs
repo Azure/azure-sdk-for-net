@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmNetworkInterfaceResource.ResourceType, out string hciVmNetworkInterfaceApiVersion);
             _networkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Endpoint, hciVmNetworkInterfaceApiVersion ?? "2025-09-01-preview");
+            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmNetworkInterfaceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmNetworkInterfaceResource> operation = new VmArmOperation<HciVmNetworkInterfaceResource>(
-                    new HciVmNetworkInterfaceOperationSource(Client),
+                    new HciVmNetworkInterfaceResourceOperationSource(Client),
                     _networkInterfacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmNetworkInterfaceResource> operation = new VmArmOperation<HciVmNetworkInterfaceResource>(
-                    new HciVmNetworkInterfaceOperationSource(Client),
+                    new HciVmNetworkInterfaceResourceOperationSource(Client),
                     _networkInterfacesClientDiagnostics,
                     Pipeline,
                     message.Request,

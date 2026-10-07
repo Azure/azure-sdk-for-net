@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             TryGetApiVersion(ResourceType, out string azureTrafficCollectorApiVersion);
             _azureTrafficCollectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ResourceType.Namespace, Diagnostics);
-            _azureTrafficCollectorsRestClient = new AzureTrafficCollectors(_azureTrafficCollectorsClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
+            _azureTrafficCollectorsRestClient = new AzureTrafficCollectors(_azureTrafficCollectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 

@@ -7,54 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable.
-    /// Serialized Name: InAvailabilityReasonType
-    /// </summary>
+    /// <summary> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </summary>
     public readonly partial struct AppServiceNameUnavailableReason : IEquatable<AppServiceNameUnavailableReason>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppServiceNameUnavailableReason"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppServiceNameUnavailableReason(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: InAvailabilityReasonType.Invalid
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppServiceNameUnavailableReason(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static AppServiceNameUnavailableReason Invalid { get; } = new AppServiceNameUnavailableReason(InvalidValue);
-        /// <summary>
-        /// AlreadyExists
-        /// Serialized Name: InAvailabilityReasonType.AlreadyExists
-        /// </summary>
+
+        /// <summary> Gets the AlreadyExists. </summary>
         public static AppServiceNameUnavailableReason AlreadyExists { get; } = new AppServiceNameUnavailableReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="AppServiceNameUnavailableReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceNameUnavailableReason left, AppServiceNameUnavailableReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceNameUnavailableReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceNameUnavailableReason left, AppServiceNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceNameUnavailableReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceNameUnavailableReason(string value) => new AppServiceNameUnavailableReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceNameUnavailableReason?(string value) => value == null ? null : new AppServiceNameUnavailableReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceNameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceNameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

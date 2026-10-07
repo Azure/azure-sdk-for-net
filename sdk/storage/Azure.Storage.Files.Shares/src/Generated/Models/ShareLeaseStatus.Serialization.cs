@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class ShareLeaseStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ShareLeaseStatus value) => value switch
         {
             ShareLeaseStatus.Locked => "locked",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareLeaseStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ShareLeaseStatus ToShareLeaseStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "locked")) return ShareLeaseStatus.Locked;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unlocked")) return ShareLeaseStatus.Unlocked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "locked"))
+            {
+                return ShareLeaseStatus.Locked;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unlocked"))
+            {
+                return ShareLeaseStatus.Unlocked;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareLeaseStatus value.");
         }
     }

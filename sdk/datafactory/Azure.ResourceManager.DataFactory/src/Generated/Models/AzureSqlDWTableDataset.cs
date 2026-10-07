@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,11 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AzureSqlDWTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureSqlDWTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public AzureSqlDWTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("AzureSqlDWTable", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
-            DatasetType = "AzureSqlDWTable";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureSqlDWTableDataset"/>. </summary>
@@ -33,28 +33,65 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
-        /// <param name="schemaTypePropertiesSchema"> The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
-        /// <param name="table"> The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
-        internal AzureSqlDWTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> schemaTypePropertiesSchema, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure SQL Data Warehouse dataset properties. </param>
+        internal AzureSqlDWTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, AzureSqlDWTableDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            TableName = tableName;
-            SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
-            Table = table;
-            DatasetType = datasetType ?? "AzureSqlDWTable";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSqlDWTableDataset"/> for deserialization. </summary>
-        internal AzureSqlDWTableDataset()
-        {
-        }
+        /// <summary> Azure SQL Data Warehouse dataset properties. </summary>
+        internal AzureSqlDWTableDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
-        public DataFactoryElement<string> TableName { get; set; }
+        public DataFactoryElement<string> TableName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSqlDWTableDatasetTypeProperties();
+                }
+                TypeProperties.TableName = value;
+            }
+        }
+
         /// <summary> The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
+        public DataFactoryElement<string> SchemaTypePropertiesSchema
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SchemaTypePropertiesSchema;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSqlDWTableDatasetTypeProperties();
+                }
+                TypeProperties.SchemaTypePropertiesSchema = value;
+            }
+        }
+
         /// <summary> The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Table { get; set; }
+        public DataFactoryElement<string> Table
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Table;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSqlDWTableDatasetTypeProperties();
+                }
+                TypeProperties.Table = value;
+            }
+        }
     }
 }

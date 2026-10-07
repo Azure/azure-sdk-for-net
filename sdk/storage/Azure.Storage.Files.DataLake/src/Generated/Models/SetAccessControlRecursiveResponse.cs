@@ -5,14 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Files.DataLake;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The SetAccessControlRecursiveResponse. </summary>
     internal partial class SetAccessControlRecursiveResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="SetAccessControlRecursiveResponse"/>. </summary>
         internal SetAccessControlRecursiveResponse()
         {
@@ -20,16 +23,18 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SetAccessControlRecursiveResponse"/>. </summary>
-        /// <param name="directoriesSuccessful"></param>
-        /// <param name="filesSuccessful"></param>
-        /// <param name="failureCount"></param>
-        /// <param name="failedEntries"></param>
-        internal SetAccessControlRecursiveResponse(int? directoriesSuccessful, int? filesSuccessful, int? failureCount, IReadOnlyList<AclFailedEntry> failedEntries)
+        /// <param name="directoriesSuccessful"> The number of directories successfully processed. </param>
+        /// <param name="filesSuccessful"> The number of files successfully processed. </param>
+        /// <param name="failureCount"> The number of failures. </param>
+        /// <param name="failedEntries"> The list of failed entries. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SetAccessControlRecursiveResponse(int? directoriesSuccessful, int? filesSuccessful, int? failureCount, IReadOnlyList<AclFailedEntry> failedEntries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DirectoriesSuccessful = directoriesSuccessful;
             FilesSuccessful = filesSuccessful;
             FailureCount = failureCount;
             FailedEntries = failedEntries;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

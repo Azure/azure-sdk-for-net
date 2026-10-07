@@ -1,14 +1,113 @@
 # Release History
 
-## 1.0.0-beta.26 (Unreleased)
+## 1.0.0-beta.30 (Unreleased)
 
 ### Features Added
 
+- Added constructor-injected resilient task handlers through
+  `IResilientTaskHandler<TInput, TOutput>` registration overloads. The task engine creates
+  and asynchronously disposes a fresh dependency-injection scope for every execution
+  attempt, including retries, steered turns, and recovered attempts.
+- Added deterministic event-stream backing composition and
+  `IHostApplicationBuilder.AddAgentEventStreams(sectionName)`. Explicit application
+  configuration now overrides protocol defaults regardless of registration order,
+  identical selections are idempotent, and conflicting same-precedence selections fail
+  with source diagnostics instead of silently discarding durability settings.
+- Added lazy task-bound stream capabilities: handlers emit through
+  `TaskContext<TInput>.Stream`, and callers subscribe through `TaskRun<TOutput>.Stream`.
+  Streams use the per-turn `InputId`, remain open across retry and recovery deferral, and
+  close only after the existing terminal task-store transition succeeds.
+- Added `ResilientTaskSettings : ClientSettings` and configuration-bound
+  `IHostApplicationBuilder.AddResilientTasks(sectionName)` overloads. Hosted task storage
+  now accepts its credential and project endpoint from one settings object.
+
 ### Breaking Changes
+
+- `UseInMemoryReplay()` now defaults to a bounded 10-minute retention window instead of
+  retaining closed streams indefinitely.
+- State-store optimistic-concurrency values now use the standard `Azure.ETag` type.
+  This includes `StateStoreItem.Etag`, `StateStoreItemRef.Etag`,
+  `StateStoreItemKey.Etag`, `FoundryStoragePreconditionException.CurrentETag`, the
+  corresponding model-factory parameters, and `FoundryStateStore.SetItemAsync` /
+  `DeleteItemAsync` `ifMatch` parameters.
 
 ### Bugs Fixed
 
+- Multi-turn suspension now coordinates the empty-queue decision and execution
+  retirement with steering admission. Inputs waiting at that boundary are drained
+  or resumed with their own identity instead of being accepted and then erased.
+- Queued input acceptance now advances the last-input precondition atomically with
+  persistence. Active input identity is stored separately for recovery and stream
+  cleanup, and rejected appends cannot be promoted or restored by a stale queue snapshot.
+- Task deletion now coordinates stream closure with confirmed storage deletion and
+  producer unwind. Failed or cancelled deletes preserve recoverable streams without
+  undoing cancellation, including inputs being promoted or removed from the queue.
+- Concurrent first starts within one task engine now coordinate task creation before
+  routing subsequent multi-turn inputs to steering, preserving each input's own handle.
+  Recovery no longer mistakes an unpublished initial start for an abandoned task, and
+  duplicate creation by another engine reports a task-level conflict.
+- Task-bound streams now record their owning task and reject cross-task reuse of an
+  explicit input id. File-backed replay persists the ownership beside the stream log so
+  isolation is enforced after process restart.
+- Closed replay streams are swept after their retention window, closed live streams are
+  removed immediately, and ownership entries are released with the stream.
+- Task-stream closure is synchronized with lazy materialization so a terminal transition
+  cannot miss a concurrently created stream. Deleting a task abandoned for recovery closes
+  its existing persisted turn stream without creating a stream that was never used.
+
 ### Other Changes
+
+- Azure Monitor now uses 100% trace sampling by default while preserving explicit sampler environment settings. Azure SDK and outbound `HttpClient` dependency spans are disabled by default and can be re-enabled through `AgentHostBuilder.ConfigureTracing`.
+
+## 1.0.0-beta.29 (2026-09-08)
+
+### Other Changes
+
+- Released to provide the public `Azure.AI.AgentServer.Core` dependency required by `Azure.AI.AgentServer.Invocations` 1.0.0-beta.7.
+
+## 1.0.0-beta.28 (2026-08-12)
+
+### Features Added
+
+- `FoundryStateStore` item operations now accept an explicit `callId` and forward
+  the ambient `FoundryAgentRequestContext.Current.CallId` by default. Resilient
+  task handlers restore a top-level persisted `call_id` for every execution attempt.
+- Added resilient **task** and **streaming** primitives for building durable, long-running agents (`Azure.AI.AgentServer.Core.Tasks` and `Azure.AI.AgentServer.Core.Streaming`):
+  - Register one-shot and multi-turn tasks with the flat `IServiceCollection.AddResilientTask()` / `AddResilientMultiTurnTask()` extension methods, including overloads that accept a source-generated `JsonTypeInfo<TInput>` for Native-AOT / trimming-safe input serialization. The reflection-based overloads carry `[RequiresUnreferencedCode]` / `[RequiresDynamicCode]` so trimming/AOT builds get a compile-time warning steering them to the `JsonTypeInfo<TInput>` overloads. Each call self-initializes the resilient-tasks services on first use (`AddResilientTasks(credential)` or a DI-registered `TokenCredential` may supply the hosted-storage identity before or after task registrations; both forms must resolve to the same instance) and returns a typed `TaskDefinition<TInput, TOutput>` handle that binds the task name and its input/output types once, so invocation is strongly typed (a mismatched input or output is a compile error).
+  - Run and resume tasks through the mockable `TaskDefinition<TInput, TOutput>` handle (`RunAsync`, `StartAsync`, `GetActiveRunAsync`) with the `TaskRun<TOutput>` handle (await its `Completion` task, or `Completion.WaitAsync(token)` to cancel only your wait) and the `TaskContext<TInput>` handler surface (entry mode, retry attempt, cooperative cancellation, shutdown, and steering signals). Each registered handle is also registered as a keyed singleton service (keyed by task name — resolution is never ambiguous even when multiple tasks share the same input/output types); resolve it in a request handler with `IServiceProvider.GetResilientTask<TInput, TOutput>(name)`. The protected constructor and virtual members support consumer unit-test substitutes.
+  - Configure per-task durability with `TaskRegistrationOptions` (title, timeout, retry) and `TaskRetryPolicy` (attempt count + an `Azure.Core.DelayStrategy` for the backoff).
+  - Resumable event streaming with `AgentEventStreamRegistry` / `AgentEventStream` and `AddAgentEventStreams()`, supporting in-memory live, in-memory replay, and file-backed replay backings via `AgentEventStreamOptions`. The event representation is `System.Net.ServerSentEvents.SseItem<string>`: the caller places the serialized event text in `SseItem<string>.Data` and an opaque `SseItem<string>.EventId` is the resume/reconnect token (`Subscribe(afterEventId)`, `GetLastEventIdAsync()`). Because the data is already a string, there is no payload codec — `SseFormatter` can frame a `Subscribe(...)` stream directly onto an HTTP response.
+  - A single `ResilientTaskException` carrying an extensible `ResilientTaskErrorCode` (`HandlerError`, `ExhaustedRetries`, `Conflict`, `PreconditionFailed`, `QueueFull`) with code-specific data exposed as nullable properties (`CurrentStatus`, `ActualLastInputId`, `Failure`). Argument validation surfaces as `ArgumentException` and cancellation as `OperationCanceledException`; recovery deferral (`ExitForRecoveryAsync`) is an internal lifecycle handoff and never surfaces as an exception. The streaming layer keeps its `AgentEventStreamException` hierarchy.
+
+### Bugs Fixed
+
+- Kept the task lease renewed across retry backoff delays so a long inter-attempt backoff cannot let the lease lapse and allow a concurrent re-invocation of the same task turn.
+- Hardened the resilient-task engine shutdown signalling against a benign race between a completing turn and host disposal.
+- A one-shot task whose durable completion write fails, and a multi-turn task whose durable suspend write fails, now surface the failure to the caller instead of reporting success while the record remains `in_progress` (which a later recovery scan could re-run).
+- The local file-backed task store now serializes its existence check and record write under the same lock as patch/delete, so two concurrent creates for the same id can no longer both succeed with the later write silently overwriting the earlier record.
+- The file-backed event-stream custom serializer/deserializer are now `Func<object, string>` / `Func<string, object>` (previously `byte[]`), matching the UTF-8 JSON-string on-disk format so a custom codec cannot silently corrupt non-UTF-8 payloads.
+- The local file-backed task store now writes each record through a temporary file and an atomic replace, so a crash mid-write can no longer leave a truncated record that reads back as a parse error and renders the task id permanently unusable.
+- The per-task write gate is no longer disposed when its bookkeeping entry is removed, closing a race where a concurrent write could observe `ObjectDisposedException` on a gate that was torn down while still in use.
+- A turn transition that replaces and disposes a handler's cancellation source concurrently with a cancel/steering signal no longer surfaces `ObjectDisposedException` from the cancel path.
+- `AddResilientTasks` and `AddAgentEventStreams` are now safe against repeated registration: `AddResilientTasks` no longer registers the durability hosted service more than once (and rejects a conflicting second credential), and `AddAgentEventStreams` rejects a second configuring call instead of silently discarding its configuration.
+- Steering inputs that were queued but not yet drained when a process crashed are no longer stranded: on recovery the persisted `pending_inputs` queue is rehydrated into the in-process steering FIFO, so a recovered chain drains them instead of silently dropping them. Each queued input's per-turn `InputId` is persisted alongside it so a recovered turn keeps its own identity and advances the chain head (`last_input_id`) exactly as it would without a crash.
+
+## 1.0.0-beta.27 (2026-07-29)
+
+### Features Added
+- Added a durable key-value **state store** client under `Azure.AI.AgentServer.Core.Storage`. `FoundryStateStore.GetOrCreateAsync` binds (creating if needed) a named, Foundry-backed store; instances expose async `GetAsync`/`UpdateAsync`/`DeleteAsync` for the store and `CreateItemAsync`/`SetItemAsync`/`GetItemAsync`/`DeleteItemAsync`/`ListKeysAsync` for its items, with optimistic concurrency (`If-Match`/`ETag`), optional per-user isolation, and store-level item TTL. The .NET analogue of the Python SDK's `FoundryStateStore`.
+- Added support for Microsoft Entra authentication when exporting telemetry to Azure Monitor. When `APPLICATIONINSIGHTS_AUTH_MODE` is set to `Entra`, the Azure Monitor exporter attempts to use a system-assigned managed identity credential (falling back to connection-string authentication if the credential cannot be created).
+
+## 1.0.0-beta.26 (2026-06-28)
+
+### Features Added
+- Container protocol version `2.0.0` support: added the platform identity header constants `PlatformHeaders.UserId` (`x-agent-user-id`) and `PlatformHeaders.FoundryCallId` (`x-agent-foundry-call-id`).
+- Added `FoundryEnvironment.AgentId` exposing the agent's stable GUID from the `FOUNDRY_AGENT_ID` environment variable.
+- Added the request-scoped `FoundryAgentRequestContext` (`AsyncLocal`-backed, never-null `Current`) that captures the inbound `x-agent-foundry-call-id` / `x-agent-user-id` via an SDK middleware, and `FoundryCallIdHandler` (a `DelegatingHandler`) that echoes **only** the call ID on outbound Foundry-bound `HttpClient` calls (`x-agent-user-id` is never echoed). The .NET analogue of the Python SDK's `get_request_context()`.
+
+### Breaking Changes
+- Renamed `IsolationContext` to `PlatformContext`. Its members are now `UserIdKey` (from `x-agent-user-id`) and `CallId` (from `x-agent-foundry-call-id`), replacing `UserIsolationKey` / `ChatIsolationKey`.
+- Replaced the `PlatformHeaders.UserIsolationKey` / `PlatformHeaders.ChatIsolationKey` constants with `PlatformHeaders.UserId` and `PlatformHeaders.FoundryCallId` per container protocol version `2.0.0`.
 
 ## 1.0.0-beta.25 (2026-05-25)
 

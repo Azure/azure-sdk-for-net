@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Dapr Component resource specific properties. </param>
-        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DaprComponentProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DaprComponentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Dapr Component resource specific properties. </summary>
@@ -170,20 +170,6 @@ namespace Azure.ResourceManager.AppContainers
                     Properties = new DaprComponentProperties();
                 }
                 return Properties.Scopes;
-            }
-        }
-
-        /// <summary> List of container app services that are bound to the Dapr component. </summary>
-        [WirePath("properties.serviceComponentBind")]
-        public IList<DaprComponentServiceBinding> ServiceComponentBind
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                return Properties.ServiceComponentBind;
             }
         }
 

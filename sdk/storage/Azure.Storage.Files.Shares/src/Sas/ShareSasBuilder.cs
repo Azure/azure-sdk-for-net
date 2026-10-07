@@ -548,7 +548,8 @@ namespace Azure.Storage.Sas
                 ContentDisposition = originalShareSasBuilder.ContentDisposition,
                 ContentEncoding = originalShareSasBuilder.ContentEncoding,
                 ContentLanguage = originalShareSasBuilder.ContentLanguage,
-                ContentType = originalShareSasBuilder.ContentType
+                ContentType = originalShareSasBuilder.ContentType,
+                DelegatedUserObjectId = originalShareSasBuilder.DelegatedUserObjectId
             };
     }
 }

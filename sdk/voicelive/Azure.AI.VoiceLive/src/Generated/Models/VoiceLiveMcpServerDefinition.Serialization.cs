@@ -82,7 +82,7 @@ namespace Azure.AI.VoiceLive
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
             writer.WritePropertyName("server_url"u8);
-            writer.WriteStringValue(ServerUrl);
+            writer.WriteStringValue(ServerUrl.AbsoluteUri);
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
@@ -161,7 +161,7 @@ namespace Azure.AI.VoiceLive
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
-            string serverUrl = default;
+            Uri serverUrl = default;
             string authorization = default;
             IDictionary<string, string> headers = default;
             IList<string> allowedTools = default;
@@ -180,7 +180,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("server_url"u8))
                 {
-                    serverUrl = prop.Value.GetString();
+                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("authorization"u8))
@@ -236,12 +236,12 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    requireApproval = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApproval = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VoiceLiveMcpServerDefinition(

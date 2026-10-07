@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,56 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct OrchestrationServiceName : IEquatable<OrchestrationServiceName>
     {
         private readonly string _value;
+        private const string AutomaticRepairsValue = "AutomaticRepairs";
+        /// <summary> AutomaticZoneRebalancing orchestration service. </summary>
+        private const string AutomaticZoneRebalancingValue = "AutomaticZoneRebalancing";
 
         /// <summary> Initializes a new instance of <see cref="OrchestrationServiceName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OrchestrationServiceName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AutomaticRepairsValue = "AutomaticRepairs";
-        private const string AutomaticZoneRebalancingValue = "AutomaticZoneRebalancing";
-
-        /// <summary> AutomaticRepairs. </summary>
+        /// <summary> Gets the AutomaticRepairs. </summary>
         public static OrchestrationServiceName AutomaticRepairs { get; } = new OrchestrationServiceName(AutomaticRepairsValue);
+
         /// <summary> AutomaticZoneRebalancing orchestration service. </summary>
         public static OrchestrationServiceName AutomaticZoneRebalancing { get; } = new OrchestrationServiceName(AutomaticZoneRebalancingValue);
+
         /// <summary> Determines if two <see cref="OrchestrationServiceName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OrchestrationServiceName left, OrchestrationServiceName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OrchestrationServiceName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OrchestrationServiceName left, OrchestrationServiceName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OrchestrationServiceName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OrchestrationServiceName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OrchestrationServiceName(string value) => new OrchestrationServiceName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OrchestrationServiceName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OrchestrationServiceName?(string value) => value == null ? null : new OrchestrationServiceName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OrchestrationServiceName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OrchestrationServiceName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

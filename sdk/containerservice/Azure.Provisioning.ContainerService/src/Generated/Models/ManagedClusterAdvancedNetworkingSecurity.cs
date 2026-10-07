@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerService
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" });
             _advancedNetworkPolicies = DefineProperty<ManagedClusterAdvancedNetworkPolicy>(nameof(AdvancedNetworkPolicies), new string[] { "advancedNetworkPolicies" });
             _transitEncryption = DefineModelProperty<AdvancedNetworkingSecurityTransitEncryption>(nameof(TransitEncryption), new string[] { "transitEncryption" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAdvancedNetworkingSecurity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -91,6 +91,10 @@ namespace Azure.Provisioning.KeyVault
             _secrets = DefineListProperty<IdentityAccessSecretPermission>(nameof(Secrets), new string[] { "secrets" });
             _certificates = DefineListProperty<IdentityAccessCertificatePermission>(nameof(Certificates), new string[] { "certificates" });
             _storage = DefineListProperty<IdentityAccessStoragePermission>(nameof(Storage), new string[] { "storage" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for IdentityAccessPermissions that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

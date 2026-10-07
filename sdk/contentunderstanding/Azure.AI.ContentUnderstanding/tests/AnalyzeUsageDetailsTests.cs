@@ -3,6 +3,8 @@
 
 #nullable enable
 
+#pragma warning disable CS0618 // Testing obsolete GetUsage / AnalyzeUsageDetails compatibility surface
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,7 +18,8 @@ using NUnit.Framework;
 namespace Azure.AI.ContentUnderstanding.Tests
 {
     /// <summary>
-    /// Unit tests for <see cref="AnalyzeOperationExtensions.GetUsage"/>
+    /// Unit tests for <see cref="AnalyzeOperationExtensions.GetUsage"/>,
+    /// <see cref="AnalyzeOperationExtensions.GetUsageDetails(Operation{AnalysisResult})"/>,
     /// and <see cref="AnalyzeUsageDetails"/>.
     /// </summary>
     [TestFixture]
@@ -49,8 +52,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     ""videoHours"": 0.0,
                     ""contextualizationTokens"": 1234,
                     ""tokens"": {
-                        ""gpt-4.1-input"": 500,
-                        ""gpt-4.1-output"": 100
+                        ""gpt-5.2-input"": 500,
+                        ""gpt-5.2-output"": 100
                     }
                 }
             }";
@@ -66,8 +69,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(0.0f, usage.VideoHours);
             Assert.AreEqual(1234, usage.ContextualizationTokens);
             Assert.AreEqual(2, usage.Tokens.Count);
-            Assert.AreEqual(500, usage.Tokens["gpt-4.1-input"]);
-            Assert.AreEqual(100, usage.Tokens["gpt-4.1-output"]);
+            Assert.AreEqual(500, usage.Tokens["gpt-5.2-input"]);
+            Assert.AreEqual(100, usage.Tokens["gpt-5.2-output"]);
         }
 
         [Test]
@@ -224,9 +227,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 ""result"": {},
                 ""usage"": {
                     ""tokens"": {
-                        ""gpt-4.1-input"": 1000,
-                        ""gpt-4.1-cached_input"": 200,
-                        ""gpt-4.1-output"": 300,
+                        ""gpt-5.2-input"": 1000,
+                        ""gpt-5.2-cached_input"": 200,
+                        ""gpt-5.2-output"": 300,
                         ""text-embedding-3-large-input"": 500
                     }
                 }
@@ -237,9 +240,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             Assert.IsNotNull(usage);
             Assert.AreEqual(4, usage!.Tokens.Count);
-            Assert.AreEqual(1000, usage.Tokens["gpt-4.1-input"]);
-            Assert.AreEqual(200, usage.Tokens["gpt-4.1-cached_input"]);
-            Assert.AreEqual(300, usage.Tokens["gpt-4.1-output"]);
+            Assert.AreEqual(1000, usage.Tokens["gpt-5.2-input"]);
+            Assert.AreEqual(200, usage.Tokens["gpt-5.2-cached_input"]);
+            Assert.AreEqual(300, usage.Tokens["gpt-5.2-output"]);
             Assert.AreEqual(500, usage.Tokens["text-embedding-3-large-input"]);
         }
 
@@ -270,7 +273,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 ""status"": ""Succeeded"",
                 ""result"": {},
                 ""usage"": {
-                    ""tokens"": { ""gpt-4.1-input"": 100 }
+                    ""tokens"": { ""gpt-5.2-input"": 100 }
                 }
             }";
 
@@ -316,7 +319,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     ""audioHours"": 0.0,
                     ""videoHours"": 0.0,
                     ""contextualizationTokens"": 0,
-                    ""tokens"": { ""gpt-4.1-input"": 0 }
+                    ""tokens"": { ""gpt-5.2-input"": 0 }
                 }
             }";
 
@@ -330,7 +333,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(0.0f, usage.AudioHours);
             Assert.AreEqual(0.0f, usage.VideoHours);
             Assert.AreEqual(0, usage.ContextualizationTokens);
-            Assert.AreEqual(0, usage.Tokens["gpt-4.1-input"]);
+            Assert.AreEqual(0, usage.Tokens["gpt-5.2-input"]);
         }
 
         [Test]
@@ -385,8 +388,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     ""documentPagesStandard"": 10000,
                     ""contextualizationTokens"": 2000000,
                     ""tokens"": {
-                        ""gpt-4.1.input"": 1500000,
-                        ""gpt-4.1.output"": 500000
+                        ""gpt-5.2.input"": 1500000,
+                        ""gpt-5.2.output"": 500000
                     }
                 }
             }";
@@ -397,8 +400,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(usage);
             Assert.AreEqual(10000, usage!.DocumentPagesStandard);
             Assert.AreEqual(2000000, usage.ContextualizationTokens);
-            Assert.AreEqual(1500000, usage.Tokens["gpt-4.1.input"]);
-            Assert.AreEqual(500000, usage.Tokens["gpt-4.1.output"]);
+            Assert.AreEqual(1500000, usage.Tokens["gpt-5.2.input"]);
+            Assert.AreEqual(500000, usage.Tokens["gpt-5.2.output"]);
         }
 
         [Test]
@@ -409,7 +412,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 ""result"": {},
                 ""usage"": {
                     ""tokens"": {
-                        ""gpt-4.1.cached input"": 100,
+                        ""gpt-5.2.cached input"": 100,
                         ""text-embedding-3-large.input"": 200,
                         ""model/v2:input"": 50
                     }
@@ -421,7 +424,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             Assert.IsNotNull(usage);
             Assert.AreEqual(3, usage!.Tokens.Count);
-            Assert.AreEqual(100, usage.Tokens["gpt-4.1.cached input"]);
+            Assert.AreEqual(100, usage.Tokens["gpt-5.2.cached input"]);
             Assert.AreEqual(200, usage.Tokens["text-embedding-3-large.input"]);
             Assert.AreEqual(50, usage.Tokens["model/v2:input"]);
         }
@@ -450,8 +453,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var tokens = new Dictionary<string, int>
             {
-                { "gpt-4.1.input", 200 },
-                { "gpt-4.1.output", 50 }
+                { "gpt-5.2.input", 200 },
+                { "gpt-5.2.output", 50 }
             };
 
             AnalyzeUsageDetails usage = ContentUnderstandingModelFactory.AnalyzeUsageDetails(
@@ -469,8 +472,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(0.5f, usage.AudioHours);
             Assert.AreEqual(1.5f, usage.VideoHours);
             Assert.AreEqual(777, usage.ContextualizationTokens);
-            Assert.AreEqual(200, usage.Tokens["gpt-4.1.input"]);
-            Assert.AreEqual(50, usage.Tokens["gpt-4.1.output"]);
+            Assert.AreEqual(200, usage.Tokens["gpt-5.2.input"]);
+            Assert.AreEqual(50, usage.Tokens["gpt-5.2.output"]);
         }
 
         [Test]
@@ -562,6 +565,68 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
         #endregion
 
+        #region GetUsageDetails
+
+        [Test]
+        public void GetUsageDetails_WhenOperationNotCompleted_ReturnsNull()
+        {
+            var mockOp = new Mock<Operation<AnalysisResult>>();
+            mockOp.Setup(o => o.HasCompleted).Returns(false);
+
+            Assert.IsNull(mockOp.Object.GetUsageDetails());
+        }
+
+        [Test]
+        public void GetUsageDetails_WhenLroResponseHasUsage_ReturnsUsageDetails()
+        {
+            string json = @"{
+                ""status"": ""Succeeded"",
+                ""result"": {},
+                ""usage"": {
+                    ""documentPagesStandard"": 1,
+                    ""contextualizationTokens"": 1000,
+                    ""tokens"": { ""gpt-5.2-input"": 10 }
+                }
+            }";
+
+            UsageDetails? usage = CreateCompletedOperation(json).GetUsageDetails();
+
+            Assert.IsNotNull(usage);
+            Assert.AreEqual(1, usage!.DocumentPagesStandard);
+            Assert.AreEqual(1000, usage.ContextualizationTokens);
+            Assert.AreEqual(10, usage.Tokens["gpt-5.2-input"]);
+        }
+
+        [Test]
+        public void GetUsageDetails_WhenInlineResponseHasUsage_ReturnsUsageDetails()
+        {
+            string json = @"{
+                ""status"": ""Succeeded"",
+                ""result"": {},
+                ""usage"": {
+                    ""documentPagesStandardInline"": 1,
+                    ""contextualizationTokens"": 500
+                }
+            }";
+
+            UsageDetails? usage = CreateInlineResponse(json).GetUsageDetails();
+
+            Assert.IsNotNull(usage);
+            Assert.AreEqual(1, usage!.DocumentPagesStandardInline);
+            Assert.IsNull(usage.DocumentPagesStandard);
+            Assert.AreEqual(500, usage.ContextualizationTokens);
+        }
+
+        [Test]
+        public void GetUsageDetails_WhenInlineResponseHasNoUsage_ReturnsNull()
+        {
+            string json = @"{ ""status"": ""Succeeded"", ""result"": {} }";
+
+            Assert.IsNull(CreateInlineResponse(json).GetUsageDetails());
+        }
+
+        #endregion
+
         #region Helpers
 
         private static Operation<AnalysisResult> CreateCompletedOperation(string json)
@@ -574,6 +639,14 @@ namespace Azure.AI.ContentUnderstanding.Tests
             mockOp.Setup(o => o.GetRawResponse()).Returns(mockResponse.Object);
 
             return mockOp.Object;
+        }
+
+        private static Response<AnalysisResult> CreateInlineResponse(string json)
+        {
+            var mockResponse = new Mock<Response>();
+            mockResponse.Setup(r => r.Content).Returns(BinaryData.FromString(json));
+            AnalysisResult result = ContentUnderstandingModelFactory.AnalysisResult();
+            return Response.FromValue(result, mockResponse.Object);
         }
 
         #endregion

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Container Apps Job execution specific properties. </param>
-        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JobExecutionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Container Apps Job execution specific properties. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Replicas in the execution. </summary>
         [WirePath("properties.detailedStatus.replicas")]
-        public IList<ReplicaExecutionStatus> DetailedStatusReplicas
+        public IList<ContainerAppJobExecutionReplicaStatus> DetailedStatusReplicas
         {
             get
             {

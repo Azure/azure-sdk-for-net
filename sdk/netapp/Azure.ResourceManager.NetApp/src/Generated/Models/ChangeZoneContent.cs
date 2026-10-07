@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -19,24 +18,11 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="ChangeZoneContent"/>. </summary>
         /// <param name="newZone"> Availability zone to move Zone Redundant elastic capacity pool to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="newZone"/> is null. </exception>
-        public ChangeZoneContent(string newZone)
-        {
-            Argument.AssertNotNull(newZone, nameof(newZone));
-
-            NewZone = newZone;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ChangeZoneContent"/>. </summary>
-        /// <param name="newZone"> Availability zone to move Zone Redundant elastic capacity pool to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ChangeZoneContent(string newZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NewZone = newZone;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Availability zone to move Zone Redundant elastic capacity pool to. </summary>
-        public string NewZone { get; }
     }
 }

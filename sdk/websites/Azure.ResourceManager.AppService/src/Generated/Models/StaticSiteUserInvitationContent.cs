@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static sites user roles invitation resource.
-    /// Serialized Name: StaticSiteUserInvitationRequestResource
-    /// </summary>
+    /// <summary> Static sites user roles invitation resource. </summary>
     public partial class StaticSiteUserInvitationContent : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUserInvitationContent"/>. </summary>
         public StaticSiteUserInvitationContent()
@@ -56,81 +25,116 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUserInvitationContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="domain">
-        /// The domain name for the static site custom domain.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.domain
-        /// </param>
-        /// <param name="provider">
-        /// The identity provider for the static site user.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.provider
-        /// </param>
-        /// <param name="userDetails">
-        /// The user id for the static site user.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.userDetails
-        /// </param>
-        /// <param name="roles">
-        /// The roles for the static site user, in free-form string format
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.roles
-        /// </param>
-        /// <param name="numHoursToExpiration">
-        /// The number of hours the sas token stays valid
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.numHoursToExpiration
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUserInvitationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domain, string provider, string userDetails, string roles, int? numHoursToExpiration, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> StaticSiteUserInvitationRequestResource resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteUserInvitationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticSiteUserInvitationRequestResourceProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Domain = domain;
-            Provider = provider;
-            UserDetails = userDetails;
-            Roles = roles;
-            NumHoursToExpiration = numHoursToExpiration;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The domain name for the static site custom domain.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.domain
-        /// </summary>
-        [WirePath("properties.domain")]
-        public string Domain { get; set; }
-        /// <summary>
-        /// The identity provider for the static site user.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.provider
-        /// </summary>
-        [WirePath("properties.provider")]
-        public string Provider { get; set; }
-        /// <summary>
-        /// The user id for the static site user.
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.userDetails
-        /// </summary>
-        [WirePath("properties.userDetails")]
-        public string UserDetails { get; set; }
-        /// <summary>
-        /// The roles for the static site user, in free-form string format
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.roles
-        /// </summary>
-        [WirePath("properties.roles")]
-        public string Roles { get; set; }
-        /// <summary>
-        /// The number of hours the sas token stays valid
-        /// Serialized Name: StaticSiteUserInvitationRequestResource.properties.numHoursToExpiration
-        /// </summary>
-        [WirePath("properties.numHoursToExpiration")]
-        public int? NumHoursToExpiration { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> StaticSiteUserInvitationRequestResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal StaticSiteUserInvitationRequestResourceProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> The domain name for the static site custom domain. </summary>
+        [WirePath("properties.domain")]
+        public string Domain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Domain;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteUserInvitationRequestResourceProperties();
+                }
+                Properties.Domain = value;
+            }
+        }
+
+        /// <summary> The identity provider for the static site user. </summary>
+        [WirePath("properties.provider")]
+        public string Provider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Provider;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteUserInvitationRequestResourceProperties();
+                }
+                Properties.Provider = value;
+            }
+        }
+
+        /// <summary> The user id for the static site user. </summary>
+        [WirePath("properties.userDetails")]
+        public string UserDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteUserInvitationRequestResourceProperties();
+                }
+                Properties.UserDetails = value;
+            }
+        }
+
+        /// <summary> The roles for the static site user, in free-form string format. </summary>
+        [WirePath("properties.roles")]
+        public string Roles
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Roles;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteUserInvitationRequestResourceProperties();
+                }
+                Properties.Roles = value;
+            }
+        }
+
+        /// <summary> The number of hours the sas token stays valid. </summary>
+        [WirePath("properties.numHoursToExpiration")]
+        public int? NumHoursToExpiration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumHoursToExpiration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteUserInvitationRequestResourceProperties();
+                }
+                Properties.NumHoursToExpiration = value;
+            }
+        }
     }
 }

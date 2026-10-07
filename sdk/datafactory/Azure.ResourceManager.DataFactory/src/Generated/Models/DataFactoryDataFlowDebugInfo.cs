@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,11 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryDataFlowDebugInfo : DataFactoryDebugInfo
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugInfo"/>. </summary>
-        /// <param name="properties">
-        /// Data flow properties.
-        /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
-        /// </param>
+        /// <param name="properties"> Data flow properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFactoryDataFlowDebugInfo(DataFactoryDataFlowProperties properties)
         {
@@ -29,27 +26,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugInfo"/>. </summary>
         /// <param name="name"> The resource name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties">
-        /// Data flow properties.
-        /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
-        /// </param>
-        internal DataFactoryDataFlowDebugInfo(string name, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryDataFlowProperties properties) : base(name, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Data flow properties. </param>
+        internal DataFactoryDataFlowDebugInfo(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryDataFlowProperties properties) : base(name, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugInfo"/> for deserialization. </summary>
-        internal DataFactoryDataFlowDebugInfo()
-        {
-        }
-
-        /// <summary>
-        /// Data flow properties.
-        /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
-        /// </summary>
+        /// <summary> Data flow properties. </summary>
         public DataFactoryDataFlowProperties Properties { get; }
     }
 }

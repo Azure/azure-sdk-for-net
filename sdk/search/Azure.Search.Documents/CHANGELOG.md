@@ -1,14 +1,71 @@
 # Release History
 
-## 12.1.0-beta.1 (Unreleased)
-
-### Features Added
+## 12.1.0-beta.3 (2026-09-14)
 
 ### Breaking Changes
 
+- The protocol `KnowledgeBaseRetrievalClient.RetrieveStreamAsync` overload now returns `AsyncStreamingResult<SseItem<BinaryData>>` instead of the experimental `AsyncStreamingClientResult<SseItem<BinaryData>>`.
+
 ### Bugs Fixed
 
-### Other Changes
+- Restored public `SearchIndexerClient` create-or-update parameters for controlling indexer cache reset and reprocessing behavior.
+
+## 12.1.0-beta.2 (2026-08-27)
+
+### Features Added
+
+- Added support for the `2026-08-01-preview` service version (now the default/latest version).
+- Added typed server-sent event streaming for knowledge base retrieval through `KnowledgeBaseRetrievalClient.RetrieveStreamAsync`, including typed retrieval, activity, answer, reference, completion, error, and unknown event models.
+- Added `ListingSearchType` along with `search`, `pageSize`, and `searchType` parameters on the resource listing methods (`GetIndexes`, `GetAliases`, `GetKnowledgeBases`, `GetKnowledgeSources`, `GetSynonymMaps`, `GetIndexers`, `GetDataSourceConnections`, `GetSkillsets`, and `GetIndexStatsSummary`).
+- Added Microsoft Entra application authentication for Work IQ knowledge sources via `WorkIQKnowledgeSourceParameters` and `EntraAppAuthentication`.
+- Added `SearchIndexKnowledgeSource` query-hint and boost configuration types: `SearchIndexKnowledgeSourceQueryHints`, `SearchIndexKnowledgeSourceFilterHint`, `SearchIndexKnowledgeSourceFieldValueBoost`, and `SearchIndexKnowledgeSourceMultiWordExpressionBoost`.
+- Added `KnowledgeSourceResultsProcessing` for controlling results processing on knowledge sources, retrieval requests, and `McpServerTool`, and added `NeverQuerySource` for request-local source exclusion.
+- Added `KnowledgeBaseRetrieveDefaults`, `KnowledgeBaseQueryHintProcessing`, `KnowledgeRetrievalAutoReasoningEffort`, and `ServedImage` for knowledge base retrieval.
+- Added `KnowledgeBaseActivityRecordModel`, exposing the model name and deployment id for model activity records, along with activity start/completion timestamps and logical reasoning effort details.
+- Added citation URLs and served-image metadata to supported knowledge base references, and added `SearchSensitivityLabelInfo` to Work IQ references.
+- Added knowledge source file multipart upload and update operations, with `FileUploadMetadata`, `UploadKnowledgeSourceFileMultipartRequest`, and `UpdateKnowledgeSourceFileRequest`, plus file prefix, metadata, parsing mode, and extraction mode properties.
+- Added `KnowledgeSourceNetworkAccessMode` and `FileKnowledgeSourceExtractionMode`.
+- Added tags and retrieval defaults to `KnowledgeBase`, `MaxVectorIndexSizePerIndexInBytes` to `SearchServiceLimits`, and `Gpt56Sol`, `Gpt56Terra`, and `Gpt56Luna` to `AzureOpenAIModelName`.
+- Added `queryWorkIQSourceAuthorization` to knowledge base retrieval methods for Work IQ on-behalf-of authentication.
+
+### Breaking Changes
+
+> These changes are relative to the previous preview release, `12.1.0-beta.1`.
+
+- Removed `SearchClientOptions.ServiceVersion.V2026_05_01_Preview`; use `V2026_08_01_Preview` instead.
+- The resource listing methods (`GetIndexes`, `GetAliases`, `GetKnowledgeBases`, `GetKnowledgeSources`, `GetSynonymMaps`, `GetIndexers`, `GetDataSourceConnections`, `GetSkillsets`, and `GetIndexStatsSummary`) replaced the `top`, `skip`, and `count` parameters with `search`, `pageSize`, and `searchType`.
+- `WorkIQKnowledgeSource` now requires a `WorkIQKnowledgeSourceParameters` argument (Entra application authentication) in its constructor.
+- The model activity records (`KnowledgeBaseModelQueryPlanningActivityRecord`, `KnowledgeBaseModelAnswerSynthesisActivityRecord`, and `KnowledgeBaseModelWebSummarizationActivityRecord`) now expose model information through the `Model` property (`KnowledgeBaseActivityRecordModel`) instead of the `ModelName` string.
+- Removed `McpServerToolInclusionMode` and the `McpServerTool.InclusionMode` property; MCP tool behavior is now configured through `ResultsProcessing` and `OutputParsing`.
+- Removed `WorkIQAttribution` and the `KnowledgeBaseWorkIQReference.Attributions` property; use `SearchSensitivityLabelInfo` for the current Work IQ reference metadata.
+
+### Bugs Fixed
+
+- Fixed `System.Text.Json.JsonException` / `InvalidOperationException: Cannot skip tokens on partial JSON` thrown when asynchronously deserializing a `SearchDocument` (for example `SearchAsync<SearchDocument>`) whose result elements are large and contain OData (`@search.*`) properties. The internal converter now uses `Utf8JsonReader.TrySkip()` instead of `Skip()` so these properties can be skipped even when the converter is invoked over a non-final JSON block. ([#40768](https://github.com/Azure/azure-sdk-for-net/issues/40768))
+
+## 12.1.0-beta.1 (2026-05-28)
+
+### Features Added
+
+- Added support for `2026-05-01-preview` service version.
+- Added MCP server knowledge source types: `McpServerKnowledgeSource`, `McpServerKnowledgeSourceParameters`, `McpServerAuthentication`, `McpServerFoundryConnectionAuthentication`, `McpServerStoredHeadersAuthentication`, `McpServerHeaders`, `McpServerTool`, `McpServerToolInclusionMode`, `McpServerOutputParsing`, `McpServerAutoOutputParsing`, `McpServerJsonOutputParsing`, `McpServerSplitOutputParsing`, `McpServerNoneOutputParsing`, and related configuration models.
+- Added knowledge source types: `FabricDataAgentKnowledgeSource`, `FabricOntologyKnowledgeSource`, `FileKnowledgeSource`, `IndexedSqlKnowledgeSource`, and `WorkIQKnowledgeSource` with associated parameters and retrieval params.
+- Added knowledge base reference types: `KnowledgeBaseFabricDataAgentReference`, `KnowledgeBaseFabricOntologyReference`, `KnowledgeBaseWorkIQReference`, `KnowledgeBaseMcpServerReference`, `KnowledgeBaseFileReference`, `KnowledgeBaseRemoteSharePointReference`, `KnowledgeBaseIndexedSharePointReference`, and `KnowledgeBaseIndexedSqlReference`.
+- Added knowledge source file management operations: `UploadKnowledgeSourceFileAsync`, `GetKnowledgeSourceFilesAsync`, and `DeleteKnowledgeSourceFileAsync` on `SearchIndexClient`, along with the `KnowledgeSourceFile` model.
+- Added `FreshnessPolicy` for freshness-based document boosting, and `EnableFreshness` property on `KnowledgeSourceReference` for per-source freshness opt-in.
+- Added `AIServices` class for configuring AI Services resources on `KnowledgeSourceIngestionParameters`.
+- Added `KnowledgeSourceContentExtractionMode` for specifying content extraction behavior during ingestion.
+- Added `KnowledgeRetrievalOutputMode` for controlling knowledge base retrieval output format.
+- Added knowledge source vectorizer types: `KnowledgeSourceVectorizer` and `KnowledgeSourceAzureOpenAIVectorizer`.
+- Added knowledge base activity record types for all knowledge source kinds: `KnowledgeBaseFileActivityRecord`, `KnowledgeBaseMcpServerActivityRecord`, and per-source activity records with associated argument types.
+- Added `ContentColumnMapping` and `EmbeddingColumnMapping` for column mapping configuration.
+- Added `SharePointConnectorAppRegistration` for SharePoint connector authentication.
+- Added `PurviewSensitivityLabelInfo` for Purview sensitivity label support.
+- Added `WorkIQAttribution` for WorkIQ attribution tracking.
+- Added `AssetStore` for asset store configuration.
+- Added `KnowledgeSourceSynchronizationError` for knowledge source sync error reporting.
+- Added `failOnError`, `maxOutputDocuments`, and `enableImageServing` properties to `KnowledgeSourceParams`.
+- Added `KnowledgeBaseImageContent` with public constructor and settable `Url` property.
 
 ## 12.0.0 (2026-05-01)
 

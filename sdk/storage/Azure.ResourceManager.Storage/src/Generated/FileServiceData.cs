@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileServiceProperties"> The properties of File services in storage account. </param>
         /// <param name="sku"> Sku name and tier. </param>
-        internal FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileServicePropertiesProperties fileServiceProperties, StorageSku sku) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FileServicePropertiesProperties fileServiceProperties, StorageSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             FileServiceProperties = fileServiceProperties;
             Sku = sku;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of File services in storage account. </summary>

@@ -33,14 +33,5 @@ namespace Azure.ResourceManager.NetApp.Models
             Message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </summary>
-        public CheckElasticResourceAvailabilityStatus? IsAvailable { get; }
-
-        /// <summary> Invalid indicates the name provided does not match Azure NetApp Files naming requirements. AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
-        public CheckElasticResourceAvailabilityReason? Reason { get; }
-
-        /// <summary> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </summary>
-        public string Message { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct WebApplicationFirewallState : IEquatable<WebApplicationFirewallState>
     {
         private readonly string _value;
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationFirewallState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Disabled. </summary>
         public static WebApplicationFirewallState Disabled { get; } = new WebApplicationFirewallState(DisabledValue);
+
         /// <summary> Enabled. </summary>
         public static WebApplicationFirewallState Enabled { get; } = new WebApplicationFirewallState(EnabledValue);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebApplicationFirewallState left, WebApplicationFirewallState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebApplicationFirewallState left, WebApplicationFirewallState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebApplicationFirewallState(string value) => new WebApplicationFirewallState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebApplicationFirewallState?(string value) => value == null ? null : new WebApplicationFirewallState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebApplicationFirewallState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebApplicationFirewallState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

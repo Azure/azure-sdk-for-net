@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal SapVirtualInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SapVirtualInstanceProperties properties, SapVirtualInstanceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapVirtualInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SapVirtualInstanceProperties properties, SapVirtualInstanceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             get
             {
-                return Properties is null ? default : Properties.Environment;
+                return Properties is null ? (SapEnvironmentType?)default : Properties.Environment;
             }
             set
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             get
             {
-                return Properties is null ? default : Properties.SapProduct;
+                return Properties is null ? (SapProductType?)default : Properties.SapProduct;
             }
             set
             {

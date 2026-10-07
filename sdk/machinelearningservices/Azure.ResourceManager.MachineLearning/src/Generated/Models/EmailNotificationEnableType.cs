@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct EmailNotificationEnableType : IEquatable<EmailNotificationEnableType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EmailNotificationEnableType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EmailNotificationEnableType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string JobCompletedValue = "JobCompleted";
         private const string JobFailedValue = "JobFailed";
         private const string JobCancelledValue = "JobCancelled";
 
-        /// <summary> JobCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailNotificationEnableType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EmailNotificationEnableType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the JobCompleted. </summary>
         public static EmailNotificationEnableType JobCompleted { get; } = new EmailNotificationEnableType(JobCompletedValue);
-        /// <summary> JobFailed. </summary>
+
+        /// <summary> Gets the JobFailed. </summary>
         public static EmailNotificationEnableType JobFailed { get; } = new EmailNotificationEnableType(JobFailedValue);
-        /// <summary> JobCancelled. </summary>
+
+        /// <summary> Gets the JobCancelled. </summary>
         public static EmailNotificationEnableType JobCancelled { get; } = new EmailNotificationEnableType(JobCancelledValue);
+
         /// <summary> Determines if two <see cref="EmailNotificationEnableType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EmailNotificationEnableType left, EmailNotificationEnableType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EmailNotificationEnableType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EmailNotificationEnableType left, EmailNotificationEnableType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EmailNotificationEnableType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EmailNotificationEnableType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EmailNotificationEnableType(string value) => new EmailNotificationEnableType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EmailNotificationEnableType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EmailNotificationEnableType?(string value) => value == null ? null : new EmailNotificationEnableType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EmailNotificationEnableType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EmailNotificationEnableType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

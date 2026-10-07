@@ -43,9 +43,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(WorkloadNetworkSegmentResource.ResourceType, out string workloadNetworkSegmentApiVersion);
             _workloadNetworkSegmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkSegmentResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegments(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
+            _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegments(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkSegmentResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -98,7 +98,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
-                    new WorkloadNetworkSegmentOperationSource(Client),
+                    new WorkloadNetworkSegmentResourceOperationSource(Client),
                     _workloadNetworkSegmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -157,7 +157,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
-                    new WorkloadNetworkSegmentOperationSource(Client),
+                    new WorkloadNetworkSegmentResourceOperationSource(Client),
                     _workloadNetworkSegmentsClientDiagnostics,
                     Pipeline,
                     message.Request,

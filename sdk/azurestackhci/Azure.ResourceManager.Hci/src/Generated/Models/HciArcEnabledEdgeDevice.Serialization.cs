@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Hci.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DeviceKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             HciArcEnabledEdgeDeviceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciArcEnabledEdgeDevice(
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 kind,
+                additionalBinaryDataProperties,
                 properties);
         }
     }

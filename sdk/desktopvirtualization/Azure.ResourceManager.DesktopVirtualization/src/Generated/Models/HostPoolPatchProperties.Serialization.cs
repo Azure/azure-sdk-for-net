@@ -189,6 +189,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("allowRDPShortPathWithPrivateLink"u8);
                 writer.WriteStringValue(AllowRdpShortPathWithPrivateLink.Value.ToString());
             }
+            if (Optional.IsDefined(ConditionalRdpProperty))
+            {
+                writer.WritePropertyName("conditionalRdpProperty"u8);
+                writer.WriteStringValue(ConditionalRdpProperty);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -254,6 +259,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             DesktopVirtualizationPublicUdp? publicUdp = default;
             DesktopVirtualizationRelayUdp? relayUdp = default;
             DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default;
+            string conditionalRdpProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -436,9 +442,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     allowRdpShortPathWithPrivateLink = new DesktopVirtualizationAllowRdpShortPathWithPrivateLink(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("conditionalRdpProperty"u8))
+                {
+                    conditionalRdpProperty = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HostPoolPatchProperties(
@@ -465,6 +476,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 publicUdp,
                 relayUdp,
                 allowRdpShortPathWithPrivateLink,
+                conditionalRdpProperty,
                 additionalBinaryDataProperties);
         }
     }

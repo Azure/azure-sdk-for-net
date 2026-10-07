@@ -17,9 +17,9 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Initializes a new instance of <see cref="ShareSmbSettingsEncryptionInTransit"/>. </summary>
         /// <param name="required"> If encryption in transit is required. </param>
-        internal ShareSmbSettingsEncryptionInTransit(bool? required)
+        internal ShareSmbSettingsEncryptionInTransit(bool? @required)
         {
-            Required = required;
+            Required = @required;
         }
 
         /// <summary> If encryption in transit is required. </summary>

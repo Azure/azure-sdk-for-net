@@ -13,11 +13,14 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary></summary>
     public partial class KnowledgeBaseRetrievalClient
     {
+        private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier200206;
+
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         private static ResponseClassifier PipelineMessageClassifier200206 => _pipelineMessageClassifier200206 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 206 });
 
-        internal HttpMessage CreateRetrieveRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateRetrieveRequest(RequestContent content, string querySourceAuthorization, string queryWorkIQSourceAuthorization, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -35,6 +38,43 @@ namespace Azure.Search.Documents.KnowledgeBases
             if ("application/json;odata.metadata=minimal" != null)
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            if (querySourceAuthorization != null)
+            {
+                request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
+            }
+            if (queryWorkIQSourceAuthorization != null)
+            {
+                request.Headers.SetValue("x-ms-query-work-iq-source-authorization", queryWorkIQSourceAuthorization);
+            }
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateRetrieveStreamRequest(RequestContent content, string querySourceAuthorization, string queryWorkIQSourceAuthorization, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/knowledgebases('", false);
+            uri.AppendPath(_knowledgeBaseName, true);
+            uri.AppendPath("')/retrieve", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "text/event-stream");
+            if (querySourceAuthorization != null)
+            {
+                request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
+            }
+            if (queryWorkIQSourceAuthorization != null)
+            {
+                request.Headers.SetValue("x-ms-query-work-iq-source-authorization", queryWorkIQSourceAuthorization);
             }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;

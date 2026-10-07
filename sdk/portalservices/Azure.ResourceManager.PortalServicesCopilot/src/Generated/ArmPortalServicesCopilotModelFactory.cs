@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PortalServicesCopilot;
@@ -33,17 +31,24 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The Copilot Settings properties. </summary>
-        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <returns> A new <see cref="Models.PortalServicesCopilotSettingsProperties"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool accessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = default)
+        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool isAccessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = default)
         {
-            return new PortalServicesCopilotSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
+            return new PortalServicesCopilotSettingsProperties(isAccessControlEnabled, provisioningState, default);
+        }
+
+        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        /// <returns> A new <see cref="Models.PortalServicesCopilotSettingPatch"/> instance for mocking. </returns>
+        public static PortalServicesCopilotSettingPatch PortalServicesCopilotSettingPatch(bool? isAccessControlEnabled = default)
+        {
+            return new PortalServicesCopilotSettingPatch(isAccessControlEnabled is null ? default : new CopilotSettingsResourceUpdateProperties(isAccessControlEnabled, default), default);
         }
     }
 }

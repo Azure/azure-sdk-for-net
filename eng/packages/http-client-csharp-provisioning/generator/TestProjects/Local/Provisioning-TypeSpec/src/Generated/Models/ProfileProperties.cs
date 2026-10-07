@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             base.DefineProvisionableProperties();
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _sku = DefineModelProperty<ProfileSku>(nameof(Sku), new string[] { "sku" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

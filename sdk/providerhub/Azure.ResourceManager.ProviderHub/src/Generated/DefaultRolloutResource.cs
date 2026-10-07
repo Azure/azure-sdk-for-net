@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ResourceType, out string defaultRolloutApiVersion);
             _defaultRolloutsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            _defaultRolloutsRestClient = new DefaultRollouts(_defaultRolloutsClientDiagnostics, Pipeline, Endpoint, defaultRolloutApiVersion ?? "2024-09-01");
+            _defaultRolloutsRestClient = new DefaultRollouts(_defaultRolloutsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, defaultRolloutApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _defaultRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, DefaultRolloutData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<DefaultRolloutResource> operation = new ProviderHubArmOperation<DefaultRolloutResource>(
-                    new DefaultRolloutOperationSource(Client),
+                    new DefaultRolloutResourceOperationSource(Client),
                     _defaultRolloutsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _defaultRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, DefaultRolloutData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<DefaultRolloutResource> operation = new ProviderHubArmOperation<DefaultRolloutResource>(
-                    new DefaultRolloutOperationSource(Client),
+                    new DefaultRolloutResourceOperationSource(Client),
                     _defaultRolloutsClientDiagnostics,
                     Pipeline,
                     message.Request,

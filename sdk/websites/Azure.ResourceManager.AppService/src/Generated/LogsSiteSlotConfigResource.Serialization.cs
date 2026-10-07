@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class LogsSiteSlotConfigResource : IJsonModel<SiteLogsConfigData>
     {
-        private static SiteLogsConfigData s_dataDeserializationInstance;
-        private static SiteLogsConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SiteLogsConfigData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SiteLogsConfigData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SiteLogsConfigData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteLogsConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteLogsConfigData>)Data).Write(writer, options);
 
-        SiteLogsConfigData IJsonModel<SiteLogsConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteLogsConfigData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteLogsConfigData IJsonModel<SiteLogsConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SiteLogsConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteLogsConfigData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SiteLogsConfigData IPersistableModel<SiteLogsConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteLogsConfigData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<SiteLogsConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteLogsConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteLogsConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

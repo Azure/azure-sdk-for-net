@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -25,13 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(className, nameof(className));
             Argument.AssertNotNull(jarFilePath, nameof(jarFilePath));
 
-            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            Arguments = new ChangeTrackingList<BinaryData>();
-            ClassName = className;
-            JarFilePath = jarFilePath;
-            JarLibs = new ChangeTrackingList<BinaryData>();
-            Defines = new ChangeTrackingDictionary<string, BinaryData>();
-            ActivityType = "HDInsightMapReduce";
+            TypeProperties = new HDInsightMapReduceActivityTypeProperties(className, jarFilePath);
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightMapReduceActivity"/>. </summary>
@@ -42,137 +37,106 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="storageLinkedServices"> Storage linked service references. </param>
-        /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
-        /// <param name="getDebugInfo"> Debug info option. </param>
-        /// <param name="className"> Class name. Type: string (or Expression with resultType string). </param>
-        /// <param name="jarFilePath"> Jar path. Type: string (or Expression with resultType string). </param>
-        /// <param name="jarLinkedService"> Jar linked service reference. </param>
-        /// <param name="jarLibs"> Jar libs. </param>
-        /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
-        internal HDInsightMapReduceActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath, DataFactoryLinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="typeProperties"> HDInsight MapReduce activity properties. </param>
+        internal HDInsightMapReduceActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, HDInsightMapReduceActivityTypeProperties typeProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
-            StorageLinkedServices = storageLinkedServices;
-            Arguments = arguments;
-            GetDebugInfo = getDebugInfo;
-            ClassName = className;
-            JarFilePath = jarFilePath;
-            JarLinkedService = jarLinkedService;
-            JarLibs = jarLibs;
-            Defines = defines;
-            ActivityType = activityType ?? "HDInsightMapReduce";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightMapReduceActivity"/> for deserialization. </summary>
-        internal HDInsightMapReduceActivity()
+        /// <summary> HDInsight MapReduce activity properties. </summary>
+        internal HDInsightMapReduceActivityTypeProperties TypeProperties { get; set; }
+
+        /// <summary> User specified arguments to HDInsightActivity. </summary>
+        public IList<BinaryData> Arguments
         {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightMapReduceActivityTypeProperties();
+                }
+                return TypeProperties.Arguments;
+            }
         }
 
-        /// <summary> Storage linked service references. </summary>
-        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
-        /// <summary>
-        /// User specified arguments to HDInsightActivity.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
-        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
+        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.GetDebugInfo;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightMapReduceActivityTypeProperties();
+                }
+                TypeProperties.GetDebugInfo = value;
+            }
+        }
+
         /// <summary> Class name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClassName { get; set; }
+        public DataFactoryElement<string> ClassName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClassName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightMapReduceActivityTypeProperties();
+                }
+                TypeProperties.ClassName = value;
+            }
+        }
+
         /// <summary> Jar path. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> JarFilePath { get; set; }
-        /// <summary> Jar linked service reference. </summary>
-        public DataFactoryLinkedServiceReference JarLinkedService { get; set; }
-        /// <summary>
-        /// Jar libs.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> JarLibs { get; }
-        /// <summary>
-        /// Allows user to specify defines for the MapReduce job request.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> Defines { get; }
+        public DataFactoryElement<string> JarFilePath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.JarFilePath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightMapReduceActivityTypeProperties();
+                }
+                TypeProperties.JarFilePath = value;
+            }
+        }
+
+        /// <summary> Jar libs. </summary>
+        public IList<BinaryData> JarLibs
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightMapReduceActivityTypeProperties();
+                }
+                return TypeProperties.JarLibs;
+            }
+        }
+
+        /// <summary> Allows user to specify defines for the MapReduce job request. </summary>
+        public IDictionary<string, BinaryData> Defines
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightMapReduceActivityTypeProperties();
+                }
+                return TypeProperties.Defines;
+            }
+        }
     }
 }

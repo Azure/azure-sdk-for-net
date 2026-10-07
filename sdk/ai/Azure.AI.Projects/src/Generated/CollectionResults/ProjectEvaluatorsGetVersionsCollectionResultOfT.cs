@@ -6,9 +6,11 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectEvaluatorsGetVersionsCollectionResultOfT : CollectionResult<EvaluatorVersion>
     {
         private readonly ProjectEvaluators _client;
@@ -80,7 +82,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private ClientResult GetNextResponse(PipelineMessage message)
         {
-            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectEvaluators.GetVersions");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ResourceGraph
         {
             TryGetApiVersion(ResourceType, out string resourceGraphQueryApiVersion);
             _graphQueryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ResourceType.Namespace, Diagnostics);
-            _graphQueryRestClient = new GraphQuery(_graphQueryClientDiagnostics, Pipeline, Endpoint, resourceGraphQueryApiVersion ?? "2024-04-01");
+            _graphQueryRestClient = new GraphQuery(_graphQueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGraphQueryApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -39,7 +39,7 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<ListContainersSegmentResponse> response;
+            Response<ListContainersSegmentResult> response;
 
             if (async)
             {
@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs.Models
             }
 
             return Page<BlobContainerItem>.FromValues(
-                response.Value.ContainerItems.ToBlobContainerItems(),
+                ((IReadOnlyList<ContainerItemInternal>)response.Value.ContainerItems).ToBlobContainerItems(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

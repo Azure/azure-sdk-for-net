@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal readonly partial struct SsisObjectMetadataType : IEquatable<SsisObjectMetadataType>
     {
         private readonly string _value;
+        /// <summary> Folder. </summary>
+        private const string FolderValue = "Folder";
+        /// <summary> Project. </summary>
+        private const string ProjectValue = "Project";
+        /// <summary> Package. </summary>
+        private const string PackageValue = "Package";
+        /// <summary> Environment. </summary>
+        private const string EnvironmentValue = "Environment";
 
         /// <summary> Initializes a new instance of <see cref="SsisObjectMetadataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SsisObjectMetadataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FolderValue = "Folder";
-        private const string ProjectValue = "Project";
-        private const string PackageValue = "Package";
-        private const string EnvironmentValue = "Environment";
+            _value = value;
+        }
 
         /// <summary> Folder. </summary>
         public static SsisObjectMetadataType Folder { get; } = new SsisObjectMetadataType(FolderValue);
+
         /// <summary> Project. </summary>
         public static SsisObjectMetadataType Project { get; } = new SsisObjectMetadataType(ProjectValue);
+
         /// <summary> Package. </summary>
         public static SsisObjectMetadataType Package { get; } = new SsisObjectMetadataType(PackageValue);
+
         /// <summary> Environment. </summary>
         public static SsisObjectMetadataType Environment { get; } = new SsisObjectMetadataType(EnvironmentValue);
+
         /// <summary> Determines if two <see cref="SsisObjectMetadataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SsisObjectMetadataType left, SsisObjectMetadataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SsisObjectMetadataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SsisObjectMetadataType left, SsisObjectMetadataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SsisObjectMetadataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SsisObjectMetadataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SsisObjectMetadataType(string value) => new SsisObjectMetadataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SsisObjectMetadataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SsisObjectMetadataType?(string value) => value == null ? null : new SsisObjectMetadataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SsisObjectMetadataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SsisObjectMetadataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

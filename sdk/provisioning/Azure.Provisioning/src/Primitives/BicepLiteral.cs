@@ -16,6 +16,13 @@ namespace Azure.Provisioning.Primitives;
 public class BicepLiteral(params BicepStatement[] statements)
     : ProvisionableConstruct()
 {
+    /// <summary>
+    /// Gets the literal Bicep statements.
+    /// </summary>
     public IList<BicepStatement> Statements { get; } = statements;
+    /// <summary>
+    /// Compiles this literal construct into its Bicep statements.
+    /// </summary>
+    /// <returns>The Bicep statements.</returns>
     protected internal override IEnumerable<BicepStatement> Compile() => Statements;
 }

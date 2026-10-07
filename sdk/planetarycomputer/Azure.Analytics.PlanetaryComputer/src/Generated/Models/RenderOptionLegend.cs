@@ -23,7 +23,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of <see cref="RenderOptionLegend"/>. </summary>
-        /// <param name="type">
+        /// <param name="kind">
         /// Legend type to make,
         /// one of: `continuous`,
         /// `classmap`,
@@ -43,9 +43,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// as scaled values.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RenderOptionLegend(LegendConfigType? @type, IList<string> labels, int? trimStart, int? trimEnd, float? scaleFactor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RenderOptionLegend(LegendConfigKind? kind, IList<string> labels, int? trimStart, int? trimEnd, float? scaleFactor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             Labels = labels;
             TrimStart = trimStart;
             TrimEnd = trimEnd;
@@ -60,7 +60,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// `interval` or `none`
         /// (note, `none` is a string literal).
         /// </summary>
-        public LegendConfigType? Type { get; set; }
+        public LegendConfigKind? Kind { get; set; }
 
         /// <summary> Text labels to display on the legend. </summary>
         public IList<string> Labels { get; }

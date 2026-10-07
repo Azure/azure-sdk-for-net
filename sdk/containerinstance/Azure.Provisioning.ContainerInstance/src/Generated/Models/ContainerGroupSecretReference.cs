@@ -76,6 +76,10 @@ namespace Azure.Provisioning.ContainerInstance
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _identity = DefineProperty<ResourceIdentifier>(nameof(Identity), new string[] { "identity" }, isRequired: true);
             _secretReferenceUri = DefineProperty<Uri>(nameof(SecretReferenceUri), new string[] { "secretReferenceUri" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupSecretReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.SubmitDeallocateContent"/> instance for mocking. </returns>
         public static SubmitDeallocateContent SubmitDeallocateContent(UserRequestSchedule schedule = default, ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new SubmitDeallocateContent(schedule, executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new SubmitDeallocateContent(schedule, executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, default);
         }
 
         /// <summary> The schedule details for the user request. </summary>
@@ -46,7 +46,26 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 timezone,
                 userRequestTimezone,
                 deadlineType,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Extra details needed to run the user's request. </summary>
+        /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
+        /// <param name="retryPolicy"> Retry policy the user can pass. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionExecutionParameterDetail"/> instance for mocking. </returns>
+        public static ScheduledActionExecutionParameterDetail ScheduledActionExecutionParameterDetail(ScheduledActionOptimizationPreference? optimizationPreference = default, UserRequestRetryPolicy retryPolicy = default)
+        {
+            return new ScheduledActionExecutionParameterDetail(optimizationPreference, retryPolicy, default);
+        }
+
+        /// <summary> The retry policy for the user request. </summary>
+        /// <param name="retryCount"> Retry count for user request. </param>
+        /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
+        /// <param name="onFailureAction"> Action to take on failure. </param>
+        /// <returns> A new <see cref="Models.UserRequestRetryPolicy"/> instance for mocking. </returns>
+        public static UserRequestRetryPolicy UserRequestRetryPolicy(int? retryCount = default, int? retryWindowInMinutes = default, ResourceOperationType? onFailureAction = default)
+        {
+            return new UserRequestRetryPolicy(retryCount, retryWindowInMinutes, onFailureAction, default);
         }
 
         /// <summary> The resources needed for the user request. </summary>
@@ -56,7 +75,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             ids ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new UserRequestResources(ids.ToList(), additionalBinaryDataProperties: null);
+            return new UserRequestResources((ids ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <summary> The response from a deallocate request. </summary>
@@ -69,7 +88,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new DeallocateResourceOperationResult(description, resourceType, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new DeallocateResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
         /// <summary> High level response from an operation on a resource. </summary>
@@ -80,7 +99,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ResourceOperationResult"/> instance for mocking. </returns>
         public static ResourceOperationResult ResourceOperationResult(ResourceIdentifier resourceId = default, string errorCode = default, string errorDetails = default, ResourceOperationDetails operation = default)
         {
-            return new ResourceOperationResult(resourceId, errorCode, errorDetails, operation, additionalBinaryDataProperties: null);
+            return new ResourceOperationResult(resourceId, errorCode, errorDetails, operation, default);
         }
 
         /// <summary> The details of a response from an operation on a resource. </summary>
@@ -114,7 +133,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 fallbackOperationInfo,
                 completedOn,
                 retryPolicy,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> These describe errors that occur at the resource level. </summary>
@@ -123,7 +142,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ResourceOperationError"/> instance for mocking. </returns>
         public static ResourceOperationError ResourceOperationError(string errorCode = default, string errorDetails = default)
         {
-            return new ResourceOperationError(errorCode, errorDetails, additionalBinaryDataProperties: null);
+            return new ResourceOperationError(errorCode, errorDetails, default);
         }
 
         /// <summary> Describes the fallback operation that was performed. </summary>
@@ -133,7 +152,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ScheduledActionFallbackInfo"/> instance for mocking. </returns>
         public static ScheduledActionFallbackInfo ScheduledActionFallbackInfo(ResourceOperationType lastOpType = default, string status = default, ResourceOperationError error = default)
         {
-            return new ScheduledActionFallbackInfo(lastOpType, status, error, additionalBinaryDataProperties: null);
+            return new ScheduledActionFallbackInfo(lastOpType, status, error, default);
         }
 
         /// <param name="schedule"> The schedule for the request. </param>
@@ -143,7 +162,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.SubmitHibernateContent"/> instance for mocking. </returns>
         public static SubmitHibernateContent SubmitHibernateContent(UserRequestSchedule schedule = default, ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new SubmitHibernateContent(schedule, executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new SubmitHibernateContent(schedule, executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, default);
         }
 
         /// <summary> The response from a Hibernate request. </summary>
@@ -156,7 +175,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new HibernateResourceOperationResult(description, resourceType, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new HibernateResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
         /// <param name="schedule"> The schedule for the request. </param>
@@ -166,7 +185,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.SubmitStartContent"/> instance for mocking. </returns>
         public static SubmitStartContent SubmitStartContent(UserRequestSchedule schedule = default, ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new SubmitStartContent(schedule, executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new SubmitStartContent(schedule, executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, default);
         }
 
         /// <summary> The response from a start request. </summary>
@@ -179,7 +198,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new StartResourceOperationResult(description, resourceType, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new StartResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -188,7 +207,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
         public static ExecuteDeallocateContent ExecuteDeallocateContent(ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new ExecuteDeallocateContent(executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new ExecuteDeallocateContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -197,7 +216,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
         public static ExecuteHibernateContent ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new ExecuteHibernateContent(executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new ExecuteHibernateContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -206,7 +225,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
         public static ExecuteStartContent ExecuteStartContent(ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new ExecuteStartContent(executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new ExecuteStartContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, default);
         }
 
         /// <summary> The ExecuteCreateFlexRequest request for executeCreateFlex operations. </summary>
@@ -216,7 +235,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteCreateFlexContent"/> instance for mocking. </returns>
         public static ExecuteCreateFlexContent ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters = default, ScheduledActionExecutionParameterDetail executionParameters = default, string correlationId = default)
         {
-            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationId, additionalBinaryDataProperties: null);
+            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationId, default);
         }
 
         /// <summary> Resource creation data model for flex VM provisioning. </summary>
@@ -226,17 +245,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourcePrefix"> If resourceOverrides doesn't contain name, service will create name based on prefix and resourceCount. </param>
         /// <param name="flexProperties"> The flex properties for flexible VM creation. </param>
         /// <returns> A new <see cref="Models.ResourceProvisionFlexPayload"/> instance for mocking. </returns>
-        public static ResourceProvisionFlexPayload ResourceProvisionFlexPayload(BulkVmConfiguration virtualMachineBaseProfile = default, IEnumerable<BulkVmConfiguration> virtualMachineOverrides = default, int resourceCount = default, string resourcePrefix = default, ComputeScheduleFlexProperties flexProperties = default)
+        public static ResourceProvisionFlexPayload ResourceProvisionFlexPayload(BulkVmConfiguration virtualMachineBaseProfile, IEnumerable<BulkVmConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix, ComputeScheduleFlexProperties flexProperties)
         {
             virtualMachineOverrides ??= new ChangeTrackingList<BulkVmConfiguration>();
 
             return new ResourceProvisionFlexPayload(
                 virtualMachineBaseProfile,
-                virtualMachineOverrides.ToList(),
+                (virtualMachineOverrides ?? new ChangeTrackingList<BulkVmConfiguration>()).ToList(),
                 resourceCount,
                 resourcePrefix,
                 flexProperties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Specifies the configuration for a virtual machine operation. </summary>
@@ -262,15 +281,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 name,
                 computeApiVersion,
                 resourceGroupName,
-                zones.ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
                 plan,
                 identity,
                 extendedLocation,
                 placement,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties,
-                vmExtensions.ToList(),
-                additionalBinaryDataProperties: null);
+                (vmExtensions ?? new ChangeTrackingList<BulkActionVmExtension>()).ToList(),
+                default);
         }
 
         /// <summary> Describes the user-defined constraints for resource hardware placement. </summary>
@@ -283,7 +302,61 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             includeZones ??= new ChangeTrackingList<string>();
             excludeZones ??= new ChangeTrackingList<string>();
 
-            return new Placement(zonePlacementPolicy, includeZones.ToList(), excludeZones.ToList(), additionalBinaryDataProperties: null);
+            return new Placement(zonePlacementPolicy, (includeZones ?? new ChangeTrackingList<string>()).ToList(), (excludeZones ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware profile for the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum compute api-version: 2020-06-01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum compute api-version: 2021-03-01. </param>
+        /// <param name="capacityReservationGroupId"> The ID of the sub-resource. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM. </param>
+        /// <returns> A new <see cref="Models.BulkActionVirtualMachineProperties"/> instance for mocking. </returns>
+        public static BulkActionVirtualMachineProperties BulkActionVirtualMachineProperties(ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, VirtualMachineHardwareProfile hardwareProfile = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, string licenseType = default, string extensionsTimeBudget = default, ScheduledEventsProfile scheduledEventsProfile = default, string userData = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VmGalleryApplication> galleryApplications = default)
+        {
+            return new BulkActionVirtualMachineProperties(
+                scheduledEventsPolicy,
+                storageProfile,
+                additionalCapabilities,
+                osProfile,
+                networkProfile,
+                hardwareProfile,
+                securityProfile,
+                bootDiagnostics is null ? default : new DiagnosticsProfile(bootDiagnostics, default),
+                licenseType,
+                extensionsTimeBudget,
+                scheduledEventsProfile,
+                userData,
+                capacityReservationGroupId is null ? default : new CapacityReservationProfile(capacityReservationGroupId is null ? default : new SubResource(capacityReservationGroupId, default), default),
+                galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VmGalleryApplication>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="isAutomaticallyApprovedForRedeploy"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="isAutomaticallyApprovedForReboot"> Specifies Reboot Scheduled Event related configurations. </param>
+        /// <param name="scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph"> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </param>
+        /// <param name="isAutomaticallyApprovedForAllInstancesDown"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
+        /// <returns> A new <see cref="Models.ScheduledEventsPolicy"/> instance for mocking. </returns>
+        public static ScheduledEventsPolicy ScheduledEventsPolicy(bool? isAutomaticallyApprovedForRedeploy = default, bool? isAutomaticallyApprovedForReboot = default, EventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default, bool? isAutomaticallyApprovedForAllInstancesDown = default)
+        {
+            return new ScheduledEventsPolicy(isAutomaticallyApprovedForRedeploy is null ? default : new UserInitiatedRedeploy(isAutomaticallyApprovedForRedeploy, default), isAutomaticallyApprovedForReboot is null ? default : new UserInitiatedReboot(isAutomaticallyApprovedForReboot, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), isAutomaticallyApprovedForAllInstancesDown is null ? default : new AllInstancesDown(isAutomaticallyApprovedForAllInstancesDown, default), default);
+        }
+
+        /// <summary> Specifies eventGridAndResourceGraph related Scheduled Event related configurations. </summary>
+        /// <param name="enable"> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </param>
+        /// <param name="scheduledEventsApiVersion"> Specifies the api-version to determine which Scheduled Events configuration schema version will be delivered. </param>
+        /// <returns> A new <see cref="Models.EventGridAndResourceGraph"/> instance for mocking. </returns>
+        public static EventGridAndResourceGraph EventGridAndResourceGraph(bool? enable = default, string scheduledEventsApiVersion = default)
+        {
+            return new EventGridAndResourceGraph(enable, scheduledEventsApiVersion, default);
         }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
@@ -296,7 +369,37 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             dataDisks ??= new ChangeTrackingList<VirtualMachineDataDisk>();
 
-            return new VirtualMachineStorageProfile(imageReference, osDisk, dataDisks.ToList(), diskControllerType, additionalBinaryDataProperties: null);
+            return new VirtualMachineStorageProfile(imageReference, osDisk, (dataDisks ?? new ChangeTrackingList<VirtualMachineDataDisk>()).ToList(), diskControllerType, default);
+        }
+
+        /// <summary> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only be set when you create the scale set. </summary>
+        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <param name="publisher"> The image publisher. </param>
+        /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
+        /// <param name="sku"> The image SKU. </param>
+        /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or 'latest'. Major, Minor, and Build are decimal numbers. Specify 'latest' to use the latest version of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update after deploy time even if a new version becomes available. Please do not use field 'version' for gallery image deployment, gallery image should always use 'id' field for deployment, to use 'latest' version of gallery image, just set '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageName}' in the 'id' field without version input. </param>
+        /// <param name="sharedGalleryImageUniqueId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
+        /// <param name="communityGalleryImageId"> Specified the community gallery image unique id for vm deployment. This can be fetched from community gallery image GET call. </param>
+        /// <returns> A new <see cref="Models.ImageReference"/> instance for mocking. </returns>
+        public static ImageReference ImageReference(ResourceIdentifier id = default, string publisher = default, string offer = default, string sku = default, string version = default, string sharedGalleryImageUniqueId = default, string communityGalleryImageId = default)
+        {
+            return new ImageReference(
+                id,
+                default,
+                publisher,
+                offer,
+                sku,
+                version,
+                sharedGalleryImageUniqueId,
+                communityGalleryImageId);
+        }
+
+        /// <summary> Describes a reference to a sub-resource. </summary>
+        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <returns> A new <see cref="Models.SubResource"/> instance for mocking. </returns>
+        public static SubResource SubResource(ResourceIdentifier id = default)
+        {
+            return new SubResource(id, default);
         }
 
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </param>
@@ -318,8 +421,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 osType,
                 encryptionSettings,
                 name,
-                vhdUri is null ? default : new VirtualHardDisk(vhdUri, null),
-                imageUri is null ? default : new VirtualHardDisk(imageUri, null),
+                vhdUri is null ? default : new VirtualHardDisk(vhdUri, default),
+                imageUri is null ? default : new VirtualHardDisk(imageUri, default),
                 caching,
                 writeAcceleratorEnabled,
                 diffDiskSettings,
@@ -327,7 +430,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 diskSizeGB,
                 managedDisk,
                 deleteOption,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Describes a Encryption Settings for a Disk. </summary>
+        /// <param name="diskEncryptionKey"> Specifies the location of the disk encryption key, which is a Key Vault Secret. </param>
+        /// <param name="keyEncryptionKey"> Specifies the location of the key encryption key in Key Vault. </param>
+        /// <param name="enabled"> Specifies whether disk encryption should be enabled on the virtual machine. </param>
+        /// <returns> A new <see cref="Models.DiskEncryptionSettings"/> instance for mocking. </returns>
+        public static DiskEncryptionSettings DiskEncryptionSettings(KeyVaultSecretReference diskEncryptionKey = default, KeyVaultKeyReference keyEncryptionKey = default, bool? enabled = default)
+        {
+            return new DiskEncryptionSettings(diskEncryptionKey, keyEncryptionKey, enabled, default);
         }
 
         /// <summary> Describes a reference to Key Vault Secret. </summary>
@@ -336,7 +449,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.KeyVaultSecretReference"/> instance for mocking. </returns>
         public static KeyVaultSecretReference KeyVaultSecretReference(Uri secretUri = default, WritableSubResource sourceVault = default)
         {
-            return new KeyVaultSecretReference(secretUri, sourceVault, additionalBinaryDataProperties: null);
+            return new KeyVaultSecretReference(secretUri, sourceVault, default);
         }
 
         /// <summary> Describes a reference to Key Vault Key. </summary>
@@ -345,7 +458,34 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.KeyVaultKeyReference"/> instance for mocking. </returns>
         public static KeyVaultKeyReference KeyVaultKeyReference(Uri keyUri = default, WritableSubResource sourceVault = default)
         {
-            return new KeyVaultKeyReference(keyUri, sourceVault, additionalBinaryDataProperties: null);
+            return new KeyVaultKeyReference(keyUri, sourceVault, default);
+        }
+
+        /// <summary> Describes the parameters of ephemeral disk settings that can be specified for operating system disk. Note: The ephemeral disk settings can only be specified for managed disk. </summary>
+        /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
+        /// <param name="placement"> Specifies the ephemeral disk placement for operating system disk. Possible values are: CacheDisk, ResourceDisk, NvmeDisk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise ResourceDisk or NvmeDisk is used. Minimum api-version for NvmeDisk: 2024-03-01. </param>
+        /// <returns> A new <see cref="Models.DiffDiskSettings"/> instance for mocking. </returns>
+        public static DiffDiskSettings DiffDiskSettings(DiffDiskOptions? option = default, DiffDiskPlacement? placement = default)
+        {
+            return new DiffDiskSettings(option, placement, default);
+        }
+
+        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
+        /// <param name="diskEncryptionSetId"> The ID of the sub-resource. </param>
+        /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
+        /// <returns> A new <see cref="Models.ComputeScheduleManagedDiskConfig"/> instance for mocking. </returns>
+        public static ComputeScheduleManagedDiskConfig ComputeScheduleManagedDiskConfig(ResourceIdentifier id = default, StorageAccountType? storageAccountType = default, ResourceIdentifier diskEncryptionSetId = default, VirtualMachineDiskSecurityProfile securityProfile = default)
+        {
+            return new ComputeScheduleManagedDiskConfig(id, default, storageAccountType, diskEncryptionSetId is null ? default : new ComputeScheduleDiskEncryptionSetConfig(diskEncryptionSetId, default), securityProfile);
+        }
+
+        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. <b>Note:</b> It can be set for only Confidential VMs. </param>
+        /// <param name="diskEncryptionSetId"> The ID of the sub-resource. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineDiskSecurityProfile"/> instance for mocking. </returns>
+        public static VirtualMachineDiskSecurityProfile VirtualMachineDiskSecurityProfile(SecurityEncryptionType? securityEncryptionType = default, ResourceIdentifier diskEncryptionSetId = default)
+        {
+            return new VirtualMachineDiskSecurityProfile(securityEncryptionType, diskEncryptionSetId is null ? default : new ComputeScheduleDiskEncryptionSetConfig(diskEncryptionSetId, default), default);
         }
 
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
@@ -367,18 +507,27 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new VirtualMachineDataDisk(
                 lun,
                 name,
-                vhdUri is null ? default : new VirtualHardDisk(vhdUri, null),
-                imageUri is null ? default : new VirtualHardDisk(imageUri, null),
+                vhdUri is null ? default : new VirtualHardDisk(vhdUri, default),
+                imageUri is null ? default : new VirtualHardDisk(imageUri, default),
                 caching,
                 writeAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
                 managedDisk,
-                sourceResourceId is null ? default : new ApiEntityReference(sourceResourceId, null),
+                sourceResourceId is null ? default : new ApiEntityReference(sourceResourceId, default),
                 toBeDetached,
                 detachOption,
                 deleteOption,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Enables or disables a capability on the virtual machine or virtual machine scale set. </summary>
+        /// <param name="ultraSsdEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
+        /// <param name="hibernationEnabled"> The flag that enables or disables hibernation capability on the VM. </param>
+        /// <returns> A new <see cref="Models.AdditionalCapabilities"/> instance for mocking. </returns>
+        public static AdditionalCapabilities AdditionalCapabilities(bool? ultraSsdEnabled = default, bool? hibernationEnabled = default)
+        {
+            return new AdditionalCapabilities(ultraSsdEnabled, hibernationEnabled, default);
         }
 
         /// <summary> Specifies the operating system settings for the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
@@ -403,10 +552,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 customData,
                 windowsConfiguration,
                 linuxConfiguration,
-                secrets.ToList(),
+                (secrets ?? new ChangeTrackingList<VaultSecretGroup>()).ToList(),
                 allowExtensionOperations,
                 requireGuestProvisionSignal,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="provisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
@@ -424,10 +573,95 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 provisionVmAgent,
                 isAutomaticUpdatesEnabled,
                 timeZone,
-                additionalUnattendContent.ToList(),
+                (additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>()).ToList(),
                 patchSettings,
-                winRMListeners is null ? default : new WinRMConfiguration((winRMListeners ?? new ChangeTrackingList<WinRMListener>()).ToList(), null),
-                additionalBinaryDataProperties: null);
+                winRMListeners is null ? default : new WinRMConfiguration((winRMListeners ?? new ChangeTrackingList<WinRMListener>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> Specifies additional XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. Contents are defined by setting name, component name, and the pass in which the content is applied. </summary>
+        /// <param name="passName"> The pass name. Currently, the only allowable value is OobeSystem. </param>
+        /// <param name="componentName"> The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup. </param>
+        /// <param name="settingName"> Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands and AutoLogon. </param>
+        /// <param name="content"> Specifies the XML formatted content that is added to the unattend.xml file for the specified path and component. The XML must be less than 4KB and must include the root element for the setting or feature that is being inserted. </param>
+        /// <returns> A new <see cref="Models.AdditionalUnattendContent"/> instance for mocking. </returns>
+        public static AdditionalUnattendContent AdditionalUnattendContent(AdditionalUnattendContentPassName? passName = default, AdditionalUnattendContentComponentName? componentName = default, SettingName? settingName = default, string content = default)
+        {
+            return new AdditionalUnattendContent(passName, componentName, settingName, content, default);
+        }
+
+        /// <summary> Specifies settings related to VM Guest Patching on Windows. </summary>
+        /// <param name="patchMode"> Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual machines associated to virtual machine scale set with OrchestrationMode as Flexible.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the property WindowsConfiguration.enableAutomaticUpdates must be false&lt;br /&gt;&lt;br /&gt; <b>AutomaticByOS</b> - The virtual machine will automatically be updated by the OS. The property WindowsConfiguration.enableAutomaticUpdates must be true. &lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - the virtual machine will automatically updated by the platform. The properties provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true. </param>
+        /// <param name="enableHotpatching"> Enables customers to patch their Azure VMs without requiring a reboot. For enableHotpatching, the 'provisionVMAgent' must be set to true and 'patchMode' must be set to 'AutomaticByPlatform'. </param>
+        /// <param name="assessmentMode"> Specifies the mode of VM Guest patch assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - You control the timing of patch assessments on a virtual machine.&lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </param>
+        /// <param name="automaticByPlatformSettings"> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Windows. </param>
+        /// <returns> A new <see cref="Models.PatchSettings"/> instance for mocking. </returns>
+        public static PatchSettings PatchSettings(WindowsVmGuestPatchMode? patchMode = default, bool? enableHotpatching = default, WindowsPatchAssessmentMode? assessmentMode = default, WindowsVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default)
+        {
+            return new PatchSettings(patchMode, enableHotpatching, assessmentMode, automaticByPlatformSettings, default);
+        }
+
+        /// <summary> Specifies additional settings to be applied when patch mode AutomaticByPlatform is selected in Windows patch settings. </summary>
+        /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
+        /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
+        /// <returns> A new <see cref="Models.WindowsVmGuestPatchAutomaticByPlatformSettings"/> instance for mocking. </returns>
+        public static WindowsVmGuestPatchAutomaticByPlatformSettings WindowsVmGuestPatchAutomaticByPlatformSettings(WindowsVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default, bool? bypassPlatformSafetyChecksOnUserSchedule = default)
+        {
+            return new WindowsVmGuestPatchAutomaticByPlatformSettings(rebootSetting, bypassPlatformSafetyChecksOnUserSchedule, default);
+        }
+
+        /// <summary> Describes Protocol and thumbprint of Windows Remote Management listener. </summary>
+        /// <param name="protocol"> Specifies the protocol of WinRM listener. Possible values are: <b>http,</b> <b>https.</b>. </param>
+        /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). In this case, your certificate needs to be the Base64 encoding of the following JSON Object which is encoded in UTF-8: &lt;br&gt;&lt;br&gt; {&lt;br&gt;  "data":"&lt;Base64-encoded-certificate&gt;",&lt;br&gt;  "dataType":"pfx",&lt;br&gt;  "password":"&lt;pfx-file-password&gt;"&lt;br&gt;} &lt;br&gt; To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
+        /// <returns> A new <see cref="Models.WinRMListener"/> instance for mocking. </returns>
+        public static WinRMListener WinRMListener(WinRMListenerProtocolType? protocol = default, Uri certificateUri = default)
+        {
+            return new WinRMListener(protocol, certificateUri, default);
+        }
+
+        /// <param name="isPasswordAuthenticationDisabled"> Specifies whether password authentication should be disabled. </param>
+        /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
+        /// <param name="provisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
+        /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </param>
+        /// <param name="isVmAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
+        /// <returns> A new <see cref="Models.LinuxConfiguration"/> instance for mocking. </returns>
+        public static LinuxConfiguration LinuxConfiguration(bool? isPasswordAuthenticationDisabled = default, IEnumerable<SshPublicKeyConfiguration> sshPublicKeys = default, bool? provisionVmAgent = default, LinuxPatchSettings patchSettings = default, bool? isVmAgentPlatformUpdatesEnabled = default)
+        {
+            return new LinuxConfiguration(
+                isPasswordAuthenticationDisabled,
+                sshPublicKeys is null ? default : new SshConfiguration((sshPublicKeys ?? new ChangeTrackingList<SshPublicKeyConfiguration>()).ToList(), default),
+                provisionVmAgent,
+                patchSettings,
+                isVmAgentPlatformUpdatesEnabled,
+                default);
+        }
+
+        /// <summary> Contains information about SSH certificate public key and the path on the Linux VM where the public key is placed. </summary>
+        /// <param name="path"> Specifies the full path on the created VM where ssh public key is stored. If the file already exists, the specified key is appended to the file. Example: /home/user/.ssh/authorized_keys. </param>
+        /// <param name="keyData"> SSH public key certificate used to authenticate with the VM through ssh. The key needs to be at least 2048-bit and in ssh-rsa format. For creating ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in Azure]https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed). </param>
+        /// <returns> A new <see cref="Models.SshPublicKeyConfiguration"/> instance for mocking. </returns>
+        public static SshPublicKeyConfiguration SshPublicKeyConfiguration(string path = default, string keyData = default)
+        {
+            return new SshPublicKeyConfiguration(path, keyData, default);
+        }
+
+        /// <summary> Specifies settings related to VM Guest Patching on Linux. </summary>
+        /// <param name="patchMode"> Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual machines associated to virtual machine scale set with OrchestrationMode as Flexible.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - The virtual machine's default patching configuration is used. &lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - The virtual machine will be automatically updated by the platform. The property provisionVMAgent must be true. </param>
+        /// <param name="assessmentMode"> Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - You control the timing of patch assessments on a virtual machine. &lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </param>
+        /// <param name="automaticByPlatformSettings"> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Linux. </param>
+        /// <returns> A new <see cref="Models.LinuxPatchSettings"/> instance for mocking. </returns>
+        public static LinuxPatchSettings LinuxPatchSettings(LinuxVmGuestPatchMode? patchMode = default, LinuxPatchAssessmentMode? assessmentMode = default, LinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default)
+        {
+            return new LinuxPatchSettings(patchMode, assessmentMode, automaticByPlatformSettings, default);
+        }
+
+        /// <summary> Specifies additional settings to be applied when patch mode AutomaticByPlatform is selected in Linux patch settings. </summary>
+        /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
+        /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
+        /// <returns> A new <see cref="Models.LinuxVmGuestPatchAutomaticByPlatformSettings"/> instance for mocking. </returns>
+        public static LinuxVmGuestPatchAutomaticByPlatformSettings LinuxVmGuestPatchAutomaticByPlatformSettings(LinuxVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default, bool? bypassPlatformSafetyChecksOnUserSchedule = default)
+        {
+            return new LinuxVmGuestPatchAutomaticByPlatformSettings(rebootSetting, bypassPlatformSafetyChecksOnUserSchedule, default);
         }
 
         /// <summary> Describes a set of certificates which are all in the same Key Vault. </summary>
@@ -438,7 +672,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             vaultCertificates ??= new ChangeTrackingList<VaultCertificate>();
 
-            return new VaultSecretGroup(sourceVault, vaultCertificates.ToList(), additionalBinaryDataProperties: null);
+            return new VaultSecretGroup(sourceVault, (vaultCertificates ?? new ChangeTrackingList<VaultCertificate>()).ToList(), default);
+        }
+
+        /// <summary> Describes a single certificate reference in a Key Vault, and where the certificate should reside on the VM. </summary>
+        /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). In this case, your certificate needs to be It is the Base64 encoding of the following JSON Object which is encoded in UTF-8: &lt;br&gt;&lt;br&gt; {&lt;br&gt;  'data':'&lt;Base64-encoded-certificate&gt;',&lt;br&gt;  'dataType':'pfx',&lt;br&gt;  'password':'&lt;pfx-file-password&gt;'&lt;br&gt;} &lt;br&gt; To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
+        /// <param name="certificateStore"> For Windows VMs, specifies the certificate store on the Virtual Machine to which the certificate should be added. The specified certificate store is implicitly in the LocalMachine account. For Linux VMs, the certificate file is placed under the /var/lib/waagent directory, with the file name &lt;UppercaseThumbprint&gt;.crt for the X509 certificate file and &lt;UppercaseThumbprint&gt;.prv for private key. Both of these files are .pem formatted. </param>
+        /// <returns> A new <see cref="Models.VaultCertificate"/> instance for mocking. </returns>
+        public static VaultCertificate VaultCertificate(Uri certificateUri = default, string certificateStore = default)
+        {
+            return new VaultCertificate(certificateUri, certificateStore, default);
         }
 
         /// <summary> Specifies the network interfaces or the networking configuration of the virtual machine. </summary>
@@ -451,7 +694,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             networkInterfaces ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>();
             networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>();
 
-            return new VirtualMachineNetworkProfile(networkInterfaces.ToList(), networkApiVersion, networkInterfaceConfigurations.ToList(), additionalBinaryDataProperties: null);
+            return new VirtualMachineNetworkProfile((networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>()).ToList(), networkApiVersion, (networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>()).ToList(), default);
+        }
+
+        /// <summary> Describes a network interface reference. </summary>
+        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <param name="properties"> Describes a network interface reference properties. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceReference"/> instance for mocking. </returns>
+        public static VirtualMachineNetworkInterfaceReference VirtualMachineNetworkInterfaceReference(ResourceIdentifier id = default, VirtualMachineNetworkInterfaceReferenceProperties properties = default)
+        {
+            return new VirtualMachineNetworkInterfaceReference(id, default, properties);
+        }
+
+        /// <summary> Describes a network interface reference properties. </summary>
+        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceReferenceProperties"/> instance for mocking. </returns>
+        public static VirtualMachineNetworkInterfaceReferenceProperties VirtualMachineNetworkInterfaceReferenceProperties(bool? primary = default, DeleteOptions? deleteOption = default)
+        {
+            return new VirtualMachineNetworkInterfaceReferenceProperties(primary, deleteOption, default);
         }
 
         /// <summary> Describes a virtual machine network interface configurations. </summary>
@@ -463,7 +724,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualMachineNetworkInterfaceConfiguration(name, properties, tags, additionalBinaryDataProperties: null);
+            return new VirtualMachineNetworkInterfaceConfiguration(name, properties, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
@@ -490,13 +751,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 disableTcpStateTracking,
                 enableFpga,
                 enableIPForwarding,
-                networkSecurityGroupId is null ? default : new SubResource(networkSecurityGroupId, null),
-                dnsServers is null ? default : new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
-                ipConfigurations.ToList(),
-                dscpConfigurationId is null ? default : new SubResource(dscpConfigurationId, null),
+                networkSecurityGroupId is null ? default : new SubResource(networkSecurityGroupId, default),
+                dnsServers is null ? default : new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), default),
+                (ipConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>()).ToList(),
+                dscpConfigurationId is null ? default : new SubResource(dscpConfigurationId, default),
                 auxiliaryMode,
                 auxiliarySku,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Describes a virtual machine network profile's IP configuration. </summary>
@@ -505,7 +766,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfiguration"/> instance for mocking. </returns>
         public static VirtualMachineNetworkInterfaceIPConfiguration VirtualMachineNetworkInterfaceIPConfiguration(string name = default, VirtualMachineNetworkInterfaceIPConfigurationProperties properties = default)
         {
-            return new VirtualMachineNetworkInterfaceIPConfiguration(name, properties, additionalBinaryDataProperties: null);
+            return new VirtualMachineNetworkInterfaceIPConfiguration(name, properties, default);
         }
 
         /// <param name="subnetId"> The ID of the sub-resource. </param>
@@ -523,14 +784,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             loadBalancerBackendAddressPools ??= new ChangeTrackingList<SubResource>();
 
             return new VirtualMachineNetworkInterfaceIPConfigurationProperties(
-                subnetId is null ? default : new SubResource(subnetId, null),
+                subnetId is null ? default : new SubResource(subnetId, default),
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
-                applicationSecurityGroups.ToList(),
-                applicationGatewayBackendAddressPools.ToList(),
-                loadBalancerBackendAddressPools.ToList(),
-                additionalBinaryDataProperties: null);
+                (applicationSecurityGroups ?? new ChangeTrackingList<SubResource>()).ToList(),
+                (applicationGatewayBackendAddressPools ?? new ChangeTrackingList<SubResource>()).ToList(),
+                (loadBalancerBackendAddressPools ?? new ChangeTrackingList<SubResource>()).ToList(),
+                default);
         }
 
         /// <summary> Describes a virtual machines IP Configuration's PublicIPAddress configuration. </summary>
@@ -543,7 +804,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualMachinePublicIPAddressConfiguration(name, properties, sku, tags, additionalBinaryDataProperties: null);
+            return new VirtualMachinePublicIPAddressConfiguration(name, properties, sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
@@ -554,19 +815,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOptions? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, IPVersion? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
+        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOptions? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIPTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, IPVersion? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
         {
-            ipTags ??= new ChangeTrackingList<VirtualMachineIpTag>();
+            ipTags ??= new ChangeTrackingList<VirtualMachineIPTag>();
 
             return new VirtualMachinePublicIPAddressConfigurationProperties(
                 idleTimeoutInMinutes,
                 deleteOption,
                 dnsSettings,
-                ipTags.ToList(),
-                publicIPPrefixId is null ? default : new SubResource(publicIPPrefixId, null),
+                (ipTags ?? new ChangeTrackingList<VirtualMachineIPTag>()).ToList(),
+                publicIPPrefixId is null ? default : new SubResource(publicIPPrefixId, default),
                 publicIPAddressVersion,
                 publicIPAllocationMethod,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Describes a virtual machines network configuration's DNS settings. </summary>
@@ -575,7 +836,134 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration"/> instance for mocking. </returns>
         public static VirtualMachinePublicIPAddressDnsSettingsConfiguration VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel = default, DomainNameLabelScopeType? domainNameLabelScope = default)
         {
-            return new VirtualMachinePublicIPAddressDnsSettingsConfiguration(domainNameLabel, domainNameLabelScope, additionalBinaryDataProperties: null);
+            return new VirtualMachinePublicIPAddressDnsSettingsConfiguration(domainNameLabel, domainNameLabelScope, default);
+        }
+
+        /// <summary> Contains the IP tag associated with the public IP address. </summary>
+        /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
+        /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineIPTag"/> instance for mocking. </returns>
+        public static VirtualMachineIPTag VirtualMachineIPTag(string ipTagType = default, string tag = default)
+        {
+            return new VirtualMachineIPTag(ipTagType, tag, default);
+        }
+
+        /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
+        /// <param name="name"> Specify public IP sku name. </param>
+        /// <param name="tier"> Specify public IP sku tier. </param>
+        /// <returns> A new <see cref="Models.PublicIPAddressSku"/> instance for mocking. </returns>
+        public static PublicIPAddressSku PublicIPAddressSku(PublicIPAddressSkuName? name = default, PublicIPAddressSkuTier? tier = default)
+        {
+            return new PublicIPAddressSku(name, tier, default);
+        }
+
+        /// <summary> Specifies the hardware profile for the virtual machine. </summary>
+        /// <param name="vmSize"> Specifies the size of the virtual machine. The enum data type is currently deprecated and will be removed by December 23rd 2023. The recommended way to get the list of available sizes is using these APIs: [List all available virtual machine sizes in an availability set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes), [List all available virtual machine sizes in a region]( https://docs.microsoft.com/rest/api/compute/resourceskus/list), [List all available virtual machine sizes for resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes). For more information about virtual machine sizes, see [Sizes for virtual machines](https://docs.microsoft.com/azure/virtual-machines/sizes). The available VM sizes depend on region and availability set. </param>
+        /// <param name="vmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-07-01. This feature is still in preview mode and is not supported for VirtualMachineScaleSet. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineHardwareProfile"/> instance for mocking. </returns>
+        public static VirtualMachineHardwareProfile VirtualMachineHardwareProfile(string vmSize = default, VirtualMachineSizeProperties vmSizeProperties = default)
+        {
+            return new VirtualMachineHardwareProfile(vmSize, vmSizeProperties, default);
+        }
+
+        /// <summary> Specifies VM Size Property settings on the virtual machine. </summary>
+        /// <param name="vCpusAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). </param>
+        /// <param name="vCpusPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). <b>Setting this property to 1 also means that hyper-threading is disabled.</b>. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineSizeProperties"/> instance for mocking. </returns>
+        public static VirtualMachineSizeProperties VirtualMachineSizeProperties(int? vCpusAvailable = default, int? vCpusPerCore = default)
+        {
+            return new VirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore, default);
+        }
+
+        /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Minimum compute api-version: 2020-12-01. </param>
+        /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
+        /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set. </param>
+        /// <param name="userAssignedIdentityResourceId"> Specifies ARM Resource ID of one of the user identities associated with the VM. </param>
+        /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. Minimum compute api-version: 2023-09-01. </param>
+        /// <returns> A new <see cref="Models.SecurityProfile"/> instance for mocking. </returns>
+        public static SecurityProfile SecurityProfile(UefiSettings uefiSettings = default, bool? encryptionAtHost = default, SecurityType? securityType = default, string userAssignedIdentityResourceId = default, ProxyAgentSettings proxyAgentSettings = default)
+        {
+            return new SecurityProfile(
+                uefiSettings,
+                encryptionAtHost,
+                securityType,
+                userAssignedIdentityResourceId is null ? default : new EncryptionIdentity(userAssignedIdentityResourceId, default),
+                proxyAgentSettings,
+                default);
+        }
+
+        /// <summary> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Minimum api-version: 2020-12-01. </summary>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. Minimum compute api-version: 2020-12-01. </param>
+        /// <param name="isVirtualTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. Minimum compute api-version: 2020-12-01. </param>
+        /// <returns> A new <see cref="Models.UefiSettings"/> instance for mocking. </returns>
+        public static UefiSettings UefiSettings(bool? isSecureBootEnabled = default, bool? isVirtualTpmEnabled = default)
+        {
+            return new UefiSettings(isSecureBootEnabled, isVirtualTpmEnabled, default);
+        }
+
+        /// <summary> Specifies ProxyAgent settings for the virtual machine or virtual machine scale set. Minimum api-version: 2023-09-01. </summary>
+        /// <param name="enabled"> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </param>
+        /// <param name="mode"> Specifies the mode that ProxyAgent will execute on. Warning: this property has been deprecated, please specify 'mode' under particular hostendpoint setting. </param>
+        /// <param name="keyIncarnationId"> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </param>
+        /// <param name="wireServer"> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
+        /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
+        /// <param name="addProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
+        /// <returns> A new <see cref="Models.ProxyAgentSettings"/> instance for mocking. </returns>
+        public static ProxyAgentSettings ProxyAgentSettings(bool? enabled = default, Mode? mode = default, int? keyIncarnationId = default, HostEndpointSettings wireServer = default, HostEndpointSettings imds = default, bool? addProxyAgentExtension = default)
+        {
+            return new ProxyAgentSettings(
+                enabled,
+                mode,
+                keyIncarnationId,
+                wireServer,
+                imds,
+                addProxyAgentExtension,
+                default);
+        }
+
+        /// <summary> Specifies particular host endpoint settings. </summary>
+        /// <param name="mode"> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </param>
+        /// <param name="inVMAccessControlProfileReferenceId"> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
+        /// <returns> A new <see cref="Models.HostEndpointSettings"/> instance for mocking. </returns>
+        public static HostEndpointSettings HostEndpointSettings(HostEndpointSettingsMode? mode = default, string inVMAccessControlProfileReferenceId = default)
+        {
+            return new HostEndpointSettings(mode, inVMAccessControlProfileReferenceId, default);
+        }
+
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
+        /// <param name="enabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
+        /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
+        /// <returns> A new <see cref="Models.BootDiagnostics"/> instance for mocking. </returns>
+        public static BootDiagnostics BootDiagnostics(bool? enabled = default, Uri storageUri = default)
+        {
+            return new BootDiagnostics(enabled, storageUri, default);
+        }
+
+        /// <summary> Profile for the scheduled events. </summary>
+        /// <param name="terminateNotificationProfile"> Specifies Terminate Scheduled Event related configurations. </param>
+        /// <param name="osImageNotificationProfile"> Specifies OS Image Scheduled Event related configurations. </param>
+        /// <returns> A new <see cref="Models.ScheduledEventsProfile"/> instance for mocking. </returns>
+        public static ScheduledEventsProfile ScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile = default, OSImageNotificationProfile osImageNotificationProfile = default)
+        {
+            return new ScheduledEventsProfile(terminateNotificationProfile, osImageNotificationProfile, default);
+        }
+
+        /// <summary> Profile properties for the Terminate Scheduled event. </summary>
+        /// <param name="notBeforeTimeout"> Configurable length of time a Virtual Machine being deleted will have to potentially approve the Terminate Scheduled Event before the event is auto approved (timed out). The configuration must be specified in ISO 8601 format, the default value is 5 minutes (PT5M). </param>
+        /// <param name="enable"> Specifies whether the Terminate Scheduled event is enabled or disabled. </param>
+        /// <returns> A new <see cref="Models.TerminateNotificationProfile"/> instance for mocking. </returns>
+        public static TerminateNotificationProfile TerminateNotificationProfile(string notBeforeTimeout = default, bool? enable = default)
+        {
+            return new TerminateNotificationProfile(notBeforeTimeout, enable, default);
+        }
+
+        /// <summary> Profile for the OS Image Scheduled event. </summary>
+        /// <param name="notBeforeTimeout"> Length of time a Virtual Machine being reimaged or having its OS upgraded will have to potentially approve the OS Image Scheduled Event before the event is auto approved (timed out). The configuration is specified in ISO 8601 format, and the value must be 15 minutes (PT15M). </param>
+        /// <param name="enable"> Specifies whether the OS Image Scheduled event is enabled or disabled. </param>
+        /// <returns> A new <see cref="Models.OSImageNotificationProfile"/> instance for mocking. </returns>
+        public static OSImageNotificationProfile OSImageNotificationProfile(string notBeforeTimeout = default, bool? enable = default)
+        {
+            return new OSImageNotificationProfile(notBeforeTimeout, enable, default);
         }
 
         /// <summary> Specifies the required information to reference a compute gallery application version. </summary>
@@ -595,7 +983,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 configurationReference,
                 treatFailureAsDeploymentFailure,
                 enableAutomaticUpgrade,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Defines a virtual machine extension. </summary>
@@ -604,7 +992,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.BulkActionVmExtension"/> instance for mocking. </returns>
         public static BulkActionVmExtension BulkActionVmExtension(string name = default, BulkActionVirtualMachineExtensionProperties properties = default)
         {
-            return new BulkActionVmExtension(name, properties, additionalBinaryDataProperties: null);
+            return new BulkActionVmExtension(name, properties, default);
         }
 
         /// <summary> Describes the properties of a Virtual Machine Extension. </summary>
@@ -633,12 +1021,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 typeHandlerVersion,
                 autoUpgradeMinorVersion,
                 enableAutomaticUpgrade,
-                settings,
-                protectedSettings,
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 suppressFailures,
                 protectedSettingsFromKeyVault,
-                provisionAfterExtensions.ToList(),
-                additionalBinaryDataProperties: null);
+                (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> The flex properties for flexible VM creation. </summary>
@@ -651,7 +1039,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             vmSizeProfiles ??= new ChangeTrackingList<ComputeScheduleVmSizeProfile>();
 
-            return new ComputeScheduleFlexProperties(vmSizeProfiles.ToList(), osType, priorityProfile, zoneAllocationPolicy, additionalBinaryDataProperties: null);
+            return new ComputeScheduleFlexProperties((vmSizeProfiles ?? new ChangeTrackingList<ComputeScheduleVmSizeProfile>()).ToList(), osType, priorityProfile, zoneAllocationPolicy, default);
         }
 
         /// <summary> A VM size profile with a name and rank for flex VM creation. </summary>
@@ -660,7 +1048,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ComputeScheduleVmSizeProfile"/> instance for mocking. </returns>
         public static ComputeScheduleVmSizeProfile ComputeScheduleVmSizeProfile(string name = default, int? rank = default)
         {
-            return new ComputeScheduleVmSizeProfile(name, rank, additionalBinaryDataProperties: null);
+            return new ComputeScheduleVmSizeProfile(name, rank, default);
+        }
+
+        /// <summary> The priority profile for flex VM creation. </summary>
+        /// <param name="type"> The priority type for VM allocation. </param>
+        /// <param name="allocationStrategy"> The allocation strategy for VM size selection. </param>
+        /// <returns> A new <see cref="Models.ComputeSchedulePriorityProfile"/> instance for mocking. </returns>
+        public static ComputeSchedulePriorityProfile ComputeSchedulePriorityProfile(ComputeSchedulePriorityType? @type = default, ComputeScheduleAllocationStrategy? allocationStrategy = default)
+        {
+            return new ComputeSchedulePriorityProfile(@type, allocationStrategy, default);
         }
 
         /// <summary> The zone allocation policy for distributing VMs across availability zones. </summary>
@@ -671,7 +1068,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             zonePreferences ??= new ChangeTrackingList<ComputeScheduleZonePreference>();
 
-            return new ComputeScheduleZoneAllocationPolicy(distributionStrategy, zonePreferences.ToList(), additionalBinaryDataProperties: null);
+            return new ComputeScheduleZoneAllocationPolicy(distributionStrategy, (zonePreferences ?? new ChangeTrackingList<ComputeScheduleZonePreference>()).ToList(), default);
         }
 
         /// <summary> A zone preference with a zone identifier and rank. </summary>
@@ -680,7 +1077,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ComputeScheduleZonePreference"/> instance for mocking. </returns>
         public static ComputeScheduleZonePreference ComputeScheduleZonePreference(string zone = default, int? rank = default)
         {
-            return new ComputeScheduleZonePreference(zone, rank, additionalBinaryDataProperties: null);
+            return new ComputeScheduleZonePreference(zone, rank, default);
         }
 
         /// <summary> The response from a create flex request. </summary>
@@ -693,7 +1090,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new ScheduledActionCreateFlexResult(description, resourceType, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new ScheduledActionCreateFlexResult(description, resourceType, location, (results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
         /// <summary> The ExecuteCreateRequest request for create operations. </summary>
@@ -703,7 +1100,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteCreateContent"/> instance for mocking. </returns>
         public static ExecuteCreateContent ExecuteCreateContent(ResourceProvisionPayload resourceConfigParameters = default, ScheduledActionExecutionParameterDetail executionParameters = default, string correlationId = default)
         {
-            return new ExecuteCreateContent(resourceConfigParameters, executionParameters, correlationId, additionalBinaryDataProperties: null);
+            return new ExecuteCreateContent(resourceConfigParameters, executionParameters, correlationId, default);
         }
 
         /// <summary> Resource creation data model. </summary>
@@ -712,11 +1109,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
         /// <returns> A new <see cref="Models.ResourceProvisionPayload"/> instance for mocking. </returns>
-        public static ResourceProvisionPayload ResourceProvisionPayload(BulkVmConfiguration virtualMachineBaseProfile = default, IEnumerable<BulkVmConfiguration> virtualMachineOverrides = default, int resourceCount = default, string resourcePrefix = default)
+        public static ResourceProvisionPayload ResourceProvisionPayload(BulkVmConfiguration virtualMachineBaseProfile, IEnumerable<BulkVmConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix)
         {
             virtualMachineOverrides ??= new ChangeTrackingList<BulkVmConfiguration>();
 
-            return new ResourceProvisionPayload(virtualMachineBaseProfile, virtualMachineOverrides.ToList(), resourceCount, resourcePrefix, additionalBinaryDataProperties: null);
+            return new ResourceProvisionPayload(virtualMachineBaseProfile, (virtualMachineOverrides ?? new ChangeTrackingList<BulkVmConfiguration>()).ToList(), resourceCount, resourcePrefix, default);
         }
 
         /// <summary> The response from a create request. </summary>
@@ -729,7 +1126,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new CreateResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new CreateResourceOperationResult(description, @type, location, (results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -739,7 +1136,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
         public static ExecuteDeleteContent ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default, bool? isForceDeletion = default)
         {
-            return new ExecuteDeleteContent(executionParameters, new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, isForceDeletion, additionalBinaryDataProperties: null);
+            return new ExecuteDeleteContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, isForceDeletion, default);
         }
 
         /// <summary> The response from a delete request. </summary>
@@ -752,7 +1149,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new DeleteResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new DeleteResourceOperationResult(description, @type, location, (results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
         /// <summary> This is the request to get operation status using operationids. </summary>
@@ -763,7 +1160,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new GetOperationStatusContent(operationIds.ToList(), correlationId, additionalBinaryDataProperties: null);
+            return new GetOperationStatusContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), correlationId, default);
         }
 
         /// <summary> This is the response from a get operations status request. </summary>
@@ -773,7 +1170,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new GetOperationStatusResult(results.ToList(), additionalBinaryDataProperties: null);
+            return new GetOperationStatusResult((results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
         /// <summary> This is the request to cancel running operations in scheduled actions using the operation ids. </summary>
@@ -784,7 +1181,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new CancelOperationsContent(operationIds.ToList(), correlationId, additionalBinaryDataProperties: null);
+            return new CancelOperationsContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), correlationId, default);
         }
 
         /// <summary> This is the response from a cancel operations request. </summary>
@@ -794,7 +1191,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new CancelOperationsResult(results.ToList(), additionalBinaryDataProperties: null);
+            return new CancelOperationsResult((results ?? new ChangeTrackingList<ResourceOperationResult>()).ToList(), default);
         }
 
         /// <summary> This is the request to get errors per vm operations. </summary>
@@ -804,7 +1201,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new GetOperationErrorsContent(operationIds.ToList(), additionalBinaryDataProperties: null);
+            return new GetOperationErrorsContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> This is the response from a get operations errors request. </summary>
@@ -814,7 +1211,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             results ??= new ChangeTrackingList<OperationErrorsResult>();
 
-            return new GetOperationErrorsResult(results.ToList(), additionalBinaryDataProperties: null);
+            return new GetOperationErrorsResult((results ?? new ChangeTrackingList<OperationErrorsResult>()).ToList(), default);
         }
 
         /// <summary> This is the first level of operation errors from the request when clients get errors per vm operation. </summary>
@@ -835,10 +1232,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 createdOn,
                 activationOn,
                 completedOn,
-                operationErrors.ToList(),
+                (operationErrors ?? new ChangeTrackingList<OperationErrorDetails>()).ToList(),
                 requestErrorCode,
                 requestErrorDetails,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> This defines a list of operation errors associated with a unique operationId. </summary>
@@ -858,7 +1255,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 errorDetailsTimestamp,
                 azureOperationName,
                 crpOperationId,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The scheduled action resource. </summary>
@@ -879,36 +1276,36 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Scheduled action properties. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endsOn"> The time when the scheduled action is supposed to stop scheduling. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <returns> A new <see cref="Models.ScheduledActionProperties"/> instance for mocking. </returns>
-        public static ScheduledActionProperties ScheduledActionProperties(ScheduledActionResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default, ScheduledActionResourceProvisioningState? provisioningState = default)
+        public static ScheduledActionProperties ScheduledActionProperties(ScheduledActionResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default, ScheduledActionResourceProvisioningState? provisioningState = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
 
             return new ScheduledActionProperties(
                 resourceType,
                 actionType,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 schedule,
-                notificationSettings.ToList(),
+                (notificationSettings ?? new ChangeTrackingList<NotificationSettings>()).ToList(),
                 disabled,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Specify the schedule in which the scheduled action is supposed to follow. </summary>
@@ -929,12 +1326,23 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ScheduledActionsSchedule(
                 scheduledTime,
                 timeZone,
-                requestedWeekDays.ToList(),
-                requestedMonths.ToList(),
-                requestedDaysOfTheMonth.ToList(),
+                (requestedWeekDays ?? new ChangeTrackingList<ScheduledActionsScheduleWeekDay>()).ToList(),
+                (requestedMonths ?? new ChangeTrackingList<ScheduledActionsScheduleMonth>()).ToList(),
+                (requestedDaysOfTheMonth ?? new ChangeTrackingList<int>()).ToList(),
                 executionParameters,
                 deadlineType,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> The information about notifications to be send to about upcoming operations. </summary>
+        /// <param name="destination"> Where the notification should be sent. For email, it should follow email format. </param>
+        /// <param name="type"> Type of notification to be sent. </param>
+        /// <param name="language"> The language the notification should be sent on. </param>
+        /// <param name="isDisabled"> Tells if the notification is enabled or not. </param>
+        /// <returns> A new <see cref="Models.NotificationSettings"/> instance for mocking. </returns>
+        public static NotificationSettings NotificationSettings(string destination = default, NotificationType @type = default, NotificationLanguage language = default, bool? isDisabled = default)
+        {
+            return new NotificationSettings(destination, @type, language, isDisabled, default);
         }
 
         /// <summary> The type used for update operations of the ScheduledAction. </summary>
@@ -945,31 +1353,31 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ScheduledActionPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new ScheduledActionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <summary> The updatable properties of the ScheduledAction. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endsOn"> The time when the scheduled action is supposed to stop scheduling. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <returns> A new <see cref="Models.ScheduledActionPatchProperties"/> instance for mocking. </returns>
-        public static ScheduledActionPatchProperties ScheduledActionPatchProperties(ScheduledActionResourceType? resourceType = default, ScheduledActionType? actionType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default)
+        public static ScheduledActionPatchProperties ScheduledActionPatchProperties(ScheduledActionResourceType? resourceType = default, ScheduledActionType? actionType = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
 
             return new ScheduledActionPatchProperties(
                 resourceType,
                 actionType,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 schedule,
-                notificationSettings.ToList(),
+                (notificationSettings ?? new ChangeTrackingList<NotificationSettings>()).ToList(),
                 disabled,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Represents an scheduled action resource metadata. </summary>
@@ -991,8 +1399,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 id,
                 @type,
                 resourceId,
-                notificationSettings.ToList(),
-                additionalBinaryDataProperties: null);
+                (notificationSettings ?? new ChangeTrackingList<NotificationSettings>()).ToList(),
+                default);
         }
 
         /// <summary> Request model to attach a list of scheduled action resources. </summary>
@@ -1002,7 +1410,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             resources ??= new ChangeTrackingList<ScheduledActionResourceDetails>();
 
-            return new ScheduledActionResourceAttachContent(resources.ToList(), additionalBinaryDataProperties: null);
+            return new ScheduledActionResourceAttachContent((resources ?? new ChangeTrackingList<ScheduledActionResourceDetails>()).ToList(), default);
         }
 
         /// <summary> The response from scheduled action resource requests, which contains the status of each resource. </summary>
@@ -1013,7 +1421,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             resourcesStatuses ??= new ChangeTrackingList<ScheduledActionResourceStatus>();
 
-            return new ScheduledActionResourceOperationResult(totalResources, resourcesStatuses.ToList(), additionalBinaryDataProperties: null);
+            return new ScheduledActionResourceOperationResult(totalResources, (resourcesStatuses ?? new ChangeTrackingList<ScheduledActionResourceStatus>()).ToList(), default);
         }
 
         /// <summary> The status of a resource after a resource level operation was performed. </summary>
@@ -1023,7 +1431,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ScheduledActionResourceStatus"/> instance for mocking. </returns>
         public static ScheduledActionResourceStatus ScheduledActionResourceStatus(ResourceIdentifier resourceId = default, ScheduledActionResourceOperationStatus status = default, ResponseError error = default)
         {
-            return new ScheduledActionResourceStatus(resourceId, status, error, additionalBinaryDataProperties: null);
+            return new ScheduledActionResourceStatus(resourceId, status, error, default);
         }
 
         /// <summary> Request model to detach a list of scheduled action resources. </summary>
@@ -1033,7 +1441,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             resources ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new ScheduledActionResourceDetachContent(resources.ToList(), additionalBinaryDataProperties: null);
+            return new ScheduledActionResourceDetachContent((resources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <summary> Request model perform a resource operation in a list of resources. </summary>
@@ -1043,7 +1451,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             resources ??= new ChangeTrackingList<ScheduledActionResourceDetails>();
 
-            return new ScheduledActionResourcePatch(resources.ToList(), additionalBinaryDataProperties: null);
+            return new ScheduledActionResourcePatch((resources ?? new ChangeTrackingList<ScheduledActionResourceDetails>()).ToList(), default);
         }
 
         /// <summary> The request to cancel an occurrence. </summary>
@@ -1053,7 +1461,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new OccurrenceCancelContent(resourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new OccurrenceCancelContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -1070,8 +1478,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Properties for an occurrence. </summary>
@@ -1081,7 +1489,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ScheduledActionOccurrenceProperties"/> instance for mocking. </returns>
         public static ScheduledActionOccurrenceProperties ScheduledActionOccurrenceProperties(DateTimeOffset scheduledOn = default, OccurrenceResultSummary resultSummary = default, ScheduledActionOccurrenceState? provisioningState = default)
         {
-            return new ScheduledActionOccurrenceProperties(scheduledOn, resultSummary, provisioningState, additionalBinaryDataProperties: null);
+            return new ScheduledActionOccurrenceProperties(scheduledOn, resultSummary, provisioningState, default);
         }
 
         /// <summary> The summarized provisioning result of an occurrence. </summary>
@@ -1092,7 +1500,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             statuses ??= new ChangeTrackingList<ResourceResultSummary>();
 
-            return new OccurrenceResultSummary(total, statuses.ToList(), additionalBinaryDataProperties: null);
+            return new OccurrenceResultSummary(total, (statuses ?? new ChangeTrackingList<ResourceResultSummary>()).ToList(), default);
         }
 
         /// <summary> The status of the resources. </summary>
@@ -1102,7 +1510,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <returns> A new <see cref="Models.ResourceResultSummary"/> instance for mocking. </returns>
         public static ResourceResultSummary ResourceResultSummary(string code = default, int count = default, ResponseError errorDetails = default)
         {
-            return new ResourceResultSummary(code, count, errorDetails, additionalBinaryDataProperties: null);
+            return new ResourceResultSummary(code, count, errorDetails, default);
         }
 
         /// <summary> The scheduled action extension. </summary>
@@ -1119,22 +1527,22 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Scheduled action extension properties. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endsOn"> The time when the scheduled action is supposed to stop scheduling. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="resourceNotificationSettings"> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </param>
         /// <returns> A new <see cref="Models.ScheduledActionsExtensionProperties"/> instance for mocking. </returns>
-        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(ScheduledActionResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default, ScheduledActionResourceProvisioningState? provisioningState = default, IEnumerable<NotificationSettings> resourceNotificationSettings = default)
+        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(ScheduledActionResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default, ScheduledActionResourceProvisioningState? provisioningState = default, IEnumerable<NotificationSettings> resourceNotificationSettings = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
             resourceNotificationSettings ??= new ChangeTrackingList<NotificationSettings>();
@@ -1142,14 +1550,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ScheduledActionsExtensionProperties(
                 resourceType,
                 actionType,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 schedule,
-                notificationSettings.ToList(),
+                (notificationSettings ?? new ChangeTrackingList<NotificationSettings>()).ToList(),
                 disabled,
                 provisioningState,
-                resourceNotificationSettings.ToList(),
-                additionalBinaryDataProperties: null);
+                (resourceNotificationSettings ?? new ChangeTrackingList<NotificationSettings>()).ToList(),
+                default);
         }
 
         /// <summary> Represents an scheduled action resource metadata. </summary>
@@ -1174,11 +1582,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 id,
                 @type,
                 resourceId,
-                notificationSettings.ToList(),
+                (notificationSettings ?? new ChangeTrackingList<NotificationSettings>()).ToList(),
                 scheduledOn,
                 provisioningState,
                 errorDetails,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Request to ask for a delay in an occurrence, delay should be set to client local time eg (ACST) 2025-05-30T22:03:00+09:30, (PST) 2025-05-30T06:35:00-07:00. </summary>
@@ -1189,7 +1597,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new OccurrenceDelayContent(delayOn, resourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new OccurrenceDelayContent(delayOn, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <summary> The scheduled action extension. </summary>
@@ -1206,8 +1614,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The properties of the occurrence extension. </summary>
@@ -1227,27 +1635,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
             return new ScheduledActionOccurrenceExtensionProperties(
                 resourceId,
-                notificationSettings.ToList(),
+                (notificationSettings ?? new ChangeTrackingList<NotificationSettings>()).ToList(),
                 scheduledOn,
                 provisioningState,
                 errorDetails,
                 scheduledActionId,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceProvisionPayload"/>. </summary>
-        /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </param>
-        /// <param name="resourceOverrides"> JSON array, that contains VM properties that should to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </param>
+        /// <summary> Resource creation data model. </summary>
+        /// <param name="baseProfile"></param>
+        /// <param name="resourceOverrides"></param>
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
         /// <returns> A new <see cref="Models.ResourceProvisionPayload"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceProvisionPayload ResourceProvisionPayload(IDictionary<string, BinaryData> baseProfile, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides, int resourceCount, string resourcePrefix)
+        public static ResourceProvisionPayload ResourceProvisionPayload(IDictionary<string, BinaryData> baseProfile = default, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides = default, int resourceCount = 0, string resourcePrefix = default)
         {
-            baseProfile ??= new ChangeTrackingDictionary<string, BinaryData>();
-            resourceOverrides ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
-
-            return new ResourceProvisionPayload(default, default, resourceCount, resourcePrefix, additionalBinaryDataProperties: null);
+            return new ResourceProvisionPayload(default, default, resourceCount, resourcePrefix, default);
         }
     }
 }

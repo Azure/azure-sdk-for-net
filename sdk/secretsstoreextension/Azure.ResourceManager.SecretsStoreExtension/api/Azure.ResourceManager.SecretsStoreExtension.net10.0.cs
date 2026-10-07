@@ -167,9 +167,11 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
 {
     public static partial class ArmSecretsStoreExtensionModelFactory
     {
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties AzureKeyVaultSecretProviderClassUpdateProperties(string keyvaultName = null, Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName? cloudName = default(Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName?), System.Guid? clientId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), string objects = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData KeyVaultSecretProviderClassData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassPatch KeyVaultSecretProviderClassPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = null, System.Guid clientId = default(System.Guid), System.Guid tenantId = default(System.Guid), string objects = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? provisioningState = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = null, Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName? cloudName = default(Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName?), System.Guid clientId = default(System.Guid), System.Guid tenantId = default(System.Guid), string objects = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? provisioningState = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping KubernetesSecretObjectMapping(string sourcePath = null, string targetKey = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition SecretSyncCondition(System.DateTimeOffset? lastTransitionOn = default(System.DateTimeOffset?), string message = null, long? observedGeneration = default(long?), string reason = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType status = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType), string type = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.SecretSyncData SecretSyncData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncPatch SecretSyncPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties properties = null) { throw null; }
@@ -177,10 +179,31 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus SecretSyncStatus(System.DateTimeOffset? lastSuccessfulSyncOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition> conditions = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties SecretSyncUpdateProperties(string secretProviderClassName = null, string serviceAccountName = null, string forceSynchronization = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping> objectSecretMapping = null) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureCloudName : System.IEquatable<Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureCloudName(string value) { throw null; }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName AzureChinaCloud { get { throw null; } }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName AzureGermanCloud { get { throw null; } }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName AzurePublicCloud { get { throw null; } }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName AzureStackCloud { get { throw null; } }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName AzureUSGovernmentCloud { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName left, Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName left, Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AzureKeyVaultSecretProviderClassUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>
     {
         public AzureKeyVaultSecretProviderClassUpdateProperties() { }
         public System.Guid? ClientId { get { throw null; } set { } }
+        public Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName? CloudName { get { throw null; } set { } }
         public string KeyvaultName { get { throw null; } set { } }
         public string Objects { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
@@ -213,6 +236,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     {
         public KeyVaultSecretProviderClassProperties(string keyvaultName, System.Guid clientId, System.Guid tenantId) { }
         public System.Guid ClientId { get { throw null; } set { } }
+        public Azure.ResourceManager.SecretsStoreExtension.Models.AzureCloudName? CloudName { get { throw null; } set { } }
         public string KeyvaultName { get { throw null; } set { } }
         public string Objects { get { throw null; } set { } }
         public Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? ProvisioningState { get { throw null; } }

@@ -3,6 +3,8 @@
 
 using Azure.Generator.Management.Models;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Tests
 {
@@ -108,6 +110,91 @@ namespace Azure.Generator.Management.Tests
             Assert.That(
                 RequestPathPattern.GetMaximumSharingSegmentsCount(right, left),
                 Is.EqualTo(RequestPathPattern.GetMaximumSharingSegmentsCount(left, right)));
+        }
+
+        [Test]
+        public void GetHashCode_EqualPatternsUseEqualHashCodes()
+        {
+            var fromString = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var fromSegments = new RequestPathPattern(fromString.AsEnumerable());
+
+            Assert.That(fromSegments, Is.EqualTo(fromString));
+            Assert.That(fromSegments.GetHashCode(), Is.EqualTo(fromString.GetHashCode()));
+        }
+
+        [Test]
+        public void GetHashCode_EqualPatternsWithDifferentVariableNamesUseEqualHashCodes()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
+
+            Assert.That(second, Is.EqualTo(first));
+            Assert.That(second.GetHashCode(), Is.EqualTo(first.GetHashCode()));
+        }
+
+        [Test]
+        public void GetHashCode_EqualPatternsWithDifferentConstantCasingUseEqualHashCodes()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
+
+            Assert.That(second, Is.EqualTo(first));
+            Assert.That(second.GetHashCode(), Is.EqualTo(first.GetHashCode()));
+        }
+
+        [Test]
+        public void Equals_NonStrictTreatsVariableNamesAsEqual()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
+
+            Assert.That(first.Equals(second), Is.True);
+        }
+
+        [Test]
+        public void Equals_TreatsProviderSegmentCasingAsEqual()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}/Providers/Microsoft.Storage/storageAccounts/{name}");
+
+            Assert.That(first.Equals(second), Is.True);
+            Assert.That(first.GetHashCode(), Is.EqualTo(second.GetHashCode()));
+            Assert.That(new RequestPathSegment("Providers").IsProvidersSegment, Is.True);
+        }
+
+        [Test]
+        public void ResourceType_ExtractsProviderNamespaceAndTypeSegments()
+        {
+            var path = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}");
+
+            var resourceType = path.ResourceType;
+
+            Assert.That(resourceType.SerializedResourceType, Is.EqualTo("Microsoft.Storage/storageAccounts/blobServices/containers"));
+            Assert.That(resourceType.Select(segment => segment.Value), Is.EqualTo(new[] { "Microsoft.Storage", "storageAccounts", "blobServices", "containers" }));
+            Assert.That(path.ResourceType, Is.SameAs(resourceType));
+        }
+
+        [Test]
+        public void ResourceType_ReturnsNullForNonResourcePath()
+        {
+            var path = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+
+            Assert.That(path.ResourceType.Count, Is.EqualTo(0));
+            Assert.That(path.ResourceType.SerializedResourceType, Is.Empty);
+        }
+
+        [Test]
+        public void GetHashCode_DifferentPatternsCanCoexistInHashSet()
+        {
+            var resourceGroup = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var subscription = new RequestPathPattern("/subscriptions/{subscriptionId}");
+
+            Assert.That(resourceGroup, Is.Not.EqualTo(subscription));
+
+            var set = new HashSet<RequestPathPattern> { resourceGroup, subscription };
+            Assert.That(set.Count, Is.EqualTo(2));
+            Assert.That(set.Contains(resourceGroup), Is.True);
+            Assert.That(set.Contains(subscription), Is.True);
         }
     }
 }

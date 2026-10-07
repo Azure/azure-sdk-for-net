@@ -20,34 +20,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageApplianceProperties"/>. </summary>
+        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
-        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
-        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rackId"/>, <paramref name="storageApplianceSkuId"/>, <paramref name="serialNumber"/> or <paramref name="administratorCredentials"/> is null. </exception>
-        public StorageApplianceProperties(ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials)
+        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="administratorCredentials"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="storageApplianceSkuId"/> is null. </exception>
+        public StorageApplianceProperties(AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId)
         {
-            Argument.AssertNotNull(rackId, nameof(rackId));
-            Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
             Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
+            Argument.AssertNotNull(rackId, nameof(rackId));
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
 
+            AdministratorCredentials = administratorCredentials;
             RackId = rackId;
-            StorageApplianceSkuId = storageApplianceSkuId;
             RackSlot = rackSlot;
             SerialNumber = serialNumber;
-            AdministratorCredentials = administratorCredentials;
+            StorageApplianceSkuId = storageApplianceSkuId;
             ExpansionShelves = new ChangeTrackingList<StorageApplianceExpansionShelf>();
             SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageApplianceProperties"/>. </summary>
+        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
-        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
-        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
+        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="caCertificate"> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </param>
         /// <param name="capacity"> The total capacity of the storage appliance. Measured in GiB. </param>
         /// <param name="capacityUsed"> The amount of storage consumed. Measured in GiB. </param>
@@ -58,19 +58,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="managementIPv4Address"> The endpoint for the management interface of the storage appliance. </param>
         /// <param name="manufacturer"> The manufacturer of the storage appliance. </param>
         /// <param name="model"> The model of the storage appliance. </param>
+        /// <param name="monitoringConfigurationStatus"> The monitoring configuration status of the storage appliance. </param>
         /// <param name="remoteVendorManagementFeature"> The indicator of whether the storage appliance supports remote vendor management. </param>
         /// <param name="remoteVendorManagementStatus"> The indicator of whether the remote vendor management feature is enabled or disabled, or unsupported if it is an unsupported feature. </param>
         /// <param name="secretRotationStatus"> The list of statuses that represent secret rotation activity. </param>
         /// <param name="version"> The version of the storage appliance. </param>
         /// <param name="provisioningState"> The provisioning state of the storage appliance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageApplianceProperties(ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, NetworkCloudCertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<StorageApplianceExpansionShelf> expansionShelves, IPAddress managementIPv4Address, string manufacturer, string model, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string version, StorageApplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageApplianceProperties(AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId, NetworkCloudCertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<StorageApplianceExpansionShelf> expansionShelves, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceMonitoringConfigurationStatus monitoringConfigurationStatus, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string version, StorageApplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            AdministratorCredentials = administratorCredentials;
             RackId = rackId;
-            StorageApplianceSkuId = storageApplianceSkuId;
             RackSlot = rackSlot;
             SerialNumber = serialNumber;
-            AdministratorCredentials = administratorCredentials;
+            StorageApplianceSkuId = storageApplianceSkuId;
             CACertificate = caCertificate;
             Capacity = capacity;
             CapacityUsed = capacityUsed;
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ManagementIPv4Address = managementIPv4Address;
             Manufacturer = manufacturer;
             Model = model;
+            MonitoringConfigurationStatus = monitoringConfigurationStatus;
             RemoteVendorManagementFeature = remoteVendorManagementFeature;
             RemoteVendorManagementStatus = remoteVendorManagementStatus;
             SecretRotationStatus = secretRotationStatus;
@@ -89,11 +91,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
+        public AdministrativeCredentials AdministratorCredentials { get; set; }
+
         /// <summary> The resource ID of the rack where this storage appliance resides. </summary>
         public ResourceIdentifier RackId { get; set; }
-
-        /// <summary> The SKU for the storage appliance. </summary>
-        public string StorageApplianceSkuId { get; set; }
 
         /// <summary> The slot the storage appliance is in the rack based on the BOM configuration. </summary>
         public long RackSlot { get; set; }
@@ -101,8 +103,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The serial number for the storage appliance. </summary>
         public string SerialNumber { get; set; }
 
-        /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
-        public AdministrativeCredentials AdministratorCredentials { get; set; }
+        /// <summary> The SKU for the storage appliance. </summary>
+        public string StorageApplianceSkuId { get; set; }
 
         /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </summary>
         public NetworkCloudCertificateInfo CACertificate { get; }
@@ -133,6 +135,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The model of the storage appliance. </summary>
         public string Model { get; }
+
+        /// <summary> The monitoring configuration status of the storage appliance. </summary>
+        public StorageApplianceMonitoringConfigurationStatus MonitoringConfigurationStatus { get; }
 
         /// <summary> The indicator of whether the storage appliance supports remote vendor management. </summary>
         public RemoteVendorManagementFeature? RemoteVendorManagementFeature { get; }

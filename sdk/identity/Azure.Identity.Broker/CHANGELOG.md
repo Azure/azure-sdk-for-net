@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.8.0-beta.1 (2026-06-09)
+
+### Features Added
+
+- Added `ManagedIdentityCredentialAttestationOptions` to enable Credential Guard key attestation support for managed identity mTLS Proof-of-Possession flows.
+
+### Other Changes
+
+- Updated `Azure.Core` dependency to version 1.59.0.
+
+## 1.7.0 (2026-05-26)
+
+### Features Added
+
+- Added `BrokerCredentialResolver` and `AddBrokerCredentialResolver()` extensions for config- and DI-based resolution of `BrokerCredential` and `VisualStudioCodeCredential` sources. (Experimental, `SCME0002`.)
 
 ## 1.6.0 (2026-04-14)
 

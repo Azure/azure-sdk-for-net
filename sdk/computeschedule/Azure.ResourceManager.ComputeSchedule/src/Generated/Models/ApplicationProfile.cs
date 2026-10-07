@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM. </summary>
-        public IList<VmGalleryApplication> GalleryApplications { get; }
+        public IList<VmGalleryApplication> GalleryApplications { get; } = new ChangeTrackingList<VmGalleryApplication>();
     }
 }

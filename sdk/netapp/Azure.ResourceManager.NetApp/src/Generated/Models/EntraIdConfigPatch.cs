@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EntraIdConfigPatch"/>. </summary>
-        public EntraIdConfigPatch()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EntraIdConfigPatch"/>. </summary>
         /// <param name="applicationId"> ApplicationId of the app created by customer to provide authentication and required API permissions for Microsoft Graph endpoint. </param>
         /// <param name="domain"> Domain of the Active directory synced to Entra ID for hybrid identities. </param>
         /// <param name="serverNamePrefix"> Using ServerNamePrefix, FQDN (Fully Qualified Domain Name) will be generated for SMB share, using this FQDN, SMB Share will be mounted on Entra Joined VM. </param>
@@ -35,17 +30,5 @@ namespace Azure.ResourceManager.NetApp.Models
             EntraIdAkvConfig = entraIdAkvConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> ApplicationId of the app created by customer to provide authentication and required API permissions for Microsoft Graph endpoint. </summary>
-        public string ApplicationId { get; set; }
-
-        /// <summary> Domain of the Active directory synced to Entra ID for hybrid identities. </summary>
-        public string Domain { get; set; }
-
-        /// <summary> Using ServerNamePrefix, FQDN (Fully Qualified Domain Name) will be generated for SMB share, using this FQDN, SMB Share will be mounted on Entra Joined VM. </summary>
-        public string ServerNamePrefix { get; set; }
-
-        /// <summary> Using AKV config, certificate will be fetched, which will contain private key &amp; public certificate, that correspond to the public certificate which is uploaded on the application created by customer. This will be used further for authentication. </summary>
-        public EntraIdAkvConfigPatch EntraIdAkvConfig { get; set; }
     }
 }

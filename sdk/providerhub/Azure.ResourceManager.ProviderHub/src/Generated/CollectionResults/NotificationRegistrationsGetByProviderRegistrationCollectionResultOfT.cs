@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProviderHub
                     yield break;
                 }
                 NotificationRegistrationListResult result = NotificationRegistrationListResult.FromResponse(response);
-                yield return Page<NotificationRegistrationData>.FromValues((IReadOnlyList<NotificationRegistrationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NotificationRegistrationData>.FromValues((IReadOnlyList<NotificationRegistrationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

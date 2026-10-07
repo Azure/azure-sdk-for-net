@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown version of DependencyReference. </summary>
     internal partial class UnknownDependencyReference : DependencyReference
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDependencyReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dependencyReferenceType, serializedAdditionalRawData)
-        {
-            DependencyReferenceType = dependencyReferenceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDependencyReference"/> for deserialization. </summary>
-        internal UnknownDependencyReference()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(dependencyReferenceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

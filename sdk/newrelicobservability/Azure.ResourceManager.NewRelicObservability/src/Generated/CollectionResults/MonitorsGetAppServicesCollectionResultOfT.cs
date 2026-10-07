@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                     yield break;
                 }
                 AppServicesListResponse result = AppServicesListResponse.FromResponse(response);
-                yield return Page<NewRelicObservabilityAppServiceInfo>.FromValues((IReadOnlyList<NewRelicObservabilityAppServiceInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NewRelicObservabilityAppServiceInfo>.FromValues((IReadOnlyList<NewRelicObservabilityAppServiceInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

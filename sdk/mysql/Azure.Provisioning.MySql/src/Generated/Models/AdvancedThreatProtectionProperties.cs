@@ -62,9 +62,13 @@ namespace Azure.Provisioning.MySql
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true, format: "O");
             _state = DefineProperty<AdvancedThreatProtectionState>(nameof(State), new string[] { "state" });
             _provisioningState = DefineProperty<AdvancedThreatProtectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AdvancedThreatProtectionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

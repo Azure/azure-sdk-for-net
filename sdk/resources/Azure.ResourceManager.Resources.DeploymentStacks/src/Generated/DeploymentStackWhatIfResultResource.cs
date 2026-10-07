@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             TryGetApiVersion(ResourceType, out string deploymentStackWhatIfResultApiVersion);
             _deploymentStacksWhatIfAtScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.DeploymentStacks", ResourceType.Namespace, Diagnostics);
-            _deploymentStacksWhatIfAtScopeRestClient = new DeploymentStacksWhatIfAtScope(_deploymentStacksWhatIfAtScopeClientDiagnostics, Pipeline, Endpoint, deploymentStackWhatIfResultApiVersion ?? "2025-07-01");
+            _deploymentStacksWhatIfAtScopeRestClient = new DeploymentStacksWhatIfAtScope(_deploymentStacksWhatIfAtScopeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentStackWhatIfResultApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 HttpMessage message = _deploymentStacksWhatIfAtScopeRestClient.CreateWhatIfRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource> operation = new DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource>(
-                    new DeploymentStackWhatIfResultOperationSource(Client),
+                    new DeploymentStackWhatIfResultResourceOperationSource(Client),
                     _deploymentStacksWhatIfAtScopeClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 HttpMessage message = _deploymentStacksWhatIfAtScopeRestClient.CreateWhatIfRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource> operation = new DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource>(
-                    new DeploymentStackWhatIfResultOperationSource(Client),
+                    new DeploymentStackWhatIfResultResourceOperationSource(Client),
                     _deploymentStacksWhatIfAtScopeClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 HttpMessage message = _deploymentStacksWhatIfAtScopeRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DeploymentStackWhatIfResultData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource> operation = new DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource>(
-                    new DeploymentStackWhatIfResultOperationSource(Client),
+                    new DeploymentStackWhatIfResultResourceOperationSource(Client),
                     _deploymentStacksWhatIfAtScopeClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 HttpMessage message = _deploymentStacksWhatIfAtScopeRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DeploymentStackWhatIfResultData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource> operation = new DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource>(
-                    new DeploymentStackWhatIfResultOperationSource(Client),
+                    new DeploymentStackWhatIfResultResourceOperationSource(Client),
                     _deploymentStacksWhatIfAtScopeClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 DaprComponentResiliencyPoliciesCollection result = DaprComponentResiliencyPoliciesCollection.FromResponse(response);
-                yield return Page<DaprComponentResiliencyPolicyData>.FromValues((IReadOnlyList<DaprComponentResiliencyPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DaprComponentResiliencyPolicyData>.FromValues((IReadOnlyList<DaprComponentResiliencyPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

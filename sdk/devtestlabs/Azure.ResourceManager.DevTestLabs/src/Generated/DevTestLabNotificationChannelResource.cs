@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(ResourceType, out string devTestLabNotificationChannelApiVersion);
             _notificationChannelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            _notificationChannelsRestClient = new NotificationChannels(_notificationChannelsClientDiagnostics, Pipeline, Endpoint, devTestLabNotificationChannelApiVersion ?? "2018-09-15");
+            _notificationChannelsRestClient = new NotificationChannels(_notificationChannelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabNotificationChannelApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 

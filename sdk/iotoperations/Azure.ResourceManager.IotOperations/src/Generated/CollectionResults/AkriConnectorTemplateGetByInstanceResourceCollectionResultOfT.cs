@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.IotOperations
                     yield break;
                 }
                 AkriConnectorTemplateResourceListResult result = AkriConnectorTemplateResourceListResult.FromResponse(response);
-                yield return Page<IotOperationsAkriConnectorTemplateData>.FromValues((IReadOnlyList<IotOperationsAkriConnectorTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IotOperationsAkriConnectorTemplateData>.FromValues((IReadOnlyList<IotOperationsAkriConnectorTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

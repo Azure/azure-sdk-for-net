@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 KeyGroupListResult result = KeyGroupListResult.FromResponse(response);
-                yield return Page<CdnKeyGroupData>.FromValues((IReadOnlyList<CdnKeyGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CdnKeyGroupData>.FromValues((IReadOnlyList<CdnKeyGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

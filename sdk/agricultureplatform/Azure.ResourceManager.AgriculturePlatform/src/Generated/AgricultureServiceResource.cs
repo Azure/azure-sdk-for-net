@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         {
             TryGetApiVersion(ResourceType, out string agricultureServiceApiVersion);
             _agriServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AgriculturePlatform", ResourceType.Namespace, Diagnostics);
-            _agriServiceRestClient = new AgriService(_agriServiceClientDiagnostics, Pipeline, Endpoint, agricultureServiceApiVersion ?? "2024-06-01-preview");
+            _agriServiceRestClient = new AgriService(_agriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agricultureServiceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 HttpMessage message = _agriServiceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgricultureServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AgriculturePlatformArmOperation<AgricultureServiceResource> operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(
-                    new AgricultureServiceOperationSource(Client),
+                    new AgricultureServiceResourceOperationSource(Client),
                     _agriServiceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 HttpMessage message = _agriServiceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgricultureServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AgriculturePlatformArmOperation<AgricultureServiceResource> operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(
-                    new AgricultureServiceOperationSource(Client),
+                    new AgricultureServiceResourceOperationSource(Client),
                     _agriServiceClientDiagnostics,
                     Pipeline,
                     message.Request,

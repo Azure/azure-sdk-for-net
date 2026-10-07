@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The list of roles in the cluster. </summary>
-        public IList<HDInsightClusterRole> Roles { get; }
+        public IList<HDInsightClusterRole> Roles { get; } = new ChangeTrackingList<HDInsightClusterRole>();
     }
 }

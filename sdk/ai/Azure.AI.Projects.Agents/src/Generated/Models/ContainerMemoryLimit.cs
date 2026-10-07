@@ -5,7 +5,7 @@
 namespace OpenAI
 {
     /// <summary></summary>
-    internal enum ContainerMemoryLimit
+    public enum ContainerMemoryLimit
     {
         /// <summary> _1g. </summary>
         _1g,

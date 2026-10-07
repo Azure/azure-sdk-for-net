@@ -1,0 +1,31 @@
+# Azure.AI.Language.QuestionAnswering.Inference approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# This package is the TypeSpec-generated successor to the GA'd Azure.AI.Language.QuestionAnswering
+# library and deliberately mirrors its public type names so existing code migrates by changing the
+# namespace alone. Every collision AZC0034 reports here is against that predecessor package;
+# renaming the types would remove that migration continuity for no benefit. Same disposition as
+# Azure.AI.DocumentIntelligence (vs Azure.AI.FormRecognizer), Azure.AI.Language.Text and
+# Azure.AI.Language.Conversations.
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextOptions
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.AnswersResult
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.AnswerSpan
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswer
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerContext
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerDialog
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.MetadataFilter
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.QueryFilters
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringAudience
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClient
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringModelFactory
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringProject
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.RankerKind
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.TextAnswer
+nowarn:AZC0034 T:Azure.AI.Language.QuestionAnswering.Inference.TextDocument

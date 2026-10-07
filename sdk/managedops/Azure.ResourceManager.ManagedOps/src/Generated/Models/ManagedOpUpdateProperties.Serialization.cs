@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
             {
                 return null;
             }
-            ManagedOpsDesiredConfigurationUpdate desiredConfiguration = default;
+            ManagedOpsDesiredConfigurationPatch desiredConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.ManagedOps.Models
                     {
                         continue;
                     }
-                    desiredConfiguration = ManagedOpsDesiredConfigurationUpdate.DeserializeManagedOpsDesiredConfigurationUpdate(prop.Value, options);
+                    desiredConfiguration = ManagedOpsDesiredConfigurationPatch.DeserializeManagedOpsDesiredConfigurationPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedOpUpdateProperties(desiredConfiguration, additionalBinaryDataProperties);

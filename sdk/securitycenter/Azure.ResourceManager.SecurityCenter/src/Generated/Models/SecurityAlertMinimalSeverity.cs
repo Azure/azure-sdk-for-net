@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityAlertMinimalSeverity : IEquatable<SecurityAlertMinimalSeverity>
     {
         private readonly string _value;
+        /// <summary> Get notifications on new alerts with High severity. </summary>
+        private const string HighValue = "High";
+        /// <summary> Get notifications on new alerts with Medium or High severity. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> Get notifications on new alerts with Low, Medium or High severity. </summary>
+        private const string LowValue = "Low";
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertMinimalSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAlertMinimalSeverity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HighValue = "High";
-        private const string MediumValue = "Medium";
-        private const string LowValue = "Low";
+            _value = value;
+        }
 
         /// <summary> Get notifications on new alerts with High severity. </summary>
         public static SecurityAlertMinimalSeverity High { get; } = new SecurityAlertMinimalSeverity(HighValue);
-        /// <summary> Get notifications on new alerts with medium or high severity. </summary>
+
+        /// <summary> Get notifications on new alerts with Medium or High severity. </summary>
         public static SecurityAlertMinimalSeverity Medium { get; } = new SecurityAlertMinimalSeverity(MediumValue);
-        /// <summary> Don't get notifications on new alerts with low, medium or high severity. </summary>
+
+        /// <summary> Get notifications on new alerts with Low, Medium or High severity. </summary>
         public static SecurityAlertMinimalSeverity Low { get; } = new SecurityAlertMinimalSeverity(LowValue);
+
         /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityAlertMinimalSeverity(string value) => new SecurityAlertMinimalSeverity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityAlertMinimalSeverity?(string value) => value == null ? null : new SecurityAlertMinimalSeverity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityAlertMinimalSeverity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityAlertMinimalSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

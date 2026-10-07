@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct IdentityConfigurationType : IEquatable<IdentityConfigurationType>
     {
         private readonly string _value;
+        private const string ManagedValue = "Managed";
+        private const string AMLTokenValue = "AMLToken";
+        private const string UserIdentityValue = "UserIdentity";
 
         /// <summary> Initializes a new instance of <see cref="IdentityConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IdentityConfigurationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ManagedValue = "Managed";
-        private const string AmlTokenValue = "AMLToken";
-        private const string UserIdentityValue = "UserIdentity";
-
-        /// <summary> Managed. </summary>
+        /// <summary> Gets the Managed. </summary>
         public static IdentityConfigurationType Managed { get; } = new IdentityConfigurationType(ManagedValue);
-        /// <summary> AMLToken. </summary>
-        public static IdentityConfigurationType AmlToken { get; } = new IdentityConfigurationType(AmlTokenValue);
-        /// <summary> UserIdentity. </summary>
+
+        /// <summary> Gets the AMLToken. </summary>
+        public static IdentityConfigurationType AMLToken { get; } = new IdentityConfigurationType(AMLTokenValue);
+
+        /// <summary> Gets the UserIdentity. </summary>
         public static IdentityConfigurationType UserIdentity { get; } = new IdentityConfigurationType(UserIdentityValue);
+
         /// <summary> Determines if two <see cref="IdentityConfigurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IdentityConfigurationType left, IdentityConfigurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IdentityConfigurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IdentityConfigurationType left, IdentityConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityConfigurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IdentityConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IdentityConfigurationType(string value) => new IdentityConfigurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IdentityConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IdentityConfigurationType?(string value) => value == null ? null : new IdentityConfigurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IdentityConfigurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IdentityConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

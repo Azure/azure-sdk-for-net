@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.StorageMover.Models
         }
 
         /// <summary> Gets the Value. </summary>
-        public IReadOnlyList<SourceTargetMap> Value { get; }
+        public IReadOnlyList<SourceTargetMap> Value { get; } = new ChangeTrackingList<SourceTargetMap>();
     }
 }

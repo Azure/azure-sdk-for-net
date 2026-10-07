@@ -16,12 +16,22 @@ namespace Azure.ResourceManager.Storage
     public partial class StorageQueueCollection
     {
         // Backward-compatible overload with int maxpagesize: Lists all queues.
+        /// <summary> Gets a list of all the queues under the specified storage account. </summary>
+        /// <param name="maxpagesize"> Optional. The maximum number of queues that should be included in a list queue response. </param>
+        /// <param name="filter"> Optional. When specified, only queues with a name starting with the given filter are listed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Pageable<StorageQueueResource> GetAll(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAll(maxpagesize?.ToString(), filter, cancellationToken);
 
         // Backward-compatible overload with int maxpagesize: Lists all queues.
+        /// <summary> Gets a list of all the queues under the specified storage account. </summary>
+        /// <param name="maxpagesize"> Optional. The maximum number of queues that should be included in a list queue response. </param>
+        /// <param name="filter"> Optional. When specified, only queues with a name starting with the given filter are listed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual AsyncPageable<StorageQueueResource> GetAllAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)

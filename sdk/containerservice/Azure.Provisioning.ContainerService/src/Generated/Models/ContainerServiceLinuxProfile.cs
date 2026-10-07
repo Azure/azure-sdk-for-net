@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _adminUsername = DefineProperty<string>(nameof(AdminUsername), new string[] { "adminUsername" }, isRequired: true);
             _ssh = DefineModelProperty<ContainerServiceSshConfiguration>(nameof(Ssh), new string[] { "ssh" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceLinuxProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

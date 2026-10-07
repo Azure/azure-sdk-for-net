@@ -40,6 +40,10 @@ namespace Azure.Provisioning.KeyVault
         {
             base.DefineProvisionableProperties();
             _addressRange = DefineProperty<string>(nameof(AddressRange), new string[] { "value" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultIPRule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

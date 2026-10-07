@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 DevCenterCatalogListResult result = DevCenterCatalogListResult.FromResponse(response);
-                yield return Page<DevCenterCatalogData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevCenterCatalogData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

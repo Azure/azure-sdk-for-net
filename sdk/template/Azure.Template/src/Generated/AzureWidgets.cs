@@ -281,7 +281,7 @@ namespace Azure.Template
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateOrUpdateWidgetRequest(widgetName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.CreateOrUpdateWidgetAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.CreateOrUpdateWidget", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -331,7 +331,7 @@ namespace Azure.Template
                 Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
                 using HttpMessage message = CreateDeleteWidgetRequest(widgetName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "AzureWidgets.DeleteWidget", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -365,7 +365,7 @@ namespace Azure.Template
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
             Operation<BinaryData> result = await DeleteWidgetAsync(waitUntil, widgetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync");
+            return ProtocolOperationHelpers.Convert(result, response => WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidget");
         }
 
         /// <summary>

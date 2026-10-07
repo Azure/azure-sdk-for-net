@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerVirtualNetworkRuleResource : IJsonModel<SqlServerVirtualNetworkRuleData>
     {
-        private static SqlServerVirtualNetworkRuleData s_dataDeserializationInstance;
-        private static SqlServerVirtualNetworkRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerVirtualNetworkRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerVirtualNetworkRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerVirtualNetworkRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerVirtualNetworkRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerVirtualNetworkRuleData>)Data).Write(writer, options);
 
-        SqlServerVirtualNetworkRuleData IJsonModel<SqlServerVirtualNetworkRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerVirtualNetworkRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerVirtualNetworkRuleData IJsonModel<SqlServerVirtualNetworkRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerVirtualNetworkRuleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerVirtualNetworkRuleData IPersistableModel<SqlServerVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerVirtualNetworkRuleData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerVirtualNetworkRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerVirtualNetworkRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerVirtualNetworkRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

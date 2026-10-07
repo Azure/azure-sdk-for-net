@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="required"> Indicates whether this parameter must be passed. </param>
         /// <param name="defaultValue"> The default value of the parameter, only applies to string types. </param>
         /// <param name="description"> A description to help users understand what this parameter means. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameterType"> Specifies the type of the Gallery Script parameter. Possible values are: String, Int, Double, Boolean, Enum. </param>
         /// <param name="minValue"> The minimum value of parameter. </param>
         /// <param name="maxValue"> The minimum value of parameter. </param>
         /// <param name="enumValues"> A list of permissible values. Only applicable values are from 'enum' values defined in 'GalleryScriptParameter'. </param>
-        internal GalleryScriptParameter(string name, bool? required, string defaultValue, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, GalleryScriptParameterType? parameterType, string minValue, string maxValue, IList<string> enumValues) : base(name, required, defaultValue, description, serializedAdditionalRawData)
+        internal GalleryScriptParameter(string name, bool? @required, string defaultValue, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, GalleryScriptParameterType? parameterType, string minValue, string maxValue, IList<string> enumValues) : base(name, @required, defaultValue, description, additionalBinaryDataProperties)
         {
             ParameterType = parameterType;
             MinValue = minValue;
@@ -41,17 +42,15 @@ namespace Azure.ResourceManager.Compute.Models
             EnumValues = enumValues;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryScriptParameter"/> for deserialization. </summary>
-        internal GalleryScriptParameter()
-        {
-        }
-
         /// <summary> Specifies the type of the Gallery Script parameter. Possible values are: String, Int, Double, Boolean, Enum. </summary>
         public GalleryScriptParameterType? ParameterType { get; set; }
+
         /// <summary> The minimum value of parameter. </summary>
         public string MinValue { get; set; }
+
         /// <summary> The minimum value of parameter. </summary>
         public string MaxValue { get; set; }
+
         /// <summary> A list of permissible values. Only applicable values are from 'enum' values defined in 'GalleryScriptParameter'. </summary>
         public IList<string> EnumValues { get; }
     }

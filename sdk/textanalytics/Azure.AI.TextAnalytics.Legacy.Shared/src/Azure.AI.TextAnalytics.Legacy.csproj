@@ -9,14 +9,6 @@
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
-  <!--
-    Global Warning Suppressions:
-        * AZC0012 - Single word class names are too generic for Entity.cs class
-  -->
-  <PropertyGroup>
-    <NoWarn>$(NoWarn);3021;AZC0012</NoWarn>
-  </PropertyGroup>
-
   <!-- Include Azure.Core shared source needed to compile -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />

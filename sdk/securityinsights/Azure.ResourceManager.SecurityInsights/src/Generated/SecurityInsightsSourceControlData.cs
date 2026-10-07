@@ -7,50 +7,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the SecurityInsightsSourceControl data model.
-    /// Represents a SourceControl in Azure Security Insights.
-    /// </summary>
+    /// <summary> Represents a SourceControl in Azure Security Insights. </summary>
     public partial class SecurityInsightsSourceControlData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsSourceControlData"/>. </summary>
         /// <param name="displayName"> The display name of the source control. </param>
@@ -64,92 +32,220 @@ namespace Azure.ResourceManager.SecurityInsights
             Argument.AssertNotNull(contentTypes, nameof(contentTypes));
             Argument.AssertNotNull(repository, nameof(repository));
 
-            DisplayName = displayName;
-            RepoType = repoType;
-            ContentTypes = contentTypes.ToList();
-            Repository = repository;
+            Properties = new SourceControlProperties(displayName, repoType, contentTypes, repository);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsSourceControlData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sourceControlId"> The id (a Guid) of the source control. </param>
-        /// <param name="version"> The version number associated with the source control. </param>
-        /// <param name="displayName"> The display name of the source control. </param>
-        /// <param name="description"> A description of the source control. </param>
-        /// <param name="repoType"> The repository type of the source control. </param>
-        /// <param name="contentTypes"> Array of source control content types. </param>
-        /// <param name="repository"> Repository metadata. </param>
-        /// <param name="servicePrincipal"> Service principal metadata. </param>
-        /// <param name="repositoryAccess"> Repository access credentials. This is write-only object and it never returns back to a user. </param>
-        /// <param name="repositoryResourceInfo"> Information regarding the resources created in user's repository. </param>
-        /// <param name="lastDeploymentInfo"> Information regarding the latest deployment for the source control. </param>
-        /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? sourceControlId, SourceControlVersion? version, string displayName, string description, SourceControlRepoType repoType, IList<SourceControlContentType> contentTypes, SourceControlRepository repository, SourceControlServicePrincipal servicePrincipal, RepositoryAccess repositoryAccess, RepositoryResourceInfo repositoryResourceInfo, SourceControlDeploymentInfo lastDeploymentInfo, PullRequestInfo pullRequest, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> source control properties. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SourceControlProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            SourceControlId = sourceControlId;
-            Version = version;
-            DisplayName = displayName;
-            Description = description;
-            RepoType = repoType;
-            ContentTypes = contentTypes;
-            Repository = repository;
-            ServicePrincipal = servicePrincipal;
-            RepositoryAccess = repositoryAccess;
-            RepositoryResourceInfo = repositoryResourceInfo;
-            LastDeploymentInfo = lastDeploymentInfo;
-            PullRequest = pullRequest;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSourceControlData"/> for deserialization. </summary>
-        internal SecurityInsightsSourceControlData()
-        {
-        }
+        /// <summary> source control properties. </summary>
+        [WirePath("properties")]
+        internal SourceControlProperties Properties { get; set; }
 
-        /// <summary> The id (a Guid) of the source control. </summary>
-        [WirePath("properties.id")]
-        public Guid? SourceControlId { get; }
-        /// <summary> The version number associated with the source control. </summary>
-        [WirePath("properties.version")]
-        public SourceControlVersion? Version { get; }
-        /// <summary> The display name of the source control. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
-        /// <summary> A description of the source control. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> The repository type of the source control. </summary>
-        [WirePath("properties.repoType")]
-        public SourceControlRepoType RepoType { get; set; }
-        /// <summary> Array of source control content types. </summary>
-        [WirePath("properties.contentTypes")]
-        public IList<SourceControlContentType> ContentTypes { get; }
-        /// <summary> Repository metadata. </summary>
-        [WirePath("properties.repository")]
-        public SourceControlRepository Repository { get; set; }
-        /// <summary> Service principal metadata. </summary>
-        [WirePath("properties.servicePrincipal")]
-        public SourceControlServicePrincipal ServicePrincipal { get; set; }
-        /// <summary> Repository access credentials. This is write-only object and it never returns back to a user. </summary>
-        [WirePath("properties.repositoryAccess")]
-        public RepositoryAccess RepositoryAccess { get; set; }
-        /// <summary> Information regarding the resources created in user's repository. </summary>
-        [WirePath("properties.repositoryResourceInfo")]
-        public RepositoryResourceInfo RepositoryResourceInfo { get; set; }
-        /// <summary> Information regarding the latest deployment for the source control. </summary>
-        [WirePath("properties.lastDeploymentInfo")]
-        public SourceControlDeploymentInfo LastDeploymentInfo { get; }
-        /// <summary> Information regarding the pull request of the source control. </summary>
-        [WirePath("properties.pullRequest")]
-        public PullRequestInfo PullRequest { get; }
         /// <summary> Etag of the azure resource. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; set; }
+
+        /// <summary> The id (a Guid) of the source control. </summary>
+        [WirePath("properties.id")]
+        public Guid? SourceControlId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceControlId;
+            }
+        }
+
+        /// <summary> The version number associated with the source control. </summary>
+        [WirePath("properties.version")]
+        public SourceControlVersion? Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
+        /// <summary> The display name of the source control. </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> A description of the source control. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The repository type of the source control. </summary>
+        [WirePath("properties.repoType")]
+        public SourceControlRepoType RepoType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepoType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.RepoType = value;
+            }
+        }
+
+        /// <summary> Array of source control content types. </summary>
+        [WirePath("properties.contentTypes")]
+        public IList<SourceControlContentType> ContentTypes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                return Properties.ContentTypes;
+            }
+        }
+
+        /// <summary> Repository metadata. </summary>
+        [WirePath("properties.repository")]
+        public SourceControlRepository Repository
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Repository;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.Repository = value;
+            }
+        }
+
+        /// <summary> Service principal metadata. </summary>
+        [WirePath("properties.servicePrincipal")]
+        public SourceControlServicePrincipal ServicePrincipal
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServicePrincipal;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.ServicePrincipal = value;
+            }
+        }
+
+        /// <summary> Workload Identity metadata. </summary>
+        [WirePath("properties.workloadIdentityFederation")]
+        public WorkloadIdentityFederation WorkloadIdentityFederation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkloadIdentityFederation;
+            }
+        }
+
+        /// <summary> Repository access credentials. This is write-only object and it never returns back to a user. </summary>
+        [WirePath("properties.repositoryAccess")]
+        public RepositoryAccess RepositoryAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepositoryAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.RepositoryAccess = value;
+            }
+        }
+
+        /// <summary> Information regarding the resources created in user's repository. </summary>
+        [WirePath("properties.repositoryResourceInfo")]
+        public RepositoryResourceInfo RepositoryResourceInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepositoryResourceInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SourceControlProperties();
+                }
+                Properties.RepositoryResourceInfo = value;
+            }
+        }
+
+        /// <summary> Information regarding the latest deployment for the source control. </summary>
+        [WirePath("properties.lastDeploymentInfo")]
+        public SourceControlDeploymentInfo LastDeploymentInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastDeploymentInfo;
+            }
+        }
+
+        /// <summary> Information regarding the pull request of the source control. </summary>
+        [WirePath("properties.pullRequest")]
+        public PullRequestInfo PullRequest
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PullRequest;
+            }
+        }
     }
 }

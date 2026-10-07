@@ -52,7 +52,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Add a data agent to the Fabric](#add-a-data-agent-to-the-fabric)
     - [Create a Fabric connection in Microsoft Foundry](#create-a-fabric-connection-in-microsoft-foundry)
     - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
-  - [Fabric IQ tool](#fabric-iq-tool)
+  - [Fabric IQ preview tool](#fabric-iq-tool)
   - [A2APreviewTool](#a2atool)
     - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
       - [Classic Microsoft Foundry](#classic-microsoft-foundry)
@@ -60,6 +60,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Using A2A Tool](#using-a2a-tool)
   - [Memory search tool](#memory-search-tool)
   - [Azure Function tool](#azure-function-tool)
+  - [Work IQ preview tool](#work-iq-preview-tool)
+  - [Web IQ preview tool](#web-iq-preview-tool)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -283,8 +285,8 @@ set the conversation parameter while calling `GetProjectResponsesClientForAgent`
 ```C# Snippet:ConversationClient
 CreateResponseOptions CreateResponseOptions = new();
 // Optionally, use a conversation to automatically maintain state between calls.
-ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation.Id);
 ```
 
 Conversations may be deleted to clean up the resources.
@@ -296,12 +298,12 @@ await openAIClient.GetConversationClient().DeleteConversationAsync(conversation.
 The conversation may be used to communicate messages to the agent.
 
 ```C# Snippet:ExistingConversations
-ProjectConversationCreationOptions conversationOptions = new()
+ConversationCreationOptions conversationOptions = new()
 {
     Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
     Metadata = { ["foo"] = "bar" },
 };
-ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
 
 //
 // Add items to an existing conversation to supplement the interaction state
@@ -483,12 +485,6 @@ Console.WriteLine(response.GetOutputText());
 
 ### Hosted Agents
 
-**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
 
 To create the hosted agent, please use the `HostedAgentDefinition` while creating the AgentVersion object.
@@ -502,7 +498,7 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
         memory: "1Gi"
     )
     {
-        Image = dockerImage,
+        ContainerConfiguration = new(dockerImage)
     };
     return agentDefinition;
 }
@@ -541,13 +537,16 @@ Configure an Agent endpoint for Responses protocol.
 AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = { AgentEndpointProtocol.Responses }
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
 PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,
 };
-ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgentObject(
+ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgent(
     agentName: agentVersion.Name,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
@@ -1110,7 +1109,7 @@ AzureAISearchToolIndex index = new()
     IndexName = "sample_index",
     TopK = 5,
     Filter = "category eq 'sleeping bag'",
-    QueryType = AzureAISearchQueryType.Simple
+    QueryType = AzureAISearchQueryKind.Simple
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1223,7 +1222,7 @@ create the `BingGroundingTool` and use it in `DeclarativeAgentDefinition` object
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
 BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-    searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+    searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1292,7 +1291,7 @@ en.wikipedia.org. This configuration is called "wikipedia" its search URL is con
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
 BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
-    searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+    searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1318,7 +1317,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Tools = { ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     )) }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -1326,7 +1325,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-Note that in this scenario we are using `GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved.
+Note that in this scenario we are using `DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved.
 Because of this setup we will need to get the response and check if we need to approve the call. If no calls were made, we are safe to output the Agent result.
 
 ```C# Snippet:Sample_CreateResponse_MCPTool_Async
@@ -1379,7 +1378,7 @@ When the connection is created, we can set it on the MCPTool and use it in `Decl
 McpTool tool = ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     ));
 tool.ProjectConnectionId = mcpProjectConnectionName;
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1403,11 +1402,13 @@ To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` objec
 string filePath = GetFile();
 OpenApiFunctionDefinition toolDefinition = new(
     name: "get_weather",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new OpenAPIAnonymousAuthenticationDetails()
-);
-toolDefinition.Description = "Retrieve weather information for a location.";
-OpenAPITool openapiTool = new(toolDefinition);
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenApiAnonymousAuthenticationDetails()
+)
+{
+    Description = "Retrieve weather information for a location."
+};
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1441,13 +1442,15 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
 OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
-);
-toolDefinition.Description = "Trip Advisor API to get travel information.";
-OpenAPITool openapiTool = new(toolDefinition);
+)
+{
+    Description = "Trip Advisor API to get travel information."
+};
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1483,9 +1486,10 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 
 #### Create Azure Playwright workspace
 
-1. Deploy an Azure Playwright workspace.
-2. In the **Get started** section, open **2. Set up authentication**.
-3. **Select Service Access Token**, then choose **Generate Token**. **Save the token immediately-once you close the page, it cannot be viewed again.**
+1. Deploy an Azure Playwright workspace and open the resource.
+2. In left panel select **Access management** and check the box **Playwright Service Access Token**.
+3. Click **Generate Token**.
+4. **Save the token immediately-once you close the page, it cannot be viewed again.**
 
 #### Configure Microsoft Foundry
 
@@ -1499,7 +1503,7 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
 
-```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
+```C# Snippet:Sample_CreateProjectClient_BrowserAutomotionPreview
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
@@ -1512,11 +1516,11 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 To use Azure Playwright workspace we need to create agent with `BrowserAutomationAgentTool`.
 
-```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
+```C# Snippet:Sample_CreateAgent_BrowserAutomotionPreview_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1533,7 +1537,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 
 Streaming response outputs with browser automation provides incremental updates as the automation is processed. This is advised for interactive scenarios, as browser automation can require several minutes to fully complete.
 
-```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
+```C# Snippet:Sample_CreateResponse_BrowserAutomotionPreview_Async
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 CreateResponseOptions responseOptions = new()
 {
@@ -1555,6 +1559,7 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 }
 ```
 
+
 ### SharePoint tool (preview)<a id="sharepoint"></a>
 `SharepointPreviewTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointPreviewTool`.
 
@@ -1567,7 +1572,7 @@ SharePointGroundingToolOptions sharepointToolOption = new()
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new SharepointPreviewTool(sharepointToolOption), }
+    Tools = { new SharePointPreviewTool(sharepointToolOption), }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1677,16 +1682,16 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-### Fabric IQ tool (preview)<a id="fabric-iq-tool"></a>
+### Fabric IQ preview tool<a id="fabric-iq-tool"></a>
 
-Fabric IQ is a layer above Microsoft Fabric. It orders and optimizes the data retrieval process. The Fabric IQ tool
+Fabric IQ is a layer above Microsoft Fabric. It orders and optimizes the data retrieval process. The Fabric IQ preview tool
 allows you to use These capabilities to get the data context for an Agent. To use it, please create the
 the Fabric IQ connection in Microsoft Foundry and use `FabricIQPreviewTool` in the Agent constructor:
 
 ```C# Snippet:Sample_CreateAgent_FabricIQ_Async
 FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
 {
-    RequireApproval = BinaryData.FromObjectAsJson("never"),
+    RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1925,6 +1930,43 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Work IQ preview tool
+
+Work IQ preview tool allows Agent to access data from [Microsoft 365 Copilot](https://learn.microsoft.com/microsoft-agent-365/tooling-servers-overview).
+To create the Agent, capable of returning the responses grounded by these data, create the `WorkIQPreviewTool` using the ID of connection to Work IQ Teams
+as shown below.
+
+```C# Snippet:Sample_CreateAgent_WorkIQ_Async
+AIProjectConnection workIQConnection = await projectClient.Connections.GetConnectionAsync(workIQConnectionName);
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions.",
+    Tools = { new WorkIQPreviewTool(workIQConnection.Id), }
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Web IQ preview tool
+Web IQ allows returning responses, grounded by web data. By operating on Pareto curve efficiency it allows to minimize the token usage. The Agent, using WebIQ may be created using code below:
+
+```C# Snippet:Sample_CreateAgent_WebIQ_Async
+string WebIQProjectConnectionId = (await projectClient.Connections.GetConnectionAsync(WebIQProjectConnectionName)).Value.Id;
+WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
+{
+    RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
+};
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "Use the available Web IQ tools to answer questions and perform tasks.",
+    Tools = { WebIQTool },
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myWebIQAgent",
     options: new(agentDefinition));
 ```
 

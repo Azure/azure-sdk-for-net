@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(CloudVmClusterResource.ResourceType, out string cloudVmClusterApiVersion);
             _cloudVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterResource.ResourceType.Namespace, Diagnostics);
-            _cloudVmClustersRestClient = new CloudVmClusters(_cloudVmClustersClientDiagnostics, Pipeline, Endpoint, cloudVmClusterApiVersion ?? "2025-09-01");
+            _cloudVmClustersRestClient = new CloudVmClusters(_cloudVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, CloudVmClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
+                    new CloudVmClusterResourceOperationSource(Client),
                     _cloudVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, CloudVmClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
+                    new CloudVmClusterResourceOperationSource(Client),
                     _cloudVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

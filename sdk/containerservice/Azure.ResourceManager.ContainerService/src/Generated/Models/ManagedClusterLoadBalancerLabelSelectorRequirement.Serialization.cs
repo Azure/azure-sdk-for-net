@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string key = default;
-            Operator? @operator = default;
+            ManagedClusterLabelSelectorOperator? @operator = default;
             IList<string> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    @operator = new Operator(prop.Value.GetString());
+                    @operator = new ManagedClusterLabelSelectorOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedClusterLoadBalancerLabelSelectorRequirement(key, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

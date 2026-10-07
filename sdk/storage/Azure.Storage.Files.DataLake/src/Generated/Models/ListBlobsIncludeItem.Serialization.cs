@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal static partial class ListBlobsIncludeItemExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ListBlobsIncludeItem value) => value switch
         {
             ListBlobsIncludeItem.Copy => "copy",
@@ -23,15 +24,37 @@ namespace Azure.Storage.Files.DataLake.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListBlobsIncludeItem value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ListBlobsIncludeItem ToListBlobsIncludeItem(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "copy")) return ListBlobsIncludeItem.Copy;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted")) return ListBlobsIncludeItem.Deleted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metadata")) return ListBlobsIncludeItem.Metadata;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "snapshots")) return ListBlobsIncludeItem.Snapshots;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "uncommittedblobs")) return ListBlobsIncludeItem.Uncommittedblobs;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "versions")) return ListBlobsIncludeItem.Versions;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "tags")) return ListBlobsIncludeItem.Tags;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "copy"))
+            {
+                return ListBlobsIncludeItem.Copy;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted"))
+            {
+                return ListBlobsIncludeItem.Deleted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metadata"))
+            {
+                return ListBlobsIncludeItem.Metadata;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "snapshots"))
+            {
+                return ListBlobsIncludeItem.Snapshots;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "uncommittedblobs"))
+            {
+                return ListBlobsIncludeItem.Uncommittedblobs;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "versions"))
+            {
+                return ListBlobsIncludeItem.Versions;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "tags"))
+            {
+                return ListBlobsIncludeItem.Tags;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListBlobsIncludeItem value.");
         }
     }

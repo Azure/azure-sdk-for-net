@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayRedirectType : IEquatable<ApplicationGatewayRedirectType>
     {
         private readonly string _value;
+        /// <summary> Permanent. </summary>
+        private const string PermanentValue = "Permanent";
+        /// <summary> Found. </summary>
+        private const string FoundValue = "Found";
+        /// <summary> SeeOther. </summary>
+        private const string SeeOtherValue = "SeeOther";
+        /// <summary> Temporary. </summary>
+        private const string TemporaryValue = "Temporary";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayRedirectType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PermanentValue = "Permanent";
-        private const string FoundValue = "Found";
-        private const string SeeOtherValue = "SeeOther";
-        private const string TemporaryValue = "Temporary";
+            _value = value;
+        }
 
         /// <summary> Permanent. </summary>
         public static ApplicationGatewayRedirectType Permanent { get; } = new ApplicationGatewayRedirectType(PermanentValue);
+
         /// <summary> Found. </summary>
         public static ApplicationGatewayRedirectType Found { get; } = new ApplicationGatewayRedirectType(FoundValue);
+
         /// <summary> SeeOther. </summary>
         public static ApplicationGatewayRedirectType SeeOther { get; } = new ApplicationGatewayRedirectType(SeeOtherValue);
+
         /// <summary> Temporary. </summary>
         public static ApplicationGatewayRedirectType Temporary { get; } = new ApplicationGatewayRedirectType(TemporaryValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayRedirectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayRedirectType left, ApplicationGatewayRedirectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayRedirectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayRedirectType left, ApplicationGatewayRedirectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayRedirectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayRedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayRedirectType(string value) => new ApplicationGatewayRedirectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayRedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayRedirectType?(string value) => value == null ? null : new ApplicationGatewayRedirectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayRedirectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayRedirectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

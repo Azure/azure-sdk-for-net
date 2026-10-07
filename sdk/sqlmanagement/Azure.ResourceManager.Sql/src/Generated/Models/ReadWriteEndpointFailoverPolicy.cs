@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct ReadWriteEndpointFailoverPolicy : IEquatable<ReadWriteEndpointFailoverPolicy>
     {
         private readonly string _value;
+        /// <summary> Manual. </summary>
+        private const string ManualValue = "Manual";
+        /// <summary> Automatic. </summary>
+        private const string AutomaticValue = "Automatic";
 
         /// <summary> Initializes a new instance of <see cref="ReadWriteEndpointFailoverPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReadWriteEndpointFailoverPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManualValue = "Manual";
-        private const string AutomaticValue = "Automatic";
+            _value = value;
+        }
 
         /// <summary> Manual. </summary>
         public static ReadWriteEndpointFailoverPolicy Manual { get; } = new ReadWriteEndpointFailoverPolicy(ManualValue);
+
         /// <summary> Automatic. </summary>
         public static ReadWriteEndpointFailoverPolicy Automatic { get; } = new ReadWriteEndpointFailoverPolicy(AutomaticValue);
+
         /// <summary> Determines if two <see cref="ReadWriteEndpointFailoverPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReadWriteEndpointFailoverPolicy left, ReadWriteEndpointFailoverPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReadWriteEndpointFailoverPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReadWriteEndpointFailoverPolicy left, ReadWriteEndpointFailoverPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReadWriteEndpointFailoverPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReadWriteEndpointFailoverPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReadWriteEndpointFailoverPolicy(string value) => new ReadWriteEndpointFailoverPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReadWriteEndpointFailoverPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReadWriteEndpointFailoverPolicy?(string value) => value == null ? null : new ReadWriteEndpointFailoverPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReadWriteEndpointFailoverPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReadWriteEndpointFailoverPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchEndpointAccessDefaultAction
     {
         /// <summary> Allow client access. </summary>
-        Allow,
+        Allow = 0,
         /// <summary> Deny client access. </summary>
-        Deny
+        Deny = 1
     }
 }

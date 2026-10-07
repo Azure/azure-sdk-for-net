@@ -4,11 +4,13 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
@@ -37,14 +39,23 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
+            using DiagnosticScope scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
             scope.Start();
             try
             {
-                ReservationRefundResult value = default;
-                var response = await _returnRestClient.PostAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                value = ReservationRefundResult.DeserializeReservationRefundResult(document.RootElement);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ReservationRefundResult value;
+                if (response.Status >= 200 && response.Status < 300 && response.Content?.ToMemory().Length > 0)
+                {
+                    using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+                    value = ReservationRefundResult.DeserializeReservationRefundResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+                }
+                else
+                {
+                    value = new ReservationRefundResult();
+                }
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -53,7 +64,6 @@ namespace Azure.ResourceManager.Reservations
                 throw;
             }
         }
-
         /// <summary>
         /// Return a reservation.
         /// <list type="bullet">
@@ -76,14 +86,23 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
+            using DiagnosticScope scope = _returnClientDiagnostics.CreateScope("ReservationOrderResource.Return");
             scope.Start();
             try
             {
-                ReservationRefundResult value = default;
-                var response = _returnRestClient.Post(Guid.Parse(Id.Name), content, cancellationToken);
-                using var document = JsonDocument.Parse(response.ContentStream);
-                value = ReservationRefundResult.DeserializeReservationRefundResult(document.RootElement);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ReservationRefundResult value;
+                if (response.Status >= 200 && response.Status < 300 && response.Content?.ToMemory().Length > 0)
+                {
+                    using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+                    value = ReservationRefundResult.DeserializeReservationRefundResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+                }
+                else
+                {
+                    value = new ReservationRefundResult();
+                }
                 return Response.FromValue(value, response);
             }
             catch (Exception e)

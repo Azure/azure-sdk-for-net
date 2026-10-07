@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceGroups;
@@ -36,19 +34,20 @@ namespace Azure.ResourceManager.ServiceGroups.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
                 kind,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="provisioningState"> The provisioning state of the serviceGroup. For example, Running. </param>
         /// <param name="displayName"> The display name of the serviceGroup. For example, ServiceGroupTest1. </param>
+        /// <param name="attributesCriticality"> The criticality designation of the service group. Valid values range from 0 through 4. </param>
         /// <param name="parentResourceId"> The fully qualified ID of the parent serviceGroup.  For example, '/providers/Microsoft.Management/serviceGroups/TestServiceGroup'. </param>
         /// <returns> A new <see cref="Models.ServiceGroupProperties"/> instance for mocking. </returns>
-        public static ServiceGroupProperties ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState = default, string displayName = default, ResourceIdentifier parentResourceId = default)
+        public static ServiceGroupProperties ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState = default, string displayName = default, int? attributesCriticality = default, ResourceIdentifier parentResourceId = default)
         {
-            return new ServiceGroupProperties(provisioningState, displayName, parentResourceId is null ? default : new ParentServiceGroupProperties(parentResourceId, null), additionalBinaryDataProperties: null);
+            return new ServiceGroupProperties(provisioningState, displayName, attributesCriticality is null ? default : new ServiceGroupAttributes(attributesCriticality, default), parentResourceId is null ? default : new ParentServiceGroupProperties(parentResourceId, default), default);
         }
     }
 }

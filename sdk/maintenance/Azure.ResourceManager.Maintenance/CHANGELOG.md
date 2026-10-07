@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.11 (Unreleased)
+## 1.2.0-beta.12 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.11 (2026-08-24)
+
+### Features Added
+
+- Upgraded API version to `2025-10-01-preview`.
+- Release AcknowledgeList and AcknowledgeListAsync.
 
 ## 1.2.0-beta.10 (2026-04-27)
 

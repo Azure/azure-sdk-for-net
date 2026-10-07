@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> The list of DNS servers IP addresses. </summary>
-        public IList<string> DnsServers { get; }
+        public IList<string> DnsServers { get; } = new ChangeTrackingList<string>();
     }
 }

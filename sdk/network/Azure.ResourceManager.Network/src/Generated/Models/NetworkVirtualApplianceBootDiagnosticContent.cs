@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Specifies input parameters required to retrieve the boot diagnostic logs for an NVA instance. </summary>
     public partial class NetworkVirtualApplianceBootDiagnosticContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceBootDiagnosticContent"/>. </summary>
         public NetworkVirtualApplianceBootDiagnosticContent()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="instanceId"> The network virtual appliance instance id for which boot diagnostic logs is being requested. </param>
         /// <param name="serialConsoleStorageSasUri"> Specifies the sas-url to the storage blob into which serial console logs for the requested instance will be written. </param>
         /// <param name="consoleScreenshotStorageSasUri"> Specifies the sas-url to the storage blob into which console screen shot for the requested instance will be written. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualApplianceBootDiagnosticContent(int? instanceId, Uri serialConsoleStorageSasUri, Uri consoleScreenshotStorageSasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkVirtualApplianceBootDiagnosticContent(int? instanceId, Uri serialConsoleStorageSasUri, Uri consoleScreenshotStorageSasUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceId = instanceId;
             SerialConsoleStorageSasUri = serialConsoleStorageSasUri;
             ConsoleScreenshotStorageSasUri = consoleScreenshotStorageSasUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The network virtual appliance instance id for which boot diagnostic logs is being requested. </summary>
         [WirePath("instanceId")]
         public int? InstanceId { get; set; }
+
         /// <summary> Specifies the sas-url to the storage blob into which serial console logs for the requested instance will be written. </summary>
         [WirePath("serialConsoleStorageSasUrl")]
         public Uri SerialConsoleStorageSasUri { get; set; }
+
         /// <summary> Specifies the sas-url to the storage blob into which console screen shot for the requested instance will be written. </summary>
         [WirePath("consoleScreenshotStorageSasUrl")]
         public Uri ConsoleScreenshotStorageSasUri { get; set; }

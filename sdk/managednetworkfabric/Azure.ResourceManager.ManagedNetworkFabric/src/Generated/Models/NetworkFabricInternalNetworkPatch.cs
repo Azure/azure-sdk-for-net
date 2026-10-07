@@ -14,123 +14,228 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The InternalNetwork patch resource definition. </summary>
     public partial class NetworkFabricInternalNetworkPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkPatch"/>. </summary>
         public NetworkFabricInternalNetworkPatch()
         {
-            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
-            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkPatch"/>. </summary>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
-        /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
-        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
-        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
-        /// <param name="nativeIPv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
-        /// <param name="nativeIPv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternalNetworkPatch(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> InternalNetwork Patch properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricInternalNetworkPatch(InternalNetworkPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Annotation = annotation;
-            Mtu = mtu;
-            ConnectedIPv4Subnets = connectedIPv4Subnets;
-            ConnectedIPv6Subnets = connectedIPv6Subnets;
-            ImportRoutePolicy = importRoutePolicy;
-            ExportRoutePolicy = exportRoutePolicy;
-            IngressAclId = ingressAclId;
-            EgressAclId = egressAclId;
-            IsMonitoringEnabled = isMonitoringEnabled;
-            BgpConfiguration = bgpConfiguration;
-            StaticRouteConfiguration = staticRouteConfiguration;
-            NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
-            NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> InternalNetwork Patch properties. </summary>
+        internal InternalNetworkPatchProperties Properties { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
-        public int? Mtu { get; set; }
+        public int? Mtu
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mtu;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                Properties.Mtu = value;
+            }
+        }
+
         /// <summary> List of Connected IPv4 Subnets. </summary>
-        public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
+        public IList<NetworkFabricConnectedSubnetPatch> ConnectedIPv4SubnetSettings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                return Properties.ConnectedIPv4SubnetSettings;
+            }
+        }
+
         /// <summary> List of connected IPv6 Subnets. </summary>
-        public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
+        public IList<NetworkFabricConnectedSubnetPatch> ConnectedIPv6SubnetSettings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                return Properties.ConnectedIPv6SubnetSettings;
+            }
+        }
+
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicy ImportRoutePolicy { get; set; }
+        public ImportRoutePolicy ImportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                Properties.ImportRoutePolicy = value;
+            }
+        }
+
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicy ExportRoutePolicy { get; set; }
+        public ExportRoutePolicy ExportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                Properties.ExportRoutePolicy = value;
+            }
+        }
+
         /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier IngressAclId { get; set; }
+        public ResourceIdentifier IngressAclId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngressAclId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                Properties.IngressAclId = value;
+            }
+        }
+
         /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier EgressAclId { get; set; }
+        public ResourceIdentifier EgressAclId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EgressAclId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                Properties.EgressAclId = value;
+            }
+        }
+
         /// <summary> To check whether monitoring of internal network is enabled or not. </summary>
-        public IsMonitoringEnabled? IsMonitoringEnabled { get; set; }
+        public IsMonitoringEnabled? IsMonitoringEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsMonitoringEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                Properties.IsMonitoringEnabled = value;
+            }
+        }
+
         /// <summary> BGP configuration properties. </summary>
-        public BgpConfiguration BgpConfiguration { get; set; }
+        public BgpPatchConfiguration BgpSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BgpSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                Properties.BgpSettings = value;
+            }
+        }
+
         /// <summary> Static Route Configuration properties. </summary>
-        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
-        /// <summary> Native IPv4 Prefix Limit Configuration properties. </summary>
-        internal NativeIPv4PrefixLimitPatchProperties NativeIPv4PrefixLimit { get; set; }
+        public StaticRoutePatchConfiguration StaticRouteSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticRouteSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                Properties.StaticRouteSettings = value;
+            }
+        }
+
         /// <summary> Prefix limits. </summary>
         public IList<PrefixLimitPatchProperties> NativeIPv4PrefixLimits
         {
             get
             {
-                if (NativeIPv4PrefixLimit is null)
-                    NativeIPv4PrefixLimit = new NativeIPv4PrefixLimitPatchProperties();
-                return NativeIPv4PrefixLimit.PrefixLimits;
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                return Properties.NativeIPv4PrefixLimits;
             }
         }
 
-        /// <summary> Native IPv6 Prefix Limit Configuration properties. </summary>
-        internal NativeIPv6PrefixLimitPatchProperties NativeIPv6PrefixLimit { get; set; }
         /// <summary> Prefix limits. </summary>
         public IList<PrefixLimitPatchProperties> NativeIPv6PrefixLimits
         {
             get
             {
-                if (NativeIPv6PrefixLimit is null)
-                    NativeIPv6PrefixLimit = new NativeIPv6PrefixLimitPatchProperties();
-                return NativeIPv6PrefixLimit.PrefixLimits;
+                if (Properties is null)
+                {
+                    Properties = new InternalNetworkPatchProperties();
+                }
+                return Properties.NativeIPv6PrefixLimits;
             }
         }
     }

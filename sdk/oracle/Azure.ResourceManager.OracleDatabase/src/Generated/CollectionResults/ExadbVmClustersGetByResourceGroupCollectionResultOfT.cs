@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 ExadbVmClusterListResult result = ExadbVmClusterListResult.FromResponse(response);
-                yield return Page<ExadbVmClusterData>.FromValues((IReadOnlyList<ExadbVmClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExadbVmClusterData>.FromValues((IReadOnlyList<ExadbVmClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

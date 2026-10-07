@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Redis
                     yield break;
                 }
                 RedisFirewallRuleListResult result = RedisFirewallRuleListResult.FromResponse(response);
-                yield return Page<RedisFirewallRuleData>.FromValues((IReadOnlyList<RedisFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RedisFirewallRuleData>.FromValues((IReadOnlyList<RedisFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

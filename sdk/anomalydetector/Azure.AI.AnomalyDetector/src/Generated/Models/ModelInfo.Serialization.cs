@@ -100,9 +100,9 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStringValue(DataSchema.Value.ToString());
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartTime, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endTime"u8);
-            writer.WriteStringValue(EndTime, "O");
+            writer.WriteStringValue(EndsOn, "O");
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -127,7 +127,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (ErrorResponse item in Errors)
+                foreach (ErrorResult item in Errors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -182,13 +182,13 @@ namespace Azure.AI.AnomalyDetector
             }
             Uri dataSource = default;
             DataSchema? dataSchema = default;
-            DateTimeOffset startTime = default;
-            DateTimeOffset endTime = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset endsOn = default;
             string displayName = default;
             int? slidingWindow = default;
             AlignPolicy alignPolicy = default;
             ModelStatus? status = default;
-            IReadOnlyList<ErrorResponse> errors = default;
+            IReadOnlyList<ErrorResult> errors = default;
             DiagnosticsInfo diagnosticsInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -209,12 +209,12 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -255,10 +255,10 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    List<ErrorResult> array = new List<ErrorResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item, options));
+                        array.Add(ErrorResult.DeserializeErrorResult(item, options));
                     }
                     errors = array;
                     continue;
@@ -274,19 +274,19 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ModelInfo(
                 dataSource,
                 dataSchema,
-                startTime,
-                endTime,
+                startsOn,
+                endsOn,
                 displayName,
                 slidingWindow,
                 alignPolicy,
                 status,
-                errors ?? new ChangeTrackingList<ErrorResponse>(),
+                errors ?? new ChangeTrackingList<ErrorResult>(),
                 diagnosticsInfo,
                 additionalBinaryDataProperties);
         }

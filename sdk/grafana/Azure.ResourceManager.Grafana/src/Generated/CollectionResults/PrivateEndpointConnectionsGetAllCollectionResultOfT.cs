@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Grafana
                     yield break;
                 }
                 GrafanaPrivateEndpointConnectionListResult result = GrafanaPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<GrafanaPrivateEndpointConnectionData>.FromValues((IReadOnlyList<GrafanaPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GrafanaPrivateEndpointConnectionData>.FromValues((IReadOnlyList<GrafanaPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

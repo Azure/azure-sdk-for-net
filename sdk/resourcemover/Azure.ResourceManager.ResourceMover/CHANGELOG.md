@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.2-beta.4 (Unreleased)
+## 1.1.2-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.2-beta.5 (2026-06-30)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.1.2-beta.4 (2026-06-09)
+
+### Features Added
+
+- Make `Azure.ResourceManager.ResourceMover` AOT-compatible.
 
 ## 1.1.2-beta.3 (2026-04-29)
 

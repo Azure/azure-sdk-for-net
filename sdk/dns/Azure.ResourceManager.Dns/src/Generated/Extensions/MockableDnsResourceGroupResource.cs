@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Dns;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dns.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDnsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDnsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDnsResourceGroupResource for mocking. </summary>
         protected MockableDnsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDnsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDnsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDnsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DnsZoneResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DnsZoneResources and their operations over a DnsZoneResource. </returns>
+        /// <summary> Gets a collection of DnsZones in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DnsZones and their operations over a DnsZoneResource. </returns>
         public virtual DnsZoneCollection GetDnsZones()
         {
             return GetCachedClient(client => new DnsZoneCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Zones_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Zones_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsZoneResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Dns.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DnsZoneResource>> GetDnsZoneAsync(string zoneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+
             return await GetDnsZones().GetAsync(zoneName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// Gets a DNS zone. Retrieves the zone properties, but not the record sets within the zone.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Zones_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Zones_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsZoneResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Dns.Mocking
         [ForwardsClientCalls]
         public virtual Response<DnsZoneResource> GetDnsZone(string zoneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+
             return GetDnsZones().Get(zoneName, cancellationToken);
         }
     }

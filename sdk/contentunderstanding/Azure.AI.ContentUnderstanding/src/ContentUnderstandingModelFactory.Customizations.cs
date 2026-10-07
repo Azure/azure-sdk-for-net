@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -23,6 +24,26 @@ namespace Azure.AI.ContentUnderstanding
     [CodeGenSuppress("ContentObjectField", typeof(IEnumerable<ContentSpan>), typeof(float?), typeof(string), typeof(IDictionary<string, ContentField>))]
     public static partial class ContentUnderstandingModelFactory
     {
+        /// <summary>
+        /// Media content base class.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.DocumentContent"/> and <see cref="ContentUnderstanding.AudioVisualContent"/>.
+        /// </summary>
+        /// <param name="kind"> Content kind. </param>
+        /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
+        /// <param name="analyzerId"> The analyzer that generated this content. </param>
+        /// <param name="category"> Classified content category. </param>
+        /// <param name="path"> The path of the content in the input. </param>
+        /// <param name="markdown"> Markdown representation of the content. </param>
+        /// <param name="fields"> Extracted fields from the content. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.AnalysisContent"/> instance for mocking. </returns>
+        /// <remarks>
+        /// Compatibility overload without <c>metadata</c>. Prefer the generated overload that includes
+        /// <c>metadata</c>. Defaults are omitted so calls with omitted or named arguments bind unambiguously.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AnalysisContent AnalysisContent(string? kind, string? mimeType, string? analyzerId, string? category, string? path, string? markdown, IDictionary<string, ContentField>? fields)
+            => AnalysisContent(kind, mimeType, analyzerId, category, path, markdown, fields, metadata: default);
+
         /// <summary> Creates a new <see cref="ContentUnderstanding.ContentStringField"/> for mocking. </summary>
         public static ContentStringField ContentStringField(string? value = default, IEnumerable<ContentSpan>? spans = default, float? confidence = default, string? source = default)
         {
@@ -95,8 +116,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="contextualizationTokens"> The number of contextualization tokens consumed. </param>
         /// <param name="tokens"> The number of LLM and embedding tokens consumed, grouped by model and type. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AnalyzeUsageDetails"/> instance for mocking. </returns>
+        [Obsolete("Use ContentUnderstandingModelFactory.UsageDetails instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AnalyzeUsageDetails AnalyzeUsageDetails(int? documentPagesMinimal = default, int? documentPagesBasic = default, int? documentPagesStandard = default, float? audioHours = default, float? videoHours = default, int? contextualizationTokens = default, IDictionary<string, int>? tokens = default)
         {
+#pragma warning disable CS0618 // Compatibility factory for obsolete AnalyzeUsageDetails
             tokens ??= new ChangeTrackingDictionary<string, int>();
             return new AnalyzeUsageDetails
             {
@@ -109,6 +133,7 @@ namespace Azure.AI.ContentUnderstanding
                 Tokens = new System.Collections.ObjectModel.ReadOnlyDictionary<string, int>(
                     new Dictionary<string, int>(tokens))
             };
+#pragma warning restore CS0618
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct RecoveryServicesSiteRecoveryFailoverDirection : IEquatable<RecoveryServicesSiteRecoveryFailoverDirection>
     {
         private readonly string _value;
+        /// <summary> PrimaryToRecovery. </summary>
+        private const string PrimaryToRecoveryValue = "PrimaryToRecovery";
+        /// <summary> RecoveryToPrimary. </summary>
+        private const string RecoveryToPrimaryValue = "RecoveryToPrimary";
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecoveryFailoverDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RecoveryServicesSiteRecoveryFailoverDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrimaryToRecoveryValue = "PrimaryToRecovery";
-        private const string RecoveryToPrimaryValue = "RecoveryToPrimary";
+            _value = value;
+        }
 
         /// <summary> PrimaryToRecovery. </summary>
         public static RecoveryServicesSiteRecoveryFailoverDirection PrimaryToRecovery { get; } = new RecoveryServicesSiteRecoveryFailoverDirection(PrimaryToRecoveryValue);
+
         /// <summary> RecoveryToPrimary. </summary>
         public static RecoveryServicesSiteRecoveryFailoverDirection RecoveryToPrimary { get; } = new RecoveryServicesSiteRecoveryFailoverDirection(RecoveryToPrimaryValue);
+
         /// <summary> Determines if two <see cref="RecoveryServicesSiteRecoveryFailoverDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryServicesSiteRecoveryFailoverDirection left, RecoveryServicesSiteRecoveryFailoverDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecoveryServicesSiteRecoveryFailoverDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryServicesSiteRecoveryFailoverDirection left, RecoveryServicesSiteRecoveryFailoverDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesSiteRecoveryFailoverDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecoveryServicesSiteRecoveryFailoverDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecoveryServicesSiteRecoveryFailoverDirection(string value) => new RecoveryServicesSiteRecoveryFailoverDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecoveryServicesSiteRecoveryFailoverDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryServicesSiteRecoveryFailoverDirection?(string value) => value == null ? null : new RecoveryServicesSiteRecoveryFailoverDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryServicesSiteRecoveryFailoverDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecoveryServicesSiteRecoveryFailoverDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

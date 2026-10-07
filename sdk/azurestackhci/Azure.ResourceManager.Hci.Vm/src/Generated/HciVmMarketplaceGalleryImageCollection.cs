@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmMarketplaceGalleryImageResource.ResourceType, out string hciVmMarketplaceGalleryImageApiVersion);
             _marketplaceGalleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmMarketplaceGalleryImageResource.ResourceType.Namespace, Diagnostics);
-            _marketplaceGalleryImagesRestClient = new MarketplaceGalleryImages(_marketplaceGalleryImagesClientDiagnostics, Pipeline, Endpoint, hciVmMarketplaceGalleryImageApiVersion ?? "2025-09-01-preview");
+            _marketplaceGalleryImagesRestClient = new MarketplaceGalleryImages(_marketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmMarketplaceGalleryImageApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _marketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmMarketplaceGalleryImageResource> operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(
-                    new HciVmMarketplaceGalleryImageOperationSource(Client),
+                    new HciVmMarketplaceGalleryImageResourceOperationSource(Client),
                     _marketplaceGalleryImagesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _marketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmMarketplaceGalleryImageResource> operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(
-                    new HciVmMarketplaceGalleryImageOperationSource(Client),
+                    new HciVmMarketplaceGalleryImageResourceOperationSource(Client),
                     _marketplaceGalleryImagesClientDiagnostics,
                     Pipeline,
                     message.Request,

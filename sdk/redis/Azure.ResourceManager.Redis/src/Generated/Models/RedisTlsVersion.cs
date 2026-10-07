@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Redis.Models
     {
         private readonly string _value;
         /// <summary> TLS protocol version 1.0 -- deprecated for security reasons. Do not use this value for new caches. </summary>
-        private const string _10Value = "1.0";
+        private const string Tls1_0Value = "1.0";
         /// <summary> TLS protocol version 1.1 -- deprecated for security reasons. Do not use this value for new caches. </summary>
-        private const string _11Value = "1.1";
+        private const string Tls1_1Value = "1.1";
         /// <summary> TLS protocol version 1.2 -- use this value, or higher, for new caches. Or do not specify, so that your cache uses the recommended default value. </summary>
-        private const string _12Value = "1.2";
+        private const string Tls1_2Value = "1.2";
 
         /// <summary> Initializes a new instance of <see cref="RedisTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,6 +31,15 @@ namespace Azure.ResourceManager.Redis.Models
 
             _value = value;
         }
+
+        /// <summary> TLS protocol version 1.0 -- deprecated for security reasons. Do not use this value for new caches. </summary>
+        public static RedisTlsVersion Tls1_0 { get; } = new RedisTlsVersion(Tls1_0Value);
+
+        /// <summary> TLS protocol version 1.1 -- deprecated for security reasons. Do not use this value for new caches. </summary>
+        public static RedisTlsVersion Tls1_1 { get; } = new RedisTlsVersion(Tls1_1Value);
+
+        /// <summary> TLS protocol version 1.2 -- use this value, or higher, for new caches. Or do not specify, so that your cache uses the recommended default value. </summary>
+        public static RedisTlsVersion Tls1_2 { get; } = new RedisTlsVersion(Tls1_2Value);
 
         /// <summary> Determines if two <see cref="RedisTlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

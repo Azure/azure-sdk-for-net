@@ -40,6 +40,10 @@ namespace Azure.Provisioning.KeyVault
         {
             base.DefineProvisionableProperties();
             _tag = DefineProperty<string>(nameof(Tag), new string[] { "tag" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedHsmServiceTagRule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

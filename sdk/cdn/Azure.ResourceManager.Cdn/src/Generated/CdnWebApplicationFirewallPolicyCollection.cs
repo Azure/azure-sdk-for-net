@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnWebApplicationFirewallPolicyResource.ResourceType, out string cdnWebApplicationFirewallPolicyApiVersion);
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnWebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
-            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, cdnWebApplicationFirewallPolicyApiVersion ?? "2025-09-01-preview");
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnWebApplicationFirewallPolicyApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, policyName, CdnWebApplicationFirewallPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnWebApplicationFirewallPolicyResource> operation = new CdnArmOperation<CdnWebApplicationFirewallPolicyResource>(
-                    new CdnWebApplicationFirewallPolicyOperationSource(Client),
+                    new CdnWebApplicationFirewallPolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, policyName, CdnWebApplicationFirewallPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnWebApplicationFirewallPolicyResource> operation = new CdnArmOperation<CdnWebApplicationFirewallPolicyResource>(
-                    new CdnWebApplicationFirewallPolicyOperationSource(Client),
+                    new CdnWebApplicationFirewallPolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,

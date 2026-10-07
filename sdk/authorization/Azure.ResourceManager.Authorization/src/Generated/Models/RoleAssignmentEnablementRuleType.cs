@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Authorization.Models
     public readonly partial struct RoleAssignmentEnablementRuleType : IEquatable<RoleAssignmentEnablementRuleType>
     {
         private readonly string _value;
+        /// <summary> MultiFactorAuthentication. </summary>
+        private const string MultiFactorAuthenticationValue = "MultiFactorAuthentication";
+        /// <summary> Justification. </summary>
+        private const string JustificationValue = "Justification";
+        /// <summary> Ticketing. </summary>
+        private const string TicketingValue = "Ticketing";
 
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentEnablementRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoleAssignmentEnablementRuleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MultiFactorAuthenticationValue = "MultiFactorAuthentication";
-        private const string JustificationValue = "Justification";
-        private const string TicketingValue = "Ticketing";
+            _value = value;
+        }
 
         /// <summary> MultiFactorAuthentication. </summary>
         public static RoleAssignmentEnablementRuleType MultiFactorAuthentication { get; } = new RoleAssignmentEnablementRuleType(MultiFactorAuthenticationValue);
+
         /// <summary> Justification. </summary>
         public static RoleAssignmentEnablementRuleType Justification { get; } = new RoleAssignmentEnablementRuleType(JustificationValue);
+
         /// <summary> Ticketing. </summary>
         public static RoleAssignmentEnablementRuleType Ticketing { get; } = new RoleAssignmentEnablementRuleType(TicketingValue);
+
         /// <summary> Determines if two <see cref="RoleAssignmentEnablementRuleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleAssignmentEnablementRuleType left, RoleAssignmentEnablementRuleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleAssignmentEnablementRuleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleAssignmentEnablementRuleType left, RoleAssignmentEnablementRuleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleAssignmentEnablementRuleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleAssignmentEnablementRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleAssignmentEnablementRuleType(string value) => new RoleAssignmentEnablementRuleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleAssignmentEnablementRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleAssignmentEnablementRuleType?(string value) => value == null ? null : new RoleAssignmentEnablementRuleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleAssignmentEnablementRuleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleAssignmentEnablementRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

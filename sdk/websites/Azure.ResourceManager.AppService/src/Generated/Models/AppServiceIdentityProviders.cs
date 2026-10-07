@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization.
-    /// Serialized Name: IdentityProviders
-    /// </summary>
+    /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
     public partial class AppServiceIdentityProviders
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceIdentityProviders"/>. </summary>
         public AppServiceIdentityProviders()
@@ -55,45 +24,20 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceIdentityProviders"/>. </summary>
-        /// <param name="azureActiveDirectory">
-        /// The configuration settings of the Azure Active directory provider.
-        /// Serialized Name: IdentityProviders.azureActiveDirectory
-        /// </param>
-        /// <param name="facebook">
-        /// The configuration settings of the Facebook provider.
-        /// Serialized Name: IdentityProviders.facebook
-        /// </param>
-        /// <param name="gitHub">
-        /// The configuration settings of the GitHub provider.
-        /// Serialized Name: IdentityProviders.gitHub
-        /// </param>
-        /// <param name="google">
-        /// The configuration settings of the Google provider.
-        /// Serialized Name: IdentityProviders.google
-        /// </param>
-        /// <param name="legacyMicrosoftAccount">
-        /// The configuration settings of the legacy Microsoft Account provider.
-        /// Serialized Name: IdentityProviders.legacyMicrosoftAccount
-        /// </param>
-        /// <param name="twitter">
-        /// The configuration settings of the Twitter provider.
-        /// Serialized Name: IdentityProviders.twitter
-        /// </param>
-        /// <param name="apple">
-        /// The configuration settings of the Apple provider.
-        /// Serialized Name: IdentityProviders.apple
-        /// </param>
-        /// <param name="azureStaticWebApps">
-        /// The configuration settings of the Azure Static Web Apps provider.
-        /// Serialized Name: IdentityProviders.azureStaticWebApps
-        /// </param>
+        /// <param name="azureActiveDirectory"> The configuration settings of the Azure Active directory provider. </param>
+        /// <param name="facebook"> The configuration settings of the Facebook provider. </param>
+        /// <param name="gitHub"> The configuration settings of the GitHub provider. </param>
+        /// <param name="google"> The configuration settings of the Google provider. </param>
+        /// <param name="legacyMicrosoftAccount"> The configuration settings of the legacy Microsoft Account provider. </param>
+        /// <param name="twitter"> The configuration settings of the Twitter provider. </param>
+        /// <param name="apple"> The configuration settings of the Apple provider. </param>
+        /// <param name="azureStaticWebApps"> The configuration settings of the Azure Static Web Apps provider. </param>
         /// <param name="customOpenIdConnectProviders">
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
-        /// Serialized Name: IdentityProviders.customOpenIdConnectProviders
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceIdentityProviders(AppServiceAadProvider azureActiveDirectory, AppServiceFacebookProvider facebook, AppServiceGitHubProvider gitHub, AppServiceGoogleProvider google, LegacyMicrosoftAccount legacyMicrosoftAccount, AppServiceTwitterProvider twitter, AppServiceAppleProvider apple, AppServiceStaticWebAppsProvider azureStaticWebApps, IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceIdentityProviders(AppServiceAadProvider azureActiveDirectory, AppServiceFacebookProvider facebook, AppServiceGitHubProvider gitHub, AppServiceGoogleProvider google, LegacyMicrosoftAccount legacyMicrosoftAccount, AppServiceTwitterProvider twitter, AppServiceAppleProvider apple, AppServiceStaticWebAppsProvider azureStaticWebApps, IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureActiveDirectory = azureActiveDirectory;
             Facebook = facebook;
@@ -104,61 +48,44 @@ namespace Azure.ResourceManager.AppService.Models
             Apple = apple;
             AzureStaticWebApps = azureStaticWebApps;
             CustomOpenIdConnectProviders = customOpenIdConnectProviders;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The configuration settings of the Azure Active directory provider.
-        /// Serialized Name: IdentityProviders.azureActiveDirectory
-        /// </summary>
+        /// <summary> The configuration settings of the Azure Active directory provider. </summary>
         [WirePath("azureActiveDirectory")]
         public AppServiceAadProvider AzureActiveDirectory { get; set; }
-        /// <summary>
-        /// The configuration settings of the Facebook provider.
-        /// Serialized Name: IdentityProviders.facebook
-        /// </summary>
+
+        /// <summary> The configuration settings of the Facebook provider. </summary>
         [WirePath("facebook")]
         public AppServiceFacebookProvider Facebook { get; set; }
-        /// <summary>
-        /// The configuration settings of the GitHub provider.
-        /// Serialized Name: IdentityProviders.gitHub
-        /// </summary>
+
+        /// <summary> The configuration settings of the GitHub provider. </summary>
         [WirePath("gitHub")]
         public AppServiceGitHubProvider GitHub { get; set; }
-        /// <summary>
-        /// The configuration settings of the Google provider.
-        /// Serialized Name: IdentityProviders.google
-        /// </summary>
+
+        /// <summary> The configuration settings of the Google provider. </summary>
         [WirePath("google")]
         public AppServiceGoogleProvider Google { get; set; }
-        /// <summary>
-        /// The configuration settings of the legacy Microsoft Account provider.
-        /// Serialized Name: IdentityProviders.legacyMicrosoftAccount
-        /// </summary>
+
+        /// <summary> The configuration settings of the legacy Microsoft Account provider. </summary>
         [WirePath("legacyMicrosoftAccount")]
         public LegacyMicrosoftAccount LegacyMicrosoftAccount { get; set; }
-        /// <summary>
-        /// The configuration settings of the Twitter provider.
-        /// Serialized Name: IdentityProviders.twitter
-        /// </summary>
+
+        /// <summary> The configuration settings of the Twitter provider. </summary>
         [WirePath("twitter")]
         public AppServiceTwitterProvider Twitter { get; set; }
-        /// <summary>
-        /// The configuration settings of the Apple provider.
-        /// Serialized Name: IdentityProviders.apple
-        /// </summary>
+
+        /// <summary> The configuration settings of the Apple provider. </summary>
         [WirePath("apple")]
         public AppServiceAppleProvider Apple { get; set; }
-        /// <summary>
-        /// The configuration settings of the Azure Static Web Apps provider.
-        /// Serialized Name: IdentityProviders.azureStaticWebApps
-        /// </summary>
+
+        /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
         [WirePath("azureStaticWebApps")]
         public AppServiceStaticWebAppsProvider AzureStaticWebApps { get; set; }
+
         /// <summary>
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
-        /// Serialized Name: IdentityProviders.customOpenIdConnectProviders
         /// </summary>
         [WirePath("customOpenIdConnectProviders")]
         public IDictionary<string, CustomOpenIdConnectProvider> CustomOpenIdConnectProviders { get; }

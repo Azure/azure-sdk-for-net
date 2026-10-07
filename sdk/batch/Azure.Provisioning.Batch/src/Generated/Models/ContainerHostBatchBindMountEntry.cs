@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _source = DefineProperty<ContainerHostDataPath>(nameof(Source), new string[] { "source" });
             _isReadOnly = DefineProperty<bool>(nameof(IsReadOnly), new string[] { "isReadOnly" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerHostBatchBindMountEntry that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

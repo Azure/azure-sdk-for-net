@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -21,11 +22,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="LicenseProfileArmEsuPropertiesWithoutAssignedLicense"/>. </summary>
         /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
         /// <param name="esuKeys"> The list of ESU keys. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverType"> The type of the Esu servers. </param>
         /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
         /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
-        internal LicenseProfileArmEsuPropertiesWithoutAssignedLicense(Guid? assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, IDictionary<string, BinaryData> serializedAdditionalRawData, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState) : base(assignedLicenseImmutableId, esuKeys, serializedAdditionalRawData)
+        internal LicenseProfileArmEsuPropertiesWithoutAssignedLicense(Guid? assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState) : base(assignedLicenseImmutableId, esuKeys, additionalBinaryDataProperties)
         {
             ServerType = serverType;
             EsuEligibility = esuEligibility;
@@ -35,9 +36,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> The type of the Esu servers. </summary>
         [WirePath("serverType")]
         public EsuServerType? ServerType { get; }
+
         /// <summary> Indicates the eligibility state of Esu. </summary>
         [WirePath("esuEligibility")]
         public EsuEligibility? EsuEligibility { get; }
+
         /// <summary> Indicates whether there is an ESU Key currently active for the machine. </summary>
         [WirePath("esuKeyState")]
         public EsuKeyState? EsuKeyState { get; }

@@ -159,6 +159,14 @@ namespace Azure.Security.Attestation
             return new PolicyModificationResult(policyModification, policyHash, jwk, null);
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="TpmAttestationResponse"/> for mocking purposes.
+        /// </summary>
+        /// <param name="data">Protocol data containing the attestation service response.</param>
+        /// <returns>A <see cref="TpmAttestationResponse"/> object.</returns>
+        public static TpmAttestationResponse TpmAttestationResponse(BinaryData data) =>
+            new TpmAttestationResponse(data != null ? Base64Url.Encode(data.ToArray()) : null);
+
         private static JsonWebKey JwkFromAttestationSigner(AttestationSigner signer)
         {
             JsonWebKey jwk = null;

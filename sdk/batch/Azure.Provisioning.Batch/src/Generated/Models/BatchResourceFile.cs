@@ -161,6 +161,10 @@ namespace Azure.Provisioning.Batch
             _filePath = DefineProperty<string>(nameof(FilePath), new string[] { "filePath" });
             _fileMode = DefineProperty<string>(nameof(FileMode), new string[] { "fileMode" });
             _identity = DefineModelProperty<ComputeNodeIdentityReference>(nameof(Identity), new string[] { "identityReference" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchResourceFile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

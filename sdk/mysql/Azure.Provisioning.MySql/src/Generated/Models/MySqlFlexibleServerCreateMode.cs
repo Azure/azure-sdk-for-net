@@ -11,12 +11,12 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerCreateMode
     {
         /// <summary> Default. </summary>
-        Default,
+        Default = 0,
         /// <summary> PointInTimeRestore. </summary>
-        PointInTimeRestore,
+        PointInTimeRestore = 1,
         /// <summary> Replica. </summary>
-        Replica,
+        Replica = 2,
         /// <summary> GeoRestore. </summary>
-        GeoRestore
+        GeoRestore = 3
     }
 }

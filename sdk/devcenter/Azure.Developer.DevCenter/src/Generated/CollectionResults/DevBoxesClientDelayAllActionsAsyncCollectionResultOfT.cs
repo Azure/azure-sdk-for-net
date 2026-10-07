@@ -50,7 +50,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The pages of DevBoxesClientDelayAllActionsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DevBoxActionDelayResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -59,8 +59,8 @@ namespace Azure.Developer.DevCenter
                     yield break;
                 }
                 PagedDevBoxActionDelayResult result = (PagedDevBoxActionDelayResult)response;
-                yield return Page<DevBoxActionDelayResult>.FromValues((IReadOnlyList<DevBoxActionDelayResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevBoxActionDelayResult>.FromValues((IReadOnlyList<DevBoxActionDelayResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

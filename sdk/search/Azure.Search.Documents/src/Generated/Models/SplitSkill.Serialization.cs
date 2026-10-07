@@ -105,6 +105,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maximumPagesToTake"u8);
                 writer.WriteNumberValue(MaximumPagesToTake.Value);
             }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            if (Optional.IsDefined(AzureOpenAITokenizerParameters))
+            {
+                writer.WritePropertyName("azureOpenAITokenizerParameters"u8);
+                writer.WriteObjectValue(AzureOpenAITokenizerParameters, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -144,6 +154,8 @@ namespace Azure.Search.Documents.Indexes.Models
             int? maximumPageLength = default;
             int? pageOverlapLength = default;
             int? maximumPagesToTake = default;
+            SplitSkillUnit? unit = default;
+            AzureOpenAITokenizerParameters azureOpenAITokenizerParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -234,9 +246,29 @@ namespace Azure.Search.Documents.Indexes.Models
                     maximumPagesToTake = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("unit"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        unit = null;
+                        continue;
+                    }
+                    unit = new SplitSkillUnit(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("azureOpenAITokenizerParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        azureOpenAITokenizerParameters = null;
+                        continue;
+                    }
+                    azureOpenAITokenizerParameters = AzureOpenAITokenizerParameters.DeserializeAzureOpenAITokenizerParameters(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SplitSkill(
@@ -244,14 +276,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 defaultLanguageCode,
                 textSplitMode,
                 maximumPageLength,
                 pageOverlapLength,
-                maximumPagesToTake);
+                maximumPagesToTake,
+                unit,
+                azureOpenAITokenizerParameters);
         }
     }
 }

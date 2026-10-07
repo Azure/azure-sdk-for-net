@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.WebPubSub
                     yield break;
                 }
                 SharedPrivateLinkResourceList result = SharedPrivateLinkResourceList.FromResponse(response);
-                yield return Page<WebPubSubSharedPrivateLinkData>.FromValues((IReadOnlyList<WebPubSubSharedPrivateLinkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WebPubSubSharedPrivateLinkData>.FromValues((IReadOnlyList<WebPubSubSharedPrivateLinkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -1,0 +1,57 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.ManagedNetworkFabric.Models
+{
+    /// <summary> Type of managed service identity for Managed Network Fabric resources. </summary>
+    public readonly partial struct NetworkFabricManagedServiceIdentityType : IEquatable<NetworkFabricManagedServiceIdentityType>
+    {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricManagedServiceIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NetworkFabricManagedServiceIdentityType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string NoneValue = "None";
+        private const string SystemAssignedValue = "SystemAssigned";
+        private const string UserAssignedValue = "UserAssigned";
+        private const string SystemAssignedUserAssignedValue = "SystemAssigned, UserAssigned";
+
+        /// <summary> None. </summary>
+        public static NetworkFabricManagedServiceIdentityType None { get; } = new NetworkFabricManagedServiceIdentityType(NoneValue);
+        /// <summary> SystemAssigned. </summary>
+        public static NetworkFabricManagedServiceIdentityType SystemAssigned { get; } = new NetworkFabricManagedServiceIdentityType(SystemAssignedValue);
+        /// <summary> UserAssigned. </summary>
+        public static NetworkFabricManagedServiceIdentityType UserAssigned { get; } = new NetworkFabricManagedServiceIdentityType(UserAssignedValue);
+        /// <summary> SystemAssigned, UserAssigned. </summary>
+        public static NetworkFabricManagedServiceIdentityType SystemAssignedUserAssigned { get; } = new NetworkFabricManagedServiceIdentityType(SystemAssignedUserAssignedValue);
+
+        /// <summary> Determines if two <see cref="NetworkFabricManagedServiceIdentityType"/> values are the same. </summary>
+        public static bool operator ==(NetworkFabricManagedServiceIdentityType left, NetworkFabricManagedServiceIdentityType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="NetworkFabricManagedServiceIdentityType"/> values are not the same. </summary>
+        public static bool operator !=(NetworkFabricManagedServiceIdentityType left, NetworkFabricManagedServiceIdentityType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricManagedServiceIdentityType"/>. </summary>
+        public static implicit operator NetworkFabricManagedServiceIdentityType(string value) => new NetworkFabricManagedServiceIdentityType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is NetworkFabricManagedServiceIdentityType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(NetworkFabricManagedServiceIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
+    }
+}

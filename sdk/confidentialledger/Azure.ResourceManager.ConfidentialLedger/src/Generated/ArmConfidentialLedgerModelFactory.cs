@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ConfidentialLedger;
 using Azure.ResourceManager.Models;
@@ -18,6 +17,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmConfidentialLedgerModelFactory
     {
+        /// <summary> The check availability request body. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.ConfidentialLedgerNameAvailabilityContent"/> instance for mocking. </returns>
+        public static ConfidentialLedgerNameAvailabilityContent ConfidentialLedgerNameAvailabilityContent(string name = default, ResourceType? resourceType = default)
+        {
+            return new ConfidentialLedgerNameAvailabilityContent(name, resourceType, default);
+        }
+
         /// <summary> The check availability result. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
@@ -25,7 +33,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <returns> A new <see cref="Models.ConfidentialLedgerNameAvailabilityResult"/> instance for mocking. </returns>
         public static ConfidentialLedgerNameAvailabilityResult ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable = default, ConfidentialLedgerNameUnavailableReason? reason = default, string message = default)
         {
-            return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <summary> Confidential Ledger. Contains the properties of Confidential Ledger Resource. </summary>
@@ -46,10 +54,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Additional Confidential Ledger properties. </summary>
@@ -87,8 +95,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 ledgerType,
                 provisioningState,
                 ledgerSku,
-                aadBasedSecurityPrincipals.ToList(),
-                certBasedSecurityPrincipals.ToList(),
+                (aadBasedSecurityPrincipals ?? new ChangeTrackingList<AadBasedSecurityPrincipal>()).ToList(),
+                (certBasedSecurityPrincipals ?? new ChangeTrackingList<CertBasedSecurityPrincipal>()).ToList(),
                 hostLevel,
                 maxBodySizeInMb,
                 subjectName,
@@ -98,7 +106,26 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 enclavePlatform,
                 applicationType,
                 scittConfiguration,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> AAD based security principal with associated Ledger RoleName. </summary>
+        /// <param name="principalId"> UUID/GUID based Principal Id of the Security Principal. </param>
+        /// <param name="tenantId"> UUID/GUID based Tenant Id of the Security Principal. </param>
+        /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
+        /// <returns> A new <see cref="Models.AadBasedSecurityPrincipal"/> instance for mocking. </returns>
+        public static AadBasedSecurityPrincipal AadBasedSecurityPrincipal(Guid? principalId = default, Guid? tenantId = default, ConfidentialLedgerRoleName? ledgerRoleName = default)
+        {
+            return new AadBasedSecurityPrincipal(principalId, tenantId, ledgerRoleName, default);
+        }
+
+        /// <summary> Cert based security principal with Ledger RoleName. </summary>
+        /// <param name="cert"> Public key of the user cert (.pem or .cer). </param>
+        /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
+        /// <returns> A new <see cref="Models.CertBasedSecurityPrincipal"/> instance for mocking. </returns>
+        public static CertBasedSecurityPrincipal CertBasedSecurityPrincipal(string cert = default, ConfidentialLedgerRoleName? ledgerRoleName = default)
+        {
+            return new CertBasedSecurityPrincipal(cert, ledgerRoleName, default);
         }
 
         /// <summary> Object representing Files Export properties of a Confidential Ledger Resource. </summary>
@@ -107,7 +134,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <returns> A new <see cref="Models.ConfidentialLedgerFilesExportContent"/> instance for mocking. </returns>
         public static ConfidentialLedgerFilesExportContent ConfidentialLedgerFilesExportContent(string restoreRegion = default, Uri uri = default)
         {
-            return new ConfidentialLedgerFilesExportContent(restoreRegion, uri, additionalBinaryDataProperties: null);
+            return new ConfidentialLedgerFilesExportContent(restoreRegion, uri, default);
         }
 
         /// <summary> Object representing the files export response of a Confidential Ledger Resource. </summary>
@@ -115,7 +142,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <returns> A new <see cref="Models.ConfidentialLedgerFilesExportResult"/> instance for mocking. </returns>
         public static ConfidentialLedgerFilesExportResult ConfidentialLedgerFilesExportResult(string message = default)
         {
-            return new ConfidentialLedgerFilesExportResult(message, additionalBinaryDataProperties: null);
+            return new ConfidentialLedgerFilesExportResult(message, default);
         }
     }
 }

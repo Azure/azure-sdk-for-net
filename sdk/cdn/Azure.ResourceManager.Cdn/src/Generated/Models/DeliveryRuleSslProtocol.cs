@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct DeliveryRuleSslProtocol : IEquatable<DeliveryRuleSslProtocol>
     {
         private readonly string _value;
-        private const string TLSv1Value = "TLSv1";
-        private const string TLSv11Value = "TLSv1.1";
-        private const string TLSv12Value = "TLSv1.2";
+        private const string Tls1_0Value = "TLSv1";
+        private const string Tls1_1Value = "TLSv1.1";
+        private const string Tls1_2Value = "TLSv1.2";
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,6 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Tls1_0. </summary>
+        public static DeliveryRuleSslProtocol Tls1_0 { get; } = new DeliveryRuleSslProtocol(Tls1_0Value);
+
+        /// <summary> Gets the Tls1_1. </summary>
+        public static DeliveryRuleSslProtocol Tls1_1 { get; } = new DeliveryRuleSslProtocol(Tls1_1Value);
+
+        /// <summary> Gets the Tls1_2. </summary>
+        public static DeliveryRuleSslProtocol Tls1_2 { get; } = new DeliveryRuleSslProtocol(Tls1_2Value);
 
         /// <summary> Determines if two <see cref="DeliveryRuleSslProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

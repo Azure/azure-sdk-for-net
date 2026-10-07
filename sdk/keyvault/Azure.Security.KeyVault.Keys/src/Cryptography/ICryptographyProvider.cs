@@ -28,6 +28,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken = default);
 
+        Task<SecureWrapResult> SecureWrapKeyAsync(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default);
+
+        SecureWrapResult SecureWrapKey(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default);
+
+        Task<SecureUnwrapResult> SecureUnwrapKeyAsync(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default);
+
+        SecureUnwrapResult SecureUnwrapKey(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default);
+
         Task<SignResult> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default);
 
         SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default);

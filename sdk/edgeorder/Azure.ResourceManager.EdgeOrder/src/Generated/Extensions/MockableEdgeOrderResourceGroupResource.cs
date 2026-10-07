@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
 
         private ClientDiagnostics OrdersOperationGroupClientDiagnostics => _ordersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OrdersOperationGroup OrdersOperationGroupRestClient => _ordersOperationGroupRestClient ??= new OrdersOperationGroup(OrdersOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private OrdersOperationGroup OrdersOperationGroupRestClient => _ordersOperationGroupRestClient ??= new OrdersOperationGroup(OrdersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         /// <summary> Gets a collection of EdgeOrderAddresses in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of EdgeOrderAddresses and their operations over a EdgeOrderAddressResource. </returns>
@@ -311,5 +312,63 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
                 context,
                 "MockableEdgeOrderResourceGroupResource.GetEdgeOrders"), data => new EdgeOrderResource(Client, data));
         }
+
+        /// <summary>
+        /// List orders at resource group level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdersOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken, CancellationToken cancellationToken)
+        {
+            return GetEdgeOrdersAsync(skipToken: skipToken, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// List orders at resource group level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdersOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken, CancellationToken cancellationToken)
+        {
+            return GetEdgeOrders(skipToken: skipToken, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

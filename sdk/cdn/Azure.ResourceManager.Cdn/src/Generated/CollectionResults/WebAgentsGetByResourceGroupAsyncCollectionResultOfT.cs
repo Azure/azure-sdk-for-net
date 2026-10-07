@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 WebAgentList result = WebAgentList.FromResponse(response);
-                yield return Page<CdnWebAgentData>.FromValues((IReadOnlyList<CdnWebAgentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CdnWebAgentData>.FromValues((IReadOnlyList<CdnWebAgentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

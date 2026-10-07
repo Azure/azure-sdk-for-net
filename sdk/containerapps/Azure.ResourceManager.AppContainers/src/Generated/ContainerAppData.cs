@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> ContainerApp resource specific properties. </param>
@@ -39,14 +38,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="identity"> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="kind"> Metadata to represent the container app kind, representing if a container app is workflowapp or functionapp. </param>
-        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ContainerAppProperties properties, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppKind? kind) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppProperties properties, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ExtendedLocation = extendedLocation;
             Identity = identity;
             ManagedBy = managedBy;
             Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ContainerApp resource specific properties. </summary>
@@ -86,16 +86,6 @@ namespace Azure.ResourceManager.AppContainers
             get
             {
                 return Properties is null ? default : Properties.RunningStatus;
-            }
-        }
-
-        /// <summary> Any errors that occurred during deployment. </summary>
-        [WirePath("properties.deploymentErrors")]
-        public string DeploymentErrors
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeploymentErrors;
             }
         }
 
@@ -253,13 +243,13 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Patching mode for the container app. Null or default in this field will be interpreted as Automatic by RP. Automatic mode will automatically apply available patches. Manual mode will require the user to manually apply patches. Disabled mode will stop patch detection and auto patching. </summary>
-        [WirePath("properties.patchingConfiguration.patchingMode")]
-        public PatchingMode? PatchingMode
+        /// <summary> Resource ID of a subnet used for outbound (egress) traffic from this Container App. Only supported for Container Apps in an Express managed environment. Mutually exclusive with the environment-level VNet configuration and immutable after the Container App is created. </summary>
+        [WirePath("properties.networking.outboundVnetSubnetId")]
+        public ResourceIdentifier NetworkingOutboundVnetSubnetId
         {
             get
             {
-                return Properties is null ? default : Properties.PatchingMode;
+                return Properties is null ? default : Properties.NetworkingOutboundVnetSubnetId;
             }
             set
             {
@@ -267,7 +257,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     Properties = new ContainerAppProperties();
                 }
-                Properties.PatchingMode = value;
+                Properties.NetworkingOutboundVnetSubnetId = value;
             }
         }
     }

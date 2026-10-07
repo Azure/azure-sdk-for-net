@@ -26,7 +26,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
-        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter)
+        /// <param name="knowledgeBaseCounter"> Total number of knowledge bases. </param>
+        /// <param name="knowledgeSourceCounter"> Total number of knowledge sources. </param>
+        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, SearchResourceCounter knowledgeBaseCounter, SearchResourceCounter knowledgeSourceCounter)
         {
             AliasCounter = aliasCounter;
             DocumentCounter = documentCounter;
@@ -37,6 +39,8 @@ namespace Azure.Search.Documents.Indexes.Models
             SynonymMapCounter = synonymMapCounter;
             SkillsetCounter = skillsetCounter;
             VectorIndexSizeCounter = vectorIndexSizeCounter;
+            KnowledgeBaseCounter = knowledgeBaseCounter;
+            KnowledgeSourceCounter = knowledgeSourceCounter;
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/>. </summary>
@@ -49,8 +53,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
+        /// <param name="knowledgeBaseCounter"> Total number of knowledge bases. </param>
+        /// <param name="knowledgeSourceCounter"> Total number of knowledge sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, SearchResourceCounter knowledgeBaseCounter, SearchResourceCounter knowledgeSourceCounter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AliasCounter = aliasCounter;
             DocumentCounter = documentCounter;
@@ -61,6 +67,8 @@ namespace Azure.Search.Documents.Indexes.Models
             SynonymMapCounter = synonymMapCounter;
             SkillsetCounter = skillsetCounter;
             VectorIndexSizeCounter = vectorIndexSizeCounter;
+            KnowledgeBaseCounter = knowledgeBaseCounter;
+            KnowledgeSourceCounter = knowledgeSourceCounter;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -90,5 +98,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Total memory consumption of all vector indexes within the service, in bytes. </summary>
         public SearchResourceCounter VectorIndexSizeCounter { get; }
+
+        /// <summary> Total number of knowledge bases. </summary>
+        public SearchResourceCounter KnowledgeBaseCounter { get; }
+
+        /// <summary> Total number of knowledge sources. </summary>
+        public SearchResourceCounter KnowledgeSourceCounter { get; }
     }
 }

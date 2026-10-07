@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The pages of JobRouterAdministrationClientGetDistributionPoliciesCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DistributionPolicy>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -48,8 +48,8 @@ namespace Azure.Communication.JobRouter
                     yield break;
                 }
                 PagedDistributionPolicy result = (PagedDistributionPolicy)response;
-                yield return Page<DistributionPolicy>.FromValues((IReadOnlyList<DistributionPolicy>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DistributionPolicy>.FromValues((IReadOnlyList<DistributionPolicy>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

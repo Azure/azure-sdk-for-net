@@ -8,46 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Description of a SKU for a scalable resource.
-    /// Serialized Name: SkuDescription
-    /// </summary>
+    /// <summary> Description of a SKU for a scalable resource. </summary>
     public partial class AppServiceSkuDescription
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceSkuDescription"/>. </summary>
         public AppServiceSkuDescription()
@@ -57,40 +26,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceSkuDescription"/>. </summary>
-        /// <param name="name">
-        /// Name of the resource SKU.
-        /// Serialized Name: SkuDescription.name
-        /// </param>
-        /// <param name="tier">
-        /// Service tier of the resource SKU.
-        /// Serialized Name: SkuDescription.tier
-        /// </param>
-        /// <param name="size">
-        /// Size specifier of the resource SKU.
-        /// Serialized Name: SkuDescription.size
-        /// </param>
-        /// <param name="family">
-        /// Family code of the resource SKU.
-        /// Serialized Name: SkuDescription.family
-        /// </param>
-        /// <param name="capacity">
-        /// Current number of instances assigned to the resource.
-        /// Serialized Name: SkuDescription.capacity
-        /// </param>
-        /// <param name="skuCapacity">
-        /// Min, max, and default scale values of the SKU.
-        /// Serialized Name: SkuDescription.skuCapacity
-        /// </param>
-        /// <param name="locations">
-        /// Locations of the SKU.
-        /// Serialized Name: SkuDescription.locations
-        /// </param>
-        /// <param name="capabilities">
-        /// Capabilities of the SKU, e.g., is traffic manager enabled?
-        /// Serialized Name: SkuDescription.capabilities
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceSkuDescription(string name, string tier, string size, string family, int? capacity, AppServiceSkuCapacity skuCapacity, IList<AzureLocation> locations, IList<AppServiceSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Name of the resource SKU. </param>
+        /// <param name="tier"> Service tier of the resource SKU. </param>
+        /// <param name="size"> Size specifier of the resource SKU. </param>
+        /// <param name="family"> Family code of the resource SKU. </param>
+        /// <param name="capacity"> Current number of instances assigned to the resource. </param>
+        /// <param name="skuCapacity"> Min, max, and default scale values of the SKU. </param>
+        /// <param name="locations"> Locations of the SKU. </param>
+        /// <param name="capabilities"> Capabilities of the SKU, e.g., is traffic manager enabled?. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceSkuDescription(string name, string tier, string size, string family, int? capacity, AppServiceSkuCapacity skuCapacity, IList<AzureLocation> locations, IList<AppServiceSkuCapability> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
@@ -100,55 +45,38 @@ namespace Azure.ResourceManager.AppService.Models
             SkuCapacity = skuCapacity;
             Locations = locations;
             Capabilities = capabilities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Name of the resource SKU.
-        /// Serialized Name: SkuDescription.name
-        /// </summary>
+        /// <summary> Name of the resource SKU. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Service tier of the resource SKU.
-        /// Serialized Name: SkuDescription.tier
-        /// </summary>
+
+        /// <summary> Service tier of the resource SKU. </summary>
         [WirePath("tier")]
         public string Tier { get; set; }
-        /// <summary>
-        /// Size specifier of the resource SKU.
-        /// Serialized Name: SkuDescription.size
-        /// </summary>
+
+        /// <summary> Size specifier of the resource SKU. </summary>
         [WirePath("size")]
         public string Size { get; set; }
-        /// <summary>
-        /// Family code of the resource SKU.
-        /// Serialized Name: SkuDescription.family
-        /// </summary>
+
+        /// <summary> Family code of the resource SKU. </summary>
         [WirePath("family")]
         public string Family { get; set; }
-        /// <summary>
-        /// Current number of instances assigned to the resource.
-        /// Serialized Name: SkuDescription.capacity
-        /// </summary>
+
+        /// <summary> Current number of instances assigned to the resource. </summary>
         [WirePath("capacity")]
         public int? Capacity { get; set; }
-        /// <summary>
-        /// Min, max, and default scale values of the SKU.
-        /// Serialized Name: SkuDescription.skuCapacity
-        /// </summary>
+
+        /// <summary> Min, max, and default scale values of the SKU. </summary>
         [WirePath("skuCapacity")]
         public AppServiceSkuCapacity SkuCapacity { get; set; }
-        /// <summary>
-        /// Locations of the SKU.
-        /// Serialized Name: SkuDescription.locations
-        /// </summary>
+
+        /// <summary> Locations of the SKU. </summary>
         [WirePath("locations")]
         public IList<AzureLocation> Locations { get; }
-        /// <summary>
-        /// Capabilities of the SKU, e.g., is traffic manager enabled?
-        /// Serialized Name: SkuDescription.capabilities
-        /// </summary>
+
+        /// <summary> Capabilities of the SKU, e.g., is traffic manager enabled?. </summary>
         [WirePath("capabilities")]
         public IList<AppServiceSkuCapability> Capabilities { get; }
     }

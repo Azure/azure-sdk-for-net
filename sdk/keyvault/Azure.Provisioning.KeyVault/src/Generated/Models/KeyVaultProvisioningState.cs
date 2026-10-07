@@ -11,8 +11,8 @@ namespace Azure.Provisioning.KeyVault
     public enum KeyVaultProvisioningState
     {
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> RegisteringDns. </summary>
-        RegisteringDns
+        RegisteringDns = 1
     }
 }

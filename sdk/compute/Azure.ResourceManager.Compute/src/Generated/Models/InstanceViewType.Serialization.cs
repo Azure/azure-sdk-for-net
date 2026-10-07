@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class InstanceViewTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this InstanceViewType value) => value switch
         {
             InstanceViewType.InstanceView => "instanceView",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InstanceViewType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static InstanceViewType ToInstanceViewType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "instanceView")) return InstanceViewType.InstanceView;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "userData")) return InstanceViewType.UserData;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "resiliencyView")) return InstanceViewType.ResiliencyView;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "instanceView"))
+            {
+                return InstanceViewType.InstanceView;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "userData"))
+            {
+                return InstanceViewType.UserData;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "resiliencyView"))
+            {
+                return InstanceViewType.ResiliencyView;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown InstanceViewType value.");
         }
     }

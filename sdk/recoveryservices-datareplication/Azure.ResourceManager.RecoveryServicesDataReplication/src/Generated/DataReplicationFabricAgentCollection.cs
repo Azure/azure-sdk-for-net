@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationFabricAgentResource.ResourceType, out string dataReplicationFabricAgentApiVersion);
             _fabricAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationFabricAgentResource.ResourceType.Namespace, Diagnostics);
-            _fabricAgentRestClient = new FabricAgent(_fabricAgentClientDiagnostics, Pipeline, Endpoint, dataReplicationFabricAgentApiVersion ?? "2024-09-01");
+            _fabricAgentRestClient = new FabricAgent(_fabricAgentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationFabricAgentApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _fabricAgentRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fabricAgentName, DataReplicationFabricAgentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource>(
-                    new DataReplicationFabricAgentOperationSource(Client),
+                    new DataReplicationFabricAgentResourceOperationSource(Client),
                     _fabricAgentClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _fabricAgentRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fabricAgentName, DataReplicationFabricAgentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource>(
-                    new DataReplicationFabricAgentOperationSource(Client),
+                    new DataReplicationFabricAgentResourceOperationSource(Client),
                     _fabricAgentClientDiagnostics,
                     Pipeline,
                     message.Request,

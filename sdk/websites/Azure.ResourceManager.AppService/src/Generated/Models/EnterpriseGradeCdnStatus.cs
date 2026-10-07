@@ -7,66 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// State indicating the status of the enterprise grade CDN serving traffic to the static web app.
-    /// Serialized Name: EnterpriseGradeCdnStatus
-    /// </summary>
+    /// <summary> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </summary>
     public readonly partial struct EnterpriseGradeCdnStatus : IEquatable<EnterpriseGradeCdnStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EnterpriseGradeCdnStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EnterpriseGradeCdnStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string EnablingValue = "Enabling";
         private const string DisabledValue = "Disabled";
         private const string DisablingValue = "Disabling";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: EnterpriseGradeCdnStatus.Enabled
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="EnterpriseGradeCdnStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EnterpriseGradeCdnStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static EnterpriseGradeCdnStatus Enabled { get; } = new EnterpriseGradeCdnStatus(EnabledValue);
-        /// <summary>
-        /// Enabling
-        /// Serialized Name: EnterpriseGradeCdnStatus.Enabling
-        /// </summary>
+
+        /// <summary> Gets the Enabling. </summary>
         public static EnterpriseGradeCdnStatus Enabling { get; } = new EnterpriseGradeCdnStatus(EnablingValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: EnterpriseGradeCdnStatus.Disabled
-        /// </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static EnterpriseGradeCdnStatus Disabled { get; } = new EnterpriseGradeCdnStatus(DisabledValue);
-        /// <summary>
-        /// Disabling
-        /// Serialized Name: EnterpriseGradeCdnStatus.Disabling
-        /// </summary>
+
+        /// <summary> Gets the Disabling. </summary>
         public static EnterpriseGradeCdnStatus Disabling { get; } = new EnterpriseGradeCdnStatus(DisablingValue);
+
         /// <summary> Determines if two <see cref="EnterpriseGradeCdnStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnterpriseGradeCdnStatus left, EnterpriseGradeCdnStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnterpriseGradeCdnStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnterpriseGradeCdnStatus left, EnterpriseGradeCdnStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnterpriseGradeCdnStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnterpriseGradeCdnStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnterpriseGradeCdnStatus(string value) => new EnterpriseGradeCdnStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnterpriseGradeCdnStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnterpriseGradeCdnStatus?(string value) => value == null ? null : new EnterpriseGradeCdnStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnterpriseGradeCdnStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnterpriseGradeCdnStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

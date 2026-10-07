@@ -7,107 +7,57 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Database backup settings.
-    /// Serialized Name: DatabaseBackupSetting
-    /// </summary>
+    /// <summary> Database backup settings. </summary>
     public partial class AppServiceDatabaseBackupSetting
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseBackupSetting"/>. </summary>
-        /// <param name="databaseType">
-        /// Database type (e.g. SqlAzure / MySql).
-        /// Serialized Name: DatabaseBackupSetting.databaseType
-        /// </param>
+        /// <param name="databaseType"> Database type (e.g. SqlAzure / MySql). </param>
         public AppServiceDatabaseBackupSetting(AppServiceDatabaseType databaseType)
         {
             DatabaseType = databaseType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseBackupSetting"/>. </summary>
-        /// <param name="databaseType">
-        /// Database type (e.g. SqlAzure / MySql).
-        /// Serialized Name: DatabaseBackupSetting.databaseType
-        /// </param>
-        /// <param name="name"> Serialized Name: DatabaseBackupSetting.name. </param>
+        /// <param name="databaseType"> Database type (e.g. SqlAzure / MySql). </param>
+        /// <param name="name"></param>
         /// <param name="connectionStringName">
         /// Contains a connection string name that is linked to the SiteConfig.ConnectionStrings.
         /// This is used during restore with overwrite connection strings options.
-        /// Serialized Name: DatabaseBackupSetting.connectionStringName
         /// </param>
-        /// <param name="connectionString">
-        /// Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one.
-        /// Serialized Name: DatabaseBackupSetting.connectionString
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceDatabaseBackupSetting(AppServiceDatabaseType databaseType, string name, string connectionStringName, string connectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="connectionString"> Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceDatabaseBackupSetting(AppServiceDatabaseType databaseType, string name, string connectionStringName, string connectionString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseType = databaseType;
             Name = name;
             ConnectionStringName = connectionStringName;
             ConnectionString = connectionString;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseBackupSetting"/> for deserialization. </summary>
-        internal AppServiceDatabaseBackupSetting()
-        {
-        }
-
-        /// <summary>
-        /// Database type (e.g. SqlAzure / MySql).
-        /// Serialized Name: DatabaseBackupSetting.databaseType
-        /// </summary>
+        /// <summary> Database type (e.g. SqlAzure / MySql). </summary>
         [WirePath("databaseType")]
         public AppServiceDatabaseType DatabaseType { get; set; }
-        /// <summary> Serialized Name: DatabaseBackupSetting.name. </summary>
+
+        /// <summary> Gets or sets the Name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary>
         /// Contains a connection string name that is linked to the SiteConfig.ConnectionStrings.
         /// This is used during restore with overwrite connection strings options.
-        /// Serialized Name: DatabaseBackupSetting.connectionStringName
         /// </summary>
         [WirePath("connectionStringName")]
         public string ConnectionStringName { get; set; }
-        /// <summary>
-        /// Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one.
-        /// Serialized Name: DatabaseBackupSetting.connectionString
-        /// </summary>
+
+        /// <summary> Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one. </summary>
         [WirePath("connectionString")]
         public string ConnectionString { get; set; }
     }

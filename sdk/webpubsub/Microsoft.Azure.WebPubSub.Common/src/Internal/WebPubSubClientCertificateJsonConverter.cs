@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -57,12 +57,10 @@ internal class WebPubSubClientCertificateJsonConverter : JsonConverter<WebPubSub
     public override void Write(Utf8JsonWriter writer, WebPubSubClientCertificate value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
-        writer.WritePropertyName(WebPubSubClientCertificate.ThumbprintProperty);
-        JsonSerializer.Serialize(writer, value.Thumbprint, options);
+        writer.WriteString(WebPubSubClientCertificate.ThumbprintProperty, value.Thumbprint);
         if (value.Content != null)
         {
-            writer.WritePropertyName(WebPubSubClientCertificate.ContentProperty);
-            JsonSerializer.Serialize(writer, value.Content, options);
+            writer.WriteString(WebPubSubClientCertificate.ContentProperty, value.Content);
         }
         writer.WriteEndObject();
     }

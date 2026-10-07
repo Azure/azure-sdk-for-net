@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(OracleNetworkAnchorResource.ResourceType, out string oracleNetworkAnchorApiVersion);
             _networkAnchorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleNetworkAnchorResource.ResourceType.Namespace, Diagnostics);
-            _networkAnchorsRestClient = new NetworkAnchors(_networkAnchorsClientDiagnostics, Pipeline, Endpoint, oracleNetworkAnchorApiVersion ?? "2025-09-01");
+            _networkAnchorsRestClient = new NetworkAnchors(_networkAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleNetworkAnchorApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _networkAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, OracleNetworkAnchorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleNetworkAnchorResource> operation = new OracleDatabaseArmOperation<OracleNetworkAnchorResource>(
-                    new OracleNetworkAnchorOperationSource(Client),
+                    new OracleNetworkAnchorResourceOperationSource(Client),
                     _networkAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _networkAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, OracleNetworkAnchorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleNetworkAnchorResource> operation = new OracleDatabaseArmOperation<OracleNetworkAnchorResource>(
-                    new OracleNetworkAnchorOperationSource(Client),
+                    new OracleNetworkAnchorResourceOperationSource(Client),
                     _networkAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,

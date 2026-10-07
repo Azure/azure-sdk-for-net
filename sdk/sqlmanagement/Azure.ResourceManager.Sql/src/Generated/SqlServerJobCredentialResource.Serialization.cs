@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerJobCredentialResource : IJsonModel<SqlServerJobCredentialData>
     {
-        private static SqlServerJobCredentialData s_dataDeserializationInstance;
-        private static SqlServerJobCredentialData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerJobCredentialData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerJobCredentialData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerJobCredentialData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerJobCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobCredentialData>)Data).Write(writer, options);
 
-        SqlServerJobCredentialData IJsonModel<SqlServerJobCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobCredentialData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerJobCredentialData IJsonModel<SqlServerJobCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerJobCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobCredentialData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerJobCredentialData IPersistableModel<SqlServerJobCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobCredentialData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobCredentialData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerJobCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

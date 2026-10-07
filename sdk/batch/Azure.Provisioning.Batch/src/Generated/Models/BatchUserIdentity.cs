@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _userName = DefineProperty<string>(nameof(UserName), new string[] { "userName" });
             _autoUser = DefineModelProperty<BatchAutoUserSpecification>(nameof(AutoUser), new string[] { "autoUser" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchUserIdentity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

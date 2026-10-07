@@ -13,303 +13,340 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the AppServiceEnvironment data model.
-    /// App Service Environment ARM resource.
-    /// Serialized Name: AppServiceEnvironmentResource
-    /// </summary>
+    /// <summary> App Service Environment ARM resource. </summary>
     public partial class AppServiceEnvironmentData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AppServiceEnvironmentData(AzureLocation location) : base(location)
         {
-            ClusterSettings = new ChangeTrackingList<AppServiceNameValuePair>();
-            UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="kind">
-        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
-        /// Serialized Name: AppServiceEnvironmentResource.kind
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.provisioningState
-        /// </param>
-        /// <param name="status">
-        /// Current status of the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.status
-        /// </param>
-        /// <param name="virtualNetwork">
-        /// Description of the Virtual Network.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.virtualNetwork
-        /// </param>
-        /// <param name="internalLoadBalancingMode">
-        /// Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.internalLoadBalancingMode
-        /// </param>
-        /// <param name="multiSize">
-        /// Front-end VM size, e.g. "Medium", "Large".
-        /// Serialized Name: AppServiceEnvironmentResource.properties.multiSize
-        /// </param>
-        /// <param name="multiRoleCount">
-        /// Number of front-end instances.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.multiRoleCount
-        /// </param>
-        /// <param name="ipSslAddressCount">
-        /// Number of IP SSL addresses reserved for the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.ipsslAddressCount
-        /// </param>
-        /// <param name="dnsSuffix">
-        /// DNS suffix of the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.dnsSuffix
-        /// </param>
-        /// <param name="maximumNumberOfMachines">
-        /// Maximum number of VMs in the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.maximumNumberOfMachines
-        /// </param>
-        /// <param name="frontEndScaleFactor">
-        /// Scale factor for front-ends.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.frontEndScaleFactor
-        /// </param>
-        /// <param name="isSuspended">
-        /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
-        /// (most likely because NSG blocked the incoming traffic).
-        /// Serialized Name: AppServiceEnvironmentResource.properties.suspended
-        /// </param>
-        /// <param name="clusterSettings">
-        /// Custom settings for changing the behavior of the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.clusterSettings
-        /// </param>
-        /// <param name="userWhitelistedIPRanges">
-        /// User added ip ranges to whitelist on ASE db
-        /// Serialized Name: AppServiceEnvironmentResource.properties.userWhitelistedIpRanges
-        /// </param>
-        /// <param name="hasLinuxWorkers">
-        /// Flag that displays whether an ASE has linux workers or not
-        /// Serialized Name: AppServiceEnvironmentResource.properties.hasLinuxWorkers
-        /// </param>
-        /// <param name="upgradePreference">
-        /// Upgrade Preference
-        /// Serialized Name: AppServiceEnvironmentResource.properties.upgradePreference
-        /// </param>
-        /// <param name="dedicatedHostCount">
-        /// Dedicated Host Count
-        /// Serialized Name: AppServiceEnvironmentResource.properties.dedicatedHostCount
-        /// </param>
-        /// <param name="isZoneRedundant">
-        /// Whether or not this App Service Environment is zone-redundant.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.zoneRedundant
-        /// </param>
-        /// <param name="customDnsSuffixConfiguration">
-        /// Full view of the custom domain suffix configuration for ASEv3.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.customDnsSuffixConfiguration
-        /// </param>
-        /// <param name="networkingConfiguration">
-        /// Full view of networking configuration for an ASE.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.networkingConfiguration
-        /// </param>
-        /// <param name="upgradeAvailability">
-        /// Whether an upgrade is available for this App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.upgradeAvailability
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, AppServiceEnvironmentUpgradePreference? upgradePreference, int? dedicatedHostCount, bool? isZoneRedundant, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration, AseV3NetworkingConfigurationData networkingConfiguration, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Core resource properties. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceEnvironmentProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Kind = kind;
-            ProvisioningState = provisioningState;
-            Status = status;
-            VirtualNetwork = virtualNetwork;
-            InternalLoadBalancingMode = internalLoadBalancingMode;
-            MultiSize = multiSize;
-            MultiRoleCount = multiRoleCount;
-            IPSslAddressCount = ipSslAddressCount;
-            DnsSuffix = dnsSuffix;
-            MaximumNumberOfMachines = maximumNumberOfMachines;
-            FrontEndScaleFactor = frontEndScaleFactor;
-            IsSuspended = isSuspended;
-            ClusterSettings = clusterSettings;
-            UserWhitelistedIPRanges = userWhitelistedIPRanges;
-            HasLinuxWorkers = hasLinuxWorkers;
-            UpgradePreference = upgradePreference;
-            DedicatedHostCount = dedicatedHostCount;
-            IsZoneRedundant = isZoneRedundant;
-            CustomDnsSuffixConfiguration = customDnsSuffixConfiguration;
-            NetworkingConfiguration = networkingConfiguration;
-            UpgradeAvailability = upgradeAvailability;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentData"/> for deserialization. </summary>
-        internal AppServiceEnvironmentData()
-        {
-        }
+        /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
+        internal AppServiceEnvironmentProperties Properties { get; set; }
 
-        /// <summary>
-        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
-        /// Serialized Name: AppServiceEnvironmentResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// Provisioning state of the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.provisioningState
-        /// </summary>
+
+        /// <summary> Provisioning state of the App Service Environment. </summary>
         [WirePath("properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Current status of the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.status
-        /// </summary>
+        public ProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Current status of the App Service Environment. </summary>
         [WirePath("properties.status")]
-        public HostingEnvironmentStatus? Status { get; }
-        /// <summary>
-        /// Description of the Virtual Network.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.virtualNetwork
-        /// </summary>
+        public HostingEnvironmentStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> Description of the Virtual Network. </summary>
         [WirePath("properties.virtualNetwork")]
-        public AppServiceVirtualNetworkProfile VirtualNetwork { get; set; }
-        /// <summary>
-        /// Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.internalLoadBalancingMode
-        /// </summary>
+        public AppServiceVirtualNetworkProfile VirtualNetwork
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetwork;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.VirtualNetwork = value;
+            }
+        }
+
+        /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
         [WirePath("properties.internalLoadBalancingMode")]
-        public LoadBalancingMode? InternalLoadBalancingMode { get; set; }
-        /// <summary>
-        /// Front-end VM size, e.g. "Medium", "Large".
-        /// Serialized Name: AppServiceEnvironmentResource.properties.multiSize
-        /// </summary>
+        public LoadBalancingMode? InternalLoadBalancingMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InternalLoadBalancingMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.InternalLoadBalancingMode = value;
+            }
+        }
+
+        /// <summary> Front-end VM size, e.g. "Medium", "Large". </summary>
         [WirePath("properties.multiSize")]
-        public string MultiSize { get; set; }
-        /// <summary>
-        /// Number of front-end instances.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.multiRoleCount
-        /// </summary>
+        public string MultiSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MultiSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.MultiSize = value;
+            }
+        }
+
+        /// <summary> Number of front-end instances. </summary>
         [WirePath("properties.multiRoleCount")]
-        public int? MultiRoleCount { get; }
-        /// <summary>
-        /// Number of IP SSL addresses reserved for the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.ipsslAddressCount
-        /// </summary>
+        public int? MultiRoleCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MultiRoleCount;
+            }
+        }
+
+        /// <summary> Number of IP SSL addresses reserved for the App Service Environment. </summary>
         [WirePath("properties.ipsslAddressCount")]
-        public int? IPSslAddressCount { get; set; }
-        /// <summary>
-        /// DNS suffix of the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.dnsSuffix
-        /// </summary>
+        public int? IPSslAddressCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPSslAddressCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.IPSslAddressCount = value;
+            }
+        }
+
+        /// <summary> DNS suffix of the App Service Environment. </summary>
         [WirePath("properties.dnsSuffix")]
-        public string DnsSuffix { get; set; }
-        /// <summary>
-        /// Maximum number of VMs in the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.maximumNumberOfMachines
-        /// </summary>
+        public string DnsSuffix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSuffix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.DnsSuffix = value;
+            }
+        }
+
+        /// <summary> Maximum number of VMs in the App Service Environment. </summary>
         [WirePath("properties.maximumNumberOfMachines")]
-        public int? MaximumNumberOfMachines { get; }
-        /// <summary>
-        /// Scale factor for front-ends.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.frontEndScaleFactor
-        /// </summary>
+        public int? MaximumNumberOfMachines
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaximumNumberOfMachines;
+            }
+        }
+
+        /// <summary> Scale factor for front-ends. </summary>
         [WirePath("properties.frontEndScaleFactor")]
-        public int? FrontEndScaleFactor { get; set; }
+        public int? FrontEndScaleFactor
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontEndScaleFactor;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.FrontEndScaleFactor = value;
+            }
+        }
+
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
         /// (most likely because NSG blocked the incoming traffic).
-        /// Serialized Name: AppServiceEnvironmentResource.properties.suspended
         /// </summary>
         [WirePath("properties.suspended")]
-        public bool? IsSuspended { get; }
-        /// <summary>
-        /// Custom settings for changing the behavior of the App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.clusterSettings
-        /// </summary>
+        public bool? IsSuspended
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSuspended;
+            }
+        }
+
+        /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
         [WirePath("properties.clusterSettings")]
-        public IList<AppServiceNameValuePair> ClusterSettings { get; }
-        /// <summary>
-        /// User added ip ranges to whitelist on ASE db
-        /// Serialized Name: AppServiceEnvironmentResource.properties.userWhitelistedIpRanges
-        /// </summary>
+        public IList<AppServiceNameValuePair> ClusterSettings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                return Properties.ClusterSettings;
+            }
+        }
+
+        /// <summary> User added ip ranges to whitelist on ASE db. </summary>
         [WirePath("properties.userWhitelistedIpRanges")]
-        public IList<string> UserWhitelistedIPRanges { get; }
-        /// <summary>
-        /// Flag that displays whether an ASE has linux workers or not
-        /// Serialized Name: AppServiceEnvironmentResource.properties.hasLinuxWorkers
-        /// </summary>
+        public IList<string> UserWhitelistedIPRanges
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                return Properties.UserWhitelistedIPRanges;
+            }
+        }
+
+        /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
         [WirePath("properties.hasLinuxWorkers")]
-        public bool? HasLinuxWorkers { get; }
-        /// <summary>
-        /// Upgrade Preference
-        /// Serialized Name: AppServiceEnvironmentResource.properties.upgradePreference
-        /// </summary>
+        public bool? HasLinuxWorkers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HasLinuxWorkers;
+            }
+        }
+
+        /// <summary> Upgrade Preference. </summary>
         [WirePath("properties.upgradePreference")]
-        public AppServiceEnvironmentUpgradePreference? UpgradePreference { get; set; }
-        /// <summary>
-        /// Dedicated Host Count
-        /// Serialized Name: AppServiceEnvironmentResource.properties.dedicatedHostCount
-        /// </summary>
+        public AppServiceEnvironmentUpgradePreference? UpgradePreference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradePreference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.UpgradePreference = value;
+            }
+        }
+
+        /// <summary> Dedicated Host Count. </summary>
         [WirePath("properties.dedicatedHostCount")]
-        public int? DedicatedHostCount { get; set; }
-        /// <summary>
-        /// Whether or not this App Service Environment is zone-redundant.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.zoneRedundant
-        /// </summary>
+        public int? DedicatedHostCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DedicatedHostCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.DedicatedHostCount = value;
+            }
+        }
+
+        /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? IsZoneRedundant { get; set; }
-        /// <summary>
-        /// Full view of the custom domain suffix configuration for ASEv3.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.customDnsSuffixConfiguration
-        /// </summary>
+        public bool? IsZoneRedundant
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsZoneRedundant;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.IsZoneRedundant = value;
+            }
+        }
+
+        /// <summary> Full view of the custom domain suffix configuration for ASEv3. </summary>
         [WirePath("properties.customDnsSuffixConfiguration")]
-        public CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration { get; set; }
-        /// <summary>
-        /// Full view of networking configuration for an ASE.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.networkingConfiguration
-        /// </summary>
+        public CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomDnsSuffixConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.CustomDnsSuffixConfiguration = value;
+            }
+        }
+
+        /// <summary> Full view of networking configuration for an ASE. </summary>
         [WirePath("properties.networkingConfiguration")]
-        public AseV3NetworkingConfigurationData NetworkingConfiguration { get; set; }
-        /// <summary>
-        /// Whether an upgrade is available for this App Service Environment.
-        /// Serialized Name: AppServiceEnvironmentResource.properties.upgradeAvailability
-        /// </summary>
+        public AseV3NetworkingConfigurationData NetworkingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AppServiceEnvironmentProperties();
+                }
+                Properties.NetworkingConfiguration = value;
+            }
+        }
+
+        /// <summary> Whether an upgrade is available for this App Service Environment. </summary>
         [WirePath("properties.upgradeAvailability")]
-        public AppServiceEnvironmentUpgradeAvailability? UpgradeAvailability { get; }
+        public AppServiceEnvironmentUpgradeAvailability? UpgradeAvailability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeAvailability;
+            }
+        }
     }
 }

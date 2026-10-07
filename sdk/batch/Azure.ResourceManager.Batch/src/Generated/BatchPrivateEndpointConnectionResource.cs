@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(ResourceType, out string batchPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, batchPrivateEndpointConnectionApiVersion ?? "2025-06-01");
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchPrivateEndpointConnectionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchPrivateEndpointConnectionData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BatchArmOperation<BatchPrivateEndpointConnectionResource> operation = new BatchArmOperation<BatchPrivateEndpointConnectionResource>(
-                    new BatchPrivateEndpointConnectionOperationSource(Client),
+                    new BatchPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchPrivateEndpointConnectionData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BatchArmOperation<BatchPrivateEndpointConnectionResource> operation = new BatchArmOperation<BatchPrivateEndpointConnectionResource>(
-                    new BatchPrivateEndpointConnectionOperationSource(Client),
+                    new BatchPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionClientDiagnostics,
                     Pipeline,
                     message.Request,

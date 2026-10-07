@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> List of application parameters with overridden values from their default values specified in the application manifest. </summary>
-        public IDictionary<string, string> Parameters { get; }
+        public IDictionary<string, string> Parameters { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

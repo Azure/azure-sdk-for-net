@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string barSettingsResourceApiVersion);
             _barSettingsOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _barSettingsOperationsRestClient = new BarSettingsOperations(_barSettingsOperationsClientDiagnostics, Pipeline, Endpoint, barSettingsResourceApiVersion ?? "2024-05-01");
+            _barSettingsOperationsRestClient = new BarSettingsOperations(_barSettingsOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barSettingsResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

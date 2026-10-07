@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct RouteMapActionType : IEquatable<RouteMapActionType>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Remove. </summary>
+        private const string RemoveValue = "Remove";
+        /// <summary> Add. </summary>
+        private const string AddValue = "Add";
+        /// <summary> Replace. </summary>
+        private const string ReplaceValue = "Replace";
+        /// <summary> Drop. </summary>
+        private const string DropValue = "Drop";
 
         /// <summary> Initializes a new instance of <see cref="RouteMapActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RouteMapActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string RemoveValue = "Remove";
-        private const string AddValue = "Add";
-        private const string ReplaceValue = "Replace";
-        private const string DropValue = "Drop";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static RouteMapActionType Unknown { get; } = new RouteMapActionType(UnknownValue);
+
         /// <summary> Remove. </summary>
         public static RouteMapActionType Remove { get; } = new RouteMapActionType(RemoveValue);
+
         /// <summary> Add. </summary>
         public static RouteMapActionType Add { get; } = new RouteMapActionType(AddValue);
+
         /// <summary> Replace. </summary>
         public static RouteMapActionType Replace { get; } = new RouteMapActionType(ReplaceValue);
+
         /// <summary> Drop. </summary>
         public static RouteMapActionType Drop { get; } = new RouteMapActionType(DropValue);
+
         /// <summary> Determines if two <see cref="RouteMapActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RouteMapActionType left, RouteMapActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RouteMapActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RouteMapActionType left, RouteMapActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RouteMapActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RouteMapActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RouteMapActionType(string value) => new RouteMapActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RouteMapActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RouteMapActionType?(string value) => value == null ? null : new RouteMapActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RouteMapActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RouteMapActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

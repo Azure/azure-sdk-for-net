@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Tests.Visitors
@@ -114,7 +115,7 @@ namespace Azure.Generator.Tests.Visitors
 
             // find the subclient factory method
             var factoryMethod = clientProvider!.Methods
-                .FirstOrDefault(m =>m.Signature.Name == "GetSubClient");
+                .FirstOrDefault(m => m.Signature.Name == "GetSubClient");
             Assert.IsNotNull(factoryMethod);
 
             var updatedFactoryMethod = visitor.InvokeVisitMethod(factoryMethod!);
@@ -164,6 +165,162 @@ namespace Azure.Generator.Tests.Visitors
 
             var result = updatedMethod!.BodyStatements!.ToDisplayString();
             Assert.AreEqual(Helpers.GetExpectedFromFile(isProtocolMethod.ToString()), result);
+        }
+
+        // Libraries such as Azure.AI.Agents.Persistent declare ClientDiagnostics in custom code.
+        // The custom-code symbol must be normalized to the framework ClientDiagnostics type so the
+        // visitor can locate it by type.
+        [Test]
+        public async Task TestProtocolMethodWithCustomCodeClientDiagnosticsProperty()
+        {
+            var visitor = new TestDistributedTracingVisitor();
+
+            // load the input
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter(
+                "p1",
+                InputPrimitiveType.String)
+            ];
+            var basicOperation = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
+            var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
+            await MockHelpers.LoadMockGeneratorAsync(
+                clients: () => [inputClient],
+                compilation: () => Helpers.GetCompilationFromDirectoryAsync());
+            // create the client provider
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+            Assert.IsNotNull(clientProvider!.CustomCodeView);
+            var customClientDiagnosticsType = clientProvider.CanonicalView.Properties
+                .Single(p => p.Name == ClientDiagnosticsPropertyName)
+                .Type;
+            Assert.AreEqual(nameof(ClientDiagnostics), customClientDiagnosticsType.Name);
+            Assert.AreEqual(typeof(ClientDiagnostics).Namespace, customClientDiagnosticsType.Namespace);
+            Assert.IsTrue(customClientDiagnosticsType.IsFrameworkType);
+            Assert.IsTrue(customClientDiagnosticsType.Equals(new CSharpType(typeof(ClientDiagnostics))));
+
+            // create a protocol method to test the visitor
+            var methodSignature = new MethodSignature(
+                "Foo",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async,
+                AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseType,
+                $"The response returned from the service.",
+                [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
+            var bodyStatements = InvokeConsoleWriteLine(Literal("Hello World"));
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, ScmMethodKind.Protocol);
+
+            // The visitor must not throw and must still wrap the body in a diagnostic scope.
+            ScmMethodProvider? updatedMethod = null;
+            Assert.DoesNotThrow(() => updatedMethod = visitor.InvokeVisitMethod(method));
+            Assert.IsNotNull(updatedMethod?.BodyStatements);
+
+            var result = updatedMethod!.BodyStatements!.ToDisplayString();
+            Assert.IsTrue(result.Contains("ClientDiagnostics.CreateScope(\"TestClient.Foo\")"),
+                $"Protocol method should be wrapped with a diagnostic scope. Actual: {result}");
+        }
+
+        // Custom code can rename the ClientDiagnostics property via [CodeGenMember("ClientDiagnostics")],
+        // but type-based lookup must still locate the renamed property.
+        [Test]
+        public async Task TestProtocolMethodWithRenamedClientDiagnosticsProperty()
+        {
+            var visitor = new TestDistributedTracingVisitor();
+
+            // load the input
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter(
+                "p1",
+                InputPrimitiveType.String)
+            ];
+            var basicOperation = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
+            var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
+            await MockHelpers.LoadMockGeneratorAsync(
+                clients: () => [inputClient],
+                compilation: () => Helpers.GetCompilationFromDirectoryAsync());
+            // create the client provider
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+            Assert.IsNotNull(clientProvider!.CustomCodeView);
+            Assert.AreEqual(
+                ClientDiagnosticsPropertyName,
+                clientProvider.CanonicalView.Properties
+                    .Single(p => p.Name == "RenamedDiagnostics")
+                    .OriginalName);
+
+            // create a protocol method to test the visitor
+            var methodSignature = new MethodSignature(
+                "Foo",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async,
+                AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseType,
+                $"The response returned from the service.",
+                [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
+            var bodyStatements = InvokeConsoleWriteLine(Literal("Hello World"));
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, ScmMethodKind.Protocol);
+
+            // The visitor must not throw and must still wrap the body in a diagnostic scope, using the
+            // renamed property to create the scope.
+            ScmMethodProvider? updatedMethod = null;
+            Assert.DoesNotThrow(() => updatedMethod = visitor.InvokeVisitMethod(method));
+            Assert.IsNotNull(updatedMethod?.BodyStatements);
+
+            var result = updatedMethod!.BodyStatements!.ToDisplayString();
+            Assert.IsTrue(result.Contains("RenamedDiagnostics.CreateScope(\"TestClient.Foo\")"),
+                $"Protocol method should be wrapped with a diagnostic scope using the renamed property. Actual: {result}");
+        }
+
+        // This test validates that the "Async" suffix is stripped from the scope name for a protocol
+        // method whose name ends in "Async", since GetScopeName() handles the stripping centrally.
+        [Test]
+        public void TestAsyncProtocolMethodScopeNameStripsAsyncSuffix()
+        {
+            var visitor = new TestDistributedTracingVisitor();
+
+            // load the input
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter(
+                "p1",
+                InputPrimitiveType.String)
+            ];
+            var basicOperation = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
+            var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            // create the client provider
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            // create a protocol method whose name ends in "Async" to test the visitor
+            var methodSignature = new MethodSignature(
+                "FooAsync",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async,
+                AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseType,
+                $"The response returned from the service.",
+                [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
+            var bodyStatements = InvokeConsoleWriteLine(Literal("Hello World"));
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, ScmMethodKind.Protocol);
+
+            var updatedMethod = visitor.InvokeVisitMethod(method!);
+            Assert.IsNotNull(updatedMethod?.BodyStatements);
+
+            var result = updatedMethod!.BodyStatements!.ToDisplayString();
+            // The "Async" suffix should be stripped from the scope name.
+            Assert.IsTrue(result.Contains("ClientDiagnostics.CreateScope(\"TestClient.Foo\")"),
+                $"Scope name should strip the \"Async\" suffix. Actual: {result}");
+            Assert.IsFalse(result.Contains("TestClient.FooAsync"),
+                $"Scope name should not contain the \"Async\" suffix. Actual: {result}");
         }
 
         [TestCase(true, ScmMethodKind.Protocol)]
@@ -249,7 +406,7 @@ namespace Azure.Generator.Tests.Visitors
             }
         }
 
-        private class TestDistributedTracingVisitor : DistributedTracingVisitor
+        private class TestDistributedTracingVisitor : AzureDistributedTracingVisitor
         {
             public ClientProvider? InvokeVisit(InputClient client, ClientProvider? clientProvider)
             {

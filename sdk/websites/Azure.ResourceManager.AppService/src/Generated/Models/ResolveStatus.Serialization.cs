@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ResolveStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResolveStatus value) => value switch
         {
             ResolveStatus.Initialized => "Initialized",
@@ -27,19 +28,53 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResolveStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ResolveStatus ToResolveStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Initialized")) return ResolveStatus.Initialized;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Resolved")) return ResolveStatus.Resolved;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidSyntax")) return ResolveStatus.InvalidSyntax;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MSINotEnabled")) return ResolveStatus.MSINotEnabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "VaultNotFound")) return ResolveStatus.VaultNotFound;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecretNotFound")) return ResolveStatus.SecretNotFound;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecretVersionNotFound")) return ResolveStatus.SecretVersionNotFound;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccessToKeyVaultDenied")) return ResolveStatus.AccessToKeyVaultDenied;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OtherReasons")) return ResolveStatus.OtherReasons;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FetchTimedOut")) return ResolveStatus.FetchTimedOut;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UnauthorizedClient")) return ResolveStatus.UnauthorizedClient;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Initialized"))
+            {
+                return ResolveStatus.Initialized;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Resolved"))
+            {
+                return ResolveStatus.Resolved;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidSyntax"))
+            {
+                return ResolveStatus.InvalidSyntax;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MSINotEnabled"))
+            {
+                return ResolveStatus.MSINotEnabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "VaultNotFound"))
+            {
+                return ResolveStatus.VaultNotFound;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecretNotFound"))
+            {
+                return ResolveStatus.SecretNotFound;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecretVersionNotFound"))
+            {
+                return ResolveStatus.SecretVersionNotFound;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccessToKeyVaultDenied"))
+            {
+                return ResolveStatus.AccessToKeyVaultDenied;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OtherReasons"))
+            {
+                return ResolveStatus.OtherReasons;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FetchTimedOut"))
+            {
+                return ResolveStatus.FetchTimedOut;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UnauthorizedClient"))
+            {
+                return ResolveStatus.UnauthorizedClient;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResolveStatus value.");
         }
     }

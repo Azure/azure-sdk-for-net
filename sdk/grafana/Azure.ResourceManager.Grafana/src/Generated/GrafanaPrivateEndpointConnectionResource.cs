@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(ResourceType, out string grafanaPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, grafanaPrivateEndpointConnectionApiVersion ?? "2025-09-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaPrivateEndpointConnectionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GrafanaPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource> operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(
-                    new GrafanaPrivateEndpointConnectionOperationSource(Client),
+                    new GrafanaPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GrafanaPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource> operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(
-                    new GrafanaPrivateEndpointConnectionOperationSource(Client),
+                    new GrafanaPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

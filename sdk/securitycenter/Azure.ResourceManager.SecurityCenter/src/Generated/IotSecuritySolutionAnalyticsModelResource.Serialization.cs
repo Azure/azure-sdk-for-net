@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class IotSecuritySolutionAnalyticsModelResource : IJsonModel<IotSecuritySolutionAnalyticsModelData>
     {
-        private static IotSecuritySolutionAnalyticsModelData s_dataDeserializationInstance;
-        private static IotSecuritySolutionAnalyticsModelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IotSecuritySolutionAnalyticsModelData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IotSecuritySolutionAnalyticsModelData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IotSecuritySolutionAnalyticsModelData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotSecuritySolutionAnalyticsModelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotSecuritySolutionAnalyticsModelData>)Data).Write(writer, options);
 
-        IotSecuritySolutionAnalyticsModelData IJsonModel<IotSecuritySolutionAnalyticsModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecuritySolutionAnalyticsModelData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotSecuritySolutionAnalyticsModelData IJsonModel<IotSecuritySolutionAnalyticsModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IotSecuritySolutionAnalyticsModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotSecuritySolutionAnalyticsModelData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IotSecuritySolutionAnalyticsModelData IPersistableModel<IotSecuritySolutionAnalyticsModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecuritySolutionAnalyticsModelData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<IotSecuritySolutionAnalyticsModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecuritySolutionAnalyticsModelData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotSecuritySolutionAnalyticsModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsTlsVersion : IEquatable<EventHubsTlsVersion>
     {
         private readonly string _value;
-        private const string Tls10Value = "1.0";
-        private const string Tls11Value = "1.1";
-        private const string Tls12Value = "1.2";
-        private const string Tls13Value = "1.3";
+        private const string Tls1_0Value = "1.0";
+        private const string Tls1_1Value = "1.1";
+        private const string Tls1_2Value = "1.2";
+        private const string Tls1_3Value = "1.3";
 
         /// <summary> Initializes a new instance of <see cref="EventHubsTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,6 +29,18 @@ namespace Azure.ResourceManager.EventHubs.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Tls1_0. </summary>
+        public static EventHubsTlsVersion Tls1_0 { get; } = new EventHubsTlsVersion(Tls1_0Value);
+
+        /// <summary> Gets the Tls1_1. </summary>
+        public static EventHubsTlsVersion Tls1_1 { get; } = new EventHubsTlsVersion(Tls1_1Value);
+
+        /// <summary> Gets the Tls1_2. </summary>
+        public static EventHubsTlsVersion Tls1_2 { get; } = new EventHubsTlsVersion(Tls1_2Value);
+
+        /// <summary> Gets the Tls1_3. </summary>
+        public static EventHubsTlsVersion Tls1_3 { get; } = new EventHubsTlsVersion(Tls1_3Value);
 
         /// <summary> Determines if two <see cref="EventHubsTlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

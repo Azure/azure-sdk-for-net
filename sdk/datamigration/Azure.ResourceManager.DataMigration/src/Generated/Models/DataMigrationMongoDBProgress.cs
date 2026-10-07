@@ -12,42 +12,12 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Base class for MongoDB migration outputs
-    /// Please note <see cref="DataMigrationMongoDBProgress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DataMigrationMongoDBCollectionProgress"/>, <see cref="DataMigrationMongoDBDatabaseProgress"/> and <see cref="DataMigrationMongoDBMigrationProgress"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataMigrationMongoDBCollectionProgress"/>, <see cref="DataMigrationMongoDBDatabaseProgress"/>, and <see cref="DataMigrationMongoDBMigrationProgress"/>.
     /// </summary>
     public abstract partial class DataMigrationMongoDBProgress
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
@@ -56,21 +26,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="errors"> The errors and warnings that have occurred for the current object. The keys are the error codes. </param>
         /// <param name="eventsPending"> The number of oplog events awaiting replay. </param>
         /// <param name="eventsReplayed"> The number of oplog events replayed so far. </param>
+        /// <param name="resultType"> The type of progress object. </param>
         /// <param name="state"></param>
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elapsedTime"/> or <paramref name="errors"/> is null. </exception>
-        protected DataMigrationMongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors, long eventsPending, long eventsReplayed, DataMigrationMongoDBMigrationState state, long totalBytes, long totalDocuments)
+        private protected DataMigrationMongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors, long eventsPending, long eventsReplayed, DataMigrationMongoDBProgressResultType resultType, DataMigrationMongoDBMigrationState state, long totalBytes, long totalDocuments)
         {
-            Argument.AssertNotNull(elapsedTime, nameof(elapsedTime));
-            Argument.AssertNotNull(errors, nameof(errors));
-
             BytesCopied = bytesCopied;
             DocumentsCopied = documentsCopied;
             ElapsedTime = elapsedTime;
             Errors = errors;
             EventsPending = eventsPending;
             EventsReplayed = eventsReplayed;
+            ResultType = resultType;
             State = state;
             TotalBytes = totalBytes;
             TotalDocuments = totalDocuments;
@@ -91,8 +59,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"></param>
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationMongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, DataMigrationMongoDBProgressResultType resultType, DataMigrationMongoDBMigrationState state, long totalBytes, long totalDocuments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationMongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, DataMigrationMongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, DataMigrationMongoDBProgressResultType resultType, DataMigrationMongoDBMigrationState state, long totalBytes, long totalDocuments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BytesCopied = bytesCopied;
             DocumentsCopied = documentsCopied;
@@ -108,40 +76,48 @@ namespace Azure.ResourceManager.DataMigration.Models
             State = state;
             TotalBytes = totalBytes;
             TotalDocuments = totalDocuments;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBProgress"/> for deserialization. </summary>
-        internal DataMigrationMongoDBProgress()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of document bytes copied during the Copying stage. </summary>
         public long BytesCopied { get; }
+
         /// <summary> The number of documents copied during the Copying stage. </summary>
         public long DocumentsCopied { get; }
+
         /// <summary> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </summary>
         public string ElapsedTime { get; }
+
         /// <summary> The errors and warnings that have occurred for the current object. The keys are the error codes. </summary>
         public IReadOnlyDictionary<string, DataMigrationMongoDBError> Errors { get; }
+
         /// <summary> The number of oplog events awaiting replay. </summary>
         public long EventsPending { get; }
+
         /// <summary> The number of oplog events replayed so far. </summary>
         public long EventsReplayed { get; }
+
         /// <summary> The timestamp of the last oplog event received, or null if no oplog event has been received yet. </summary>
         public DateTimeOffset? LastEventOn { get; }
+
         /// <summary> The timestamp of the last oplog event replayed, or null if no oplog event has been replayed yet. </summary>
         public DateTimeOffset? LastReplayOn { get; }
+
         /// <summary> The name of the progress object. For a collection, this is the unqualified collection name. For a database, this is the database name. For the overall migration, this is null. </summary>
         public string Name { get; }
+
         /// <summary> The qualified name of the progress object. For a collection, this is the database-qualified name. For a database, this is the database name. For the overall migration, this is null. </summary>
         public string QualifiedName { get; }
+
         /// <summary> The type of progress object. </summary>
         internal DataMigrationMongoDBProgressResultType ResultType { get; set; }
-        /// <summary> Gets the state. </summary>
+
+        /// <summary> Gets the State. </summary>
         public DataMigrationMongoDBMigrationState State { get; }
+
         /// <summary> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </summary>
         public long TotalBytes { get; }
+
         /// <summary> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </summary>
         public long TotalDocuments { get; }
     }

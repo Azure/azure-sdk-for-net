@@ -1,16 +1,31 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
-
-Updated to api version 2025-12-26-preview.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2026-07-27)
+
+### Other Changes
+
+- Replaced `DatadogActivateSaaSContent.SaaSGuid` (of type `Guid`) with `SaaSResourceId` (of type `ResourceIdentifier`). The `DatadogActivateSaaSContent` constructor parameter changed accordingly from `Guid saaSGuid` to `ResourceIdentifier saaSResourceId`, and the corresponding `ArmDatadogModelFactory.DatadogActivateSaaSContent` factory parameter was updated as well.
+
+## 1.1.0-beta.1 (2026-06-03)
+
+### Features Added
+
+Updated to api version 2025-12-26-preview.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.0.0 (2025-11-20)
 
@@ -86,4 +101,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

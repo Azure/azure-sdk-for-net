@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ServiceWorkspaceSchemaResource : IJsonModel<ApiManagementGlobalSchemaData>
     {
-        private static ApiManagementGlobalSchemaData s_dataDeserializationInstance;
-        private static ApiManagementGlobalSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiManagementGlobalSchemaData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiManagementGlobalSchemaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiManagementGlobalSchemaData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementGlobalSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGlobalSchemaData>)Data).Write(writer, options);
 
-        ApiManagementGlobalSchemaData IJsonModel<ApiManagementGlobalSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGlobalSchemaData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementGlobalSchemaData IJsonModel<ApiManagementGlobalSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiManagementGlobalSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementGlobalSchemaData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiManagementGlobalSchemaData IPersistableModel<ApiManagementGlobalSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGlobalSchemaData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementGlobalSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGlobalSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementGlobalSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

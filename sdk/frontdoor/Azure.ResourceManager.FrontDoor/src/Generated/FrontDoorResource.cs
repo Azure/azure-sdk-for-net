@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(ResourceType, out string frontDoorApiVersion);
             _frontDoorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _frontDoorsRestClient = new FrontDoors(_frontDoorsClientDiagnostics, Pipeline, Endpoint, frontDoorApiVersion ?? "2025-11-01");
+            _frontDoorsRestClient = new FrontDoors(_frontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorApiVersion ?? "2025-11-01");
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, frontDoorApiVersion ?? "2025-11-01");
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _frontDoorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation<FrontDoorResource> operation = new FrontDoorArmOperation<FrontDoorResource>(
-                    new FrontDoorOperationSource(Client),
+                    new FrontDoorResourceOperationSource(Client),
                     _frontDoorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _frontDoorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation<FrontDoorResource> operation = new FrontDoorArmOperation<FrontDoorResource>(
-                    new FrontDoorOperationSource(Client),
+                    new FrontDoorResourceOperationSource(Client),
                     _frontDoorsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -14,37 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Parameters for updating a factory resource. </summary>
     public partial class DataFactoryPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPatch"/>. </summary>
         public DataFactoryPatch()
@@ -54,22 +26,41 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPatch"/>. </summary>
         /// <param name="tags"> The resource tags. </param>
-        /// <param name="identity"> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DataFactoryPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="identity"> Managed service identity of the factory. </param>
+        /// <param name="properties"> Properties of update the factory. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, FactoryUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
-            PublicNetworkAccess = publicNetworkAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
+
+        /// <summary> Managed service identity of the factory. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Properties of update the factory. </summary>
+        internal FactoryUpdateProperties Properties { get; set; }
+
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
-        public DataFactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DataFactoryPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FactoryUpdateProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
     }
 }

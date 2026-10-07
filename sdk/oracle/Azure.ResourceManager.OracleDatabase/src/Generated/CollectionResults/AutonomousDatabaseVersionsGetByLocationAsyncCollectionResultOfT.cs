@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     yield break;
                 }
-                AutonomousDbVersionListResult result = AutonomousDbVersionListResult.FromResponse(response);
-                yield return Page<AutonomousDBVersionData>.FromValues((IReadOnlyList<AutonomousDBVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AutonomousDBVersionListResult result = AutonomousDBVersionListResult.FromResponse(response);
                 nextPage = result.NextLink;
+                yield return Page<AutonomousDBVersionData>.FromValues((IReadOnlyList<AutonomousDBVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

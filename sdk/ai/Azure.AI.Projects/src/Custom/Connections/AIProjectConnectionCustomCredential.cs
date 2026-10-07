@@ -9,6 +9,7 @@ namespace Azure.AI.Projects
     [CodeGenType("AIProjectConnectionCustomCredential")]
     public partial class AIProjectConnectionCustomCredential
     {
+        /// <summary> Gets the set of custom credential key/value pairs. </summary>
         [CodeGenMember("AdditionalProperties")]
         public IReadOnlyDictionary<string, string> Keys => new ReadOnlyDictionary<string, string>(_additionalStringProperties);
     }

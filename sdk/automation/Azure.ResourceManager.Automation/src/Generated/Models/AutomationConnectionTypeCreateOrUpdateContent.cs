@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the create or update connection type operation. </summary>
     public partial class AutomationConnectionTypeCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the connection type. </param>
@@ -55,32 +27,33 @@ namespace Azure.ResourceManager.Automation.Models
             Argument.AssertNotNull(fieldDefinitions, nameof(fieldDefinitions));
 
             Name = name;
-            FieldDefinitions = fieldDefinitions;
+            Properties = new ConnectionTypeCreateOrUpdateProperties(fieldDefinitions);
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the connection type. </param>
-        /// <param name="isGlobal"> Gets or sets a Boolean value to indicate if the connection type is global. </param>
-        /// <param name="fieldDefinitions"> Gets or sets the field definitions of the connection type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationConnectionTypeCreateOrUpdateContent(string name, bool? isGlobal, IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Gets or sets the value of the connection type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationConnectionTypeCreateOrUpdateContent(string name, ConnectionTypeCreateOrUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            IsGlobal = isGlobal;
-            FieldDefinitions = fieldDefinitions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCreateOrUpdateContent"/> for deserialization. </summary>
-        internal AutomationConnectionTypeCreateOrUpdateContent()
-        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the name of the connection type. </summary>
         public string Name { get; }
-        /// <summary> Gets or sets a Boolean value to indicate if the connection type is global. </summary>
-        public bool? IsGlobal { get; set; }
+
+        /// <summary> Gets or sets the value of the connection type. </summary>
+        internal ConnectionTypeCreateOrUpdateProperties Properties { get; }
+
         /// <summary> Gets or sets the field definitions of the connection type. </summary>
-        public IDictionary<string, AutomationConnectionFieldDefinition> FieldDefinitions { get; }
+        public IDictionary<string, AutomationConnectionFieldDefinition> FieldDefinitions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FieldDefinitions;
+            }
+        }
     }
 }

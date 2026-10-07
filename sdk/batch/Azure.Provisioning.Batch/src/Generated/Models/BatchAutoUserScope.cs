@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchAutoUserScope
     {
         /// <summary> Specifies that the service should create a new user for the task. </summary>
-        Task,
+        Task = 0,
         /// <summary> Specifies that the task runs as the common auto user account which is created on every node in a pool. </summary>
-        Pool
+        Pool = 1
     }
 }

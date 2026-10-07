@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ContainerService
     public enum LocalDnsForwardPolicy
     {
         /// <summary> Implements sequential upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
-        Sequential,
+        Sequential = 0,
         /// <summary> Implements round robin upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
-        RoundRobin,
+        RoundRobin = 1,
         /// <summary> Implements random upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
-        Random
+        Random = 2
     }
 }

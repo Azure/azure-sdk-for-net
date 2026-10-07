@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct SchemaMigrationStage : IEquatable<SchemaMigrationStage>
     {
         private readonly string _value;
+        /// <summary> NotStarted. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> ValidatingInputs. </summary>
+        private const string ValidatingInputsValue = "ValidatingInputs";
+        /// <summary> CollectingObjects. </summary>
+        private const string CollectingObjectsValue = "CollectingObjects";
+        /// <summary> DownloadingScript. </summary>
+        private const string DownloadingScriptValue = "DownloadingScript";
+        /// <summary> GeneratingScript. </summary>
+        private const string GeneratingScriptValue = "GeneratingScript";
+        /// <summary> UploadingScript. </summary>
+        private const string UploadingScriptValue = "UploadingScript";
+        /// <summary> DeployingSchema. </summary>
+        private const string DeployingSchemaValue = "DeployingSchema";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> CompletedWithWarnings. </summary>
+        private const string CompletedWithWarningsValue = "CompletedWithWarnings";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="SchemaMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SchemaMigrationStage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string ValidatingInputsValue = "ValidatingInputs";
-        private const string CollectingObjectsValue = "CollectingObjects";
-        private const string DownloadingScriptValue = "DownloadingScript";
-        private const string GeneratingScriptValue = "GeneratingScript";
-        private const string UploadingScriptValue = "UploadingScript";
-        private const string DeployingSchemaValue = "DeployingSchema";
-        private const string CompletedValue = "Completed";
-        private const string CompletedWithWarningsValue = "CompletedWithWarnings";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> NotStarted. </summary>
         public static SchemaMigrationStage NotStarted { get; } = new SchemaMigrationStage(NotStartedValue);
+
         /// <summary> ValidatingInputs. </summary>
         public static SchemaMigrationStage ValidatingInputs { get; } = new SchemaMigrationStage(ValidatingInputsValue);
+
         /// <summary> CollectingObjects. </summary>
         public static SchemaMigrationStage CollectingObjects { get; } = new SchemaMigrationStage(CollectingObjectsValue);
+
         /// <summary> DownloadingScript. </summary>
         public static SchemaMigrationStage DownloadingScript { get; } = new SchemaMigrationStage(DownloadingScriptValue);
+
         /// <summary> GeneratingScript. </summary>
         public static SchemaMigrationStage GeneratingScript { get; } = new SchemaMigrationStage(GeneratingScriptValue);
+
         /// <summary> UploadingScript. </summary>
         public static SchemaMigrationStage UploadingScript { get; } = new SchemaMigrationStage(UploadingScriptValue);
+
         /// <summary> DeployingSchema. </summary>
         public static SchemaMigrationStage DeployingSchema { get; } = new SchemaMigrationStage(DeployingSchemaValue);
+
         /// <summary> Completed. </summary>
         public static SchemaMigrationStage Completed { get; } = new SchemaMigrationStage(CompletedValue);
+
         /// <summary> CompletedWithWarnings. </summary>
         public static SchemaMigrationStage CompletedWithWarnings { get; } = new SchemaMigrationStage(CompletedWithWarningsValue);
+
         /// <summary> Failed. </summary>
         public static SchemaMigrationStage Failed { get; } = new SchemaMigrationStage(FailedValue);
+
         /// <summary> Determines if two <see cref="SchemaMigrationStage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SchemaMigrationStage left, SchemaMigrationStage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SchemaMigrationStage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SchemaMigrationStage left, SchemaMigrationStage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SchemaMigrationStage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SchemaMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SchemaMigrationStage(string value) => new SchemaMigrationStage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SchemaMigrationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SchemaMigrationStage?(string value) => value == null ? null : new SchemaMigrationStage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SchemaMigrationStage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SchemaMigrationStage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

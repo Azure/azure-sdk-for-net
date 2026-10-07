@@ -13,9 +13,9 @@ namespace Azure.Provisioning.ContainerService
     public enum ProxyRedirectionMechanism
     {
         /// <summary> Istio will inject an init container into each pod to redirect traffic (requires NET_ADMIN and NET_RAW). </summary>
-        InitContainers,
+        InitContainers = 0,
         /// <summary> Istio will install a chained CNI plugin to redirect traffic (recommended). </summary>
         [DataMember(Name = "CNIChaining")]
-        CniChaining
+        CniChaining = 1
     }
 }

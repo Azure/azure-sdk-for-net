@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task NotebookWorkspaceCreateAndUpdate()
         {
@@ -79,7 +78,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyNotebookWorkspaces(workspace, workspace2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task NotebookWorkspaceList()
         {
@@ -92,7 +90,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyNotebookWorkspaces(workspaces[0], workspace);
         }
 
-        [Test]
         [RecordedTest]
         public async Task NotebookWorkspaceGetConnectionInfo()
         {
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsNotEmpty(info.NotebookServerEndpoint);
         }
 
-        [Test]
         [RecordedTest]
         public async Task NotebookWorkspaceRegenerateAuthToken()
         {
@@ -125,7 +121,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task NotebookWorkspaceStart()
         {
@@ -134,7 +129,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await workspace.StartAsync();
         }
 
-        [Test]
         [RecordedTest]
         public async Task NotebookWorkspaceDelete()
         {

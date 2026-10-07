@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,11 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="DynamicsCrmEntityDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public DynamicsCrmEntityDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public DynamicsCrmEntityDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("DynamicsCrmEntity", linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
-            DatasetType = "DynamicsCrmEntity";
         }
 
         /// <summary> Initializes a new instance of <see cref="DynamicsCrmEntityDataset"/>. </summary>
@@ -33,20 +33,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="entityName"> The logical name of the entity. Type: string (or Expression with resultType string). </param>
-        internal DynamicsCrmEntityDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> entityName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Dynamics CRM entity dataset properties. </param>
+        internal DynamicsCrmEntityDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DynamicsCrmEntityDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            EntityName = entityName;
-            DatasetType = datasetType ?? "DynamicsCrmEntity";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynamicsCrmEntityDataset"/> for deserialization. </summary>
-        internal DynamicsCrmEntityDataset()
-        {
-        }
+        /// <summary> Dynamics CRM entity dataset properties. </summary>
+        internal DynamicsCrmEntityDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The logical name of the entity. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> EntityName { get; set; }
+        public DataFactoryElement<string> EntityName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EntityName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DynamicsCrmEntityDatasetTypeProperties();
+                }
+                TypeProperties.EntityName = value;
+            }
+        }
     }
 }

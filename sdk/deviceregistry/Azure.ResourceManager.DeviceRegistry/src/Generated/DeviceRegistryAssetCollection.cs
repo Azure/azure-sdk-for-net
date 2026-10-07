@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryAssetResource.ResourceType, out string deviceRegistryAssetApiVersion);
             _assetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetResource.ResourceType.Namespace, Diagnostics);
-            _assetsRestClient = new Assets(_assetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryAssetApiVersion ?? "2026-03-01-preview");
+            _assetsRestClient = new Assets(_assetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryAssetApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _assetsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, DeviceRegistryAssetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<DeviceRegistryAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryAssetResource>(
-                    new DeviceRegistryAssetOperationSource(Client),
+                    new DeviceRegistryAssetResourceOperationSource(Client),
                     _assetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _assetsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assetName, DeviceRegistryAssetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<DeviceRegistryAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryAssetResource>(
-                    new DeviceRegistryAssetOperationSource(Client),
+                    new DeviceRegistryAssetResourceOperationSource(Client),
                     _assetsClientDiagnostics,
                     Pipeline,
                     message.Request,

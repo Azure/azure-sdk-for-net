@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ContainerService
     public enum NamespaceNetworkPolicyRule
     {
         /// <summary> Deny all network traffic. </summary>
-        DenyAll,
+        DenyAll = 0,
         /// <summary> Allow all network traffic. </summary>
-        AllowAll,
+        AllowAll = 1,
         /// <summary> Allow traffic within the same namespace. </summary>
-        AllowSameNamespace
+        AllowSameNamespace = 2
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Access Control List (ACL) configurations patch properties. </summary>
     public partial class ControlPlaneAclPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ControlPlaneAclPatchProperties"/>. </summary>
         public ControlPlaneAclPatchProperties()
@@ -54,16 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="ControlPlaneAclPatchProperties"/>. </summary>
         /// <param name="ipAddressType"> IP Address Type. IPv4 or IPv6. </param>
         /// <param name="matchConfigurations"> Access Control List (ACL) match configurations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlaneAclPatchProperties(NetworkFabricIPAddressType? ipAddressType, IList<ControlPlaneAclMatchConfigurationPatchProperties> matchConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ControlPlaneAclPatchProperties(NetworkFabricIPAddressType? ipAddressType, IList<ControlPlaneAclMatchConfigurationPatchProperties> matchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPAddressType = ipAddressType;
             MatchConfigurations = matchConfigurations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP Address Type. IPv4 or IPv6. </summary>
         public NetworkFabricIPAddressType? IPAddressType { get; set; }
+
         /// <summary> Access Control List (ACL) match configurations. </summary>
         public IList<ControlPlaneAclMatchConfigurationPatchProperties> MatchConfigurations { get; }
     }

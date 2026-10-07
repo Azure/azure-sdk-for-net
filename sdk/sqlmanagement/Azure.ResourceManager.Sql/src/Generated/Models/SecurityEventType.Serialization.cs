@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class SecurityEventTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SecurityEventType value) => value switch
         {
             SecurityEventType.Undefined => "Undefined",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityEventType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SecurityEventType ToSecurityEventType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Undefined")) return SecurityEventType.Undefined;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SqlInjectionVulnerability")) return SecurityEventType.SqlInjectionVulnerability;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SqlInjectionExploit")) return SecurityEventType.SqlInjectionExploit;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Undefined"))
+            {
+                return SecurityEventType.Undefined;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SqlInjectionVulnerability"))
+            {
+                return SecurityEventType.SqlInjectionVulnerability;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SqlInjectionExploit"))
+            {
+                return SecurityEventType.SqlInjectionExploit;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityEventType value.");
         }
     }

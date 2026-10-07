@@ -1,0 +1,52 @@
+parameters:
+  - name: Artifacts
+    type: object
+    default: []
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: SDKType
+    type: string
+    default: all
+  - name: BuildSnippets
+    type: boolean
+    default: true
+  - name: ArtifactName
+    type: string
+    default: BuildPackagesArtifact
+  - name: DependsOn
+    type: string
+    default: ''
+  - name: CloudConfig
+    type: object
+    default: {}
+  - name: Matrix
+    type: string
+  - name: UsePlatformContainer
+    type: boolean
+    default: false
+  - name: OSName
+    type: string
+
+jobs:
+  - job:
+    displayName: "Analyze"
+    dependsOn: ${{ parameters.DependsOn }}
+    condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
+
+    strategy:
+      matrix: $[ ${{ parameters.Matrix }} ]
+
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+
+    steps:
+      - template: /eng/pipelines/templates/steps/analyze.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          BuildSnippets: ${{ parameters.BuildSnippets }}
+          ArtifactName: ${{ parameters.ArtifactName }}

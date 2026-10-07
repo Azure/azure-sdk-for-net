@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(ResourceType, out string dataReplicationPrivateEndpointConnectionProxyApiVersion);
             _privateEndpointConnectionProxiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxies(_privateEndpointConnectionProxiesClientDiagnostics, Pipeline, Endpoint, dataReplicationPrivateEndpointConnectionProxyApiVersion ?? "2024-09-01");
+            _privateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxies(_privateEndpointConnectionProxiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationPrivateEndpointConnectionProxyApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

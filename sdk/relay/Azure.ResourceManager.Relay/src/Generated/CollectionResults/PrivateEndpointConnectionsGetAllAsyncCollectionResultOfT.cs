@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Relay
                     yield break;
                 }
                 RelayPrivateEndpointConnectionListResult result = RelayPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<RelayPrivateEndpointConnectionData>.FromValues((IReadOnlyList<RelayPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RelayPrivateEndpointConnectionData>.FromValues((IReadOnlyList<RelayPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MedianStoppingPolicy : MachineLearningEarlyTerminationPolicy
     {
         /// <summary> Initializes a new instance of <see cref="MedianStoppingPolicy"/>. </summary>
-        public MedianStoppingPolicy()
+        public MedianStoppingPolicy() : base(EarlyTerminationPolicyType.MedianStopping)
         {
-            PolicyType = EarlyTerminationPolicyType.MedianStopping;
         }
 
         /// <summary> Initializes a new instance of <see cref="MedianStoppingPolicy"/>. </summary>
-        /// <param name="policyType"> [Required] Name of policy configuration. </param>
-        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MedianStoppingPolicy(EarlyTerminationPolicyType policyType, int? evaluationInterval, int? delayEvaluation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, evaluationInterval, delayEvaluation, serializedAdditionalRawData)
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <param name="policyType"> [Required] Name of policy configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MedianStoppingPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(delayEvaluation, evaluationInterval, policyType, additionalBinaryDataProperties)
         {
-            PolicyType = policyType;
         }
     }
 }

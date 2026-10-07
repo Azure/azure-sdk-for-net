@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct PrivateLinkServiceAccessMode : IEquatable<PrivateLinkServiceAccessMode>
     {
         private readonly string _value;
+        /// <summary> Allows unrestricted access to the private link service. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Limits access to subscriptions which are inside visibility list only. </summary>
+        private const string RestrictedValue = "Restricted";
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrivateLinkServiceAccessMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string RestrictedValue = "Restricted";
+            _value = value;
+        }
 
         /// <summary> Allows unrestricted access to the private link service. </summary>
         public static PrivateLinkServiceAccessMode Default { get; } = new PrivateLinkServiceAccessMode(DefaultValue);
+
         /// <summary> Limits access to subscriptions which are inside visibility list only. </summary>
         public static PrivateLinkServiceAccessMode Restricted { get; } = new PrivateLinkServiceAccessMode(RestrictedValue);
+
         /// <summary> Determines if two <see cref="PrivateLinkServiceAccessMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrivateLinkServiceAccessMode left, PrivateLinkServiceAccessMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrivateLinkServiceAccessMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrivateLinkServiceAccessMode left, PrivateLinkServiceAccessMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateLinkServiceAccessMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PrivateLinkServiceAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrivateLinkServiceAccessMode(string value) => new PrivateLinkServiceAccessMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrivateLinkServiceAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrivateLinkServiceAccessMode?(string value) => value == null ? null : new PrivateLinkServiceAccessMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateLinkServiceAccessMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrivateLinkServiceAccessMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

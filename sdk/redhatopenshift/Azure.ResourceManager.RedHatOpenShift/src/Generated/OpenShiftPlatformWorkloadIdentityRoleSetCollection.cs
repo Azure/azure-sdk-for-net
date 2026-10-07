@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.RedHatOpenShift
             TryGetApiVersion(OpenShiftPlatformWorkloadIdentityRoleSetResource.ResourceType, out string openShiftPlatformWorkloadIdentityRoleSetApiVersion);
             _location = location;
             _platformWorkloadIdentityRoleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftPlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
-            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
             _platformWorkloadIdentityRoleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftPlatformWorkloadIdentityRoleSetResource.ResourceType.Namespace, Diagnostics);
-            _platformWorkloadIdentityRoleSetsRestClient = new PlatformWorkloadIdentityRoleSets(_platformWorkloadIdentityRoleSetsClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetsRestClient = new PlatformWorkloadIdentityRoleSets(_platformWorkloadIdentityRoleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
             ValidateResourceId(id);
         }
 

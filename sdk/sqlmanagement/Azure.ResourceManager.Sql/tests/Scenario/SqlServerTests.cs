@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Tests
             await CreateOrUpdateSqlServer(sqlServerName);
             var SqlServerList = await _resourceGroup.GetSqlServers().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(SqlServerList);
-            Assert.AreEqual(1,SqlServerList.Count);
+            Assert.AreEqual(1, SqlServerList.Count);
             Assert.AreEqual(sqlServerName, SqlServerList[0].Data.Name);
         }
 

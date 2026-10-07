@@ -4,13 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base model for Trigger of the schedule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CronTrigger"/>, <see cref="RecurrenceTrigger"/>, and <see cref="OneTimeTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CronTrigger"/>, <see cref="OneTimeTrigger"/>, and <see cref="RecurrenceTrigger"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class ScheduleTrigger
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

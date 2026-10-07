@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         }
 
         /// <summary> Ip Access Policy Rules List. </summary>
-        public IList<ServiceNetworkingIPAccessRule> Rules { get; }
+        public IList<ServiceNetworkingIPAccessRule> Rules { get; } = new ChangeTrackingList<ServiceNetworkingIPAccessRule>();
     }
 }

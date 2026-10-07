@@ -11,6 +11,6 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerAdministratorType
     {
         /// <summary> ActiveDirectory. </summary>
-        ActiveDirectory
+        ActiveDirectory = 0
     }
 }

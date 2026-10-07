@@ -44,7 +44,7 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the NetworkSecurityPerimeter. </summary>
+        /// <summary> Gets the NetworkSecurityPerimeter. </summary>
         public NetworkSecurityPerimeter NetworkSecurityPerimeter
         {
             get
@@ -52,14 +52,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _networkSecurityPerimeter;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _networkSecurityPerimeter, value);
-            }
         }
 
-        /// <summary> Gets or sets the ResourceAssociation. </summary>
+        /// <summary> Gets the ResourceAssociation. </summary>
         public BatchResourceAssociation ResourceAssociation
         {
             get
@@ -67,25 +62,15 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _resourceAssociation;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resourceAssociation, value);
-            }
         }
 
-        /// <summary> Gets or sets the Profile. </summary>
+        /// <summary> Gets the Profile. </summary>
         public NetworkSecurityProfile Profile
         {
             get
             {
                 Initialize();
                 return _profile;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _profile, value);
             }
         }
 
@@ -98,6 +83,10 @@ namespace Azure.Provisioning.Batch
             _networkSecurityPerimeter = DefineModelProperty<NetworkSecurityPerimeter>(nameof(NetworkSecurityPerimeter), new string[] { "networkSecurityPerimeter" });
             _resourceAssociation = DefineModelProperty<BatchResourceAssociation>(nameof(ResourceAssociation), new string[] { "resourceAssociation" });
             _profile = DefineModelProperty<NetworkSecurityProfile>(nameof(Profile), new string[] { "profile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NetworkSecurityPerimeterConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

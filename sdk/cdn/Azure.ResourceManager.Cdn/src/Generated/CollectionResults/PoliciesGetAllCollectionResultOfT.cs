@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 CdnWebApplicationFirewallPolicyList result = CdnWebApplicationFirewallPolicyList.FromResponse(response);
-                yield return Page<CdnWebApplicationFirewallPolicyData>.FromValues((IReadOnlyList<CdnWebApplicationFirewallPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CdnWebApplicationFirewallPolicyData>.FromValues((IReadOnlyList<CdnWebApplicationFirewallPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

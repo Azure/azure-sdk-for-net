@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.SelfHelp
                     yield break;
                 }
                 SelfHelpDiscoverySolutionResult result = SelfHelpDiscoverySolutionResult.FromResponse(response);
-                yield return Page<SelfHelpSolutionMetadata>.FromValues((IReadOnlyList<SelfHelpSolutionMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SelfHelpSolutionMetadata>.FromValues((IReadOnlyList<SelfHelpSolutionMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

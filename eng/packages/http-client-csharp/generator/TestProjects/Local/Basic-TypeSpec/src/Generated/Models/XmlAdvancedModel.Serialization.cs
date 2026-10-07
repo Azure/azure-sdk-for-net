@@ -228,7 +228,7 @@ namespace BasicTypeSpec
             }
             writer.WriteEndElement();
             writer.WriteStartElement("createdAt");
-            writer.WriteStringValue(CreatedAt, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WriteEndElement();
             writer.WriteStartElement("duration");
             writer.WriteStringValue(Duration, "P");
@@ -392,7 +392,7 @@ namespace BasicTypeSpec
             XmlNestedModel nestedModel = default;
             XmlNestedModel optionalNestedModel = default;
             IDictionary<string, string> metadata = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             TimeSpan duration = default;
             BinaryData data = default;
             IDictionary<string, BinaryData> optionalRecordUnknown = default;
@@ -546,7 +546,7 @@ namespace BasicTypeSpec
                 }
                 if (localName == "createdAt")
                 {
-                    createdAt = child.GetDateTimeOffset("O");
+                    createdOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "duration")
@@ -711,15 +711,15 @@ namespace BasicTypeSpec
                 originalName,
                 xmlIdentifier,
                 content,
-                unwrappedStrings,
-                unwrappedCounts,
-                unwrappedItems,
-                wrappedColors,
-                items,
+                unwrappedStrings ?? new ChangeTrackingList<string>(),
+                unwrappedCounts ?? new ChangeTrackingList<int>(),
+                unwrappedItems ?? new ChangeTrackingList<XmlItem>(),
+                wrappedColors ?? new ChangeTrackingList<string>(),
+                items ?? new ChangeTrackingList<XmlItem>(),
                 nestedModel,
                 optionalNestedModel,
-                metadata,
-                createdAt,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                createdOn,
                 duration,
                 data,
                 optionalRecordUnknown ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -729,15 +729,15 @@ namespace BasicTypeSpec
                 optionalExtensibleEnum,
                 label,
                 daysUsed,
-                fooItems,
+                fooItems ?? new ChangeTrackingList<string>(),
                 anotherModel,
-                modelsWithNamespaces,
-                unwrappedModelsWithNamespaces,
-                listOfListFoo,
-                dictionaryFoo,
-                dictionaryOfDictionaryFoo,
-                dictionaryListFoo,
-                listOfDictionaryFoo);
+                modelsWithNamespaces ?? new ChangeTrackingList<XmlModelWithNamespace>(),
+                unwrappedModelsWithNamespaces ?? new ChangeTrackingList<XmlModelWithNamespace>(),
+                listOfListFoo ?? new ChangeTrackingList<IList<XmlItem>>(),
+                dictionaryFoo ?? new ChangeTrackingDictionary<string, XmlItem>(),
+                dictionaryOfDictionaryFoo ?? new ChangeTrackingDictionary<string, IDictionary<string, XmlItem>>(),
+                dictionaryListFoo ?? new ChangeTrackingDictionary<string, IList<XmlItem>>(),
+                listOfDictionaryFoo ?? new ChangeTrackingList<IDictionary<string, XmlItem>>());
         }
 
         /// <param name="writer"> The XML writer. </param>

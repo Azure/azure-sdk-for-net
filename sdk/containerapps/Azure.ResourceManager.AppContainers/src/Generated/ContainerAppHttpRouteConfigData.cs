@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> Advanced Ingress routing for path/header based routing for a Container App Environment. </summary>
+    /// <summary> A set of host names and http request routing rules for a Container App Environment. </summary>
     public partial class ContainerAppHttpRouteConfigData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Http Route Config properties. </param>
-        internal ContainerAppHttpRouteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerAppHttpRouteConfigProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppHttpRouteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppHttpRouteConfigProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Http Route Config properties. </summary>

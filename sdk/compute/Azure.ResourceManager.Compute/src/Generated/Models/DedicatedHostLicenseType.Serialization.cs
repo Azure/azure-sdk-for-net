@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class DedicatedHostLicenseTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DedicatedHostLicenseType value) => value switch
         {
             DedicatedHostLicenseType.None => "None",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DedicatedHostLicenseType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DedicatedHostLicenseType ToDedicatedHostLicenseType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return DedicatedHostLicenseType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows_Server_Hybrid")) return DedicatedHostLicenseType.WindowsServerHybrid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows_Server_Perpetual")) return DedicatedHostLicenseType.WindowsServerPerpetual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return DedicatedHostLicenseType.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows_Server_Hybrid"))
+            {
+                return DedicatedHostLicenseType.WindowsServerHybrid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows_Server_Perpetual"))
+            {
+                return DedicatedHostLicenseType.WindowsServerPerpetual;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DedicatedHostLicenseType value.");
         }
     }

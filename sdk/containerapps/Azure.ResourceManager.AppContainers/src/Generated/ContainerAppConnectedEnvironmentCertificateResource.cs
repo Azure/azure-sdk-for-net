@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppConnectedEnvironmentCertificateApiVersion);
             _connectedEnvironmentsCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _connectedEnvironmentsCertificatesRestClient = new ConnectedEnvironmentsCertificates(_connectedEnvironmentsCertificatesClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentCertificateApiVersion ?? "2025-10-02-preview");
+            _connectedEnvironmentsCertificatesRestClient = new ConnectedEnvironmentsCertificates(_connectedEnvironmentsCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentCertificateApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppCertificatePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentCertificateResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentCertificateResource>(
-                    new ContainerAppConnectedEnvironmentCertificateOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentCertificateResourceOperationSource(Client),
                     _connectedEnvironmentsCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppCertificatePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentCertificateResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentCertificateResource>(
-                    new ContainerAppConnectedEnvironmentCertificateOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentCertificateResourceOperationSource(Client),
                     _connectedEnvironmentsCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

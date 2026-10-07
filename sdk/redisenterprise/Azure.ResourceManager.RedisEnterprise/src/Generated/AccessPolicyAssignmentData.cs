@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the access policy assignment. </param>
-        internal AccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AccessPolicyAssignmentProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyAssignmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the access policy assignment. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </summary>
+        /// <summary> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </summary>
         [WirePath("properties.accessPolicyName")]
         public string AccessPolicyName
         {
@@ -66,6 +66,34 @@ namespace Azure.ResourceManager.RedisEnterprise
                     Properties = new AccessPolicyAssignmentProperties();
                 }
                 Properties.AccessPolicyName = value;
+            }
+        }
+
+        /// <summary> The Redis ACL permissions string applied to this assignment, for example `+@read ~cache:<i>`. Defaults to `+@all ~</i>` if not specified. </summary>
+        [WirePath("properties.accessString")]
+        public string AccessString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessPolicyAssignmentProperties();
+                }
+                Properties.AccessString = value;
+            }
+        }
+
+        /// <summary> Provisioning error details when the access string failed to apply (e.g., invalid ACL syntax). Null when provisioning succeeded. </summary>
+        [WirePath("properties.provisioningError")]
+        public AccessPolicyAssignmentProvisioningError ProvisioningError
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningError;
             }
         }
 

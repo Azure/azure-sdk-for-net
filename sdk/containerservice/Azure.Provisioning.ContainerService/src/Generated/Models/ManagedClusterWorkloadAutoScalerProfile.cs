@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _keda = DefineModelProperty<ManagedClusterWorkloadAutoScalerProfileKeda>(nameof(Keda), new string[] { "keda" });
             _verticalPodAutoscaler = DefineModelProperty<ManagedClusterVerticalPodAutoscaler>(nameof(VerticalPodAutoscaler), new string[] { "verticalPodAutoscaler" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterWorkloadAutoScalerProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

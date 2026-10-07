@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation? location = default;
             string sku = default;
             ETag? eTag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ReservationRecommendationKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             LegacyReservationRecommendationProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ConsumptionLegacyReservationRecommendation(
@@ -222,12 +222,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 location,
                 sku,
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 kind,
+                additionalBinaryDataProperties,
                 properties);
         }
     }

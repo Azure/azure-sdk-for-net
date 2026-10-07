@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class WorkspaceContractResource : IJsonModel<WorkspaceContractData>
     {
-        private static WorkspaceContractData s_dataDeserializationInstance;
-        private static WorkspaceContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkspaceContractData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkspaceContractData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkspaceContractData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkspaceContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceContractData>)Data).Write(writer, options);
 
-        WorkspaceContractData IJsonModel<WorkspaceContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceContractData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkspaceContractData IJsonModel<WorkspaceContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkspaceContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkspaceContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkspaceContractData IPersistableModel<WorkspaceContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkspaceContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<WorkspaceContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkspaceContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

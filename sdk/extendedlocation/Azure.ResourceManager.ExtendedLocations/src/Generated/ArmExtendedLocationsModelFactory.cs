@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ExtendedLocations;
 using Azure.ResourceManager.Models;
@@ -29,7 +29,55 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <returns> A new <see cref="Models.CustomLocationOperationInfo"/> instance for mocking. </returns>
         public static CustomLocationOperationInfo CustomLocationOperationInfo(string description = default, string operation = default, string provider = default, string resource = default, bool? isDataAction = default, string name = default, string origin = default)
         {
-            return new CustomLocationOperationInfo(description is null && operation is null && provider is null && resource is null ? default : new CustomLocationOperationValueDisplay(description, operation, provider, resource, null), isDataAction, name, origin, additionalBinaryDataProperties: null);
+            return new CustomLocationOperationInfo(description is null && operation is null && provider is null && resource is null ? default : new CustomLocationOperationValueDisplay(description, operation, provider, resource, default), isDataAction, name, origin, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
+        /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
+        /// <param name="displayName"> Display name for the Custom Locations location. </param>
+        /// <param name="hostResourceId"> Connected Cluster or AKS Cluster. The Custom Locations RP will perform a checkAccess API for listAdminCredentials permissions. </param>
+        /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
+        /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
+        /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="ExtendedLocations.CustomLocationData"/> instance for mocking. </returns>
+        public static CustomLocationData CustomLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CustomLocationAuthentication authentication, IEnumerable<ResourceIdentifier> clusterExtensionIds, string displayName, ResourceIdentifier hostResourceId, CustomLocationHostType? hostType, string @namespace, string provisioningState, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CustomLocationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                authentication is null && clusterExtensionIds is null && displayName is null && hostResourceId is null && hostType is null && @namespace is null && provisioningState is null ? default : new CustomLocationProperties(
+                    authentication,
+                    (clusterExtensionIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    displayName,
+                    hostResourceId,
+                    hostType,
+                    @namespace,
+                    provisioningState,
+                    default),
+                identity,
+                default);
+        }
+
+        /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>
+        /// <param name="customLocationPropertiesAuthenticationType"> The type of the Custom Locations authentication. </param>
+        /// <param name="value"> The kubeconfig value. </param>
+        /// <returns> A new <see cref="Models.CustomLocationAuthentication"/> instance for mocking. </returns>
+        public static CustomLocationAuthentication CustomLocationAuthentication(string customLocationPropertiesAuthenticationType = default, string value = default)
+        {
+            return new CustomLocationAuthentication(customLocationPropertiesAuthenticationType, value, default);
         }
 
         /// <param name="identity"> Identity for the resource. </param>
@@ -54,7 +102,36 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 hostType,
                 @namespace,
                 provisioningState,
-                null), tags, additionalBinaryDataProperties: null);
+                default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="clusterExtensionId"> Cluster Extension ID. </param>
+        /// <param name="extensionType"> Cluster Extension Type. </param>
+        /// <param name="typesMetadata"> Metadata of the Resource Type. </param>
+        /// <returns> A new <see cref="Models.CustomLocationEnabledResourceType"/> instance for mocking. </returns>
+        public static CustomLocationEnabledResourceType CustomLocationEnabledResourceType(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier clusterExtensionId = default, string extensionType = default, IEnumerable<CustomLocationEnabledResourceTypeMetadata> typesMetadata = default)
+        {
+            return new CustomLocationEnabledResourceType(
+                id,
+                name,
+                resourceType,
+                systemData,
+                clusterExtensionId is null && extensionType is null && typesMetadata is null ? default : new EnabledResourceTypeProperties(clusterExtensionId, extensionType, (typesMetadata ?? new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> Metadata of the Resource Type. </summary>
+        /// <param name="apiVersion"> Api Version of Resource Type. </param>
+        /// <param name="resourceProviderNamespace"> Resource Provider Namespace of Resource Type. </param>
+        /// <param name="resourceType"> Resource Type. </param>
+        /// <returns> A new <see cref="Models.CustomLocationEnabledResourceTypeMetadata"/> instance for mocking. </returns>
+        public static CustomLocationEnabledResourceTypeMetadata CustomLocationEnabledResourceTypeMetadata(string apiVersion = default, string resourceProviderNamespace = default, string resourceType = default)
+        {
+            return new CustomLocationEnabledResourceTypeMetadata(apiVersion, resourceProviderNamespace, resourceType, default);
         }
 
         /// <summary> The Find Target Resource Group operation request. </summary>
@@ -64,7 +141,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CustomLocationFindTargetResourceGroupProperties(labels, additionalBinaryDataProperties: null);
+            return new CustomLocationFindTargetResourceGroupProperties(labels ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> The Find Target Resource Group operation response. </summary>
@@ -73,7 +150,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <returns> A new <see cref="Models.CustomLocationFindTargetResourceGroupResult"/> instance for mocking. </returns>
         public static CustomLocationFindTargetResourceGroupResult CustomLocationFindTargetResourceGroupResult(string matchedResourceSyncRule = default, string targetResourceGroup = default)
         {
-            return new CustomLocationFindTargetResourceGroupResult(matchedResourceSyncRule, targetResourceGroup, additionalBinaryDataProperties: null);
+            return new CustomLocationFindTargetResourceGroupResult(matchedResourceSyncRule, targetResourceGroup, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -96,10 +173,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                priority is null && provisioningState is null && selector is null && targetResourceGroup is null ? default : new ResourceSyncRuleProperties(priority, provisioningState, selector, targetResourceGroup, null));
+                priority is null && provisioningState is null && selector is null && targetResourceGroup is null ? default : new ResourceSyncRuleProperties(priority, provisioningState, selector, targetResourceGroup, default),
+                default);
         }
 
         /// <summary> A label selector is composed of two parts, matchLabels and matchExpressions. The first part, matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. The second part, matchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. All of the requirements, from both matchLabels and matchExpressions must all be satisfied in order to match. </summary>
@@ -111,7 +188,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             matchExpressions ??= new ChangeTrackingList<ResourceSyncRuleMatchExpression>();
             matchLabels ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ResourceSyncRulePropertiesSelector(matchExpressions.ToList(), matchLabels, additionalBinaryDataProperties: null);
+            return new ResourceSyncRulePropertiesSelector((matchExpressions ?? new ChangeTrackingList<ResourceSyncRuleMatchExpression>()).ToList(), matchLabels ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Resource Sync Rules matchExpression property definition. </summary>
@@ -123,7 +200,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new ResourceSyncRuleMatchExpression(key, @operator, values.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceSyncRuleMatchExpression(key, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="priority"> Priority represents a priority of the Resource Sync Rule. </param>
@@ -136,17 +213,17 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ResourceSyncRulePatch(priority is null && provisioningState is null && selector is null && targetResourceGroup is null ? default : new ResourceSyncRuleProperties(priority, provisioningState, selector, targetResourceGroup, null), tags, additionalBinaryDataProperties: null);
+            return new ResourceSyncRulePatch(priority is null && provisioningState is null && selector is null && targetResourceGroup is null ? default : new ResourceSyncRuleProperties(priority, provisioningState, selector, targetResourceGroup, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocations.CustomLocationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
+        /// <summary> Custom Locations definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
         /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
         /// <param name="displayName"> Display name for the Custom Locations location. </param>
@@ -155,43 +232,27 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
         /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
         /// <returns> A new <see cref="ExtendedLocations.CustomLocationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CustomLocationData CustomLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, CustomLocationAuthentication authentication = default, IEnumerable<ResourceIdentifier> clusterExtensionIds = default, string displayName = default, ResourceIdentifier hostResourceId = default, CustomLocationHostType? hostType = default, string @namespace = default, string provisioningState = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            clusterExtensionIds ??= new ChangeTrackingList<ResourceIdentifier>();
-
             return new CustomLocationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
-                identity);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CustomLocationEnabledResourceType"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="clusterExtensionId"> Cluster Extension ID. </param>
-        /// <param name="extensionType"> Cluster Extension Type. </param>
-        /// <param name="typesMetadata"> Metadata of the Resource Type. </param>
-        /// <returns> A new <see cref="Models.CustomLocationEnabledResourceType"/> instance for mocking. </returns>
-        public static CustomLocationEnabledResourceType CustomLocationEnabledResourceType(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier clusterExtensionId = default, string extensionType = default, IEnumerable<CustomLocationEnabledResourceTypeMetadata> typesMetadata = default)
-        {
-            typesMetadata ??= new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>();
-
-            return new CustomLocationEnabledResourceType(
-                id,
-                name,
-                resourceType,
-                additionalBinaryDataProperties: null,
-                default,
-                systemData);
+                authentication is null && clusterExtensionIds is null && displayName is null && hostResourceId is null && hostType is null && @namespace is null && provisioningState is null ? default : new CustomLocationProperties(
+                    authentication,
+                    (clusterExtensionIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    displayName,
+                    hostResourceId,
+                    hostType,
+                    @namespace,
+                    provisioningState,
+                    default),
+                identity,
+                default);
         }
     }
 }

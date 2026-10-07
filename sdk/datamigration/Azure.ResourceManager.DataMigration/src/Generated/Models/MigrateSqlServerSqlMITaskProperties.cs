@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,34 +15,25 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMITaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskProperties"/>. </summary>
-        public MigrateSqlServerSqlMITaskProperties()
+        public MigrateSqlServerSqlMITaskProperties() : base(DataMigrationTaskType.MigrateSqlServerAzureSqlDbMI)
         {
             Output = new ChangeTrackingList<MigrateSqlServerSqlMITaskOutput>();
-            TaskType = DataMigrationTaskType.MigrateSqlServerAzureSqlDBMI;
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
-        /// <param name="commands">
-        /// Array of command properties.
-        /// Please note <see cref="DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataMigrationMongoDBCancelCommand"/>, <see cref="DataMigrationMongoDBFinishCommand"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/> and <see cref="DataMigrationMongoDBRestartCommand"/>.
-        /// </param>
+        /// <param name="commands"> Array of command properties. </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Task input. </param>
-        /// <param name="output">
-        /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateSqlServerSqlMITaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputError"/>, <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/> and <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>.
-        /// </param>
+        /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <param name="taskId"> task id. </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
         /// <param name="parentTaskId"> parent task id. </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
-        internal MigrateSqlServerSqlMITaskProperties(DataMigrationTaskType taskType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationTaskState? state, IReadOnlyList<DataMigrationCommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateSqlServerSqlMITaskInput input, IReadOnlyList<MigrateSqlServerSqlMITaskOutput> output, string taskId, DateTimeOffset? createdOn, string parentTaskId, bool? isCloneable) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlMITaskProperties(DataMigrationTaskType taskType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationTaskState? state, IReadOnlyList<DataMigrationCommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MigrateSqlServerSqlMITaskInput input, IReadOnlyList<MigrateSqlServerSqlMITaskOutput> output, string taskId, DateTimeOffset? createdOn, string parentTaskId, bool? isCloneable) : base(taskType, errors, state, commands, clientData, additionalBinaryDataProperties)
         {
             Input = input;
             Output = output;
@@ -49,23 +41,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             CreatedOn = createdOn;
             ParentTaskId = parentTaskId;
             IsCloneable = isCloneable;
-            TaskType = taskType;
         }
 
         /// <summary> Task input. </summary>
         public MigrateSqlServerSqlMITaskInput Input { get; set; }
-        /// <summary>
-        /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateSqlServerSqlMITaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputError"/>, <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/> and <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>.
-        /// </summary>
+
+        /// <summary> Task output. This is ignored if submitted. </summary>
         public IReadOnlyList<MigrateSqlServerSqlMITaskOutput> Output { get; }
+
         /// <summary> task id. </summary>
         public string TaskId { get; set; }
+
         /// <summary> DateTime in UTC when the task was created. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
+
         /// <summary> parent task id. </summary>
         public string ParentTaskId { get; set; }
+
         /// <summary> whether the task can be cloned or not. </summary>
         public bool? IsCloneable { get; set; }
     }

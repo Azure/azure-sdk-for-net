@@ -33,15 +33,27 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(new ResourceIdentifier(resourceId));
 
             // invoke the operation
-            DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
+            SettingName settingName = SettingName.Current;
             DefenderForStorageSettingData data = new DefenderForStorageSettingData
             {
-                IsEnabled = true,
-                IsOverrideSubscriptionLevelSettingsEnabled = true,
-                IsSensitiveDataDiscoveryEnabled = true,
-                ScanResultsEventGridTopicResourceId = new ResourceIdentifier("/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.EventGrid/topics/sampletopic"),
-                IsMalwareScanningOnUploadEnabled = true,
-                CapGBPerMonth = -1,
+                Properties = new DefenderForStorageSettingProperties
+                {
+                    IsEnabled = true,
+                    IsOverrideSubscriptionLevelSettings = true,
+                    SensitiveDataDiscovery = new SensitiveDataDiscoveryProperties
+                    {
+                        IsEnabled = true,
+                    },
+                    MalwareScanning = new MalwareScanningProperties
+                    {
+                        ScanResultsEventGridTopicResourceId = new ResourceIdentifier("/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.EventGrid/topics/sampletopic"),
+                        OnUpload = new OnUploadProperties
+                        {
+                            IsEnabled = true,
+                            CapGBPerMonth = -1,
+                        },
+                    },
+                },
             };
             ArmOperation<DefenderForStorageSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, data);
             DefenderForStorageSettingResource result = lro.Value;
@@ -70,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(new ResourceIdentifier(resourceId));
 
             // invoke the operation
-            DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
+            SettingName settingName = SettingName.Current;
             DefenderForStorageSettingResource result = await collection.GetAsync(settingName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -97,7 +109,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(new ResourceIdentifier(resourceId));
 
             // invoke the operation
-            DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
+            SettingName settingName = SettingName.Current;
             bool result = await collection.ExistsAsync(settingName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -120,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(new ResourceIdentifier(resourceId));
 
             // invoke the operation
-            DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
+            SettingName settingName = SettingName.Current;
             NullableResponse<DefenderForStorageSettingResource> response = await collection.GetIfExistsAsync(settingName);
             DefenderForStorageSettingResource result = response.HasValue ? response.Value : null;
 

@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The pages of EasmClientGetCisaCvesCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<CisaCveResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -45,8 +45,8 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 PagedCisaCveResult result = (PagedCisaCveResult)response;
-                yield return Page<CisaCveResult>.FromValues((IReadOnlyList<CisaCveResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CisaCveResult>.FromValues((IReadOnlyList<CisaCveResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

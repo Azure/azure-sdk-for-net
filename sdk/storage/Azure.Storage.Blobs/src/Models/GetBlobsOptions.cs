@@ -31,5 +31,18 @@ namespace Azure.Storage.Blobs.Models
         /// For non-recursive list, only one entity level is supported.
         /// </summary>
         public string StartFrom { get; set; }
+
+        /// <summary>
+        /// Optional.  Specifies a fully qualified path within the container,
+        /// ending the listing when all results before have been returned.
+        /// This is only supported if <see cref="ResponseFormat"/> is set to <see cref="StorageResponseFormat.Arrow"/>.
+        /// </summary>
+        public string EndBefore { get; set; }
+
+        /// <summary>
+        /// Optional.  Specifies the format the service should use to return list results.
+        /// Defaults to <see cref="StorageResponseFormat.Auto"/>.
+        /// </summary>
+        public StorageResponseFormat ResponseFormat { get; set; } = StorageResponseFormat.Auto;
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 12.26.0-beta.2 (Unreleased)
+## 12.28.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,31 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.27.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.27.0-beta.1 and 12.27.0-beta.2.
+
+## 12.27.0-beta.2 (2026-09-14)
+
+### Bugs Fixed
+- Fixed bug where header values were not being sanitized for CR or LF characters when using `BlobBatchClient` APIs.
+
+## 12.26.1 (2026-09-14)
+
+### Bugs Fixed
+- Fixed bug where header values were not being sanitized for CR or LF characters when using `BlobBatchClient` APIs.
+
+## 12.27.0-beta.1 (2026-07-22)
+
+### Features Added
+- Added support for service version 2026-10-06.
+
+## 12.26.0 (2026-06-04)
+
+### Features Added
+- Includes all features from 12.26.0-beta.1
 
 ## 12.25.0 (2026-05-12)
 

@@ -10,21 +10,16 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of OutboundRule. </summary>
     internal partial class UnknownOutboundRule : MachineLearningOutboundRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(category, status, outboundRuleType, serializedAdditionalRawData)
-        {
-            OutboundRuleType = outboundRuleType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownOutboundRule"/> for deserialization. </summary>
-        internal UnknownOutboundRule()
+        /// <param name="type"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <param name="errorInformation"> Error information about an outbound rule of a machine learning workspace if RuleStatus is failed. </param>
+        /// <param name="parentRuleNames"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(category, status, @type != default ? @type : "unknown", errorInformation, parentRuleNames, additionalBinaryDataProperties)
         {
         }
     }

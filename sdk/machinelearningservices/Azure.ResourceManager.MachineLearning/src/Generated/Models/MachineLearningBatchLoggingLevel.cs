@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -18,41 +19,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningBatchLoggingLevel : IEquatable<MachineLearningBatchLoggingLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchLoggingLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningBatchLoggingLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InfoValue = "Info";
         private const string WarningValue = "Warning";
         private const string DebugValue = "Debug";
 
-        /// <summary> Info. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchLoggingLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningBatchLoggingLevel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Info. </summary>
         public static MachineLearningBatchLoggingLevel Info { get; } = new MachineLearningBatchLoggingLevel(InfoValue);
-        /// <summary> Warning. </summary>
+
+        /// <summary> Gets the Warning. </summary>
         public static MachineLearningBatchLoggingLevel Warning { get; } = new MachineLearningBatchLoggingLevel(WarningValue);
-        /// <summary> Debug. </summary>
+
+        /// <summary> Gets the Debug. </summary>
         public static MachineLearningBatchLoggingLevel Debug { get; } = new MachineLearningBatchLoggingLevel(DebugValue);
+
         /// <summary> Determines if two <see cref="MachineLearningBatchLoggingLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningBatchLoggingLevel left, MachineLearningBatchLoggingLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningBatchLoggingLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningBatchLoggingLevel left, MachineLearningBatchLoggingLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningBatchLoggingLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningBatchLoggingLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningBatchLoggingLevel(string value) => new MachineLearningBatchLoggingLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningBatchLoggingLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningBatchLoggingLevel?(string value) => value == null ? null : new MachineLearningBatchLoggingLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningBatchLoggingLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningBatchLoggingLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

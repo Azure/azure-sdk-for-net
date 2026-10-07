@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The SettingsType. </summary>
+    /// <summary></summary>
     public readonly partial struct SettingsType : IEquatable<SettingsType>
     {
         private readonly string _value;
+        private const string PublicValue = "public";
 
         /// <summary> Initializes a new instance of <see cref="SettingsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SettingsType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PublicValue = "public";
-
-        /// <summary> public. </summary>
+        /// <summary> Gets the Public. </summary>
         public static SettingsType Public { get; } = new SettingsType(PublicValue);
+
         /// <summary> Determines if two <see cref="SettingsType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SettingsType left, SettingsType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SettingsType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SettingsType left, SettingsType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SettingsType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SettingsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SettingsType(string value) => new SettingsType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SettingsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SettingsType?(string value) => value == null ? null : new SettingsType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SettingsType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SettingsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

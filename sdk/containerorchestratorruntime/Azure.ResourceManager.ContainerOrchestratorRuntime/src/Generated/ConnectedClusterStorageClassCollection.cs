@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             TryGetApiVersion(ConnectedClusterStorageClassResource.ResourceType, out string connectedClusterStorageClassApiVersion);
             _storageClassClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ConnectedClusterStorageClassResource.ResourceType.Namespace, Diagnostics);
-            _storageClassRestClient = new StorageClass(_storageClassClientDiagnostics, Pipeline, Endpoint, connectedClusterStorageClassApiVersion ?? "2024-03-01");
+            _storageClassRestClient = new StorageClass(_storageClassClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterStorageClassApiVersion ?? "2024-03-01");
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 HttpMessage message = _storageClassRestClient.CreateCreateOrUpdateRequest(Id.ToString(), storageClassName, ConnectedClusterStorageClassData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
-                    new ConnectedClusterStorageClassOperationSource(Client),
+                    new ConnectedClusterStorageClassResourceOperationSource(Client),
                     _storageClassClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 HttpMessage message = _storageClassRestClient.CreateCreateOrUpdateRequest(Id.ToString(), storageClassName, ConnectedClusterStorageClassData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
-                    new ConnectedClusterStorageClassOperationSource(Client),
+                    new ConnectedClusterStorageClassResourceOperationSource(Client),
                     _storageClassClientDiagnostics,
                     Pipeline,
                     message.Request,

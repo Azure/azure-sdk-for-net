@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class CassandraTableThroughputSettingResource : IJsonModel<ThroughputSettingData>
     {
-        private static ThroughputSettingData s_dataDeserializationInstance;
-        private static ThroughputSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ThroughputSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ThroughputSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ThroughputSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ThroughputSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ThroughputSettingData>)Data).Write(writer, options);
 
-        ThroughputSettingData IJsonModel<ThroughputSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ThroughputSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThroughputSettingData IJsonModel<ThroughputSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ThroughputSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ThroughputSettingData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ThroughputSettingData IPersistableModel<ThroughputSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ThroughputSettingData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<ThroughputSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ThroughputSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ThroughputSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

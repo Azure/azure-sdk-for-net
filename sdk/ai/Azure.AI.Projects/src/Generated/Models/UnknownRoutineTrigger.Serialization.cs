@@ -102,18 +102,18 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            RoutineTriggerType @type = default;
+            RoutineTriggerKind @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new RoutineTriggerType(prop.Value.GetString());
+                    @type = new RoutineTriggerKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownRoutineTrigger(@type, additionalBinaryDataProperties);

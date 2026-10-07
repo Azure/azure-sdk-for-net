@@ -14,12 +14,12 @@ namespace Azure.Provisioning.Batch
     {
         /// <summary> All virtual machines in the scale set are automatically updated at the same time. </summary>
         [DataMember(Name = "automatic")]
-        Automatic,
+        Automatic = 0,
         /// <summary> You control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action. </summary>
         [DataMember(Name = "manual")]
-        Manual,
+        Manual = 1,
         /// <summary> The existing instances in a scale set are brought down in batches to be upgraded. Once the upgraded batch is complete, the instances will begin taking traffic again and the next batch will begin. This continues until all instances brought up-to-date. </summary>
         [DataMember(Name = "rolling")]
-        Rolling
+        Rolling = 2
     }
 }

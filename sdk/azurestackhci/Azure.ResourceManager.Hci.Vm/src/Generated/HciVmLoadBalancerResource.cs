@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmLoadBalancerApiVersion);
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Endpoint, hciVmLoadBalancerApiVersion ?? "2025-09-01-preview");
+            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmLoadBalancerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmLoadBalancerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmLoadBalancerResource> operation = new VmArmOperation<HciVmLoadBalancerResource>(
-                    new HciVmLoadBalancerOperationSource(Client),
+                    new HciVmLoadBalancerResourceOperationSource(Client),
                     _loadBalancersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmLoadBalancerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmLoadBalancerResource> operation = new VmArmOperation<HciVmLoadBalancerResource>(
-                    new HciVmLoadBalancerOperationSource(Client),
+                    new HciVmLoadBalancerResourceOperationSource(Client),
                     _loadBalancersClientDiagnostics,
                     Pipeline,
                     message.Request,

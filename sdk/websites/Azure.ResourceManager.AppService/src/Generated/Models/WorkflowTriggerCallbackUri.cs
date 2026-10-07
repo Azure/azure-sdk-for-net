@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow trigger callback URL.
-    /// Serialized Name: WorkflowTriggerCallbackUrl
-    /// </summary>
+    /// <summary> The workflow trigger callback URL. </summary>
     public partial class WorkflowTriggerCallbackUri
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerCallbackUri"/>. </summary>
         internal WorkflowTriggerCallbackUri()
@@ -55,76 +24,45 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerCallbackUri"/>. </summary>
-        /// <param name="value">
-        /// Gets the workflow trigger callback URL.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.value
-        /// </param>
-        /// <param name="method">
-        /// Gets the workflow trigger callback URL HTTP method.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.method
-        /// </param>
-        /// <param name="basePath">
-        /// Gets the workflow trigger callback URL base path.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.basePath
-        /// </param>
-        /// <param name="relativePath">
-        /// Gets the workflow trigger callback URL relative path.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.relativePath
-        /// </param>
-        /// <param name="relativePathParameters">
-        /// Gets the workflow trigger callback URL relative path parameters.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.relativePathParameters
-        /// </param>
-        /// <param name="queries">
-        /// Gets the workflow trigger callback URL query parameters.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.queries
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerCallbackUri(string value, string method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, WorkflowTriggerListCallbackUriQueries queries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> Gets the workflow trigger callback URL. </param>
+        /// <param name="method"> Gets the workflow trigger callback URL HTTP method. </param>
+        /// <param name="basePath"> Gets the workflow trigger callback URL base path. </param>
+        /// <param name="relativePath"> Gets the workflow trigger callback URL relative path. </param>
+        /// <param name="relativePathParameters"> Gets the workflow trigger callback URL relative path parameters. </param>
+        /// <param name="queries"> Gets the workflow trigger callback URL query parameters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowTriggerCallbackUri(string value, string @method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, WorkflowTriggerListCallbackUriQueries queries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            Method = method;
+            Method = @method;
             BasePath = basePath;
             RelativePath = relativePath;
             RelativePathParameters = relativePathParameters;
             Queries = queries;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Gets the workflow trigger callback URL.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.value
-        /// </summary>
+        /// <summary> Gets the workflow trigger callback URL. </summary>
         [WirePath("value")]
         public string Value { get; }
-        /// <summary>
-        /// Gets the workflow trigger callback URL HTTP method.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.method
-        /// </summary>
+
+        /// <summary> Gets the workflow trigger callback URL HTTP method. </summary>
         [WirePath("method")]
         public string Method { get; }
-        /// <summary>
-        /// Gets the workflow trigger callback URL base path.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.basePath
-        /// </summary>
+
+        /// <summary> Gets the workflow trigger callback URL base path. </summary>
         [WirePath("basePath")]
         public string BasePath { get; }
-        /// <summary>
-        /// Gets the workflow trigger callback URL relative path.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.relativePath
-        /// </summary>
+
+        /// <summary> Gets the workflow trigger callback URL relative path. </summary>
         [WirePath("relativePath")]
         public string RelativePath { get; }
-        /// <summary>
-        /// Gets the workflow trigger callback URL relative path parameters.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.relativePathParameters
-        /// </summary>
+
+        /// <summary> Gets the workflow trigger callback URL relative path parameters. </summary>
         [WirePath("relativePathParameters")]
         public IReadOnlyList<string> RelativePathParameters { get; }
-        /// <summary>
-        /// Gets the workflow trigger callback URL query parameters.
-        /// Serialized Name: WorkflowTriggerCallbackUrl.queries
-        /// </summary>
+
+        /// <summary> Gets the workflow trigger callback URL query parameters. </summary>
         [WirePath("queries")]
         public WorkflowTriggerListCallbackUriQueries Queries { get; }
     }

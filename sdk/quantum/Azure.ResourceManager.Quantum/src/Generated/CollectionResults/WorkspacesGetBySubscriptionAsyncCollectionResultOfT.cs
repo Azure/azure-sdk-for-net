@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Quantum
                     yield break;
                 }
                 QuantumWorkspaceListResult result = QuantumWorkspaceListResult.FromResponse(response);
-                yield return Page<QuantumWorkspaceData>.FromValues((IReadOnlyList<QuantumWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<QuantumWorkspaceData>.FromValues((IReadOnlyList<QuantumWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

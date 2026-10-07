@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct SapCloudForCustomerSinkWriteBehavior : IEquatable<SapCloudForCustomerSinkWriteBehavior>
     {
         private readonly string _value;
+        /// <summary> Insert. </summary>
+        private const string InsertValue = "Insert";
+        /// <summary> Update. </summary>
+        private const string UpdateValue = "Update";
 
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerSinkWriteBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapCloudForCustomerSinkWriteBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InsertValue = "Insert";
-        private const string UpdateValue = "Update";
+            _value = value;
+        }
 
         /// <summary> Insert. </summary>
         public static SapCloudForCustomerSinkWriteBehavior Insert { get; } = new SapCloudForCustomerSinkWriteBehavior(InsertValue);
+
         /// <summary> Update. </summary>
         public static SapCloudForCustomerSinkWriteBehavior Update { get; } = new SapCloudForCustomerSinkWriteBehavior(UpdateValue);
+
         /// <summary> Determines if two <see cref="SapCloudForCustomerSinkWriteBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapCloudForCustomerSinkWriteBehavior left, SapCloudForCustomerSinkWriteBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapCloudForCustomerSinkWriteBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapCloudForCustomerSinkWriteBehavior left, SapCloudForCustomerSinkWriteBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapCloudForCustomerSinkWriteBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapCloudForCustomerSinkWriteBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapCloudForCustomerSinkWriteBehavior(string value) => new SapCloudForCustomerSinkWriteBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapCloudForCustomerSinkWriteBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapCloudForCustomerSinkWriteBehavior?(string value) => value == null ? null : new SapCloudForCustomerSinkWriteBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapCloudForCustomerSinkWriteBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapCloudForCustomerSinkWriteBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

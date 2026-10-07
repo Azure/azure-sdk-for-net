@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricManagedIdentitySelectorType : IEquatable<NetworkFabricManagedIdentitySelectorType>
     {
         private readonly string _value;
+        /// <summary> System Assigned Identity. </summary>
+        private const string SystemAssignedIdentityValue = "SystemAssignedIdentity";
+        /// <summary> User Assigned Identity. </summary>
+        private const string UserAssignedIdentityValue = "UserAssignedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricManagedIdentitySelectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricManagedIdentitySelectorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SystemAssignedIdentityValue = "SystemAssignedIdentity";
-        private const string UserAssignedIdentityValue = "UserAssignedIdentity";
+            _value = value;
+        }
 
         /// <summary> System Assigned Identity. </summary>
         public static NetworkFabricManagedIdentitySelectorType SystemAssignedIdentity { get; } = new NetworkFabricManagedIdentitySelectorType(SystemAssignedIdentityValue);
+
         /// <summary> User Assigned Identity. </summary>
         public static NetworkFabricManagedIdentitySelectorType UserAssignedIdentity { get; } = new NetworkFabricManagedIdentitySelectorType(UserAssignedIdentityValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricManagedIdentitySelectorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricManagedIdentitySelectorType left, NetworkFabricManagedIdentitySelectorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricManagedIdentitySelectorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricManagedIdentitySelectorType left, NetworkFabricManagedIdentitySelectorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricManagedIdentitySelectorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricManagedIdentitySelectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricManagedIdentitySelectorType(string value) => new NetworkFabricManagedIdentitySelectorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricManagedIdentitySelectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricManagedIdentitySelectorType?(string value) => value == null ? null : new NetworkFabricManagedIdentitySelectorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricManagedIdentitySelectorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricManagedIdentitySelectorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             {
                 Channel = ContainerServiceFleetUpgradeChannel.Stable,
                 TargetKubernetesVersion = "",
-                LongTermSupport = false,
+                IsLongTermSupport = false,
             };
             ArmOperation<AutoUpgradeProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, data, matchConditions: null);
             AutoUpgradeProfileResource result = lro.Value;

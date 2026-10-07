@@ -16,29 +16,29 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     {
         private readonly string _value;
         /// <summary> Equal to. </summary>
-        private const string EqualValue = "==";
+        private const string EqualValue = "eq";
         /// <summary> Not equal to. </summary>
-        private const string NotEqualValue = "!=";
+        private const string NotEqualValue = "ne";
         /// <summary> Less than. </summary>
-        private const string LessThanValue = "<";
+        private const string LessThanValue = "lt";
         /// <summary> Less than or equal to. </summary>
-        private const string LessThanOrEqualValue = "<=";
+        private const string LessThanOrEqualValue = "lte";
         /// <summary> Greater than. </summary>
-        private const string GreaterThanValue = ">";
+        private const string GreaterThanValue = "gt";
         /// <summary> Greater than or equal to. </summary>
-        private const string GreaterThanOrEqualValue = ">=";
-        /// <summary> In operator. </summary>
-        private const string InValue = "@in";
-        /// <summary> Not in. </summary>
-        private const string NotInValue = "!in";
+        private const string GreaterThanOrEqualValue = "gte";
+        /// <summary> Matches when `value` is one of the items in the `^^`-delimited list (for example, `value` = "east^^west^^north"). </summary>
+        private const string InValue = "in";
+        /// <summary> Matches when `value` is none of the items in the `^^`-delimited list (for example, `value` = "east^^west^^north"). </summary>
+        private const string NotInValue = "notin";
         /// <summary> Starts with. </summary>
         private const string StartsWithValue = "startswith";
         /// <summary> Does not start with. </summary>
-        private const string NotStartsWithValue = "!startswith";
+        private const string NotStartsWithValue = "notstartswith";
         /// <summary> Contains the value. </summary>
         private const string ContainsValue = "contains";
         /// <summary> Does not contain the value. </summary>
-        private const string NotContainsValue = "!contains";
+        private const string NotContainsValue = "notcontains";
 
         /// <summary> Initializes a new instance of <see cref="SliConditionOperator"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <summary> Greater than or equal to. </summary>
         public static SliConditionOperator GreaterThanOrEqual { get; } = new SliConditionOperator(GreaterThanOrEqualValue);
 
-        /// <summary> In operator. </summary>
+        /// <summary> Matches when `value` is one of the items in the `^^`-delimited list (for example, `value` = "east^^west^^north"). </summary>
         public static SliConditionOperator In { get; } = new SliConditionOperator(InValue);
 
-        /// <summary> Not in. </summary>
+        /// <summary> Matches when `value` is none of the items in the `^^`-delimited list (for example, `value` = "east^^west^^north"). </summary>
         public static SliConditionOperator NotIn { get; } = new SliConditionOperator(NotInValue);
 
         /// <summary> Starts with. </summary>

@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _code = DefineProperty<ContainerServiceStateCode>(nameof(Code), new string[] { "code" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServicePowerState that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Search.Documents;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -117,6 +118,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(RetrievalReasoningEffort))
+            {
+                writer.WritePropertyName("retrievalReasoningEffort"u8);
+                writer.WriteObjectValue(RetrievalReasoningEffort, options);
+            }
+            if (Optional.IsDefined(OutputMode))
+            {
+                writer.WritePropertyName("outputMode"u8);
+                writer.WriteStringValue(OutputMode.Value.ToString());
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
@@ -131,6 +142,42 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(RetrievalInstructions))
+            {
+                writer.WritePropertyName("retrievalInstructions"u8);
+                writer.WriteStringValue(RetrievalInstructions);
+            }
+            if (Optional.IsDefined(AnswerInstructions))
+            {
+                writer.WritePropertyName("answerInstructions"u8);
+                writer.WriteStringValue(AnswerInstructions);
+            }
+            if (Optional.IsDefined(CorsOptions))
+            {
+                writer.WritePropertyName("corsOptions"u8);
+                writer.WriteObjectValue(CorsOptions, options);
+            }
+            if (Optional.IsDefined(RetrieveDefaults))
+            {
+                writer.WritePropertyName("retrieveDefaults"u8);
+                writer.WriteObjectValue(RetrieveDefaults, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -177,9 +224,16 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             IList<KnowledgeSourceReference> knowledgeSources = default;
             IList<KnowledgeBaseModel> models = default;
+            KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
+            KnowledgeRetrievalOutputMode? outputMode = default;
             ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             string description = default;
+            IDictionary<string, string> tags = default;
+            string retrievalInstructions = default;
+            string answerInstructions = default;
+            CorsOptions corsOptions = default;
+            KnowledgeBaseRetrieveDefaults retrieveDefaults = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -212,6 +266,24 @@ namespace Azure.Search.Documents.Indexes.Models
                     models = array;
                     continue;
                 }
+                if (prop.NameEquals("retrievalReasoningEffort"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retrievalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("outputMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputMode = new KnowledgeRetrievalOutputMode(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("@odata.etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -236,18 +308,74 @@ namespace Azure.Search.Documents.Indexes.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("retrievalInstructions"u8))
+                {
+                    retrievalInstructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("answerInstructions"u8))
+                {
+                    answerInstructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("corsOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    corsOptions = CorsOptions.DeserializeCorsOptions(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("retrieveDefaults"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retrieveDefaults = KnowledgeBaseRetrieveDefaults.DeserializeKnowledgeBaseRetrieveDefaults(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KnowledgeBase(
                 name,
-                knowledgeSources,
+                knowledgeSources ?? new ChangeTrackingList<KnowledgeSourceReference>(),
                 models ?? new ChangeTrackingList<KnowledgeBaseModel>(),
+                retrievalReasoningEffort,
+                outputMode,
                 eTag,
                 encryptionKey,
                 description,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                retrievalInstructions,
+                answerInstructions,
+                corsOptions,
+                retrieveDefaults,
                 additionalBinaryDataProperties);
         }
     }

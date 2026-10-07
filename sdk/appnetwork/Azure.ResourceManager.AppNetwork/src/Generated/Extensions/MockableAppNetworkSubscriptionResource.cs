@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
 
         private ClientDiagnostics AppLinksClientDiagnostics => _appLinksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppLinks AppLinksRestClient => _appLinksRestClient ??= new AppLinks(AppLinksClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private AppLinks AppLinksRestClient => _appLinksRestClient ??= new AppLinks(AppLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics AvailableVersionsClientDiagnostics => _availableVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableVersions AvailableVersionsRestClient => _availableVersionsRestClient ??= new AvailableVersions(AvailableVersionsClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private AvailableVersions AvailableVersionsRestClient => _availableVersionsRestClient ??= new AvailableVersions(AvailableVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// List AppLink resources by subscription.

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _scale = DefineModelProperty<AgentPoolScaleProfile>(nameof(Scale), new string[] { "scale" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for VirtualMachinesProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

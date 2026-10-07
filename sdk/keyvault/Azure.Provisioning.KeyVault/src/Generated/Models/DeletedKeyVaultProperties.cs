@@ -93,10 +93,14 @@ namespace Azure.Provisioning.KeyVault
             base.DefineProvisionableProperties();
             _vaultId = DefineProperty<ResourceIdentifier>(nameof(VaultId), new string[] { "vaultId" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionDate" }, isOutput: true);
-            _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeDate" }, isOutput: true);
+            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionDate" }, isOutput: true, format: "O");
+            _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeDate" }, isOutput: true, format: "O");
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);
             _purgeProtectionEnabled = DefineProperty<bool>(nameof(PurgeProtectionEnabled), new string[] { "purgeProtectionEnabled" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeletedKeyVaultProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -21,18 +20,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ElasticEncryptionConfiguration"/>. </summary>
         /// <param name="elasticPoolEncryptionKeySource"> Pool Encryption Key Source. </param>
         /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultPrivateEndpointResourceId"/> is null. </exception>
-        public ElasticEncryptionConfiguration(ElasticPoolEncryptionKeySource elasticPoolEncryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId)
-        {
-            Argument.AssertNotNull(keyVaultPrivateEndpointResourceId, nameof(keyVaultPrivateEndpointResourceId));
-
-            ElasticPoolEncryptionKeySource = elasticPoolEncryptionKeySource;
-            KeyVaultPrivateEndpointResourceId = keyVaultPrivateEndpointResourceId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticEncryptionConfiguration"/>. </summary>
-        /// <param name="elasticPoolEncryptionKeySource"> Pool Encryption Key Source. </param>
-        /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ElasticEncryptionConfiguration(ElasticPoolEncryptionKeySource elasticPoolEncryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -40,11 +27,5 @@ namespace Azure.ResourceManager.NetApp.Models
             KeyVaultPrivateEndpointResourceId = keyVaultPrivateEndpointResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Pool Encryption Key Source. </summary>
-        public ElasticPoolEncryptionKeySource ElasticPoolEncryptionKeySource { get; set; }
-
-        /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
-        public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
     }
 }

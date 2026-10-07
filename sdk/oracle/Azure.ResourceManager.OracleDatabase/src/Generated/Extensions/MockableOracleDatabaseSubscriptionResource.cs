@@ -51,35 +51,35 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
 
         private ClientDiagnostics CloudExadataInfrastructuresClientDiagnostics => _cloudExadataInfrastructuresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudExadataInfrastructures CloudExadataInfrastructuresRestClient => _cloudExadataInfrastructuresRestClient ??= new CloudExadataInfrastructures(CloudExadataInfrastructuresClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private CloudExadataInfrastructures CloudExadataInfrastructuresRestClient => _cloudExadataInfrastructuresRestClient ??= new CloudExadataInfrastructures(CloudExadataInfrastructuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics CloudVmClustersClientDiagnostics => _cloudVmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudVmClusters CloudVmClustersRestClient => _cloudVmClustersRestClient ??= new CloudVmClusters(CloudVmClustersClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private CloudVmClusters CloudVmClustersRestClient => _cloudVmClustersRestClient ??= new CloudVmClusters(CloudVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics AutonomousDatabasesClientDiagnostics => _autonomousDatabasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AutonomousDatabases AutonomousDatabasesRestClient => _autonomousDatabasesRestClient ??= new AutonomousDatabases(AutonomousDatabasesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private AutonomousDatabases AutonomousDatabasesRestClient => _autonomousDatabasesRestClient ??= new AutonomousDatabases(AutonomousDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ExadbVmClustersClientDiagnostics => _exadbVmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExadbVmClusters ExadbVmClustersRestClient => _exadbVmClustersRestClient ??= new ExadbVmClusters(ExadbVmClustersClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ExadbVmClusters ExadbVmClustersRestClient => _exadbVmClustersRestClient ??= new ExadbVmClusters(ExadbVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ExascaleDbStorageVaultsClientDiagnostics => _exascaleDbStorageVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExascaleDbStorageVaults ExascaleDbStorageVaultsRestClient => _exascaleDbStorageVaultsRestClient ??= new ExascaleDbStorageVaults(ExascaleDbStorageVaultsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ExascaleDbStorageVaults ExascaleDbStorageVaultsRestClient => _exascaleDbStorageVaultsRestClient ??= new ExascaleDbStorageVaults(ExascaleDbStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkAnchorsClientDiagnostics => _networkAnchorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkAnchors NetworkAnchorsRestClient => _networkAnchorsRestClient ??= new NetworkAnchors(NetworkAnchorsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private NetworkAnchors NetworkAnchorsRestClient => _networkAnchorsRestClient ??= new NetworkAnchors(NetworkAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ResourceAnchorsClientDiagnostics => _resourceAnchorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceAnchors ResourceAnchorsRestClient => _resourceAnchorsRestClient ??= new ResourceAnchors(ResourceAnchorsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ResourceAnchors ResourceAnchorsRestClient => _resourceAnchorsRestClient ??= new ResourceAnchors(ResourceAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics DbSystemsClientDiagnostics => _dbSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DbSystems DbSystemsRestClient => _dbSystemsRestClient ??= new DbSystems(DbSystemsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private DbSystems DbSystemsRestClient => _dbSystemsRestClient ??= new DbSystems(DbSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         /// <summary> Gets a collection of OracleSystemVersions in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

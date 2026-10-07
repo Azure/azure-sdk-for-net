@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.NewRelicObservability.csproj" />
+  <Project Path="tests/Azure.ResourceManager.NewRelicObservability.Tests.csproj" />
+</Solution>

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Indicates catalog item types that can be synced. </summary>
-        public IList<DevCenterCatalogItemType> CatalogItemSyncTypes { get; }
+        public IList<DevCenterCatalogItemType> CatalogItemSyncTypes { get; } = new ChangeTrackingList<DevCenterCatalogItemType>();
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(ResourceType, out string dnsResolverPolicyVirtualNetworkLinkApiVersion);
             _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
-            _dnsResolverPolicyVirtualNetworkLinksRestClient = new DnsResolverPolicyVirtualNetworkLinks(_dnsResolverPolicyVirtualNetworkLinksClientDiagnostics, Pipeline, Endpoint, dnsResolverPolicyVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
+            _dnsResolverPolicyVirtualNetworkLinksRestClient = new DnsResolverPolicyVirtualNetworkLinks(_dnsResolverPolicyVirtualNetworkLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverPolicyVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverPolicyVirtualNetworkLinkPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(
-                    new DnsResolverPolicyVirtualNetworkLinkOperationSource(Client),
+                    new DnsResolverPolicyVirtualNetworkLinkResourceOperationSource(Client),
                     _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -291,7 +292,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverPolicyVirtualNetworkLinkPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(
-                    new DnsResolverPolicyVirtualNetworkLinkOperationSource(Client),
+                    new DnsResolverPolicyVirtualNetworkLinkResourceOperationSource(Client),
                     _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -682,6 +683,64 @@ namespace Azure.ResourceManager.DnsResolver
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Deletes a DNS resolver policy virtual network link. WARNING: This operation cannot be undone.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}Operation IdDnsResolverPolicyVirtualNetworkLinks_DeleteDefault Api Version2025-05-01Resource<see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes a DNS resolver policy virtual network link. WARNING: This operation cannot be undone.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}Operation IdDnsResolverPolicyVirtualNetworkLinks_DeleteDefault Api Version2025-05-01Resource<see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates a DNS resolver policy virtual network link.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}Operation IdDnsResolverPolicyVirtualNetworkLinks_UpdateDefault Api Version2025-05-01Resource<see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>> UpdateAsync(WaitUntil waitUntil, DnsResolverPolicyVirtualNetworkLinkPatch patch, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return UpdateAsync(waitUntil, patch, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates a DNS resolver policy virtual network link.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}/virtualNetworkLinks/{dnsResolverPolicyVirtualNetworkLinkName}Operation IdDnsResolverPolicyVirtualNetworkLinks_UpdateDefault Api Version2025-05-01Resource<see cref="DnsResolverPolicyVirtualNetworkLinkResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> Update(WaitUntil waitUntil, DnsResolverPolicyVirtualNetworkLinkPatch patch, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return Update(waitUntil, patch, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
         }
     }
 }

@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the namespace. </param>
         /// <param name="sku"> Properties of SKU. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
-        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SBNamespaceProperties properties, ServiceBusSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SBNamespaceProperties properties, ServiceBusSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the namespace. </summary>
@@ -271,6 +271,24 @@ namespace Azure.ResourceManager.ServiceBus
                     Properties = new SBNamespaceProperties();
                 }
                 Properties.GeoDataReplication = value;
+            }
+        }
+
+        /// <summary> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </summary>
+        [WirePath("properties.ipAddressType")]
+        public ServiceBusIPAddressType? IPAddressType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAddressType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBNamespaceProperties();
+                }
+                Properties.IPAddressType = value;
             }
         }
 

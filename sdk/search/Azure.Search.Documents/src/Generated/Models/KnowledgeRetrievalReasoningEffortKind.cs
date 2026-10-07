@@ -17,6 +17,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private readonly string _value;
         /// <summary> Does not perform any source selections, query planning, or iterative search. </summary>
         private const string MinimalValue = "minimal";
+        /// <summary> Use low reasoning during retrieval. </summary>
+        private const string LowValue = "low";
+        /// <summary> Use a moderate amount of reasoning during retrieval. </summary>
+        private const string MediumValue = "medium";
+        /// <summary> Automatically select the reasoning effort during retrieval, escalating from the cheapest tier only as far as needed. </summary>
+        private const string AutoValue = "auto";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalReasoningEffortKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +36,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Does not perform any source selections, query planning, or iterative search. </summary>
         public static KnowledgeRetrievalReasoningEffortKind Minimal { get; } = new KnowledgeRetrievalReasoningEffortKind(MinimalValue);
+
+        /// <summary> Use low reasoning during retrieval. </summary>
+        public static KnowledgeRetrievalReasoningEffortKind Low { get; } = new KnowledgeRetrievalReasoningEffortKind(LowValue);
+
+        /// <summary> Use a moderate amount of reasoning during retrieval. </summary>
+        public static KnowledgeRetrievalReasoningEffortKind Medium { get; } = new KnowledgeRetrievalReasoningEffortKind(MediumValue);
+
+        /// <summary> Automatically select the reasoning effort during retrieval, escalating from the cheapest tier only as far as needed. </summary>
+        public static KnowledgeRetrievalReasoningEffortKind Auto { get; } = new KnowledgeRetrievalReasoningEffortKind(AutoValue);
 
         /// <summary> Determines if two <see cref="KnowledgeRetrievalReasoningEffortKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

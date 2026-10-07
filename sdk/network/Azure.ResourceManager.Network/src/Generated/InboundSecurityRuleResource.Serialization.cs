@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class InboundSecurityRuleResource : IJsonModel<InboundSecurityRuleData>
     {
-        private static InboundSecurityRuleData s_dataDeserializationInstance;
-        private static InboundSecurityRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<InboundSecurityRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<InboundSecurityRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new InboundSecurityRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InboundSecurityRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InboundSecurityRuleData>)Data).Write(writer, options);
 
-        InboundSecurityRuleData IJsonModel<InboundSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InboundSecurityRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InboundSecurityRuleData IJsonModel<InboundSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InboundSecurityRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InboundSecurityRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         InboundSecurityRuleData IPersistableModel<InboundSecurityRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InboundSecurityRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<InboundSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InboundSecurityRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InboundSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

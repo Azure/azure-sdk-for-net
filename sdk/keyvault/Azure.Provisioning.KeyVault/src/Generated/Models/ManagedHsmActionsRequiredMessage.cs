@@ -11,6 +11,6 @@ namespace Azure.Provisioning.KeyVault
     public enum ManagedHsmActionsRequiredMessage
     {
         /// <summary> None. </summary>
-        None
+        None = 0
     }
 }

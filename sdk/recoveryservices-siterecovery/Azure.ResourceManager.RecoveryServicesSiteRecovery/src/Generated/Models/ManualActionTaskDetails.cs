@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ManualActionTaskDetails : SiteRecoveryTaskTypeDetails
     {
         /// <summary> Initializes a new instance of <see cref="ManualActionTaskDetails"/>. </summary>
-        internal ManualActionTaskDetails()
+        internal ManualActionTaskDetails() : base("ManualActionTaskDetails")
         {
-            InstanceType = "ManualActionTaskDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="ManualActionTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name. </param>
         /// <param name="instructions"> The instructions. </param>
         /// <param name="observation"> The observation. </param>
-        internal ManualActionTaskDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string instructions, string observation) : base(instanceType, serializedAdditionalRawData)
+        internal ManualActionTaskDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string instructions, string observation) : base(instanceType, additionalBinaryDataProperties)
         {
             Name = name;
             Instructions = instructions;
             Observation = observation;
-            InstanceType = instanceType ?? "ManualActionTaskDetails";
         }
 
         /// <summary> The name. </summary>
         public string Name { get; }
+
         /// <summary> The instructions. </summary>
         public string Instructions { get; }
+
         /// <summary> The observation. </summary>
         public string Observation { get; }
     }

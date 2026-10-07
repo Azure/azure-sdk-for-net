@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         {
             TryGetApiVersion(ResourceType, out string devOpsPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", ResourceType.Namespace, Diagnostics);
-            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
+            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsPoolApiVersion ?? "2026-07-03-preview");
             _resourceDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", ResourceType.Namespace, Diagnostics);
-            _resourceDetailsRestClient = new ResourceDetails(_resourceDetailsClientDiagnostics, Pipeline, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
+            _resourceDetailsRestClient = new ResourceDetails(_resourceDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsPoolApiVersion ?? "2026-07-03-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 HttpMessage message = _poolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsPoolPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevOpsInfrastructureArmOperation<DevOpsPoolResource> operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(
-                    new DevOpsPoolOperationSource(Client),
+                    new DevOpsPoolResourceOperationSource(Client),
                     _poolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 HttpMessage message = _poolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsPoolPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevOpsInfrastructureArmOperation<DevOpsPoolResource> operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(
-                    new DevOpsPoolOperationSource(Client),
+                    new DevOpsPoolResourceOperationSource(Client),
                     _poolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

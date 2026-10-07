@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     yield break;
                 }
                 AzureBackupJobResourceList result = AzureBackupJobResourceList.FromResponse(response);
-                yield return Page<DataProtectionBackupJobData>.FromValues((IReadOnlyList<DataProtectionBackupJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<DataProtectionBackupJobData>.FromValues((IReadOnlyList<DataProtectionBackupJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

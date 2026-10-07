@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> List of Arc extensions installed on edge device. </summary>
         [WirePath("extensions")]
-        public IReadOnlyList<HciEdgeDeviceArcExtension> Extensions { get; }
+        public IReadOnlyList<HciEdgeDeviceArcExtension> Extensions { get; } = new ChangeTrackingList<HciEdgeDeviceArcExtension>();
     }
 }

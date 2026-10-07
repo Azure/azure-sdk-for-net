@@ -7,17 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Data flow properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeDataFlowProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataFlowProperties"/>. </summary>
         public IntegrationRuntimeDataFlowProperties()
         {
             CustomProperties = new ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataFlowProperties"/>. </summary>
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="timeToLiveInMinutes"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>
         /// <param name="shouldCleanupAfterTtl"> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </param>
         /// <param name="customProperties"> Custom properties are used to tune the data flow runtime performance. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLiveInMinutes, bool? shouldCleanupAfterTtl, IList<IntegrationRuntimeDataFlowCustomItem> customProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             ComputeType = computeType;
@@ -34,49 +38,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             TimeToLiveInMinutes = timeToLiveInMinutes;
             ShouldCleanupAfterTtl = shouldCleanupAfterTtl;
             CustomProperties = customProperties;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Compute type of the cluster which will execute data flow job. </summary>
         public DataFlowComputeType? ComputeType { get; set; }
+
         /// <summary> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </summary>
         public int? CoreCount { get; set; }
+
         /// <summary> Time to live (in minutes) setting of the cluster which will execute data flow job. </summary>
         public int? TimeToLiveInMinutes { get; set; }
+
         /// <summary> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </summary>
         public bool? ShouldCleanupAfterTtl { get; set; }
+
         /// <summary> Custom properties are used to tune the data flow runtime performance. </summary>
         public IList<IntegrationRuntimeDataFlowCustomItem> CustomProperties { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

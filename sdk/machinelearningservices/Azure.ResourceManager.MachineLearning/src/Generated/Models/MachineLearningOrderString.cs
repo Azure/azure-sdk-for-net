@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningOrderString. </summary>
+    /// <summary></summary>
     public readonly partial struct MachineLearningOrderString : IEquatable<MachineLearningOrderString>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningOrderString"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningOrderString(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatedAtDescValue = "CreatedAtDesc";
         private const string CreatedAtAscValue = "CreatedAtAsc";
         private const string UpdatedAtDescValue = "UpdatedAtDesc";
         private const string UpdatedAtAscValue = "UpdatedAtAsc";
 
-        /// <summary> CreatedAtDesc. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOrderString"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningOrderString(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the CreatedAtDesc. </summary>
         public static MachineLearningOrderString CreatedAtDesc { get; } = new MachineLearningOrderString(CreatedAtDescValue);
-        /// <summary> CreatedAtAsc. </summary>
+
+        /// <summary> Gets the CreatedAtAsc. </summary>
         public static MachineLearningOrderString CreatedAtAsc { get; } = new MachineLearningOrderString(CreatedAtAscValue);
-        /// <summary> UpdatedAtDesc. </summary>
+
+        /// <summary> Gets the UpdatedAtDesc. </summary>
         public static MachineLearningOrderString UpdatedAtDesc { get; } = new MachineLearningOrderString(UpdatedAtDescValue);
-        /// <summary> UpdatedAtAsc. </summary>
+
+        /// <summary> Gets the UpdatedAtAsc. </summary>
         public static MachineLearningOrderString UpdatedAtAsc { get; } = new MachineLearningOrderString(UpdatedAtAscValue);
+
         /// <summary> Determines if two <see cref="MachineLearningOrderString"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningOrderString left, MachineLearningOrderString right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningOrderString"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningOrderString left, MachineLearningOrderString right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningOrderString"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningOrderString"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningOrderString(string value) => new MachineLearningOrderString(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningOrderString"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningOrderString?(string value) => value == null ? null : new MachineLearningOrderString(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningOrderString other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningOrderString other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.ResourceManager.Resources.Bicep;
 
 namespace Azure.ResourceManager.Resources.Bicep.Models
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <returns> A new <see cref="Models.DecompileOperationContent"/> instance for mocking. </returns>
         public static DecompileOperationContent DecompileOperationContent(string template = default)
         {
-            return new DecompileOperationContent(template, additionalBinaryDataProperties: null);
+            return new DecompileOperationContent(template, default);
         }
 
         /// <summary> The response of the decompileBicep operation. </summary>
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         {
             files ??= new ChangeTrackingList<DecompiledFileDefinition>();
 
-            return new DecompileOperationSuccessResult(files.ToList(), entryPoint, additionalBinaryDataProperties: null);
+            return new DecompileOperationSuccessResult((files ?? new ChangeTrackingList<DecompiledFileDefinition>()).ToList(), entryPoint, default);
         }
 
         /// <summary> The definition of a file along with its contents. </summary>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <returns> A new <see cref="Models.DecompiledFileDefinition"/> instance for mocking. </returns>
         public static DecompiledFileDefinition DecompiledFileDefinition(string path = default, string contents = default)
         {
-            return new DecompiledFileDefinition(path, contents, additionalBinaryDataProperties: null);
+            return new DecompiledFileDefinition(path, contents, default);
         }
     }
 }

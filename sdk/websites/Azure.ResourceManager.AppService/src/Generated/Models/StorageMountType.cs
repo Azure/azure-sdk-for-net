@@ -7,60 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Type of the storage mount.
-    /// Serialized Name: StorageMountType
-    /// </summary>
+    /// <summary> Type of the storage mount. </summary>
     public readonly partial struct StorageMountType : IEquatable<StorageMountType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageMountType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageMountType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AzureFilesValue = "AzureFiles";
         private const string LocalStorageValue = "LocalStorage";
         private const string FileShareValue = "FileShare";
 
-        /// <summary>
-        /// AzureFiles
-        /// Serialized Name: StorageMountType.AzureFiles
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageMountType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AzureFiles. </summary>
         public static StorageMountType AzureFiles { get; } = new StorageMountType(AzureFilesValue);
-        /// <summary>
-        /// LocalStorage
-        /// Serialized Name: StorageMountType.LocalStorage
-        /// </summary>
+
+        /// <summary> Gets the LocalStorage. </summary>
         public static StorageMountType LocalStorage { get; } = new StorageMountType(LocalStorageValue);
-        /// <summary>
-        /// FileShare
-        /// Serialized Name: StorageMountType.FileShare
-        /// </summary>
+
+        /// <summary> Gets the FileShare. </summary>
         public static StorageMountType FileShare { get; } = new StorageMountType(FileShareValue);
+
         /// <summary> Determines if two <see cref="StorageMountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageMountType left, StorageMountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageMountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageMountType left, StorageMountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageMountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageMountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageMountType(string value) => new StorageMountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageMountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageMountType?(string value) => value == null ? null : new StorageMountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageMountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageMountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

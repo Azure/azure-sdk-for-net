@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Sphere
                     yield break;
                 }
                 ImageListResult result = ImageListResult.FromResponse(response);
-                yield return Page<SphereImageData>.FromValues((IReadOnlyList<SphereImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SphereImageData>.FromValues((IReadOnlyList<SphereImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

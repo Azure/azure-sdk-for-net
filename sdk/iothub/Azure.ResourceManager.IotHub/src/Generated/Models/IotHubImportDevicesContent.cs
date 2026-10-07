@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Use to provide parameters when requesting an import of all devices in the hub. </summary>
     public partial class IotHubImportDevicesContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotHubImportDevicesContent"/>. </summary>
         /// <param name="inputBlobContainerUri"> The input blob container URI. </param>
@@ -68,8 +40,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="identity"> Managed identity properties of storage endpoint for import devices. </param>
         /// <param name="includeConfigurations"> The value indicating whether configurations should be imported. </param>
         /// <param name="configurationsBlobName"> The blob name to be used when importing configurations from the provided input blob container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubImportDevicesContent(Uri inputBlobContainerUri, Uri outputBlobContainerUri, string inputBlobName, string outputBlobName, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, bool? includeConfigurations, string configurationsBlobName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubImportDevicesContent(Uri inputBlobContainerUri, Uri outputBlobContainerUri, string inputBlobName, string outputBlobName, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, bool? includeConfigurations, string configurationsBlobName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InputBlobContainerUri = inputBlobContainerUri;
             OutputBlobContainerUri = outputBlobContainerUri;
@@ -79,41 +51,48 @@ namespace Azure.ResourceManager.IotHub.Models
             Identity = identity;
             IncludeConfigurations = includeConfigurations;
             ConfigurationsBlobName = configurationsBlobName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotHubImportDevicesContent"/> for deserialization. </summary>
-        internal IotHubImportDevicesContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The input blob container URI. </summary>
         public Uri InputBlobContainerUri { get; }
+
         /// <summary> The output blob container URI. </summary>
         public Uri OutputBlobContainerUri { get; }
+
         /// <summary> The blob name to be used when importing from the provided input blob container. </summary>
         public string InputBlobName { get; set; }
+
         /// <summary> The blob name to use for storing the status of the import job. </summary>
         public string OutputBlobName { get; set; }
+
         /// <summary> Specifies authentication type being used for connecting to the storage account. </summary>
         public IotHubAuthenticationType? AuthenticationType { get; set; }
+
         /// <summary> Managed identity properties of storage endpoint for import devices. </summary>
         internal ManagedIdentity Identity { get; set; }
-        /// <summary> The user assigned identity. </summary>
-        public ResourceIdentifier UserAssignedIdentity
-        {
-            get => Identity is null ? default : Identity.UserAssignedIdentity;
-            set
-            {
-                if (Identity is null)
-                    Identity = new ManagedIdentity();
-                Identity.UserAssignedIdentity = value;
-            }
-        }
 
         /// <summary> The value indicating whether configurations should be imported. </summary>
         public bool? IncludeConfigurations { get; set; }
+
         /// <summary> The blob name to be used when importing configurations from the provided input blob container. </summary>
         public string ConfigurationsBlobName { get; set; }
+
+        /// <summary> The user assigned identity. </summary>
+        public ResourceIdentifier UserAssignedIdentity
+        {
+            get
+            {
+                return Identity is null ? default : Identity.UserAssignedIdentity;
+            }
+            set
+            {
+                if (Identity is null)
+                {
+                    Identity = new ManagedIdentity();
+                }
+                Identity.UserAssignedIdentity = value;
+            }
+        }
     }
 }

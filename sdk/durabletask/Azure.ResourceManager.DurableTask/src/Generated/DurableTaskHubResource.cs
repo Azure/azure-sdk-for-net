@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(ResourceType, out string durableTaskHubApiVersion);
             _taskHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Endpoint, durableTaskHubApiVersion ?? "2026-02-01");
+            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskHubApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DurableTaskHubData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskHubResource> operation = new DurableTaskArmOperation<DurableTaskHubResource>(
-                    new DurableTaskHubOperationSource(Client),
+                    new DurableTaskHubResourceOperationSource(Client),
                     _taskHubsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DurableTaskHubData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskHubResource> operation = new DurableTaskArmOperation<DurableTaskHubResource>(
-                    new DurableTaskHubOperationSource(Client),
+                    new DurableTaskHubResourceOperationSource(Client),
                     _taskHubsClientDiagnostics,
                     Pipeline,
                     message.Request,

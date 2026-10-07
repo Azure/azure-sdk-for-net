@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppConfiguration
                     yield break;
                 }
                 AppConfigurationStoreApiKeyListResult result = AppConfigurationStoreApiKeyListResult.FromResponse(response);
-                yield return Page<AppConfigurationStoreApiKey>.FromValues((IReadOnlyList<AppConfigurationStoreApiKey>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppConfigurationStoreApiKey>.FromValues((IReadOnlyList<AppConfigurationStoreApiKey>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

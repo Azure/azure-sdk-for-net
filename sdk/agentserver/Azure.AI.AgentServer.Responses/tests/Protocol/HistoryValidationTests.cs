@@ -167,29 +167,29 @@ public class HistoryValidationTests : IDisposable
         public HashSet<string> InvalidPreviousResponseIds { get; } = new();
         public HashSet<string> InvalidConversationIds { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, IsolationContext isolation, CancellationToken cancellationToken = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
             => _inner.CreateResponseAsync(request, isolation, cancellationToken);
 
-        public override Task<ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
+        public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
             => _inner.GetResponseAsync(responseId, isolation, cancellationToken);
 
-        public override Task UpdateResponseAsync(ResponseObject response, IsolationContext isolation, CancellationToken cancellationToken = default)
+        public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken cancellationToken = default)
             => _inner.UpdateResponseAsync(response, isolation, cancellationToken);
 
-        public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
+        public override Task DeleteResponseAsync(string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
             => _inner.DeleteResponseAsync(responseId, isolation, cancellationToken);
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, IsolationContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => _inner.GetInputItemsAsync(responseId, isolation, limit, ascending, after, before, cancellationToken);
 
-        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, IsolationContext isolation, CancellationToken cancellationToken = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken cancellationToken = default)
             => _inner.GetItemsAsync(itemIds, isolation, cancellationToken);
 
         public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(
             string? previousResponseId,
             string? conversationId,
             int limit,
-            IsolationContext isolation,
+            PlatformContext isolation,
             CancellationToken cancellationToken = default)
         {
             if (previousResponseId is not null && InvalidPreviousResponseIds.Contains(previousResponseId))

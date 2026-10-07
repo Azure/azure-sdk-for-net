@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricConfigurationState : IEquatable<NetworkFabricConfigurationState>
     {
         private readonly string _value;
+        /// <summary> Success Configuration State. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed Configuration State. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Rejected Configuration State. </summary>
+        private const string RejectedValue = "Rejected";
+        /// <summary> Accepted Configuration State. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Provisioned Configuration State. </summary>
+        private const string ProvisionedValue = "Provisioned";
+        /// <summary> ErrorProvisioning Configuration State. </summary>
+        private const string ErrorProvisioningValue = "ErrorProvisioning";
+        /// <summary> Deprovisioning Configuration State. </summary>
+        private const string DeprovisioningValue = "Deprovisioning";
+        /// <summary> Deprovisioned Configuration State. </summary>
+        private const string DeprovisionedValue = "Deprovisioned";
+        /// <summary> ErrorDeprovisioning Configuration State. </summary>
+        private const string ErrorDeprovisioningValue = "ErrorDeprovisioning";
+        /// <summary> DeferredControl Configuration State. </summary>
+        private const string DeferredControlValue = "DeferredControl";
+        /// <summary> Provisioning Configuration State. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> PendingCommit Configuration State. </summary>
+        private const string PendingCommitValue = "PendingCommit";
+        /// <summary> PendingAdministrativeUpdate State. </summary>
+        private const string PendingAdministrativeUpdateValue = "PendingAdministrativeUpdate";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricConfigurationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricConfigurationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string RejectedValue = "Rejected";
-        private const string AcceptedValue = "Accepted";
-        private const string ProvisionedValue = "Provisioned";
-        private const string ErrorProvisioningValue = "ErrorProvisioning";
-        private const string DeprovisioningValue = "Deprovisioning";
-        private const string DeprovisionedValue = "Deprovisioned";
-        private const string ErrorDeprovisioningValue = "ErrorDeprovisioning";
-        private const string DeferredControlValue = "DeferredControl";
-        private const string ProvisioningValue = "Provisioning";
-        private const string PendingCommitValue = "PendingCommit";
-        private const string PendingAdministrativeUpdateValue = "PendingAdministrativeUpdate";
+            _value = value;
+        }
 
         /// <summary> Success Configuration State. </summary>
         public static NetworkFabricConfigurationState Succeeded { get; } = new NetworkFabricConfigurationState(SucceededValue);
+
         /// <summary> Failed Configuration State. </summary>
         public static NetworkFabricConfigurationState Failed { get; } = new NetworkFabricConfigurationState(FailedValue);
+
         /// <summary> Rejected Configuration State. </summary>
         public static NetworkFabricConfigurationState Rejected { get; } = new NetworkFabricConfigurationState(RejectedValue);
+
         /// <summary> Accepted Configuration State. </summary>
         public static NetworkFabricConfigurationState Accepted { get; } = new NetworkFabricConfigurationState(AcceptedValue);
+
         /// <summary> Provisioned Configuration State. </summary>
         public static NetworkFabricConfigurationState Provisioned { get; } = new NetworkFabricConfigurationState(ProvisionedValue);
+
         /// <summary> ErrorProvisioning Configuration State. </summary>
         public static NetworkFabricConfigurationState ErrorProvisioning { get; } = new NetworkFabricConfigurationState(ErrorProvisioningValue);
+
         /// <summary> Deprovisioning Configuration State. </summary>
         public static NetworkFabricConfigurationState Deprovisioning { get; } = new NetworkFabricConfigurationState(DeprovisioningValue);
+
         /// <summary> Deprovisioned Configuration State. </summary>
         public static NetworkFabricConfigurationState Deprovisioned { get; } = new NetworkFabricConfigurationState(DeprovisionedValue);
+
         /// <summary> ErrorDeprovisioning Configuration State. </summary>
         public static NetworkFabricConfigurationState ErrorDeprovisioning { get; } = new NetworkFabricConfigurationState(ErrorDeprovisioningValue);
+
         /// <summary> DeferredControl Configuration State. </summary>
         public static NetworkFabricConfigurationState DeferredControl { get; } = new NetworkFabricConfigurationState(DeferredControlValue);
+
         /// <summary> Provisioning Configuration State. </summary>
         public static NetworkFabricConfigurationState Provisioning { get; } = new NetworkFabricConfigurationState(ProvisioningValue);
+
         /// <summary> PendingCommit Configuration State. </summary>
         public static NetworkFabricConfigurationState PendingCommit { get; } = new NetworkFabricConfigurationState(PendingCommitValue);
+
         /// <summary> PendingAdministrativeUpdate State. </summary>
         public static NetworkFabricConfigurationState PendingAdministrativeUpdate { get; } = new NetworkFabricConfigurationState(PendingAdministrativeUpdateValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricConfigurationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricConfigurationState left, NetworkFabricConfigurationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricConfigurationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricConfigurationState left, NetworkFabricConfigurationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricConfigurationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricConfigurationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricConfigurationState(string value) => new NetworkFabricConfigurationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricConfigurationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricConfigurationState?(string value) => value == null ? null : new NetworkFabricConfigurationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricConfigurationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricConfigurationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

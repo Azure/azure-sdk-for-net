@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public void ValidateApiData_ModelFactory_ByUri()
         {
-            var apiData = ArmApiManagementModelFactory.ApiData(null, null, default, null, null, null, null, null, null, null, null, null, null, null, null, null, termsOfServiceUri: uri, null, null, null, null, serviceUri: uri);
+            var apiData = ArmApiManagementModelFactory.ApiData(termsOfServiceLink: uri.AbsoluteUri, serviceLink: uri.AbsoluteUri);
             Assert.IsNotNull(apiData.TermsOfServiceUri);
             Assert.IsNotNull(apiData.ServiceUri);
             Assert.IsNotNull(apiData.TermsOfServiceLink);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public void ValidateApiEntityBaseContract_ModelFactory_ByUri()
         {
-            var apiEntityBaseContract = ArmApiManagementModelFactory.ApiEntityBaseContract(null, null, null, null, null, null, null, null, null, null, null, null, termsOfServiceUri: uri);
+            var apiEntityBaseContract = ArmApiManagementModelFactory.ApiEntityBaseContract(termsOfServiceLink: uri.AbsoluteUri);
             Assert.IsNotNull(apiEntityBaseContract.TermsOfServiceUri);
             Assert.IsNotNull(apiEntityBaseContract.TermsOfServiceLink);
             Assert.AreEqual(apiEntityBaseContract.TermsOfServiceLink, apiEntityBaseContract.TermsOfServiceUri.AbsoluteUri);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public void ValidateApiCreateOrUpdateContent_ModelFactory_ByUri()
         {
-            var apiCreateOrUpdateContent = ArmApiManagementModelFactory.ApiCreateOrUpdateContent(null, null, null, null, null, null, null, null, null, null, null, null, termsOfServiceUri: uri, null, null, null, null, serviceUri: uri);
+            var apiCreateOrUpdateContent = ArmApiManagementModelFactory.ApiCreateOrUpdateContent(termsOfServiceLink: uri.AbsoluteUri, serviceLink: uri.AbsoluteUri);
             Assert.IsNotNull(apiCreateOrUpdateContent.TermsOfServiceUri);
             Assert.IsNotNull(apiCreateOrUpdateContent.ServiceUri);
             Assert.IsNotNull(apiCreateOrUpdateContent.TermsOfServiceLink);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public void ValidateApiPatch_ModelFactory_ByUri()
         {
-            var apiPatch = ArmApiManagementModelFactory.ApiPatch(null, null, null, null, null, null, null, null, null, null, null, null, termsOfServiceUri: uri, null, null, null, serviceUri: uri);
+            var apiPatch = ArmApiManagementModelFactory.ApiPatch(termsOfServiceLink: uri.AbsoluteUri, serviceLink: uri.AbsoluteUri);
             Assert.IsNotNull(apiPatch.TermsOfServiceUri);
             Assert.IsNotNull(apiPatch.ServiceUri);
             Assert.IsNotNull(apiPatch.TermsOfServiceLink);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public void ValidateAssociatedApiProperties_ModelFactory_ByUri()
         {
-            var associatedApiProperties = ArmApiManagementModelFactory.AssociatedApiProperties(null, null, null, null, null, null, null, null, null, null, null, null, termsOfServiceUri: uri, null, null, null, null, null);
+            var associatedApiProperties = ArmApiManagementModelFactory.AssociatedApiProperties(termsOfServiceLink: uri.AbsoluteUri);
             Assert.IsNotNull(associatedApiProperties.TermsOfServiceUri);
             Assert.IsNotNull(associatedApiProperties.TermsOfServiceLink);
             Assert.AreEqual(associatedApiProperties.TermsOfServiceLink, associatedApiProperties.TermsOfServiceUri.AbsoluteUri);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public void ValidateGatewayApiData_ModelFactory_ByUri()
         {
-            var gatewayApiData = ArmApiManagementModelFactory.GatewayApiData(null, null, default, null, null, null, null, null, null, null, null, null, null, null, null, null, termsOfServiceUri: uri, null, null, null, null, serviceUri: uri);
+            var gatewayApiData = ArmApiManagementModelFactory.GatewayApiData(termsOfServiceLink: uri.AbsoluteUri, serviceLink: uri.AbsoluteUri);
             Assert.IsNotNull(gatewayApiData.TermsOfServiceUri);
             Assert.IsNotNull(gatewayApiData.ServiceUri);
             Assert.IsNotNull(gatewayApiData.TermsOfServiceLink);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public void ValidateProductApiData_ModelFactory_ByUri()
         {
-            var productApiData = ArmApiManagementModelFactory.ProductApiData(null, null, default, null, null, null, null, null, null, null, null, null, null, null, null, null, termsOfServiceUri: uri, null, null, null, null, serviceUri: uri);
+            var productApiData = ArmApiManagementModelFactory.ProductApiData(termsOfServiceLink: uri.AbsoluteUri, serviceLink: uri.AbsoluteUri);
             Assert.IsNotNull(productApiData.TermsOfServiceUri);
             Assert.IsNotNull(productApiData.ServiceUri);
             Assert.IsNotNull(productApiData.TermsOfServiceLink);

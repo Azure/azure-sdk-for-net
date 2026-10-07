@@ -1,0 +1,12 @@
+# Per-language tuning for the cross-language auto-build-repair flow.
+#
+# These values configure the shared repair concept (driving
+# azure-sdk-mcp:azsdk_customized_code_update) for THIS language repo. The keys and
+# their meaning are standardized across languages; the values are tunable per repo,
+# so each language can pick a bound appropriate to its build/regeneration cost.
+#
+# maxIterations: maximum engine patch attempts reaching regeneration/build
+#   validation, passed as maxAttempts / --max-attempts in ONE customized-update
+#   invocation (1..10). Baseline checks and tool/Exit reminders do not count.
+#   Never commit partial progress while the final build is red. Default is 3.
+maxIterations: 3

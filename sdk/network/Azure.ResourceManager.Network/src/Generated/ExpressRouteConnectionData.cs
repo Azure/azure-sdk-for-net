@@ -9,14 +9,10 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteConnection data model.
-    /// ExpressRouteConnection resource.
-    /// </summary>
+    /// <summary> ExpressRouteConnection resource. </summary>
     public partial class ExpressRouteConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionData"/>. </summary>
@@ -26,64 +22,135 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="provisioningState"> The provisioning state of the express route connection resource. </param>
-        /// <param name="expressRouteCircuitPeering"> The ExpressRoute circuit peering. </param>
-        /// <param name="authorizationKey"> Authorization key to establish the connection. </param>
-        /// <param name="routingWeight"> The routing weight associated to the connection. </param>
-        /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="expressRouteGatewayBypass"> Enable FastPath to vWan Firewall hub. </param>
-        /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal ExpressRouteConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfiguration routingConfiguration) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the express route connection. </param>
+        internal ExpressRouteConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ExpressRouteConnectionProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ProvisioningState = provisioningState;
-            ExpressRouteCircuitPeering = expressRouteCircuitPeering;
-            AuthorizationKey = authorizationKey;
-            RoutingWeight = routingWeight;
-            EnableInternetSecurity = enableInternetSecurity;
-            ExpressRouteGatewayBypass = expressRouteGatewayBypass;
-            EnablePrivateLinkFastPath = enablePrivateLinkFastPath;
-            RoutingConfiguration = routingConfiguration;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the express route connection. </summary>
+        [WirePath("properties")]
+        internal ExpressRouteConnectionProperties Properties { get; set; }
 
         /// <summary> The provisioning state of the express route connection resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The ExpressRoute circuit peering. </summary>
-        internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.expressRouteCircuitPeering.id")]
-        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        public NetworkProvisioningState? ProvisioningState
         {
-            get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The ExpressRoute circuit peering. </summary>
+        [WirePath("properties.expressRouteCircuitPeering")]
+        public ResourceIdentifier ExpressRouteCircuitPeering
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitPeering;
+            }
             set
             {
-                if (ExpressRouteCircuitPeering is null)
-                    ExpressRouteCircuitPeering = new WritableSubResource();
-                ExpressRouteCircuitPeering.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.ExpressRouteCircuitPeering = value;
             }
         }
 
         /// <summary> Authorization key to establish the connection. </summary>
         [WirePath("properties.authorizationKey")]
-        public string AuthorizationKey { get; set; }
+        public string AuthorizationKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthorizationKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.AuthorizationKey = value;
+            }
+        }
+
         /// <summary> The routing weight associated to the connection. </summary>
         [WirePath("properties.routingWeight")]
-        public int? RoutingWeight { get; set; }
+        public int? RoutingWeight
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingWeight;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.RoutingWeight = value;
+            }
+        }
+
         /// <summary> Enable internet security. </summary>
         [WirePath("properties.enableInternetSecurity")]
-        public bool? EnableInternetSecurity { get; set; }
+        public bool? EnableInternetSecurity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableInternetSecurity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.EnableInternetSecurity = value;
+            }
+        }
+
         /// <summary> Enable FastPath to vWan Firewall hub. </summary>
         [WirePath("properties.expressRouteGatewayBypass")]
-        public bool? ExpressRouteGatewayBypass { get; set; }
+        public bool? ExpressRouteGatewayBypass
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteGatewayBypass;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.ExpressRouteGatewayBypass = value;
+            }
+        }
+
         /// <summary> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </summary>
         [WirePath("properties.enablePrivateLinkFastPath")]
-        public bool? EnablePrivateLinkFastPath { get; set; }
-        /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
-        [WirePath("properties.routingConfiguration")]
-        public RoutingConfiguration RoutingConfiguration { get; set; }
+        public bool? EnablePrivateLinkFastPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnablePrivateLinkFastPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.EnablePrivateLinkFastPath = value;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     internal readonly partial struct FirewallPolicyRuleCollectionType : IEquatable<FirewallPolicyRuleCollectionType>
     {
         private readonly string _value;
+        /// <summary> FirewallPolicyNatRuleCollection. </summary>
+        private const string FirewallPolicyNatRuleCollectionValue = "FirewallPolicyNatRuleCollection";
+        /// <summary> FirewallPolicyFilterRuleCollection. </summary>
+        private const string FirewallPolicyFilterRuleCollectionValue = "FirewallPolicyFilterRuleCollection";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyRuleCollectionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FirewallPolicyNatRuleCollectionValue = "FirewallPolicyNatRuleCollection";
-        private const string FirewallPolicyFilterRuleCollectionValue = "FirewallPolicyFilterRuleCollection";
+            _value = value;
+        }
 
         /// <summary> FirewallPolicyNatRuleCollection. </summary>
         public static FirewallPolicyRuleCollectionType FirewallPolicyNatRuleCollection { get; } = new FirewallPolicyRuleCollectionType(FirewallPolicyNatRuleCollectionValue);
+
         /// <summary> FirewallPolicyFilterRuleCollection. </summary>
         public static FirewallPolicyRuleCollectionType FirewallPolicyFilterRuleCollection { get; } = new FirewallPolicyRuleCollectionType(FirewallPolicyFilterRuleCollectionValue);
+
         /// <summary> Determines if two <see cref="FirewallPolicyRuleCollectionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallPolicyRuleCollectionType left, FirewallPolicyRuleCollectionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallPolicyRuleCollectionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallPolicyRuleCollectionType left, FirewallPolicyRuleCollectionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyRuleCollectionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallPolicyRuleCollectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallPolicyRuleCollectionType(string value) => new FirewallPolicyRuleCollectionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallPolicyRuleCollectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallPolicyRuleCollectionType?(string value) => value == null ? null : new FirewallPolicyRuleCollectionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallPolicyRuleCollectionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallPolicyRuleCollectionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

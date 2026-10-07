@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningServiceDataAccessAuthIdentity. </summary>
+    /// <summary></summary>
     public readonly partial struct MachineLearningServiceDataAccessAuthIdentity : IEquatable<MachineLearningServiceDataAccessAuthIdentity>
     {
         private readonly string _value;
+        /// <summary> Do not use any identity for service data access. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Use the system assigned managed identity of the Workspace to authenticate service data access. </summary>
+        private const string WorkspaceSystemAssignedIdentityValue = "WorkspaceSystemAssignedIdentity";
+        /// <summary> Use the user assigned managed identity of the Workspace to authenticate service data access. </summary>
+        private const string WorkspaceUserAssignedIdentityValue = "WorkspaceUserAssignedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServiceDataAccessAuthIdentity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningServiceDataAccessAuthIdentity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string WorkspaceSystemAssignedIdentityValue = "WorkspaceSystemAssignedIdentity";
-        private const string WorkspaceUserAssignedIdentityValue = "WorkspaceUserAssignedIdentity";
+            _value = value;
+        }
 
         /// <summary> Do not use any identity for service data access. </summary>
         public static MachineLearningServiceDataAccessAuthIdentity None { get; } = new MachineLearningServiceDataAccessAuthIdentity(NoneValue);
+
         /// <summary> Use the system assigned managed identity of the Workspace to authenticate service data access. </summary>
         public static MachineLearningServiceDataAccessAuthIdentity WorkspaceSystemAssignedIdentity { get; } = new MachineLearningServiceDataAccessAuthIdentity(WorkspaceSystemAssignedIdentityValue);
+
         /// <summary> Use the user assigned managed identity of the Workspace to authenticate service data access. </summary>
         public static MachineLearningServiceDataAccessAuthIdentity WorkspaceUserAssignedIdentity { get; } = new MachineLearningServiceDataAccessAuthIdentity(WorkspaceUserAssignedIdentityValue);
+
         /// <summary> Determines if two <see cref="MachineLearningServiceDataAccessAuthIdentity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningServiceDataAccessAuthIdentity left, MachineLearningServiceDataAccessAuthIdentity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningServiceDataAccessAuthIdentity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningServiceDataAccessAuthIdentity left, MachineLearningServiceDataAccessAuthIdentity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningServiceDataAccessAuthIdentity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningServiceDataAccessAuthIdentity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningServiceDataAccessAuthIdentity(string value) => new MachineLearningServiceDataAccessAuthIdentity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningServiceDataAccessAuthIdentity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningServiceDataAccessAuthIdentity?(string value) => value == null ? null : new MachineLearningServiceDataAccessAuthIdentity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningServiceDataAccessAuthIdentity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningServiceDataAccessAuthIdentity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

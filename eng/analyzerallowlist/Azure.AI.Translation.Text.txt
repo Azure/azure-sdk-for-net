@@ -1,0 +1,6 @@
+# Azure.AI.Translation.Text approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# 'DetectedLanguage' is the natural domain name and matches the shipped
+# Azure.AI.TextAnalytics surface; the two packages are never referenced together.
+nowarn:AZC0034 T:Azure.AI.Translation.Text.DetectedLanguage

@@ -10,7 +10,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The DispatchRoutineAsyncRequest. </summary>
     internal partial class DispatchRoutineAsyncRequest : IJsonModel<DispatchRoutineAsyncRequest>
     {
         /// <param name="data"> The data to parse. </param>
@@ -143,7 +142,7 @@ namespace Azure.AI.Projects
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DispatchRoutineAsyncRequest(payload, additionalBinaryDataProperties);

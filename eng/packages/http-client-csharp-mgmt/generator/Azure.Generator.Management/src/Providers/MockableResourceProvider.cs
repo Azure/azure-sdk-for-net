@@ -113,7 +113,7 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
                     new ExpressionPropertyBody(
                         restClientField.Assign(
-                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion)),
+                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion)),
                             nullCoalesce: true)),
                     enclosingType);
 
@@ -131,6 +131,9 @@ namespace Azure.Generator.Management.Providers
         protected override FormattableString BuildDescription() => $"A class to add extension methods to {ArmCoreType:C}.";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Extensions", $"{Name}.cs");
+
+        protected override IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+            => ManagementMethodProvider.GetBodyDependencyTypes(Methods);
 
         protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 
@@ -192,6 +195,19 @@ namespace Azure.Generator.Management.Providers
             return [.. properties];
         }
 
+        protected override IReadOnlyList<MethodProvider> BuildMethodsForBackCompatibility(IEnumerable<MethodProvider> originalMethods)
+        {
+            if (LastContractView?.Methods == null || LastContractView.Methods.Count == 0)
+            {
+                return [.. originalMethods];
+            }
+
+            var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
+            var backCompatMethods = base.BuildMethodsForBackCompatibility(originalMethodList);
+
+            return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
+        }
+
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>(_resources.Count * 3 + _resourceMethods.Count * 2 + _nonResourceMethods.Count * 2);
@@ -204,8 +220,8 @@ namespace Azure.Generator.Management.Providers
             {
                 foreach (var resourceMethod in resourceMethods)
                 {
-                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true));
-                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true, _operationContext));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false, _operationContext));
                 }
             }
 
@@ -300,33 +316,37 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
+        private protected MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync, OperationContext operationContext, ParameterProvider? scopeParameter = null)
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
 
             // If the user provided a @@clientName(.., "csharp") on the underlying tsp method,
-            // honor it instead of fabricating from (kind, ResourceName). The TCGC name on
-            // resourceMethod.InputMethod.Name already reflects the override.
+            // honor it instead of fabricating from (kind, ResourceName). Resolve the name through
+            // the final provider so an already-shipped name is preserved by back compatibility.
             // Scope: only List operations for now. Other kinds (Read/Create/Update/Delete/Action)
             // can be opted into in a follow-up.
             if (methodName != null
                 && resourceMethod.Kind == ResourceOperationKind.List
                 && ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(resourceMethod.InputMethod))
             {
-                var baseName = resourceMethod.InputMethod.Name;
-                methodName = isAsync ? $"{baseName}Async" : baseName;
+                methodName = GetConvenienceMethodName();
             }
 
-            // Only fall back to the raw SDK method name when no standard name was generated.
+            // Only fall back to the SDK method name when no standard name was generated.
             // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to
-            // standard CRUD method naming patterns.
+            // standard CRUD method naming patterns. Resolve through the final provider rather than
+            // reading InputMethod.Name, which may already contain a normalized breaking rename.
             if (methodName == null)
             {
-                var baseName = resourceMethod.InputMethod.Name;
-                methodName = isAsync ? $"{baseName}Async" : baseName;
+                methodName = GetConvenienceMethodName();
             }
 
-            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName, resource);
+            string GetConvenienceMethodName() => _clientInfos[resourceMethod.InputClient]
+                .RestClientProvider
+                .GetConvenienceMethodByOperation(resourceMethod.InputMethod.Operation, isAsync, this)
+                .Signature.Name;
+
+            return BuildServiceMethodWithContext(resourceMethod.InputMethod, resourceMethod.InputClient, operationContext, isAsync, methodName, resource, scopeParameter);
         }
 
         protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null)
@@ -337,23 +357,26 @@ namespace Azure.Generator.Management.Providers
         protected MethodProvider BuildServiceMethodWithContext(InputServiceMethod method, InputClient inputClient, OperationContext operationContext, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
         {
             var clientInfo = _clientInfos[inputClient];
+            var parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter),
-                _ => BuildNonPagingServiceMethod(method, operationContext, clientInfo, isAsync, methodName, explicitResourceClient, scopeParameter)
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, parameterMappings, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter),
+                _ => BuildNonPagingServiceMethod(method, parameterMappings, clientInfo, isAsync, methodName, explicitResourceClient, scopeParameter)
             };
         }
 
-        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, OperationContext operationContext, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
+        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, ParameterContextRegistry parameterMappings, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
         {
-            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable.
+            // Long-running operations are excluded: an LRO returning an array is surfaced as
+            // ArmOperation<IReadOnlyList<T>> instead of a pageable.
             var responseBodyType = method.GetResponseBodyType();
-            if (responseBodyType != null && responseBodyType.IsList)
+            if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
-                return new ArrayResponseOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
+                return new ArrayResponseOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
             }
 
-            return new ResourceOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
+            return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, ResourceOperationKind.Action, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

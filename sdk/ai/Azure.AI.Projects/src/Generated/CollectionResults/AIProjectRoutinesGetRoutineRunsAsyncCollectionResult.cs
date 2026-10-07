@@ -17,9 +17,8 @@ namespace Azure.AI.Projects
         private readonly string _foundryFeatures;
         private readonly string _filter;
         private readonly int? _limit;
-        private readonly string _order;
         private readonly string _after;
-        private readonly string _before;
+        private readonly string _order;
         private readonly RequestOptions _options;
 
         /// <summary> Initializes a new instance of AIProjectRoutinesGetRoutineRunsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
@@ -27,35 +26,22 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="filter"> An optional MLflow search-runs filter expression applied within the routine's experiment. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
+        /// <param name="limit"> The maximum number of runs to return. </param>
+        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
         /// <param name="order">
         /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
         /// for descending order.
         /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AIProjectRoutinesGetRoutineRunsAsyncCollectionResult(AIProjectRoutines client, string routineName, string foundryFeatures, string filter, int? limit, string order, string after, string before, RequestOptions options)
+        public AIProjectRoutinesGetRoutineRunsAsyncCollectionResult(AIProjectRoutines client, string routineName, string foundryFeatures, string filter, int? limit, string after, string order, RequestOptions options)
         {
             _client = client;
             _routineName = routineName;
             _foundryFeatures = foundryFeatures;
             _filter = filter;
             _limit = limit;
-            _order = order;
             _after = after;
-            _before = before;
+            _order = order;
             _options = options;
         }
 
@@ -63,19 +49,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetRoutineRunsRequest(_routineName, _foundryFeatures, _filter, _limit, _order, _after, _before, _options);
-            string nextToken = null;
+            PipelineMessage message = _client.CreateGetRoutineRunsRequest(_routineName, _foundryFeatures, _filter, _limit, _after, _order, _options);
+            Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultRoutineRun)result).LastId;
-                if (string.IsNullOrEmpty(nextToken))
+                nextPageUri = ((PagedResultWithNextLinkRoutineRun)result).NextLink;
+                if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateGetRoutineRunsRequest(_routineName, _foundryFeatures, _filter, _limit, _order, nextToken, _before, _options);
+                message = _client.CreateNextGetRoutineRunsRequest(nextPageUri, _routineName, _foundryFeatures, _filter, _limit, _after, _order, _options);
             }
         }
 
@@ -84,10 +70,10 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultRoutineRun)page).LastId;
-            if (!string.IsNullOrEmpty(nextPage))
+            Uri nextPage = ((PagedResultWithNextLinkRoutineRun)page).NextLink;
+            if (nextPage != null)
             {
-                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));
+                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
             }
             else
             {
@@ -99,7 +85,17 @@ namespace Azure.AI.Projects
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
-            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutineRuns");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

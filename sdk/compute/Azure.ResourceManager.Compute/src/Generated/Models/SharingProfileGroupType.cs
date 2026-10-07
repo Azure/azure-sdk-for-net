@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This property allows you to specify the type of sharing group. Possible values are: **Subscriptions,** **AADTenants.**. </summary>
+    /// <summary> This property allows you to specify the type of sharing group. Possible values are: <b>Subscriptions,</b> <b>AADTenants.</b>. </summary>
     public readonly partial struct SharingProfileGroupType : IEquatable<SharingProfileGroupType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SharingProfileGroupType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SharingProfileGroupType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SubscriptionsValue = "Subscriptions";
         private const string AADTenantsValue = "AADTenants";
 
-        /// <summary> Subscriptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingProfileGroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SharingProfileGroupType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Subscriptions. </summary>
         public static SharingProfileGroupType Subscriptions { get; } = new SharingProfileGroupType(SubscriptionsValue);
-        /// <summary> AADTenants. </summary>
+
+        /// <summary> Gets the AADTenants. </summary>
         public static SharingProfileGroupType AADTenants { get; } = new SharingProfileGroupType(AADTenantsValue);
+
         /// <summary> Determines if two <see cref="SharingProfileGroupType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SharingProfileGroupType left, SharingProfileGroupType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SharingProfileGroupType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SharingProfileGroupType left, SharingProfileGroupType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SharingProfileGroupType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SharingProfileGroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SharingProfileGroupType(string value) => new SharingProfileGroupType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SharingProfileGroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SharingProfileGroupType?(string value) => value == null ? null : new SharingProfileGroupType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SharingProfileGroupType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SharingProfileGroupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

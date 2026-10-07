@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -137,22 +138,28 @@ namespace Azure.Generator.Management.Tests.Providers
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
             Assert.That(outputLibrary, Is.Not.Null);
 
-            // Verify that TWO separate OperationSources are created, not just one
+            // Verify that separate OperationSources are created per resource. In addition, when multiple
+            // resources share the same data type we also register a fallback OperationSource keyed by the
+            // raw data type, so that ResourceOperationMethodProvider.BuildLroHandling can look it up when
+            // TryGetResourceClientProvider declines to wrap (Count != 1 case).
             var operationSources = outputLibrary!.OperationSourceDict;
-            Assert.That(operationSources.Count, Is.EqualTo(2),
-                "Should generate 2 OperationSources for 2 resources sharing the same data model");
+            Assert.That(operationSources.Count, Is.EqualTo(3),
+                "Should generate 2 resource-keyed OperationSources plus 1 data-type-keyed fallback");
 
             // Verify the OperationSource names and types
             var operationSourcesList = operationSources.Values.ToList();
             var names = operationSourcesList.Select(os => os.Name).OrderBy(n => n).ToList();
 
             // Both resources should have their own OperationSource
-            Assert.That(names, Does.Contain("SiteOperationSource"), "Should have SiteResourceOperationSource");
-            Assert.That(names, Does.Contain("SitesBySubscriptionOperationSource"), "Should have SitesBySubscriptionResourceOperationSource");
+            Assert.That(names, Does.Contain("SiteResourceOperationSource"), "Should have SiteResourceOperationSource");
+            Assert.That(names, Does.Contain("SitesBySubscriptionResourceOperationSource"), "Should have SitesBySubscriptionResourceOperationSource");
+            // And the fallback entry keyed by the shared data type should be registered as a non-resource OperationSource
+            Assert.That(names, Does.Contain("SiteDataOperationSource"),
+                "Should have a fallback OperationSource keyed by the shared data type for the non-wrap LRO path");
 
             // Verify each OperationSource implements IOperationSource<CorrectResourceType>
-            var siteOperationSource = operationSourcesList.First(os => os.Name == "SiteOperationSource");
-            var sitesBySubOperationSource = operationSourcesList.First(os => os.Name == "SitesBySubscriptionOperationSource");
+            var siteOperationSource = operationSourcesList.First(os => os.Name == "SiteResourceOperationSource");
+            var sitesBySubOperationSource = operationSourcesList.First(os => os.Name == "SitesBySubscriptionResourceOperationSource");
 
             // Check that the OperationSource implements IOperationSource<T> with the correct T
             var siteImplements = siteOperationSource.Implements;
@@ -313,6 +320,43 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_DynamicResourceOperationSource_PreservesRawData()
+        {
+            var provider = GetOperationSourceProvider(isDynamicModel: true);
+
+            foreach (var method in provider.Methods)
+            {
+                var body = method.BodyStatements?.ToDisplayString();
+                Assert.That(body, Is.Not.Null);
+                Assert.That(
+                    body,
+                    Does.Contain("DeserializeResponseTypeData(document.RootElement, document.RootElement.GetUtf8Bytes(), global::Samples.ModelSerializationExtensions.WireOptions)"));
+            }
+        }
+
+        [TestCase]
+        public void Verify_DynamicNonResourceOperationSource_PreservesRawData()
+        {
+            var inputModel = InputFactory.Model(
+                "DynamicResult",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                isDynamicModel: true);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var modelProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+            Assert.That(modelProvider, Is.Not.Null);
+            var provider = new OperationSourceProvider(modelProvider!.Type, isDynamicModel: true);
+
+            foreach (var method in provider.Methods)
+            {
+                var body = method.BodyStatements?.ToDisplayString();
+                Assert.That(body, Is.Not.Null);
+                Assert.That(
+                    body,
+                    Does.Contain("DeserializeDynamicResult(document.RootElement, document.RootElement.GetUtf8Bytes(), global::Samples.ModelSerializationExtensions.WireOptions)"));
+            }
+        }
+
+        [TestCase]
         public void Verify_NonResourceFrameworkType_CreateResult_UsesModelReaderWriter()
         {
             // Regression test for #58709: for cross-assembly framework result types (e.g. OperationStatusResult,
@@ -338,6 +382,16 @@ namespace Azure.Generator.Management.Tests.Providers
             }
         }
 
+        [TestCase]
+        public void Verify_GenericResultType_UsesGenericOperationSourceName()
+        {
+            _ = ManagementMockHelpers.LoadMockPlugin();
+
+            var provider = new OperationSourceProvider(new CSharpType(typeof(IList<>), typeof(string)));
+
+            Assert.That(provider.Name, Is.EqualTo("IListOfStringOperationSource"));
+        }
+
         private static (MethodProvider CreateResult, MethodProvider CreateResultAsync) GetNonResourceFrameworkOperationSourceMethods()
         {
             // Bootstrap the mock plugin so TypeProvider machinery (ModelReaderWriterContextDefinition, etc.) is available.
@@ -359,7 +413,7 @@ namespace Azure.Generator.Management.Tests.Providers
             return method!;
         }
 
-        private static OperationSourceProvider GetOperationSourceProvider()
+        private static OperationSourceProvider GetOperationSourceProvider(bool isDynamicModel = false)
         {
             // Create test data with a long-running operation
             const string TestClientName = "TestClient";
@@ -371,7 +425,8 @@ namespace Azure.Generator.Management.Tests.Providers
                     InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
                 ],
-                decorators: []);
+                decorators: [],
+                isDynamicModel: isDynamicModel);
 
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");

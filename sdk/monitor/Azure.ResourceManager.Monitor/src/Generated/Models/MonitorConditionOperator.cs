@@ -7,16 +7,16 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Operators allowed in the rule condition. </summary>
+    /// <summary> Monitor condition comparison operator. </summary>
     public enum MonitorConditionOperator
     {
-        /// <summary> GreaterThan. </summary>
+        /// <summary> Greater than. </summary>
         GreaterThan,
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary> Greater than or equal. </summary>
         GreaterThanOrEqual,
-        /// <summary> LessThan. </summary>
+        /// <summary> Less than. </summary>
         LessThan,
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary> Less than or equal. </summary>
         LessThanOrEqual,
         /// <summary> Equals. </summary>
         EqualsValue

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DomainRegistration
                     yield break;
                 }
                 DomainOwnershipIdentifierListResult result = DomainOwnershipIdentifierListResult.FromResponse(response);
-                yield return Page<DomainOwnershipIdentifierData>.FromValues((IReadOnlyList<DomainOwnershipIdentifierData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DomainOwnershipIdentifierData>.FromValues((IReadOnlyList<DomainOwnershipIdentifierData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

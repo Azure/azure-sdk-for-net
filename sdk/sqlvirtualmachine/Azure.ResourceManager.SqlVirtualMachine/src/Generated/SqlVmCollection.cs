@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             TryGetApiVersion(SqlVmResource.ResourceType, out string sqlVmApiVersion);
             _sqlVirtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmResource.ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Endpoint, sqlVmApiVersion ?? "2023-10-01");
+            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlVmApiVersion ?? "2023-10-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
-                    new SqlVmOperationSource(Client),
+                    new SqlVmResourceOperationSource(Client),
                     _sqlVirtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
-                    new SqlVmOperationSource(Client),
+                    new SqlVmResourceOperationSource(Client),
                     _sqlVirtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,

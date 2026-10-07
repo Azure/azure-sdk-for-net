@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(MySqlFlexibleServerConfigurationResource.ResourceType, out string mySqlFlexibleServerConfigurationApiVersion);
             _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerConfigurationApiVersion ?? "2024-12-30");
+            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerConfigurationApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _configurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, MySqlFlexibleServerConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(
-                    new MySqlFlexibleServerConfigurationOperationSource(Client),
+                    new MySqlFlexibleServerConfigurationResourceOperationSource(Client),
                     _configurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _configurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, MySqlFlexibleServerConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(
-                    new MySqlFlexibleServerConfigurationOperationSource(Client),
+                    new MySqlFlexibleServerConfigurationResourceOperationSource(Client),
                     _configurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -69,6 +69,7 @@
     "apos",
     "azsdk",
     "blazor",
+    "bleu",
     "byok",
     "centralus",
     "clippy",
@@ -143,7 +144,6 @@
     "otel",
     "overridden",
     "parallelization",
-    "personalizer",
     "petabit",
     "picometer",
     "pids",
@@ -165,6 +165,7 @@
     "skus",
     "somaxconn",
     "southcentralus",
+    "sovcloud",
     "structs",
     "sybase",
     "sysctls",
@@ -241,12 +242,6 @@
       "words": [
         "dynatrace",
         "fqdns"
-      ]
-    },
-    {
-      "filename": "**/sdk/astronomer/**/*.cs",
-      "words": [
-        "astro"
       ]
     },
     {
@@ -774,13 +769,6 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
-      "words": [
-        "kustomization",
-        "kustomizations"
-      ]
-    },
-    {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
         "ccyymmdd",
@@ -1272,6 +1260,7 @@
         "hkey",
         "mcas",
         "mdatp",
+        "mdti",
         "msti",
         "nlstext",
         "puid",
@@ -1286,21 +1275,6 @@
       "filename": "**/sdk/sphere/**/*.cs",
       "words": [
         "nwfs"
-      ]
-    },
-    {
-      "filename": "**/sdk/sqlmanagement/**/*.cs",
-      "words": [
-        "cias",
-        "droppeded",
-        "dtcs",
-        "freemium",
-        "nchar",
-        "ntext",
-        "nvarchar",
-        "stdev",
-        "unrestorable",
-        "vcores"
       ]
     },
     {
@@ -1576,6 +1550,14 @@
         "deidentified",
         "deidentify",
         "healthdataaiservices"
+      ]
+    },
+    {
+      "filename": "**/sdk/dataai/**/*",
+      "words": [
+        "apim",
+        "rerank",
+        "reranker"
       ]
     },
     {

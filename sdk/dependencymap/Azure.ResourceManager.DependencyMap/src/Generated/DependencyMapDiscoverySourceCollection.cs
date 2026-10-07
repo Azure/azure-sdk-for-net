@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             TryGetApiVersion(DependencyMapDiscoverySourceResource.ResourceType, out string dependencyMapDiscoverySourceApiVersion);
             _discoverySourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DependencyMap", DependencyMapDiscoverySourceResource.ResourceType.Namespace, Diagnostics);
-            _discoverySourcesRestClient = new DiscoverySources(_discoverySourcesClientDiagnostics, Pipeline, Endpoint, dependencyMapDiscoverySourceApiVersion ?? "2025-07-01-preview");
+            _discoverySourcesRestClient = new DiscoverySources(_discoverySourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyMapDiscoverySourceApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _discoverySourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceName, DependencyMapDiscoverySourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DependencyMapArmOperation<DependencyMapDiscoverySourceResource> operation = new DependencyMapArmOperation<DependencyMapDiscoverySourceResource>(
-                    new DependencyMapDiscoverySourceOperationSource(Client),
+                    new DependencyMapDiscoverySourceResourceOperationSource(Client),
                     _discoverySourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _discoverySourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceName, DependencyMapDiscoverySourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DependencyMapArmOperation<DependencyMapDiscoverySourceResource> operation = new DependencyMapArmOperation<DependencyMapDiscoverySourceResource>(
-                    new DependencyMapDiscoverySourceOperationSource(Client),
+                    new DependencyMapDiscoverySourceResourceOperationSource(Client),
                     _discoverySourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

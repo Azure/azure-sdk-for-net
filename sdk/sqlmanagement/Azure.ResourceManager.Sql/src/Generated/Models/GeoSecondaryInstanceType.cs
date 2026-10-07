@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct GeoSecondaryInstanceType : IEquatable<GeoSecondaryInstanceType>
     {
         private readonly string _value;
+        /// <summary> Geo. </summary>
+        private const string GeoValue = "Geo";
+        /// <summary> Standby. </summary>
+        private const string StandbyValue = "Standby";
 
         /// <summary> Initializes a new instance of <see cref="GeoSecondaryInstanceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GeoSecondaryInstanceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GeoValue = "Geo";
-        private const string StandbyValue = "Standby";
+            _value = value;
+        }
 
         /// <summary> Geo. </summary>
         public static GeoSecondaryInstanceType Geo { get; } = new GeoSecondaryInstanceType(GeoValue);
+
         /// <summary> Standby. </summary>
         public static GeoSecondaryInstanceType Standby { get; } = new GeoSecondaryInstanceType(StandbyValue);
+
         /// <summary> Determines if two <see cref="GeoSecondaryInstanceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GeoSecondaryInstanceType left, GeoSecondaryInstanceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GeoSecondaryInstanceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GeoSecondaryInstanceType left, GeoSecondaryInstanceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GeoSecondaryInstanceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GeoSecondaryInstanceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GeoSecondaryInstanceType(string value) => new GeoSecondaryInstanceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GeoSecondaryInstanceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GeoSecondaryInstanceType?(string value) => value == null ? null : new GeoSecondaryInstanceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GeoSecondaryInstanceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GeoSecondaryInstanceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

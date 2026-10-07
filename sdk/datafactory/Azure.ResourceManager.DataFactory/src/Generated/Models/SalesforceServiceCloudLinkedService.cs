@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SalesforceServiceCloudLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudLinkedService"/>. </summary>
-        public SalesforceServiceCloudLinkedService()
+        public SalesforceServiceCloudLinkedService() : base("SalesforceServiceCloud")
         {
-            LinkedServiceType = "SalesforceServiceCloud";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudLinkedService"/>. </summary>
@@ -27,39 +27,101 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="environmentUri"> The URL of Salesforce Service Cloud instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'. To copy data from custom domain, specify, for example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </param>
-        /// <param name="username"> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> The password for Basic authentication of the Salesforce instance. </param>
-        /// <param name="securityToken"> The security token is optional to remotely access Salesforce instance. </param>
-        /// <param name="apiVersion"> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </param>
-        /// <param name="extendedProperties"> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SalesforceServiceCloudLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> environmentUri, DataFactoryElement<string> username, DataFactorySecret password, DataFactorySecret securityToken, DataFactoryElement<string> apiVersion, DataFactoryElement<string> extendedProperties, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Salesforce Service Cloud linked service properties. </param>
+        /// <param name="password"></param>
+        internal SalesforceServiceCloudLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SalesforceServiceCloudLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            EnvironmentUri = environmentUri;
-            Username = username;
+            TypeProperties = typeProperties;
             Password = password;
-            SecurityToken = securityToken;
-            ApiVersion = apiVersion;
-            ExtendedProperties = extendedProperties;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "SalesforceServiceCloud";
         }
 
+        /// <summary> Salesforce Service Cloud linked service properties. </summary>
+        internal SalesforceServiceCloudLinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> The URL of Salesforce Service Cloud instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'. To copy data from custom domain, specify, for example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> EnvironmentUri { get; set; }
+        public DataFactoryElement<string> EnvironmentUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EnvironmentUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudLinkedServiceTypeProperties();
+                }
+                TypeProperties.EnvironmentUri = value;
+            }
+        }
+
         /// <summary> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> The password for Basic authentication of the Salesforce instance. </summary>
-        public DataFactorySecret Password { get; set; }
-        /// <summary> The security token is optional to remotely access Salesforce instance. </summary>
-        public DataFactorySecret SecurityToken { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ApiVersion { get; set; }
+        public DataFactoryElement<string> ApiVersion
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ApiVersion;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudLinkedServiceTypeProperties();
+                }
+                TypeProperties.ApiVersion = value;
+            }
+        }
+
         /// <summary> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ExtendedProperties { get; set; }
+        public DataFactoryElement<string> ExtendedProperties
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ExtendedProperties;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudLinkedServiceTypeProperties();
+                }
+                TypeProperties.ExtendedProperties = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SalesforceServiceCloudLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

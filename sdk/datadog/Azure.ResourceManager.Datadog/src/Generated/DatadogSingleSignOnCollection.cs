@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(DatadogSingleSignOnResource.ResourceType, out string datadogSingleSignOnApiVersion);
             _singleSignOnConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogSingleSignOnResource.ResourceType.Namespace, Diagnostics);
-            _singleSignOnConfigurationsRestClient = new SingleSignOnConfigurations(_singleSignOnConfigurationsClientDiagnostics, Pipeline, Endpoint, datadogSingleSignOnApiVersion ?? "2025-12-26-preview");
+            _singleSignOnConfigurationsRestClient = new SingleSignOnConfigurations(_singleSignOnConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogSingleSignOnApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _singleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogSingleSignOnData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatadogArmOperation<DatadogSingleSignOnResource> operation = new DatadogArmOperation<DatadogSingleSignOnResource>(
-                    new DatadogSingleSignOnOperationSource(Client),
+                    new DatadogSingleSignOnResourceOperationSource(Client),
                     _singleSignOnConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _singleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogSingleSignOnData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatadogArmOperation<DatadogSingleSignOnResource> operation = new DatadogArmOperation<DatadogSingleSignOnResource>(
-                    new DatadogSingleSignOnOperationSource(Client),
+                    new DatadogSingleSignOnResourceOperationSource(Client),
                     _singleSignOnConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

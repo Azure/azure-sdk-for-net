@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
@@ -20,79 +20,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public static partial class ArmPostgreSqlFlexibleServersModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="migrationId"> Identifier of a migration. </param>
-        /// <param name="currentStatus"> Current status of a migration. </param>
-        /// <param name="migrationInstanceResourceId"> Identifier of the private endpoint migration instance. </param>
-        /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
-        /// <param name="migrationOption"> Supported option for a migration. </param>
-        /// <param name="sourceType"> Source server type used for the migration: ApsaraDB_RDS, AWS, AWS_AURORA, AWS_EC2, AWS_RDS, AzureVM, Crunchy_PostgreSQL, Digital_Ocean_Droplets, Digital_Ocean_PostgreSQL, EDB, EDB_Oracle_Server, EDB_PostgreSQL, GCP, GCP_AlloyDB, GCP_CloudSQL, GCP_Compute, Heroku_PostgreSQL, Huawei_Compute, Huawei_RDS, OnPremises, PostgreSQLCosmosDB, PostgreSQLFlexibleServer, PostgreSQLSingleServer, or Supabase_PostgreSQL. </param>
-        /// <param name="sslMode"> SSL mode used by a migration. Default SSL mode for 'PostgreSQLSingleServer' is 'VerifyFull'. Default SSL mode for other source types is 'Prefer'. </param>
-        /// <param name="sourceDbServerMetadata"> Metadata of source database server. </param>
-        /// <param name="targetDbServerMetadata"> Metadata of target database server. </param>
-        /// <param name="sourceDbServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
-        /// <param name="sourceDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
-        /// <param name="targetDbServerResourceId"> Identifier of the target database server resource. </param>
-        /// <param name="targetDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </param>
-        /// <param name="secretParameters"> Migration secret parameters. </param>
-        /// <param name="dbsToMigrate"> Names of databases to migrate. </param>
-        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup logical replication on source server, if needed. </param>
-        /// <param name="overwriteDbsInTarget"> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </param>
-        /// <param name="migrationWindowStartTimeInUtc"> Start time (UTC) for migration window. </param>
-        /// <param name="migrationWindowEndTimeInUtc"> End time (UTC) for migration window. </param>
-        /// <param name="migrateRoles"> Indicates if roles and permissions must be migrated. </param>
-        /// <param name="startDataMigration"> Indicates if data migration must start right away. </param>
-        /// <param name="triggerCutover"> Indicates if cutover must be triggered for the entire migration. </param>
-        /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
-        /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
-        /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlMigrationData"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string migrationId = default, PostgreSqlMigrationStatus currentStatus = default, ResourceIdentifier migrationInstanceResourceId = default, PostgreSqlMigrationMode? migrationMode = default, MigrationOption? migrationOption = default, PostgreSqlFlexibleServersSourceType? sourceType = default, PostgreSqlFlexibleServersSslMode? sslMode = default, PostgreSqlServerMetadata sourceDbServerMetadata = default, PostgreSqlServerMetadata targetDbServerMetadata = default, ResourceIdentifier sourceDbServerResourceId = default, string sourceDbServerFullyQualifiedDomainName = default, ResourceIdentifier targetDbServerResourceId = default, string targetDbServerFullyQualifiedDomainName = default, PostgreSqlMigrationSecretParameters secretParameters = default, IEnumerable<string> dbsToMigrate = default, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default, DateTimeOffset? migrationWindowStartTimeInUtc = default, DateTimeOffset? migrationWindowEndTimeInUtc = default, MigrateRolesEnum? migrateRoles = default, PostgreSqlMigrationStartDataMigration? startDataMigration = default, PostgreSqlMigrationTriggerCutover? triggerCutover = default, IEnumerable<string> dbsToTriggerCutoverOn = default, PostgreSqlMigrationCancel? cancel = default, IEnumerable<string> dbsToCancelMigrationOn = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PostgreSqlMigrationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                migrationId is null && currentStatus is null && migrationInstanceResourceId is null && migrationMode is null && migrationOption is null && sourceType is null && sslMode is null && sourceDbServerMetadata is null && targetDbServerMetadata is null && sourceDbServerResourceId is null && sourceDbServerFullyQualifiedDomainName is null && targetDbServerResourceId is null && targetDbServerFullyQualifiedDomainName is null && secretParameters is null && dbsToMigrate is null && setupLogicalReplicationOnSourceDbIfNeeded is null && overwriteDbsInTarget is null && migrationWindowStartTimeInUtc is null && migrationWindowEndTimeInUtc is null && migrateRoles is null && startDataMigration is null && triggerCutover is null && dbsToTriggerCutoverOn is null && cancel is null && dbsToCancelMigrationOn is null ? default : new MigrationProperties(
-                    migrationId,
-                    currentStatus,
-                    migrationInstanceResourceId,
-                    migrationMode,
-                    migrationOption,
-                    sourceType,
-                    sslMode,
-                    sourceDbServerMetadata,
-                    targetDbServerMetadata,
-                    sourceDbServerResourceId,
-                    sourceDbServerFullyQualifiedDomainName,
-                    targetDbServerResourceId,
-                    targetDbServerFullyQualifiedDomainName,
-                    secretParameters,
-                    (dbsToMigrate ?? new ChangeTrackingList<string>()).ToList(),
-                    setupLogicalReplicationOnSourceDbIfNeeded,
-                    overwriteDbsInTarget,
-                    migrationWindowStartTimeInUtc,
-                    migrationWindowEndTimeInUtc,
-                    migrateRoles,
-                    startDataMigration,
-                    triggerCutover,
-                    (dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>()).ToList(),
-                    cancel,
-                    (dbsToCancelMigrationOn ?? new ChangeTrackingList<string>()).ToList(),
-                    null));
-        }
-
         /// <summary> State of migration. </summary>
         /// <param name="state"> State of migration. </param>
         /// <param name="error"> Error message, if any, for the migration state. </param>
@@ -100,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlMigrationStatus"/> instance for mocking. </returns>
         public static PostgreSqlMigrationStatus PostgreSqlMigrationStatus(PostgreSqlMigrationState? state = default, string error = default, PostgreSqlMigrationSubStateDetails currentSubStateDetails = default)
         {
-            return new PostgreSqlMigrationStatus(state, error, currentSubStateDetails, additionalBinaryDataProperties: null);
+            return new PostgreSqlMigrationStatus(state, error, currentSubStateDetails, default);
         }
 
         /// <summary> Details of migration substate. </summary>
@@ -112,7 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             dbDetails ??= new ChangeTrackingDictionary<string, DbMigrationStatus>();
 
-            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails, validationDetails, additionalBinaryDataProperties: null);
+            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails ?? new ChangeTrackingDictionary<string, DbMigrationStatus>(), validationDetails, default);
         }
 
         /// <summary> Migration state of a database. </summary>
@@ -152,7 +79,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 incomingChanges,
                 latency,
                 message,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Details for the validation for migration. </summary>
@@ -171,9 +98,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 status,
                 validationStartTimeInUtc,
                 validationEndTimeInUtc,
-                serverLevelValidationDetails.ToList(),
-                dbLevelValidationDetails.ToList(),
-                additionalBinaryDataProperties: null);
+                (serverLevelValidationDetails ?? new ChangeTrackingList<ValidationSummaryItem>()).ToList(),
+                (dbLevelValidationDetails ?? new ChangeTrackingList<DbLevelValidationStatus>()).ToList(),
+                default);
         }
 
         /// <summary> Validation summary object. </summary>
@@ -185,7 +112,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             messages ??= new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
 
-            return new ValidationSummaryItem(validationSummaryItemType, state, messages.ToList(), additionalBinaryDataProperties: null);
+            return new ValidationSummaryItem(validationSummaryItemType, state, (messages ?? new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>()).ToList(), default);
         }
 
         /// <summary> Validation message object. </summary>
@@ -194,7 +121,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersValidationMessage"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServersValidationMessage PostgreSqlFlexibleServersValidationMessage(PostgreSqlFlexibleServersValidationState? state = default, string message = default)
         {
-            return new PostgreSqlFlexibleServersValidationMessage(state, message, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServersValidationMessage(state, message, default);
         }
 
         /// <summary> Validation status summary for a database. </summary>
@@ -207,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             summary ??= new ChangeTrackingList<ValidationSummaryItem>();
 
-            return new DbLevelValidationStatus(databaseName, startedOn, endedOn, summary.ToList(), additionalBinaryDataProperties: null);
+            return new DbLevelValidationStatus(databaseName, startedOn, endedOn, (summary ?? new ChangeTrackingList<ValidationSummaryItem>()).ToList(), default);
         }
 
         /// <summary> Database server metadata. </summary>
@@ -218,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlServerMetadata"/> instance for mocking. </returns>
         public static PostgreSqlServerMetadata PostgreSqlServerMetadata(AzureLocation? location = default, string version = default, int? storageMb = default, PostgreSqlFlexibleServersServerSku sku = default)
         {
-            return new PostgreSqlServerMetadata(location, version, storageMb, sku, additionalBinaryDataProperties: null);
+            return new PostgreSqlServerMetadata(location, version, storageMb, sku, default);
         }
 
         /// <summary> Compute information of a server. </summary>
@@ -227,7 +154,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersServerSku"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServersServerSku PostgreSqlFlexibleServersServerSku(string name = default, PostgreSqlFlexibleServerSkuTier? tier = default)
         {
-            return new PostgreSqlFlexibleServersServerSku(name, tier, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServersServerSku(name, tier, default);
+        }
+
+        /// <summary> Migration secret parameters. </summary>
+        /// <param name="adminCredentials"> Credentials of administrator users for source and target servers. </param>
+        /// <param name="sourceServerUsername"> Gets or sets the name of the user for the source server. This user doesn't need to be an administrator. </param>
+        /// <param name="targetServerUsername"> Gets or sets the name of the user for the target server. This user doesn't need to be an administrator. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlMigrationSecretParameters"/> instance for mocking. </returns>
+        public static PostgreSqlMigrationSecretParameters PostgreSqlMigrationSecretParameters(PostgreSqlMigrationAdminCredentials adminCredentials = default, string sourceServerUsername = default, string targetServerUsername = default)
+        {
+            return new PostgreSqlMigrationSecretParameters(adminCredentials, sourceServerUsername, targetServerUsername, default);
+        }
+
+        /// <summary> Credentials of administrator users for source and target servers. </summary>
+        /// <param name="sourceServerPassword"> Password for the user of the source server. </param>
+        /// <param name="targetServerPassword"> Password for the user of the target server. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlMigrationAdminCredentials"/> instance for mocking. </returns>
+        public static PostgreSqlMigrationAdminCredentials PostgreSqlMigrationAdminCredentials(string sourceServerPassword = default, string targetServerPassword = default)
+        {
+            return new PostgreSqlMigrationAdminCredentials(sourceServerPassword, targetServerPassword, default);
         }
 
         /// <summary> Availability of a migration name. </summary>
@@ -245,7 +191,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 isNameAvailable,
                 reason,
                 message,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -279,7 +225,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="sku"> Compute tier and size of a server. </param>
         /// <param name="identity"> User assigned managed identities assigned to the server. </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string administratorLogin = default, string administratorLoginPassword = default, PostgreSqlFlexibleServerVersion? version = default, string minorVersion = default, PostgreSqlFlexibleServerState? state = default, string fullyQualifiedDomainName = default, PostgreSqlFlexibleServerStorage storage = default, PostgreSqlFlexibleServerAuthConfig authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, PostgreSqlFlexibleServerBackupProperties backup = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerHighAvailability highAvailability = default, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default, ResourceIdentifier sourceServerResourceId = default, DateTimeOffset? pointInTimeUtc = default, string availabilityZone = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, int? replicaCapacity = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerCreateMode? createMode = default, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default, PostgreSqlFlexibleServerClusterProperties cluster = default, PostgreSqlFlexibleServerSku sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default)
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections, PostgreSqlFlexibleServerClusterProperties cluster, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -288,8 +234,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null && cluster is null ? default : new ServerProperties(
                     administratorLogin,
@@ -314,9 +259,66 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     createMode,
                     (privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>()).ToList(),
                     cluster,
-                    null),
+                    default),
                 sku,
-                identity);
+                identity,
+                default);
+        }
+
+        /// <summary> Storage properties of a server. </summary>
+        /// <param name="storageSizeInGB"> Size of storage assigned to a server. </param>
+        /// <param name="autoGrow"> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </param>
+        /// <param name="tier"> Storage tier of a server. </param>
+        /// <param name="iops"> Maximum IOPS supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </param>
+        /// <param name="throughput"> Maximum throughput supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </param>
+        /// <param name="storageType"> Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorage"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerStorage PostgreSqlFlexibleServerStorage(int? storageSizeInGB = default, StorageAutoGrow? autoGrow = default, PostgreSqlManagedDiskPerformanceTier? tier = default, int? iops = default, int? throughput = default, PostgreSqlFlexibleServersStorageType? storageType = default)
+        {
+            return new PostgreSqlFlexibleServerStorage(
+                storageSizeInGB,
+                autoGrow,
+                tier,
+                iops,
+                throughput,
+                storageType,
+                default);
+        }
+
+        /// <summary> Authentication configuration properties of a server. </summary>
+        /// <param name="activeDirectoryAuth"> Indicates if the server supports Microsoft Entra authentication. </param>
+        /// <param name="passwordAuth"> Indicates if the server supports password based authentication. </param>
+        /// <param name="tenantId"> Identifier of the tenant of the delegated resource. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerAuthConfig"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerAuthConfig PostgreSqlFlexibleServerAuthConfig(PostgreSqlFlexibleServerActiveDirectoryAuthEnum? activeDirectoryAuth = default, PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth = default, Guid? tenantId = default)
+        {
+            return new PostgreSqlFlexibleServerAuthConfig(activeDirectoryAuth, passwordAuth, tenantId, default);
+        }
+
+        /// <summary> Data encryption properties of a server. </summary>
+        /// <param name="primaryKeyUri"> URI of the key in Azure Key Vault used for data encryption of the primary storage associated to a server. </param>
+        /// <param name="primaryUserAssignedIdentityId"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the primary storage associated to a server. </param>
+        /// <param name="geoBackupKeyUri"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </param>
+        /// <param name="geoBackupUserAssignedIdentityId"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </param>
+        /// <param name="keyType"> Data encryption type used by a server. </param>
+        /// <param name="primaryEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server. </param>
+        /// <param name="geoBackupEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the geographically redundant storage associated to the server when it is configured to support geographically redundant backups. </param>
+        /// <param name="primaryFederatedIdentityClientId"> Client id of multi-tenant Microsoft Entra application. </param>
+        /// <param name="geoBackupFederatedIdentityClientId"> Client id of multi-tenant Microsoft Entra application for when it is configured to support geographically redundant backups. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerDataEncryption"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerDataEncryption PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Uri geoBackupKeyUri = default, string geoBackupUserAssignedIdentityId = default, PostgreSqlFlexibleServerKeyType? keyType = default, PostgreSqlKeyStatus? primaryEncryptionKeyStatus = default, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = default, Guid? primaryFederatedIdentityClientId = default, Guid? geoBackupFederatedIdentityClientId = default)
+        {
+            return new PostgreSqlFlexibleServerDataEncryption(
+                primaryKeyUri,
+                primaryUserAssignedIdentityId,
+                geoBackupKeyUri,
+                geoBackupUserAssignedIdentityId,
+                keyType,
+                primaryEncryptionKeyStatus,
+                geoBackupEncryptionKeyStatus,
+                primaryFederatedIdentityClientId,
+                geoBackupFederatedIdentityClientId,
+                default);
         }
 
         /// <summary> Backup properties of a server. </summary>
@@ -326,7 +328,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerBackupProperties PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays = default, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = default, DateTimeOffset? earliestRestoreOn = default)
         {
-            return new PostgreSqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, default);
         }
 
         /// <summary> High availability properties of a server. </summary>
@@ -336,7 +338,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerHighAvailability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerHighAvailability PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHighAvailabilityMode? mode = default, PostgreSqlFlexibleServerHAState? state = default, string standbyAvailabilityZone = default)
         {
-            return new PostgreSqlFlexibleServerHighAvailability(mode, state, standbyAvailabilityZone, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerHighAvailability(mode, state, standbyAvailabilityZone, default);
+        }
+
+        /// <summary> Maintenance window properties of a server. </summary>
+        /// <param name="customWindow"> Indicates whether custom window is enabled or disabled. </param>
+        /// <param name="startHour"> Start hour to be used for maintenance window. </param>
+        /// <param name="startMinute"> Start minute to be used for maintenance window. </param>
+        /// <param name="dayOfWeek"> Day of the week to be used for maintenance window. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerMaintenanceWindow"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerMaintenanceWindow PostgreSqlFlexibleServerMaintenanceWindow(string customWindow = default, int? startHour = default, int? startMinute = default, int? dayOfWeek = default)
+        {
+            return new PostgreSqlFlexibleServerMaintenanceWindow(customWindow, startHour, startMinute, dayOfWeek, default);
         }
 
         /// <summary> Replica properties of a server. </summary>
@@ -354,7 +367,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 replicationState,
                 promoteMode,
                 promoteOption,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersPrivateLinkServiceConnectionState PostgreSqlFlexibleServersPrivateLinkServiceConnectionState(PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new PostgreSqlFlexibleServersPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <summary> Cluster properties of a server. </summary>
+        /// <param name="clusterSize"> Number of nodes assigned to the elastic cluster. </param>
+        /// <param name="defaultDatabaseName"> Default database name for the elastic cluster. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerClusterProperties"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerClusterProperties PostgreSqlFlexibleServerClusterProperties(int? clusterSize = default, string defaultDatabaseName = default)
+        {
+            return new PostgreSqlFlexibleServerClusterProperties(clusterSize, defaultDatabaseName, default);
+        }
+
+        /// <summary> Compute information of a server. </summary>
+        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
+        /// <param name="tier"> Tier of the compute assigned to a server. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerSku"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerSku PostgreSqlFlexibleServerSku(string name = default, PostgreSqlFlexibleServerSkuTier tier = default)
+        {
+            return new PostgreSqlFlexibleServerSku(name, tier, default);
         }
 
         /// <summary> Identities associated with a server. </summary>
@@ -367,7 +408,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), principalId, identityType, tenantId, default);
         }
 
         /// <param name="sku"> Compute tier and size of a server. </param>
@@ -383,17 +424,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dataEncryption"> Data encryption properties of a server. </param>
         /// <param name="availabilityZone"> Availability zone of a server. </param>
         /// <param name="createMode"> Update mode of an existing server. </param>
+        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. </param>
         /// <param name="replicationRole"> Role of the server in a replication set. </param>
         /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
         /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerPatch"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, PostgreSqlFlexibleServerVersion? version = default, PostgreSqlFlexibleServerStorage storage = default, PostgreSqlFlexibleServerBackupProperties backup = default, PostgreSqlFlexibleServerHighAvailability highAvailability = default, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default, PostgreSqlFlexibleServerAuthConfig authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, string availabilityZone = default, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerClusterProperties cluster = default, IDictionary<string, string> tags = default)
+        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, PostgreSqlFlexibleServerVersion? version = default, PostgreSqlFlexibleServerStorage storage = default, PostgreSqlFlexibleServerBackupProperties backup = default, PostgreSqlFlexibleServerHighAvailability highAvailability = default, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default, PostgreSqlFlexibleServerAuthConfig authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, string availabilityZone = default, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default, ResourceIdentifier sourceServerResourceId = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerClusterProperties cluster = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PostgreSqlFlexibleServerPatch(sku, identity, administratorLogin is null && administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && authConfig is null && dataEncryption is null && availabilityZone is null && createMode is null && replicationRole is null && replica is null && network is null && cluster is null ? default : new ServerPropertiesForPatch(
+            return new PostgreSqlFlexibleServerPatch(sku, identity, administratorLogin is null && administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && authConfig is null && dataEncryption is null && availabilityZone is null && createMode is null && sourceServerResourceId is null && replicationRole is null && replica is null && network is null && cluster is null ? default : new ServerPropertiesForPatch(
                 administratorLogin,
                 administratorLoginPassword,
                 version,
@@ -405,11 +447,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 dataEncryption,
                 availabilityZone,
                 createMode,
+                sourceServerResourceId,
                 replicationRole,
                 replica,
                 network,
                 cluster,
-                null), tags, additionalBinaryDataProperties: null);
+                default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> PostgreSQL database engine restart parameters. </summary>
+        /// <param name="restartWithFailover"> Indicates if restart the PostgreSQL database engine should failover or switch over from primary to standby. This only works if server has high availability enabled. </param>
+        /// <param name="failoverMode"> Failover mode. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerRestartParameter"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerRestartParameter PostgreSqlFlexibleServerRestartParameter(bool? restartWithFailover = default, PostgreSqlFlexibleServerFailoverMode? failoverMode = default)
+        {
+            return new PostgreSqlFlexibleServerRestartParameter(restartWithFailover, failoverMode, default);
         }
 
         /// <summary> Status of a network migration operation. </summary>
@@ -417,10 +469,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="state"> State of the network migration operation. </param>
-        /// <returns> A new <see cref="Models.DbMigrateNetworkStatus"/> instance for mocking. </returns>
-        public static DbMigrateNetworkStatus DbMigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, DbNetworkMigrationState? state = default)
+        /// <returns> A new <see cref="Models.DBMigrateNetworkStatus"/> instance for mocking. </returns>
+        public static DBMigrateNetworkStatus DBMigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, DBNetworkMigrationState? state = default)
         {
-            return new DbMigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, additionalBinaryDataProperties: null);
+            return new DBMigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, default);
+        }
+
+        /// <summary> Request model for starting a major version upgrade precheck. </summary>
+        /// <param name="targetVersion"> The target major version to upgrade to. </param>
+        /// <returns> A new <see cref="Models.StartMajorVersionUpgradePrecheckContent"/> instance for mocking. </returns>
+        public static StartMajorVersionUpgradePrecheckContent StartMajorVersionUpgradePrecheckContent(PostgreSqlFlexibleServerVersion targetVersion = default)
+        {
+            return new StartMajorVersionUpgradePrecheckContent(targetVersion, default);
+        }
+
+        /// <summary> Response model for starting a major version upgrade precheck. </summary>
+        /// <param name="name"> The precheck validation ID. </param>
+        /// <param name="createOn"> The time when the precheck was created. </param>
+        /// <param name="status"> The status of the precheck validation. </param>
+        /// <returns> A new <see cref="Models.StartMajorVersionUpgradePrecheckResult"/> instance for mocking. </returns>
+        public static StartMajorVersionUpgradePrecheckResult StartMajorVersionUpgradePrecheckResult(string name = default, DateTimeOffset? createOn = default, MajorVersionUpgradePrecheckStatus? status = default)
+        {
+            return new StartMajorVersionUpgradePrecheckResult(name, createOn, status, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -446,7 +516,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 value is null && description is null && defaultValue is null && dataType is null && allowedValues is null && source is null && isDynamicConfig is null && isReadOnly is null && isConfigPendingRestart is null && unit is null && documentationLink is null ? default : new ConfigurationProperties(
                     value,
                     description,
@@ -459,7 +528,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     isConfigPendingRestart,
                     unit,
                     documentationLink,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -476,8 +546,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                new FirewallRuleProperties(startIPAddress, endIPAddress, null));
+                startIPAddress is null && endIPAddress is null ? default : new FirewallRuleProperties(startIPAddress, endIPAddress, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -495,8 +565,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new PostgreSqlFlexibleServersPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new PostgreSqlFlexibleServersPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -514,8 +584,174 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                endpointType is null && members is null && virtualEndpoints is null ? default : new VirtualEndpointResourceProperties(endpointType, (members ?? new ChangeTrackingList<string>()).ToList(), (virtualEndpoints ?? new ChangeTrackingList<string>()).ToList(), null));
+                endpointType is null && members is null && virtualEndpoints is null ? default : new VirtualEndpointResourceProperties(endpointType, (members ?? new ChangeTrackingList<string>()).ToList(), (virtualEndpoints ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> Maintenance event resource for a PostgreSQL flexible server. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="FlexibleServers.MaintenanceEventData"/> instance for mocking. </returns>
+        public static MaintenanceEventData MaintenanceEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaintenanceEventProperties properties = default)
+        {
+            return new MaintenanceEventData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of a maintenance event resource. </summary>
+        /// <param name="maintenanceEventId"> A service-generated identifier for this maintenance event, assigned by the platform (e.g., 'YL1T-HFG'). The format is not contractual and clients should not attempt to parse or construct this value. </param>
+        /// <param name="maintenanceType"> The maintenance type (e.g., 'PlannedMaintenance'). </param>
+        /// <param name="description"> The human-readable description of the maintenance event. </param>
+        /// <param name="status"> The customer-facing status of the maintenance event. </param>
+        /// <param name="startsOn"> The scheduled start time of the maintenance event (UTC). </param>
+        /// <param name="endsOn"> The scheduled end time of the maintenance event (UTC). </param>
+        /// <param name="estimatedDowntime"> The estimated downtime as an ISO 8601 duration string (e.g., 'PT60S' = 60 seconds). </param>
+        /// <param name="isDeferrable"> A value indicating whether this maintenance event can be rescheduled by the customer. </param>
+        /// <param name="deferralDeadlineOn"> The latest date/time this maintenance event can be postponed to (UTC). Present only when deferrable is true. </param>
+        /// <param name="rescheduledFromOn"> The previous scheduled start time before the most recent reschedule (UTC). Null if the event has never been rescheduled. </param>
+        /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
+        /// <param name="originalStartsOn"> The initial scheduled start time before any reschedule (UTC). Equals startTime when the event has never been rescheduled. </param>
+        /// <returns> A new <see cref="Models.MaintenanceEventProperties"/> instance for mocking. </returns>
+        public static MaintenanceEventProperties MaintenanceEventProperties(string maintenanceEventId = default, PostgreSqlFlexibleServerMaintenanceType maintenanceType = default, string description = default, MaintenanceEventStatus status = default, DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, string estimatedDowntime = default, bool isDeferrable = default, DateTimeOffset? deferralDeadlineOn = default, DateTimeOffset? rescheduledFromOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset originalStartsOn = default)
+        {
+            return new MaintenanceEventProperties(
+                maintenanceEventId,
+                maintenanceType,
+                description,
+                status,
+                startsOn,
+                endsOn,
+                estimatedDowntime,
+                isDeferrable,
+                deferralDeadlineOn,
+                rescheduledFromOn,
+                lastUpdatedOn,
+                originalStartsOn,
+                default);
+        }
+
+        /// <summary> Parameters to reschedule a maintenance event. </summary>
+        /// <param name="postponeToOn"> New start time in RFC3339 format. </param>
+        /// <returns> A new <see cref="Models.MaintenanceEventRescheduleContent"/> instance for mocking. </returns>
+        public static MaintenanceEventRescheduleContent MaintenanceEventRescheduleContent(DateTimeOffset postponeToOn = default)
+        {
+            return new MaintenanceEventRescheduleContent(postponeToOn, default);
+        }
+
+        /// <summary> Response model for maintenance event reschedule and apply-now actions. </summary>
+        /// <param name="maintenanceEventId"> The maintenance event name (maintenance ID). </param>
+        /// <param name="serverId"> The full Azure resource ID of the server. </param>
+        /// <param name="status"> The status of the maintenance event. </param>
+        /// <param name="plannedStartsOn"> The planned start time of the maintenance event (UTC). </param>
+        /// <param name="plannedEndsOn"> The planned end time of the maintenance event (UTC). </param>
+        /// <param name="isAppliedNow"> A value indicating whether this was an apply-now (immediate) action. True for ApplyNow; false for Reschedule. </param>
+        /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
+        /// <returns> A new <see cref="Models.MaintenanceEventActionResult"/> instance for mocking. </returns>
+        public static MaintenanceEventActionResult MaintenanceEventActionResult(string maintenanceEventId = default, ResourceIdentifier serverId = default, MaintenanceEventStatus? status = default, DateTimeOffset? plannedStartsOn = default, DateTimeOffset? plannedEndsOn = default, bool? isAppliedNow = default, DateTimeOffset? lastUpdatedOn = default)
+        {
+            return new MaintenanceEventActionResult(
+                maintenanceEventId,
+                serverId,
+                status,
+                plannedStartsOn,
+                plannedEndsOn,
+                isAppliedNow,
+                lastUpdatedOn,
+                default);
+        }
+
+        /// <summary> Major version upgrade precheck resource for a PostgreSQL flexible server. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="FlexibleServers.MajorVersionUpgradePrecheckData"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckData MajorVersionUpgradePrecheckData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MajorVersionUpgradePrecheckProperties properties = default)
+        {
+            return new MajorVersionUpgradePrecheckData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Major version upgrade precheck resource with validation results. </summary>
+        /// <param name="createOn"> The time when the precheck was created. </param>
+        /// <param name="status"> The status of the precheck validation. </param>
+        /// <param name="precheckResult"> The detailed result of the precheck operation. </param>
+        /// <param name="targetVersion"> The target PostgreSQL major version for the upgrade. </param>
+        /// <param name="policyDetails"> Array of policy validation details. </param>
+        /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckProperties"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckProperties MajorVersionUpgradePrecheckProperties(DateTimeOffset? createOn = default, MajorVersionUpgradePrecheckStatus? status = default, MajorVersionUpgradePrecheckResult precheckResult = default, PostgreSqlFlexibleServerVersion? targetVersion = default, IEnumerable<MajorVersionUpgradePrecheckPolicyDetail> policyDetails = default)
+        {
+            policyDetails ??= new ChangeTrackingList<MajorVersionUpgradePrecheckPolicyDetail>();
+
+            return new MajorVersionUpgradePrecheckProperties(
+                createOn,
+                status,
+                precheckResult,
+                targetVersion,
+                (policyDetails ?? new ChangeTrackingList<MajorVersionUpgradePrecheckPolicyDetail>()).ToList(),
+                default);
+        }
+
+        /// <summary> Precheck result details. </summary>
+        /// <param name="action"> The action performed. </param>
+        /// <param name="upgradeSequence"> The upgrade sequence information. </param>
+        /// <param name="errorInfo"> Array of error information. </param>
+        /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckResult"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckResult MajorVersionUpgradePrecheckResult(string action = default, PostgreSqlMajorVersionUpgradeSequence upgradeSequence = default, IEnumerable<MajorVersionUpgradePrecheckErrorInfo> errorInfo = default)
+        {
+            errorInfo ??= new ChangeTrackingList<MajorVersionUpgradePrecheckErrorInfo>();
+
+            return new MajorVersionUpgradePrecheckResult(action, upgradeSequence, (errorInfo ?? new ChangeTrackingList<MajorVersionUpgradePrecheckErrorInfo>()).ToList(), default);
+        }
+
+        /// <summary> Upgrade sequence information. </summary>
+        /// <param name="sourceVersion"> The source PostgreSQL version. </param>
+        /// <param name="targetVersion"> The target PostgreSQL version. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlMajorVersionUpgradeSequence"/> instance for mocking. </returns>
+        public static PostgreSqlMajorVersionUpgradeSequence PostgreSqlMajorVersionUpgradeSequence(PostgreSqlFlexibleServerVersion? sourceVersion = default, PostgreSqlFlexibleServerVersion? targetVersion = default)
+        {
+            return new PostgreSqlMajorVersionUpgradeSequence(sourceVersion, targetVersion, default);
+        }
+
+        /// <summary> Error information from precheck validation. </summary>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckErrorInfo"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckErrorInfo MajorVersionUpgradePrecheckErrorInfo(int? errorCode = default, string errorMessage = default)
+        {
+            return new MajorVersionUpgradePrecheckErrorInfo(errorCode, errorMessage, default);
+        }
+
+        /// <summary> Policy validation details. </summary>
+        /// <param name="policyName"> The name of the policy. </param>
+        /// <param name="isPassed"> Whether the policy validation passed. </param>
+        /// <param name="errorCode"> The error code if validation failed. </param>
+        /// <param name="errorMessage"> The error message if validation failed. </param>
+        /// <param name="policyDescription"> Description of what the policy validates. </param>
+        /// <returns> A new <see cref="Models.MajorVersionUpgradePrecheckPolicyDetail"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckPolicyDetail MajorVersionUpgradePrecheckPolicyDetail(string policyName = default, bool? isPassed = default, int? errorCode = default, string errorMessage = default, string policyDescription = default)
+        {
+            return new MajorVersionUpgradePrecheckPolicyDetail(
+                policyName,
+                isPassed,
+                errorCode,
+                errorMessage,
+                policyDescription,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -534,8 +770,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                new AdministratorMicrosoftEntraProperties(principalType, principalName, objectId, tenantId, null));
+                principalType is null && principalName is null && objectId is null && tenantId is null ? default : new AdministratorMicrosoftEntraProperties(principalType, principalName, objectId, tenantId, default),
+                default);
+        }
+
+        /// <param name="principalType"> Type of Microsoft Entra principal to which the server administrator is associated. </param>
+        /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
+        /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent(PostgreSqlFlexibleServerPrincipalType? principalType = default, string principalName = default, Guid? tenantId = default)
+        {
+            return new PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent(principalType is null && principalName is null && tenantId is null ? default : new AdministratorMicrosoftEntraPropertiesForAdd(principalType, principalName, tenantId, default), default);
         }
 
         /// <summary> Capability for the Azure Database for PostgreSQL flexible server. </summary>
@@ -564,13 +809,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerCapabilityProperties(
                 capabilityStatus,
                 reason,
-                additionalBinaryDataProperties: null,
+                default,
                 name,
-                supportedServerEditions.ToList(),
-                supportedServerVersions.ToList(),
-                supportedFeatures.ToList(),
+                (supportedServerEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>()).ToList(),
+                (supportedServerVersions ?? new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>()).ToList(),
+                (supportedFeatures ?? new ChangeTrackingList<PostgreSqlFlexibleServerSupportedFeature>()).ToList(),
                 supportFastProvisioning,
-                supportedFastProvisioningEditions.ToList(),
+                (supportedFastProvisioningEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>()).ToList(),
                 geoBackupSupported,
                 zoneRedundantHaSupported,
                 zoneRedundantHaAndGeoBackupSupported,
@@ -595,11 +840,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerEditionCapability(
                 capabilityStatus,
                 reason,
-                additionalBinaryDataProperties: null,
+                default,
                 name,
                 defaultSkuName,
-                supportedStorageEditions.ToList(),
-                supportedServerSkus.ToList());
+                (supportedStorageEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageEditionCapability>()).ToList(),
+                (supportedServerSkus ?? new ChangeTrackingList<PostgreSqlFlexibleServerSkuCapability>()).ToList());
         }
 
         /// <summary> Capabilities in terms of storage tier. </summary>
@@ -616,10 +861,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerStorageEditionCapability(
                 capabilityStatus,
                 reason,
-                additionalBinaryDataProperties: null,
+                default,
                 name,
                 defaultStorageSizeMb,
-                supportedStorageCapabilities.ToList());
+                (supportedStorageCapabilities ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageCapability>()).ToList());
         }
 
         /// <summary> Storage size (in MB) capability. </summary>
@@ -641,7 +886,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerStorageCapability(
                 capabilityStatus,
                 reason,
-                additionalBinaryDataProperties: null,
+                default,
                 supportedIops,
                 supportedMaximumIops,
                 storageSizeInMB,
@@ -649,7 +894,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 supportedThroughput,
                 supportedMaximumThroughput,
                 defaultIopsTier,
-                supportedIopsTiers.ToList());
+                (supportedIopsTiers ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>()).ToList());
         }
 
         /// <summary> Capability of a storage tier. </summary>
@@ -660,7 +905,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerStorageTierCapability PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = default, string reason = default, string name = default, long? iops = default)
         {
-            return new PostgreSqlFlexibleServerStorageTierCapability(capabilityStatus, reason, additionalBinaryDataProperties: null, name, iops);
+            return new PostgreSqlFlexibleServerStorageTierCapability(capabilityStatus, reason, default, name, iops);
         }
 
         /// <summary> Base object for representing capability. </summary>
@@ -669,7 +914,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlBaseCapability"/> instance for mocking. </returns>
         public static PostgreSqlBaseCapability PostgreSqlBaseCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = default, string reason = default)
         {
-            return new PostgreSqlBaseCapability(capabilityStatus, reason, additionalBinaryDataProperties: null);
+            return new PostgreSqlBaseCapability(capabilityStatus, reason, default);
         }
 
         /// <summary> Capabilities in terms of compute. </summary>
@@ -693,14 +938,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerSkuCapability(
                 capabilityStatus,
                 reason,
-                additionalBinaryDataProperties: null,
+                default,
                 name,
                 vCores,
                 supportedIops,
                 supportedMemoryPerVcoreMb,
-                supportedZones.ToList(),
-                supportedHaMode.ToList(),
-                supportedFeatures.ToList(),
+                (supportedZones ?? new ChangeTrackingList<string>()).ToList(),
+                (supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>()).ToList(),
+                (supportedFeatures ?? new ChangeTrackingList<PostgreSqlFlexibleServerSupportedFeature>()).ToList(),
                 securityProfile);
         }
 
@@ -710,7 +955,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerSupportedFeature"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerSupportedFeature PostgreSqlFlexibleServerSupportedFeature(string name = default, PostgreSqlFlexibleServerFeatureStatus? status = default)
         {
-            return new PostgreSqlFlexibleServerSupportedFeature(name, status, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerSupportedFeature(name, status, default);
         }
 
         /// <summary> Capabilities in terms of major versions of PostgreSQL database engine. </summary>
@@ -728,10 +973,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerServerVersionCapability(
                 capabilityStatus,
                 reason,
-                additionalBinaryDataProperties: null,
+                default,
                 name,
-                supportedVersionsToUpgrade.ToList(),
-                supportedFeatures.ToList());
+                (supportedVersionsToUpgrade ?? new ChangeTrackingList<string>()).ToList(),
+                (supportedFeatures ?? new ChangeTrackingList<PostgreSqlFlexibleServerSupportedFeature>()).ToList());
         }
 
         /// <summary> Capability of a fast provisioning compute tier. </summary>
@@ -748,7 +993,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(
                 capabilityStatus,
                 reason,
-                additionalBinaryDataProperties: null,
+                default,
                 supportedTier,
                 supportedSku,
                 supportedStorageGb,
@@ -773,28 +1018,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 createdOn is null && lastModifiedOn is null && sizeInKb is null && typePropertiesType is null && uri is null ? default : new CapturedLogProperties(
                     createdOn,
                     lastModifiedOn,
                     sizeInKb,
                     typePropertiesType,
                     uri,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="backupName"> Backup Name for the current backup. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupContent"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrPreBackupContent PostgreSqlFlexibleServerLtrPreBackupContent(string backupName = default)
         {
-            return new PostgreSqlFlexibleServerLtrPreBackupContent(new PostgreSqlFlexibleServerBackupSettings(backupName, null), additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerLtrPreBackupContent(backupName is null ? default : new PostgreSqlFlexibleServerBackupSettings(backupName, default), default);
         }
 
         /// <param name="backupName"> Backup Name for the current backup. </param>
         /// <returns> A new <see cref="Models.PostgreSqlBackupContent"/> instance for mocking. </returns>
         public static PostgreSqlBackupContent PostgreSqlBackupContent(string backupName = default)
         {
-            return new PostgreSqlBackupContent(new PostgreSqlFlexibleServerBackupSettings(backupName, null), additionalBinaryDataProperties: null);
+            return new PostgreSqlBackupContent(backupName is null ? default : new PostgreSqlFlexibleServerBackupSettings(backupName, default), default);
         }
 
         /// <summary> Settings for the long term backup. </summary>
@@ -802,14 +1047,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupSettings"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerBackupSettings PostgreSqlFlexibleServerBackupSettings(string backupName = default)
         {
-            return new PostgreSqlFlexibleServerBackupSettings(backupName, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerBackupSettings(backupName, default);
         }
 
         /// <param name="numberOfContainers"> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrPreBackupResult PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers = default)
         {
-            return new PostgreSqlFlexibleServerLtrPreBackupResult(new BackupsLongTermRetentionResponseProperties(numberOfContainers, null), additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerLtrPreBackupResult(new BackupsLongTermRetentionResponseProperties(numberOfContainers, default), default);
         }
 
         /// <summary> Details about the target where the backup content will be stored. </summary>
@@ -819,7 +1064,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             sasUriList ??= new ChangeTrackingList<string>();
 
-            return new PostgreSqlFlexibleServerBackupStoreDetails(sasUriList.ToList(), additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerBackupStoreDetails((sasUriList ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
@@ -846,7 +1091,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 percentComplete,
                 errorCode,
                 errorMessage,
-                null), additionalBinaryDataProperties: null);
+                default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -871,7 +1116,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 datasourceSizeInBytes is null && dataTransferredInBytes is null && backupName is null && backupMetadata is null && status is null && startOn is null && endOn is null && percentComplete is null && errorCode is null && errorMessage is null ? default : new LtrBackupOperationResponseProperties(
                     datasourceSizeInBytes,
                     dataTransferredInBytes,
@@ -883,7 +1127,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     percentComplete,
                     errorCode,
                     errorMessage,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -900,8 +1145,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                state is null && createdOn is null ? default : new AdvancedThreatProtectionSettingsProperties(state.GetValueOrDefault(), createdOn, null));
+                state is null && createdOn is null ? default : new AdvancedThreatProtectionSettingsProperties(state.GetValueOrDefault(), createdOn, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -919,8 +1164,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                backupType is null && completedOn is null && source is null ? default : new BackupAutomaticAndOnDemandProperties(backupType, completedOn, source, null));
+                backupType is null && completedOn is null && source is null ? default : new BackupAutomaticAndOnDemandProperties(backupType, completedOn, source, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -929,15 +1174,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tuningOptionsState"> State of the tuning option. </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerTuningOptionData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerTuningOptionData PostgreSqlFlexibleServerTuningOptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string tuningOptionsState = default)
+        public static PostgreSqlFlexibleServerTuningOptionData PostgreSqlFlexibleServerTuningOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tuningOptionsState)
         {
             return new PostgreSqlFlexibleServerTuningOptionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tuningOptionsState is null ? default : new TuningOptionsProperties(tuningOptionsState, null));
+                tuningOptionsState is null ? default : new TuningOptionsProperties(tuningOptionsState, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -964,7 +1209,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 kind,
                 initialRecommendedOn is null && lastRecommendedOn is null && timesRecommended is null && improvedQueryIds is null && recommendationReason is null && currentState is null && recommendationType is null && implementationDetails is null && analyzedWorkload is null && estimatedImpact is null && details is null ? default : new ObjectRecommendationProperties(
                     initialRecommendedOn,
@@ -978,7 +1222,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     analyzedWorkload,
                     (estimatedImpact ?? new ChangeTrackingList<RecommendationImpactRecord>()).ToList(),
                     details,
-                    null));
+                    default),
+                default);
+        }
+
+        /// <summary> Implementation details for the recommended action. </summary>
+        /// <param name="method"> Method of implementation for recommended action. </param>
+        /// <param name="script"> Implementation script for the recommended action. </param>
+        /// <returns> A new <see cref="Models.ObjectRecommendationImplementationDetails"/> instance for mocking. </returns>
+        public static ObjectRecommendationImplementationDetails ObjectRecommendationImplementationDetails(string @method = default, string script = default)
+        {
+            return new ObjectRecommendationImplementationDetails(@method, script, default);
+        }
+
+        /// <summary> Workload information for the recommended action. </summary>
+        /// <param name="startOn"> Start time (UTC) of the workload analyzed. </param>
+        /// <param name="endOn"> End time (UTC) of the workload analyzed. </param>
+        /// <param name="queryCount"> Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero). </param>
+        /// <returns> A new <see cref="Models.ObjectRecommendationAnalyzedWorkload"/> instance for mocking. </returns>
+        public static ObjectRecommendationAnalyzedWorkload ObjectRecommendationAnalyzedWorkload(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? queryCount = default)
+        {
+            return new ObjectRecommendationAnalyzedWorkload(startOn, endOn, queryCount, default);
         }
 
         /// <summary> Impact on some metric if this recommended action is applied. </summary>
@@ -989,7 +1253,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.RecommendationImpactRecord"/> instance for mocking. </returns>
         public static RecommendationImpactRecord RecommendationImpactRecord(string dimensionName = default, string unit = default, long? queryId = default, double? absoluteValue = default)
         {
-            return new RecommendationImpactRecord(dimensionName, unit, queryId, absoluteValue, additionalBinaryDataProperties: null);
+            return new RecommendationImpactRecord(dimensionName, unit, queryId, absoluteValue, default);
         }
 
         /// <summary> Recommendation details for the recommended action. </summary>
@@ -1012,9 +1276,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 table,
                 indexType,
                 indexName,
-                indexColumns.ToList(),
-                includedColumns.ToList(),
-                additionalBinaryDataProperties: null);
+                (indexColumns ?? new ChangeTrackingList<string>()).ToList(),
+                (includedColumns ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> Quota usage for servers. </summary>
@@ -1032,7 +1296,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 unit,
                 currentValue,
                 id,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Name property for quota usage. </summary>
@@ -1041,7 +1305,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.QuotaUsageNameProperty"/> instance for mocking. </returns>
         public static QuotaUsageNameProperty QuotaUsageNameProperty(string value = default, string localizedValue = default)
         {
-            return new QuotaUsageNameProperty(value, localizedValue, additionalBinaryDataProperties: null);
+            return new QuotaUsageNameProperty(value, localizedValue, default);
+        }
+
+        /// <summary> Virtual network subnet usage parameter. </summary>
+        /// <param name="virtualNetworkArmResourceId"> Virtual network resource id. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(ResourceIdentifier virtualNetworkArmResourceId = default)
+        {
+            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(virtualNetworkArmResourceId, default);
         }
 
         /// <summary> Virtual network subnet usage data. </summary>
@@ -1053,7 +1325,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             delegatedSubnetsUsage ??= new ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage>();
 
-            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(delegatedSubnetsUsage.ToList(), location, subscriptionId, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult((delegatedSubnetsUsage ?? new ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage>()).ToList(), location, subscriptionId, default);
         }
 
         /// <summary> Delegated subnet usage data. </summary>
@@ -1062,7 +1334,302 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerDelegatedSubnetUsage"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerDelegatedSubnetUsage PostgreSqlFlexibleServerDelegatedSubnetUsage(string subnetName = default, long? usage = default)
         {
-            return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName, usage, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName, usage, default);
+        }
+
+        /// <summary> Properties of a server. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> Compute tier and size of a server. </param>
+        /// <param name="identity"> User assigned managed identities assigned to the server. </param>
+        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
+        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
+        /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
+        /// <param name="state"> Possible states of a server. </param>
+        /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
+        /// <param name="storageSizeInGB"> Size of storage assigned to a server. </param>
+        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
+        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
+        /// <param name="backup"> Backup properties of a server. </param>
+        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
+        /// <param name="highAvailability"> High availability properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
+        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </param>
+        /// <param name="pointInTimeUtc"> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </param>
+        /// <param name="availabilityZone"> Availability zone of a server. </param>
+        /// <param name="replicationRole"> Role of the server in a replication set. </param>
+        /// <param name="replicaCapacity"> Maximum number of read replicas allowed for a server. </param>
+        /// <param name="createMode"> Creation mode of a new server. </param>
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, int? storageSizeInGB, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServerCreateMode? createMode)
+        {
+            return new PostgreSqlFlexibleServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storageSizeInGB is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replicationRole is null && replicaCapacity is null && createMode is null ? default : new ServerProperties(
+                    administratorLogin,
+                    administratorLoginPassword,
+                    version,
+                    minorVersion,
+                    state,
+                    fullyQualifiedDomainName,
+                    storageSizeInGB is null ? default : new PostgreSqlFlexibleServerStorage(
+                        storageSizeInGB,
+                        default,
+                        default,
+                        default,
+                        default,
+                        default,
+                        default),
+                    authConfig,
+                    dataEncryption,
+                    backup,
+                    network,
+                    highAvailability,
+                    maintenanceWindow,
+                    sourceServerResourceId,
+                    pointInTimeUtc,
+                    availabilityZone,
+                    replicationRole,
+                    replicaCapacity,
+                    replicationRole is null && replicaCapacity is null ? default : new PostgreSqlFlexibleServersReplica(
+                        replicationRole,
+                        replicaCapacity,
+                        default,
+                        default,
+                        default,
+                        default),
+                    createMode,
+                    default,
+                    default,
+                    default),
+                sku,
+                identity,
+                default);
+        }
+
+        /// <summary> Properties of a server. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> Compute tier and size of a server. </param>
+        /// <param name="identity"> User assigned managed identities assigned to the server. </param>
+        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
+        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
+        /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
+        /// <param name="state"> Possible states of a server. </param>
+        /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
+        /// <param name="storage"> Storage properties of a server. </param>
+        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
+        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
+        /// <param name="backup"> Backup properties of a server. </param>
+        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
+        /// <param name="highAvailability"> High availability properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
+        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </param>
+        /// <param name="pointInTimeUtc"> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </param>
+        /// <param name="availabilityZone"> Availability zone of a server. </param>
+        /// <param name="replicationRole"> Role of the server in a replication set. </param>
+        /// <param name="replicaCapacity"> Maximum number of read replicas allowed for a server. </param>
+        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
+        /// <param name="createMode"> Creation mode of a new server. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified server. </param>
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections)
+        {
+            return new PostgreSqlFlexibleServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null ? default : new ServerProperties(
+                    administratorLogin,
+                    administratorLoginPassword,
+                    version,
+                    minorVersion,
+                    state,
+                    fullyQualifiedDomainName,
+                    storage,
+                    authConfig,
+                    dataEncryption,
+                    backup,
+                    network,
+                    highAvailability,
+                    maintenanceWindow,
+                    sourceServerResourceId,
+                    pointInTimeUtc,
+                    availabilityZone,
+                    replicationRole,
+                    replicaCapacity,
+                    replica,
+                    createMode,
+                    (privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>()).ToList(),
+                    default,
+                    default),
+                sku,
+                identity,
+                default);
+        }
+
+        /// <summary> Properties of a server. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> Compute tier and size of a server. </param>
+        /// <param name="identity"> User assigned managed identities assigned to the server. </param>
+        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
+        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
+        /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
+        /// <param name="state"> Possible states of a server. </param>
+        /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
+        /// <param name="storage"> Storage properties of a server. </param>
+        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
+        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
+        /// <param name="backup"> Backup properties of a server. </param>
+        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
+        /// <param name="highAvailability"> High availability properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
+        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </param>
+        /// <param name="pointInTimeUtc"> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </param>
+        /// <param name="availabilityZone"> Availability zone of a server. </param>
+        /// <param name="replicationRole"> Role of the server in a replication set. </param>
+        /// <param name="replicaCapacity"> Maximum number of read replicas allowed for a server. </param>
+        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
+        /// <param name="createMode"> Creation mode of a new server. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified server. </param>
+        /// <param name="cluster"> Cluster properties of a server. </param>
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PostgreSqlFlexibleServerSku sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, PostgreSqlFlexibleServerVersion? version = default, string minorVersion = default, PostgreSqlFlexibleServerState? state = default, string fullyQualifiedDomainName = default, PostgreSqlFlexibleServerStorage storage = default, PostgreSqlFlexibleServerAuthConfig authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, PostgreSqlFlexibleServerBackupProperties backup = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerHighAvailability highAvailability = default, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default, ResourceIdentifier sourceServerResourceId = default, DateTimeOffset? pointInTimeUtc = default, string availabilityZone = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, int? replicaCapacity = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerCreateMode? createMode = default, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default, PostgreSqlFlexibleServerClusterProperties cluster = default)
+        {
+            return new PostgreSqlFlexibleServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null && cluster is null ? default : new ServerProperties(
+                    administratorLogin,
+                    administratorLoginPassword,
+                    version,
+                    minorVersion,
+                    state,
+                    fullyQualifiedDomainName,
+                    storage,
+                    authConfig,
+                    dataEncryption,
+                    backup,
+                    network,
+                    highAvailability,
+                    maintenanceWindow,
+                    sourceServerResourceId,
+                    pointInTimeUtc,
+                    availabilityZone,
+                    replicationRole,
+                    replicaCapacity,
+                    replica,
+                    createMode,
+                    (privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>()).ToList(),
+                    cluster,
+                    default),
+                sku,
+                identity,
+                default);
+        }
+
+        /// <summary> Properties of a migration. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="migrationId"> Identifier of a migration. </param>
+        /// <param name="currentStatus"> Current status of a migration. </param>
+        /// <param name="migrationInstanceResourceId"> Identifier of the private endpoint migration instance. </param>
+        /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
+        /// <param name="migrationOption"> Supported option for a migration. </param>
+        /// <param name="sourceType"> Source server type used for the migration: ApsaraDB_RDS, AWS, AWS_AURORA, AWS_EC2, AWS_RDS, AzureVM, Crunchy_PostgreSQL, Digital_Ocean_Droplets, Digital_Ocean_PostgreSQL, EDB, EDB_Oracle_Server, EDB_PostgreSQL, GCP, GCP_AlloyDB, GCP_CloudSQL, GCP_Compute, Heroku_PostgreSQL, Huawei_Compute, Huawei_RDS, OnPremises, PostgreSQLCosmosDB, PostgreSQLFlexibleServer, PostgreSQLSingleServer, or Supabase_PostgreSQL. </param>
+        /// <param name="sslMode"> SSL mode used by a migration. Default SSL mode for 'PostgreSQLSingleServer' is 'VerifyFull'. Default SSL mode for other source types is 'Prefer'. </param>
+        /// <param name="sourceDbServerMetadata"> Metadata of source database server. </param>
+        /// <param name="targetDbServerMetadata"> Metadata of target database server. </param>
+        /// <param name="sourceDbServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
+        /// <param name="sourceDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
+        /// <param name="targetDbServerResourceId"> Identifier of the target database server resource. </param>
+        /// <param name="targetDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </param>
+        /// <param name="secretParameters"> Migration secret parameters. </param>
+        /// <param name="dbsToMigrate"> Names of databases to migrate. </param>
+        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup logical replication on source server, if needed. </param>
+        /// <param name="overwriteDbsInTarget"> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </param>
+        /// <param name="migrationWindowStartTimeInUtc"> Start time (UTC) for migration window. </param>
+        /// <param name="migrationWindowEndTimeInUtc"> End time (UTC) for migration window. </param>
+        /// <param name="migrateRoles"> Indicates if roles and permissions must be migrated. </param>
+        /// <param name="startDataMigration"> Indicates if data migration must start right away. </param>
+        /// <param name="triggerCutover"> Indicates if cutover must be triggered for the entire migration. </param>
+        /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
+        /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
+        /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlMigrationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string migrationId = default, PostgreSqlMigrationStatus currentStatus = default, ResourceIdentifier migrationInstanceResourceId = default, PostgreSqlMigrationMode? migrationMode = default, MigrationOption? migrationOption = default, PostgreSqlFlexibleServersSourceType? sourceType = default, PostgreSqlFlexibleServersSslMode? sslMode = default, PostgreSqlServerMetadata sourceDbServerMetadata = default, PostgreSqlServerMetadata targetDbServerMetadata = default, ResourceIdentifier sourceDbServerResourceId = default, string sourceDbServerFullyQualifiedDomainName = default, ResourceIdentifier targetDbServerResourceId = default, string targetDbServerFullyQualifiedDomainName = default, PostgreSqlMigrationSecretParameters secretParameters = default, IEnumerable<string> dbsToMigrate = default, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default, DateTimeOffset? migrationWindowStartTimeInUtc = default, DateTimeOffset? migrationWindowEndTimeInUtc = default, MigrateRolesEnum? migrateRoles = default, PostgreSqlMigrationStartDataMigration? startDataMigration = default, PostgreSqlMigrationTriggerCutover? triggerCutover = default, IEnumerable<string> dbsToTriggerCutoverOn = default, PostgreSqlMigrationCancel? cancel = default, IEnumerable<string> dbsToCancelMigrationOn = default)
+        {
+            return new PostgreSqlMigrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                migrationId is null && currentStatus is null && migrationInstanceResourceId is null && migrationMode is null && migrationOption is null && sourceType is null && sslMode is null && sourceDbServerMetadata is null && targetDbServerMetadata is null && sourceDbServerResourceId is null && sourceDbServerFullyQualifiedDomainName is null && targetDbServerResourceId is null && targetDbServerFullyQualifiedDomainName is null && secretParameters is null && dbsToMigrate is null && setupLogicalReplicationOnSourceDbIfNeeded is null && overwriteDbsInTarget is null && migrationWindowStartTimeInUtc is null && migrationWindowEndTimeInUtc is null && migrateRoles is null && startDataMigration is null && triggerCutover is null && dbsToTriggerCutoverOn is null && cancel is null && dbsToCancelMigrationOn is null ? default : new MigrationProperties(
+                    migrationId,
+                    currentStatus,
+                    migrationInstanceResourceId,
+                    migrationMode,
+                    migrationOption,
+                    sourceType,
+                    sslMode,
+                    sourceDbServerMetadata,
+                    targetDbServerMetadata,
+                    sourceDbServerResourceId,
+                    sourceDbServerFullyQualifiedDomainName,
+                    targetDbServerResourceId,
+                    targetDbServerFullyQualifiedDomainName,
+                    secretParameters,
+                    (dbsToMigrate ?? new ChangeTrackingList<string>()).ToList(),
+                    setupLogicalReplicationOnSourceDbIfNeeded,
+                    overwriteDbsInTarget,
+                    migrationWindowStartTimeInUtc,
+                    migrationWindowEndTimeInUtc,
+                    migrateRoles,
+                    startDataMigration,
+                    triggerCutover,
+                    (dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>()).ToList(),
+                    cancel,
+                    (dbsToCancelMigrationOn ?? new ChangeTrackingList<string>()).ToList(),
+                    default),
+                default);
         }
     }
 }

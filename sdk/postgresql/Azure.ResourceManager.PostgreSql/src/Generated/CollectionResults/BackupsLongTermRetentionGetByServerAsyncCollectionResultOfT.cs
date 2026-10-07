@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 PostgreSqlLtrServerBackupOperationList result = PostgreSqlLtrServerBackupOperationList.FromResponse(response);
-                yield return Page<PostgreSqlLtrServerBackupOperationData>.FromValues((IReadOnlyList<PostgreSqlLtrServerBackupOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PostgreSqlLtrServerBackupOperationData>.FromValues((IReadOnlyList<PostgreSqlLtrServerBackupOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

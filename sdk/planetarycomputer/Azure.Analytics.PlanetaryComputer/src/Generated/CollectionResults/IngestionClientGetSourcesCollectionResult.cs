@@ -43,7 +43,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The pages of IngestionClientGetSourcesCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -51,14 +51,14 @@ namespace Azure.Analytics.PlanetaryComputer
                 {
                     yield break;
                 }
-                IngestionSourceSummaryPagedResponse result = (IngestionSourceSummaryPagedResponse)response;
+                IngestionSourceSummaryPagedResult result = (IngestionSourceSummaryPagedResult)response;
+                nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAnalyticsPlanetaryComputerContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAnalyticsPlanetaryComputerContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
                 if (nextPage == null)
                 {
                     yield break;

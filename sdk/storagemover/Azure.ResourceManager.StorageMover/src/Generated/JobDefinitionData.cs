@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Job definition properties. </param>
-        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JobDefinitionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobDefinitionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Job definition properties. </summary>
@@ -308,6 +308,105 @@ namespace Azure.ResourceManager.StorageMover
                     Properties = new JobDefinitionProperties();
                 }
                 Properties.IsPermissionsPreserved = value;
+            }
+        }
+
+        /// <summary>
+        /// Indicates that this Job Definition is a cross-tenant job where the
+        /// counterpart endpoint resides in a different Azure AD tenant. When true,
+        /// `crossTenantEndpointTenantId` and `crossTenantEndpointResourceId` must be
+        /// provided. Defaults to false. Cannot be modified after the Job Definition is
+        /// created.
+        /// </summary>
+        public bool? IsCrossTenantJob
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsCrossTenantJob;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.IsCrossTenantJob = value;
+            }
+        }
+
+        /// <summary>
+        /// The Azure AD tenant ID of the cross-tenant source endpoint. Required when
+        /// `isCrossTenantJob` is true. Cannot be modified after the Job Definition is
+        /// created.
+        /// </summary>
+        public string CrossTenantEndpointTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CrossTenantEndpointTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.CrossTenantEndpointTenantId = value;
+            }
+        }
+
+        /// <summary>
+        /// Full ARM resource ID of the cross-tenant (foreign) endpoint. On the
+        /// source-tenant copy this is the TARGET endpoint; on the
+        /// target-tenant copy this is the SOURCE endpoint.
+        /// </summary>
+        public ResourceIdentifier CrossTenantEndpointResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CrossTenantEndpointResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.CrossTenantEndpointResourceId = value;
+            }
+        }
+
+        /// <summary> The synchronization mode for the Job Definition. </summary>
+        public string SyncMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.SyncMode = value;
+            }
+        }
+
+        /// <summary> The last time the mover was synchronized. </summary>
+        public DateTimeOffset? MoverSyncedUntil
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MoverSyncedUntil;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.MoverSyncedUntil = value;
             }
         }
 

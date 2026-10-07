@@ -86,6 +86,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("filterAddOn"u8);
                 writer.WriteStringValue(FilterAddOn);
             }
+            if (Optional.IsDefined(QueryHintOverrides))
+            {
+                writer.WritePropertyName("queryHintOverrides"u8);
+                writer.WriteObjectValue(QueryHintOverrides, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -116,10 +121,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             string knowledgeSourceName = default;
             bool? includeReferences = default;
             bool? includeReferenceSourceData = default;
+            bool? alwaysQuerySource = default;
+            bool? neverQuerySource = default;
+            bool? failOnError = default;
             float? rerankerThreshold = default;
+            KnowledgeSourceResultsProcessing? resultsProcessing = default;
+            int? maxOutputDocuments = default;
             KnowledgeSourceKind kind = default;
+            bool? enableImageServing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string filterAddOn = default;
+            SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("knowledgeSourceName"u8))
@@ -145,6 +157,33 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     includeReferenceSourceData = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("alwaysQuerySource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    alwaysQuerySource = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("neverQuerySource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    neverQuerySource = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("failOnError"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failOnError = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("rerankerThreshold"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -154,9 +193,36 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     rerankerThreshold = prop.Value.GetSingle();
                     continue;
                 }
+                if (prop.NameEquals("resultsProcessing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultsProcessing = new KnowledgeSourceResultsProcessing(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("maxOutputDocuments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxOutputDocuments = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("enableImageServing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableImageServing = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("filterAddOn"u8))
@@ -164,19 +230,35 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     filterAddOn = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("queryHintOverrides"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryHintOverrides = SearchIndexKnowledgeSourceQueryHints.DeserializeSearchIndexKnowledgeSourceQueryHints(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchIndexKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
+                alwaysQuerySource,
+                neverQuerySource,
+                failOnError,
                 rerankerThreshold,
+                resultsProcessing,
+                maxOutputDocuments,
                 kind,
+                enableImageServing,
                 additionalBinaryDataProperties,
-                filterAddOn);
+                filterAddOn,
+                queryHintOverrides);
         }
     }
 }

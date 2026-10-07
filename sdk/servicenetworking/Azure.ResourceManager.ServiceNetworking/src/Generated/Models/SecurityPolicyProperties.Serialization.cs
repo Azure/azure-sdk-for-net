@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 writer.WritePropertyName("wafPolicy"u8);
                 writer.WriteObjectValue(WafPolicy, options);
             }
-            if (Optional.IsDefined(IpAccessRulesPolicy))
+            if (Optional.IsDefined(IPAccessRulesPolicy))
             {
                 writer.WritePropertyName("ipAccessRulesPolicy"u8);
-                writer.WriteObjectValue(IpAccessRulesPolicy, options);
+                writer.WriteObjectValue(IPAccessRulesPolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SecurityPolicyProperties(policyType, wafPolicy, ipAccessRulesPolicy, provisioningState, additionalBinaryDataProperties);

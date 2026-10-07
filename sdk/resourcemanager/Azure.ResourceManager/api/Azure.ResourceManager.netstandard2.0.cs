@@ -79,6 +79,7 @@ namespace Azure.ResourceManager
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureBleuCloud;
         public static readonly Azure.ResourceManager.ArmEnvironment AzureChina;
         public static readonly Azure.ResourceManager.ArmEnvironment AzureGermany;
         public static readonly Azure.ResourceManager.ArmEnvironment AzureGovernment;

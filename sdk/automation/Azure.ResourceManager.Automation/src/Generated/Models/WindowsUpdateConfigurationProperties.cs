@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Windows specific update configuration. </summary>
     public partial class WindowsUpdateConfigurationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WindowsUpdateConfigurationProperties"/>. </summary>
         public WindowsUpdateConfigurationProperties()
@@ -57,22 +29,25 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="excludedKBNumbers"> KB numbers excluded from the software update configuration. </param>
         /// <param name="includedKBNumbers"> KB numbers included from the software update configuration. </param>
         /// <param name="rebootSetting"> Reboot setting for the software update configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsUpdateConfigurationProperties(WindowsUpdateClassification? includedUpdateClassifications, IList<string> excludedKBNumbers, IList<string> includedKBNumbers, string rebootSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsUpdateConfigurationProperties(WindowsUpdateClassification? includedUpdateClassifications, IList<string> excludedKBNumbers, IList<string> includedKBNumbers, string rebootSetting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IncludedUpdateClassifications = includedUpdateClassifications;
             ExcludedKBNumbers = excludedKBNumbers;
             IncludedKBNumbers = includedKBNumbers;
             RebootSetting = rebootSetting;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Update classification included in the software update configuration. A comma separated string with required values. </summary>
         public WindowsUpdateClassification? IncludedUpdateClassifications { get; set; }
+
         /// <summary> KB numbers excluded from the software update configuration. </summary>
         public IList<string> ExcludedKBNumbers { get; }
+
         /// <summary> KB numbers included from the software update configuration. </summary>
         public IList<string> IncludedKBNumbers { get; }
+
         /// <summary> Reboot setting for the software update configuration. </summary>
         public string RebootSetting { get; set; }
     }

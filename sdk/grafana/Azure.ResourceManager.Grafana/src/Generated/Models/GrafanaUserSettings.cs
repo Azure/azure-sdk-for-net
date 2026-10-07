@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Grafana.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GrafanaUserSettings"/>. </summary>
-        /// <param name="viewersCanEdit"> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </param>
-        /// <param name="editorsCanAdmin"> Set to true so editors can administrate dashboards, folders and teams they create. </param>
+        /// <param name="canViewersEdit"> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </param>
+        /// <param name="canEditorsAdmin"> Set to true so editors can administrate dashboards, folders and teams they create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaUserSettings(bool? viewersCanEdit, bool? editorsCanAdmin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GrafanaUserSettings(bool? canViewersEdit, bool? canEditorsAdmin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ViewersCanEdit = viewersCanEdit;
-            EditorsCanAdmin = editorsCanAdmin;
+            CanViewersEdit = canViewersEdit;
+            CanEditorsAdmin = canEditorsAdmin;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </summary>
-        public bool? ViewersCanEdit { get; set; }
+        public bool? CanViewersEdit { get; set; }
 
         /// <summary> Set to true so editors can administrate dashboards, folders and teams they create. </summary>
-        public bool? EditorsCanAdmin { get; set; }
+        public bool? CanEditorsAdmin { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithHeaderNextLinkWithMaxPageCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -47,13 +47,17 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithHeaderNextLinkWithMaxPageResponse result = (ListWithHeaderNextLinkWithMaxPageResponse)response;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ListWithHeaderNextLinkWithMaxPageResult result = (ListWithHeaderNextLinkWithMaxPageResult)response;
                 if (response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value))
                 {
                     nextPage = new Uri(value, UriKind.RelativeOrAbsolute);
                 }
                 else
+                {
+                    nextPage = null;
+                }
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }

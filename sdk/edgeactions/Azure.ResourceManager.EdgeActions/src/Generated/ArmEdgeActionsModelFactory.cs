@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EdgeActions;
 using Azure.ResourceManager.Models;
@@ -37,11 +36,11 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                sku);
+                sku,
+                default);
         }
 
         /// <summary> Represents an edge action properties. </summary>
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
         {
             attachments ??= new ChangeTrackingList<EdgeActionAttachment>();
 
-            return new EdgeActionProperties(provisioningState, attachments.ToList(), additionalBinaryDataProperties: null);
+            return new EdgeActionProperties(provisioningState, (attachments ?? new ChangeTrackingList<EdgeActionAttachment>()).ToList(), default);
         }
 
         /// <summary> Edge action attachment information. </summary>
@@ -61,7 +60,16 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <returns> A new <see cref="Models.EdgeActionAttachment"/> instance for mocking. </returns>
         public static EdgeActionAttachment EdgeActionAttachment(string id = default, ResourceIdentifier attachedResourceId = default)
         {
-            return new EdgeActionAttachment(id, attachedResourceId, additionalBinaryDataProperties: null);
+            return new EdgeActionAttachment(id, attachedResourceId, default);
+        }
+
+        /// <summary> The SKU type for the edge action. </summary>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="tier"> The tier of the SKU. </param>
+        /// <returns> A new <see cref="Models.EdgeActionSkuType"/> instance for mocking. </returns>
+        public static EdgeActionSkuType EdgeActionSkuType(string name = default, string tier = default)
+        {
+            return new EdgeActionSkuType(name, tier, default);
         }
 
         /// <summary> The type used for update operations of the EdgeAction. </summary>
@@ -73,7 +81,23 @@ namespace Azure.ResourceManager.EdgeActions.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EdgeActionPatch(properties, sku, tags, additionalBinaryDataProperties: null);
+            return new EdgeActionPatch(properties, sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Represents an edge action properties. </summary>
+        /// <returns> A new <see cref="Models.EdgeActionPropertiesUpdate"/> instance for mocking. </returns>
+        public static EdgeActionPropertiesUpdate EdgeActionPropertiesUpdate()
+        {
+            return new EdgeActionPropertiesUpdate(default);
+        }
+
+        /// <summary> The SKU type for update operations. </summary>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="tier"> The tier of the SKU. </param>
+        /// <returns> A new <see cref="Models.EdgeActionSkuTypeUpdate"/> instance for mocking. </returns>
+        public static EdgeActionSkuTypeUpdate EdgeActionSkuTypeUpdate(string name = default, string tier = default)
+        {
+            return new EdgeActionSkuTypeUpdate(name, tier, default);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -94,10 +118,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Represents an edge action version. </summary>
@@ -115,7 +139,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 provisioningState,
                 isDefaultVersion,
                 lastPackageUpdatedOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The type used for update operations of the EdgeActionVersion. </summary>
@@ -126,7 +150,25 @@ namespace Azure.ResourceManager.EdgeActions.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EdgeActionVersionPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new EdgeActionVersionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> The updatable properties of the EdgeActionVersion. </summary>
+        /// <param name="deploymentType"> The deployment type. </param>
+        /// <param name="isDefaultVersion"> The active state. </param>
+        /// <returns> A new <see cref="Models.EdgeActionVersionUpdateProperties"/> instance for mocking. </returns>
+        public static EdgeActionVersionUpdateProperties EdgeActionVersionUpdateProperties(EdgeActionVersionDeploymentType? deploymentType = default, EdgeActionIsDefaultVersion? isDefaultVersion = default)
+        {
+            return new EdgeActionVersionUpdateProperties(deploymentType, isDefaultVersion, default);
+        }
+
+        /// <summary> Version code information for edge action. </summary>
+        /// <param name="content"> The version code deployment content . </param>
+        /// <param name="name"> The version code name. </param>
+        /// <returns> A new <see cref="Models.EdgeActionVersionCode"/> instance for mocking. </returns>
+        public static EdgeActionVersionCode EdgeActionVersionCode(string content = default, string name = default)
+        {
+            return new EdgeActionVersionCode(content, name, default);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -147,10 +189,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Properties for edge action execution filter. </summary>
@@ -168,7 +210,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 executionFilterIdentifierHeaderName,
                 executionFilterIdentifierHeaderValue,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The type used for update operations of the EdgeActionExecutionFilter. </summary>
@@ -179,7 +221,17 @@ namespace Azure.ResourceManager.EdgeActions.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EdgeActionExecutionFilterPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new EdgeActionExecutionFilterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> The updatable properties of the EdgeActionExecutionFilter. </summary>
+        /// <param name="versionId"> The referenced versionId of the edgeaction version. </param>
+        /// <param name="executionFilterIdentifierHeaderName"> Custom Header Key associated with the execution filter. </param>
+        /// <param name="executionFilterIdentifierHeaderValue"> Custom Header Value associated with the execution filter. </param>
+        /// <returns> A new <see cref="Models.EdgeActionExecutionFilterUpdateProperties"/> instance for mocking. </returns>
+        public static EdgeActionExecutionFilterUpdateProperties EdgeActionExecutionFilterUpdateProperties(ResourceIdentifier versionId = default, string executionFilterIdentifierHeaderName = default, string executionFilterIdentifierHeaderValue = default)
+        {
+            return new EdgeActionExecutionFilterUpdateProperties(versionId, executionFilterIdentifierHeaderName, executionFilterIdentifierHeaderValue, default);
         }
     }
 }

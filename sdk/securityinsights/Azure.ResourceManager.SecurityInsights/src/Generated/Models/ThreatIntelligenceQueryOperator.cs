@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,110 +15,177 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct ThreatIntelligenceQueryOperator : IEquatable<ThreatIntelligenceQueryOperator>
     {
         private readonly string _value;
+        /// <summary> Equals. </summary>
+        private const string EqualsValueValue = "Equals";
+        /// <summary> NotEquals. </summary>
+        private const string NotEqualsValue = "NotEquals";
+        /// <summary> LessThan. </summary>
+        private const string LessThanValue = "LessThan";
+        /// <summary> LessThanEqual. </summary>
+        private const string LessThanEqualValue = "LessThanEqual";
+        /// <summary> GreaterThan. </summary>
+        private const string GreaterThanValue = "GreaterThan";
+        /// <summary> GreaterThanEqual. </summary>
+        private const string GreaterThanEqualValue = "GreaterThanEqual";
+        /// <summary> StringContains. </summary>
+        private const string StringContainsValue = "StringContains";
+        /// <summary> StringNotContains. </summary>
+        private const string StringNotContainsValue = "StringNotContains";
+        /// <summary> StringStartsWith. </summary>
+        private const string StringStartsWithValue = "StringStartsWith";
+        /// <summary> StringNotStartsWith. </summary>
+        private const string StringNotStartsWithValue = "StringNotStartsWith";
+        /// <summary> StringEndsWith. </summary>
+        private const string StringEndsWithValue = "StringEndsWith";
+        /// <summary> StringNotEndsWith. </summary>
+        private const string StringNotEndsWithValue = "StringNotEndsWith";
+        /// <summary> StringIsEmpty. </summary>
+        private const string StringIsEmptyValue = "StringIsEmpty";
+        /// <summary> IsNull. </summary>
+        private const string IsNullValue = "IsNull";
+        /// <summary> IsTrue. </summary>
+        private const string IsTrueValue = "IsTrue";
+        /// <summary> IsFalse. </summary>
+        private const string IsFalseValue = "IsFalse";
+        /// <summary> ArrayContains. </summary>
+        private const string ArrayContainsValue = "ArrayContains";
+        /// <summary> ArrayNotContains. </summary>
+        private const string ArrayNotContainsValue = "ArrayNotContains";
+        /// <summary> OnOrAfterRelative. </summary>
+        private const string OnOrAfterRelativeValue = "OnOrAfterRelative";
+        /// <summary> AfterRelative. </summary>
+        private const string AfterRelativeValue = "AfterRelative";
+        /// <summary> OnOrBeforeRelative. </summary>
+        private const string OnOrBeforeRelativeValue = "OnOrBeforeRelative";
+        /// <summary> BeforeRelative. </summary>
+        private const string BeforeRelativeValue = "BeforeRelative";
+        /// <summary> OnOrAfterAbsolute. </summary>
+        private const string OnOrAfterAbsoluteValue = "OnOrAfterAbsolute";
+        /// <summary> AfterAbsolute. </summary>
+        private const string AfterAbsoluteValue = "AfterAbsolute";
+        /// <summary> OnOrBeforeAbsolute. </summary>
+        private const string OnOrBeforeAbsoluteValue = "OnOrBeforeAbsolute";
+        /// <summary> BeforeAbsolute. </summary>
+        private const string BeforeAbsoluteValue = "BeforeAbsolute";
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ThreatIntelligenceQueryOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualsValueValue = "Equals";
-        private const string NotEqualsValue = "NotEquals";
-        private const string LessThanValue = "LessThan";
-        private const string LessThanEqualValue = "LessThanEqual";
-        private const string GreaterThanValue = "GreaterThan";
-        private const string GreaterThanEqualValue = "GreaterThanEqual";
-        private const string StringContainsValue = "StringContains";
-        private const string StringNotContainsValue = "StringNotContains";
-        private const string StringStartsWithValue = "StringStartsWith";
-        private const string StringNotStartsWithValue = "StringNotStartsWith";
-        private const string StringEndsWithValue = "StringEndsWith";
-        private const string StringNotEndsWithValue = "StringNotEndsWith";
-        private const string StringIsEmptyValue = "StringIsEmpty";
-        private const string IsNullValue = "IsNull";
-        private const string IsTrueValue = "IsTrue";
-        private const string IsFalseValue = "IsFalse";
-        private const string ArrayContainsValue = "ArrayContains";
-        private const string ArrayNotContainsValue = "ArrayNotContains";
-        private const string OnOrAfterRelativeValue = "OnOrAfterRelative";
-        private const string AfterRelativeValue = "AfterRelative";
-        private const string OnOrBeforeRelativeValue = "OnOrBeforeRelative";
-        private const string BeforeRelativeValue = "BeforeRelative";
-        private const string OnOrAfterAbsoluteValue = "OnOrAfterAbsolute";
-        private const string AfterAbsoluteValue = "AfterAbsolute";
-        private const string OnOrBeforeAbsoluteValue = "OnOrBeforeAbsolute";
-        private const string BeforeAbsoluteValue = "BeforeAbsolute";
+            _value = value;
+        }
 
         /// <summary> Equals. </summary>
         public static ThreatIntelligenceQueryOperator EqualsValue { get; } = new ThreatIntelligenceQueryOperator(EqualsValueValue);
+
         /// <summary> NotEquals. </summary>
         public static ThreatIntelligenceQueryOperator NotEquals { get; } = new ThreatIntelligenceQueryOperator(NotEqualsValue);
+
         /// <summary> LessThan. </summary>
         public static ThreatIntelligenceQueryOperator LessThan { get; } = new ThreatIntelligenceQueryOperator(LessThanValue);
+
         /// <summary> LessThanEqual. </summary>
         public static ThreatIntelligenceQueryOperator LessThanEqual { get; } = new ThreatIntelligenceQueryOperator(LessThanEqualValue);
+
         /// <summary> GreaterThan. </summary>
         public static ThreatIntelligenceQueryOperator GreaterThan { get; } = new ThreatIntelligenceQueryOperator(GreaterThanValue);
+
         /// <summary> GreaterThanEqual. </summary>
         public static ThreatIntelligenceQueryOperator GreaterThanEqual { get; } = new ThreatIntelligenceQueryOperator(GreaterThanEqualValue);
+
         /// <summary> StringContains. </summary>
         public static ThreatIntelligenceQueryOperator StringContains { get; } = new ThreatIntelligenceQueryOperator(StringContainsValue);
+
         /// <summary> StringNotContains. </summary>
         public static ThreatIntelligenceQueryOperator StringNotContains { get; } = new ThreatIntelligenceQueryOperator(StringNotContainsValue);
+
         /// <summary> StringStartsWith. </summary>
         public static ThreatIntelligenceQueryOperator StringStartsWith { get; } = new ThreatIntelligenceQueryOperator(StringStartsWithValue);
+
         /// <summary> StringNotStartsWith. </summary>
         public static ThreatIntelligenceQueryOperator StringNotStartsWith { get; } = new ThreatIntelligenceQueryOperator(StringNotStartsWithValue);
+
         /// <summary> StringEndsWith. </summary>
         public static ThreatIntelligenceQueryOperator StringEndsWith { get; } = new ThreatIntelligenceQueryOperator(StringEndsWithValue);
+
         /// <summary> StringNotEndsWith. </summary>
         public static ThreatIntelligenceQueryOperator StringNotEndsWith { get; } = new ThreatIntelligenceQueryOperator(StringNotEndsWithValue);
+
         /// <summary> StringIsEmpty. </summary>
         public static ThreatIntelligenceQueryOperator StringIsEmpty { get; } = new ThreatIntelligenceQueryOperator(StringIsEmptyValue);
+
         /// <summary> IsNull. </summary>
         public static ThreatIntelligenceQueryOperator IsNull { get; } = new ThreatIntelligenceQueryOperator(IsNullValue);
+
         /// <summary> IsTrue. </summary>
         public static ThreatIntelligenceQueryOperator IsTrue { get; } = new ThreatIntelligenceQueryOperator(IsTrueValue);
+
         /// <summary> IsFalse. </summary>
         public static ThreatIntelligenceQueryOperator IsFalse { get; } = new ThreatIntelligenceQueryOperator(IsFalseValue);
+
         /// <summary> ArrayContains. </summary>
         public static ThreatIntelligenceQueryOperator ArrayContains { get; } = new ThreatIntelligenceQueryOperator(ArrayContainsValue);
+
         /// <summary> ArrayNotContains. </summary>
         public static ThreatIntelligenceQueryOperator ArrayNotContains { get; } = new ThreatIntelligenceQueryOperator(ArrayNotContainsValue);
+
         /// <summary> OnOrAfterRelative. </summary>
         public static ThreatIntelligenceQueryOperator OnOrAfterRelative { get; } = new ThreatIntelligenceQueryOperator(OnOrAfterRelativeValue);
+
         /// <summary> AfterRelative. </summary>
         public static ThreatIntelligenceQueryOperator AfterRelative { get; } = new ThreatIntelligenceQueryOperator(AfterRelativeValue);
+
         /// <summary> OnOrBeforeRelative. </summary>
         public static ThreatIntelligenceQueryOperator OnOrBeforeRelative { get; } = new ThreatIntelligenceQueryOperator(OnOrBeforeRelativeValue);
+
         /// <summary> BeforeRelative. </summary>
         public static ThreatIntelligenceQueryOperator BeforeRelative { get; } = new ThreatIntelligenceQueryOperator(BeforeRelativeValue);
+
         /// <summary> OnOrAfterAbsolute. </summary>
         public static ThreatIntelligenceQueryOperator OnOrAfterAbsolute { get; } = new ThreatIntelligenceQueryOperator(OnOrAfterAbsoluteValue);
+
         /// <summary> AfterAbsolute. </summary>
         public static ThreatIntelligenceQueryOperator AfterAbsolute { get; } = new ThreatIntelligenceQueryOperator(AfterAbsoluteValue);
+
         /// <summary> OnOrBeforeAbsolute. </summary>
         public static ThreatIntelligenceQueryOperator OnOrBeforeAbsolute { get; } = new ThreatIntelligenceQueryOperator(OnOrBeforeAbsoluteValue);
+
         /// <summary> BeforeAbsolute. </summary>
         public static ThreatIntelligenceQueryOperator BeforeAbsolute { get; } = new ThreatIntelligenceQueryOperator(BeforeAbsoluteValue);
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceQueryOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ThreatIntelligenceQueryOperator left, ThreatIntelligenceQueryOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceQueryOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ThreatIntelligenceQueryOperator left, ThreatIntelligenceQueryOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ThreatIntelligenceQueryOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ThreatIntelligenceQueryOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ThreatIntelligenceQueryOperator(string value) => new ThreatIntelligenceQueryOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ThreatIntelligenceQueryOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ThreatIntelligenceQueryOperator?(string value) => value == null ? null : new ThreatIntelligenceQueryOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ThreatIntelligenceQueryOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ThreatIntelligenceQueryOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

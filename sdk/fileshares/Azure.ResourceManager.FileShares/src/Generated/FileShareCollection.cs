@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(FileShareResource.ResourceType, out string fileShareApiVersion);
             _fileSharesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", FileShareResource.ResourceType.Namespace, Diagnostics);
-            _fileSharesInterfaceRestClient = new FileSharesInterface(_fileSharesInterfaceClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2026-06-01");
+            _fileSharesInterfaceRestClient = new FileSharesInterface(_fileSharesInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileShareApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileSharesInterfaceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, FileShareData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FileSharesArmOperation<FileShareResource> operation = new FileSharesArmOperation<FileShareResource>(
-                    new FileShareOperationSource(Client),
+                    new FileShareResourceOperationSource(Client),
                     _fileSharesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileSharesInterfaceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, FileShareData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FileSharesArmOperation<FileShareResource> operation = new FileSharesArmOperation<FileShareResource>(
-                    new FileShareOperationSource(Client),
+                    new FileShareResourceOperationSource(Client),
                     _fileSharesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,

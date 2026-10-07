@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct PendingUploadType : IEquatable<PendingUploadType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PendingUploadType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PendingUploadType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string TemporaryBlobReferenceValue = "TemporaryBlobReference";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="PendingUploadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PendingUploadType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static PendingUploadType None { get; } = new PendingUploadType(NoneValue);
-        /// <summary> TemporaryBlobReference. </summary>
+
+        /// <summary> Gets the TemporaryBlobReference. </summary>
         public static PendingUploadType TemporaryBlobReference { get; } = new PendingUploadType(TemporaryBlobReferenceValue);
+
         /// <summary> Determines if two <see cref="PendingUploadType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PendingUploadType left, PendingUploadType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PendingUploadType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PendingUploadType left, PendingUploadType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PendingUploadType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PendingUploadType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PendingUploadType(string value) => new PendingUploadType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PendingUploadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PendingUploadType?(string value) => value == null ? null : new PendingUploadType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PendingUploadType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PendingUploadType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,0 +1,6 @@
+directory: specification/programenrollment/resource-manager/Microsoft.ProgramEnrollment/ProgramEnrollment
+commit: c8c51661d65b46a2d527bde080c4bac88f6d2096
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

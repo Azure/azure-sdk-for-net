@@ -1,6 +1,6 @@
 # Release History
 
-## 12.28.0-beta.2 (Unreleased)
+## 12.30.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.29.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.29.0-beta.1
+
+## 12.29.0-beta.1 (2026-07-21)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.28.0 (2026-06-04)
+
+### Features Added
+- This release contains bug fixes to improve quality.
 
 ## 12.27.0 (2026-05-12)
 

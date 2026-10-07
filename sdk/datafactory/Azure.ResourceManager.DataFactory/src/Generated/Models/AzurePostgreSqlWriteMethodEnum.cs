@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct AzurePostgreSqlWriteMethodEnum : IEquatable<AzurePostgreSqlWriteMethodEnum>
     {
         private readonly string _value;
+        /// <summary> BulkInsert. </summary>
+        private const string BulkInsertValue = "BulkInsert";
+        /// <summary> CopyCommand. </summary>
+        private const string CopyCommandValue = "CopyCommand";
+        /// <summary> Upsert. </summary>
+        private const string UpsertValue = "Upsert";
 
         /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlWriteMethodEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzurePostgreSqlWriteMethodEnum(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BulkInsertValue = "BulkInsert";
-        private const string CopyCommandValue = "CopyCommand";
-        private const string UpsertValue = "Upsert";
+            _value = value;
+        }
 
         /// <summary> BulkInsert. </summary>
         public static AzurePostgreSqlWriteMethodEnum BulkInsert { get; } = new AzurePostgreSqlWriteMethodEnum(BulkInsertValue);
+
         /// <summary> CopyCommand. </summary>
         public static AzurePostgreSqlWriteMethodEnum CopyCommand { get; } = new AzurePostgreSqlWriteMethodEnum(CopyCommandValue);
+
         /// <summary> Upsert. </summary>
         public static AzurePostgreSqlWriteMethodEnum Upsert { get; } = new AzurePostgreSqlWriteMethodEnum(UpsertValue);
+
         /// <summary> Determines if two <see cref="AzurePostgreSqlWriteMethodEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzurePostgreSqlWriteMethodEnum left, AzurePostgreSqlWriteMethodEnum right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzurePostgreSqlWriteMethodEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzurePostgreSqlWriteMethodEnum left, AzurePostgreSqlWriteMethodEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzurePostgreSqlWriteMethodEnum"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzurePostgreSqlWriteMethodEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzurePostgreSqlWriteMethodEnum(string value) => new AzurePostgreSqlWriteMethodEnum(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzurePostgreSqlWriteMethodEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzurePostgreSqlWriteMethodEnum?(string value) => value == null ? null : new AzurePostgreSqlWriteMethodEnum(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzurePostgreSqlWriteMethodEnum other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzurePostgreSqlWriteMethodEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

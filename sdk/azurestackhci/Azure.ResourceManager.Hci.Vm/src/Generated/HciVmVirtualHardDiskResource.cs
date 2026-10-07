@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmVirtualHardDiskApiVersion);
             _virtualHardDisksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _virtualHardDisksRestClient = new VirtualHardDisks(_virtualHardDisksClientDiagnostics, Pipeline, Endpoint, hciVmVirtualHardDiskApiVersion ?? "2025-09-01-preview");
+            _virtualHardDisksRestClient = new VirtualHardDisks(_virtualHardDisksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmVirtualHardDiskApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualHardDisksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
-                    new HciVmVirtualHardDiskOperationSource(Client),
+                    new HciVmVirtualHardDiskResourceOperationSource(Client),
                     _virtualHardDisksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualHardDisksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
-                    new HciVmVirtualHardDiskOperationSource(Client),
+                    new HciVmVirtualHardDiskResourceOperationSource(Client),
                     _virtualHardDisksClientDiagnostics,
                     Pipeline,
                     message.Request,

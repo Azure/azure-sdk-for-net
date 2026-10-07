@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ServiceFabric
                     yield break;
                 }
                 ApplicationTypeResourceList result = ApplicationTypeResourceList.FromResponse(response);
-                yield return Page<ServiceFabricApplicationTypeData>.FromValues((IReadOnlyList<ServiceFabricApplicationTypeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceFabricApplicationTypeData>.FromValues((IReadOnlyList<ServiceFabricApplicationTypeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

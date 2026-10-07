@@ -1,4 +1,6 @@
-directory: specification/cloudhealth/CloudHealth.Management
-commit: 1edd56a14f5634b4b41e3d9bd12fd14ed65d0e7b
+directory: specification/cloudhealth/resource-manager/Microsoft.CloudHealth/CloudHealth
+commit: b735831b63e60f417a65b7a5c265c16f7cf503f2
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

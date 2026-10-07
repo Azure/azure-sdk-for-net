@@ -15,25 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class SecurityAutomationActionLogicApp : SecurityAutomationAction
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionLogicApp"/>. </summary>
-        public SecurityAutomationActionLogicApp()
+        public SecurityAutomationActionLogicApp() : base(ActionType.LogicApp)
         {
-            ActionType = ActionType.LogicApp;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionLogicApp"/>. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="logicAppResourceId"> The triggered Logic App Azure Resource ID. This can also reside on other subscriptions, given that you have permissions to trigger the Logic App. </param>
         /// <param name="uri"> The Logic App trigger URI endpoint (it will not be included in any response). </param>
-        internal SecurityAutomationActionLogicApp(ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier logicAppResourceId, Uri uri) : base(actionType, serializedAdditionalRawData)
+        internal SecurityAutomationActionLogicApp(ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier logicAppResourceId, Uri uri) : base(actionType, additionalBinaryDataProperties)
         {
             LogicAppResourceId = logicAppResourceId;
             Uri = uri;
-            ActionType = actionType;
         }
 
         /// <summary> The triggered Logic App Azure Resource ID. This can also reside on other subscriptions, given that you have permissions to trigger the Logic App. </summary>
         public ResourceIdentifier LogicAppResourceId { get; set; }
+
         /// <summary> The Logic App trigger URI endpoint (it will not be included in any response). </summary>
         public Uri Uri { get; set; }
     }

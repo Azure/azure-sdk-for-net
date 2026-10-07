@@ -19,9 +19,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     internal class AmqpMessageConverter
     {
-        /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
-        private const int StreamBufferSizeInBytes = 512;
-
         public static AmqpMessageConverter Default = new AmqpMessageConverter();
 
         public virtual AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false)
@@ -93,7 +90,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     message.Batchable = true;
                     using var messageStream = message.ToStream();
-                    data.Add(new Data { Value = ReadStreamToArraySegment(messageStream) });
+                    data.Add(new Data { Value = AmqpAnnotatedMessageConverter.ReadStreamToArraySegment(messageStream) });
                 }
                 batchEnvelope = AmqpMessage.Create(data);
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
@@ -129,48 +126,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             batchEnvelope.Batchable = true;
             return batchEnvelope;
-        }
-
-        /// <summary>
-        ///   Converts a stream to an <see cref="ArraySegment{T}" /> representation.
-        /// </summary>
-        ///
-        /// <param name="stream">The stream to read and capture in memory.</param>
-        ///
-        /// <returns>The <see cref="ArraySegment{T}" /> containing the stream data.</returns>
-        ///
-        private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
-        {
-            switch (stream)
-            {
-                case { Length: < 1 }:
-                    return default;
-
-                case BufferListStream bufferListStream:
-                    return bufferListStream.ReadBytes((int)stream.Length);
-
-                case MemoryStream memStreamSource:
-                    {
-                        using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
-                        memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
-                        {
-                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
-                        }
-                        return segment;
-                    }
-
-                default:
-                    {
-                        using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
-                        stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
-                        {
-                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
-                        }
-                        return segment;
-                    }
-            }
         }
 
         public virtual AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage sbMessage)
@@ -241,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 case PropertyValueType.Stream:
                     if (mappingType == MappingType.ApplicationProperty)
                     {
-                        amqpObject = ReadStreamToArraySegment((Stream)netObject);
+                        amqpObject = AmqpAnnotatedMessageConverter.ReadStreamToArraySegment((Stream)netObject);
                     }
                     break;
                 case PropertyValueType.Uri:
@@ -258,7 +213,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         if (mappingType == MappingType.ApplicationProperty)
                         {
-                            amqpObject = ReadStreamToArraySegment(netObjectAsStream);
+                            amqpObject = AmqpAnnotatedMessageConverter.ReadStreamToArraySegment(netObjectAsStream);
                         }
                     }
                     else if (mappingType == MappingType.ApplicationProperty)

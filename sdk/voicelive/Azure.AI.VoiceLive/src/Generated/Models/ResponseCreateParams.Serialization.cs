@@ -193,6 +193,41 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(InterimResponse))
+            {
+                writer.WritePropertyName("interim_response"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(InterimResponse);
+#else
+                using (JsonDocument document = JsonDocument.Parse(InterimResponse))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsCollectionDefined(InvokeInput))
+            {
+                writer.WritePropertyName("invoke_input"u8);
+                writer.WriteStartObject();
+                foreach (var item in InvokeInput)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -250,6 +285,8 @@ namespace Azure.AI.VoiceLive
             AssistantMessageItem preGeneratedAssistantMessage = default;
             ReasoningEffort? reasoningEffort = default;
             IDictionary<string, string> metadata = default;
+            BinaryData interimResponse = default;
+            IDictionary<string, BinaryData> invokeInput = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -324,7 +361,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    voice = BinaryData.FromString(prop.Value.GetRawText());
+                    voice = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("output_audio_format"u8))
@@ -370,7 +407,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    maxOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
+                    maxOutputTokens = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("pre_generated_assistant_message"u8))
@@ -412,9 +449,39 @@ namespace Azure.AI.VoiceLive
                     metadata = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("interim_response"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interimResponse = prop.Value.GetUtf8Bytes();
+                    continue;
+                }
+                if (prop.NameEquals("invoke_input"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
+                        }
+                    }
+                    invokeInput = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResponseCreateParams(
@@ -433,6 +500,8 @@ namespace Azure.AI.VoiceLive
                 preGeneratedAssistantMessage,
                 reasoningEffort,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
+                interimResponse,
+                invokeInput ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalBinaryDataProperties);
         }
     }

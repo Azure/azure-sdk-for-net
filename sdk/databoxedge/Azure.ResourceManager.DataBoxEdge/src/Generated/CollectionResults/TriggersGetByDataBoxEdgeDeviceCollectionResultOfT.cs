@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     yield break;
                 }
                 TriggerList result = TriggerList.FromResponse(response);
-                yield return Page<DataBoxEdgeTriggerData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataBoxEdgeTriggerData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

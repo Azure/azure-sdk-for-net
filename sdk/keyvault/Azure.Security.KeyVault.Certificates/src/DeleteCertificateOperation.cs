@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -16,24 +17,25 @@ namespace Azure.Security.KeyVault.Certificates
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(2);
 
-        private readonly KeyVaultPipeline _pipeline;
+        private readonly KeyVaultCertificatesClient _generated;
         private readonly OperationInternal _operationInternal;
         private readonly DeletedCertificate _value;
 
-        internal DeleteCertificateOperation(KeyVaultPipeline pipeline, Response<DeletedCertificate> response)
+        internal DeleteCertificateOperation(KeyVaultCertificatesClient generated, ClientDiagnostics diagnostics, Response<DeletedCertificate> response)
         {
-            _pipeline = pipeline;
+            _generated = generated ?? throw new ArgumentNullException(nameof(generated));
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
 
-            // The recoveryId is only returned if soft delete is enabled.
+            // The recoveryId is only returned if soft delete is enabled. Without it the
+            // service performed an immediate delete so there is nothing to poll for - skip
+            // straight to a Succeeded state (matches the legacy fast-path behavior).
             if (_value.RecoveryId is null)
             {
-                // If soft delete is not enabled, deleting is immediate so set success accordingly.
                 _operationInternal = OperationInternal.Succeeded(response.GetRawResponse());
             }
             else
             {
-                _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(DeleteCertificateOperation), new[]
+                _operationInternal = new(this, diagnostics, response.GetRawResponse(), nameof(DeleteCertificateOperation), new[]
                 {
                     new KeyValuePair<string, string>("secret", _value.Name), // Retained for backward compatibility.
                     new KeyValuePair<string, string>("certificate", _value.Name),
@@ -97,9 +99,13 @@ namespace Azure.Security.KeyVault.Certificates
 
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            // Soft-delete semantics: 404 -> still pending, 200 -> deleted. Use
+            // ErrorOptions.NoThrow so the protocol overload surfaces 404 as a raw
+            // Response (which we map to Pending) instead of throwing.
+            var ctx = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
             Response response = async
-                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.DeletedCertificatesPath, _value.Name).ConfigureAwait(false)
-                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.DeletedCertificatesPath, _value.Name);
+                ? await _generated.GetDeletedCertificateAsync(_value.Name, ctx).ConfigureAwait(false)
+                : _generated.GetDeletedCertificate(_value.Name, ctx);
 
             switch (response.Status)
             {

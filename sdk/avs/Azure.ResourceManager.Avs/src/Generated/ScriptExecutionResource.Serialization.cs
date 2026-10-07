@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary></summary>
-    public partial class ScriptExecutionResource : ArmResource, IJsonModel<ScriptExecutionData>
+    public partial class ScriptExecutionResource : IJsonModel<ScriptExecutionData>
     {
         private static IJsonModel<ScriptExecutionData> s_dataDeserializationInstance;
 

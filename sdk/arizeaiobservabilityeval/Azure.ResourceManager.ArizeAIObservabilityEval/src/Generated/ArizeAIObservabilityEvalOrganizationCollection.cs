@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         {
             TryGetApiVersion(ArizeAIObservabilityEvalOrganizationResource.ResourceType, out string arizeAIObservabilityEvalOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArizeAIObservabilityEval", ArizeAIObservabilityEvalOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, arizeAIObservabilityEvalOrganizationApiVersion ?? "2024-10-01");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, arizeAIObservabilityEvalOrganizationApiVersion ?? "2024-10-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, ArizeAIObservabilityEvalOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource> operation = new ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource>(
-                    new ArizeAIObservabilityEvalOrganizationOperationSource(Client),
+                    new ArizeAIObservabilityEvalOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, ArizeAIObservabilityEvalOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource> operation = new ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource>(
-                    new ArizeAIObservabilityEvalOrganizationOperationSource(Client),
+                    new ArizeAIObservabilityEvalOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,

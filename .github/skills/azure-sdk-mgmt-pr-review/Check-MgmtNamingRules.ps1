@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Scans Azure Management SDK API surface files for naming rule violations.
+    Scans Azure Management SDK API surface files for naming and source-compatibility violations.
 
 .DESCRIPTION
     Checks all naming conventions defined in the azure-sdk-mgmt-pr-review skill:
@@ -10,6 +10,7 @@
       - Contextual/ambiguous type names
       - Enum plural names
       - ListOperations methods
+      - Required/optional parameter changes relative to a stable baseline
 
 .PARAMETER PackagePath
     Path to the SDK package directory (e.g., sdk/compute/Azure.ResourceManager.Compute).
@@ -23,8 +24,19 @@
     on types/members that are new or changed compared to the baseline will be reported.
     This enables deterministic filtering without relying on LLM judgment.
 
+.PARAMETER BaselineVersion
+    Released package version represented by BaselineApiFilePath. Included in source-
+    compatibility findings so reviewers know which GA contract was compared.
+
 .PARAMETER ExcludeRules
     Array of rule IDs to skip (e.g., 'SUFFIX001', 'BOOL001').
+
+.PARAMETER ListNewTypes
+    When set, the script does not run rule checks. Instead it emits a deterministic
+    inventory of every public class/struct/enum declaration, tagging each NEW or
+    EXISTING relative to -BaselineApiFilePath (or all NEW when no baseline is given).
+    Use this as the bounded worklist for the reviewer's exhaustive contextual-naming
+    pass so no new public type is missed across review rounds.
 
 .EXAMPLE
     .\Check-MgmtNamingRules.ps1 -PackagePath sdk/compute/Azure.ResourceManager.Compute
@@ -43,7 +55,13 @@ param(
     [string]$BaselineApiFilePath,
 
     [Parameter(Mandatory = $false)]
-    [string[]]$ExcludeRules = @()
+    [string]$BaselineVersion,
+
+    [Parameter(Mandatory = $false)]
+    [string[]]$ExcludeRules = @(),
+
+    [Parameter(Mandatory = $false)]
+    [switch]$ListNewTypes
 )
 
 Set-StrictMode -Version Latest
@@ -117,6 +135,7 @@ $totalLines = $lines.Count
 
 # Load baseline API file for filtering (if provided)
 $baselineLines = @{}
+$baselineTypeKeys = @{}
 if ($BaselineApiFilePath) {
     if (-not (Test-Path $BaselineApiFilePath)) {
         throw "Baseline API file not found: $BaselineApiFilePath"
@@ -148,26 +167,47 @@ $typeStartDepth = 0
 # Collected type info for cross-referencing
 $typeInfos = @{}  # short name -> @{ Kind; Bases; Namespace; Line }
 
-# First pass: collect all type declarations and their base types.
-for ($i = 0; $i -lt $totalLines; $i++) {
-    $line = $lines[$i]
+function Get-TypeKey([string]$namespace, [string]$kind, [string]$name) {
+    return "$namespace|$kind|$name"
+}
 
-    if ($line -match '^\s*namespace\s+([\w.]+)') {
-        $currentNamespace = $Matches[1]
-        continue
+function Get-TypeInfosFromApiLines([string[]]$apiLines) {
+    $infos = @{}
+    $namespace = ''
+
+    for ($lineIndex = 0; $lineIndex -lt $apiLines.Count; $lineIndex++) {
+        $line = $apiLines[$lineIndex]
+
+        if ($line -match '^\s*namespace\s+([\w.]+)') {
+            $namespace = $Matches[1]
+            continue
+        }
+
+        # Match type declarations: public partial class Foo : Bar, IBaz
+        if ($line -match '^\s*public\s+(?:(?:partial|abstract|static|sealed|readonly)\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
+            $shortName = $Matches['name']
+            $kind = $Matches['kind']
+            $bases = if ($Matches['bases']) { $Matches['bases'].Trim() } else { '' }
+            $infos[$shortName] = @{
+                Kind      = $kind
+                Bases     = $bases
+                Namespace = $namespace
+                Line      = $lineIndex + 1
+                Key       = Get-TypeKey $namespace $kind $shortName
+            }
+        }
     }
 
-    # Match type declarations: public partial class Foo : Bar, IBaz
-    if ($line -match '^\s*public\s+(?:partial\s+|abstract\s+|static\s+|sealed\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
-        $shortName = $Matches['name']
-        $kind = $Matches['kind']
-        $bases = if ($Matches['bases']) { $Matches['bases'].Trim() } else { '' }
-        $typeInfos[$shortName] = @{
-            Kind      = $kind
-            Bases     = $bases
-            Namespace = $currentNamespace
-            Line      = $i + 1
-        }
+    return $infos
+}
+
+# First pass: collect all type declarations and their base types.
+$typeInfos = Get-TypeInfosFromApiLines $lines
+
+if ($BaselineApiFilePath) {
+    $baselineTypeInfos = Get-TypeInfosFromApiLines (Get-Content $BaselineApiFilePath)
+    foreach ($baselineTypeInfo in $baselineTypeInfos.Values) {
+        $baselineTypeKeys[$baselineTypeInfo.Key] = $true
     }
 }
 
@@ -195,9 +235,240 @@ function Get-PascalCaseTokens([string]$name) {
     return @([regex]::Matches($name, '[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+') | ForEach-Object { $_.Value })
 }
 
+function Split-TopLevelParameters([string]$parameterText) {
+    if ([string]::IsNullOrWhiteSpace($parameterText)) {
+        return @()
+    }
+
+    $parameters = [System.Collections.Generic.List[string]]::new()
+    $start = 0
+    $angleDepth = 0
+    $parenthesisDepth = 0
+    $bracketDepth = 0
+
+    for ($i = 0; $i -lt $parameterText.Length; $i++) {
+        switch ($parameterText[$i]) {
+            '<' { $angleDepth++ }
+            '>' { if ($angleDepth -gt 0) { $angleDepth-- } }
+            '(' { $parenthesisDepth++ }
+            ')' { if ($parenthesisDepth -gt 0) { $parenthesisDepth-- } }
+            '[' { $bracketDepth++ }
+            ']' { if ($bracketDepth -gt 0) { $bracketDepth-- } }
+            ',' {
+                if ($angleDepth -eq 0 -and $parenthesisDepth -eq 0 -and $bracketDepth -eq 0) {
+                    $parameters.Add($parameterText.Substring($start, $i - $start).Trim())
+                    $start = $i + 1
+                }
+            }
+        }
+    }
+
+    $parameters.Add($parameterText.Substring($start).Trim())
+    return $parameters.ToArray()
+}
+
+function Get-TopLevelDefaultSeparator([string]$parameterText) {
+    $angleDepth = 0
+    $parenthesisDepth = 0
+    $bracketDepth = 0
+
+    for ($i = 0; $i -lt $parameterText.Length; $i++) {
+        switch ($parameterText[$i]) {
+            '<' { $angleDepth++ }
+            '>' { if ($angleDepth -gt 0) { $angleDepth-- } }
+            '(' { $parenthesisDepth++ }
+            ')' { if ($parenthesisDepth -gt 0) { $parenthesisDepth-- } }
+            '[' { $bracketDepth++ }
+            ']' { if ($bracketDepth -gt 0) { $bracketDepth-- } }
+            '=' {
+                if ($angleDepth -eq 0 -and $parenthesisDepth -eq 0 -and $bracketDepth -eq 0) {
+                    return $i
+                }
+            }
+        }
+    }
+
+    return -1
+}
+
+function Get-ApiMethodInfos([string[]]$apiLines) {
+    $methods = @{}
+    $namespace = ''
+    $typeName = ''
+
+    for ($lineIndex = 0; $lineIndex -lt $apiLines.Count; $lineIndex++) {
+        $line = $apiLines[$lineIndex]
+
+        if ($line -match '^\s*namespace\s+([\w.]+)') {
+            $namespace = $Matches[1]
+            continue
+        }
+
+        if ($line -match '^\s*public\s+(?:(?:partial|abstract|static|sealed|readonly)\s+)*(?:class|struct|interface)\s+(?<name>\w+)') {
+            $typeName = $Matches['name']
+            continue
+        }
+
+        if (-not $typeName -or
+            $line -notmatch '^\s*public\s+' -or
+            $line -notmatch '\)\s*\{') {
+            continue
+        }
+
+        $openParenthesis = $line.IndexOf('(')
+        $closeParenthesis = $line.LastIndexOf(')')
+        if ($openParenthesis -lt 0 -or $closeParenthesis -le $openParenthesis) {
+            continue
+        }
+
+        $prefix = $line.Substring(0, $openParenthesis).Trim()
+        if ($prefix -notmatch '(?<name>[A-Za-z_]\w*(?:<[^>]+>)?)$') {
+            continue
+        }
+
+        $memberName = $Matches['name']
+        $parameterText = $line.Substring($openParenthesis + 1, $closeParenthesis - $openParenthesis - 1)
+        $parameters = [System.Collections.Generic.List[object]]::new()
+        $parameterTypes = [System.Collections.Generic.List[string]]::new()
+
+        foreach ($parameter in (Split-TopLevelParameters $parameterText)) {
+            $defaultSeparator = Get-TopLevelDefaultSeparator $parameter
+            $declaration = if ($defaultSeparator -ge 0) {
+                $parameter.Substring(0, $defaultSeparator).Trim()
+            } else {
+                $parameter.Trim()
+            }
+
+            if ($declaration -notmatch '^(?<type>.+?)\s+(?<name>@?[A-Za-z_]\w*)$') {
+                continue
+            }
+
+            $parameterType = ($Matches['type'] -replace '\s+', ' ').Trim()
+            $parameterTypes.Add($parameterType)
+            $parameters.Add([pscustomobject]@{
+                Name       = $Matches['name']
+                Type       = $parameterType
+                IsOptional = $defaultSeparator -ge 0
+            })
+        }
+
+        $key = "$namespace|$typeName|$memberName|$($parameterTypes -join ',')"
+        $methods[$key] = [pscustomobject]@{
+            Namespace  = $namespace
+            TypeName   = $typeName
+            MemberName = $memberName
+            Parameters = $parameters.ToArray()
+            Signature  = "$memberName($parameterText)"
+            Line       = $lineIndex + 1
+        }
+    }
+
+    return $methods
+}
+
+#endregion
+
+#region --- Inventory mode (-ListNewTypes) ---
+
+# Emits a deterministic, complete worklist of public class/struct/enum declarations.
+# When a baseline is provided, each entry is tagged NEW (type name/kind absent from
+# the baseline) or EXISTING. This gives the reviewer a bounded list to apply the
+# contextual-naming judgment to exhaustively, so no new public type is missed across
+# review rounds. Interfaces are excluded (not part of the model naming surface).
+if ($ListNewTypes) {
+    $inventory = foreach ($name in $typeInfos.Keys) {
+        $info = $typeInfos[$name]
+        if ($info.Kind -eq 'interface') { continue }
+        $isNew = $true
+        if ($BaselineApiFilePath) {
+            $isNew = -not $baselineTypeKeys.ContainsKey($info.Key)
+        }
+        [pscustomobject]@{
+            Line   = $info.Line
+            Kind   = $info.Kind
+            Name   = $name
+            Status = if ($isNew) { 'NEW' } else { 'EXISTING' }
+        }
+    }
+
+    $inventory = @($inventory | Sort-Object Line)
+    $newCount = @($inventory | Where-Object { $_.Status -eq 'NEW' }).Count
+
+    Write-Host "`n=== New public type inventory (contextual-naming worklist) ===" -ForegroundColor Cyan
+    Write-Host "File: $(Split-Path $ApiFilePath -Leaf)"
+    if ($BaselineApiFilePath) {
+        Write-Host "Baseline: $(Split-Path $BaselineApiFilePath -Leaf) (NEW = type name/kind absent from baseline)"
+    } else {
+        Write-Host "Baseline: <none> (all public types are in scope)"
+    }
+    Write-Host "Total public types: $($inventory.Count); NEW (in scope): $newCount" -ForegroundColor Yellow
+    Write-Host "-----------------------------------------------------------"
+    foreach ($entry in $inventory) {
+        Write-Host ("{0,-9} Line {1,-6} {2,-8} {3}" -f $entry.Status, $entry.Line, $entry.Kind, $entry.Name)
+    }
+    Write-Host "-----------------------------------------------------------"
+    Write-Host "Evaluate every NEW entry above against the contextual-naming rule and record a verdict for each." -ForegroundColor Cyan
+    return
+}
+
 #endregion
 
 #region --- Rule Checks ---
+
+# =====================================================
+# RULE: OPTPARAM001 - Preserve callable optional parameters
+# =====================================================
+# ApiCompat primarily protects binary compatibility. An optional-to-required change
+# on a member with no sibling overload deterministically breaks the GA call that
+# omits that argument. When sibling overloads exist, textual metadata is not enough
+# to prove a source break, so suppress the candidate until a compiler-backed check
+# can evaluate the complete overload set. Required-to-optional changes are likewise
+# not emitted without compiler evidence.
+if ($BaselineApiFilePath -and $ExcludeRules -notcontains 'OPTPARAM001') {
+    $currentMethods = Get-ApiMethodInfos $lines
+    $baselineMethods = Get-ApiMethodInfos (Get-Content $BaselineApiFilePath)
+    $currentOverloadCounts = @{}
+
+    foreach ($method in $currentMethods.Values) {
+        $overloadKey = "$($method.Namespace)|$($method.TypeName)|$($method.MemberName)"
+        $currentOverloadCounts[$overloadKey] = 1 + [int]($currentOverloadCounts[$overloadKey])
+    }
+
+    foreach ($key in $baselineMethods.Keys) {
+        if (-not $currentMethods.ContainsKey($key)) {
+            continue
+        }
+
+        $currentMethod = $currentMethods[$key]
+        $baselineMethod = $baselineMethods[$key]
+        $overloadKey = "$($currentMethod.Namespace)|$($currentMethod.TypeName)|$($currentMethod.MemberName)"
+        if ($currentOverloadCounts[$overloadKey] -gt 1) {
+            Write-Verbose "Suppressed optionality candidate for $($currentMethod.TypeName).$($currentMethod.MemberName): sibling overloads require compiler evidence."
+            continue
+        }
+
+        $optionalToRequired = [System.Collections.Generic.List[string]]::new()
+        for ($parameterIndex = 0; $parameterIndex -lt $currentMethod.Parameters.Count; $parameterIndex++) {
+            $currentParameter = $currentMethod.Parameters[$parameterIndex]
+            $baselineParameter = $baselineMethod.Parameters[$parameterIndex]
+            if ($baselineParameter.IsOptional -and -not $currentParameter.IsOptional) {
+                $optionalToRequired.Add($currentParameter.Name)
+            }
+        }
+
+        if ($optionalToRequired.Count -gt 0) {
+            $parameterNames = ($optionalToRequired | ForEach-Object { "'$_'" }) -join ', '
+            $baselineLabel = if ($BaselineVersion) { "GA baseline $BaselineVersion" } else { 'the GA baseline' }
+            $violations.Add([NamingViolation]::new(
+                'OPTPARAM001', 'Error', 'Source Compatibility',
+                $currentMethod.TypeName, $currentMethod.MemberName,
+                "Parameter(s) $parameterNames changed from optional to required on the only current overload. The omitted-argument call accepted by $baselineLabel no longer compiles. Baseline signature: $($baselineMethod.Signature). Current signature: $($currentMethod.Signature).",
+                "Restore the optional defaults from $baselineLabel.",
+                $currentMethod.Line
+            ))
+        }
+    }
+}
 
 # =====================================================
 # RULE: SUFFIX - Bad type name suffixes
@@ -591,6 +862,66 @@ foreach ($typeName in $typeInfos.Keys) {
 }
 
 # =====================================================
+# RULE: RESNAME001 - Single-word generic resource trio names
+# =====================================================
+# After stripping the reserved ARM suffix (Resource / Data / Collection), the
+# remaining noun must still carry RP/domain context. A bare single word like
+# 'Drill', 'Goal', 'Recovery', 'Enrollment' is too generic - reviewers cannot
+# tell which RP it belongs to in IntelliSense and the name will collide with
+# similarly-generic types from other mgmt packages. This rule fires only when
+# the class actually inherits the ARM resource trio base (ArmResource /
+# ResourceData / TrackedResourceData / ArmCollection) so plain models named
+# 'FooData' that aren't resource data types are not flagged here.
+$resourceNameAllowList = @(
+    'GenericResource'     # ARM common, intentionally generic
+)
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'RESNAME001') { continue }
+    if ($resourceNameAllowList -contains $typeName) { continue }
+    $info = $typeInfos[$typeName]
+
+    $noun = $null
+    $suffix = $null
+    if ($typeName -like '*Resource' -and (Test-InheritsFrom $typeName 'ArmResource')) {
+        $noun = $typeName -replace 'Resource$',''
+        $suffix = 'Resource'
+    }
+    elseif ($typeName -like '*Data' -and (
+            (Test-InheritsFrom $typeName 'ResourceData') -or
+            (Test-InheritsFrom $typeName 'TrackedResourceData'))) {
+        $noun = $typeName -replace 'Data$',''
+        $suffix = 'Data'
+        # Strip an optional 'Resource' infix so we evaluate the same noun as the
+        # *Resource / *Collection classes (RESINFIX001 already flags the infix).
+        if ($noun -like '*Resource' -and $noun -ne 'Resource') {
+            $noun = $noun -replace 'Resource$',''
+        }
+    }
+    elseif ($typeName -like '*Collection' -and (Test-InheritsFrom $typeName 'ArmCollection')) {
+        $noun = $typeName -replace 'Collection$',''
+        $suffix = 'Collection'
+        if ($noun -like '*Resource' -and $noun -ne 'Resource') {
+            $noun = $noun -replace 'Resource$',''
+        }
+    }
+    if (-not $noun) { continue }
+    # Single-word noun: starts with a capital letter and has no further capitals.
+    # This catches 'Drill', 'Goal', 'Recovery', 'Enrollment' but allows
+    # 'DrillRun', 'RecoveryPlan', 'GoalAssignment', 'UsagePlan', etc.
+    if ($noun -cmatch '^[A-Z][a-z]+$') {
+        $message = "Resource trio noun '$noun' is a single generic word. After stripping the reserved '$suffix' suffix, the name carries no RP/domain context and will collide with similarly-named types in other mgmt packages."
+        $fix = "Rename the whole trio ('${noun}Resource' / '${noun}Data' / '${noun}Collection') with an RP/domain prefix so the noun becomes multi-word and service-scoped (e.g., '<RpPrefix>${noun}*')."
+        $violations.Add([NamingViolation]::new(
+            'RESNAME001', 'Warning', 'Resource Naming',
+            $typeName, '',
+            $message,
+            $fix,
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
 # Contextual / generic naming is intentionally NOT enforced by this script.
 # =====================================================
 # Naming context is too case-by-case to encode reliably in regex/allowlists -
@@ -731,7 +1062,7 @@ if ($BaselineApiFilePath -and $baselineLines.Count -gt 0) {
 #region --- Output ---
 
 if ($violations.Count -eq 0) {
-    Write-Host "`n✅ No naming violations found." -ForegroundColor Green
+    Write-Host "`n✅ No API review violations found." -ForegroundColor Green
     return
 }
 
@@ -742,7 +1073,7 @@ $errorCount   = @($violations | Where-Object { $_.Severity -eq 'Error' }).Count
 $warningCount = @($violations | Where-Object { $_.Severity -eq 'Warning' }).Count
 
 Write-Host "`n========================================" -ForegroundColor Yellow
-Write-Host " Naming Rule Violations Report" -ForegroundColor Yellow
+Write-Host " API Review Rule Violations Report" -ForegroundColor Yellow
 Write-Host "========================================" -ForegroundColor Yellow
 Write-Host " File: $(Split-Path $ApiFilePath -Leaf)"
 Write-Host " Errors:   $errorCount" -ForegroundColor Red

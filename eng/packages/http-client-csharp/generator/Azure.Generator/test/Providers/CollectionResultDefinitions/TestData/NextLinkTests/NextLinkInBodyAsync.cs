@@ -39,7 +39,7 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsAsyncCollectionResult as an enumerable collection. </returns>
         public override async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken, global::System.UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 global::Azure.Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -48,13 +48,13 @@ namespace Samples
                     yield break;
                 }
                 global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+                nextPage = result.NextCat;
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
                 foreach (var item in result.Cats)
                 {
-                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::System.ClientModel.Primitives.ModelReaderWriterOptions.Json, global::Samples.SamplesContext.Default));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextCat;
                 if ((nextPage == null))
                 {
                     yield break;

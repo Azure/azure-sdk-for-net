@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication
         {
             TryGetApiVersion(ResourceType, out string communicationSmtpUsernameApiVersion);
             _smtpUsernamesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, Diagnostics);
-            _smtpUsernamesRestClient = new SmtpUsernames(_smtpUsernamesClientDiagnostics, Pipeline, Endpoint, communicationSmtpUsernameApiVersion ?? "2026-03-18");
+            _smtpUsernamesRestClient = new SmtpUsernames(_smtpUsernamesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, communicationSmtpUsernameApiVersion ?? "2026-03-18");
             ValidateResourceId(id);
         }
 

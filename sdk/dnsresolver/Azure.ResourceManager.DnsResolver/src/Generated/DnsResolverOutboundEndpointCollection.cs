@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverOutboundEndpointResource.ResourceType, out string dnsResolverOutboundEndpointApiVersion);
             _outboundEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverOutboundEndpointResource.ResourceType.Namespace, Diagnostics);
-            _outboundEndpointsRestClient = new OutboundEndpoints(_outboundEndpointsClientDiagnostics, Pipeline, Endpoint, dnsResolverOutboundEndpointApiVersion ?? "2025-10-01-preview");
+            _outboundEndpointsRestClient = new OutboundEndpoints(_outboundEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverOutboundEndpointApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _outboundEndpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundEndpointName, DnsResolverOutboundEndpointData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverOutboundEndpointResource> operation = new DnsResolverArmOperation<DnsResolverOutboundEndpointResource>(
-                    new DnsResolverOutboundEndpointOperationSource(Client),
+                    new DnsResolverOutboundEndpointResourceOperationSource(Client),
                     _outboundEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _outboundEndpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundEndpointName, DnsResolverOutboundEndpointData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverOutboundEndpointResource> operation = new DnsResolverArmOperation<DnsResolverOutboundEndpointResource>(
-                    new DnsResolverOutboundEndpointOperationSource(Client),
+                    new DnsResolverOutboundEndpointResourceOperationSource(Client),
                     _outboundEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,

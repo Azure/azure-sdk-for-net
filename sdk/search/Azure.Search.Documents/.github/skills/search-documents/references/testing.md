@@ -43,8 +43,7 @@ protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_05_01_P
 | `SearchTestBase.LatestVersion` must match `SearchClientOptions.LatestVersion` | Otherwise tests run against the wrong API version |
 | Never add `[ClientTestFixture]` on derived classes | Inherited from `SearchTestBase` — overrides fragment the matrix |
 | Use `[ServiceVersion(Min = ...)]` only when a test would **fail** against an older version | Not for documentation — costs nothing to run against all versions in playback |
-| `#if AZURE_SEARCH_PREVIEW` is compile-time; `[ServiceVersion]` is runtime | Different mechanisms for different problems — don't mix them |
-| `AZURE_SEARCH_PREVIEW` auto-defined when `<Version>` contains `-` | Set in both `src/*.csproj` and `tests/*.csproj` via `$(Version.Contains('-'))` |
+| `// search-preview:<version>` is a comment marker; `[ServiceVersion]` is runtime | Different mechanisms for different problems — don't mix them |
 
 **Updating the matrix:** Change `CurrentGAVersion` (and optionally `CurrentPreviewVersion`). All tests follow automatically.
 
@@ -52,7 +51,7 @@ protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_05_01_P
 
 ## Preview Isolation
 
-Preview tests live in `*.Preview.cs` partial class files, wrapped entirely in `#if AZURE_SEARCH_PREVIEW`:
+Preview tests live in `*.Preview.cs` partial class files. Tag preview-specific tests with `// search-preview:<api-version>` comments.
 
 ```
 SearchTests.Preview.cs
@@ -60,7 +59,7 @@ SearchIndexClientTests.Preview.cs
 SearchIndexerClientTests.Preview.cs
 ```
 
-**GA promotion:** Remove `#if`/`#endif` wrapper → update `[ServiceVersion(Min)]` to new GA version → optionally merge into main file.
+**GA promotion:** Remove preview markers and `[ServiceVersion(Min)]` → optionally merge into main file.
 
 ---
 
@@ -71,7 +70,7 @@ SearchIndexerClientTests.Preview.cs
 | Service interaction (CRUD, queries) | `SearchTestBase` | Uses `SearchResources.Create*Async(this)` + recordings |
 | Request payload validation | `ClientTestBase` | `MockTransport` — no recordings, instant |
 | Type/convention scanning | None (`[TestFixture]`) | Reflection-based, no framework |
-| Preview feature | `SearchTestBase` in `*.Preview.cs` | Compile-gated, `[ServiceVersion(Min = CurrentPreviewVersion)]` |
+| Preview feature | `SearchTestBase` in `*.Preview.cs` | Tagged with `// search-preview:<version>`, `[ServiceVersion(Min = CurrentPreviewVersion)]` |
 | Timing-sensitive (auto-flush) | `SearchTestBase` + `[LiveOnly]` | Cannot be recorded |
 | Geo-limited (semantic search) | `SearchTestBase` + `[PlaybackOnly]` | Cannot run live in all regions |
 
@@ -84,7 +83,7 @@ SearchIndexerClientTests.Preview.cs
 1. Run TypeCompleteness tests — failures **are** the to-do list.
 2. New `SearchOptions` property → add 1 line to `SearchOptionsMockTests.SearchOptionProperties()`.
 3. New client operation → write recorded test + mock test.
-4. New preview feature → add to `*.Preview.cs`.
+4. New preview feature → add to `*.Preview.cs`, tag with `// search-preview:<api-version>`.
 5. Full suite: `dotnet test --filter "TestCategory!=Live"`.
 
 TypeCompleteness tests detect new models automatically. No manual model tracking needed for Tiers 1+2.

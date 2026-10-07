@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Elastic
                     yield break;
                 }
                 ElasticVmListResult result = ElasticVmListResult.FromResponse(response);
-                yield return Page<ElasticVmResourceInfo>.FromValues((IReadOnlyList<ElasticVmResourceInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ElasticVmResourceInfo>.FromValues((IReadOnlyList<ElasticVmResourceInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

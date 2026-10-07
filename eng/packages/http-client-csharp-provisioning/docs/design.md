@@ -209,11 +209,119 @@ Element types for `BicepList<T>` and `BicepDictionary<T>` are resolved without `
 Generates `ProvisionableResource` subclasses from input model types + resource metadata:
 - **Property collection**: walks the model's inheritance chain and collects all properties, flattening only those with the `@flattenProperty` decorator
 - **Field-property linking**: each property gets a nullable backing field. Properties and fields are co-created through the TypeFactory property creation pipeline, ensuring names go through the mgmt visitor pipeline. These linked pairs are lazily initialized on first access.
-- **System properties**: `name`, `location` (required input), `id`, `systemData` (output-only), `tags` (input), `type` (skipped)
-- **Parent resources**: child resources get a typed `Parent` property for parent-child relationship
+- **System properties**: `location` (required input), `id`, `systemData` (output-only), `tags` (input), and `type` (skipped)
+- **Resource identity and relationships**: `Name`, `Parent`, and `Scope` follow the rules below
 - **Constructor**: `(string bicepIdentifier, string? resourceVersion)` with default API version
 - **`FromExisting()`**: static factory method
 - **`ResourceVersions`**: nested class with GA API version constants
+
+### Resource Name, Parent, and Scope
+
+ARM resource types contain a provider namespace followed by one or more resource type segments. For example:
+
+- `Microsoft.AppConfiguration/configurationStores` has one resource type level.
+- `Microsoft.AppConfiguration/configurationStores/keyValues` has two resource type levels.
+- `Microsoft.RecoveryServices/vaults/backupstorageconfig` has two resource type levels.
+
+The generator uses this hierarchy together with the ARM provider schema's `ParentResourceId` and extension-resource metadata to decide which relationship property to generate and whether `Name` can use a fixed singleton name.
+
+#### Parent and Scope Resolution
+
+For a non-extension resource, the generator resolves `ParentResourceId` against resources generated in the same output library:
+
+- When the resolved resource is the immediate structural parent by resource type, the resource gets a strongly typed, required `Parent` property.
+- When the resolved resource is a more distant ancestor, or when the parent is virtual, belongs to another package, or otherwise does not resolve locally, no `Parent` property is generated. The caller supplies the full resource-name hierarchy because no Bicep `parent` relationship is emitted.
+
+A writable extension resource uses Bicep's `scope` relationship instead of `parent`. It gets a `ProvisionableResource Scope` property so any generated provisioning resource can be assigned without introducing a package dependency. A read-only extension resource does not expose writable `Scope` metadata.
+
+`Parent` and `Scope` are mutually exclusive:
+
+The following snippets abbreviate the generated accessor bodies to emphasize the public API and property definitions.
+
+```csharp
+// Structural child resource
+public ConfigurationStore Parent { get; set; }
+
+_parent = DefineResource<ConfigurationStore>(
+    "Parent",
+    new[] { "parent" },
+    isRequired: true);
+```
+
+```csharp
+// Writable extension resource
+public ProvisionableResource Scope { get; set; }
+
+_scope = DefineResource<ProvisionableResource>(
+    nameof(Scope),
+    new[] { "scope" });
+```
+
+#### Name Generation
+
+Regular resources always have a required, settable `Name` without a default:
+
+```csharp
+public BicepValue<string> Name { get; set; }
+
+_name = DefineProperty<string>(
+    nameof(Name),
+    new[] { "name" },
+    isRequired: true);
+```
+
+For a singleton resource that has only one valid name for its resource type, that fixed name is safe only when it represents the complete Bicep name relative to the generated relationship:
+
+1. When the immediate structural `Parent` resolves, the resource type is the parent's resource type plus exactly one trailing type segment.
+2. When there is no generated `Parent`, the resource type must contain exactly one resource type segment after the provider namespace.
+
+In those cases, `Name` is getter-only and receives the fixed singleton name as its default:
+
+```csharp
+public BicepValue<string> Name { get; }
+
+_name = DefineProperty<string>(
+    nameof(Name),
+    new[] { "name" },
+    isRequired: true,
+    defaultValue: "singletonName");
+```
+
+If either condition is not met, the generator treats the singleton name like a regular resource name: it remains required and settable, and the fixed one-segment name is not used as a default. The caller supplies all name segments not represented by a generated `Parent`.
+
+#### Supported Shapes
+
+| Resource shape | Generated relationship | Generated `Name` |
+|---|---|---|
+| Top-level regular resource | None | Required and settable |
+| Top-level singleton | None | Getter-only with the fixed singleton name |
+| Regular child with its direct parent generated locally | Strongly typed `Parent` | Required and settable; contains the child segment |
+| Singleton child with its direct parent generated locally | Strongly typed `Parent` | Getter-only with the fixed singleton name |
+| Child whose nearest generated ancestor is more than one resource type level above it | None | Required and settable; contains every resource name segment |
+| Child of a virtual or cross-package parent | None | Required and settable; contains every resource name segment |
+| Writable regular extension resource | `ProvisionableResource Scope` | Required and settable |
+| Writable singleton extension resource | `ProvisionableResource Scope` | Follows the parentless singleton rule: fixed only for a top-level resource type |
+| Read-only extension resource | None | Follows the regular or singleton name rule, but exposes no writable `Scope` |
+
+For example, if the nearest generated ancestor has resource type `Contoso/parents` and its singleton descendant has resource type `Contoso/parents/intermediates/settings`, that ancestor is not the immediate structural parent (`Contoso/parents/intermediates`). The descendant therefore has no generated `Parent` and requires the full name hierarchy:
+
+```csharp
+var setting = new SingletonSetting("setting")
+{
+    Name = "parentName/intermediateName/singletonName"
+};
+```
+
+The same rule applies when the parent is virtual, cross-package, or otherwise not generated locally. The Recovery Services shape reported in [#61575](https://github.com/Azure/azure-sdk-for-net/issues/61575) is generated effectively as:
+
+```csharp
+var storageConfig = new BackupResourceConfig("storageConfig")
+{
+    Name = "myVault/vaultstorageconfig"
+};
+```
+
+This produces a valid name for resource type `Microsoft.RecoveryServices/vaults/backupstorageconfig` without adding a dependency on the package that defines the vault.
 
 ### Model Provider
 
@@ -234,7 +342,7 @@ The output library bypasses the mgmt output pipeline (which would trigger mgmt-s
 
 ---
 
-## 7. Naming & Namespace Strategy
+## 7. Type Naming & Namespace Strategy
 
 - All types in flat namespace: `Azure.Provisioning.{ServiceName}` (no `.Models` sub-namespace)
 - Achieved by setting `model-namespace=false` in the provisioning emitter, which prevents the base `NamespaceVisitor` from appending `.Models`

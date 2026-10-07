@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedOps
         {
             TryGetApiVersion(ResourceType, out string managedOpApiVersion);
             _managedOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedOps", ResourceType.Namespace, Diagnostics);
-            _managedOperationsRestClient = new ManagedOperations(_managedOperationsClientDiagnostics, Pipeline, Endpoint, managedOpApiVersion ?? "2025-07-28-preview");
+            _managedOperationsRestClient = new ManagedOperations(_managedOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedOpApiVersion ?? "2025-07-28-preview");
             ValidateResourceId(id);
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ManagedOps
                 HttpMessage message = _managedOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ManagedOpPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
-                    new ManagedOpOperationSource(Client),
+                    new ManagedOpResourceOperationSource(Client),
                     _managedOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ManagedOps
                 HttpMessage message = _managedOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ManagedOpPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
-                    new ManagedOpOperationSource(Client),
+                    new ManagedOpResourceOperationSource(Client),
                     _managedOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,

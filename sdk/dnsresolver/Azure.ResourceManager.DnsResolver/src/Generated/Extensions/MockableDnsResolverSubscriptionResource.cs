@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
 
         private ClientDiagnostics DnsResolversClientDiagnostics => _dnsResolversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolvers DnsResolversRestClient => _dnsResolversRestClient ??= new DnsResolvers(DnsResolversClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsResolvers DnsResolversRestClient => _dnsResolversRestClient ??= new DnsResolvers(DnsResolversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DnsForwardingRulesetsClientDiagnostics => _dnsForwardingRulesetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsForwardingRulesets DnsForwardingRulesetsRestClient => _dnsForwardingRulesetsRestClient ??= new DnsForwardingRulesets(DnsForwardingRulesetsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsForwardingRulesets DnsForwardingRulesetsRestClient => _dnsForwardingRulesetsRestClient ??= new DnsForwardingRulesets(DnsForwardingRulesetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DnsResolverPoliciesClientDiagnostics => _dnsResolverPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolverPolicies DnsResolverPoliciesRestClient => _dnsResolverPoliciesRestClient ??= new DnsResolverPolicies(DnsResolverPoliciesClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsResolverPolicies DnsResolverPoliciesRestClient => _dnsResolverPoliciesRestClient ??= new DnsResolverPolicies(DnsResolverPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DnsResolverDomainListsClientDiagnostics => _dnsResolverDomainListsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolverDomainLists DnsResolverDomainListsRestClient => _dnsResolverDomainListsRestClient ??= new DnsResolverDomainLists(DnsResolverDomainListsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private DnsResolverDomainLists DnsResolverDomainListsRestClient => _dnsResolverDomainListsRestClient ??= new DnsResolverDomainLists(DnsResolverDomainListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         /// <summary>
         /// Lists DNS resolvers in all resource groups of a subscription.

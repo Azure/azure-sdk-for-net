@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(ResourceType, out string storageSyncServiceApiVersion);
             _storageSyncServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
-            _storageSyncServicesRestClient = new StorageSyncServices(_storageSyncServicesClientDiagnostics, Pipeline, Endpoint, storageSyncServiceApiVersion ?? "2022-09-01");
+            _storageSyncServicesRestClient = new StorageSyncServices(_storageSyncServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncServiceApiVersion ?? "2025-12-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _storageSyncServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageSyncServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<StorageSyncServiceResource> operation = new StorageSyncArmOperation<StorageSyncServiceResource>(
-                    new StorageSyncServiceOperationSource(Client),
+                    new StorageSyncServiceResourceOperationSource(Client),
                     _storageSyncServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _storageSyncServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageSyncServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<StorageSyncServiceResource> operation = new StorageSyncArmOperation<StorageSyncServiceResource>(
-                    new StorageSyncServiceOperationSource(Client),
+                    new StorageSyncServiceResourceOperationSource(Client),
                     _storageSyncServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,29 +18,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class UebaSettings : SecurityInsightsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="UebaSettings"/>. </summary>
-        public UebaSettings()
+        public UebaSettings() : base(SettingKind.Ueba)
         {
-            DataSources = new ChangeTrackingList<UebaDataSource>();
-            Kind = SettingKind.Ueba;
         }
 
         /// <summary> Initializes a new instance of <see cref="UebaSettings"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the setting. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="dataSources"> The relevant data sources that enriched by ueba. </param>
-        internal UebaSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<UebaDataSource> dataSources) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Ueba properties. </param>
+        internal UebaSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, UebaProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
-            DataSources = dataSources;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> Ueba properties. </summary>
+        [WirePath("properties")]
+        internal UebaProperties Properties { get; set; }
 
         /// <summary> The relevant data sources that enriched by ueba. </summary>
         [WirePath("properties.dataSources")]
-        public IList<UebaDataSource> DataSources { get; }
+        public IList<UebaDataSources> DataSources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UebaProperties();
+                }
+                return Properties.DataSources;
+            }
+        }
     }
 }

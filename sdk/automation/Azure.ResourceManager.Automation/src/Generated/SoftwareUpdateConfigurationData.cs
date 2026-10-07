@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the SoftwareUpdateConfiguration data model.
-    /// Software update configuration properties.
-    /// </summary>
+    /// <summary> Software update configuration properties. </summary>
     public partial class SoftwareUpdateConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationData"/>. </summary>
         /// <param name="updateConfiguration"> update specific properties for the Software update configuration. </param>
@@ -60,61 +28,136 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNull(updateConfiguration, nameof(updateConfiguration));
             Argument.AssertNotNull(scheduleInfo, nameof(scheduleInfo));
 
-            UpdateConfiguration = updateConfiguration;
-            ScheduleInfo = scheduleInfo;
+            Properties = new SoftwareUpdateConfigurationProperties(updateConfiguration, scheduleInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="updateConfiguration"> update specific properties for the Software update configuration. </param>
-        /// <param name="scheduleInfo"> Schedule information for the Software update configuration. </param>
-        /// <param name="provisioningState"> Provisioning state for the software update configuration, which only appears in the response. </param>
-        /// <param name="error"> Details of provisioning error. </param>
-        /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
-        /// <param name="createdBy"> CreatedBy property, which only appears in the response. </param>
-        /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
-        /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
-        /// <param name="tasks"> Tasks information for the Software update configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationResponseError error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Software update configuration properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SoftwareUpdateConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            UpdateConfiguration = updateConfiguration;
-            ScheduleInfo = scheduleInfo;
-            ProvisioningState = provisioningState;
-            Error = error;
-            CreatedOn = createdOn;
-            CreatedBy = createdBy;
-            LastModifiedOn = lastModifiedOn;
-            LastModifiedBy = lastModifiedBy;
-            Tasks = tasks;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationData"/> for deserialization. </summary>
-        internal SoftwareUpdateConfigurationData()
-        {
-        }
+        /// <summary> Software update configuration properties. </summary>
+        internal SoftwareUpdateConfigurationProperties Properties { get; set; }
 
         /// <summary> update specific properties for the Software update configuration. </summary>
-        public SoftwareUpdateConfigurationSpecificProperties UpdateConfiguration { get; set; }
+        public SoftwareUpdateConfigurationSpecificProperties UpdateConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdateConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SoftwareUpdateConfigurationProperties();
+                }
+                Properties.UpdateConfiguration = value;
+            }
+        }
+
         /// <summary> Schedule information for the Software update configuration. </summary>
-        public SoftwareUpdateConfigurationScheduleProperties ScheduleInfo { get; set; }
+        public SoftwareUpdateConfigurationScheduleProperties ScheduleInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduleInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SoftwareUpdateConfigurationProperties();
+                }
+                Properties.ScheduleInfo = value;
+            }
+        }
+
         /// <summary> Provisioning state for the software update configuration, which only appears in the response. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Details of provisioning error. </summary>
-        public AutomationResponseError Error { get; set; }
+        public AutomationResponseError Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SoftwareUpdateConfigurationProperties();
+                }
+                Properties.Error = value;
+            }
+        }
+
         /// <summary> Creation time of the resource, which only appears in the response. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> CreatedBy property, which only appears in the response. </summary>
-        public string CreatedBy { get; }
+        public string CreatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedBy;
+            }
+        }
+
         /// <summary> Last time resource was modified, which only appears in the response. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> LastModifiedBy property, which only appears in the response. </summary>
-        public string LastModifiedBy { get; }
+        public string LastModifiedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedBy;
+            }
+        }
+
         /// <summary> Tasks information for the Software update configuration. </summary>
-        public SoftwareUpdateConfigurationTasks Tasks { get; set; }
+        public SoftwareUpdateConfigurationTasks Tasks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Tasks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SoftwareUpdateConfigurationProperties();
+                }
+                Properties.Tasks = value;
+            }
+        }
     }
 }

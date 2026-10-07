@@ -7,19 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Specifies the custom service configuration. </summary>
     public partial class CustomService
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="CustomService"/>. </summary>
         public CustomService()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, EnvironmentVariable>();
             Endpoints = new ChangeTrackingList<ContainerEndpoint>();
             Volumes = new ChangeTrackingList<VolumeDefinition>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomService"/>. </summary>
@@ -29,8 +33,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="docker"> Describes the docker settings for the image. </param>
         /// <param name="endpoints"> Configuring the endpoints for the container. </param>
         /// <param name="volumes"> Configuring the volumes for the container. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CustomService(string name, ImageSetting image, IDictionary<string, EnvironmentVariable> environmentVariables, DockerSetting docker, IList<ContainerEndpoint> endpoints, IList<VolumeDefinition> volumes, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="kernel"> Describes the jupyter kernel settings for the image if its a custom environment. </param>
+        /// <param name="additionalProperties"></param>
+        internal CustomService(string name, ImageSetting image, IDictionary<string, EnvironmentVariable> environmentVariables, DockerSetting docker, IList<ContainerEndpoint> endpoints, IList<VolumeDefinition> volumes, JupyterKernelConfig kernel, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             Image = image;
@@ -38,58 +43,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Docker = docker;
             Endpoints = endpoints;
             Volumes = volumes;
-            AdditionalProperties = additionalProperties;
+            Kernel = kernel;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Name of the Custom Service. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Describes the Image Specifications. </summary>
         [WirePath("image")]
         public ImageSetting Image { get; set; }
+
         /// <summary> Environment Variable for the container. </summary>
         [WirePath("environmentVariables")]
         public IDictionary<string, EnvironmentVariable> EnvironmentVariables { get; }
+
         /// <summary> Describes the docker settings for the image. </summary>
         [WirePath("docker")]
         public DockerSetting Docker { get; set; }
+
         /// <summary> Configuring the endpoints for the container. </summary>
         [WirePath("endpoints")]
         public IList<ContainerEndpoint> Endpoints { get; }
+
         /// <summary> Configuring the volumes for the container. </summary>
         [WirePath("volumes")]
         public IList<VolumeDefinition> Volumes { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("AdditionalProperties")]
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Describes the jupyter kernel settings for the image if its a custom environment. </summary>
+        [WirePath("kernel")]
+        public JupyterKernelConfig Kernel { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

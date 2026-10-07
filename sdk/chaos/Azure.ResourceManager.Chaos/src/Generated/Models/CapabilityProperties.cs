@@ -27,14 +27,16 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="description"> Localized string of the description. </param>
         /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
         /// <param name="urn"> String of the URN for this Capability Type. </param>
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use because resource is created synchronously. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilityProperties(string publisher, string targetType, string description, string parametersSchema, string urn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapabilityProperties(string publisher, string targetType, string description, string parametersSchema, string urn, ChaosProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Publisher = publisher;
             TargetType = targetType;
             Description = description;
             ParametersSchema = parametersSchema;
             Urn = urn;
+            ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,5 +54,8 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> String of the URN for this Capability Type. </summary>
         public string Urn { get; }
+
+        /// <summary> Resource provisioning state. Not currently in use because resource is created synchronously. </summary>
+        public ChaosProvisioningState? ProvisioningState { get; }
     }
 }

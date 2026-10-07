@@ -14,7 +14,6 @@ using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> Job run properties. </summary>
     internal partial class JobRunProperties : IJsonModel<JobRunProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -95,15 +94,15 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("agentResourceId"u8);
                 writer.WriteStringValue(AgentResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ExecutionStartsOn))
             {
                 writer.WritePropertyName("executionStartTime"u8);
-                writer.WriteStringValue(ExecutionStartOn.Value, "O");
+                writer.WriteStringValue(ExecutionStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionEndOn))
+            if (options.Format != "W" && Optional.IsDefined(ExecutionEndsOn))
             {
                 writer.WritePropertyName("executionEndTime"u8);
-                writer.WriteStringValue(ExecutionEndOn.Value, "O");
+                writer.WriteStringValue(ExecutionEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(TriggerType))
             {
@@ -302,8 +301,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             JobRunScanStatus? scanStatus = default;
             string agentName = default;
             ResourceIdentifier agentResourceId = default;
-            DateTimeOffset? executionStartOn = default;
-            DateTimeOffset? executionEndOn = default;
+            DateTimeOffset? executionStartsOn = default;
+            DateTimeOffset? executionEndsOn = default;
             StorageMoverJobTriggerType? triggerType = default;
             DateTimeOffset? scheduledExecutionOn = default;
             DateTimeOffset? lastStatusUpdate = default;
@@ -357,11 +356,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("agentResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeAgentResourceIdValue(prop, ref agentResourceId);
                     continue;
                 }
                 if (prop.NameEquals("executionStartTime"u8))
@@ -370,7 +365,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    executionStartOn = prop.Value.GetDateTimeOffset("O");
+                    executionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("executionEndTime"u8))
@@ -379,7 +374,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    executionEndOn = prop.Value.GetDateTimeOffset("O");
+                    executionEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("triggerType"u8))
@@ -524,11 +519,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeSourceResourceIdValue(prop, ref sourceResourceId);
                     continue;
                 }
                 if (prop.NameEquals("sourceProperties"u8))
@@ -537,7 +528,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    sourceProperties = BinaryData.FromString(prop.Value.GetRawText());
+                    sourceProperties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("targetName"u8))
@@ -547,11 +538,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("targetResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeTargetResourceIdValue(prop, ref targetResourceId);
                     continue;
                 }
                 if (prop.NameEquals("targetProperties"u8))
@@ -560,7 +547,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    targetProperties = BinaryData.FromString(prop.Value.GetRawText());
+                    targetProperties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("jobDefinitionProperties"u8))
@@ -569,7 +556,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    jobDefinitionProperties = BinaryData.FromString(prop.Value.GetRawText());
+                    jobDefinitionProperties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -606,7 +593,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new JobRunProperties(
@@ -614,8 +601,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 scanStatus,
                 agentName,
                 agentResourceId,
-                executionStartOn,
-                executionEndOn,
+                executionStartsOn,
+                executionEndsOn,
                 triggerType,
                 scheduledExecutionOn,
                 lastStatusUpdate,

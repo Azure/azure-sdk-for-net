@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MonitorDimensionOperator : IEquatable<MonitorDimensionOperator>
     {
         private readonly string _value;
+        /// <summary> Include. </summary>
+        private const string IncludeValue = "Include";
+        /// <summary> Exclude. </summary>
+        private const string ExcludeValue = "Exclude";
 
         /// <summary> Initializes a new instance of <see cref="MonitorDimensionOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorDimensionOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IncludeValue = "Include";
-        private const string ExcludeValue = "Exclude";
+            _value = value;
+        }
 
         /// <summary> Include. </summary>
         public static MonitorDimensionOperator Include { get; } = new MonitorDimensionOperator(IncludeValue);
+
         /// <summary> Exclude. </summary>
         public static MonitorDimensionOperator Exclude { get; } = new MonitorDimensionOperator(ExcludeValue);
+
         /// <summary> Determines if two <see cref="MonitorDimensionOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorDimensionOperator left, MonitorDimensionOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorDimensionOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorDimensionOperator left, MonitorDimensionOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorDimensionOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorDimensionOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorDimensionOperator(string value) => new MonitorDimensionOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorDimensionOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorDimensionOperator?(string value) => value == null ? null : new MonitorDimensionOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorDimensionOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorDimensionOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

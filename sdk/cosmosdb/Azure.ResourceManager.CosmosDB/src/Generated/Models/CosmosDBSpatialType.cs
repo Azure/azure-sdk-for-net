@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBSpatialType : IEquatable<CosmosDBSpatialType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBSpatialType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBSpatialType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PointValue = "Point";
         private const string LineStringValue = "LineString";
         private const string PolygonValue = "Polygon";
         private const string MultiPolygonValue = "MultiPolygon";
 
-        /// <summary> Point. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSpatialType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBSpatialType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Point. </summary>
         public static CosmosDBSpatialType Point { get; } = new CosmosDBSpatialType(PointValue);
-        /// <summary> LineString. </summary>
+
+        /// <summary> Gets the LineString. </summary>
         public static CosmosDBSpatialType LineString { get; } = new CosmosDBSpatialType(LineStringValue);
-        /// <summary> Polygon. </summary>
+
+        /// <summary> Gets the Polygon. </summary>
         public static CosmosDBSpatialType Polygon { get; } = new CosmosDBSpatialType(PolygonValue);
-        /// <summary> MultiPolygon. </summary>
+
+        /// <summary> Gets the MultiPolygon. </summary>
         public static CosmosDBSpatialType MultiPolygon { get; } = new CosmosDBSpatialType(MultiPolygonValue);
+
         /// <summary> Determines if two <see cref="CosmosDBSpatialType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBSpatialType left, CosmosDBSpatialType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBSpatialType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBSpatialType left, CosmosDBSpatialType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBSpatialType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBSpatialType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBSpatialType(string value) => new CosmosDBSpatialType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBSpatialType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBSpatialType?(string value) => value == null ? null : new CosmosDBSpatialType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBSpatialType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBSpatialType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

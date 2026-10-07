@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumeSnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppVolumeSnapshotResource> operation = new NetAppArmOperation<NetAppVolumeSnapshotResource>(
-                    new NetAppVolumeSnapshotOperationSource(Client),
+                    new NetAppVolumeSnapshotResourceOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumeSnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppVolumeSnapshotResource> operation = new NetAppArmOperation<NetAppVolumeSnapshotResource>(
-                    new NetAppVolumeSnapshotOperationSource(Client),
+                    new NetAppVolumeSnapshotResourceOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,

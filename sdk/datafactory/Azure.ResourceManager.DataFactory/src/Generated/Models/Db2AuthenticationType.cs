@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct Db2AuthenticationType : IEquatable<Db2AuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
 
         /// <summary> Initializes a new instance of <see cref="Db2AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Db2AuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static Db2AuthenticationType Basic { get; } = new Db2AuthenticationType(BasicValue);
+
         /// <summary> Determines if two <see cref="Db2AuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(Db2AuthenticationType left, Db2AuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="Db2AuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(Db2AuthenticationType left, Db2AuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="Db2AuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="Db2AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator Db2AuthenticationType(string value) => new Db2AuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="Db2AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator Db2AuthenticationType?(string value) => value == null ? null : new Db2AuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Db2AuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(Db2AuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

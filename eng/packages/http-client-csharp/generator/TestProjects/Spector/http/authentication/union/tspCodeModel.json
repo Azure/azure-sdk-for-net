@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "UnionClient",
+      "isExactName": false,
       "namespace": "Authentication.Union",
       "doc": "Illustrates clients generated with ApiKey and OAuth2 authentication.",
       "methods": [
@@ -16,12 +17,14 @@
           "$id": "2",
           "kind": "basic",
           "name": "validKey",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated",
           "operation": {
             "$id": "3",
             "name": "validKey",
+            "isExactName": false,
             "resourceName": "Union",
             "doc": "Check whether client is authenticated",
             "accessibility": "public",
@@ -57,12 +60,14 @@
           "$id": "4",
           "kind": "basic",
           "name": "validToken",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated",
           "operation": {
             "$id": "5",
             "name": "validToken",
+            "isExactName": false,
             "resourceName": "Union",
             "doc": "Check whether client is authenticated",
             "accessibility": "public",
@@ -124,7 +129,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Authentication.Union.endpoint"
+          "crossLanguageDefinitionId": "Authentication.Union.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

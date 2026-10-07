@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             TryGetApiVersion(SapVirtualInstanceResource.ResourceType, out string sapVirtualInstanceApiVersion);
             _sapVirtualInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapVirtualInstance", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
-            _sapVirtualInstancesRestClient = new SapVirtualInstances(_sapVirtualInstancesClientDiagnostics, Pipeline, Endpoint, sapVirtualInstanceApiVersion ?? "2024-09-01");
+            _sapVirtualInstancesRestClient = new SapVirtualInstances(_sapVirtualInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapVirtualInstanceApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, SapVirtualInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadsSapVirtualInstanceArmOperation<SapVirtualInstanceResource> operation = new WorkloadsSapVirtualInstanceArmOperation<SapVirtualInstanceResource>(
-                    new SapVirtualInstanceOperationSource(Client),
+                    new SapVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, SapVirtualInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadsSapVirtualInstanceArmOperation<SapVirtualInstanceResource> operation = new WorkloadsSapVirtualInstanceArmOperation<SapVirtualInstanceResource>(
-                    new SapVirtualInstanceOperationSource(Client),
+                    new SapVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,

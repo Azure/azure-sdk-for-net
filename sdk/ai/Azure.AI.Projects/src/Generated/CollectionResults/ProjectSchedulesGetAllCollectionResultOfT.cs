@@ -6,10 +6,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectSchedulesGetAllCollectionResultOfT : CollectionResult<ProjectsSchedule>
     {
         private readonly ProjectSchedules _client;
@@ -78,7 +80,17 @@ namespace Azure.AI.Projects
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private ClientResult GetNextResponse(PipelineMessage message)
         {
-            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectSchedules.GetAll");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

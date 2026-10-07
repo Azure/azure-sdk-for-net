@@ -225,8 +225,8 @@ namespace Azure.Search.Documents.Tests.Samples
                             {
                                 ResourceUri = new Uri(openAIEndpoint),
                                 ApiKey = openAIKey,
-                                DeploymentName = "gpt-5-mini",
-                                ModelName = AzureOpenAIModelName.Gpt5Mini
+                                DeploymentName = "gpt-5.4-mini",
+                                ModelName = AzureOpenAIModelName.Gpt54Mini
                             }));
 #if !SNIPPET
                 }

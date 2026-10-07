@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
 
         private ClientDiagnostics AssetsClientDiagnostics => _assetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Assets AssetsRestClient => _assetsRestClient ??= new Assets(AssetsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private Assets AssetsRestClient => _assetsRestClient ??= new Assets(AssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics AssetEndpointProfilesClientDiagnostics => _assetEndpointProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AssetEndpointProfiles AssetEndpointProfilesRestClient => _assetEndpointProfilesRestClient ??= new AssetEndpointProfiles(AssetEndpointProfilesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private AssetEndpointProfiles AssetEndpointProfilesRestClient => _assetEndpointProfilesRestClient ??= new AssetEndpointProfiles(AssetEndpointProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics SchemaRegistriesClientDiagnostics => _schemaRegistriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SchemaRegistries SchemaRegistriesRestClient => _schemaRegistriesRestClient ??= new SchemaRegistries(SchemaRegistriesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private SchemaRegistries SchemaRegistriesRestClient => _schemaRegistriesRestClient ??= new SchemaRegistries(SchemaRegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         /// <summary> Gets a collection of DeviceRegistryBillingContainers in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeviceRegistryBillingContainers and their operations over a DeviceRegistryBillingContainerResource. </returns>

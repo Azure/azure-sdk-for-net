@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base model for interim response configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StaticInterimResponseConfig"/> and <see cref="LlmInterimResponseConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LlmInterimResponseConfig"/> and <see cref="StaticInterimResponseConfig"/>.
     /// </summary>
     public abstract partial class InterimResponseConfigBase
     {
@@ -51,8 +51,5 @@ namespace Azure.AI.VoiceLive
         /// Supported: 'latency', 'tool'.
         /// </summary>
         public IList<InterimResponseTrigger> Triggers { get; }
-
-        /// <summary> Latency threshold in milliseconds before triggering interim response. Default is 2000ms. </summary>
-        public int? LatencyThresholdMs { get; set; }
     }
 }

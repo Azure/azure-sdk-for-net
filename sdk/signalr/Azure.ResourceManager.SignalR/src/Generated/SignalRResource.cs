@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(ResourceType, out string signalRApiVersion);
             _signalRResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", ResourceType.Namespace, Diagnostics);
-            _signalRResourcesRestClient = new SignalRResources(_signalRResourcesClientDiagnostics, Pipeline, Endpoint, signalRApiVersion ?? "2025-01-01-preview");
+            _signalRResourcesRestClient = new SignalRResources(_signalRResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _signalRResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignalRData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRResource> operation = new SignalRArmOperation<SignalRResource>(
-                    new SignalROperationSource(Client),
+                    new SignalRResourceOperationSource(Client),
                     _signalRResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _signalRResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignalRData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRResource> operation = new SignalRArmOperation<SignalRResource>(
-                    new SignalROperationSource(Client),
+                    new SignalRResourceOperationSource(Client),
                     _signalRResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

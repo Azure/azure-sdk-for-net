@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Batch
             _encryptionAtHost = DefineProperty<bool>(nameof(EncryptionAtHost), new string[] { "encryptionAtHost" });
             _uefiSettings = DefineModelProperty<BatchUefiSettings>(nameof(UefiSettings), new string[] { "uefiSettings" });
             _proxyAgentSettings = DefineModelProperty<BatchProxyAgentSettings>(nameof(ProxyAgentSettings), new string[] { "proxyAgentSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

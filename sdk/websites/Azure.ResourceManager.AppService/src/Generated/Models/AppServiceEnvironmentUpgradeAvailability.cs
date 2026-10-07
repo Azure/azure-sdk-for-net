@@ -7,54 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Whether an upgrade is available for this App Service Environment.
-    /// Serialized Name: UpgradeAvailability
-    /// </summary>
+    /// <summary> Whether an upgrade is available for this App Service Environment. </summary>
     public readonly partial struct AppServiceEnvironmentUpgradeAvailability : IEquatable<AppServiceEnvironmentUpgradeAvailability>
     {
         private readonly string _value;
+        /// <summary> No upgrade is currently available for this App Service Environment. </summary>
+        private const string NoneValue = "None";
+        /// <summary> An upgrade is ready to be manually initiated on this App Service Environment. </summary>
+        private const string ReadyValue = "Ready";
 
         /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentUpgradeAvailability"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppServiceEnvironmentUpgradeAvailability(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string ReadyValue = "Ready";
-
-        /// <summary>
-        /// No upgrade is currently available for this App Service Environment
-        /// Serialized Name: UpgradeAvailability.None
-        /// </summary>
+        /// <summary> No upgrade is currently available for this App Service Environment. </summary>
         public static AppServiceEnvironmentUpgradeAvailability None { get; } = new AppServiceEnvironmentUpgradeAvailability(NoneValue);
-        /// <summary>
-        /// An upgrade is ready to be manually initiated on this App Service Environment
-        /// Serialized Name: UpgradeAvailability.Ready
-        /// </summary>
+
+        /// <summary> An upgrade is ready to be manually initiated on this App Service Environment. </summary>
         public static AppServiceEnvironmentUpgradeAvailability Ready { get; } = new AppServiceEnvironmentUpgradeAvailability(ReadyValue);
+
         /// <summary> Determines if two <see cref="AppServiceEnvironmentUpgradeAvailability"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceEnvironmentUpgradeAvailability left, AppServiceEnvironmentUpgradeAvailability right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceEnvironmentUpgradeAvailability"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceEnvironmentUpgradeAvailability left, AppServiceEnvironmentUpgradeAvailability right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceEnvironmentUpgradeAvailability"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceEnvironmentUpgradeAvailability"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceEnvironmentUpgradeAvailability(string value) => new AppServiceEnvironmentUpgradeAvailability(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceEnvironmentUpgradeAvailability"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceEnvironmentUpgradeAvailability?(string value) => value == null ? null : new AppServiceEnvironmentUpgradeAvailability(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceEnvironmentUpgradeAvailability other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceEnvironmentUpgradeAvailability other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

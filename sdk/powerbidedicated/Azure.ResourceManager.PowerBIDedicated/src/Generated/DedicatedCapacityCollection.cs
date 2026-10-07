@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         {
             TryGetApiVersion(DedicatedCapacityResource.ResourceType, out string dedicatedCapacityApiVersion);
             _capacitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated", DedicatedCapacityResource.ResourceType.Namespace, Diagnostics);
-            _capacitiesRestClient = new Capacities(_capacitiesClientDiagnostics, Pipeline, Endpoint, dedicatedCapacityApiVersion ?? "2021-01-01");
+            _capacitiesRestClient = new Capacities(_capacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedCapacityApiVersion ?? "2021-01-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 HttpMessage message = _capacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, DedicatedCapacityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PowerBIDedicatedArmOperation<DedicatedCapacityResource> operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(
-                    new DedicatedCapacityOperationSource(Client),
+                    new DedicatedCapacityResourceOperationSource(Client),
                     _capacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 HttpMessage message = _capacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, DedicatedCapacityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PowerBIDedicatedArmOperation<DedicatedCapacityResource> operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(
-                    new DedicatedCapacityOperationSource(Client),
+                    new DedicatedCapacityResourceOperationSource(Client),
                     _capacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,

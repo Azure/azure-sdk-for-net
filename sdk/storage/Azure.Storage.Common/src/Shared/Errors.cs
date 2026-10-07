@@ -51,7 +51,7 @@ namespace Azure.Storage
             => new ArgumentException($"Cannot transfer {streamLength} bytes with a maximum transfer size of {statedMaxBlockSize} bytes per block. Please increase the TransferOptions.MaximumTransferChunkSize to at least {necessaryMinBlockSize}.");
 
         public static InvalidDataException HashMismatch(string hashHeaderName)
-            => new InvalidDataException($"{hashHeaderName} did not match hash of recieved data.");
+            => new InvalidDataException($"{hashHeaderName} did not match hash of received data.");
 
         public static InvalidDataException ChecksumMismatch(ReadOnlySpan<byte> left, ReadOnlySpan<byte> right)
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER

@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerService
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" });
             _dnsServer = DefineProperty<string>(nameof(DnsServer), new string[] { "dnsServer" });
             _rootDomainName = DefineProperty<string>(nameof(RootDomainName), new string[] { "rootDomainName" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for WindowsGmsaProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

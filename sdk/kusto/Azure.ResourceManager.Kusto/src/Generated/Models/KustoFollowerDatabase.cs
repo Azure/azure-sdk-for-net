@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> A class representing follower database object. </summary>
     public partial class KustoFollowerDatabase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoFollowerDatabase"/>. </summary>
         internal KustoFollowerDatabase()
@@ -52,36 +24,66 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoFollowerDatabase"/>. </summary>
-        /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
-        /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
-        /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
-        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
-        /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KustoFollowerDatabase(ResourceIdentifier clusterResourceId, string attachedDatabaseConfigurationName, string databaseName, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, KustoDatabaseShareOrigin? databaseShareOrigin, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Follower database definition. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KustoFollowerDatabase(FollowerDatabaseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClusterResourceId = clusterResourceId;
-            AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
-            DatabaseName = databaseName;
-            TableLevelSharingProperties = tableLevelSharingProperties;
-            DatabaseShareOrigin = databaseShareOrigin;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Follower database definition. </summary>
+        [WirePath("properties")]
+        internal FollowerDatabaseProperties Properties { get; }
 
         /// <summary> Resource id of the cluster that follows a database owned by this cluster. </summary>
         [WirePath("properties.clusterResourceId")]
-        public ResourceIdentifier ClusterResourceId { get; }
+        public ResourceIdentifier ClusterResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterResourceId;
+            }
+        }
+
         /// <summary> Resource name of the attached database configuration in the follower cluster. </summary>
         [WirePath("properties.attachedDatabaseConfigurationName")]
-        public string AttachedDatabaseConfigurationName { get; }
+        public string AttachedDatabaseConfigurationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AttachedDatabaseConfigurationName;
+            }
+        }
+
         /// <summary> The database name owned by this cluster that was followed. * in case following all databases. </summary>
         [WirePath("properties.databaseName")]
-        public string DatabaseName { get; }
+        public string DatabaseName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseName;
+            }
+        }
+
         /// <summary> Table level sharing specifications. </summary>
         [WirePath("properties.tableLevelSharingProperties")]
-        public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; }
+        public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TableLevelSharingProperties;
+            }
+        }
+
         /// <summary> The origin of the following setup. </summary>
         [WirePath("properties.databaseShareOrigin")]
-        public KustoDatabaseShareOrigin? DatabaseShareOrigin { get; }
+        public KustoDatabaseShareOrigin? DatabaseShareOrigin
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseShareOrigin;
+            }
+        }
     }
 }

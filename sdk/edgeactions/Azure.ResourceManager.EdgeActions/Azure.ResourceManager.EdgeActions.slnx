@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.EdgeActions.csproj" />
+  <Project Path="tests/Azure.ResourceManager.EdgeActions.Tests.csproj" />
+</Solution>

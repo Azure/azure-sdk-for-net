@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct ReferenceType : IEquatable<ReferenceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ReferenceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReferenceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IdValue = "Id";
         private const string DataPathValue = "DataPath";
         private const string OutputPathValue = "OutputPath";
 
-        /// <summary> Id. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ReferenceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Id. </summary>
         public static ReferenceType Id { get; } = new ReferenceType(IdValue);
-        /// <summary> DataPath. </summary>
+
+        /// <summary> Gets the DataPath. </summary>
         public static ReferenceType DataPath { get; } = new ReferenceType(DataPathValue);
-        /// <summary> OutputPath. </summary>
+
+        /// <summary> Gets the OutputPath. </summary>
         public static ReferenceType OutputPath { get; } = new ReferenceType(OutputPathValue);
+
         /// <summary> Determines if two <see cref="ReferenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReferenceType left, ReferenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReferenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReferenceType left, ReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReferenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReferenceType(string value) => new ReferenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReferenceType?(string value) => value == null ? null : new ReferenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReferenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

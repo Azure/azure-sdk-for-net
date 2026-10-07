@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DataFactorySparkConfigurationType : IEquatable<DataFactorySparkConfigurationType>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Customized. </summary>
+        private const string CustomizedValue = "Customized";
+        /// <summary> Artifact. </summary>
+        private const string ArtifactValue = "Artifact";
 
         /// <summary> Initializes a new instance of <see cref="DataFactorySparkConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFactorySparkConfigurationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string CustomizedValue = "Customized";
-        private const string ArtifactValue = "Artifact";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static DataFactorySparkConfigurationType Default { get; } = new DataFactorySparkConfigurationType(DefaultValue);
+
         /// <summary> Customized. </summary>
         public static DataFactorySparkConfigurationType Customized { get; } = new DataFactorySparkConfigurationType(CustomizedValue);
+
         /// <summary> Artifact. </summary>
         public static DataFactorySparkConfigurationType Artifact { get; } = new DataFactorySparkConfigurationType(ArtifactValue);
+
         /// <summary> Determines if two <see cref="DataFactorySparkConfigurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFactorySparkConfigurationType left, DataFactorySparkConfigurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFactorySparkConfigurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFactorySparkConfigurationType left, DataFactorySparkConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactorySparkConfigurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFactorySparkConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFactorySparkConfigurationType(string value) => new DataFactorySparkConfigurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFactorySparkConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFactorySparkConfigurationType?(string value) => value == null ? null : new DataFactorySparkConfigurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFactorySparkConfigurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFactorySparkConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

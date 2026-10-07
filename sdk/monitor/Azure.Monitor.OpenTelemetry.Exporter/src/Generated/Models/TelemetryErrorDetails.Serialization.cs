@@ -161,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TelemetryErrorDetails(index, statusCode, message, additionalBinaryDataProperties);

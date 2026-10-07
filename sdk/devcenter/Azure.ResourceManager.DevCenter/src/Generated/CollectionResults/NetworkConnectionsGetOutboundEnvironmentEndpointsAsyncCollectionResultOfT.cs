@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 OutboundEnvironmentEndpointCollection result = OutboundEnvironmentEndpointCollection.FromResponse(response);
-                yield return Page<OutboundEnvironmentEndpoint>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OutboundEnvironmentEndpoint>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

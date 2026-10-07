@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     /// <summary>
     /// A class representing a ArmDeployment along with the instance operations that can be performed on it.
@@ -51,8 +50,8 @@ namespace Azure.ResourceManager.Resources
         internal ArmDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string armDeploymentApiVersion);
-            _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
-            _armDeploymentsRestClient = new ArmDeployments(_armDeploymentsClientDiagnostics, Pipeline, Endpoint, armDeploymentApiVersion ?? "2025-04-01");
+            _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Deployments", ResourceType.Namespace, Diagnostics);
+            _armDeploymentsRestClient = new ArmDeployments(_armDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResourcesArmOperation operation = new ResourcesArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DeploymentsArmOperation operation = new DeploymentsArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResourcesArmOperation operation = new ResourcesArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DeploymentsArmOperation operation = new DeploymentsArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -690,7 +689,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResourcesArmOperation<ArmDeploymentValidateResult> operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(
+                DeploymentsArmOperation<ArmDeploymentValidateResult> operation = new DeploymentsArmOperation<ArmDeploymentValidateResult>(
                     new ArmDeploymentValidateResultOperationSource(),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
@@ -749,7 +748,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResourcesArmOperation<ArmDeploymentValidateResult> operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(
+                DeploymentsArmOperation<ArmDeploymentValidateResult> operation = new DeploymentsArmOperation<ArmDeploymentValidateResult>(
                     new ArmDeploymentValidateResultOperationSource(),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
@@ -808,8 +807,8 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
-                    new ArmDeploymentOperationSource(Client),
+                DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
+                    new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -867,8 +866,8 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
-                    new ArmDeploymentOperationSource(Client),
+                DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
+                    new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -879,258 +878,6 @@ namespace Azure.ResourceManager.Resources
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ArmDeploymentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
-                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ArmDeploymentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
-                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ArmDeploymentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
-                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ArmDeploymentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
-                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ArmDeploymentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
-                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ArmDeploymentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _armDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
-                    return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
             }
             catch (Exception e)
             {

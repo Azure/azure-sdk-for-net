@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class WebAppLogLevelExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WebAppLogLevel value) => value switch
         {
             WebAppLogLevel.Off => "Off",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppLogLevel value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WebAppLogLevel ToWebAppLogLevel(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Off")) return WebAppLogLevel.Off;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose")) return WebAppLogLevel.Verbose;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Information")) return WebAppLogLevel.Information;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return WebAppLogLevel.Warning;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return WebAppLogLevel.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Off"))
+            {
+                return WebAppLogLevel.Off;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose"))
+            {
+                return WebAppLogLevel.Verbose;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Information"))
+            {
+                return WebAppLogLevel.Information;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning"))
+            {
+                return WebAppLogLevel.Warning;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error"))
+            {
+                return WebAppLogLevel.Error;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppLogLevel value.");
         }
     }

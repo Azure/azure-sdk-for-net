@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlContainerCreateAndUpdate()
         {
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlContainers(container, container2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlContainerList()
         {
@@ -112,7 +110,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlContainers(containers[0], container);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlContainerThroughput()
         {
@@ -130,9 +127,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task SqlContainerMigrateToAutoscale()
         {
             var container = await CreateSqlContainer(null);
@@ -143,9 +140,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertAutoscale(throughputData);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task SqlContainerMigrateToManual()
         {
             var container = await CreateSqlContainer(new AutoscaleSettings()
@@ -160,28 +157,24 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertManualThroughput(throughputData);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlContainerRetrieveContinuousBackupInformation()
         {
             var container = await CreateSqlContainer(null);
 
             CosmosDBBackupInformation backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
-            long restoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp.Value.ToUnixTimeMilliseconds();
+            long restoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableOn.Value.ToUnixTimeMilliseconds();
             Assert.True(restoreTime > 0);
 
-            var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(container.Id, _containerName, container.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, container.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
+            var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(AzureLocation.WestUS, container.Data.Resource) { Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 } };
 
             container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
             backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
-            long latestRestoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp.Value.ToUnixTimeMilliseconds();
+            long latestRestoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableOn.Value.ToUnixTimeMilliseconds();
             Assert.True(latestRestoreTime > 0);
             Assert.True(latestRestoreTime > restoreTime);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlContainerDelete()
         {
@@ -237,7 +230,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         },
                         new List<CosmosDBVectorIndex>(),
                         new List<FullTextIndexPath>(),
-                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
+                        additionalBinaryDataProperties: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
@@ -265,6 +258,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var createOptions = new CosmosDBAccountCreateOrUpdateContent(AzureLocation.WestUS, locations)
             {
+                DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                 Kind = CosmosDBAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
                 IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120", null) },

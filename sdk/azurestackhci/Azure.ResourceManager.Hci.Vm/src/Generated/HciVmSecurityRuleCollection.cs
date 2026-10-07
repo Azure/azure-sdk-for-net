@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmSecurityRuleResource.ResourceType, out string hciVmSecurityRuleApiVersion);
             _securityRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmSecurityRuleResource.ResourceType.Namespace, Diagnostics);
-            _securityRulesRestClient = new SecurityRules(_securityRulesClientDiagnostics, Pipeline, Endpoint, hciVmSecurityRuleApiVersion ?? "2025-09-01-preview");
+            _securityRulesRestClient = new SecurityRules(_securityRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmSecurityRuleApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _securityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityRuleName, HciVmSecurityRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmSecurityRuleResource> operation = new VmArmOperation<HciVmSecurityRuleResource>(
-                    new HciVmSecurityRuleOperationSource(Client),
+                    new HciVmSecurityRuleResourceOperationSource(Client),
                     _securityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _securityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityRuleName, HciVmSecurityRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmSecurityRuleResource> operation = new VmArmOperation<HciVmSecurityRuleResource>(
-                    new HciVmSecurityRuleOperationSource(Client),
+                    new HciVmSecurityRuleResourceOperationSource(Client),
                     _securityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

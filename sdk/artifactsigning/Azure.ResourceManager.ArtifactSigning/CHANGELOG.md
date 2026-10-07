@@ -1,5 +1,6 @@
 # Release History
-## 1.1.0-beta.1 (Unreleased)
+
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -8,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2026-07-15)
+
+### Features Added
+
+- Upgraded api-version to 2026-05-15-preview.
+- Added `ArtifactSigningCertificateProfileResource.RevokeCertificates` to revoke multiple certificates in a single request.
+- Added `ProgramType` property to `CertificateProfileProperties`.
+
+### Other Changes
+
+- Deprecated `ArtifactSigningCertificateProfileResource.RevokeCertificate`. Use `RevokeCertificates` instead.
+
+## 1.0.1 (2026-05-15)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.0.0 (2026-02-14)
 

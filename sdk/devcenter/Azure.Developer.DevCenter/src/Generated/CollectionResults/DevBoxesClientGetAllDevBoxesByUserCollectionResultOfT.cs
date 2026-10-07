@@ -40,7 +40,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The pages of DevBoxesClientGetAllDevBoxesByUserCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DevBox>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -49,8 +49,8 @@ namespace Azure.Developer.DevCenter
                     yield break;
                 }
                 PagedDevBox result = (PagedDevBox)response;
-                yield return Page<DevBox>.FromValues((IReadOnlyList<DevBox>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevBox>.FromValues((IReadOnlyList<DevBox>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

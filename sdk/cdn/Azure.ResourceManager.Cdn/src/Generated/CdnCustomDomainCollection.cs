@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnCustomDomainResource.ResourceType, out string cdnCustomDomainApiVersion);
             _customDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Endpoint, cdnCustomDomainApiVersion ?? "2025-09-01-preview");
+            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnCustomDomainApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _customDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, CdnCustomDomainCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnCustomDomainResource> operation = new CdnArmOperation<CdnCustomDomainResource>(
-                    new CdnCustomDomainOperationSource(Client),
+                    new CdnCustomDomainResourceOperationSource(Client),
                     _customDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _customDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, CdnCustomDomainCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnCustomDomainResource> operation = new CdnArmOperation<CdnCustomDomainResource>(
-                    new CdnCustomDomainOperationSource(Client),
+                    new CdnCustomDomainResourceOperationSource(Client),
                     _customDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,

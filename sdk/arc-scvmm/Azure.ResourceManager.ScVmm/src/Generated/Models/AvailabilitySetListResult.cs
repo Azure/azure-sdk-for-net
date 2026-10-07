@@ -7,64 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> List of AvailabilitySets. </summary>
+    /// <summary> The response of a AvailabilitySet list operation. </summary>
     internal partial class AvailabilitySetListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvailabilitySetListResult"/>. </summary>
-        internal AvailabilitySetListResult()
+        /// <param name="value"> The AvailabilitySet items on this page. </param>
+        internal AvailabilitySetListResult(IEnumerable<ScVmmAvailabilitySetData> value)
         {
-            Value = new ChangeTrackingList<ScVmmAvailabilitySetData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilitySetListResult"/>. </summary>
-        /// <param name="value"> List of AvailabilitySets. </param>
-        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilitySetListResult(IReadOnlyList<ScVmmAvailabilitySetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The AvailabilitySet items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilitySetListResult(IList<ScVmmAvailabilitySetData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of AvailabilitySets. </summary>
-        public IReadOnlyList<ScVmmAvailabilitySetData> Value { get; }
-        /// <summary> Url to follow for getting next page of resources. </summary>
+        /// <summary> The AvailabilitySet items on this page. </summary>
+        public IList<ScVmmAvailabilitySetData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

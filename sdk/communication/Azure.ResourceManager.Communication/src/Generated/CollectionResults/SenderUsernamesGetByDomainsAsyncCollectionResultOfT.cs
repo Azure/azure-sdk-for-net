@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Communication
                     yield break;
                 }
                 SenderUsernameResourceListResult result = SenderUsernameResourceListResult.FromResponse(response);
-                yield return Page<SenderUsernameResourceData>.FromValues((IReadOnlyList<SenderUsernameResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SenderUsernameResourceData>.FromValues((IReadOnlyList<SenderUsernameResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

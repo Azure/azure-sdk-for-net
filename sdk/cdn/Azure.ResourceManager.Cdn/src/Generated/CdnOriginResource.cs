@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string cdnOriginApiVersion);
             _originsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _originsRestClient = new Origins(_originsClientDiagnostics, Pipeline, Endpoint, cdnOriginApiVersion ?? "2025-09-01-preview");
+            _originsRestClient = new Origins(_originsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnOriginApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _originsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CdnOriginPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnOriginResource> operation = new CdnArmOperation<CdnOriginResource>(
-                    new CdnOriginOperationSource(Client),
+                    new CdnOriginResourceOperationSource(Client),
                     _originsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _originsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CdnOriginPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnOriginResource> operation = new CdnArmOperation<CdnOriginResource>(
-                    new CdnOriginOperationSource(Client),
+                    new CdnOriginResourceOperationSource(Client),
                     _originsClientDiagnostics,
                     Pipeline,
                     message.Request,

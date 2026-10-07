@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(OracleDBSystemResource.ResourceType, out string oracleDBSystemApiVersion);
             _dbSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBSystemResource.ResourceType.Namespace, Diagnostics);
-            _dbSystemsRestClient = new DbSystems(_dbSystemsClientDiagnostics, Pipeline, Endpoint, oracleDBSystemApiVersion ?? "2025-09-01");
+            _dbSystemsRestClient = new DbSystems(_dbSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _dbSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, OracleDBSystemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleDBSystemResource> operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(
-                    new OracleDBSystemOperationSource(Client),
+                    new OracleDBSystemResourceOperationSource(Client),
                     _dbSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _dbSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, OracleDBSystemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleDBSystemResource> operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(
-                    new OracleDBSystemOperationSource(Client),
+                    new OracleDBSystemResourceOperationSource(Client),
                     _dbSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,

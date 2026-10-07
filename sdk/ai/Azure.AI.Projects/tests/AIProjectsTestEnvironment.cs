@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Tests.Shared;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 
@@ -12,11 +13,17 @@ namespace Azure.AI.Projects.Tests
 {
     public class AIProjectsTestEnvironment : TestEnvironment
     {
+        public AIProjectsTestEnvironment()
+        {
+            PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+        }
+
         public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string DATASETNAME => GetRecordedVariable("DATASET_NAME");
         public string DATASETVERSION1 => GetRecordedVariable("DATASET_VERSION_1");
         public string DATASETVERSION2 => GetRecordedVariable("DATASET_VERSION_2");
         public string FOUNDRY_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_MODEL_NAME));
+        public string FOUNDRY_REALTIME_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_REALTIME_MODEL_NAME));
         public string MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
         public string MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME));
         public string EMBEDDING_MODEL_NAME => GetRecordedVariable(nameof(EMBEDDING_MODEL_NAME));
@@ -65,10 +72,44 @@ namespace Azure.AI.Projects.Tests
         public string FOUNDRY_AGENT_ID => GetRecordedVariable(nameof(FOUNDRY_AGENT_ID));
         public string TRACE_LOOKBACK_HOURS => GetRecordedVariable(nameof(TRACE_LOOKBACK_HOURS));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
-        public override Dictionary<string, string> ParseEnvironmentFile() => new()
+        public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
+        public string WEBIQ_CONNECTION_ID => GetRecordedVariable(nameof(WEBIQ_CONNECTION_ID));
+        public string HOSTED_AGENT_NAME => GetRecordedVariable(nameof(HOSTED_AGENT_NAME));
+        public string TEAMS_CONNECTION_NAME => GetRecordedVariable(nameof(TEAMS_CONNECTION_NAME));
+        public string TEAMS_GROUP_ID => GetRecordedVariable(nameof(TEAMS_GROUP_ID));
+        public string TEAMS_CHANNEL_ID => GetRecordedVariable(nameof(TEAMS_CHANNEL_ID));
+        public string GITHUB_CONNECTION_NAME => GetRecordedVariable(nameof(GITHUB_CONNECTION_NAME));
+        public string GITHUB_USERNAME => GetRecordedVariable(nameof(GITHUB_USERNAME));
+        public string GITHUB_REPOSITORY => GetRecordedVariable(nameof(GITHUB_REPOSITORY));
+
+        public override Dictionary<string, string> ParseEnvironmentFile()
         {
-            { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }
-        };
+            var values = AiTestEnvironmentBootstrap.ReadEnvironmentFile(
+                new Dictionary<string, string>
+                {
+                    { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }
+                },
+                out bool environmentFileFound);
+
+            ConfigureBootstrapping(environmentFileFound);
+            return values;
+        }
+
+        private void ConfigureBootstrapping(bool environmentFileFound)
+        {
+            if (environmentFileFound)
+            {
+                // A test environment is already provisioned. The AI Foundry suites need far more
+                // settings than the deployment template/scripts pre-create, so don't launch resource
+                // creation for a missing setting; let the test fail with a clear "missing environment
+                // variable" error instead.
+                AiTestEnvironmentBootstrap.DisableResourceBootstrapping();
+            }
+            else
+            {
+                PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+            }
+        }
 
         public override Task WaitForEnvironmentAsync()
         {

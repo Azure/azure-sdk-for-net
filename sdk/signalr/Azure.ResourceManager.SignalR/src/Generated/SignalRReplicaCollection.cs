@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRReplicaResource.ResourceType, out string signalRReplicaApiVersion);
             _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRReplicaResource.ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, signalRReplicaApiVersion ?? "2025-01-01-preview");
+            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRReplicaApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,

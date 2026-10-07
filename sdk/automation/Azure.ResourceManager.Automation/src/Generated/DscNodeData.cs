@@ -7,106 +7,204 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the DscNode data model.
-    /// Definition of a DscNode
-    /// </summary>
+    /// <summary> Definition of a DscNode. </summary>
     public partial class DscNodeData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DscNodeData"/>. </summary>
         public DscNodeData()
         {
-            ExtensionHandler = new ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DscNodeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastSeenOn"> Gets or sets the last seen time of the node. </param>
-        /// <param name="registrationOn"> Gets or sets the registration time of the node. </param>
-        /// <param name="ip"> Gets or sets the ip of the node. </param>
-        /// <param name="accountId"> Gets or sets the account id of the node. </param>
-        /// <param name="status"> Gets or sets the status of the node. </param>
-        /// <param name="nodeId"> Gets or sets the node id. </param>
-        /// <param name="etag"> Gets or sets the etag of the resource. </param>
-        /// <param name="totalCount"> Gets the total number of records matching filter criteria. </param>
-        /// <param name="extensionHandler"> Gets or sets the list of extensionHandler properties for a Node. </param>
-        /// <param name="namePropertiesNodeConfigurationName"> Gets or sets the name of the dsc node configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeenOn, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of a DscNode. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscNodeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            LastSeenOn = lastSeenOn;
-            RegistrationOn = registrationOn;
-            IP = ip;
-            AccountId = accountId;
-            Status = status;
-            NodeId = nodeId;
-            ETag = etag;
-            TotalCount = totalCount;
-            ExtensionHandler = extensionHandler;
-            NamePropertiesNodeConfigurationName = namePropertiesNodeConfigurationName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The properties of a DscNode. </summary>
+        internal DscNodeProperties Properties { get; set; }
+
         /// <summary> Gets or sets the last seen time of the node. </summary>
-        public DateTimeOffset? LastSeenOn { get; set; }
+        public DateTimeOffset? LastSeenOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastSeenOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                Properties.LastSeenOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the registration time of the node. </summary>
-        public DateTimeOffset? RegistrationOn { get; set; }
+        public DateTimeOffset? RegistrationOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RegistrationOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                Properties.RegistrationOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the ip of the node. </summary>
-        public string IP { get; set; }
+        public string IP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                Properties.IP = value;
+            }
+        }
+
         /// <summary> Gets or sets the account id of the node. </summary>
-        public string AccountId { get; set; }
+        public string AccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccountId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                Properties.AccountId = value;
+            }
+        }
+
         /// <summary> Gets or sets the status of the node. </summary>
-        public string Status { get; set; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
         /// <summary> Gets or sets the node id. </summary>
-        public string NodeId { get; set; }
+        public string NodeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                Properties.NodeId = value;
+            }
+        }
+
         /// <summary> Gets or sets the etag of the resource. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                Properties.ETag = value;
+            }
+        }
+
         /// <summary> Gets the total number of records matching filter criteria. </summary>
-        public int? TotalCount { get; set; }
+        public int? TotalCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                Properties.TotalCount = value;
+            }
+        }
+
         /// <summary> Gets or sets the list of extensionHandler properties for a Node. </summary>
-        public IList<DscNodeExtensionHandlerAssociationProperty> ExtensionHandler { get; }
+        public IList<DscNodeExtensionHandlerAssociationProperty> ExtensionHandler
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                return Properties.ExtensionHandler;
+            }
+        }
+
         /// <summary> Gets or sets the name of the dsc node configuration. </summary>
-        public string NamePropertiesNodeConfigurationName { get; set; }
+        public string NamePropertiesNodeConfigurationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NamePropertiesNodeConfigurationName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscNodeProperties();
+                }
+                Properties.NamePropertiesNodeConfigurationName = value;
+            }
+        }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(ResourceType, out string redisLinkedServerWithPropertyApiVersion);
             _linkedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            _linkedServerRestClient = new LinkedServer(_linkedServerClientDiagnostics, Pipeline, Endpoint, redisLinkedServerWithPropertyApiVersion ?? "2025-08-01-preview");
+            _linkedServerRestClient = new LinkedServer(_linkedServerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisLinkedServerWithPropertyApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _linkedServerRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisLinkedServerWithPropertyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation<RedisLinkedServerWithPropertyResource> operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(
-                    new RedisLinkedServerWithPropertyOperationSource(Client),
+                    new RedisLinkedServerWithPropertyResourceOperationSource(Client),
                     _linkedServerClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _linkedServerRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisLinkedServerWithPropertyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation<RedisLinkedServerWithPropertyResource> operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(
-                    new RedisLinkedServerWithPropertyOperationSource(Client),
+                    new RedisLinkedServerWithPropertyResourceOperationSource(Client),
                     _linkedServerClientDiagnostics,
                     Pipeline,
                     message.Request,

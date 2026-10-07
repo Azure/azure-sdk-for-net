@@ -48,7 +48,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The pages of EasmClientGetDiscoveryGroupRunsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DiscoveryRunResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -57,13 +57,13 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 DiscoveryRunPageResult result = (DiscoveryRunPageResult)response;
-                yield return Page<DiscoveryRunResult>.FromValues((IReadOnlyList<DiscoveryRunResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<DiscoveryRunResult>.FromValues((IReadOnlyList<DiscoveryRunResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

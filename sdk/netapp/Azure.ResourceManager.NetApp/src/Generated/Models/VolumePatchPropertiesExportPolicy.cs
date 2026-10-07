@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Export policy rule. </summary>
-        public IList<NetAppVolumeExportPolicyRule> Rules { get; }
+        public IList<NetAppVolumeExportPolicyRule> Rules { get; } = new ChangeTrackingList<NetAppVolumeExportPolicyRule>();
     }
 }

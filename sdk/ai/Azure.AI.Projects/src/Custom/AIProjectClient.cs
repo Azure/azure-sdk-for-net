@@ -2,16 +2,20 @@
 // Licensed under the MIT License.
 
 global using System.ClientModel;
-global using System.ClientModel.Primitives;
 global using System.ComponentModel;
 global using Microsoft.TypeSpec.Generator.Customizations;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
+using OpenAI.Realtime;
 
 #pragma warning disable AZC0007
 
@@ -19,6 +23,13 @@ namespace Azure.AI.Projects
 {
     // Data plane generated client.
     /// <summary> The AzureAI service client. </summary>
+    // The generator now also emits its own internal AIProjectClient(AuthenticationPolicy, Uri,
+    // AIProjectClientOptions) constructor to support settings-based construction, but it doesn't
+    // chain to ClientConnectionProvider's required base(int) constructor (a generator emission gap
+    // for this base-class shape), so the generated overload fails to compile. Suppress it in favor
+    // of this file's existing, already-correct customization of the same constructor below (which
+    // also threads a token provider through for ProjectsRealtimeClient's use).
+    [CodeGenSuppress("AIProjectClient", typeof(AuthenticationPolicy), typeof(Uri), typeof(AIProjectClientOptions))]
     public partial class AIProjectClient : ClientConnectionProvider
     {
         private const int _defaultMaxCacheSize = 100;
@@ -29,6 +40,9 @@ namespace Azure.AI.Projects
         private ProjectOpenAIClient _cachedOpenAIClient;
         private AgentAdministrationClient _cachedAgentsClient;
         private readonly TelemetryDetails _telemetryDetails;
+        [Experimental("AAIP002")]
+        private ProjectsRealtimeClient _cachedProjectsRealtimeClient;
+        private static readonly string s_experimentalHeaders = "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview";
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient()
@@ -39,7 +53,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of AIProjectClient from a <see cref="AIProjectClientSettings"/>. </summary>
         /// <param name="settings"> The settings for AIProjectClient. </param>
         [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
-        public AIProjectClient(AIProjectClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
+        public AIProjectClient(AIProjectClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options, settings?.CredentialProvider)
         {
         }
 
@@ -47,7 +61,17 @@ namespace Azure.AI.Projects
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal AIProjectClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AIProjectClientOptions options)
+        /// <param name="tokenProvider">
+        /// The token provider backing <paramref name="authenticationPolicy"/>, if the settings this
+        /// client was constructed from resolved one (for example a token-credential-based
+        /// <see cref="AIProjectClientSettings"/>). REST calls continue to authenticate solely via
+        /// <paramref name="authenticationPolicy"/> on the pipeline; this is stored only so
+        /// subclients with their own independent auth handshake -- such as the WebSocket-based
+        /// <see cref="ProjectsRealtimeClient"/> -- have a provider to use. It is left <see langword="null"/>
+        /// for settings this client cannot resolve one from (for example API-key-based settings),
+        /// in which case such subclients remain unavailable; see <see cref="GetProjectsRealtimeClient"/>.
+        /// </param>
+        internal AIProjectClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AIProjectClientOptions options, AuthenticationTokenProvider tokenProvider = null)
             : base(maxCacheSize: _defaultMaxCacheSize)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -55,8 +79,10 @@ namespace Azure.AI.Projects
             options ??= new AIProjectClientOptions();
 
             _endpoint = endpoint;
+            _tokenProvider = tokenProvider;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AIProjectClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
@@ -90,7 +116,7 @@ namespace Azure.AI.Projects
                 "api-version",
                 _apiVersion,
                 conditionToEvaluate: request => request?.Uri?.AbsolutePath?.ToLowerInvariant()?.Contains("openai/v1") != true);
-            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,HostedAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,Toolboxes=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,CodeAgents=V1Preview,Models=V1Preview,AgentsOptimization=V1Preview,Routines=V1Preview,ExternalAgents=V1Preview");
+            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", s_experimentalHeaders);
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", _telemetryDetails.UserAgent.ToString());
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
             PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
@@ -98,6 +124,7 @@ namespace Azure.AI.Projects
             PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
 
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
 
             _cacheManager = new ClientConnectionCacheManager(_endpoint, Pipeline, tokenProvider);
         }
@@ -117,26 +144,26 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of AIProjectConnectionsOperations. </summary>
         internal virtual AIProjectConnectionsOperations GetAIProjectConnectionsOperationsClient()
         {
-            return Volatile.Read(ref _cachedAIProjectConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectConnectionsOperations, new AIProjectConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectConnectionsOperations;
+            return Volatile.Read(ref _cachedAIProjectConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectConnectionsOperations, new AIProjectConnectionsOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectConnectionsOperations;
         }
 
         /// <summary> Initializes a new instance of AIProjectIndexesOperations. </summary>
         internal virtual AIProjectIndexesOperations GetAIProjectIndexesOperationsClient()
         {
-            return Volatile.Read(ref _cachedAIProjectIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectIndexesOperations, new AIProjectIndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectIndexesOperations;
+            return Volatile.Read(ref _cachedAIProjectIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectIndexesOperations, new AIProjectIndexesOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectIndexesOperations;
         }
 
         /// <summary> Initializes a new instance of AIProjectDeploymentsOperations. </summary>
         internal virtual AIProjectDeploymentsOperations GetAIProjectDeploymentsOperationsClient()
         {
-            return Volatile.Read(ref _cachedAIProjectDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDeploymentsOperations, new AIProjectDeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectDeploymentsOperations;
+            return Volatile.Read(ref _cachedAIProjectDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDeploymentsOperations, new AIProjectDeploymentsOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectDeploymentsOperations;
         }
 
         /// <summary> Initializes a new instance of AIProjectDatasetsOperations. </summary>
         internal virtual AIProjectDatasetsOperations GetAIProjectDatasetsOperationsClient()
         {
             // Custom method to allow for passing of credential used when SAS is not provided.
-            return Volatile.Read(ref _cachedAIProjectDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDatasetsOperations, new AIProjectDatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedAIProjectDatasetsOperations;
+            return Volatile.Read(ref _cachedAIProjectDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDatasetsOperations, new AIProjectDatasetsOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedAIProjectDatasetsOperations;
         }
 
         internal virtual ProjectOpenAIClient GetCachedOpenAIClient()
@@ -150,63 +177,108 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of RedTeams. </summary>
+        [Experimental("AAIP001")]
         internal virtual RedTeams GetRedTeamsClient()
         {
-            return Volatile.Read(ref _cachedRedTeams) ?? Interlocked.CompareExchange(ref _cachedRedTeams, new RedTeams(Pipeline, _endpoint, _apiVersion), null) ?? _cachedRedTeams;
+            return Volatile.Read(ref _cachedRedTeams) ?? Interlocked.CompareExchange(ref _cachedRedTeams, new RedTeams(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedRedTeams;
         }
 
         /// <summary> Initializes a new instance of EvaluationRules. </summary>
         internal virtual EvaluationRules GetEvaluationRulesClient()
         {
-            return Volatile.Read(ref _cachedEvaluationRules) ?? Interlocked.CompareExchange(ref _cachedEvaluationRules, new EvaluationRules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluationRules;
+            return Volatile.Read(ref _cachedEvaluationRules) ?? Interlocked.CompareExchange(ref _cachedEvaluationRules, new EvaluationRules(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluationRules;
         }
 
         /// <summary> Initializes a new instance of EvaluationTaxonomies. </summary>
         internal virtual EvaluationTaxonomies GetEvaluationTaxonomiesClient()
         {
-            return Volatile.Read(ref _cachedEvaluationTaxonomies) ?? Interlocked.CompareExchange(ref _cachedEvaluationTaxonomies, new EvaluationTaxonomies(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluationTaxonomies;
+            return Volatile.Read(ref _cachedEvaluationTaxonomies) ?? Interlocked.CompareExchange(ref _cachedEvaluationTaxonomies, new EvaluationTaxonomies(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluationTaxonomies;
         }
 
         /// <summary> Initializes a new instance of ProjectEvaluators. </summary>
+        [Experimental("AAIP001")]
         internal virtual ProjectEvaluators GetProjectEvaluatorsClient()
         {
-            return Volatile.Read(ref _cachedProjectEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectEvaluators, new ProjectEvaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectEvaluators;
+            return Volatile.Read(ref _cachedProjectEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectEvaluators, new ProjectEvaluators(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectEvaluators;
         }
 
         /// <summary> Initializes a new instance of ProjectInsights. </summary>
+        [Experimental("AAIP001")]
         internal virtual ProjectInsights GetProjectInsightsClient()
         {
-            return Volatile.Read(ref _cachedProjectInsights) ?? Interlocked.CompareExchange(ref _cachedProjectInsights, new ProjectInsights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectInsights;
+            return Volatile.Read(ref _cachedProjectInsights) ?? Interlocked.CompareExchange(ref _cachedProjectInsights, new ProjectInsights(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectInsights;
         }
 
         /// <summary> Initializes a new instance of ProjectSchedules. </summary>
+        [Experimental("AAIP001")]
         internal virtual ProjectSchedules GetProjectSchedulesClient()
         {
-            return Volatile.Read(ref _cachedProjectSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectSchedules, new ProjectSchedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectSchedules;
+            return Volatile.Read(ref _cachedProjectSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectSchedules, new ProjectSchedules(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectSchedules;
         }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStoresOperations. </summary>
+        [Experimental("AAIP001")]
         internal virtual AIProjectMemoryStores GetAIProjectMemoryStoresOperationsClient()
         {
-            return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
+            return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
         }
 
         /// <summary> Initializes a new instance of AIProjectModels. </summary>
+        [Experimental("AAIP001")]
         internal virtual AIProjectModels GetAIProjectModelsClient()
         {
-            return Volatile.Read(ref _cachedAIProjectModels) ?? Interlocked.CompareExchange(ref _cachedAIProjectModels, new AIProjectModels(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectModels;
+            return Volatile.Read(ref _cachedAIProjectModels) ?? Interlocked.CompareExchange(ref _cachedAIProjectModels, new AIProjectModels(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectModels;
         }
 
         /// <summary> Initializes a new instance of DataGenerationJobs. </summary>
+        [Experimental("AAIP001")]
         internal virtual DataGenerationJobs GetDataGenerationJobsClient()
         {
-            return Volatile.Read(ref _cachedDataGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedDataGenerationJobs, new DataGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataGenerationJobs;
+            return Volatile.Read(ref _cachedDataGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedDataGenerationJobs, new DataGenerationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataGenerationJobs;
         }
 
         /// <summary> Initializes a new instance of EvaluatorGenerationJobs. </summary>
+        [Experimental("AAIP001")]
         internal virtual EvaluatorGenerationJobs GetEvaluatorGenerationJobsClient()
         {
-            return Volatile.Read(ref _cachedEvaluatorGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedEvaluatorGenerationJobs, new EvaluatorGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluatorGenerationJobs;
+            return Volatile.Read(ref _cachedEvaluatorGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedEvaluatorGenerationJobs, new EvaluatorGenerationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluatorGenerationJobs;
+        }
+
+        /// <summary> Initializes a new instance of AIProjectRoutines. </summary>
+        [Experimental("AAIP001")]
+        internal virtual AIProjectRoutines GetAIProjectRoutinesClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
+        }
+
+        [Experimental("AAIP002")]
+        internal virtual ProjectsRealtimeClient GetProjectsRealtimeClient()
+        {
+            if (_tokenProvider is null)
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(ProjectsRealtimeClient)} requires an {nameof(AuthenticationTokenProvider)}, but this {nameof(AIProjectClient)} " +
+                    $"was not constructed with one (for example, it was constructed from an {nameof(AIProjectClientSettings)} whose credential " +
+                    $"could not resolve one). Construct the client with the {nameof(AIProjectClient)}(Uri, AuthenticationTokenProvider, AIProjectClientOptions) " +
+                    "constructor to use Voice Agents realtime sessions.");
+            }
+
+            return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient, new ProjectsRealtimeClient(_endpoint, _tokenProvider, _flows[0], _apiVersion, s_experimentalHeaders), null) ?? _cachedProjectsRealtimeClient;
+        }
+
+        /// <summary>
+        /// Gets the client for working with Voice Agents' realtime endpoints. Call
+        /// <see cref="ProjectsRealtimeClient.StartSessionAsync"/> on it (the same method an OpenAI
+        /// <see cref="RealtimeClient"/> consumer would use) to start and connect a session for a
+        /// named voice agent.
+        /// </summary>
+        [Experimental("AAIP002")]
+        public virtual ProjectsRealtimeClient ProjectsRealtimeClient => GetProjectsRealtimeClient();
+
+        /// <summary> Initializes a new instance of AgentInsightMonitors. </summary>
+        internal virtual AgentInsightMonitors GetAgentInsightMonitorsClient()
+        {
+            return Volatile.Read(ref _cachedAgentInsightMonitors) ?? Interlocked.CompareExchange(ref _cachedAgentInsightMonitors, new AgentInsightMonitors(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentInsightMonitors;
         }
         /// <summary> Gets the client for managing connections. </summary>
         public virtual AIProjectConnectionsOperations Connections { get => GetAIProjectConnectionsOperationsClient(); }
@@ -216,18 +288,44 @@ namespace Azure.AI.Projects
         public virtual AIProjectDeploymentsOperations Deployments { get => GetAIProjectDeploymentsOperationsClient(); }
         /// <summary> Gets the client for managing indexes. </summary>
         public virtual AIProjectIndexesOperations Indexes { get => GetAIProjectIndexesOperationsClient(); }
+        /// <summary> Gets the client for invoking Azure OpenAI operations scoped to this project. </summary>
         public virtual ProjectOpenAIClient ProjectOpenAIClient => GetCachedOpenAIClient();
+        /// <summary> Gets the client for administering agents in this project. </summary>
         public virtual AgentAdministrationClient AgentAdministrationClient => GetCachedAgentsClient();
+        /// <summary> Gets the client for managing memory stores. </summary>
+        [Experimental("AAIP001")]
         public virtual AIProjectMemoryStores MemoryStores => GetAIProjectMemoryStoresClient();
+        /// <summary> Gets the client for managing red team scans. </summary>
+        [Experimental("AAIP001")]
         public virtual RedTeams RedTeams => GetRedTeamsClient();
+        /// <summary> Gets the client for managing evaluation rules. </summary>
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();
+        /// <summary> Gets the client for managing evaluation taxonomies. </summary>
         public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
+        /// <summary> Gets the client for managing project evaluators. </summary>
+        [Experimental("AAIP001")]
         public virtual ProjectEvaluators Evaluators => GetProjectEvaluatorsClient();
+        /// <summary> Gets the client for retrieving project insights. </summary>
+        [Experimental("AAIP001")]
         public virtual ProjectInsights Insights => GetProjectInsightsClient();
+        /// <summary> Gets the client for managing project schedules. </summary>
+        [Experimental("AAIP001")]
         public virtual ProjectSchedules Schedules => GetProjectSchedulesClient();
+        /// <summary> Gets the client for managing model deployments and capabilities. </summary>
+        [Experimental("AAIP001")]
         public virtual AIProjectModels Models => GetAIProjectModelsClient();
+        /// <summary> Gets the client for managing evaluator generation jobs. </summary>
+        [Experimental("AAIP001")]
         public virtual EvaluatorGenerationJobs EvaluatorGenerationJobs => GetEvaluatorGenerationJobsClient();
+        /// <summary> Gets the client for managing data generation jobs. </summary>
+        [Experimental("AAIP001")]
         public virtual DataGenerationJobs DataGenerationJobs => GetDataGenerationJobsClient();
+        /// <summary> Gets the client for routines operations. </summary>
+        [Experimental("AAIP001")]
+        public virtual AIProjectRoutines Routines => GetAIProjectRoutinesClient();
+        /// <summary> Gets the client for Agent Insights Monitors </summary>
+        [Experimental("AAIP001")]
+        public virtual AgentInsightMonitors AgentInsightMonitors => GetAgentInsightMonitorsClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 

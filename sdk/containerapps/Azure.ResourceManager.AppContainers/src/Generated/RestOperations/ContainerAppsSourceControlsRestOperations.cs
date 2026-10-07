@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppContainers
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of ContainerAppsSourceControls for mocking. </summary>
         protected ContainerAppsSourceControls()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of ContainerAppsSourceControls. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ContainerAppsSourceControls(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ContainerAppsSourceControls(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(ContainerAppsSourceControls).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -61,11 +64,12 @@ namespace Azure.ResourceManager.AppContainers
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, RequestContent content, string xMsGithubAuxiliary, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -85,17 +89,14 @@ namespace Azure.ResourceManager.AppContainers
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if (xMsGithubAuxiliary != null)
-            {
-                request.Headers.SetValue("x-ms-github-auxiliary", xMsGithubAuxiliary);
-            }
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, string xMsGithubAuxiliary, bool? ignoreWorkflowDeletionFailure, bool? deleteWorkflow, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -111,22 +112,11 @@ namespace Azure.ResourceManager.AppContainers
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (ignoreWorkflowDeletionFailure != null)
-            {
-                uri.AppendQuery("ignoreWorkflowDeletionFailure", TypeFormatters.ConvertToString(ignoreWorkflowDeletionFailure), true);
-            }
-            if (deleteWorkflow != null)
-            {
-                uri.AppendQuery("deleteWorkflow", TypeFormatters.ConvertToString(deleteWorkflow), true);
-            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            if (xMsGithubAuxiliary != null)
-            {
-                request.Headers.SetValue("x-ms-github-auxiliary", xMsGithubAuxiliary);
-            }
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -149,6 +139,7 @@ namespace Azure.ResourceManager.AppContainers
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -172,6 +163,7 @@ namespace Azure.ResourceManager.AppContainers
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

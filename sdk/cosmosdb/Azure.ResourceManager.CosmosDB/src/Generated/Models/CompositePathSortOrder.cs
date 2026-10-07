@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CompositePathSortOrder : IEquatable<CompositePathSortOrder>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CompositePathSortOrder"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CompositePathSortOrder(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AscendingValue = "ascending";
         private const string DescendingValue = "descending";
 
-        /// <summary> ascending. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompositePathSortOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CompositePathSortOrder(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Ascending. </summary>
         public static CompositePathSortOrder Ascending { get; } = new CompositePathSortOrder(AscendingValue);
-        /// <summary> descending. </summary>
+
+        /// <summary> Gets the Descending. </summary>
         public static CompositePathSortOrder Descending { get; } = new CompositePathSortOrder(DescendingValue);
+
         /// <summary> Determines if two <see cref="CompositePathSortOrder"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CompositePathSortOrder left, CompositePathSortOrder right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CompositePathSortOrder"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CompositePathSortOrder left, CompositePathSortOrder right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CompositePathSortOrder"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CompositePathSortOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CompositePathSortOrder(string value) => new CompositePathSortOrder(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CompositePathSortOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CompositePathSortOrder?(string value) => value == null ? null : new CompositePathSortOrder(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CompositePathSortOrder other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CompositePathSortOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

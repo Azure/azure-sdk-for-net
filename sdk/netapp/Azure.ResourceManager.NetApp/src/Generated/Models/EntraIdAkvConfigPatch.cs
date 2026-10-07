@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EntraIdAkvConfigPatch"/>. </summary>
-        public EntraIdAkvConfigPatch()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EntraIdAkvConfigPatch"/>. </summary>
         /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Entra ID credentials are stored. </param>
         /// <param name="certificateName"> The name of the certificate in Azure Key Vault. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </param>
@@ -34,14 +29,5 @@ namespace Azure.ResourceManager.NetApp.Models
             UserAssignedIdentity = userAssignedIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The Azure Key Vault URI where the Entra ID credentials are stored. </summary>
-        public Uri AzureKeyVaultUri { get; set; }
-
-        /// <summary> The name of the certificate in Azure Key Vault. </summary>
-        public string CertificateName { get; set; }
-
-        /// <summary> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </summary>
-        public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

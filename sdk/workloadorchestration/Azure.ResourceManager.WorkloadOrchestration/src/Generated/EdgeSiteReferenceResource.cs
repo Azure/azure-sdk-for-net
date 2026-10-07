@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(ResourceType, out string edgeSiteReferenceApiVersion);
             _siteReferencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            _siteReferencesRestClient = new SiteReferences(_siteReferencesClientDiagnostics, Pipeline, Endpoint, edgeSiteReferenceApiVersion ?? "2025-06-01");
+            _siteReferencesRestClient = new SiteReferences(_siteReferencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSiteReferenceApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _siteReferencesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeSiteReferenceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource>(
-                    new EdgeSiteReferenceOperationSource(Client),
+                    new EdgeSiteReferenceResourceOperationSource(Client),
                     _siteReferencesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _siteReferencesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeSiteReferenceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource>(
-                    new EdgeSiteReferenceOperationSource(Client),
+                    new EdgeSiteReferenceResourceOperationSource(Client),
                     _siteReferencesClientDiagnostics,
                     Pipeline,
                     message.Request,

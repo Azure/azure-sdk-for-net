@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct PipelineActivityState : IEquatable<PipelineActivityState>
     {
         private readonly string _value;
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Inactive. </summary>
+        private const string InactiveValue = "Inactive";
 
         /// <summary> Initializes a new instance of <see cref="PipelineActivityState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PipelineActivityState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string InactiveValue = "Inactive";
+            _value = value;
+        }
 
         /// <summary> Active. </summary>
         public static PipelineActivityState Active { get; } = new PipelineActivityState(ActiveValue);
+
         /// <summary> Inactive. </summary>
         public static PipelineActivityState Inactive { get; } = new PipelineActivityState(InactiveValue);
+
         /// <summary> Determines if two <see cref="PipelineActivityState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PipelineActivityState left, PipelineActivityState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PipelineActivityState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PipelineActivityState left, PipelineActivityState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PipelineActivityState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PipelineActivityState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PipelineActivityState(string value) => new PipelineActivityState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PipelineActivityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PipelineActivityState?(string value) => value == null ? null : new PipelineActivityState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PipelineActivityState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PipelineActivityState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

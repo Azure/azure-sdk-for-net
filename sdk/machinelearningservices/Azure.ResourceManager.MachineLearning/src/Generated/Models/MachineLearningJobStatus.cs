@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,77 +15,123 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningJobStatus : IEquatable<MachineLearningJobStatus>
     {
         private readonly string _value;
+        /// <summary> Run hasn't started yet. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> Run has started. The user has a run ID. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> (Not used currently) It will be used if ES is creating the compute target. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The run environment is being prepared. </summary>
+        private const string PreparingValue = "Preparing";
+        /// <summary> The job is queued in the compute target. For example, in BatchAI the job is in queued state, while waiting for all required nodes to be ready. </summary>
+        private const string QueuedValue = "Queued";
+        /// <summary> The job started to run in the compute target. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Job is completed in the target. It is in output collection state now. </summary>
+        private const string FinalizingValue = "Finalizing";
+        /// <summary> Cancellation has been requested for the job. </summary>
+        private const string CancelRequestedValue = "CancelRequested";
+        /// <summary> Job completed successfully. This reflects that both the job itself and output collection states completed successfully. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Job failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Following cancellation request, the job is now successfully canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary>
+        /// When heartbeat is enabled, if the run isn't updating any information to RunHistory then the run goes to NotResponding state.
+        /// NotResponding is the only state that is exempt from strict transition orders. A run can go from NotResponding to any of the previous states.
+        /// </summary>
+        private const string NotRespondingValue = "NotResponding";
+        /// <summary> The job is paused by users. Some adjustment to labeling jobs can be made only in paused state. </summary>
+        private const string PausedValue = "Paused";
+        /// <summary> Default job status if not mapped to all other statuses. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningJobStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string StartingValue = "Starting";
-        private const string ProvisioningValue = "Provisioning";
-        private const string PreparingValue = "Preparing";
-        private const string QueuedValue = "Queued";
-        private const string RunningValue = "Running";
-        private const string FinalizingValue = "Finalizing";
-        private const string CancelRequestedValue = "CancelRequested";
-        private const string CompletedValue = "Completed";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string NotRespondingValue = "NotResponding";
-        private const string PausedValue = "Paused";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> Run hasn't started yet. </summary>
         public static MachineLearningJobStatus NotStarted { get; } = new MachineLearningJobStatus(NotStartedValue);
+
         /// <summary> Run has started. The user has a run ID. </summary>
         public static MachineLearningJobStatus Starting { get; } = new MachineLearningJobStatus(StartingValue);
+
         /// <summary> (Not used currently) It will be used if ES is creating the compute target. </summary>
         public static MachineLearningJobStatus Provisioning { get; } = new MachineLearningJobStatus(ProvisioningValue);
+
         /// <summary> The run environment is being prepared. </summary>
         public static MachineLearningJobStatus Preparing { get; } = new MachineLearningJobStatus(PreparingValue);
+
         /// <summary> The job is queued in the compute target. For example, in BatchAI the job is in queued state, while waiting for all required nodes to be ready. </summary>
         public static MachineLearningJobStatus Queued { get; } = new MachineLearningJobStatus(QueuedValue);
+
         /// <summary> The job started to run in the compute target. </summary>
         public static MachineLearningJobStatus Running { get; } = new MachineLearningJobStatus(RunningValue);
+
         /// <summary> Job is completed in the target. It is in output collection state now. </summary>
         public static MachineLearningJobStatus Finalizing { get; } = new MachineLearningJobStatus(FinalizingValue);
+
         /// <summary> Cancellation has been requested for the job. </summary>
         public static MachineLearningJobStatus CancelRequested { get; } = new MachineLearningJobStatus(CancelRequestedValue);
+
         /// <summary> Job completed successfully. This reflects that both the job itself and output collection states completed successfully. </summary>
         public static MachineLearningJobStatus Completed { get; } = new MachineLearningJobStatus(CompletedValue);
+
         /// <summary> Job failed. </summary>
         public static MachineLearningJobStatus Failed { get; } = new MachineLearningJobStatus(FailedValue);
+
         /// <summary> Following cancellation request, the job is now successfully canceled. </summary>
         public static MachineLearningJobStatus Canceled { get; } = new MachineLearningJobStatus(CanceledValue);
+
         /// <summary>
         /// When heartbeat is enabled, if the run isn't updating any information to RunHistory then the run goes to NotResponding state.
         /// NotResponding is the only state that is exempt from strict transition orders. A run can go from NotResponding to any of the previous states.
         /// </summary>
         public static MachineLearningJobStatus NotResponding { get; } = new MachineLearningJobStatus(NotRespondingValue);
+
         /// <summary> The job is paused by users. Some adjustment to labeling jobs can be made only in paused state. </summary>
         public static MachineLearningJobStatus Paused { get; } = new MachineLearningJobStatus(PausedValue);
+
         /// <summary> Default job status if not mapped to all other statuses. </summary>
         public static MachineLearningJobStatus Unknown { get; } = new MachineLearningJobStatus(UnknownValue);
+
         /// <summary> Determines if two <see cref="MachineLearningJobStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningJobStatus left, MachineLearningJobStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningJobStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningJobStatus left, MachineLearningJobStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningJobStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningJobStatus(string value) => new MachineLearningJobStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningJobStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningJobStatus?(string value) => value == null ? null : new MachineLearningJobStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningJobStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningJobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

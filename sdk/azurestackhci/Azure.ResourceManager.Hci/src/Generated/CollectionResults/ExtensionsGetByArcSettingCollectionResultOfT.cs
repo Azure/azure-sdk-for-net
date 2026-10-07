@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 ExtensionList result = ExtensionList.FromResponse(response);
-                yield return Page<ArcExtensionData>.FromValues((IReadOnlyList<ArcExtensionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ArcExtensionData>.FromValues((IReadOnlyList<ArcExtensionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

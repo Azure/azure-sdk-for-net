@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ResourceTypeSkuResource.ResourceType, out string resourceTypeSkuApiVersion);
             _resourceTypeSkuClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceTypeSkuResource.ResourceType.Namespace, Diagnostics);
-            _resourceTypeSkuRestClient = new ResourceTypeSku(_resourceTypeSkuClientDiagnostics, Pipeline, Endpoint, resourceTypeSkuApiVersion ?? "2024-09-01");
+            _resourceTypeSkuRestClient = new ResourceTypeSku(_resourceTypeSkuClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceTypeSkuApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthDataAIServices;
 using Azure.ResourceManager.Models;
@@ -38,11 +37,11 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
         /// <summary> Details of the HealthDataAIServices DeidService. </summary>
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             privateEndpointConnections ??= new ChangeTrackingList<HealthDataAIServicesPrivateEndpointConnection>();
 
-            return new DeidServiceProperties(provisioningState, serviceUri, privateEndpointConnections.ToList(), publicNetworkAccess, additionalBinaryDataProperties: null);
+            return new DeidServiceProperties(provisioningState, serviceUri, (privateEndpointConnections ?? new ChangeTrackingList<HealthDataAIServicesPrivateEndpointConnection>()).ToList(), publicNetworkAccess, default);
         }
 
         /// <summary> The private endpoint connection resource. </summary>
@@ -72,8 +71,8 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
@@ -85,7 +84,17 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+            return new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.HealthDataAIServicesPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static HealthDataAIServicesPrivateLinkServiceConnectionState HealthDataAIServicesPrivateLinkServiceConnectionState(HealthDataAIServicesPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new HealthDataAIServicesPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -96,7 +105,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeidServicePatch(tags, identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, null), additionalBinaryDataProperties: null);
+            return new DeidServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, default), default);
         }
 
         /// <summary> Holder for private endpoint connections. </summary>
@@ -113,8 +122,8 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Private Links for DeidService resource. </summary>
@@ -131,8 +140,8 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Properties of a private link resource. </summary>
@@ -145,7 +154,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new HealthDataAIServicesPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+            return new HealthDataAIServicesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
     }
 }

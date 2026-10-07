@@ -9,6 +9,10 @@
       "$id": "1",
       "kind": "enum",
       "name": "VersionsA",
+      "apiVersions": [
+        "av1",
+        "av2"
+      ],
       "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.VersionsA",
       "valueType": {
         "$id": "2",
@@ -29,7 +33,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -42,19 +47,25 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Service.MultipleServices.ServiceA",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "enum",
       "name": "VersionsB",
+      "apiVersions": [
+        "bv1",
+        "bv2"
+      ],
       "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.VersionsB",
       "valueType": {
         "$id": "6",
@@ -75,7 +86,8 @@
           "enumType": {
             "$ref": "5"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "8",
@@ -88,14 +100,16 @@
           "enumType": {
             "$ref": "5"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Service.MultipleServices.ServiceB",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -105,6 +119,7 @@
       "$id": "9",
       "kind": "client",
       "name": "ServiceAClient",
+      "isExactName": false,
       "namespace": "Service.MultipleServices.ServiceA",
       "doc": "First service definition in a multiple-services package with versioning.\nWithout explicit `@client`, this should create a separate root client (`ServiceAClient`).",
       "methods": [],
@@ -137,7 +152,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.endpoint"
+          "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.endpoint",
+          "isExactName": false
         },
         {
           "$id": "13",
@@ -163,7 +179,8 @@
           "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.SubNamespace.subOpA.apiVersion",
           "readOnly": false,
           "access": "public",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -178,12 +195,14 @@
           "$id": "15",
           "kind": "client",
           "name": "ASubNamespace",
+          "isExactName": false,
           "namespace": "Service.MultipleServices.ServiceA.SubNamespace",
           "methods": [
             {
               "$id": "16",
               "kind": "basic",
               "name": "subOpA",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "av1",
@@ -192,6 +211,7 @@
               "operation": {
                 "$id": "17",
                 "name": "subOpA",
+                "isExactName": false,
                 "resourceName": "SubNamespace",
                 "accessibility": "public",
                 "parameters": [
@@ -223,7 +243,8 @@
                       {
                         "$ref": "13"
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -283,7 +304,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.SubNamespace.endpoint"
+              "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.SubNamespace.endpoint",
+              "isExactName": false
             },
             {
               "$ref": "13"
@@ -305,12 +327,14 @@
           "$id": "23",
           "kind": "client",
           "name": "AOperations",
+          "isExactName": false,
           "namespace": "Service.MultipleServices.ServiceA",
           "methods": [
             {
               "$id": "24",
               "kind": "basic",
               "name": "opA",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "av1",
@@ -319,6 +343,7 @@
               "operation": {
                 "$id": "25",
                 "name": "opA",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [
@@ -371,9 +396,11 @@
                         "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.Operations.opA.apiVersion",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -433,7 +460,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.Operations.endpoint"
+              "crossLanguageDefinitionId": "Service.MultipleServices.ServiceA.Operations.endpoint",
+              "isExactName": false
             },
             {
               "$ref": "28"
@@ -458,6 +486,7 @@
       "$id": "33",
       "kind": "client",
       "name": "ServiceBClient",
+      "isExactName": false,
       "namespace": "Service.MultipleServices.ServiceB",
       "doc": "Second service definition in a multiple-services package with versioning.\nWithout explicit `@client`, this should create a separate root client (`ServiceBClient`).",
       "methods": [],
@@ -490,7 +519,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.endpoint"
+          "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.endpoint",
+          "isExactName": false
         },
         {
           "$id": "37",
@@ -516,7 +546,8 @@
           "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.SubNamespace.subOpB.apiVersion",
           "readOnly": false,
           "access": "public",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -531,12 +562,14 @@
           "$id": "39",
           "kind": "client",
           "name": "BSubNamespace",
+          "isExactName": false,
           "namespace": "Service.MultipleServices.ServiceB.SubNamespace",
           "methods": [
             {
               "$id": "40",
               "kind": "basic",
               "name": "subOpB",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "bv1",
@@ -545,6 +578,7 @@
               "operation": {
                 "$id": "41",
                 "name": "subOpB",
+                "isExactName": false,
                 "resourceName": "SubNamespace",
                 "accessibility": "public",
                 "parameters": [
@@ -576,7 +610,8 @@
                       {
                         "$ref": "37"
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -636,7 +671,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.SubNamespace.endpoint"
+              "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.SubNamespace.endpoint",
+              "isExactName": false
             },
             {
               "$ref": "37"
@@ -658,12 +694,14 @@
           "$id": "47",
           "kind": "client",
           "name": "BOperations",
+          "isExactName": false,
           "namespace": "Service.MultipleServices.ServiceB",
           "methods": [
             {
               "$id": "48",
               "kind": "basic",
               "name": "opB",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "bv1",
@@ -672,6 +710,7 @@
               "operation": {
                 "$id": "49",
                 "name": "opB",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [
@@ -724,9 +763,11 @@
                         "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.Operations.opB.apiVersion",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -786,7 +827,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.Operations.endpoint"
+              "crossLanguageDefinitionId": "Service.MultipleServices.ServiceB.Operations.endpoint",
+              "isExactName": false
             },
             {
               "$ref": "52"

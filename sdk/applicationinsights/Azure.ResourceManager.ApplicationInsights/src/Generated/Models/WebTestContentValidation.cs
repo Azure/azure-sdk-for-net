@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> The collection of content validation properties. </summary>
     public partial class WebTestContentValidation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebTestContentValidation"/>. </summary>
         public WebTestContentValidation()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="contentMatch"> Content to look for in the return of the WebTest.  Must not be null or empty. </param>
         /// <param name="ignoreCase"> When set, this value makes the ContentMatch validation case insensitive. </param>
         /// <param name="passIfTextFound"> When true, validation will pass if there is a match for the ContentMatch string.  If false, validation will fail if there is a match. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebTestContentValidation(string contentMatch, bool? ignoreCase, bool? passIfTextFound, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebTestContentValidation(string contentMatch, bool? ignoreCase, bool? passIfTextFound, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContentMatch = contentMatch;
             IgnoreCase = ignoreCase;
             PassIfTextFound = passIfTextFound;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Content to look for in the return of the WebTest.  Must not be null or empty. </summary>
         [WirePath("ContentMatch")]
         public string ContentMatch { get; set; }
+
         /// <summary> When set, this value makes the ContentMatch validation case insensitive. </summary>
         [WirePath("IgnoreCase")]
         public bool? IgnoreCase { get; set; }
+
         /// <summary> When true, validation will pass if there is a match for the ContentMatch string.  If false, validation will fail if there is a match. </summary>
         [WirePath("PassIfTextFound")]
         public bool? PassIfTextFound { get; set; }

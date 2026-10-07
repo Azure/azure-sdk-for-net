@@ -1,6 +1,6 @@
 # Release History
 
-## 12.27.0-beta.2 (Unreleased)
+## 12.29.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,29 @@
 
 ### Bugs Fixed
 
+- Fixed `AuthenticatedRegionCryptoStream.Dispose()` to be idempotent and thread-safe, so the buffer it rents is no longer returned to the shared `ArrayPool<byte>` more than once when the stream is disposed repeatedly or concurrently. Returning the same array twice allowed unrelated callers to rent the same array instance and corrupt each other's data.
+
 ### Other Changes
+
+## 12.28.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.28.0-beta.1
+
+## 12.28.0-beta.1 (2026-07-21)
+
+### Features Added
+- Added support for service version 2026-10-06.
+
+## 12.27.1 (2026-06-23)
+
+### Bugs Fixed
+- Fixed an issue where the `GenerateUserDelegationSasUri` convenience methods on the `QueueClient` did not honor the `DelegatedUserObjectId` property set on the supplied `QueueSasBuilder`.
+
+## 12.27.0 (2026-06-04)
+
+### Features Added
+- Includes all features from 12.27.0-beta.1
 
 ## 12.26.0 (2026-05-12)
 

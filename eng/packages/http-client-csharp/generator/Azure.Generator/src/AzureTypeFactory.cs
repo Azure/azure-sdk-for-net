@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Pipeline;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
@@ -59,7 +60,7 @@ namespace Azure.Generator
         {
             get
             {
-                var packages = new List<CSharpProjectWriter.CSProjDependencyPackage>(2)
+                var packages = new List<CSharpProjectWriter.CSProjDependencyPackage>(3)
                 {
                     new("Azure.Core")
                 };
@@ -67,10 +68,18 @@ namespace Azure.Generator
                 {
                     packages.Add(new("Azure.Core.Expressions.DataFactory"));
                 }
+                if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients.Any(HasStreamingOperation))
+                {
+                    packages.Add(new("System.ClientModel"));
+                }
 
                 return packages;
             }
         }
+
+        private static bool HasStreamingOperation(InputClient client)
+            => client.Methods.Any(method => method.Response.Type is InputStreamingType)
+                || client.Children.Any(HasStreamingOperation);
 
         /// <inheritdoc/>
         protected override string BuildServiceName()
@@ -149,11 +158,10 @@ namespace Azure.Generator
         {
             return fullyQualifiedTypeName switch
             {
-                "Azure.Core.ResourceIdentifier" => typeof(ResourceIdentifier),
-                "Azure.Core.AzureLocation" => typeof(AzureLocation),
-                "Azure.ResponseError" => typeof(ResponseError),
-                "Azure.ETag" => typeof(ETag),
+                "Azure.Core.Pipeline.ClientDiagnostics" => typeof(ClientDiagnostics),
                 _ => base.CreateFrameworkType(fullyQualifiedTypeName)
+                    ?? typeof(Response).Assembly.GetType(fullyQualifiedTypeName)
+                    ?? typeof(DataFactoryElement<>).Assembly.GetType(fullyQualifiedTypeName)
             };
         }
 

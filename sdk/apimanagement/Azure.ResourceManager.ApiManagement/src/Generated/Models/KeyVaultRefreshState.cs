@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The KeyVaultRefreshState. </summary>
+    /// <summary></summary>
     public readonly partial struct KeyVaultRefreshState : IEquatable<KeyVaultRefreshState>
     {
         private readonly string _value;
+        /// <summary> Entities for which KeyVault refresh failed. </summary>
+        private const string TrueValue = "true";
+        /// <summary> Entities for which KeyVault refresh succeeded. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultRefreshState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultRefreshState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrueValue = "true";
-        private const string FalseValue = "false";
+            _value = value;
+        }
 
         /// <summary> Entities for which KeyVault refresh failed. </summary>
         public static KeyVaultRefreshState True { get; } = new KeyVaultRefreshState(TrueValue);
+
         /// <summary> Entities for which KeyVault refresh succeeded. </summary>
         public static KeyVaultRefreshState False { get; } = new KeyVaultRefreshState(FalseValue);
+
         /// <summary> Determines if two <see cref="KeyVaultRefreshState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KeyVaultRefreshState left, KeyVaultRefreshState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KeyVaultRefreshState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KeyVaultRefreshState left, KeyVaultRefreshState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultRefreshState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KeyVaultRefreshState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultRefreshState(string value) => new KeyVaultRefreshState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KeyVaultRefreshState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KeyVaultRefreshState?(string value) => value == null ? null : new KeyVaultRefreshState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyVaultRefreshState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KeyVaultRefreshState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

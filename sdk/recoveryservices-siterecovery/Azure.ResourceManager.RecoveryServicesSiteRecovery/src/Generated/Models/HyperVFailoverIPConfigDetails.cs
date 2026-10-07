@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The HyperVFailoverIPConfigDetails. </summary>
     public partial class HyperVFailoverIPConfigDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HyperVFailoverIPConfigDetails"/>. </summary>
         public HyperVFailoverIPConfigDetails()
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="tfoStaticIPAddress"></param>
         /// <param name="tfoPublicIPAddressId"></param>
         /// <param name="tfoLBBackendAddressPoolIds"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HyperVFailoverIPConfigDetails(string ipConfigName, bool? isPrimary, bool? isSeletedForFailover, string recoverySubnetName, IPAddress recoveryStaticIPAddress, ResourceIdentifier recoveryPublicIPAddressId, IList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, IPAddress tfoStaticIPAddress, ResourceIdentifier tfoPublicIPAddressId, IList<string> tfoLBBackendAddressPoolIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HyperVFailoverIPConfigDetails(string ipConfigName, bool? isPrimary, bool? isSeletedForFailover, string recoverySubnetName, IPAddress recoveryStaticIPAddress, ResourceIdentifier recoveryPublicIPAddressId, IList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, IPAddress tfoStaticIPAddress, ResourceIdentifier tfoPublicIPAddressId, IList<string> tfoLBBackendAddressPoolIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPConfigName = ipConfigName;
             IsPrimary = isPrimary;
@@ -80,30 +52,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TfoStaticIPAddress = tfoStaticIPAddress;
             TfoPublicIPAddressId = tfoPublicIPAddressId;
             TfoLBBackendAddressPoolIds = tfoLBBackendAddressPoolIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the ip config name. </summary>
+        /// <summary> Gets or sets the IPConfigName. </summary>
         public string IPConfigName { get; set; }
-        /// <summary> Gets or sets the is primary. </summary>
+
+        /// <summary> Gets or sets the IsPrimary. </summary>
         public bool? IsPrimary { get; set; }
-        /// <summary> Gets or sets the is seleted for failover. </summary>
+
+        /// <summary> Gets or sets the IsSeletedForFailover. </summary>
         public bool? IsSeletedForFailover { get; set; }
-        /// <summary> Gets or sets the recovery subnet name. </summary>
+
+        /// <summary> Gets or sets the RecoverySubnetName. </summary>
         public string RecoverySubnetName { get; set; }
-        /// <summary> Gets or sets the recovery static ip address. </summary>
+
+        /// <summary> Gets or sets the RecoveryStaticIPAddress. </summary>
         public IPAddress RecoveryStaticIPAddress { get; set; }
-        /// <summary> Gets or sets the recovery public ip address id. </summary>
+
+        /// <summary> Gets or sets the RecoveryPublicIPAddressId. </summary>
         public ResourceIdentifier RecoveryPublicIPAddressId { get; set; }
-        /// <summary> Gets the recovery lb backend address pool ids. </summary>
+
+        /// <summary> Gets the RecoveryLBBackendAddressPoolIds. </summary>
         public IList<string> RecoveryLBBackendAddressPoolIds { get; }
-        /// <summary> Gets or sets the tfo subnet name. </summary>
+
+        /// <summary> Gets or sets the TfoSubnetName. </summary>
         public string TfoSubnetName { get; set; }
-        /// <summary> Gets or sets the tfo static ip address. </summary>
+
+        /// <summary> Gets or sets the TfoStaticIPAddress. </summary>
         public IPAddress TfoStaticIPAddress { get; set; }
-        /// <summary> Gets or sets the tfo public ip address id. </summary>
+
+        /// <summary> Gets or sets the TfoPublicIPAddressId. </summary>
         public ResourceIdentifier TfoPublicIPAddressId { get; set; }
-        /// <summary> Gets the tfo lb backend address pool ids. </summary>
+
+        /// <summary> Gets the TfoLBBackendAddressPoolIds. </summary>
         public IList<string> TfoLBBackendAddressPoolIds { get; }
     }
 }
