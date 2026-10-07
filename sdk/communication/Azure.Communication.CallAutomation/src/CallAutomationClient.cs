@@ -585,6 +585,15 @@ namespace Azure.Communication.CallAutomation
                 options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>());
             request.DtmfOptions = options.DtmfOptions == null ? null : new DtmfConfigurationOptionsInternal(options.DtmfOptions.EnableDtmfBroadcastInGroupCalls);
 
+            if (options.HoldGroupOptions != null)
+            {
+                request.HoldGroupOptions = new HoldGroupOptionsInternal
+                {
+                    PlaySourceInfo = CallMedia.TranslatePlaySourceToInternal(options.HoldGroupOptions.PlaySource),
+                    OperationContext = options.HoldGroupOptions.OperationContext
+                };
+            }
+
             return request;
         }
 

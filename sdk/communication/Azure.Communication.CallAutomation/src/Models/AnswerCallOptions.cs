@@ -68,5 +68,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
         public DtmfConfigurationOptions DtmfOptions { get; set; }
+
+        /// <summary>
+        /// Hold group configuration for the call.
+        /// </summary>
+        public HoldGroupOptions HoldGroupOptions { get; set; }
     }
 }

@@ -7,6 +7,7 @@
   - `CreateHoldGroup()` / `CreateHoldGroupAsync()` - Create a new hold group with specified audio source.
   - `DeleteHoldGroup()` / `DeleteHoldGroupAsync()` - Delete an existing hold group.
   - New public models: `HoldGroupOptions` and `DeleteHoldGroupOptions` for configuring hold group operations.
+  - `AnswerCallOptions` now accepts `HoldGroupOptions` to create a hold group at call answer time.
   - Events for hold group lifecycle: `HoldGroupCreated`, `HoldGroupAudioStarted`, `HoldGroupAudioFailed`, and `HoldGroupFailed`.
   - Result type `HoldGroupCreatedEventResult` for waiting on hold group creation events.
 - The StartRecording function now accepts the PauseOnStart parameter.

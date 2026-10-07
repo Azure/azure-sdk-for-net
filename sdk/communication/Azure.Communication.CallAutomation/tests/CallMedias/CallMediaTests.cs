@@ -1198,7 +1198,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             // Assert
             Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
             Assert.That(deleteOptions.OperationContext, Is.Null);
-            Assert.That(deleteOptions.OperationCallbackUri, Is.Null);
         }
 
         [Test]
@@ -1217,25 +1216,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             // Assert
             Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
             Assert.That(deleteOptions.OperationContext, Is.EqualTo(operationContext));
-            Assert.That(deleteOptions.OperationCallbackUri, Is.Null);
-        }
-
-        [Test]
-        public void DeleteHoldGroupOptionsWithCallbackUriTest()
-        {
-            // Arrange
-            var holdGroupId = "hold-group-id-789";
-            var callbackUri = new Uri("https://example.com/callback");
-
-            // Act
-            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
-            {
-                OperationCallbackUri = callbackUri
-            };
-
-            // Assert
-            Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
-            Assert.That(deleteOptions.OperationCallbackUri, Is.EqualTo(callbackUri));
         }
 
         [Test]
@@ -1244,19 +1224,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             // Arrange
             var holdGroupId = "hold-group-comprehensive";
             var operationContext = "comprehensive-context";
-            var callbackUri = new Uri("https://example.com/comprehensive-callback");
 
             // Act
             var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
             {
-                OperationContext = operationContext,
-                OperationCallbackUri = callbackUri
+                OperationContext = operationContext
             };
 
             // Assert
             Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
             Assert.That(deleteOptions.OperationContext, Is.EqualTo(operationContext));
-            Assert.That(deleteOptions.OperationCallbackUri, Is.EqualTo(callbackUri));
         }
 
         [Test]
@@ -1269,22 +1246,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             // Test with TextSource
             var textOptions = new HoldGroupOptions(_textSource);
             Assert.That(textOptions.PlaySource, Is.TypeOf<TextSource>());
-        }
-
-        [Test]
-        public void DeleteHoldGroupOptionsNullUriTest()
-        {
-            // Arrange
-            var holdGroupId = "test-id";
-
-            // Act
-            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
-            {
-                OperationCallbackUri = null
-            };
-
-            // Assert
-            Assert.That(deleteOptions.OperationCallbackUri, Is.Null);
         }
 
         [Test]
@@ -1314,27 +1275,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
             // Assert
             Assert.That(holdGroupOptions.OperationContext, Is.Null);
-        }
-
-        [Test]
-        public void DeleteHoldGroupOptionsCallbackUriModificationTest()
-        {
-            // Arrange
-            var holdGroupId = "test-id";
-            var originalUri = new Uri("https://example.com/callback1");
-            var newUri = new Uri("https://example.com/callback2");
-
-            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
-            {
-                OperationCallbackUri = originalUri
-            };
-
-            // Act
-            deleteOptions.OperationCallbackUri = newUri;
-
-            // Assert
-            Assert.That(deleteOptions.OperationCallbackUri, Is.EqualTo(newUri));
-            Assert.That(deleteOptions.OperationCallbackUri, Is.Not.EqualTo(originalUri));
         }
     }
 }
