@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -60,6 +61,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The Frontend IP addresses of the load balancer. </summary>
+        [WirePath("properties.frontendIPConfigurations")]
+        public IList<WritableSubResource> FrontendIPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OutboundRulePropertiesFormat();
+                }
+                return Properties.FrontendIPConfigurations;
+            }
+        }
+
         /// <summary> The provisioning state of the outbound rule resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState
@@ -76,7 +91,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (LoadBalancerOutboundRuleProtocol?)default : Properties.Protocol;
             }
             set
             {

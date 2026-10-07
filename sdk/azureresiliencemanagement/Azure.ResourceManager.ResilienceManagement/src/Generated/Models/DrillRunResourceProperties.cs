@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="DrillRunResourceProperties"/>. </summary>
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="jobResourceType"> Discriminator for the JobResource object hierarchy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioning state of the Drill Run Resource. </param>
-        internal DrillRunResourceProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, string jobId, string taskId, string taskName, JobResourceType jobResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResilienceManagementProvisioningState? provisioningState) : base(status, startOn, endOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobId, taskId, taskName, jobResourceType, additionalBinaryDataProperties)
+        internal DrillRunResourceProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, string jobId, string taskId, string taskName, JobResourceType jobResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResilienceManagementProvisioningState? provisioningState) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobId, taskId, taskName, jobResourceType, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
         }

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.DataTypesLogsState;
+                return Properties is null ? (SecurityInsightsDataTypeConnectionState?)default : Properties.DataTypesLogsState;
             }
             set
             {

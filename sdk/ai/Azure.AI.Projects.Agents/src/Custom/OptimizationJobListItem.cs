@@ -3,7 +3,7 @@
 
 namespace Azure.AI.Projects.Agents;
 
-public partial class OptimizationJobListItem
+public partial class AgentOptimizationJobListItem
 {
     /// <summary> Error details — populated only on failure. </summary>
     internal FoundryOpenAIError Error { get; }

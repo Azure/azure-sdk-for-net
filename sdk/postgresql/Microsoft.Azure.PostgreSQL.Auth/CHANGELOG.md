@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2026-08-26)
+
+### Features Added
+
+- First stable release of the Entra ID authentication extension for the Npgsql PostgreSQL driver.
 
 ## 1.0.0-beta.1 (2026-04-09)
 

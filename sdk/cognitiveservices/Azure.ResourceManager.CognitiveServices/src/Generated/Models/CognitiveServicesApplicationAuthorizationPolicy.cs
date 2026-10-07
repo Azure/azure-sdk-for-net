@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Represents a policy for authorizing applications based on specified authentication and authorization schemes.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesRoleBasedBuiltInAuthorizationPolicy"/>, <see cref="OrganizationSharedBuiltInAuthorizationPolicy"/>, and <see cref="ChannelsBuiltInAuthorizationPolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ChannelsBuiltInAuthorizationPolicy"/>, <see cref="CognitiveServicesRoleBasedBuiltInAuthorizationPolicy"/>, and <see cref="OrganizationSharedBuiltInAuthorizationPolicy"/>.
     /// </summary>
     public abstract partial class CognitiveServicesApplicationAuthorizationPolicy
     {

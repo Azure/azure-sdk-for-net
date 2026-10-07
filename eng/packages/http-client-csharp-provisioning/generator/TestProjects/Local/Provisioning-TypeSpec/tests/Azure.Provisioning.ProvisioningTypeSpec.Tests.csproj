@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\sdk\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\..\..\sdk\provisioning\Azure.Provisioning\src\Azure.Provisioning.csproj" />
+    <ProjectReference Include="..\src\Azure.Provisioning.ProvisioningTypeSpec.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\..\..\sdk\provisioning\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\..\..\..\..\..\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />
+  </ItemGroup>
+</Project>

@@ -23,6 +23,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningAzureDataLakeGen2Datastore. </summary>
         public MachineLearningAzureDataLakeGen2Datastore()
         {
+            DatastoreType.Assign(MachineLearning.DatastoreType.AzureDataLakeGen2);
         }
 
         /// <summary> Gets or sets the ResourceGroup. </summary>
@@ -134,7 +135,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("datastoreType", new string[] { "datastoreType" }, defaultValue: "AzureDataLakeGen2");
             _resourceGroup = DefineProperty<string>(nameof(ResourceGroup), new string[] { "resourceGroup" });
             _subscriptionId = DefineProperty<string>(nameof(SubscriptionId), new string[] { "subscriptionId" });
             _accountName = DefineProperty<string>(nameof(AccountName), new string[] { "accountName" }, isRequired: true);

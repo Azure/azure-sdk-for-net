@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             writer.WritePropertyName("ipConfigurations"u8);
             writer.WriteStartArray();
-            foreach (ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration item in IpConfigurations)
+            foreach (ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration item in IPConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeBulkActionsVirtualMachineNetworkInterfaceConfigurationProperties(

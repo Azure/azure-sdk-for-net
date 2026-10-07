@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new HostNameMatchCondition. </summary>
         public HostNameMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRuleHostNameConditionParameters);
         }
 
         /// <summary> Gets or sets the HostNameOperator. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleHostNameConditionParameters");
             _hostNameOperator = DefineProperty<HostNameOperator>(nameof(HostNameOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _matchValues = DefineListProperty<string>(nameof(MatchValues), new string[] { "matchValues" });

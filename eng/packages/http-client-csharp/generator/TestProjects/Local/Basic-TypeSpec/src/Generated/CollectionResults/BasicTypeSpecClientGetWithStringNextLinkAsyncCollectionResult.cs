@@ -46,7 +46,7 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithStringNextLinkResponse result = (ListWithStringNextLinkResponse)response;
+                ListWithStringNextLinkResult result = (ListWithStringNextLinkResult)response;
                 string nextPageString = result.Next;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 List<BinaryData> items = new List<BinaryData>();

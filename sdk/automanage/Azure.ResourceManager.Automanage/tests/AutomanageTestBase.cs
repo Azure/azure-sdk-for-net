@@ -11,7 +11,8 @@ using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments;
+using Azure.ResourceManager.Resources.Deployments.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Automanage.Tests
             });
 
             // create vm
-            var deploymentLro = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, "deployVM", deploymentContent);
+            var deploymentLro = await ResourcesDeploymentsExtensions.GetArmDeployments(rg).CreateOrUpdateAsync(WaitUntil.Completed, "deployVM", deploymentContent);
             var deployment = deploymentLro.Value.Data;
 
             var vmId = deployment.Properties.OutputResources.Select(sub => sub.Id).First(id => id.ResourceType == VirtualMachineResource.ResourceType);

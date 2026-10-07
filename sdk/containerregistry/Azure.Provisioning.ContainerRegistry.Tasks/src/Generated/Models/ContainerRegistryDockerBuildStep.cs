@@ -22,6 +22,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         /// <summary> Creates a new ContainerRegistryDockerBuildStep. </summary>
         public ContainerRegistryDockerBuildStep()
         {
+            Type.Assign(StepType.Docker);
         }
 
         /// <summary> Gets or sets the ImageNames. </summary>
@@ -118,7 +119,6 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "Docker");
             _imageNames = DefineListProperty<string>(nameof(ImageNames), new string[] { "imageNames" });
             _isPushEnabled = DefineProperty<bool>(nameof(IsPushEnabled), new string[] { "isPushEnabled" });
             _isCacheDisabled = DefineProperty<bool>(nameof(IsCacheDisabled), new string[] { "noCache" });

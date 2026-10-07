@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// This is the parameter set of either the Orchestration project itself or one of the target services.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisConfig"/>, <see cref="QuestionAnsweringConfig"/>, and <see cref="ConversationConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationConfig"/>, <see cref="LuisConfig"/>, and <see cref="QuestionAnsweringConfig"/>.
     /// </summary>
     public abstract partial class AnalysisConfig
     {

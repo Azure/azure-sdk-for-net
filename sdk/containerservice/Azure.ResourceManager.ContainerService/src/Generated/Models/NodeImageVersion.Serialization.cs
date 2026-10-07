@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(NodeImageVersion)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Os))
+            if (Optional.IsDefined(OS))
             {
                 writer.WritePropertyName("os"u8);
-                writer.WriteStringValue(Os);
+                writer.WriteStringValue(OS);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NodeImageVersion(os, sku, version, fullName, additionalBinaryDataProperties);

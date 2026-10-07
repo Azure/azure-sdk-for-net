@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Priority;
+                return Properties is null ? (int?)default : Properties.Priority;
             }
             set
             {

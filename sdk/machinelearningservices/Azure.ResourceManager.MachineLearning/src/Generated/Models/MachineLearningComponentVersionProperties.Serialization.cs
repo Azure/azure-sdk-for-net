@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         componentSpec = null;
                         continue;
                     }
-                    componentSpec = BinaryData.FromString(prop.Value.GetRawText());
+                    componentSpec = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningComponentVersionProperties(

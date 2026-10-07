@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         }
 
         /// <summary> Domain expiration timestamp. </summary>
-        public DateTimeOffset? ExpireOn
+        public DateTimeOffset? ExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 

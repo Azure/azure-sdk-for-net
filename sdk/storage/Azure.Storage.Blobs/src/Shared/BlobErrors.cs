@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
-using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
@@ -13,9 +11,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal class BlobErrors : Errors
     {
-        public static ArgumentOutOfRangeException BlobConditionsMustBeDefault(params string[] conditions) =>
-            new ArgumentOutOfRangeException($"The {string.Join(" and ", conditions)} conditions must have their default values because they are ignored by the blob service");
-
         public static InvalidOperationException BlobOrContainerMissing(string leaseClient,
             string blobBaseClient,
             string blobContainerClient) =>
@@ -45,9 +40,6 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set");
             }
         }
-
-        public static ArgumentException ParsingFullHttpRangeFailed(string range)
-            => new ArgumentException("Could not obtain the total length from HTTP range " + range);
 
         public static void VerifyParallelismGreaterThanOne(int parallelism)
         {

@@ -166,7 +166,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ApplicationTypeVersionResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ServiceFabricManagedApplicationType>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ServiceFabricManagedApplicationType>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

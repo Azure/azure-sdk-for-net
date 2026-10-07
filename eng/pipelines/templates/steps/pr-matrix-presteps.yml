@@ -12,6 +12,9 @@ parameters:
   - name: EnableLocWeighting
     type: boolean
     default: false
+  - name: EnableTestRuntimeWeighting
+    type: boolean
+    default: false
   - name: LocTarget
     type: number
     default: 474000
@@ -77,6 +80,57 @@ steps:
         }
     displayName: Only target direct packages for build and test
     condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
+
+  - ${{ if eq(parameters.EnableTestRuntimeWeighting, true) }}:
+    - pwsh: |
+        $weightsFile = "$(Build.ArtifactStagingDirectory)/test-weights.json"
+        Remove-Item $weightsFile -Force -ErrorAction SilentlyContinue
+
+        # Direct and indirect packages are batched separately. Neither group benefits from
+        # runtime weighting unless it contains at least two packages to distribute.
+        $packageInfos = @(
+          Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -File -Recurse |
+            ForEach-Object { Get-Content $_.FullName -Raw | ConvertFrom-Json }
+        )
+        $directPackageCount = @($packageInfos | Where-Object { $_.IncludedForValidation -eq $false }).Count
+        $indirectPackageCount = @($packageInfos | Where-Object { $_.IncludedForValidation -eq $true }).Count
+        if ($directPackageCount -le 1 -and $indirectPackageCount -le 1) {
+          Write-Host "Runtime-weighted batching is unnecessary for $directPackageCount direct and $indirectPackageCount indirect package(s). Using count-based batching."
+          return
+        }
+
+        try {
+          eng/scripts/Get-TestAssemblyWeights.ps1 `
+            -RepoRoot "$(Build.SourcesDirectory)" `
+            -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+            -OutputFile $weightsFile
+        }
+        catch {
+          $reason = $_.Exception.Message -replace "`r?`n", " "
+          Write-Host "##vso[task.logissue type=warning]Runtime-weighted test batching could not be applied: $reason Falling back to count-based test batching (10 packages per job)."
+          Remove-Item $weightsFile -Force -ErrorAction SilentlyContinue
+        }
+      displayName: Query test assembly runtimes for balanced batching
+      condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
+      env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+    - pwsh: |
+        $weightsFile = "$(Build.ArtifactStagingDirectory)/test-weights.json"
+        if (Test-Path $weightsFile) {
+          eng/scripts/Apply-WeightedBatching.ps1 `
+            -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+            -WeightsFile $weightsFile `
+            -Target 240
+
+          # PackageInfo entries now represent weighted buckets. Slower macOS runs one
+          # bucket per job, while Linux and Windows amortize setup over three buckets.
+          Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobLinux]3"
+          Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobWindows]3"
+          Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobMac]1"
+        }
+      displayName: Apply test-runtime weighted batching
+      condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
 
   - ${{ if eq(parameters.EnableLocWeighting, true) }}:
     - pwsh: |

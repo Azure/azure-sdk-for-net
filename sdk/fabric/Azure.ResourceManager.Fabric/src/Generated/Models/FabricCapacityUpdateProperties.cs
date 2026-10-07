@@ -22,13 +22,18 @@ namespace Azure.ResourceManager.Fabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FabricCapacityUpdateProperties"/>. </summary>
+        /// <param name="overage"> The capacity overage properties of the Fabric capacity resource. </param>
         /// <param name="administration"> The capacity administration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCapacityUpdateProperties(FabricCapacityAdministration administration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FabricCapacityUpdateProperties(CapacityOverageProperties overage, FabricCapacityAdministration administration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Overage = overage;
             Administration = administration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The capacity overage properties of the Fabric capacity resource. </summary>
+        public CapacityOverageProperties Overage { get; set; }
 
         /// <summary> The capacity administration. </summary>
         internal FabricCapacityAdministration Administration { get; set; }

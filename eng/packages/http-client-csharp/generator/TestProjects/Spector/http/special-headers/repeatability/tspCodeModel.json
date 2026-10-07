@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ImmediateSuccessResponseRepeatabilityResult",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.ResponseRepeatabilityResult.anonymous",
       "valueType": {
         "$id": "2",

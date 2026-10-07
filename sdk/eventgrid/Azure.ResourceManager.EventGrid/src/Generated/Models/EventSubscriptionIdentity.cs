@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             get
             {
-                return FederatedIdentityCredentialInfo is null ? default : FederatedIdentityCredentialInfo.FederatedClientId;
+                return FederatedIdentityCredentialInfo is null ? (Guid?)default : FederatedIdentityCredentialInfo.FederatedClientId;
             }
             set
             {

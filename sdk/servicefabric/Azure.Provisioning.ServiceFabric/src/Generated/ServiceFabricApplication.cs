@@ -332,7 +332,7 @@ namespace Azure.Provisioning.ServiceFabric
             _properties = DefineModelProperty<ApplicationResourceProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ServiceFabricCluster>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ServiceFabricCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

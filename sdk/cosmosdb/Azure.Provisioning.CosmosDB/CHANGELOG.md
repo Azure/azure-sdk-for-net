@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2026-09-03)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Generated from typespec and bump api-version to `2026-03-15`.
 
 ## 1.1.0-beta.1 (2025-06-16)
 
