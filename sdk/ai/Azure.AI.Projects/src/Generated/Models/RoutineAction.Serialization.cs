@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base model for a routine action.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentResponsesApiRoutineAction"/> and <see cref="AgentInvocationsApiRoutineAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentInvocationsApiRoutineAction"/> and <see cref="AgentResponsesApiRoutineAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRoutineAction))]
     public abstract partial class RoutineAction : IJsonModel<RoutineAction>
@@ -126,10 +126,10 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
-                    case "invoke_agent_responses_api":
-                        return AgentResponsesApiRoutineAction.DeserializeAgentResponsesApiRoutineAction(element, options);
                     case "invoke_agent_invocations_api":
                         return AgentInvocationsApiRoutineAction.DeserializeAgentInvocationsApiRoutineAction(element, options);
+                    case "invoke_agent_responses_api":
+                        return AgentResponsesApiRoutineAction.DeserializeAgentResponsesApiRoutineAction(element, options);
                 }
             }
             return UnknownRoutineAction.DeserializeUnknownRoutineAction(element, options);

@@ -361,7 +361,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    voice = BinaryData.FromString(prop.Value.GetRawText());
+                    voice = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("output_audio_format"u8))
@@ -407,7 +407,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    maxOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
+                    maxOutputTokens = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("pre_generated_assistant_message"u8))
@@ -455,7 +455,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    interimResponse = BinaryData.FromString(prop.Value.GetRawText());
+                    interimResponse = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("invoke_input"u8))
@@ -473,7 +473,7 @@ namespace Azure.AI.VoiceLive
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     invokeInput = dictionary;
@@ -481,7 +481,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResponseCreateParams(

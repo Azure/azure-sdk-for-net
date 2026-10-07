@@ -258,8 +258,8 @@ namespace Azure.Storage.Files.Shares
                 sessionId: handleItem.SessionId,
                 clientIp: handleItem.ClientIP,
                 clientName: handleItem.ClientName,
-                openedOn: handleItem.OpenTime,
-                lastReconnectedOn: handleItem.LastReconnectTime,
+                openedOn: handleItem.OpenOn,
+                lastReconnectedOn: handleItem.LastReconnectOn,
                 accessRights: ((IReadOnlyList<AccessRight>)handleItem.AccessRightList).ToShareFileHandleAccessRight());
         }
 
@@ -852,7 +852,11 @@ namespace Azure.Storage.Files.Shares
                 MaxBurstCreditsForIops = response.Headers.TryGetValue("x-ms-share-max-burst-credits-for-iops", out long? maxBurstCreditsForIops) ? maxBurstCreditsForIops : null,
                 NextAllowedProvisionedIopsDowngradeTime = response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-iops-downgrade-time", out DateTimeOffset? nextIopsDowngrade) ? nextIopsDowngrade : null,
                 NextAllowedProvisionedBandwidthDowngradeTime = response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-bandwidth-downgrade-time", out DateTimeOffset? nextBwDowngrade) ? nextBwDowngrade : null,
+                EnableChangeFeed = response.Headers.TryGetValue("x-ms-file-enable-change-feed", out bool? enableChangeFeed) ? enableChangeFeed : null,
+                ChangeFeedRetentionInDays = response.Headers.TryGetValue("x-ms-file-change-feed-retention-in-days", out int? changeFeedRetentionInDays) ? changeFeedRetentionInDays : null,
+                ChangeFeedBlobContainerName = response.Headers.TryGetValue("x-ms-file-blob-container-for-xfiles-change-feed", out string changeFeedBlobContainerName) ? changeFeedBlobContainerName : null,
                 //EnableDirectoryLease = response.Headers.EnableSmbDirectoryLease,
+                CreatedOn = response.Headers.TryGetValue("x-ms-share-creation-time", out DateTimeOffset? creationTime) ? creationTime : null,
             };
         }
 
@@ -913,11 +917,11 @@ namespace Azure.Storage.Files.Shares
                 ProvisionedIngressMBps = sharePropertiesInternal.ProvisionedIngressMBps,
                 ProvisionedEgressMBps = sharePropertiesInternal.ProvisionedEgressMBps,
                 ProvisionedBandwidthMiBps = sharePropertiesInternal.ProvisionedBandwidthMiBps,
-                NextAllowedQuotaDowngradeTime = sharePropertiesInternal.NextAllowedQuotaDowngradeTime,
-                DeletedOn = sharePropertiesInternal.DeletedTime,
+                NextAllowedQuotaDowngradeTime = sharePropertiesInternal.NextAllowedQuotaDowngradeOn,
+                DeletedOn = sharePropertiesInternal.DeletedOn,
                 RemainingRetentionDays = sharePropertiesInternal.RemainingRetentionDays,
                 AccessTier = sharePropertiesInternal.AccessTier,
-                AccessTierChangeTime = sharePropertiesInternal.AccessTierChangeTime,
+                AccessTierChangeTime = sharePropertiesInternal.AccessTierChangedOn,
                 AccessTierTransitionState = sharePropertiesInternal.AccessTierTransitionState,
                 LeaseStatus = sharePropertiesInternal.LeaseStatus,
                 LeaseState = sharePropertiesInternal.LeaseState,
@@ -932,9 +936,10 @@ namespace Azure.Storage.Files.Shares
                 PaidBurstingMaxBandwidthMibps = sharePropertiesInternal.PaidBurstingMaxBandwidthMibps,
                 IncludedBurstIops = sharePropertiesInternal.IncludedBurstIops,
                 MaxBurstCreditsForIops = sharePropertiesInternal.MaxBurstCreditsForIops,
-                NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeTime,
-                NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeTime,
+                NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeOn,
+                NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeOn,
                 //EnableDirectoryLease = sharePropertiesInternal.EnableSmbDirectoryLease,
+                CreatedOn = sharePropertiesInternal.CreatedOn
             };
         }
 
@@ -1032,7 +1037,12 @@ namespace Azure.Storage.Files.Shares
                 properties: directoryItem.Properties.ToShareFileItemProperties(),
                 fileAttributes: ShareModelExtensions.ToFileAttributes(directoryItem.Attributes),
                 permissionKey: directoryItem.PermissionKey,
-                fileSize: null);
+                fileSize: null,
+                linkCount: directoryItem.LinkCount,
+                fileType: FileType.Directory,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
         }
 
         internal static ShareFileItem ToShareFileItem(this FileItem fileItem)
@@ -1049,7 +1059,122 @@ namespace Azure.Storage.Files.Shares
                 properties: fileItem.Properties.ToShareFileItemProperties(),
                 fileAttributes: ShareModelExtensions.ToFileAttributes(fileItem.Attributes),
                 permissionKey: fileItem.PermissionKey,
-                fileSize: fileItem.Properties.ContentLength);
+                fileSize: fileItem.Properties.ContentLength,
+                linkCount: fileItem.LinkCount,
+                fileType: FileType.Regular,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this SymLinkItem fileItem)
+        {
+            if (fileItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: fileItem.Name.Encoded == true ? Uri.UnescapeDataString(fileItem.Name.Content) : fileItem.Name.Content,
+                id: fileItem.FileId,
+                properties: fileItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: fileItem.LinkCount,
+                fileType: FileType.SymLink,
+                linkText: fileItem.LinkText,
+                deviceMajor: null,
+                deviceMinor: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this BlockDeviceItem blockDeviceItem)
+        {
+            if (blockDeviceItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: blockDeviceItem.Name.Encoded == true ? Uri.UnescapeDataString(blockDeviceItem.Name.Content) : blockDeviceItem.Name.Content,
+                id: blockDeviceItem.FileId,
+                properties: blockDeviceItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: blockDeviceItem.LinkCount,
+                fileType: FileType.BlockDevice,
+                linkText: null,
+                deviceMajor: blockDeviceItem.DeviceMajor,
+                deviceMinor: blockDeviceItem.DeviceMinor);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this CharDeviceItem charDeviceItem)
+        {
+            if (charDeviceItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: charDeviceItem.Name.Encoded == true ? Uri.UnescapeDataString(charDeviceItem.Name.Content) : charDeviceItem.Name.Content,
+                id: charDeviceItem.FileId,
+                properties: charDeviceItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: charDeviceItem.LinkCount,
+                fileType: FileType.CharacterDevice,
+                linkText: null,
+                deviceMajor: charDeviceItem.DeviceMajor,
+                deviceMinor: charDeviceItem.DeviceMinor);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this FifoItem fifoItem)
+        {
+            if (fifoItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: fifoItem.Name.Encoded == true ? Uri.UnescapeDataString(fifoItem.Name.Content) : fifoItem.Name.Content,
+                id: fifoItem.FileId,
+                properties: fifoItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: fifoItem.LinkCount,
+                fileType: FileType.Fifo,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
+        }
+
+        internal static ShareFileItem ToShareFileItem(this SocketItem socketItem)
+        {
+            if (socketItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem(
+                isDirectory: false,
+                name: socketItem.Name.Encoded == true ? Uri.UnescapeDataString(socketItem.Name.Content) : socketItem.Name.Content,
+                id: socketItem.FileId,
+                properties: socketItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: null,
+                linkCount: socketItem.LinkCount,
+                fileType: FileType.Socket,
+                linkText: null,
+                deviceMajor: null,
+                deviceMinor: null);
         }
 
         internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)
@@ -1060,12 +1185,15 @@ namespace Azure.Storage.Files.Shares
             }
 
             return new ShareFileItemProperties(
-                createdOn: fileProperty.CreationTime,
-                lastAccessedOn: fileProperty.LastAccessTime,
-                lastWrittenOn: fileProperty.LastWriteTime,
-                changedOn: fileProperty.ChangeTime,
+                createdOn: fileProperty.CreatedOn,
+                lastAccessedOn: fileProperty.LastAccessOn,
+                lastWrittenOn: fileProperty.LastWriteOn,
+                changedOn: fileProperty.ChangedOn,
                 lastModified: fileProperty.LastModified,
-                eTag: fileProperty.ETag == null ? null : new ETag(fileProperty.ETag));
+                eTag: fileProperty.ETag == null ? null : new ETag(fileProperty.ETag),
+                owner: fileProperty.Owner,
+                group: fileProperty.Group,
+                fileMode: NfsFileMode.ParseOctalFileMode(fileProperty.FileMode));
         }
 
         internal static DateTimeOffset ExtractLastModified(this ResponseHeaders responseHeaders)

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties is null ? default : Properties.SupportedOSType;
+                return Properties is null ? (SupportedOperatingSystemType?)default : Properties.SupportedOSType;
             }
             set
             {

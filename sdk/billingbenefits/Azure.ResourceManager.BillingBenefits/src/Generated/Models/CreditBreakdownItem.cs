@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Initializes a new instance of <see cref="CreditBreakdownItem"/>. </summary>
         /// <param name="allocation"> Allocation details including currency and amount for this breakdown item. </param>
-        /// <param name="startOn"> Start DateTime. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="startsOn"> Start DateTime. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="dimensions"> Key-value pairs for additional parameters and metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreditBreakdownItem(BillingBenefitsCommitment allocation, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<CreditDimension> dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreditBreakdownItem(BillingBenefitsCommitment allocation, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IList<CreditDimension> dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Allocation = allocation;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Dimensions = dimensions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsCommitment Allocation { get; set; }
 
         /// <summary> Start DateTime. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End DateTime in UTC. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Key-value pairs for additional parameters and metadata. </summary>
         public IList<CreditDimension> Dimensions { get; }

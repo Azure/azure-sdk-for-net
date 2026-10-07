@@ -63,7 +63,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrarUpdatedAt"></param>
         /// <param name="registrarExpiresAt"></param>
         /// <param name="soaRecords"></param>
-        /// <param name="detailedFromWhoisAt"></param>
+        /// <param name="detailedFromWhoisOn"></param>
         /// <param name="registrarNames"></param>
         /// <param name="sources"></param>
         /// <param name="firstSeen"></param>
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainAsset(string domain, long? whoisId, IList<ObservedInteger> registrarIanaIds, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<AlexaInfo> alexaInfos, IList<ObservedString> nameServers, IList<ObservedString> mailServers, IList<ObservedString> whoisServers, IList<ObservedString> domainStatuses, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedLong> registrarExpiresAt, IList<SoaRecord> soaRecords, DateTimeOffset? detailedFromWhoisAt, IList<ObservedString> registrarNames, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedBoolean> parkedDomain, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainAsset(string domain, long? whoisId, IList<ObservedInteger> registrarIanaIds, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<AlexaInfo> alexaInfos, IList<ObservedString> nameServers, IList<ObservedString> mailServers, IList<ObservedString> whoisServers, IList<ObservedString> domainStatuses, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedLong> registrarExpiresAt, IList<SoaRecord> soaRecords, DateTimeOffset? detailedFromWhoisOn, IList<ObservedString> registrarNames, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedBoolean> parkedDomain, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             WhoisId = whoisId;
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Defender.Easm
             RegistrarUpdatedAt = registrarUpdatedAt;
             RegistrarExpiresAt = registrarExpiresAt;
             SoaRecords = soaRecords;
-            DetailedFromWhoisAt = detailedFromWhoisAt;
+            DetailedFromWhoisOn = detailedFromWhoisOn;
             RegistrarNames = registrarNames;
             Sources = sources;
             FirstSeen = firstSeen;
@@ -163,8 +163,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the SoaRecords. </summary>
         public IList<SoaRecord> SoaRecords { get; }
 
-        /// <summary> Gets the DetailedFromWhoisAt. </summary>
-        public DateTimeOffset? DetailedFromWhoisAt { get; }
+        /// <summary> Gets the DetailedFromWhoisOn. </summary>
+        public DateTimeOffset? DetailedFromWhoisOn { get; }
 
         /// <summary> Gets the RegistrarNames. </summary>
         public IList<ObservedString> RegistrarNames { get; }

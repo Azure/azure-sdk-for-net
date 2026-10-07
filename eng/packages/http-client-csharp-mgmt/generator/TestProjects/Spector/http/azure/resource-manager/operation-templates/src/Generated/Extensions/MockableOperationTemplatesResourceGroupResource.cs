@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         private Lro _lroRestClient;
         private ClientDiagnostics _lroPagingClientDiagnostics;
         private LroPaging _lroPagingRestClient;
+        private ClientDiagnostics _legacyClientDiagnostics;
+        private Legacy _legacyRestClient;
 
         /// <summary> Initializes a new instance of MockableOperationTemplatesResourceGroupResource for mocking. </summary>
         protected MockableOperationTemplatesResourceGroupResource()
@@ -45,6 +47,10 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
         private ClientDiagnostics LroPagingClientDiagnostics => _lroPagingClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private LroPaging LroPagingRestClient => _lroPagingRestClient ??= new LroPaging(LroPagingClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+
+        private ClientDiagnostics LegacyClientDiagnostics => _legacyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Legacy LegacyRestClient => _legacyRestClient ??= new Legacy(LegacyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
 
         /// <summary> Gets a collection of Widgets in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Widgets and their operations over a WidgetResource. </returns>
@@ -109,6 +115,71 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
             return GetWidgets().Get(widgetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Monitors in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Monitors and their operations over a MonitorResource. </returns>
+        public virtual MonitorCollection GetMonitors()
+        {
+            return GetCachedClient(client => new MonitorCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Monitor
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/monitors/{monitorName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Paging_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> The name of the Monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MonitorResource>> GetMonitorAsync(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            return await GetMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Monitor
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/monitors/{monitorName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Paging_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> The name of the Monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MonitorResource> GetMonitor(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            return GetMonitors().Get(monitorName, cancellationToken);
         }
 
         /// <summary>
@@ -539,6 +610,314 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/products/{productName}/postPagingLroWithBody. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LroPaging_PostPagingLroWithBody. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="productName"> The name of the Product. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal async Task<ArmOperation<ProductListResult>> PostPagingLroWithBodyAsync(WaitUntil waitUntil, string productName, VnetProfile body, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = LroPagingClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.PostPagingLroWithBody");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroPagingRestClient.CreatePostPagingLroWithBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, VnetProfile.ToRequestContent(body), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationTemplatesArmOperation<ProductListResult> operation = new OperationTemplatesArmOperation<ProductListResult>(
+                    new ProductListResultOperationSource(),
+                    LroPagingClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/products/{productName}/postPagingLroWithBody. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LroPaging_PostPagingLroWithBody. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="productName"> The name of the Product. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal ArmOperation<ProductListResult> PostPagingLroWithBody(WaitUntil waitUntil, string productName, VnetProfile body, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = LroPagingClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.PostPagingLroWithBody");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LroPagingRestClient.CreatePostPagingLroWithBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, productName, VnetProfile.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationTemplatesArmOperation<ProductListResult> operation = new OperationTemplatesArmOperation<ProductListResult>(
+                    new ProductListResultOperationSource(),
+                    LroPagingClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// RoutedGet
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/configurations/{name}/diagnostics/{diagnosticName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Legacy_RoutedGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="diagnosticName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DiagnosticInfo>> RoutedGetAsync(string name, string diagnosticName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
+
+            using DiagnosticScope scope = LegacyClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.RoutedGet");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LegacyRestClient.CreateRoutedGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, diagnosticName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiagnosticInfo> response = Response.FromValue(DiagnosticInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// RoutedGet
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/configurations/{name}/diagnostics/{diagnosticName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Legacy_RoutedGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="diagnosticName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DiagnosticInfo> RoutedGet(string name, string diagnosticName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
+
+            using DiagnosticScope scope = LegacyClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.RoutedGet");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LegacyRestClient.CreateRoutedGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, diagnosticName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiagnosticInfo> response = Response.FromValue(DiagnosticInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a Configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/configurations/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Legacy_CreateOrReplaceOptionalBody. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The name of the Configuration. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Configuration>> CreateOrReplaceOptionalBodyAsync(string configurationName, Configuration resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using DiagnosticScope scope = LegacyClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.CreateOrReplaceOptionalBody");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LegacyRestClient.CreateCreateOrReplaceOptionalBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configurationName, Configuration.ToRequestContent(resource), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Configuration> response = Response.FromValue(Configuration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a Configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.OperationTemplates/configurations/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Legacy_CreateOrReplaceOptionalBody. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The name of the Configuration. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Configuration> CreateOrReplaceOptionalBody(string configurationName, Configuration resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using DiagnosticScope scope = LegacyClientDiagnostics.CreateScope("MockableOperationTemplatesResourceGroupResource.CreateOrReplaceOptionalBody");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LegacyRestClient.CreateCreateOrReplaceOptionalBodyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configurationName, Configuration.ToRequestContent(resource), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Configuration> response = Response.FromValue(Configuration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {

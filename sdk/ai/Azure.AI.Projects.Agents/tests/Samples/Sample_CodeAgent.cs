@@ -11,6 +11,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
+
 public class Sample_CodeAgent : SamplesBase
 {
     protected static string GetDirectory(string path, [CallerFilePath] string pth = "")

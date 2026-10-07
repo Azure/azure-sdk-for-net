@@ -40,6 +40,11 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>Optional Bicep literal serialization format.</summary>
         public string? Format { get; }
 
+        /// <summary>
+        /// Creates a regular provisioning property. This bypasses input-property initialization in
+        /// <see cref="PropertyProvider"/> so provisioning can explicitly control public visibility
+        /// and setter behavior while retaining <paramref name="inputProperty"/> for reconciliation.
+        /// </summary>
         private ProvisioningPropertyProvider(
             InputModelProperty inputProperty,
             FieldProvider backingField,
@@ -52,14 +57,58 @@ namespace Azure.Generator.Provisioning.Providers
             bool isSettable,
             bool isRequired,
             string? defaultValue,
-            string? format)
-            : base(null, MethodSignatureModifiers.Public, type, name, body, enclosingType)
+            string? format,
+            PropertyWireInformation? wireInfo)
+            : base(
+                null,
+                MethodSignatureModifiers.Public,
+                type,
+                name,
+                body,
+                enclosingType,
+                wireInfo: wireInfo)
         {
             InputProperty = inputProperty;
             BackingField = backingField;
             BicepPath = bicepPath;
             IsOutput = isOutput;
             IsSettable = isSettable;
+            IsRequired = isRequired;
+            DefaultValue = defaultValue;
+            Format = format;
+        }
+
+        /// <summary>
+        /// Creates a discriminator property. Initializing <see cref="PropertyProvider"/> with
+        /// <paramref name="inputProperty"/> preserves discriminator metadata before the property is
+        /// reshaped as an internal, getter-only <c>BicepValue&lt;string&gt;</c>.
+        /// </summary>
+        private ProvisioningPropertyProvider(
+            InputModelProperty inputProperty,
+            FieldProvider backingField,
+            CSharpType type,
+            string name,
+            MethodPropertyBody body,
+            TypeProvider enclosingType,
+            string[] bicepPath,
+            bool isOutput,
+            bool isRequired,
+            string? defaultValue,
+            string? format,
+            PropertyWireInformation? wireInfo)
+            : base(inputProperty, enclosingType)
+        {
+            InputProperty = inputProperty;
+            Update(
+                modifiers: MethodSignatureModifiers.Internal,
+                type: type,
+                name: name,
+                body: body,
+                wireInfo: wireInfo);
+            BackingField = backingField;
+            BicepPath = bicepPath;
+            IsOutput = isOutput;
+            IsSettable = false;
             IsRequired = isRequired;
             DefaultValue = defaultValue;
             Format = format;
@@ -79,6 +128,8 @@ namespace Azure.Generator.Provisioning.Providers
             string[] bicepPath,
             string? defaultValue,
             string? format,
+            PropertyWireInformation? wireInfo,
+            bool isDiscriminator,
             TypeProvider enclosingType)
         {
             var field = new FieldProvider(
@@ -94,7 +145,7 @@ namespace Azure.Generator.Provisioning.Providers
             ];
 
             MethodPropertyBody body;
-            if (!isSettable)
+            if (!isSettable || isDiscriminator)
             {
                 body = new MethodPropertyBody(getter);
             }
@@ -117,9 +168,13 @@ namespace Azure.Generator.Provisioning.Providers
                 body = new MethodPropertyBody(getter, setter);
             }
 
-            return new ProvisioningPropertyProvider(
-                inputProperty, field, bicepType, resolvedName, body, enclosingType,
-                bicepPath, isOutput, isSettable, isRequired, defaultValue, format);
+            return isDiscriminator
+                ? new ProvisioningPropertyProvider(
+                    inputProperty, field, bicepType, resolvedName, body, enclosingType,
+                    bicepPath, isOutput, isRequired, defaultValue, format, wireInfo)
+                : new ProvisioningPropertyProvider(
+                    inputProperty, field, bicepType, resolvedName, body, enclosingType,
+                    bicepPath, isOutput, isSettable, isRequired, defaultValue, format, wireInfo);
         }
     }
 }

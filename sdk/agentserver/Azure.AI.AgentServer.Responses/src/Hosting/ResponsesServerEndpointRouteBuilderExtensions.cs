@@ -125,18 +125,20 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         }
 
         // The resilient/steerable request paths run INSIDE a Core @task / @multi_turn_task and
-        // resolve ITaskInvoker per request. AddResponsesServer composes the Core task subsystem
-        // (AddResilientTasks) in both local and hosted environments — independent of how options are set —
-        // so the historical "options enabled via a separate configuration path leaves ITaskInvoker
-        // unregistered" desync can no longer occur. This defensive guard remains as a safety net: if a
-        // consumer somehow removed the task subsystem while a resilient/steerable option is enabled, it
-        // fails loud at startup rather than as a per-request 500.
+        // resolve their TaskDefinition handle by name (keyed DI) per request. AddResponsesServer
+        // composes the Core task subsystem (AddResilientTasks + the two flat task registrations) in
+        // both local and hosted environments — independent of how options are set — so the
+        // historical "options enabled via a separate configuration path leaves the task subsystem
+        // unregistered" desync can no longer occur. This defensive guard remains as a safety net: if
+        // a consumer somehow removed the task subsystem while a resilient/steerable option is
+        // enabled, it fails loud at startup rather than as a per-request 500.
         if ((options.ResilientBackground || options.SteerableConversations)
-            && services.GetService<Core.Tasks.ITaskInvoker>() is null)
+            && services.GetKeyedService<Core.Tasks.TaskDefinition<Internal.Resilience.ResponseTaskInput, Internal.Resilience.ResponseTaskOutput>>(
+                Internal.Resilience.ResponsesResilientTaskHandler.OneShotTaskName) is null)
         {
             throw new InvalidOperationException(
                 "ResilientBackground/SteerableConversations is enabled but the Core resilient-task " +
-                "subsystem (ITaskInvoker) is not registered. AddResponsesServer() composes it for both " +
+                "subsystem is not registered. AddResponsesServer() composes it for both " +
                 "local and hosted hosts; if you removed or replaced the task subsystem registration, restore it " +
                 "or disable the resilient/steerable options.");
         }

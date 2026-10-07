@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.NetApp
     public partial class NetAppAccountData
     {
         private EntraIdConfig _entraIdConfig;
-        private LdapConfiguration _ldapConfiguration;
 
         /// <summary> Entra ID configuration. </summary>
         public EntraIdConfig EntraIdConfig
@@ -24,8 +23,15 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> LDAP configuration. </summary>
         public LdapConfiguration LdapConfiguration
         {
-            get => _ldapConfiguration;
-            set => _ldapConfiguration = value;
+            get => Properties is null ? default : Properties.LdapConfiguration;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.LdapConfiguration = value;
+            }
         }
     }
 }

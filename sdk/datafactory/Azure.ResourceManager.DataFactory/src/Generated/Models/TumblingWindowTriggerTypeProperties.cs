@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerTypeProperties"/>. </summary>
         /// <param name="frequency"> The frequency of the time windows. </param>
         /// <param name="interval"> The interval of the time windows. The minimum interval allowed is 15 Minutes. </param>
-        /// <param name="startOn"> The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
+        /// <param name="startsOn"> The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
         /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a new run is triggered. </param>
-        public TumblingWindowTriggerTypeProperties(TumblingWindowFrequency frequency, int interval, DateTimeOffset startOn, int maxConcurrency)
+        public TumblingWindowTriggerTypeProperties(TumblingWindowFrequency frequency, int interval, DateTimeOffset startsOn, int maxConcurrency)
         {
             Frequency = frequency;
             Interval = interval;
-            StartOn = startOn;
+            StartsOn = startsOn;
             MaxConcurrency = maxConcurrency;
             DependsOn = new ChangeTrackingList<DependencyReference>();
         }
@@ -35,19 +35,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerTypeProperties"/>. </summary>
         /// <param name="frequency"> The frequency of the time windows. </param>
         /// <param name="interval"> The interval of the time windows. The minimum interval allowed is 15 Minutes. </param>
-        /// <param name="startOn"> The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
-        /// <param name="endOn"> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
+        /// <param name="startsOn"> The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
+        /// <param name="endsOn"> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
         /// <param name="delay"> Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a new run is triggered. </param>
         /// <param name="retryPolicy"> Retry policy that will be applied for failed pipeline runs. </param>
         /// <param name="dependsOn"> Triggers that this trigger depends on. Only tumbling window triggers are supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TumblingWindowTriggerTypeProperties(TumblingWindowFrequency frequency, int interval, DateTimeOffset startOn, DateTimeOffset? endOn, DataFactoryElement<string> delay, int maxConcurrency, RetryPolicy retryPolicy, IList<DependencyReference> dependsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TumblingWindowTriggerTypeProperties(TumblingWindowFrequency frequency, int interval, DateTimeOffset startsOn, DateTimeOffset? endsOn, DataFactoryElement<string> delay, int maxConcurrency, RetryPolicy retryPolicy, IList<DependencyReference> dependsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             Interval = interval;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Delay = delay;
             MaxConcurrency = maxConcurrency;
             RetryPolicy = retryPolicy;
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public int Interval { get; set; }
 
         /// <summary> The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> Delay { get; set; }

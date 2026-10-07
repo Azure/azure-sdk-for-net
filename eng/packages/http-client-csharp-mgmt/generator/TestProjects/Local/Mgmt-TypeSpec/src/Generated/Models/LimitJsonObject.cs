@@ -11,10 +11,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary>
-    /// LimitJson abstract class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
-    /// </summary>
+    /// <summary> LimitJson abstract class. </summary>
     public abstract partial class LimitJsonObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

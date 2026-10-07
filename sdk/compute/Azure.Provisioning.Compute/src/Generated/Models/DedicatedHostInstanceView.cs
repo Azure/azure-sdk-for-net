@@ -57,7 +57,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return AvailableCapacity.AllocatableVMs;
+                return AvailableCapacity is null ? default : AvailableCapacity.AllocatableVMs;
             }
         }
 

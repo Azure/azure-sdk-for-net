@@ -140,7 +140,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return DiagnosticsProfile.BootDiagnostics;
+                return DiagnosticsProfile is null ? default : DiagnosticsProfile.BootDiagnostics;
             }
         }
 

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Output information for a data generation job.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDataGenerationJobOutput"/> and <see cref="DatasetDataGenerationJobOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatasetDataGenerationJobOutput"/> and <see cref="FileDataGenerationJobOutput"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class DataGenerationJobOutput

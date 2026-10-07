@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new KikChannel. </summary>
         public KikChannel()
         {
+            ChannelName.Assign("KikChannel");
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "KikChannel");
             _properties = DefineModelProperty<KikChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

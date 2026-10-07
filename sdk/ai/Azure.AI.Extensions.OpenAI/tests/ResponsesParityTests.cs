@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,18 +7,24 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Containers;
+using OpenAI.Conversations;
 using OpenAI.Files;
+using OpenAI.Models;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 // We need this alias to avoid conflict with internal enum MessageRole.
 using RealOpenAI = OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
+#pragma warning disable AAIP001
 
 /// <summary>
 /// Many of these tests are adapted from https://github.com/openai/openai-dotnet/tree/main/tests/Responses.
@@ -114,7 +120,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         bool isDefaultModel = defaults?.Any(defaultItem => defaultItem == ResponsesClientDefault.DefaultModel) == true;
         bool isDefaultConversation = defaults?.Any(defaultItem => defaultItem == ResponsesClientDefault.DefaultConversation) == true;
 
-        ProjectConversation existingConversation = null;
+        ConversationResource existingConversation = null;
         if (isDefaultConversation)
         {
             ProjectOpenAIClient openAIClientForConversations = GetTestProjectOpenAIClient();
@@ -383,7 +389,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             }
         }
 
-        ProjectConversation newConversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource newConversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
         ProjectResponsesClient responsesForNewConversation = client.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME, newConversation.Id);
         ResponseResult newResponse = await responsesForNewConversation.CreateResponseAsync("Hello, new conversation!");
 
@@ -431,7 +437,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
-        ProjectConversation conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
         Assert.That(conversation.Id, Does.StartWith("conv_"));
 
         FunctionTool functionTool = ResponseTool.CreateFunctionTool(
@@ -443,7 +449,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         CreateResponseOptions responseOptions = new()
         {
             Model = TestEnvironment.FOUNDRY_MODEL_NAME,
-            AgentConversationId = conversation,
+            AgentConversationId = conversation.Id,
             Tools = { functionTool },
             InputItems = { ResponseItem.CreateUserMessageItem("What's my favorite food?") },
         };
@@ -460,7 +466,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         CreateResponseOptions followupOptions = new()
         {
             Model = TestEnvironment.FOUNDRY_MODEL_NAME,
-            AgentConversationId = conversation,
+            AgentConversationId = conversation.Id,
             InputItems = { ResponseItem.CreateFunctionCallOutputItem(functionCallResponseItem.CallId, "pizza") },
         };
 
@@ -564,4 +570,49 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         ResponseResult response = await client.GetProjectResponsesClient().CreateResponseAsync("What is the size of France in square miles?");
         Assert.That(string.IsNullOrEmpty(response.GetOutputText()), Is.False, "The Agent did not returned a response.");
     }
+
+    [Category("Smoke")]
+    [Test]
+    public void AutomaticContainerSerializesMemoryAndNetworkPolicy()
+    {
+        ContainerAllowlistNetworkPolicy networkPolicy = new ContainerAllowlistNetworkPolicy(["pypi.org", "files.pythonhosted.org"]);
+
+        networkPolicy.DomainSecrets.Add(
+            new ContainerNetworkPolicyDomainSecret(
+                domain: "pypi.org",
+                name: "PYPI_TOKEN",
+                value: "test-token"));
+
+        AutomaticCodeInterpreterToolContainerConfiguration configuration = CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(fileIds: ["file_123"]);
+        configuration.NetworkPolicy = networkPolicy;
+        configuration.MemoryLimit = ContainerMemoryLimit.Max4GB;
+
+        CodeInterpreterToolContainer container = new CodeInterpreterToolContainer(configuration);
+
+        CodeInterpreterTool tool = CodeInterpreterTool.CreateCodeInterpreterTool(container);
+
+        BinaryData serialized = ModelReaderWriter.Write(
+            tool,
+            ModelReaderWriterOptions.Json);
+
+        using JsonDocument document = JsonDocument.Parse(serialized);
+        JsonElement root = document.RootElement;
+        JsonElement containerElement = root.GetProperty("container");
+
+        Assert.That(containerElement.GetProperty("type").GetString(), Is.EqualTo("auto"));
+        Assert.That(containerElement.GetProperty("file_ids")[0].GetString(), Is.EqualTo("file_123"));
+        Assert.That(containerElement.GetProperty("memory_limit").GetString(), Is.EqualTo("4g"));
+
+        JsonElement policy = containerElement.GetProperty("network_policy");
+        Assert.That(policy.GetProperty("type").GetString(), Is.EqualTo("allowlist"));
+        Assert.That(
+            policy.GetProperty("allowed_domains")[0].GetString(),
+            Is.EqualTo("pypi.org"));
+
+        JsonElement secret = policy.GetProperty("domain_secrets")[0];
+        Assert.That(secret.GetProperty("domain").GetString(), Is.EqualTo("pypi.org"));
+        Assert.That(secret.GetProperty("name").GetString(), Is.EqualTo("PYPI_TOKEN"));
+        Assert.That(secret.GetProperty("value").GetString(), Is.EqualTo("test-token"));
+    }
 }
+#pragma warning restore AAIP001

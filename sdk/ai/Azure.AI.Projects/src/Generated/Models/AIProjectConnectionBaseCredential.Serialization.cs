@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// A base class for connection credentials
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, <see cref="NoAuthenticationCredentials"/>, and <see cref="AgenticIdentityPreviewCredentials"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, <see cref="AgenticIdentityPreviewCredentials"/>, and <see cref="NoAuthenticationCredentials"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAIProjectConnectionBaseCredential))]
     public abstract partial class AIProjectConnectionBaseCredential : IJsonModel<AIProjectConnectionBaseCredential>
@@ -126,16 +126,16 @@ namespace Azure.AI.Projects
                 {
                     case "ApiKey":
                         return AIProjectConnectionApiKeyCredential.DeserializeAIProjectConnectionApiKeyCredential(element, options);
-                    case "AAD":
-                        return AIProjectConnectionEntraIdCredential.DeserializeAIProjectConnectionEntraIdCredential(element, options);
                     case "CustomKeys":
                         return AIProjectConnectionCustomCredential.DeserializeAIProjectConnectionCustomCredential(element, options);
+                    case "AAD":
+                        return AIProjectConnectionEntraIdCredential.DeserializeAIProjectConnectionEntraIdCredential(element, options);
                     case "SAS":
                         return AIProjectConnectionSasCredential.DeserializeAIProjectConnectionSasCredential(element, options);
-                    case "None":
-                        return NoAuthenticationCredentials.DeserializeNoAuthenticationCredentials(element, options);
                     case "AgenticIdentityToken_Preview":
                         return AgenticIdentityPreviewCredentials.DeserializeAgenticIdentityPreviewCredentials(element, options);
+                    case "None":
+                        return NoAuthenticationCredentials.DeserializeNoAuthenticationCredentials(element, options);
                 }
             }
             return UnknownAIProjectConnectionBaseCredential.DeserializeUnknownAIProjectConnectionBaseCredential(element, options);

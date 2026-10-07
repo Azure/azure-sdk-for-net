@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.IngestionMode;
+                return Properties is null ? (IngestionMode?)default : Properties.IngestionMode;
             }
             set
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.ContentType;
+                return Properties is null ? (SecurityInsightsFileImportContentType?)default : Properties.ContentType;
             }
             set
             {
@@ -195,21 +195,21 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> The time the files associated with this import are deleted from the storage account. </summary>
         [WirePath("properties.filesValidUntilTimeUTC")]
-        public DateTimeOffset? FilesValidUntil
+        public DateTimeOffset? FilesExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.FilesValidUntil;
+                return Properties is null ? default : Properties.FilesExpiresOn;
             }
         }
 
         /// <summary> The time the file import record is soft deleted from the database and history. </summary>
         [WirePath("properties.importValidUntilTimeUTC")]
-        public DateTimeOffset? ImportValidUntil
+        public DateTimeOffset? ImportExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ImportValidUntil;
+                return Properties is null ? default : Properties.ImportExpiresOn;
             }
         }
     }

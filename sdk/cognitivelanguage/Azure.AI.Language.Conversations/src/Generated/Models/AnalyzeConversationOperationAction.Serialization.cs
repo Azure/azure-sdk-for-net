@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// Base class for a long-running conversation input task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomSummarizationOperationAction"/>, <see cref="SummarizationOperationAction"/>, and <see cref="PiiOperationAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomSummarizationOperationAction"/>, <see cref="PiiOperationAction"/>, and <see cref="SummarizationOperationAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeConversationOperationAction))]
     public abstract partial class AnalyzeConversationOperationAction : IJsonModel<AnalyzeConversationOperationAction>
@@ -137,10 +137,10 @@ namespace Azure.AI.Language.Conversations.Models
                 {
                     case "CustomConversationalSummarizationTask":
                         return CustomSummarizationOperationAction.DeserializeCustomSummarizationOperationAction(element, options);
-                    case "ConversationalSummarizationTask":
-                        return SummarizationOperationAction.DeserializeSummarizationOperationAction(element, options);
                     case "ConversationalPIITask":
                         return PiiOperationAction.DeserializePiiOperationAction(element, options);
+                    case "ConversationalSummarizationTask":
+                        return SummarizationOperationAction.DeserializeSummarizationOperationAction(element, options);
                 }
             }
             return UnknownAnalyzeConversationOperationAction.DeserializeUnknownAnalyzeConversationOperationAction(element, options);

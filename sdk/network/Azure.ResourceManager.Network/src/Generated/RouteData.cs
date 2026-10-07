@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.NextHopType;
+                return Properties is null ? (RouteNextHopType?)default : Properties.NextHopType;
             }
             set
             {
@@ -106,20 +106,6 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </summary>
-        [WirePath("properties.nextHop.nextHopIpAddresses")]
-        public IList<string> NextHopIpAddresses
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RoutePropertiesFormat();
-                }
-                return Properties.NextHopIpAddresses;
             }
         }
     }

@@ -15,12 +15,19 @@ namespace Azure.ResourceManager.Search.Models
     public readonly partial struct SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState : IEquatable<SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The configuration was provisioned successfully. </summary>
         private const string SucceededValue = "Succeeded";
+        /// <summary> The configuration is being created. </summary>
         private const string CreatingValue = "Creating";
+        /// <summary> The configuration is being updated. </summary>
         private const string UpdatingValue = "Updating";
+        /// <summary> The configuration is being deleted. </summary>
         private const string DeletingValue = "Deleting";
+        /// <summary> The configuration request was accepted and provisioning has not started yet. </summary>
         private const string AcceptedValue = "Accepted";
+        /// <summary> The configuration failed to provision. </summary>
         private const string FailedValue = "Failed";
+        /// <summary> The configuration provisioning was canceled. </summary>
         private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
@@ -33,25 +40,25 @@ namespace Azure.ResourceManager.Search.Models
             _value = value;
         }
 
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> The configuration was provisioned successfully. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(SucceededValue);
 
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> The configuration is being created. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Creating { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(CreatingValue);
 
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> The configuration is being updated. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Updating { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(UpdatingValue);
 
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> The configuration is being deleted. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Deleting { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(DeletingValue);
 
-        /// <summary> Gets the Accepted. </summary>
+        /// <summary> The configuration request was accepted and provisioning has not started yet. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Accepted { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(AcceptedValue);
 
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> The configuration failed to provision. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Failed { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(FailedValue);
 
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> The configuration provisioning was canceled. </summary>
         public static SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState Canceled { get; } = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(CanceledValue);
 
         /// <summary> Determines if two <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState"/> values are the same. </summary>

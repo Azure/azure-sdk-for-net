@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Defines workload agnostic properties for a job.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/>, and <see cref="VaultBackupJob"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DpmBackupJob"/>, <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="MabBackupJob"/>, <see cref="StorageBackupJob"/>, <see cref="VaultBackupJob"/>, and <see cref="WorkloadBackupJob"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownJob))]
     public abstract partial class BackupGenericJob : IJsonModel<BackupGenericJob>
@@ -160,20 +160,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "DpmJob":
+                        return DpmBackupJob.DeserializeDpmBackupJob(element, options);
                     case "AzureIaaSVMJob":
                         return IaasVmBackupJob.DeserializeIaasVmBackupJob(element, options);
                     case "AzureIaaSVMJobV2":
                         return IaasVmBackupJobV2.DeserializeIaasVmBackupJobV2(element, options);
-                    case "AzureStorageJob":
-                        return StorageBackupJob.DeserializeStorageBackupJob(element, options);
-                    case "AzureWorkloadJob":
-                        return WorkloadBackupJob.DeserializeWorkloadBackupJob(element, options);
-                    case "DpmJob":
-                        return DpmBackupJob.DeserializeDpmBackupJob(element, options);
                     case "MabJob":
                         return MabBackupJob.DeserializeMabBackupJob(element, options);
+                    case "AzureStorageJob":
+                        return StorageBackupJob.DeserializeStorageBackupJob(element, options);
                     case "VaultJob":
                         return VaultBackupJob.DeserializeVaultBackupJob(element, options);
+                    case "AzureWorkloadJob":
+                        return WorkloadBackupJob.DeserializeWorkloadBackupJob(element, options);
                 }
             }
             return UnknownJob.DeserializeUnknownJob(element, options);

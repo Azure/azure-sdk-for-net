@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="restoreRequestType"> Restore Type (FullShareRestore or ItemLevelRestore). </param>
         /// <param name="restoreFileSpecs"> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </param>
         /// <param name="targetDetails"> Target File Share Details. </param>
-        internal FileShareRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, FileShareCopyOption? copyOptions, FileShareRestoreType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        /// <param name="identityInfo"> Managed identity information required to access the storage account. </param>
+        internal FileShareRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, FileShareCopyOption? copyOptions, FileShareRestoreType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails, BackupIdentityInfo identityInfo) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RestoreRequestType = restoreRequestType;
             RestoreFileSpecs = restoreFileSpecs;
             TargetDetails = targetDetails;
+            IdentityInfo = identityInfo;
         }
 
         /// <summary> Type of this recovery. </summary>
@@ -58,5 +60,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Target File Share Details. </summary>
         public TargetAfsRestoreInfo TargetDetails { get; set; }
+
+        /// <summary> Managed identity information required to access the storage account. </summary>
+        public BackupIdentityInfo IdentityInfo { get; set; }
     }
 }

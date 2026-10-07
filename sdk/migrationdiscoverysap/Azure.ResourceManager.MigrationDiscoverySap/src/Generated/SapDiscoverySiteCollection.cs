@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
     /// </summary>
     public partial class SapDiscoverySiteCollection : ArmCollection, IEnumerable<SapDiscoverySiteResource>, IAsyncEnumerable<SapDiscoverySiteResource>
     {
-        private readonly ClientDiagnostics _sapDiscoverySiteClientDiagnostics;
-        private readonly SapDiscoverySitesRestOperations _sapDiscoverySiteRestClient;
+        private readonly ClientDiagnostics _sapDiscoverySitesClientDiagnostics;
+        private readonly SAPDiscoverySites _sapDiscoverySitesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SapDiscoverySiteCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SapDiscoverySiteCollection for mocking. </summary>
         protected SapDiscoverySiteCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SapDiscoverySiteCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDiscoverySiteCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SapDiscoverySiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sapDiscoverySiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap", SapDiscoverySiteResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SapDiscoverySiteResource.ResourceType, out string sapDiscoverySiteApiVersion);
-            _sapDiscoverySiteRestClient = new SapDiscoverySitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sapDiscoverySiteApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _sapDiscoverySitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap", SapDiscoverySiteResource.ResourceType.Namespace, Diagnostics);
+            _sapDiscoverySitesRestClient = new SAPDiscoverySites(_sapDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapDiscoverySiteApiVersion ?? "2023-10-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a discovery site resource for SAP Migration. This resource will be used to run system discovery and assessment with Azure Migrate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="sapDiscoverySiteName"> The name of the discovery site resource for SAP Migration. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SapDiscoverySiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sapDiscoverySiteName, SapDiscoverySiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sapDiscoverySiteClientDiagnostics.CreateScope("SapDiscoverySiteCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sapDiscoverySitesClientDiagnostics.CreateScope("SapDiscoverySiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sapDiscoverySiteRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrationDiscoverySapArmOperation<SapDiscoverySiteResource>(new SapDiscoverySiteOperationSource(Client), _sapDiscoverySiteClientDiagnostics, Pipeline, _sapDiscoverySiteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapDiscoverySitesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, SapDiscoverySiteData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MigrationDiscoverySapArmOperation<SapDiscoverySiteResource> operation = new MigrationDiscoverySapArmOperation<SapDiscoverySiteResource>(
+                    new SapDiscoverySiteResourceOperationSource(Client),
+                    _sapDiscoverySitesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Creates a discovery site resource for SAP Migration. This resource will be used to run system discovery and assessment with Azure Migrate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="sapDiscoverySiteName"> The name of the discovery site resource for SAP Migration. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SapDiscoverySiteResource> CreateOrUpdate(WaitUntil waitUntil, string sapDiscoverySiteName, SapDiscoverySiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sapDiscoverySiteClientDiagnostics.CreateScope("SapDiscoverySiteCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sapDiscoverySitesClientDiagnostics.CreateScope("SapDiscoverySiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sapDiscoverySiteRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, data, cancellationToken);
-                var operation = new MigrationDiscoverySapArmOperation<SapDiscoverySiteResource>(new SapDiscoverySiteOperationSource(Client), _sapDiscoverySiteClientDiagnostics, Pipeline, _sapDiscoverySiteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapDiscoverySitesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, SapDiscoverySiteData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MigrationDiscoverySapArmOperation<SapDiscoverySiteResource> operation = new MigrationDiscoverySapArmOperation<SapDiscoverySiteResource>(
+                    new SapDiscoverySiteResourceOperationSource(Client),
+                    _sapDiscoverySitesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Gets a SAP Migration discovery site resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapDiscoverySiteName"> The name of the discovery site resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SapDiscoverySiteResource>> GetAsync(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
-            using var scope = _sapDiscoverySiteClientDiagnostics.CreateScope("SapDiscoverySiteCollection.Get");
+            using DiagnosticScope scope = _sapDiscoverySitesClientDiagnostics.CreateScope("SapDiscoverySiteCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sapDiscoverySiteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SapDiscoverySiteData> response = Response.FromValue(SapDiscoverySiteData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SapDiscoverySiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Gets a SAP Migration discovery site resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapDiscoverySiteName"> The name of the discovery site resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SapDiscoverySiteResource> Get(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
-            using var scope = _sapDiscoverySiteClientDiagnostics.CreateScope("SapDiscoverySiteCollection.Get");
+            using DiagnosticScope scope = _sapDiscoverySitesClientDiagnostics.CreateScope("SapDiscoverySiteCollection.Get");
             scope.Start();
             try
             {
-                var response = _sapDiscoverySiteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SapDiscoverySiteData> response = Response.FromValue(SapDiscoverySiteData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SapDiscoverySiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Gets all SAP Migration discovery site resources in a Resource Group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapDiscoverySiteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sapDiscoverySiteRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapDiscoverySiteRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapDiscoverySiteResource(Client, SapDiscoverySiteData.DeserializeSapDiscoverySiteData(e)), _sapDiscoverySiteClientDiagnostics, Pipeline, "SapDiscoverySiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetByResourceGroupAsyncCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
         }
 
         /// <summary>
         /// Gets all SAP Migration discovery site resources in a Resource Group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <returns> A collection of <see cref="SapDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapDiscoverySiteResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sapDiscoverySiteRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapDiscoverySiteRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapDiscoverySiteResource(Client, SapDiscoverySiteData.DeserializeSapDiscoverySiteData(e)), _sapDiscoverySiteClientDiagnostics, Pipeline, "SapDiscoverySiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetByResourceGroupCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapDiscoverySiteName"> The name of the discovery site resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
-            using var scope = _sapDiscoverySiteClientDiagnostics.CreateScope("SapDiscoverySiteCollection.Exists");
+            using DiagnosticScope scope = _sapDiscoverySitesClientDiagnostics.CreateScope("SapDiscoverySiteCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sapDiscoverySiteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SapDiscoverySiteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SapDiscoverySiteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SapDiscoverySiteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapDiscoverySiteName"> The name of the discovery site resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
-            using var scope = _sapDiscoverySiteClientDiagnostics.CreateScope("SapDiscoverySiteCollection.Exists");
+            using DiagnosticScope scope = _sapDiscoverySitesClientDiagnostics.CreateScope("SapDiscoverySiteCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sapDiscoverySiteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SapDiscoverySiteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SapDiscoverySiteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SapDiscoverySiteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapDiscoverySiteName"> The name of the discovery site resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SapDiscoverySiteResource>> GetIfExistsAsync(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
-            using var scope = _sapDiscoverySiteClientDiagnostics.CreateScope("SapDiscoverySiteCollection.GetIfExists");
+            using DiagnosticScope scope = _sapDiscoverySitesClientDiagnostics.CreateScope("SapDiscoverySiteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sapDiscoverySiteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SapDiscoverySiteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SapDiscoverySiteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SapDiscoverySiteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SapDiscoverySiteResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SapDiscoverySiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapDiscoverySiteName"> The name of the discovery site resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapDiscoverySiteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SapDiscoverySiteResource> GetIfExists(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
 
-            using var scope = _sapDiscoverySiteClientDiagnostics.CreateScope("SapDiscoverySiteCollection.GetIfExists");
+            using DiagnosticScope scope = _sapDiscoverySitesClientDiagnostics.CreateScope("SapDiscoverySiteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sapDiscoverySiteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SapDiscoverySiteData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SapDiscoverySiteData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SapDiscoverySiteData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SapDiscoverySiteResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SapDiscoverySiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SapDiscoverySiteResource> IAsyncEnumerable<SapDiscoverySiteResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

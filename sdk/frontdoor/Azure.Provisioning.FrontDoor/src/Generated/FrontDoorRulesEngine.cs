@@ -119,7 +119,7 @@ namespace Azure.Provisioning.FrontDoor
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<RulesEngineProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<FrontDoorResource>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

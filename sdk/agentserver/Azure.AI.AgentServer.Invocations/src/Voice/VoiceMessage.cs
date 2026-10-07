@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
 /// <summary>Base type for one immutable Bridge-to-agent Voice event.</summary>
+[Experimental("AAAS001")]
 public abstract class VoiceInboundMessage
 {
     private protected VoiceInboundMessage(string messageType, string id, DateTimeOffset timestamp)
@@ -28,6 +31,7 @@ public abstract class VoiceInboundMessage
 }
 
 /// <summary>Base type for one immutable agent-to-Bridge Voice message.</summary>
+[Experimental("AAAS001")]
 public abstract class VoiceOutboundMessage
 {
     private protected VoiceOutboundMessage(
@@ -55,6 +59,7 @@ public abstract class VoiceOutboundMessage
 }
 
 /// <summary>Stateless factories for agent-owned Voice protocol identifiers.</summary>
+[Experimental("AAAS001")]
 public static class VoiceIds
 {
     /// <summary>Creates a new <c>m_</c> message identifier.</summary>
@@ -80,6 +85,7 @@ internal static class VoiceModelHelpers
 }
 
 /// <summary>Response deadlines supplied by the Bridge for one connection.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseTimeouts
 {
     /// <summary>Initializes response deadlines.</summary>
@@ -101,6 +107,7 @@ public sealed class VoiceResponseTimeouts
 }
 
 /// <summary>The Bridge application-start event.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceSessionStartEvent : VoiceInboundMessage
 {
     /// <summary>Initializes a Bridge application-start event.</summary>
@@ -143,6 +150,7 @@ public sealed class VoiceSessionStartEvent : VoiceInboundMessage
 }
 
 /// <summary>An explicit positive application-readiness acknowledgement.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceSessionReadyMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes a readiness acknowledgement.</summary>
