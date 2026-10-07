@@ -3,6 +3,9 @@
 // a later incomplete attempt must never fall back to an older successful attempt.
 import fs from "node:fs";
 import path from "node:path";
+import { setTimeout as delay } from "node:timers/promises";
+import { parseArgs } from "node:util";
+import { pathToFileURL } from "node:url";
 import { globFiles } from "./glob.ts";
 
 // No individual result can exceed the bundle's expanded-size ceiling. Check before
@@ -25,6 +28,52 @@ export function expectedShardsFromMatrix(value) {
         throw new Error("The eval matrix must contain unique, non-empty shard names.");
     }
     return names.sort();
+}
+
+// The artifact list cannot reveal a newer retry that lost its agent before publishing.
+export function latestShardAttempts(timeline, matrix) {
+    expectedShardsFromMatrix(matrix);
+    if (!Array.isArray(timeline?.records)) throw new Error("The current build timeline is required.");
+    const attempts = {};
+    for (const [key, entry] of Object.entries(matrix)) {
+        if (!validShard(key)) throw new Error("Invalid matrix leg identity.");
+        const jobs = timeline.records.filter(record => record?.type === "Job" && record.identifier === `Eval.RunShard.${key}`);
+        for (const record of jobs) {
+            if (!Number.isSafeInteger(record.attempt) || record.attempt < 1) throw new Error("Invalid timeline attempt.");
+            const current = { attempt: record.attempt, complete: record.state === "completed" &&
+                ["succeeded", "succeededWithIssues", "failed"].includes(record.result) };
+            const previous = attempts[entry.shardName];
+            if (previous?.attempt === current.attempt && previous.complete !== current.complete) throw new Error("Ambiguous timeline attempt.");
+            if (!previous || previous.attempt < current.attempt) attempts[entry.shardName] = current;
+        }
+        if (!attempts[entry.shardName]) throw new Error("An expected matrix job is missing from the current build timeline.");
+    }
+    return { schemaVersion: 1, valid: true, attempts };
+}
+
+export async function readShardAttempts(env, { fetchImpl = fetch, wait = delay } = {}) {
+    const base = new URL(env.SYSTEM_COLLECTIONURI), matrix = JSON.parse(env.EVAL_EXPECTED_MATRIX);
+    expectedShardsFromMatrix(matrix);
+    if (base.protocol !== "https:" || base.hostname !== "dev.azure.com" || base.port || base.username || base.password || base.search || base.hash ||
+        !/^\/[a-z0-9][a-z0-9-]{0,99}\/$/i.test(base.pathname) || !env.SYSTEM_ACCESSTOKEN ||
+        !/^[a-f0-9-]{36}$/i.test(env.SYSTEM_TEAMPROJECTID ?? "") || !/^[1-9][0-9]*$/.test(env.BUILD_BUILDID ?? "")) {
+        throw new Error("Current build identity/token missing.");
+    }
+    const url = new URL(`${env.SYSTEM_TEAMPROJECTID}/_apis/build/builds/${env.BUILD_BUILDID}/timeline?api-version=7.1`, base);
+    for (let attempt = 0; attempt < 3; attempt++) {
+        let response;
+        try {
+            response = await fetchImpl(url, { headers: { authorization: `Bearer ${env.SYSTEM_ACCESSTOKEN}` },
+                redirect: "error", signal: AbortSignal.timeout(30_000) });
+            if (!response.ok) throw new Error("Timeline could not be read.");
+            return latestShardAttempts(await response.json(), matrix);
+        } catch (error) {
+            if ((response && ![408, 429, 500, 502, 503, 504].includes(response.status)) || attempt === 2) throw error;
+        } finally { await response?.body?.cancel().catch(() => {}); }
+        const header = response?.headers?.get("retry-after"), seconds = Number(header);
+        const milliseconds = header && Number.isFinite(seconds) ? seconds * 1000 : header ? Date.parse(header) - Date.now() : NaN;
+        await wait(Math.min(30_000, Math.max(0, Number.isFinite(milliseconds) ? milliseconds : 1000 * 2 ** attempt)));
+    }
 }
 
 function emptyDirectory(directory) {
@@ -199,4 +248,16 @@ export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards
     };
     fs.writeFileSync(path.join(resultsRoot, "shard-index.json"), JSON.stringify(shardInput, null, 2) + "\n");
     return { complete, status, shardInput };
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+    try {
+        const { values } = parseArgs({ options: { "results-root": { type: "string" }, "output-directory": { type: "string" },
+            "shard-name": { type: "string" }, attempt: { type: "string" } } });
+        if (!values["results-root"] || !values["output-directory"]) throw new Error("Results and output directories are required.");
+        const result = stageShardResults({ resultsRoot: values["results-root"], outputDirectory: values["output-directory"],
+            shardName: values["shard-name"], attempt: Number(values.attempt) });
+        console.log(`Staged ${result.shard} attempt ${result.attempt}: ${result.trials} trials; ${result.complete ? "complete" : "incomplete"}.`);
+        if (!result.complete) console.log(`##vso[task.logissue type=warning]${result.reason}`);
+    } catch (error) { console.error(error.message); process.exitCode = 1; }
 }

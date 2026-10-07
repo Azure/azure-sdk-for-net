@@ -51,27 +51,16 @@ jobs:
             eval-result-*/**/*.junit.xml
           targetPath: $(Pipeline.Workspace)/eval-results
 
-      # Read this build only; this is not dashboard polling or historical discovery.
-      # A newer job attempt without any artifact must never reuse older results.
-      - script: |
-          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/capture-eval-attempts.ts" \
-            --output "$(Build.ArtifactStagingDirectory)/eval-summary/job-attempts.json"
-        displayName: 'Verify latest shard job attempts from current build timeline'
-        condition: always()
-        env:
-          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-          EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
-
-      # Renders the rollup to the run's Summary tab (##vso[task.uploadsummary]).
+      # Verify this build's timeline and render the same selected attempts for every output.
       - script: |
           node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.ts" \
             --results-root "$(Pipeline.Workspace)/eval-results" \
             --selected-root "$(Pipeline.Workspace)/eval-selected" \
-            --attempts-file "$(Build.ArtifactStagingDirectory)/eval-summary/job-attempts.json" \
             --output-path "$(Build.ArtifactStagingDirectory)/eval-summary/eval-summary.md"
         displayName: 'Select expected latest attempts and render complete-build summary'
         condition: always()
         env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
 
       - ${{ if or(parameters.createDashboardBundle, parameters.publishDashboardResults) }}:

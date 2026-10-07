@@ -1,13 +1,11 @@
 // Publishes a saved build archive, persists the storage result, then signals the fixed dashboard.
 import { parseArgs } from "node:util";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { AzureCliCredential } from "@azure/identity";
 import { ContainerClient } from "@azure/storage-blob";
 import { PublicationError } from "./bundle.ts";
-import { containerUrl, publisherIdentity, publishBundle } from "./storage.ts";
-import { notifyDashboard } from "./notification.ts";
-import { publicationFailure } from "./diagnostics.ts";
+import { STORAGE_CONTAINER_URL, publisherIdentity, publishBundle, notifyDashboard, publicationFailure, savePublicationResult } from "./storage.ts";
 
 let operation = "validate_configuration", save, stored = false;
 try {
@@ -17,21 +15,25 @@ try {
         process.env.BUILD_REASON === "PullRequest" || process.env.BUILD_SOURCEBRANCH?.startsWith("refs/pull/"))) {
         throw new PublicationError("untrusted_run", "Publishing requires a trusted internal, non-PR run.");
     }
-    const output = resolve(values.result); await mkdir(dirname(output), { recursive: true });
-    save = result => writeFile(output, JSON.stringify(result, null, 2) + "\n");
-    const destination = containerUrl(process.env.EVAL_STORAGE_CONTAINER_URL);
+    const output = resolve(values.result);
+    if (output === resolve(values.bundle)) throw new PublicationError("invalid_arguments", "The archive and publication result must use different paths.");
+    await mkdir(dirname(output), { recursive: true });
+    save = result => savePublicationResult(output, result);
     const credential = new AzureCliCredential({ processTimeoutInMs: 30_000 });
     operation = "acquire_storage_token";
     const identity = publisherIdentity((await credential.getToken("https://storage.azure.com/.default")).token);
     console.log("Pipeline storage identity acquired; no token was logged.");
-    const client = new ContainerClient(destination, credential, { retryOptions: { maxTries: 3, tryTimeoutInMs: 30_000 } });
+    // publishBundle owns the retry budget; do not multiply it with SDK retries.
+    const client = new ContainerClient(STORAGE_CONTAINER_URL, credential, { retryOptions: { maxTries: 1, tryTimeoutInMs: 30_000 } });
     operation = "publish_blob";
     const result = await publishBundle({ bundlePath: resolve(values.bundle), client, publisherId: identity, onStored: async result => {
+        operation = "persist_storage_result";
         await save(result); stored = true;
     },
         notify: target => notifyDashboard({ target,
             getToken: async audience => (await credential.getToken(`${audience}/.default`)).token }) });
-    await save(result);
+    try { await save(result); }
+    catch { console.warn("##vso[task.logissue type=warning]Archive stored; notification status could not be saved. The original storage receipt is retained."); }
     console.log(`Result archive stored: ${result.blobName} (duplicate: ${result.duplicate}).`);
     if (result.notification.status === "failed") console.warn("##vso[task.logissue type=warning]Blob upload succeeded; dashboard refresh failed. Retry the signal or reconcile the cache later.");
     else console.log(`Dashboard notification: ${result.notification.status}.`);
@@ -42,6 +44,8 @@ try {
         try { await save(failure); } catch { /* Preserve the primary, sanitized failure. */ }
     }
     console.error(`Publication diagnostic: ${JSON.stringify(failure)}`);
-    console.error(error instanceof PublicationError ? error.message : "Blob publication failed. Check the service connection, container access and agent network route.");
+    console.error(error instanceof PublicationError ? error.message : operation === "persist_storage_result" ?
+        "Archive stored, but its receipt could not be saved; no notification was sent. Retry the same saved archive." :
+        "Blob publication failed. Check the service connection, container access and agent network route.");
     process.exitCode = 1;
 }

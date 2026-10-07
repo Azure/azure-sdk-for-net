@@ -129,7 +129,7 @@ jobs:
       # Even an early failure publishes an incomplete marker; never fall back to stale data.
       - script: |
           mkdir -p "$(Build.ArtifactStagingDirectory)/debug"
-          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/stage-eval-results.ts" \
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/lib/shard-results.ts" \
             --results-root "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
             --output-directory "$(Build.ArtifactStagingDirectory)/eval-result" \
             --shard-name "$(shardName)" --attempt "$(System.JobAttempt)"

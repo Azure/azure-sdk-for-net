@@ -6,7 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { globFiles } from "./lib/glob.ts";
-import { expectedShardsFromMatrix, selectSummaryResults } from "./lib/shard-results.ts";
+import { expectedShardsFromMatrix, readShardAttempts, selectSummaryResults } from "./lib/shard-results.ts";
 
 // Maps a JUnit file path back to its shard and job attempt. Result artifacts download into
 // folders named `eval-result-<shardName>-<attempt>` (the attempt suffix keeps "Rerun failed
@@ -340,9 +340,6 @@ function parseArgs(argv) {
       case "--selected-root":
         options.selectedRoot = next();
         break;
-      case "--attempts-file":
-        options.attemptsFile = next();
-        break;
       default:
         throw new Error(`Unknown argument: ${arg}`);
     }
@@ -353,7 +350,7 @@ function parseArgs(argv) {
   return options;
 }
 
-function main(argv) {
+async function main(argv) {
   const options = parseArgs(argv);
   fs.mkdirSync(path.dirname(path.resolve(options.outputPath)), { recursive: true });
   fs.mkdirSync(options.resultsRoot, { recursive: true });
@@ -367,11 +364,14 @@ function main(argv) {
       matrixValid = false;
     }
     // Even a failed Prepare must use an empty destination, not stale selected results.
-    let jobAttempts = { valid: false };
-    if (options.attemptsFile) {
-      try { jobAttempts = JSON.parse(fs.readFileSync(options.attemptsFile, "utf8")); }
-      catch { /* Keep diagnostic results, but missing or invalid timeline evidence cannot authorize publication. */ }
+    let jobAttempts = { schemaVersion: 1, valid: false, attempts: {} };
+    if (matrixValid) {
+      try { jobAttempts = await readShardAttempts(process.env); }
+      catch {
+        console.warn("##vso[task.logissue type=warning]Latest shard attempts could not be verified; Summary will retain diagnostics but refuse publication.");
+      }
     }
+    fs.writeFileSync(path.join(path.dirname(options.outputPath), "job-attempts.json"), JSON.stringify(jobAttempts, null, 2) + "\n");
     selection = selectSummaryResults({ resultsRoot: options.resultsRoot,
       selectedRoot: options.selectedRoot, expectedShards, jobAttempts });
     if (!matrixValid) {
@@ -419,7 +419,7 @@ function main(argv) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
-    main(process.argv.slice(2));
+    await main(process.argv.slice(2));
   } catch (error) {
     if (process.env.TF_BUILD && process.argv.includes("--selected-root")) {
       console.log("##vso[task.setvariable variable=EvalSummaryComplete]false");
