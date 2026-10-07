@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string UserData { get; set; }
 
         /// <summary> Specifies the capacity reservation related details of a scale set. Minimum api-version: 2021-04-01. </summary>
-        internal CapacityReservationProfile CapacityReservation { get; set; }
+        public CapacityReservationProfile CapacityReservation { get; set; }
 
         /// <summary> Specifies the Interconnect Block related details of a Scale Set. Minimum api-version: 2026-03-01. </summary>
         internal InterconnectBlockProfile InterconnectBlockProfile { get; set; }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </summary>
-        internal VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
+        public VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
 
         /// <summary> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. Minimum api-version: 2022-11-01. </summary>
         internal ServiceArtifactReference ServiceArtifactReference { get; set; }
@@ -158,23 +158,6 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> Resource Id. </summary>
-        public ResourceIdentifier CapacityReservationGroupId
-        {
-            get
-            {
-                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
-            }
-            set
-            {
-                if (CapacityReservation is null)
-                {
-                    CapacityReservation = new CapacityReservationProfile();
-                }
-                CapacityReservation.CapacityReservationGroupId = value;
-            }
-        }
-
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
         public ResourceIdentifier InterconnectBlockId
         {
@@ -202,23 +185,6 @@ namespace Azure.ResourceManager.Compute.Models
                     ApplicationProfile = new ApplicationProfile();
                 }
                 return ApplicationProfile.GalleryApplications;
-            }
-        }
-
-        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
-        public VirtualMachineSizeProperties HardwareVmSizeProperties
-        {
-            get
-            {
-                return HardwareProfile is null ? default : HardwareProfile.VmSizeProperties;
-            }
-            set
-            {
-                if (HardwareProfile is null)
-                {
-                    HardwareProfile = new VirtualMachineScaleSetHardwareProfile();
-                }
-                HardwareProfile.VmSizeProperties = value;
             }
         }
 

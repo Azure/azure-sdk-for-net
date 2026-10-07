@@ -46,7 +46,7 @@ ProvisioningParameter publisherName =
 infra.Add(publisherName);
 
 ApiManagementService apiService =
-    new(nameof(apiService), ApiManagementService.ResourceVersions.V2024_05_01)
+    new(nameof(apiService), ApiManagementService.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Sku = new ApiManagementServiceSkuProperties
         {
@@ -105,7 +105,7 @@ infra.Add(productPolicy);
 
 // Service
 ApiManagementService apiService =
-    new(nameof(apiService), ApiManagementService.ResourceVersions.V2024_05_01)
+    new(nameof(apiService), ApiManagementService.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Sku = new ApiManagementServiceSkuProperties
         {
@@ -119,7 +119,7 @@ infra.Add(apiService);
 
 // Tenant policy
 ApiManagementPolicy tenantPolicyResource =
-    new("tenantPolicyResource", ApiManagementPolicy.ResourceVersions.V2024_05_01)
+    new("tenantPolicyResource", ApiManagementPolicy.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         Value = tenantPolicy
@@ -128,7 +128,7 @@ infra.Add(tenantPolicyResource);
 
 // API
 ApiManagementApi exampleApi =
-    new("exampleApi", ApiManagementApi.ResourceVersions.V2024_05_01)
+    new("exampleApi", ApiManagementApi.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         DisplayName = "Example API Name",
@@ -140,7 +140,7 @@ infra.Add(exampleApi);
 
 // Operations
 ApiOperation exampleOperationDelete =
-    new("exampleOperationDelete", ApiOperation.ResourceVersions.V2024_05_01)
+    new("exampleOperationDelete", ApiOperation.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = exampleApi,
         DisplayName = "DELETE resource",
@@ -151,7 +151,7 @@ ApiOperation exampleOperationDelete =
 infra.Add(exampleOperationDelete);
 
 ApiOperation exampleOperationGet =
-    new("exampleOperationGet", ApiOperation.ResourceVersions.V2024_05_01)
+    new("exampleOperationGet", ApiOperation.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = exampleApi,
         DisplayName = "GET resource",
@@ -163,7 +163,7 @@ infra.Add(exampleOperationGet);
 
 // Operation policy
 ApiOperationPolicy exampleOperationGetPolicy =
-    new("exampleOperationGetPolicy", ApiOperationPolicy.ResourceVersions.V2024_05_01)
+    new("exampleOperationGetPolicy", ApiOperationPolicy.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = exampleOperationGet,
         Value = operationPolicy
@@ -172,7 +172,7 @@ infra.Add(exampleOperationGetPolicy);
 
 // API with policy
 ApiManagementApi exampleApiWithPolicy =
-    new("exampleApiWithPolicy", ApiManagementApi.ResourceVersions.V2024_05_01)
+    new("exampleApiWithPolicy", ApiManagementApi.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         DisplayName = "Example API Name with Policy",
@@ -183,7 +183,7 @@ ApiManagementApi exampleApiWithPolicy =
 infra.Add(exampleApiWithPolicy);
 
 ApiPolicy exampleApiWithPolicyPolicy =
-    new("exampleApiWithPolicyPolicy", ApiPolicy.ResourceVersions.V2024_05_01)
+    new("exampleApiWithPolicyPolicy", ApiPolicy.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = exampleApiWithPolicy,
         Value = apiPolicy
@@ -192,7 +192,7 @@ infra.Add(exampleApiWithPolicyPolicy);
 
 // Product with policy
 ApiManagementProduct exampleProduct =
-    new("exampleProduct", ApiManagementProduct.ResourceVersions.V2024_05_01)
+    new("exampleProduct", ApiManagementProduct.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         DisplayName = "Example Product Name",
@@ -205,7 +205,7 @@ ApiManagementProduct exampleProduct =
 infra.Add(exampleProduct);
 
 ApiManagementProductPolicy exampleProductPolicy =
-    new("exampleProductPolicy", ApiManagementProductPolicy.ResourceVersions.V2024_05_01)
+    new("exampleProductPolicy", ApiManagementProductPolicy.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = exampleProduct,
         Value = productPolicy
@@ -214,7 +214,7 @@ infra.Add(exampleProductPolicy);
 
 // Users
 ApiManagementUser exampleUser1 =
-    new("exampleUser1", ApiManagementUser.ResourceVersions.V2024_05_01)
+    new("exampleUser1", ApiManagementUser.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         FirstName = "ExampleFirstName1",
@@ -226,7 +226,7 @@ ApiManagementUser exampleUser1 =
 infra.Add(exampleUser1);
 
 ApiManagementUser exampleUser2 =
-    new("exampleUser2", ApiManagementUser.ResourceVersions.V2024_05_01)
+    new("exampleUser2", ApiManagementUser.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         FirstName = "ExampleFirstName2",
@@ -239,7 +239,7 @@ infra.Add(exampleUser2);
 
 // Named value
 ApiManagementNamedValue exampleNamedValue =
-    new("exampleNamedValue", ApiManagementNamedValue.ResourceVersions.V2024_05_01)
+    new("exampleNamedValue", ApiManagementNamedValue.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         DisplayName = "propertyExampleName",
@@ -250,7 +250,7 @@ infra.Add(exampleNamedValue);
 
 // Group
 ApiManagementGroup exampleGroup =
-    new("exampleGroup", ApiManagementGroup.ResourceVersions.V2024_05_01)
+    new("exampleGroup", ApiManagementGroup.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         DisplayName = "Example Group Name",
@@ -260,7 +260,7 @@ infra.Add(exampleGroup);
 
 // OpenId Connect provider
 ApiManagementOpenIdConnectProvider exampleOpenIdConnectProvider =
-    new("exampleOpenIdConnectProvider", ApiManagementOpenIdConnectProvider.ResourceVersions.V2024_05_01)
+    new("exampleOpenIdConnectProvider", ApiManagementOpenIdConnectProvider.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         DisplayName = "exampleOpenIdConnectProviderName",
@@ -272,7 +272,7 @@ infra.Add(exampleOpenIdConnectProvider);
 
 // Logger
 ApiManagementLogger exampleLogger =
-    new("exampleLogger", ApiManagementLogger.ResourceVersions.V2024_05_01)
+    new("exampleLogger", ApiManagementLogger.ResourceVersions.V2025_09_01_PREVIEW)
     {
         Parent = apiService,
         LoggerType = LoggerType.AzureEventHub,

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.Status;
+                return Properties is null ? (PostgreSqlExecutionStatus?)default : Properties.Status;
             }
             set
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.StartsOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.StartsOn;
             }
             set
             {

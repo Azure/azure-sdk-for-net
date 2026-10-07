@@ -220,7 +220,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CustomConversationSummarizationActionContent(
@@ -230,7 +230,7 @@ namespace Azure.AI.Language.Conversations.Models
                 sentenceCount,
                 stringIndexType,
                 summaryLength,
-                summaryAspects,
+                summaryAspects ?? new ChangeTrackingList<SummaryAspect>(),
                 additionalBinaryDataProperties);
         }
     }

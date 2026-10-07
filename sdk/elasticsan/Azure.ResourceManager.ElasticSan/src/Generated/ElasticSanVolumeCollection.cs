@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             TryGetApiVersion(ElasticSanVolumeResource.ResourceType, out string elasticSanVolumeApiVersion);
             _volumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanVolumeResource.ResourceType.Namespace, Diagnostics);
-            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanVolumeApiVersion ?? "2025-09-01");
+            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanVolumeApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +69,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +127,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +185,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +234,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,13 +283,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volumes if set to true. If set to false or if not specified, returns only active volumes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanVolumeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticSanVolumeResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticSanVolumeResource> GetAllAsync(ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -299,6 +302,7 @@ namespace Azure.ResourceManager.ElasticSan
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
+                accessSoftDeletedResources?.ToString(),
                 context,
                 "ElasticSanVolumeCollection.GetAll"), data => new ElasticSanVolumeResource(Client, data));
         }
@@ -316,13 +320,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volumes if set to true. If set to false or if not specified, returns only active volumes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanVolumeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticSanVolumeResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticSanVolumeResource> GetAll(ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -334,6 +339,7 @@ namespace Azure.ResourceManager.ElasticSan
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
+                accessSoftDeletedResources?.ToString(),
                 context,
                 "ElasticSanVolumeCollection.GetAll"), data => new ElasticSanVolumeResource(Client, data));
         }
@@ -351,7 +357,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +414,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +471,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,7 +532,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -589,5 +595,61 @@ namespace Azure.ResourceManager.ElasticSan
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
+
+        /// <summary>
+        /// List Volumes in a VolumeGroup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Volumes_ListByVolumeGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ElasticSanVolumeResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<ElasticSanVolumeResource> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(accessSoftDeletedResources: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// List Volumes in a VolumeGroup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Volumes_ListByVolumeGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ElasticSanVolumeResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<ElasticSanVolumeResource> GetAll(CancellationToken cancellationToken)
+        {
+            return GetAll(accessSoftDeletedResources: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

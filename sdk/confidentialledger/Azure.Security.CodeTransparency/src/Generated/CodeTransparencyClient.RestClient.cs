@@ -78,7 +78,7 @@ namespace Azure.Security.CodeTransparency
             return message;
         }
 
-        internal HttpMessage CreateCreateEntryV09Request(RequestContent content, bool? waitForCommit, RequestContext context)
+        internal HttpMessage CreateCreateEntryRequest(RequestContent content, bool? waitForCommit, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -119,7 +119,7 @@ namespace Azure.Security.CodeTransparency
             return message;
         }
 
-        internal HttpMessage CreateGetEntryV09Request(string entryId, RequestContext context)
+        internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -137,7 +137,7 @@ namespace Azure.Security.CodeTransparency
             return message;
         }
 
-        internal HttpMessage CreateGetEntryStatementV09Request(string entryId, RequestContext context)
+        internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

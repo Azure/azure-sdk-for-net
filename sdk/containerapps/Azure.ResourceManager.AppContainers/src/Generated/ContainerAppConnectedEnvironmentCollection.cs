@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppConnectedEnvironmentResource.ResourceType, out string containerAppConnectedEnvironmentApiVersion);
             _connectedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _connectedEnvironmentsRestClient = new ConnectedEnvironments(_connectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _connectedEnvironmentsRestClient = new ConnectedEnvironments(_connectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

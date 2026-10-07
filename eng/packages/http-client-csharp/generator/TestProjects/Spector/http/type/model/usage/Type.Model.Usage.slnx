@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Type.Model.Usage.csproj" />
+  <Project Path="tests/Type.Model.Usage.Tests.csproj" />
 </Solution>

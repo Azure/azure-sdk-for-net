@@ -229,13 +229,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     measurements = dictionary;
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new TelemetryExceptionData(
                 version,
                 kind,
                 additionalProperties,
-                exceptions,
+                exceptions ?? new ChangeTrackingList<TelemetryExceptionDetails>(),
                 severityLevel,
                 problemId,
                 properties ?? new ChangeTrackingDictionary<string, string>(),

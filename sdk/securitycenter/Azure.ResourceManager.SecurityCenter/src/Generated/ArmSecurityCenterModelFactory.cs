@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// The action that should be triggered.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SecurityAutomationActionLogicApp"/>, <see cref="Models.SecurityAutomationActionEventHub"/>, and <see cref="Models.SecurityAutomationActionWorkspace"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SecurityAutomationActionEventHub"/>, <see cref="Models.SecurityAutomationActionLogicApp"/>, and <see cref="Models.SecurityAutomationActionWorkspace"/>.
         /// </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
         /// <returns> A new <see cref="Models.SecurityAutomationAction"/> instance for mocking. </returns>
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// A custom alert rule.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ThresholdCustomAlertRule"/>, <see cref="Models.TimeWindowCustomAlertRule"/>, <see cref="Models.AllowlistCustomAlertRule"/>, <see cref="Models.ListCustomAlertRule"/>, <see cref="Models.DenylistCustomAlertRule"/>, <see cref="Models.ConnectionToIPNotAllowed"/>, <see cref="Models.ConnectionFromIPNotAllowed"/>, <see cref="Models.LocalUserNotAllowed"/>, <see cref="Models.ProcessNotAllowed"/>, <see cref="Models.ActiveConnectionsNotInAllowedRange"/>, <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>, <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>, <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>, <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>, <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>, <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>, <see cref="Models.FileUploadsNotInAllowedRange"/>, <see cref="Models.QueuePurgesNotInAllowedRange"/>, <see cref="Models.TwinUpdatesNotInAllowedRange"/>, and <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ActiveConnectionsNotInAllowedRange"/>, <see cref="Models.AllowlistCustomAlertRule"/>, <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>, <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>, <see cref="Models.ConnectionFromIPNotAllowed"/>, <see cref="Models.ConnectionToIPNotAllowed"/>, <see cref="Models.DenylistCustomAlertRule"/>, <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>, <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>, <see cref="Models.FileUploadsNotInAllowedRange"/>, <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>, <see cref="Models.ListCustomAlertRule"/>, <see cref="Models.LocalUserNotAllowed"/>, <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>, <see cref="Models.ProcessNotAllowed"/>, <see cref="Models.QueuePurgesNotInAllowedRange"/>, <see cref="Models.ThresholdCustomAlertRule"/>, <see cref="Models.TimeWindowCustomAlertRule"/>, <see cref="Models.TwinUpdatesNotInAllowedRange"/>, and <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/>.
         /// </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
@@ -1681,7 +1681,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 
@@ -1821,7 +1821,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// The security offering details
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CspmMonitorAwsOffering"/>, <see cref="Models.DefenderForContainersAwsOffering"/>, <see cref="Models.DefenderForServersAwsOffering"/>, <see cref="Models.DefenderForDatabasesAwsOffering"/>, <see cref="Models.CspmMonitorGcpOffering"/>, <see cref="Models.DefenderForServersGcpOffering"/>, <see cref="Models.DefenderForDatabasesGcpOffering"/>, <see cref="Models.DefenderForContainersGcpOffering"/>, <see cref="Models.CspmMonitorGithubOffering"/>, <see cref="Models.CspmMonitorAzureDevOpsOffering"/>, <see cref="Models.DefenderCspmAwsOffering"/>, <see cref="Models.DefenderCspmGcpOffering"/>, <see cref="Models.CspmMonitorGitLabOffering"/>, <see cref="Models.CspmMonitorDockerHubOffering"/>, <see cref="Models.DefenderForContainersDockerHubOffering"/>, <see cref="Models.DefenderCspmDockerHubOffering"/>, <see cref="Models.CspmMonitorJFrogOffering"/>, <see cref="Models.DefenderForContainersJFrogOffering"/>, and <see cref="Models.DefenderCspmJFrogOffering"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CspmMonitorAwsOffering"/>, <see cref="Models.CspmMonitorAzureDevOpsOffering"/>, <see cref="Models.CspmMonitorDockerHubOffering"/>, <see cref="Models.CspmMonitorGcpOffering"/>, <see cref="Models.CspmMonitorGitLabOffering"/>, <see cref="Models.CspmMonitorGithubOffering"/>, <see cref="Models.CspmMonitorJFrogOffering"/>, <see cref="Models.DefenderCspmAwsOffering"/>, <see cref="Models.DefenderCspmDockerHubOffering"/>, <see cref="Models.DefenderCspmGcpOffering"/>, <see cref="Models.DefenderCspmJFrogOffering"/>, <see cref="Models.DefenderForContainersAwsOffering"/>, <see cref="Models.DefenderForContainersDockerHubOffering"/>, <see cref="Models.DefenderForContainersGcpOffering"/>, <see cref="Models.DefenderForContainersJFrogOffering"/>, <see cref="Models.DefenderForDatabasesAwsOffering"/>, <see cref="Models.DefenderForDatabasesGcpOffering"/>, <see cref="Models.DefenderForServersAwsOffering"/>, and <see cref="Models.DefenderForServersGcpOffering"/>.
         /// </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
@@ -2497,7 +2497,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// The security connector environment data.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AwsEnvironment"/>, <see cref="Models.GcpProjectEnvironment"/>, <see cref="Models.GithubScopeEnvironment"/>, <see cref="Models.AzureDevOpsScopeEnvironment"/>, <see cref="Models.GitLabScopeEnvironmentInfo"/>, <see cref="Models.DockerHubEnvironmentInfo"/>, and <see cref="Models.JFrogEnvironmentInfo"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AwsEnvironment"/>, <see cref="Models.AzureDevOpsScopeEnvironment"/>, <see cref="Models.DockerHubEnvironmentInfo"/>, <see cref="Models.GcpProjectEnvironment"/>, <see cref="Models.GitLabScopeEnvironmentInfo"/>, <see cref="Models.GithubScopeEnvironment"/>, and <see cref="Models.JFrogEnvironmentInfo"/>.
         /// </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <returns> A new <see cref="Models.SecurityConnectorEnvironment"/> instance for mocking. </returns>
@@ -2567,7 +2567,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// The gcpOrganization data
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.GcpParentOrganizationalInfo"/> and <see cref="Models.GcpMemberOrganizationalInfo"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.GcpMemberOrganizationalInfo"/> and <see cref="Models.GcpParentOrganizationalInfo"/>.
         /// </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         /// <returns> A new <see cref="Models.GcpOrganizationalInfo"/> instance for mocking. </returns>
@@ -3192,7 +3192,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                new DiscoveredSecuritySolutionProperties(securityFamily, offer, publisher, sku, default),
                 location,
                 default);
         }
@@ -3234,7 +3234,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                virtualMachines is null && requests is null && provisioningState is null ? default : new JitNetworkAccessPolicyProperties((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessPolicyVirtualMachine>()).ToList(), (requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>()).ToList(), provisioningState, default),
                 kind,
                 location,
                 default);
@@ -3563,7 +3563,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName is null && description is null && assignedStandardId is null && effect is null && excludedScopes is null && expiresOn is null && exemptionData is null && attestationData is null && metadata is null ? default : new StandardAssignmentProperties(
                     displayName,
                     description,
-                    new AssignedStandardItem(assignedStandardId, default),
+                    assignedStandardId is null ? default : new AssignedStandardItem(assignedStandardId, default),
                     effect,
                     (excludedScopes ?? new ChangeTrackingList<string>()).ToList(),
                     expiresOn,
@@ -3688,7 +3688,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// The kind of the security setting
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.DataExportSettings"/> and <see cref="Models.AlertSyncSettings"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.AlertSyncSettings"/> and <see cref="Models.DataExportSettings"/>.
         /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -3955,12 +3955,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName is null && description is null && assignedStandardId is null && assignedComponentKey is null && scope is null && effect is null && expiresOn is null && additionalDataExemptionCategory is null && metadata is null ? default : new AssignmentProperties(
                     displayName,
                     description,
-                    new AssignedStandardItem(assignedStandardId, default),
-                    new AssignedComponentItem(assignedComponentKey, default),
+                    assignedStandardId is null ? default : new AssignedStandardItem(assignedStandardId, default),
+                    assignedComponentKey is null ? default : new AssignedComponentItem(assignedComponentKey, default),
                     scope,
                     effect,
                     expiresOn,
-                    new AssignmentPropertiesAdditionalData(additionalDataExemptionCategory, default),
+                    additionalDataExemptionCategory is null ? default : new AssignmentPropertiesAdditionalData(additionalDataExemptionCategory, default),
                     metadata,
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -4070,7 +4070,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     resourceDetails,
                     displayName,
                     additionalData ?? new ChangeTrackingDictionary<string, string>(),
-                    new AssessmentLinks(linksAzurePortalUri, default),
+                    linksAzurePortalUri is null ? default : new AssessmentLinks(linksAzurePortalUri, default),
                     metadata,
                     partnersData,
                     default,
@@ -4253,7 +4253,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     resourceDetails,
                     displayName,
                     additionalData ?? new ChangeTrackingDictionary<string, string>(),
-                    new AssessmentLinks(linksAzurePortalUri, default),
+                    linksAzurePortalUri is null ? default : new AssessmentLinks(linksAzurePortalUri, default),
                     metadata,
                     partnersData,
                     default,
@@ -4761,7 +4761,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                privateEndpointConnections is null && privateLinkResources is null ? default : new PrivateLinkProperties(default, (privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>()).ToList(), (privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupData>()).ToList(), default, default),
+                provisioningState is null && privateEndpointConnections is null && privateLinkResources is null && publicNetworkAccess is null ? default : new PrivateLinkProperties(provisioningState, (privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>()).ToList(), (privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupData>()).ToList(), publicNetworkAccess, default),
                 default);
         }
 
@@ -4792,7 +4792,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                displayName is null && max is null && current is null && percentage is null && weight is null ? default : new SecureScoreItemProperties(displayName, new ScoreDetails(max, current, percentage, default), weight, default),
+                displayName is null && max is null && current is null && percentage is null && weight is null ? default : new SecureScoreItemProperties(displayName, max is null && current is null && percentage is null ? default : new ScoreDetails(max, current, percentage, default), weight, default),
                 default);
         }
 
@@ -4819,7 +4819,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 displayName is null && max is null && current is null && percentage is null && healthyResourceCount is null && unhealthyResourceCount is null && notApplicableResourceCount is null && weight is null && definition is null ? default : new SecureScoreControlScoreDetails(
                     displayName,
-                    new ScoreDetails(max, current, percentage, default),
+                    max is null && current is null && percentage is null ? default : new ScoreDetails(max, current, percentage, default),
                     healthyResourceCount,
                     unhealthyResourceCount,
                     notApplicableResourceCount,
@@ -4850,7 +4850,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     displayName,
                     description,
                     maxScore,
-                    new SecureScoreControlDefinitionSource(sourceType, default),
+                    sourceType is null ? default : new SecureScoreControlDefinitionSource(sourceType, default),
                     (assessmentDefinitions ?? new ChangeTrackingList<SubResource>()).ToList(),
                     default),
                 default);
@@ -5323,7 +5323,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// Details of the sub-assessment
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SqlServerVulnerabilityProperties"/>, <see cref="Models.ContainerRegistryVulnerabilityProperties"/>, and <see cref="Models.ServerVulnerabilityProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryVulnerabilityProperties"/>, <see cref="Models.ServerVulnerabilityProperties"/>, and <see cref="Models.SqlServerVulnerabilityProperties"/>.
         /// </summary>
         /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
         /// <returns> A new <see cref="Models.SecuritySubAssessmentAdditionalInfo"/> instance for mocking. </returns>

@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of an input tool definition that an agent can use.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="SharepointToolDefinition"/>, <see cref="AzureAISearchToolDefinition"/>, <see cref="OpenApiToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="DeepResearchToolDefinition"/>, <see cref="MCPToolDefinition"/>, <see cref="ComputerUseToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, and <see cref="BrowserAutomationToolDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="BrowserAutomationToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ComputerUseToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="DeepResearchToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="MCPToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="OpenApiToolDefinition"/>, and <see cref="SharepointToolDefinition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownToolDefinition))]
     public abstract partial class ToolDefinition : IJsonModel<ToolDefinition>
@@ -124,36 +124,36 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
-                    case "code_interpreter":
-                        return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
-                    case "file_search":
-                        return FileSearchToolDefinition.DeserializeFileSearchToolDefinition(element, options);
-                    case "function":
-                        return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);
-                    case "bing_grounding":
-                        return BingGroundingToolDefinition.DeserializeBingGroundingToolDefinition(element, options);
-                    case "fabric_dataagent":
-                        return MicrosoftFabricToolDefinition.DeserializeMicrosoftFabricToolDefinition(element, options);
-                    case "sharepoint_grounding":
-                        return SharepointToolDefinition.DeserializeSharepointToolDefinition(element, options);
                     case "azure_ai_search":
                         return AzureAISearchToolDefinition.DeserializeAzureAISearchToolDefinition(element, options);
-                    case "openapi":
-                        return OpenApiToolDefinition.DeserializeOpenApiToolDefinition(element, options);
+                    case "azure_function":
+                        return AzureFunctionToolDefinition.DeserializeAzureFunctionToolDefinition(element, options);
                     case "bing_custom_search":
                         return BingCustomSearchToolDefinition.DeserializeBingCustomSearchToolDefinition(element, options);
+                    case "bing_grounding":
+                        return BingGroundingToolDefinition.DeserializeBingGroundingToolDefinition(element, options);
+                    case "browser_automation":
+                        return BrowserAutomationToolDefinition.DeserializeBrowserAutomationToolDefinition(element, options);
+                    case "code_interpreter":
+                        return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
+                    case "computer_use_preview":
+                        return ComputerUseToolDefinition.DeserializeComputerUseToolDefinition(element, options);
                     case "connected_agent":
                         return ConnectedAgentToolDefinition.DeserializeConnectedAgentToolDefinition(element, options);
                     case "deep_research":
                         return DeepResearchToolDefinition.DeserializeDeepResearchToolDefinition(element, options);
+                    case "file_search":
+                        return FileSearchToolDefinition.DeserializeFileSearchToolDefinition(element, options);
+                    case "function":
+                        return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);
                     case "mcp":
                         return MCPToolDefinition.DeserializeMCPToolDefinition(element, options);
-                    case "computer_use_preview":
-                        return ComputerUseToolDefinition.DeserializeComputerUseToolDefinition(element, options);
-                    case "azure_function":
-                        return AzureFunctionToolDefinition.DeserializeAzureFunctionToolDefinition(element, options);
-                    case "browser_automation":
-                        return BrowserAutomationToolDefinition.DeserializeBrowserAutomationToolDefinition(element, options);
+                    case "fabric_dataagent":
+                        return MicrosoftFabricToolDefinition.DeserializeMicrosoftFabricToolDefinition(element, options);
+                    case "openapi":
+                        return OpenApiToolDefinition.DeserializeOpenApiToolDefinition(element, options);
+                    case "sharepoint_grounding":
+                        return SharepointToolDefinition.DeserializeSharepointToolDefinition(element, options);
                 }
             }
             return UnknownToolDefinition.DeserializeUnknownToolDefinition(element, options);

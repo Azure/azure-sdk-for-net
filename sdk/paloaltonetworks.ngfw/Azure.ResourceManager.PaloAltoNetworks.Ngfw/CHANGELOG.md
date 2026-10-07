@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.1 (2026-09-17)
+
+### Features Added
+
+- Upgraded API version to `2026-07-29-preview`.
+- Added custom packet capture and Azure Monitor Data Collection Rule-based log ingestion resources.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.62.0.
 
 ## 1.2.1 (2026-06-23)
 

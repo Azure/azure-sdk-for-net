@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// An action for the delivery rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FrontDoorUrlSigningAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriSigningAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="CdnEdgeAction"/>, <see cref="UriRewriteAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, and <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnEdgeAction"/>, <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="FrontDoorUrlSigningAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/>, and <see cref="UriSigningAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDeliveryRuleAction))]
     public abstract partial class DeliveryRuleAction : IJsonModel<DeliveryRuleAction>
@@ -125,28 +125,28 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AfdUrlSigning":
-                        return FrontDoorUrlSigningAction.DeserializeFrontDoorUrlSigningAction(element, options);
-                    case "UrlRedirect":
-                        return UriRedirectAction.DeserializeUriRedirectAction(element, options);
-                    case "UrlSigning":
-                        return UriSigningAction.DeserializeUriSigningAction(element, options);
-                    case "OriginGroupOverride":
-                        return OriginGroupOverrideAction.DeserializeOriginGroupOverrideAction(element, options);
                     case "EdgeAction":
                         return CdnEdgeAction.DeserializeCdnEdgeAction(element, options);
-                    case "UrlRewrite":
-                        return UriRewriteAction.DeserializeUriRewriteAction(element, options);
-                    case "ModifyRequestHeader":
-                        return DeliveryRuleRequestHeaderAction.DeserializeDeliveryRuleRequestHeaderAction(element, options);
-                    case "ModifyResponseHeader":
-                        return DeliveryRuleResponseHeaderAction.DeserializeDeliveryRuleResponseHeaderAction(element, options);
                     case "CacheExpiration":
                         return DeliveryRuleCacheExpirationAction.DeserializeDeliveryRuleCacheExpirationAction(element, options);
                     case "CacheKeyQueryString":
                         return DeliveryRuleCacheKeyQueryStringAction.DeserializeDeliveryRuleCacheKeyQueryStringAction(element, options);
+                    case "ModifyRequestHeader":
+                        return DeliveryRuleRequestHeaderAction.DeserializeDeliveryRuleRequestHeaderAction(element, options);
+                    case "ModifyResponseHeader":
+                        return DeliveryRuleResponseHeaderAction.DeserializeDeliveryRuleResponseHeaderAction(element, options);
                     case "RouteConfigurationOverride":
                         return DeliveryRuleRouteConfigurationOverrideAction.DeserializeDeliveryRuleRouteConfigurationOverrideAction(element, options);
+                    case "AfdUrlSigning":
+                        return FrontDoorUrlSigningAction.DeserializeFrontDoorUrlSigningAction(element, options);
+                    case "OriginGroupOverride":
+                        return OriginGroupOverrideAction.DeserializeOriginGroupOverrideAction(element, options);
+                    case "UrlRedirect":
+                        return UriRedirectAction.DeserializeUriRedirectAction(element, options);
+                    case "UrlRewrite":
+                        return UriRewriteAction.DeserializeUriRewriteAction(element, options);
+                    case "UrlSigning":
+                        return UriSigningAction.DeserializeUriSigningAction(element, options);
                 }
             }
             return UnknownDeliveryRuleAction.DeserializeUnknownDeliveryRuleAction(element, options);

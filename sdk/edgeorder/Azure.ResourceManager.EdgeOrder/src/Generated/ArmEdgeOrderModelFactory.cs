@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                addressClassification is null && shippingAddress is null && addressValidationStatus is null ? default : new EdgeOrderItemAddressProperties(
+                addressClassification is null && shippingAddress is null && contactDetails is null && addressValidationStatus is null && provisioningState is null ? default : new EdgeOrderItemAddressProperties(
                     addressClassification,
                     shippingAddress,
-                    default,
+                    contactDetails,
                     addressValidationStatus,
-                    default,
+                    provisioningState,
                     default),
                 default);
         }
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                orderItemDetails is null && startOn is null && orderId is null ? default : new OrderItemProperties(
+                orderItemDetails is null && addressDetails is null && startOn is null && orderId is null && provisioningState is null ? default : new OrderItemProperties(
                     orderItemDetails,
-                    default,
+                    addressDetails,
                     startOn,
                     orderId,
-                    default,
+                    provisioningState,
                     default),
                 identity,
                 default);
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 name,
                 resourceType,
                 systemData,
-                orderItemIds is null && orderStageHistory is null && orderMode is null ? default : new OrderProperties((orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, (orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>()).ToList(), orderMode, default),
+                orderItemIds is null && currentStage is null && orderStageHistory is null && orderMode is null ? default : new OrderProperties((orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), currentStage, (orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>()).ToList(), orderMode, default),
                 default);
         }
 
@@ -1040,12 +1040,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
-        /// <param name="resourceProviderDetails"></param>
+        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
         /// <returns> A new <see cref="Models.ProductFamily"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductFamily ProductFamily(string displayName, ProductDescription description, IEnumerable<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperties, IEnumerable<ProductLine> productLines, IEnumerable<ResourceProviderDetails> resourceProviderDetails)
         {
-            return new ProductFamily(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null ? default : new ProductFamilyProperties(
+            return new ProductFamily(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null && resourceProviderDetails is null ? default : new ProductFamilyProperties(
                 displayName,
                 description,
                 (imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>()).ToList(),
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default,
                 (filterableProperties ?? new ChangeTrackingList<FilterableProperty>()).ToList(),
                 (productLines ?? new ChangeTrackingList<ProductLine>()).ToList(),
-                default), default);
+                (resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>()).ToList()), default);
         }
 
         /// <summary> Product line. </summary>
@@ -1180,12 +1180,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
-        /// <param name="resourceProviderDetails"></param>
+        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
         /// <returns> A new <see cref="Models.ProductFamiliesMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductFamiliesMetadata ProductFamiliesMetadata(string displayName, ProductDescription description, IEnumerable<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperties, IEnumerable<ProductLine> productLines, IEnumerable<ResourceProviderDetails> resourceProviderDetails)
         {
-            return new ProductFamiliesMetadata(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null ? default : new ProductFamilyProperties(
+            return new ProductFamiliesMetadata(displayName is null && description is null && imageInformation is null && costInformation is null && availabilityInformation is null && hierarchyInformation is null && filterableProperties is null && productLines is null && resourceProviderDetails is null ? default : new ProductFamilyProperties(
                 displayName,
                 description,
                 (imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>()).ToList(),
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default,
                 (filterableProperties ?? new ChangeTrackingList<FilterableProperty>()).ToList(),
                 (productLines ?? new ChangeTrackingList<ProductLine>()).ToList(),
-                default), default);
+                (resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>()).ToList()), default);
         }
 
         /// <summary> Specifies the properties or parameters for an order. Order is a grouping of one or more order items. </summary>

@@ -76,46 +76,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                allowPublicAccessWhenBehindVnet is null && enableDataIsolation is null && enableServiceSideCMKEncryption is null && primaryUserAssignedIdentity is null && isHbiWorkspace is null && isProvisionNetworkNow is null && serviceManagedResourcesCosmosDBCollectionsThroughput is null && isStorageHnsEnabled is null && isV1LegacyMode is null && workspaceHubConfig is null && workspaceId is null ? default : new WorkspaceProperties(
+                allowPublicAccessWhenBehindVnet is null && applicationInsights is null && associatedWorkspaces is null && containerRegistry is null && description is null && discoveryUri is null && enableDataIsolation is null && enableServiceSideCMKEncryption is null && encryptionProperty is null && featureStoreSettings is null && friendlyName is null && isHbiWorkspace is null && hubResourceId is null && imageBuildCompute is null && keyVault is null && managedNetwork is null && mlFlowTrackingUri is null && notebookInfo is null && primaryUserAssignedIdentity is null && privateEndpointConnections is null && privateLinkCount is null && isProvisionNetworkNow is null && provisioningState is null && publicNetworkAccess is null && serverlessComputeSettings is null && serviceManagedResourcesCosmosDBCollectionsThroughput is null && serviceProvisionedResourceGroup is null && sharedPrivateLinkResources is null && storageAccount is null && isStorageHnsEnabled is null && systemDatastoresAuthMode is null && tenantId is null && isV1LegacyMode is null && workspaceHubConfig is null && workspaceId is null ? default : new WorkspaceProperties(
                     allowPublicAccessWhenBehindVnet,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    applicationInsights,
+                    (associatedWorkspaces ?? new ChangeTrackingList<string>()).ToList(),
+                    containerRegistry,
+                    description,
+                    discoveryUri,
                     enableDataIsolation,
                     enableServiceSideCMKEncryption,
-                    new MachineLearningEncryptionProperty(
-                        default,
-                        new IdentityForCmk(primaryUserAssignedIdentity, default),
-                        default,
-                        default,
-                        default,
-                        default,
-                        default),
-                    default,
-                    default,
+                    encryptionProperty,
+                    featureStoreSettings,
+                    friendlyName,
                     isHbiWorkspace,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    hubResourceId,
+                    imageBuildCompute,
+                    keyVault,
+                    managedNetwork,
+                    mlFlowTrackingUri,
+                    notebookInfo,
+                    primaryUserAssignedIdentity,
+                    (privateEndpointConnections ?? new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>()).ToList(),
+                    privateLinkCount,
                     isProvisionNetworkNow,
-                    default,
-                    default,
-                    default,
-                    new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
-                    default,
-                    default,
-                    default,
+                    provisioningState,
+                    publicNetworkAccess,
+                    serverlessComputeSettings,
+                    serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
+                    serviceProvisionedResourceGroup,
+                    (sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>()).ToList(),
+                    storageAccount,
                     isStorageHnsEnabled,
-                    default,
-                    default,
+                    systemDatastoresAuthMode,
+                    tenantId,
                     isV1LegacyMode,
                     workspaceHubConfig,
                     workspaceId,
@@ -445,7 +438,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 primaryUserAssignedIdentity,
                 publicNetworkAccessType,
                 serverlessComputeSettings,
-                new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
+                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
                 systemDatastoresAuthMode,
                 isV1LegacyMode,
                 default), sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
@@ -482,7 +475,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 primaryUserAssignedIdentity,
                 publicNetworkAccessType,
                 serverlessComputeSettings,
-                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
+                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
                 systemDatastoresAuthMode,
                 isV1LegacyMode,
                 default);
@@ -816,15 +809,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedResourceId is null && managedResourceGroupAssignedIdentities is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null ? default : new RegistryProperties(
-                    default,
-                    default,
-                    new ArmResourceId(managedResourceId, default),
-                    new ManagedResourceGroupSettings((managedResourceGroupAssignedIdentities ?? new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>()).ToList(), default),
+                discoveryUri is null && intellectualPropertyPublisher is null && managedResourceId is null && managedResourceGroupAssignedIdentities is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null && publicNetworkAccess is null && regionDetails is null ? default : new RegistryProperties(
+                    discoveryUri,
+                    intellectualPropertyPublisher,
+                    managedResourceId is null ? default : new ArmResourceId(managedResourceId, default),
+                    managedResourceGroupAssignedIdentities is null ? default : new ManagedResourceGroupSettings((managedResourceGroupAssignedIdentities ?? new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>()).ToList(), default),
                     mlFlowRegistryUri,
                     (registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>()).ToList(),
-                    default,
-                    default,
+                    publicNetworkAccess,
+                    (regionDetails ?? new ChangeTrackingList<RegistryRegionArmDetails>()).ToList(),
                     default),
                 identity,
                 kind,
@@ -1860,7 +1853,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Base definition for asset references.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningIdAssetReference"/>, <see cref="Models.MachineLearningDataPathAssetReference"/>, and <see cref="Models.MachineLearningOutputPathAssetReference"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningDataPathAssetReference"/>, <see cref="Models.MachineLearningIdAssetReference"/>, and <see cref="Models.MachineLearningOutputPathAssetReference"/>.
         /// </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
         /// <returns> A new <see cref="Models.MachineLearningAssetReferenceBase"/> instance for mocking. </returns>
@@ -2607,7 +2600,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// The MachineLearningTriggerBase.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningRecurrenceTrigger"/> and <see cref="Models.CronTrigger"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CronTrigger"/> and <see cref="Models.MachineLearningRecurrenceTrigger"/>.
         /// </summary>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
@@ -3574,7 +3567,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Command job definition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningTableJobInput"/>, <see cref="Models.MachineLearningCustomModelJobInput"/>, <see cref="Models.MachineLearningFlowModelJobInput"/>, <see cref="Models.MachineLearningLiteralJobInput"/>, <see cref="Models.MachineLearningTritonModelJobInput"/>, <see cref="Models.MachineLearningUriFileJobInput"/>, and <see cref="Models.MachineLearningUriFolderJobInput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningCustomModelJobInput"/>, <see cref="Models.MachineLearningFlowModelJobInput"/>, <see cref="Models.MachineLearningLiteralJobInput"/>, <see cref="Models.MachineLearningTableJobInput"/>, <see cref="Models.MachineLearningTritonModelJobInput"/>, <see cref="Models.MachineLearningUriFileJobInput"/>, and <see cref="Models.MachineLearningUriFolderJobInput"/>.
         /// </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
@@ -3702,7 +3695,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// The MonitoringFeatureFilterBase.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningAllFeatures"/>, <see cref="Models.FeatureSubset"/>, and <see cref="Models.TopNFeaturesByAttribution"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FeatureSubset"/>, <see cref="Models.MachineLearningAllFeatures"/>, and <see cref="Models.TopNFeaturesByAttribution"/>.
         /// </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
         /// <returns> A new <see cref="Models.MonitoringFeatureFilterBase"/> instance for mocking. </returns>
@@ -3921,7 +3914,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Base definition for a job.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.SparkJob"/>, and <see cref="Models.MachineLearningSweepJob"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.MachineLearningSweepJob"/>, and <see cref="Models.SparkJob"/>.
         /// </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
@@ -4245,7 +4238,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// AutoML vertical class.
         /// Base class for AutoML verticals - TableVertical/ImageVertical/NLPVertical
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ClassificationTask"/>, <see cref="Models.MachineLearningForecasting"/>, <see cref="Models.ImageClassification"/>, <see cref="Models.ImageClassificationMultilabel"/>, <see cref="Models.ImageInstanceSegmentation"/>, <see cref="Models.ImageObjectDetection"/>, <see cref="Models.AutoMLVerticalRegression"/>, <see cref="Models.TextClassification"/>, <see cref="Models.TextClassificationMultilabel"/>, and <see cref="Models.TextNer"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AutoMLVerticalRegression"/>, <see cref="Models.ClassificationTask"/>, <see cref="Models.ImageClassification"/>, <see cref="Models.ImageClassificationMultilabel"/>, <see cref="Models.ImageInstanceSegmentation"/>, <see cref="Models.ImageObjectDetection"/>, <see cref="Models.MachineLearningForecasting"/>, <see cref="Models.TextClassification"/>, <see cref="Models.TextClassificationMultilabel"/>, and <see cref="Models.TextNer"/>.
         /// </summary>
         /// <param name="logVerbosity"> Enum for setting log verbosity. </param>
         /// <param name="targetColumnName">
@@ -7019,7 +7012,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningComputePatch"/> instance for mocking. </returns>
         public static MachineLearningComputePatch MachineLearningComputePatch(AmlComputeScaleSettings scaleSettings = default)
         {
-            return new MachineLearningComputePatch(scaleSettings is null ? default : new ClusterUpdateProperties(new ScaleSettingsInformation(scaleSettings, default), default), default);
+            return new MachineLearningComputePatch(scaleSettings is null ? default : new ClusterUpdateProperties(scaleSettings is null ? default : new ScaleSettingsInformation(scaleSettings, default), default), default);
         }
 
         /// <summary> Compute node information related to a AmlCompute. </summary>
@@ -7044,7 +7037,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Secrets related to a Machine Learning compute. Might differ for every type of compute.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningAksComputeSecrets"/>, <see cref="Models.MachineLearningVirtualMachineSecrets"/>, and <see cref="Models.MachineLearningDatabricksComputeSecrets"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MachineLearningAksComputeSecrets"/>, <see cref="Models.MachineLearningDatabricksComputeSecrets"/>, and <see cref="Models.MachineLearningVirtualMachineSecrets"/>.
         /// </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeSecrets"/> instance for mocking. </returns>
@@ -7245,7 +7238,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// The MachineLearningWorkspaceConnectionProperties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="Models.CustomKeysWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>, and <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="Models.CustomKeysWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>, <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/>, and <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>.
         /// </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
@@ -8051,9 +8044,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     discoveryUri,
                     enableDataIsolation,
                     default,
-                    new MachineLearningEncryptionProperty(
+                    primaryUserAssignedIdentity is null ? default : new MachineLearningEncryptionProperty(
                         default,
-                        new IdentityForCmk(primaryUserAssignedIdentity, default),
+                        primaryUserAssignedIdentity is null ? default : new IdentityForCmk(primaryUserAssignedIdentity, default),
                         default,
                         default,
                         default,
@@ -8075,7 +8068,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState,
                     default,
                     serverlessComputeSettings,
-                    new ServiceManagedResourcesSettings(new CosmosDBSettings(cosmosDbCollectionsThroughput, default), default),
+                    cosmosDbCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(cosmosDbCollectionsThroughput is null ? default : new CosmosDBSettings(cosmosDbCollectionsThroughput, default), default),
                     serviceProvisionedResourceGroup,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>()).ToList(),
                     storageAccount,
@@ -8621,7 +8614,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Base definition for a job.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.SparkJob"/>, and <see cref="Models.MachineLearningSweepJob"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.MachineLearningSweepJob"/>, and <see cref="Models.SparkJob"/>.
         /// </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -8995,7 +8988,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 discoveryUri is null && intellectualPropertyPublisher is null && managedResourceId is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null && publicNetworkAccess is null && regionDetails is null ? default : new RegistryProperties(
                     discoveryUri,
                     intellectualPropertyPublisher,
-                    new ArmResourceId(managedResourceId, default),
+                    managedResourceId is null ? default : new ArmResourceId(managedResourceId, default),
                     default,
                     mlFlowRegistryUri,
                     (registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>()).ToList(),
