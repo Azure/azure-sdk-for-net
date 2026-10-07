@@ -318,7 +318,7 @@ Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 [RetryOptionsSample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample13_AdvancedConfiguration.md#customizing-the-retry-options
 [TransportSample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample13_AdvancedConfiguration.md#configuring-the-transport
 [ServiceBusMessagingExceptions]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-messaging-exceptions
-[AmqpSpec]: https://www.amqp.org/resources/specifications
+[AmqpSpec]: https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-types-v1.0-os.html
 [GetConnectionString]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quickstart-portal#get-the-connection-string
 [AuthorizeSAS]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas
 [RBAC]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-managed-service-identity
