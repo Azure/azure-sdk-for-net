@@ -155,6 +155,18 @@ stages:
                     deploy:
                       steps:
                         - ${{ if eq(parameters.PublicFeed, 'Nuget.org') }}:
+                          - pwsh: |
+                              $source = '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}'
+                              $destination = '$(Pipeline.Workspace)/esrp/${{artifact.safeName}}'
+                              Remove-Item -Recurse -Force $destination -ErrorAction SilentlyContinue
+                              New-Item -ItemType Directory -Path $destination | Out-Null
+                              $packages = @(Get-ChildItem -Path $source -Filter '*.nupkg' -File | Where-Object Name -NotLike '*.symbols.nupkg')
+                              if ($packages.Count -eq 0) {
+                                throw "No product NuGet packages found in $source"
+                              }
+                              $packages | Copy-Item -Destination $destination
+                            displayName: Stage NuGet packages for ESRP
+
                           - task: EsrpRelease@14
                             displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }} via ESRP
                             inputs:
@@ -168,12 +180,12 @@ stages:
                               ContentType: 'NuGet'
                               OrganizationName: 'azure-sdk'
                               ContentSource: 'Folder'
-                              FolderLocation: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}'
+                              FolderLocation: '$(Pipeline.Workspace)/esrp/${{artifact.safeName}}'
                               WaitForReleaseCompletion: true
                               Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
                               Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
                               ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
-                              MainPublisher: 'ESRPRELPACMANTEST'
+                              MainPublisher: 'ESRPRELPACMAN'
 
                         - ${{ if ne(parameters.PublicFeed, 'Nuget.org') }}:
                           - task: 1ES.PublishNuget@1
