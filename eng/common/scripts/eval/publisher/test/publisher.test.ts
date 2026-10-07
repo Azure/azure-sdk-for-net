@@ -1,15 +1,15 @@
+// Verifies immutable publication, retained receipts, bounded notification retries and pipeline trust gates.
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { test } from "node:test";
 import { runInNewContext } from "node:vm";
 import { zipSync, strToU8 } from "fflate";
 import { blobName, boundedFile, isUtcTimestamp, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.ts";
-import { containerUrl, publisherIdentity, publishBundle } from "../storage.ts";
-import { DASHBOARD_NOTIFICATION_TARGET, notifyDashboard } from "../notification.ts";
-import { publicationFailure } from "../diagnostics.ts";
+import { STORAGE_CONTAINER_URL, DASHBOARD_NOTIFICATION_TARGET, publisherIdentity, publishBundle, notifyDashboard, publicationFailure, savePublicationResult } from "../storage.ts";
 
 const manifest = { schemaVersion: 1, adoOrganization: "azure-sdk", adoProject: "internal", repo: "Azure/azure-sdk-tools",
     pipeline: "synthetic", pipelineDefinitionId: "8255", buildId: "1001", summaryAttempt: 1, runTimestamp: "2026-09-21T00:00:00.000Z" };
@@ -40,9 +40,9 @@ async function fixture(t) {
     return { root, path, client, requests, objects, options, notifications, failAfterStore(callback) { afterStore = callback; } };
 }
 
-function run(script, args, env = {}) {
+function run(script, args, env = {}, preload = []) {
     const environment = { ...process.env, ...env }; delete environment.NODE_TEST_CONTEXT;
-    const child = spawnSync(process.execPath, ["--experimental-strip-types", script, ...args], {
+    const child = spawnSync(process.execPath, ["--experimental-strip-types", ...preload, script, ...args], {
         encoding: "utf8", env: environment, timeout: 30_000, maxBuffer: 2 * 1024 * 1024,
     });
     assert.ifError(child.error); assert.equal(child.status, 0, child.stderr + child.stdout);
@@ -62,16 +62,22 @@ test("full shared shard -> summary -> one schema-v1 ZIP -> immutable Blob flow",
         ].map(record => JSON.stringify(record)).join("\n") + "\n");
         await writeFile(join(invocation, "eval-results.junit.xml"),
             `<testsuites><testsuite><testcase name="${shard}"><failure message="Unit test result"/></testcase></testsuite></testsuites>`);
-        run(join(scripts, "stage-eval-results.ts"), ["--results-root", source, "--output-directory", join(downloads, `eval-result-${shard}-1`), "--shard-name", shard, "--attempt", "1"]);
+        run(join(scripts, "lib/shard-results.ts"), ["--results-root", source, "--output-directory", join(downloads, `eval-result-${shard}-1`), "--shard-name", shard, "--attempt", "1"]);
     }
     const summary = join(f.root, "summary", "eval-summary.md");
-    const attempts = join(f.root, "job-attempts.json");
-    await writeFile(attempts, JSON.stringify({ schemaVersion: 1, valid: true,
-        attempts: { shard_a: { attempt: 1, complete: true }, shard_b: { attempt: 1, complete: true } } }));
-    const summaryRun = run(join(scripts, "build-eval-summary.ts"), ["--results-root", downloads, "--selected-root", join(f.root, "selected"), "--attempts-file", attempts, "--output-path", summary], {
+    const mock = join(f.root, "timeline-fetch.mjs");
+    await writeFile(mock, `globalThis.fetch = async (url, options) => {
+        if (url.origin !== "https://dev.azure.com" || options.headers.authorization !== "Bearer fixture-token" || options.redirect !== "error") throw new Error("Unexpected timeline request");
+        return Response.json({ records: ["a", "b"].map(key => ({ type: "Job",
+            identifier: "Eval.RunShard." + key, attempt: 1, state: "completed", result: "failed" })) });
+    };`);
+    const summaryRun = run(join(scripts, "build-eval-summary.ts"), ["--results-root", downloads, "--selected-root", join(f.root, "selected"), "--output-path", summary], {
         TF_BUILD: "true", EVAL_EXPECTED_MATRIX: JSON.stringify({ a: { shardName: "shard_a" }, b: { shardName: "shard_b" } }),
-    });
+        SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/", SYSTEM_TEAMPROJECTID: "00000000-0000-4000-8000-000000000001",
+        BUILD_BUILDID: "1001", SYSTEM_ACCESSTOKEN: "fixture-token",
+    }, ["--import", pathToFileURL(mock).href]);
     assert.match(summaryRun.stdout, /EvalSummaryComplete\]true/);
+    assert.equal(JSON.parse(await readFile(join(dirname(summary), "job-attempts.json"), "utf8")).valid, true);
     const path = join(f.root, "build.zip");
     const packed = await prepareBundle({ indexPath: join(downloads, "shard-index.json"), summaryPath: summary, outputPath: path, manifest });
     assert.equal(packed.trials, 2); assert.equal(packed.shards, 2);
@@ -136,6 +142,66 @@ test("failed storage-result persistence never sends a notification", async (t) =
     const f = await fixture(t);
     await assert.rejects(publishBundle({ ...f.options, onStored: async () => { throw new Error("Result artifact unavailable"); } }), /Result artifact unavailable/);
     assert.equal(f.objects.size, 1); assert.equal(f.notifications.length, 0);
+});
+
+test("receipt updates are atomic and failed notification-status saves preserve stored evidence", async (t) => {
+    const f = await fixture(t), output = join(f.root, "publication.json");
+    const result = await publishBundle({ ...f.options, onStored: value => savePublicationResult(output, value),
+        notify: async () => { throw new Error("Dashboard offline"); } });
+    const saved = await readFile(output, "utf8");
+    assert.equal(JSON.parse(saved).status, "stored"); assert.equal(JSON.parse(saved).notification.status, "pending");
+    await mkdir(`${output}.tmp`);
+    await assert.rejects(savePublicationResult(output, result));
+    assert.equal(await readFile(output, "utf8"), saved);
+    await rm(`${output}.tmp`, { recursive: true });
+    await savePublicationResult(output, result);
+    assert.equal(JSON.parse(await readFile(output, "utf8")).notification.status, "failed");
+});
+
+test("real publisher CLI retains storage success if the final notification-status write fails", async (t) => {
+    const f = await fixture(t), output = join(f.root, "cli-receipt.json"), mock = join(f.root, "mock-publication.mjs");
+    await writeFile(mock, `import assert from "node:assert/strict";
+        import { mkdirSync, readFileSync } from "node:fs";
+        import { Socket } from "node:net";
+        import { AzureCliCredential } from ${JSON.stringify(import.meta.resolve("@azure/identity"))};
+        import { ContainerClient } from ${JSON.stringify(import.meta.resolve("@azure/storage-blob"))};
+        Socket.prototype.connect = function() { throw new Error("Network is disabled in this test"); };
+        AzureCliCredential.prototype.getToken = async function(scope) {
+            assert.ok(["https://storage.azure.com/.default", ${JSON.stringify(`${dashboardAudience}/.default`)}].includes(scope));
+            const claims = { tid: "11111111-1111-1111-1111-111111111111", oid: "22222222-2222-2222-2222-222222222222" };
+            return { token: "header." + Buffer.from(JSON.stringify(claims)).toString("base64url") + ".signature" };
+        };
+        ContainerClient.prototype.getBlockBlobClient = function(name) {
+            assert.equal(this.url, ${JSON.stringify(STORAGE_CONTAINER_URL)});
+            return { uploadData: async (bytes, options) => { assert.ok(bytes.length); assert.deepEqual(options.conditions, { ifNoneMatch: "*" }); } };
+        };
+        globalThis.fetch = async (url, options) => {
+            assert.equal(url.href, ${JSON.stringify(`${dashboardUrl}/api/refresh`)});
+            assert.equal(options.redirect, "error");
+            assert.equal(JSON.parse(readFileSync(${JSON.stringify(output)}, "utf8")).status, "stored");
+            mkdirSync(${JSON.stringify(`${output}.tmp`)});
+            return Response.json({ status: "succeeded", failureCount: 0 });
+        };`);
+    const child = run(resolve(import.meta.dirname, "../publish-bundle.ts"), ["--bundle", f.path, "--result", output], {
+        TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "Manual", BUILD_SOURCEBRANCH: "refs/heads/feature",
+        EVAL_STORAGE_CONTAINER_URL: "https://attacker.example/results", PATH: "",
+    }, ["--import", pathToFileURL(mock).href]);
+    assert.match(child.stdout, /Result archive stored:/);
+    assert.match(child.stderr, /original storage receipt is retained/);
+    const receipt = JSON.parse(await readFile(output, "utf8"));
+    assert.equal(receipt.status, "stored"); assert.equal(receipt.notification.status, "pending");
+    assert.equal(receipt.sha256, sha256(await readFile(f.path)));
+    assert.doesNotMatch(child.stderr, /Publication diagnostic|Bearer header/);
+});
+
+test("storage throttling honors Retry-After within the fixed retry budget", async (t) => {
+    const f = await fixture(t), original = f.client.getBlockBlobClient.bind(f.client), waits = []; let calls = 0;
+    const client = { getBlockBlobClient(name) { const blob = original(name); return { ...blob, async uploadData(bytes, options) {
+        if (++calls === 1) throw Object.assign(new Error("Throttled"), { statusCode: 429, response: { headers: new Headers({ "retry-after": "5" }) } });
+        return blob.uploadData(bytes, options);
+    } }; } };
+    const result = await publishBundle({ ...f.options, client, wait: async value => waits.push(value) });
+    assert.equal(result.status, "stored"); assert.equal(calls, 2); assert.deepEqual(waits, [5000]);
 });
 
 test("upload failures stop after four attempts without reporting success or notifying", async (t) => {
@@ -280,10 +346,13 @@ test("publication timestamps match the reader's UTC calendar validation", async 
     assert.equal(f.notifications.length, 0);
 });
 
-test("storage URLs never accept embedded credentials or arbitrary paths", () => {
-    assert.equal(containerUrl("https://evaltestsummary.blob.core.windows.net/vally-results"), "https://evaltestsummary.blob.core.windows.net/vally-results");
-    for (const value of ["http://evaltestsummary.blob.core.windows.net/vally-results", "https://evaltestsummary.blob.core.windows.net/vally-results?sig=secret", "https://evil.example/container", "https://user:pass@evaltestsummary.blob.core.windows.net/vally-results", "https://evaltestsummary.blob.core.windows.net/"]) assert.throws(() => containerUrl(value));
+test("storage destination is fixed and publisher provenance requires valid tenant/principal IDs", () => {
+    assert.equal(STORAGE_CONTAINER_URL, "https://evaltestsummary.blob.core.windows.net/vally-results");
     assert.throws(() => publisherIdentity("invalid"), { code: "storage_identity" });
+    const claims = { tid: "11111111-1111-1111-1111-111111111111", oid: "22222222-2222-2222-2222-222222222222" };
+    const token = value => `header.${Buffer.from(JSON.stringify(value)).toString("base64url")}.signature`;
+    assert.equal(publisherIdentity(token(claims)), `${claims.tid}:${claims.oid}`);
+    assert.throws(() => publisherIdentity(token({ ...claims, tid: "-".repeat(36) })), { code: "storage_identity" });
 });
 
 test("notification destination and audience are fixed even when obsolete environment overrides exist", async () => {
@@ -392,7 +461,7 @@ test("pipeline keeps publication opt-in, blocks PR credentials and shares the re
     assert.match(summary, /pool:\s+name: \$\(LINUXPOOL\)\s+image: \$\(LINUXVMIMAGE\)\s+os: linux/);
     assert.match(steps, /if and\(parameters.publishDashboardResults.*System.TeamProject.*internal.*PullRequest.*refs\/pull\//);
     assert.match(steps, /azureSubscription: eval-dashboard-sc/);
-    assert.match(steps, /EVAL_STORAGE_CONTAINER_URL: https:\/\/evaltestsummary\.blob\.core\.windows\.net\/vally-results/);
+    assert.doesNotMatch(steps, /EVAL_STORAGE_CONTAINER_URL/);
     assert.match(summary, /dependsOn:|EvalExpectedMatrix:.*stageDependencies.Prepare.generate_eval_matrix/);
     assert.match(archetype, /dependsOn: \[Prepare, Eval\]/);
     assert.ok(summary.indexOf("../steps/eval-publish-results.yml") < summary.indexOf("task: PublishTestResults@2"));

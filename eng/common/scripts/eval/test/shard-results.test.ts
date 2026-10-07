@@ -1,11 +1,12 @@
+// Verifies complete result staging, authoritative attempts and recovery after transport failures.
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
 import { test } from "node:test";
-import { expectedShardsFromMatrix, selectSummaryResults, stageShardResults } from "../lib/shard-results.ts";
+import { expectedShardsFromMatrix, latestShardAttempts, readShardAttempts, selectSummaryResults, stageShardResults } from "../lib/shard-results.ts";
 import { getVallyShardVerdict } from "../lib/verdict.ts";
 
 function setup(t) {
@@ -45,7 +46,29 @@ function runCli(scriptName, args, environment = {}, cwd = undefined) {
     const env = { ...process.env, ...environment };
     delete env.NODE_TEST_CONTEXT;
     for (const key of Object.keys(env)) if (env[key] === undefined) delete env[key];
-    const child = spawnSync(process.execPath, ["--experimental-strip-types", script, ...args], {
+    const preload = [];
+    if (scriptName === "build-eval-summary.ts" && args.includes("--selected-root")) {
+        const root = path.dirname(args[args.indexOf("--results-root") + 1]);
+        fs.mkdirSync(root, { recursive: true });
+        const mock = path.join(root, "timeline-fetch.mjs"), evidence = path.join(root, "job-attempts.json");
+        fs.writeFileSync(mock, `import { readFileSync } from "node:fs";
+            globalThis.fetch = async () => {
+                try {
+                    const evidence = JSON.parse(readFileSync(${JSON.stringify(evidence)}, "utf8"));
+                    if (evidence.valid !== true) return new Response("", { status: 403 });
+                    const records = Object.entries(JSON.parse(process.env.EVAL_EXPECTED_MATRIX)).flatMap(([key, value]) => {
+                        const item = evidence.attempts[value.shardName];
+                        return item ? [{ type: "Job", identifier: "Eval.RunShard." + key, attempt: item.attempt,
+                            state: "completed", result: item.complete ? "failed" : "canceled" }] : [];
+                    });
+                    return Response.json({ records });
+                } catch { return new Response("", { status: 403 }); }
+            };`);
+        Object.assign(env, { SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/",
+            SYSTEM_TEAMPROJECTID: "00000000-0000-4000-8000-000000000001", BUILD_BUILDID: "1001", SYSTEM_ACCESSTOKEN: "fixture-token" });
+        preload.push("--import", pathToFileURL(mock).href);
+    }
+    const child = spawnSync(process.execPath, ["--experimental-strip-types", ...preload, script, ...args], {
         encoding: "utf8", env, cwd, timeout: 30_000, maxBuffer: 1024 * 1024,
     });
     assert.ifError(child.error);
@@ -58,7 +81,7 @@ function runSummary(root, shards, options = {}) {
         JSON.stringify(Object.fromEntries(shards.map((shardName) => [shardName, { shardName }])));
     const child = runCli("build-eval-summary.ts", [
         "--results-root", path.join(root, "download"), "--selected-root", path.join(root, "selected"),
-        "--attempts-file", path.join(root, "job-attempts.json"), "--output-path", output,
+        "--output-path", output,
     ], { TF_BUILD: "true", EVAL_EXPECTED_MATRIX: matrix });
     return {
         child, markdown: fs.readFileSync(output, "utf8"),
@@ -362,24 +385,25 @@ test("a missing artifact root reports every expected shard missing", (t) => {
     assert.deepEqual(index.attempts, []);
 });
 
-test("summary cannot publish when timeline evidence is omitted, missing or corrupt", (t) => {
+test("summary cannot publish when timeline evidence is unavailable, invalid or corrupt", (t) => {
     const root = setup(t);
-    for (const mode of ["omitted", "missing", "corrupt"]) {
+    for (const mode of ["invalid", "missing", "corrupt"]) {
         const directory = path.join(root, mode);
         artifact(directory, "area_a", 1);
         const attempts = path.join(directory, "job-attempts.json");
+        if (mode === "invalid") fs.writeFileSync(attempts, JSON.stringify({ valid: false }));
         if (mode === "missing") fs.unlinkSync(attempts);
         if (mode === "corrupt") fs.writeFileSync(attempts, "not JSON");
         const output = path.join(directory, "summary", "eval-summary.md");
         const child = runCli("build-eval-summary.ts", ["--results-root", path.join(directory, "download"),
-            "--selected-root", path.join(directory, "selected"), "--output-path", output,
-            ...(mode === "omitted" ? [] : ["--attempts-file", attempts])], {
+            "--selected-root", path.join(directory, "selected"), "--output-path", output], {
             TF_BUILD: "true", EVAL_EXPECTED_MATRIX: JSON.stringify({ a: { shardName: "area_a" } }),
         });
         assert.equal(child.status, 1); assert.match(child.stdout, /EvalSummaryComplete\]false/);
         assert.equal(readJson(path.join(directory, "download", "shard-index.json")).complete, false);
         assert.equal(readJson(path.join(directory, "summary", "eval-summary.json")).totals.scenarios, 1);
         assert.match(fs.readFileSync(output, "utf8"), /timeline/);
+        assert.equal(readJson(path.join(directory, "summary", "job-attempts.json")).valid, false);
     }
 });
 
@@ -414,7 +438,7 @@ test("staging CLI logs counts and sanitized warnings, never the raw invalid reco
     const privateText = "SYNTHETIC_RAW_RECORD_DO_NOT_LOG";
     fs.appendFileSync(path.join(source, "results.jsonl"), privateText);
     const output = path.join(root, "stage");
-    const child = runCli("stage-eval-results.ts", ["--results-root", source, "--output-directory", output, "--shard-name", "area_test", "--attempt", "3"]);
+    const child = runCli("lib/shard-results.ts", ["--results-root", source, "--output-directory", output, "--shard-name", "area_test", "--attempt", "3"]);
     assert.equal(child.status, 0, child.stderr);
     assert.match(child.stdout, /Staged area_test attempt 3: 1 trials; incomplete/);
     assert.match(child.stdout, /##vso\[task.logissue type=warning\]/);
@@ -458,4 +482,61 @@ test("invalid Prepare cannot reuse a stale selected directory", (t) => {
     assert.match(child.stdout, /##vso\[task.setvariable variable=EvalSummaryComplete\]false/);
     assert.deepEqual(fs.readdirSync(selected), ["keep.txt"]);
     assert.equal(fs.readFileSync(path.join(selected, "keep.txt"), "utf8"), "keep me");
+});
+
+const timelineEnv = { SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/", SYSTEM_TEAMPROJECTID: "00000000-0000-4000-8000-000000000001",
+    BUILD_BUILDID: "1001", SYSTEM_ACCESSTOKEN: "fixture-token", EVAL_EXPECTED_MATRIX: '{"a":{"shardName":"a"}}' };
+const timelineRecord = { type: "Job", identifier: "Eval.RunShard.a", attempt: 1, state: "completed", result: "failed" };
+
+test("timeline uses matrix identifiers, highest attempts and completed state, rejecting ambiguous attempts", () => {
+    const matrix = { a: { shardName: "a" } }, records = [timelineRecord, { ...timelineRecord, attempt: 2 }];
+    assert.deepEqual(latestShardAttempts({ records }, matrix).attempts.a, { attempt: 2, complete: true });
+    records[1].result = "canceled";
+    assert.equal(latestShardAttempts({ records }, matrix).attempts.a.complete, false);
+    assert.throws(() => latestShardAttempts({ records: [] }, matrix));
+    assert.throws(() => latestShardAttempts({ records }, {}));
+    assert.throws(() => latestShardAttempts({ records: [timelineRecord, { ...timelineRecord, result: "canceled" }] }, matrix), /Ambiguous/);
+});
+
+test("newer failed attempt with no artifact cannot adopt an older complete artifact", t => {
+    const root = setup(t); artifact(root, "a", 1);
+    for (const [index, jobAttempts] of [undefined, null,
+        { schemaVersion: 1, valid: true, attempts: { a: { attempt: 2, complete: true } } },
+        { schemaVersion: 1, valid: true, attempts: { a: { attempt: 1, complete: false } } },
+        { schemaVersion: 1, valid: false, attempts: {} }].entries()) {
+        const selected = selectSummaryResults({ resultsRoot: path.join(root, "download"), selectedRoot: path.join(root, `selection-${index}`), expectedShards: ["a"], jobAttempts });
+        assert.equal(selected.complete, false); assert.match(selected.status[0].reason, /timeline/);
+    }
+});
+
+test("timeline reads retry transient failures only, with a fixed three-attempt budget", async () => {
+    const waits = []; let calls = 0;
+    const result = await readShardAttempts(timelineEnv, { wait: async value => waits.push(value), fetchImpl: async (url, options) => {
+        calls++; assert.equal(url.href, "https://dev.azure.com/azure-sdk/00000000-0000-4000-8000-000000000001/_apis/build/builds/1001/timeline?api-version=7.1");
+        assert.equal(options.headers.authorization, "Bearer fixture-token"); assert.equal(options.redirect, "error");
+        if (calls === 1) throw new Error("Lost response");
+        if (calls === 2) return new Response("", { status: 503 });
+        return Response.json({ records: [timelineRecord] });
+    } });
+    assert.equal(result.valid, true); assert.equal(calls, 3); assert.deepEqual(waits, [1000, 2000]);
+    waits.length = 0; calls = 0;
+    await readShardAttempts(timelineEnv, { wait: async value => waits.push(value), fetchImpl: async () => ++calls === 1 ?
+        new Response("", { status: 429, headers: { "retry-after": "5" } }) : Response.json({ records: [timelineRecord] }) });
+    assert.equal(calls, 2); assert.deepEqual(waits, [5000]);
+    calls = 0;
+    await assert.rejects(readShardAttempts(timelineEnv, { wait: async () => {}, fetchImpl: async () => { calls++; throw new Error("Offline"); } }));
+    assert.equal(calls, 3);
+    for (const status of [302, 401, 403]) {
+        calls = 0;
+        await assert.rejects(readShardAttempts(timelineEnv, { wait: () => assert.fail("Permanent failures do not retry"),
+            fetchImpl: async () => { calls++; return new Response("", { status }); } }));
+        assert.equal(calls, 1);
+    }
+});
+
+test("invalid timeline configuration cannot send the build token to another endpoint", async () => {
+    for (const collection of ["https://dev.azure.com:444/azure-sdk/", "https://dev.azure.com.attacker.example/azure-sdk/",
+        "http://dev.azure.com/azure-sdk/", "https://user:password@dev.azure.com/azure-sdk/", "https://dev.azure.com/azure-sdk/?extra=1"]) {
+        await assert.rejects(readShardAttempts({ ...timelineEnv, SYSTEM_COLLECTIONURI: collection }, { fetchImpl: () => assert.fail("Invalid endpoint reached fetch") }));
+    }
 });
