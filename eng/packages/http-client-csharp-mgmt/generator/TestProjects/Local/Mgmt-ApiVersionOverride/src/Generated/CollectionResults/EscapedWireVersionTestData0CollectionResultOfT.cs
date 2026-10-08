@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,43 +14,46 @@ using Azure.Generator.MgmtApiVersionOverride.Tests.Models;
 
 namespace Azure.Generator.MgmtApiVersionOverride.Tests
 {
-    internal partial class WireVersionOperationsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<WireVersionTestData>
+    internal partial class EscapedWireVersionTestData0CollectionResultOfT : Pageable<EscapedWireVersionTestData>
     {
-        private readonly WireVersionOperations _client;
+        private readonly EscapedWireVersionReads _client;
         private readonly Guid _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of WireVersionOperationsGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The WireVersionOperations client used to send requests. </param>
+        /// <summary> Initializes a new instance of EscapedWireVersionTestData0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The EscapedWireVersionReads client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WireVersionOperationsGetBySubscriptionAsyncCollectionResultOfT(WireVersionOperations client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EscapedWireVersionTestData0CollectionResultOfT(EscapedWireVersionReads client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of WireVersionOperationsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EscapedWireVersionTestData0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WireVersionOperationsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<WireVersionTestData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of EscapedWireVersionTestData0CollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<EscapedWireVersionTestData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                WireVersionTestListResult result = WireVersionTestListResult.FromResponse(response);
+                EscapedWireVersionTestListResult result = EscapedWireVersionTestListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<WireVersionTestData>.FromValues((IReadOnlyList<WireVersionTestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<EscapedWireVersionTestData>.FromValues((IReadOnlyList<EscapedWireVersionTestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -62,14 +64,14 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

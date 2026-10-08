@@ -73,7 +73,7 @@ namespace Azure.Generator.Management
             AllocateCollectionResultName(baseName, null, null, "CollectionResultOfT");
 
         internal string GetArrayCollectionResultName(string baseName, string @namespace) =>
-            AllocateCollectionResultName(baseName, @namespace, candidate => $"{candidate}CollectionResultOfT", "CollectionResultOfT");
+            AllocateCollectionResultName(baseName, @namespace, _ => $"{baseName}CollectionResultOfT", "CollectionResultOfT");
 
         private string AllocateCollectionResultName(string baseName, string? @namespace, Func<string, string>? originalName, string suffix)
         {
@@ -91,6 +91,14 @@ namespace Azure.Generator.Management
 
         private bool CanClaimPreservedName(string name, string? @namespace, string? originalName)
         {
+            // Do not first emit a compact identity owned by another operation. Otherwise adding a
+            // reference or partial on the next run transfers that same name to its original owner.
+            if (originalName is not null && @namespace is not null && name != originalName &&
+                OriginalCollectionResultNames.Contains((@namespace, name)))
+            {
+                return false;
+            }
+
             if (!_preservedCollectionResultNames.TryGetValue(name, out var owners))
             {
                 return true;
@@ -98,9 +106,20 @@ namespace Azure.Generator.Management
 
             foreach (var owner in owners)
             {
-                if (originalName is null || @namespace is null || (owner.Namespaces is not null && !owner.Namespaces.Contains(@namespace)))
+                if (originalName is null || @namespace is null)
                 {
                     return false;
+                }
+
+                if (owner.Namespaces is not null && !owner.Namespaces.Contains(@namespace))
+                {
+                    // Ordinary handwritten types are namespace-local. Mapped aliases can become
+                    // generated files and still reserve their globally shared output identity.
+                    if (owner.OriginalName is not null)
+                    {
+                        return false;
+                    }
+                    continue;
                 }
 
                 if (owner.OriginalName is not null)
@@ -136,7 +155,7 @@ namespace Azure.Generator.Management
                     return _originalCollectionResultNames;
                 }
 
-                _originalCollectionResultNames = new();
+                var names = new HashSet<(string Namespace, string Name)>();
                 var clients = new Queue<InputClient>(ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients);
                 var visited = new HashSet<InputClient>();
                 while (clients.TryDequeue(out var inputClient))
@@ -161,12 +180,26 @@ namespace Azure.Generator.Management
                             var prefix = $"{client.Name}{operationName.ToIdentifierName()}";
                             foreach (var suffix in new[] { "CollectionResult", "CollectionResultOfT", "AsyncCollectionResult", "AsyncCollectionResultOfT" })
                             {
-                                _originalCollectionResultNames.Add((client.Type.Namespace, $"{prefix}{suffix}"));
+                                names.Add((client.Type.Namespace, $"{prefix}{suffix}"));
                             }
                         }
                     }
                 }
-                return _originalCollectionResultNames;
+                // Provider shells contain the actual ARM method placements. Resolve only eligible
+                // array operations, never ARM method bodies or all methods on a paging REST client.
+                var plans = ResourceProviders.SelectMany(provider => provider.ArrayCollectionResultPlans)
+                    .Concat(ResourceCollectionProviders.SelectMany(provider => provider.ArrayCollectionResultPlans))
+                    .Concat(MockableResourceProviders.SelectMany(provider => provider.ArrayCollectionResultPlans))
+                    .ToArray();
+                foreach (var plan in plans)
+                {
+                    foreach (var name in plan.GetOriginalNames())
+                    {
+                        names.Add((ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace, name));
+                    }
+                }
+                // Publish only the completed inventory; recursive reads must not see a partial set.
+                return _originalCollectionResultNames = names;
             }
         }
 
@@ -203,7 +236,10 @@ namespace Azure.Generator.Management
             // Existing hand-written code may construct a generated helper without declaring a partial
             // customization. Keep those identities too, rather than breaking package customizations.
             ReservePreservedCollectionResultNames();
-            return _customReferencedCollectionResults!.Contains(helper.Name);
+            return _customReferencedCollectionResults!.Contains(helper.Name) &&
+                _preservedCollectionResultNames[helper.Name].Any(owner =>
+                    (owner.Namespaces is null || owner.Namespaces.Contains(helper.Type.Namespace)) &&
+                    (owner.OriginalName is null || owner.OriginalName == helper.Name));
         }
 
         private void ReservePreservedCollectionResultNames()
@@ -281,7 +317,17 @@ namespace Azure.Generator.Management
             {
                 return new HashSet<string>(StringComparer.Ordinal) { referencedType.ContainingNamespace.ToDisplayString() };
             }
-            var qualifier = identifier.Parent is QualifiedNameSyntax qualified && qualified.Right == identifier ? qualified.Left : null;
+
+            SyntaxNode? qualifier = identifier.Parent switch
+            {
+                QualifiedNameSyntax qualified when qualified.Right == identifier => qualified.Left,
+                AliasQualifiedNameSyntax aliased when aliased.Name == identifier => aliased.Alias,
+                MemberAccessExpressionSyntax member when member.Name == identifier => member.Expression,
+                _ => null
+            };
+            var parts = qualifier?.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>().Select(part => part.Identifier.ValueText).ToArray() ?? [];
+            var explicitAlias = identifier.Parent is AliasQualifiedNameSyntax ||
+                qualifier?.DescendantNodesAndSelf().OfType<AliasQualifiedNameSyntax>().Any() == true;
             if (qualifier is not null)
             {
                 var qualifiedNamespace = model.GetSymbolInfo(qualifier).Symbol as INamespaceSymbol;
@@ -289,30 +335,18 @@ namespace Azure.Generator.Management
                 {
                     return new HashSet<string>(StringComparer.Ordinal) { qualifiedNamespace.ToDisplayString() };
                 }
-                // The namespace can be missing along with its generated helper. An explicit global
-                // qualification still identifies it unambiguously without semantic binding.
-                if (qualifier.ToString().StartsWith("global::", StringComparison.Ordinal))
+                if (explicitAlias && parts[0] == "global")
                 {
-                    return new HashSet<string>(StringComparer.Ordinal) { qualifier.ToString()["global::".Length..] };
+                    return new HashSet<string>(StringComparer.Ordinal) { string.Join(".", parts.Skip(1)) };
                 }
             }
 
-            var qualifierRoot = qualifier?.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>().FirstOrDefault();
-            string? aliasTarget = null;
-            bool aliasTargetIsAbsolute = false;
-
-            // Generated helpers are absent from this compilation. Keep all namespaces in scope
-            // as alternatives for this reference, rather than treating each import as a new owner.
-            var namespaces = new HashSet<string>(StringComparer.Ordinal) { "" };
+            // Missing generated types cannot bind semantically. Keep the legal lexical scopes as
+            // alternatives, and resolve each import at its declaration, not at the reference site.
+            var namespaces = GetEnclosingNamespaces(identifier, model).ToHashSet(StringComparer.Ordinal);
+            IReadOnlySet<string>? aliasTargets = null;
             foreach (var scope in identifier.Ancestors())
             {
-                if (scope is BaseNamespaceDeclarationSyntax namespaceDeclaration && model.GetDeclaredSymbol(namespaceDeclaration) is INamespaceSymbol namespaceSymbol)
-                {
-                    for (var enclosingNamespace = namespaceSymbol; !enclosingNamespace.IsGlobalNamespace; enclosingNamespace = enclosingNamespace.ContainingNamespace)
-                    {
-                        namespaces.Add(enclosingNamespace.ToDisplayString());
-                    }
-                }
                 var usings = scope switch
                 {
                     BaseNamespaceDeclarationSyntax declaration => declaration.Usings,
@@ -333,17 +367,17 @@ namespace Azure.Generator.Management
             }
             if (qualifier is not null)
             {
-                // Preserve namespace aliases as well as ordinary relative qualification. For unresolved
-                // relative names, use the same enclosing/imported lookup scopes as unqualified names.
-                var qualifiedName = qualifier.ToString();
-                if (aliasTarget is not null)
+                if (aliasTargets is not null)
                 {
-                    qualifiedName = aliasTarget + qualifiedName[qualifierRoot!.Identifier.Text.Length..];
-                    if (aliasTargetIsAbsolute)
-                    {
-                        return new HashSet<string>(StringComparer.Ordinal) { qualifiedName };
-                    }
+                    var tail = string.Join(".", parts.Skip(1));
+                    return aliasTargets.Select(target => tail.Length == 0 ? target : $"{target}.{tail}").ToHashSet(StringComparer.Ordinal);
                 }
+                if (explicitAlias)
+                {
+                    // An unbound extern alias is not a namespace in this generated assembly.
+                    return new HashSet<string>(StringComparer.Ordinal);
+                }
+                var qualifiedName = string.Join(".", parts);
                 return namespaces.Select(scope => scope.Length == 0 ? qualifiedName : $"{scope}.{qualifiedName}").ToHashSet(StringComparer.Ordinal);
             }
             return namespaces;
@@ -354,18 +388,44 @@ namespace Azure.Generator.Management
                 {
                     return;
                 }
-                var importedNamespace = semanticModel.GetSymbolInfo(directive.Name).Symbol as INamespaceSymbol;
-                var importName = directive.Name.ToString();
+                var targets = GetImportNamespaces(directive, semanticModel);
                 if (directive.Alias is null)
                 {
-                    namespaces.Add(importedNamespace?.ToDisplayString() ?? importName.Replace("global::", ""));
+                    namespaces.UnionWith(targets);
                 }
-                else if (aliasTarget is null && directive.Alias.Name.Identifier.ValueText == qualifierRoot?.Identifier.ValueText)
+                else if (aliasTargets is null && parts.Length > 0 && directive.Alias.Name.Identifier.ValueText == parts[0])
                 {
-                    aliasTargetIsAbsolute = importedNamespace is not null || importName.StartsWith("global::", StringComparison.Ordinal);
-                    aliasTarget = importedNamespace?.ToDisplayString() ?? importName.Replace("global::", "");
+                    aliasTargets = targets;
                 }
             }
+        }
+
+        private static IEnumerable<string> GetEnclosingNamespaces(SyntaxNode node, SemanticModel model)
+        {
+            var declaration = node.AncestorsAndSelf().OfType<BaseNamespaceDeclarationSyntax>().FirstOrDefault();
+            var symbol = declaration is null ? null : model.GetDeclaredSymbol(declaration) as INamespaceSymbol;
+            for (; symbol is not null && !symbol.IsGlobalNamespace; symbol = symbol.ContainingNamespace)
+            {
+                yield return symbol.ToDisplayString();
+            }
+            yield return "";
+        }
+
+        private static IReadOnlySet<string> GetImportNamespaces(UsingDirectiveSyntax directive, SemanticModel model)
+        {
+            if (model.GetSymbolInfo(directive.Name!).Symbol is INamespaceSymbol importedNamespace)
+            {
+                return new HashSet<string>(StringComparer.Ordinal) { importedNamespace.ToDisplayString() };
+            }
+            var parts = directive.Name!.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>().Select(part => part.Identifier.ValueText).ToArray();
+            if (directive.Name.DescendantNodesAndSelf().OfType<AliasQualifiedNameSyntax>().Any() && parts[0] == "global")
+            {
+                return new HashSet<string>(StringComparer.Ordinal) { string.Join(".", parts.Skip(1)) };
+            }
+            var importName = string.Join(".", parts);
+            return GetEnclosingNamespaces(directive, model)
+                .Select(scope => scope.Length == 0 ? importName : $"{scope}.{importName}")
+                .ToHashSet(StringComparer.Ordinal);
         }
 
         private bool ReserveCollectionResultName(string name, string? @namespace, string? originalName, IReadOnlySet<string>? referenceNamespaces = null)

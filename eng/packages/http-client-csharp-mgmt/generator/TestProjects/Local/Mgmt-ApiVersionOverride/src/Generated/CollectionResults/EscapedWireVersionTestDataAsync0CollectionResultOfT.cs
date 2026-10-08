@@ -15,7 +15,7 @@ using Azure.Generator.MgmtApiVersionOverride.Tests.Models;
 
 namespace Azure.Generator.MgmtApiVersionOverride.Tests
 {
-    internal partial class EscapedWireVersionReadsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<EscapedWireVersionTestData>
+    internal partial class EscapedWireVersionTestDataAsync0CollectionResultOfT : AsyncPageable<EscapedWireVersionTestData>
     {
         private readonly EscapedWireVersionReads _client;
         private readonly Guid _subscriptionId;
@@ -23,13 +23,13 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of EscapedWireVersionReadsGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EscapedWireVersionTestDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EscapedWireVersionReads client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EscapedWireVersionReadsGetByResourceGroupAsyncCollectionResultOfT(EscapedWireVersionReads client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EscapedWireVersionTestDataAsync0CollectionResultOfT(EscapedWireVersionReads client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,10 +38,10 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of EscapedWireVersionReadsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EscapedWireVersionTestDataAsync0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EscapedWireVersionReadsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of EscapedWireVersionTestDataAsync0CollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<EscapedWireVersionTestData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
