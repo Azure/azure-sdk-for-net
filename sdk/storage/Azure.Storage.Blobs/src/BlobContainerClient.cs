@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -365,6 +365,15 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// Session authentication requires the storage account name, which is derived from
+        /// <paramref name="blobContainerUri"/> when possible. Set <see cref="Models.SessionOptions.AccountName"/>
+        /// when using a custom endpoint URL from which the account name cannot be derived.
+        /// If the account name cannot be determined, this constructor throws when
+        /// <see cref="Models.SessionOptions.SessionMode"/> was explicitly set to
+        /// <see cref="Models.SessionMode.Enabled"/>; otherwise session authentication is
+        /// disabled and bearer token authentication is used.
+        /// </remarks>
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
         {
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
@@ -373,7 +382,13 @@ namespace Azure.Storage.Blobs
 
             string audienceScope = string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope();
 
-            _authenticationPolicy = credential.AsPolicy(audienceScope, options);
+            SessionProvider sessionProvider = options?.SessionOptions?.SessionProvider
+                ?? new ContainerSessionProvider(blobContainerUri, credential, options);
+            _authenticationPolicy = new SessionAuthenticationPolicy(
+                endpoint: blobContainerUri,
+                fallbackAuthPolicy: credential.AsPolicy(audienceScope, options),
+                sessionProvider: sessionProvider,
+                sessionOptions: options?.SessionOptions);
             options ??= new BlobClientOptions();
 
             _clientConfiguration = new BlobClientConfiguration(
@@ -1602,12 +1617,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
                     Response response;
 
                     if (async)
@@ -2469,12 +2478,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
                     List<BlobSignedIdentifier> sanitizedPermissions = null;
                     if (permissions != null)
                     {
@@ -2530,6 +2533,129 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion SetAccessPolicy
+
+        #region CreateSession
+        /// <summary>
+        /// The <see cref="CreateSession"/> operation
+        /// enables users to create a session scoped to a container.
+        /// </summary>
+        /// <param name="config">
+        /// Specifies the options for creating the session.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{CreateSessionResponse}"/> describing
+        /// the session details that was create.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        internal virtual Response<CreateSessionResponse> CreateSession(
+            CreateSessionConfiguration config,
+            CancellationToken cancellationToken = default)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(config)}: {config}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
+
+                try
+                {
+                    scope.Start();
+                    Response<CreateSessionResponse> response = ContainerRestClient.CreateSession(
+                        createSessionConfiguration: config,
+                        cancellationToken: cancellationToken);
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    scope.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateSessionAsync"/> operation
+        /// enables users to create a session scoped to a container.
+        /// </summary>
+        /// <param name="config">
+        /// Specifies the options for creating the session.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{CreateSessionResponse}"/> describing
+        /// the session details that was create.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        internal virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(
+            CreateSessionConfiguration config,
+            CancellationToken cancellationToken = default)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(config)}: {config}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
+
+                try
+                {
+                    scope.Start();
+                    Response<CreateSessionResponse> response = await ContainerRestClient.CreateSessionAsync(
+                        createSessionConfiguration: config,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion CreateSession
 
         #region GetBlobs
         /// <summary>
@@ -3023,7 +3149,7 @@ namespace Azure.Storage.Blobs
                     byte[] contentMD5 = contentMD5Str != null ? Convert.FromBase64String(contentMD5Str) : null;
 
                     var properties = new BlobPropertiesInternal(
-                        creationTime: creationTimeCol?.GetTimestamp(i),
+                        createdOn: creationTimeCol?.GetTimestamp(i),
                         lastModified: lastModifiedCol?.GetTimestamp(i) ?? default,
                         eTag: etagCol?.GetString(i),
                         contentLength: ReadNullableLong(contentLengthCol, i),
@@ -3042,12 +3168,12 @@ namespace Azure.Storage.Blobs
                         copyStatus: ReadEnum(copyStatusCol, i, s => s.ToCopyStatus()),
                         copySource: copySourceCol?.GetString(i),
                         copyProgress: copyProgressCol?.GetString(i),
-                        copyCompletionTime: copyCompletionTimeCol?.GetTimestamp(i),
+                        copyCompletionOn: copyCompletionTimeCol?.GetTimestamp(i),
                         copyStatusDescription: copyStatusDescriptionCol?.GetString(i),
                         serverEncrypted: ReadNullableBool(serverEncryptedCol, i),
                         incrementalCopy: ReadNullableBool(incrementalCopyCol, i),
                         destinationSnapshot: destinationSnapshotCol?.GetString(i),
-                        deletedTime: deletedTimeCol?.GetTimestamp(i),
+                        deletedOn: deletedTimeCol?.GetTimestamp(i),
                         remainingRetentionDays: ReadNullableInt(remainingRetentionDaysCol, i),
                         accessTier: ReadEnum(accessTierCol, i, s => new AccessTier(s)),
                         accessTierInferred: ReadNullableBool(accessTierInferredCol, i),
@@ -3055,7 +3181,7 @@ namespace Azure.Storage.Blobs
                         smartAccessTier: ReadEnum(smartAccessTierCol, i, s => new AccessTier(s)),
                         customerProvidedKeySha256: customerProvidedKeySha256Col?.GetString(i),
                         encryptionScope: encryptionScopeCol?.GetString(i),
-                        accessTierChangeTime: accessTierChangeTimeCol?.GetTimestamp(i),
+                        accessTierChangedOn: accessTierChangeTimeCol?.GetTimestamp(i),
                         tagCount: ReadNullableInt(tagCountCol, i),
                         expiresOn: null,
                         isSealed: ReadNullableBool(sealedCol, i),

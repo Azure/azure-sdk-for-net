@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="milestoneId"> Unique identifier for the milestone. </param>
         /// <param name="name"> Display name for the milestone. </param>
         /// <param name="status"> Current status of the milestone. </param>
-        /// <param name="endOn"> End date for this milestone. </param>
+        /// <param name="endsOn"> End date for this milestone. </param>
         /// <param name="spendTarget"> Spend target for this milestone. </param>
         /// <param name="award"> Award details for this milestone (only present for primary conditional credits). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConditionalCreditMilestoneBase(string milestoneId, string name, MilestoneStatus? status, DateTimeOffset? endOn, BillingBenefitsPrice spendTarget, Award award, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConditionalCreditMilestoneBase(string milestoneId, string name, MilestoneStatus? status, DateTimeOffset? endsOn, BillingBenefitsPrice spendTarget, Award award, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MilestoneId = milestoneId;
             Name = name;
             Status = status;
-            EndOn = endOn;
+            EndsOn = endsOn;
             SpendTarget = spendTarget;
             Award = award;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public MilestoneStatus? Status { get; set; }
 
         /// <summary> End date for this milestone. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Spend target for this milestone. </summary>
         public BillingBenefitsPrice SpendTarget { get; set; }

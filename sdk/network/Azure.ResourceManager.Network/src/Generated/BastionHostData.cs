@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -33,12 +34,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The sku of this Bastion Host. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BastionHostPropertiesFormat properties, IList<string> zones, ETag? eTag, NetworkSku sku) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        /// <param name="identity"> The identity assigned to the Bastion Host resource. </param>
+        internal BastionHostData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BastionHostPropertiesFormat properties, IList<string> zones, ETag? eTag, NetworkSku sku, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Zones = zones;
             ETag = eTag;
             Sku = sku;
+            Identity = identity;
         }
 
         /// <summary> Represents the bastion host resource. </summary>
@@ -56,6 +59,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> The sku of this Bastion Host. </summary>
         [WirePath("sku")]
         internal NetworkSku Sku { get; set; }
+
+        /// <summary> The identity assigned to the Bastion Host resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> IP configuration of the Bastion Host resource. </summary>
         [WirePath("properties.ipConfigurations")]
@@ -258,6 +265,24 @@ namespace Azure.ResourceManager.Network
                     Properties = new BastionHostPropertiesFormat();
                 }
                 Properties.EnablePrivateOnlyBastion = value;
+            }
+        }
+
+        /// <summary> The storage account and identity to use for session recording. </summary>
+        [WirePath("properties.sessionRecordingConfiguration")]
+        public BastionSessionRecordingConfiguration SessionRecordingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionRecordingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.SessionRecordingConfiguration = value;
             }
         }
 

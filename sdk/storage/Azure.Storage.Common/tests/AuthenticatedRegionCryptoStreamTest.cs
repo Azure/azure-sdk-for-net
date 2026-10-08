@@ -470,7 +470,7 @@ namespace Azure.Storage.Test
             IAuthenticatedCryptographicTransform transform = new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Decrypt);
             if (detectReorder)
             {
-                transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, 1);
+                transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, 0);
             }
             destStream = new MemoryStream();
             writeStream = new AuthenticatedRegionCryptoStream(
@@ -515,7 +515,7 @@ namespace Azure.Storage.Test
             IAuthenticatedCryptographicTransform transform = new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Decrypt);
             if (detectReorder)
             {
-                transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, 1);
+                transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, 0);
             }
             destStream = new MemoryStream();
             readStream = new AuthenticatedRegionCryptoStream(

@@ -11,13 +11,17 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary></summary>
+    /// <summary> The governance option for a governed service. </summary>
     public readonly partial struct VirtualEnclaveGovernedServiceItemOption : IEquatable<VirtualEnclaveGovernedServiceItemOption>
     {
         private readonly string _value;
+        /// <summary> Allow the governed service. </summary>
         private const string AllowValue = "Allow";
+        /// <summary> Deny the governed service. </summary>
         private const string DenyValue = "Deny";
+        /// <summary> Allow only configured exceptions for the governed service. </summary>
         private const string ExceptionOnlyValue = "ExceptionOnly";
+        /// <summary> The governance option does not apply to the governed service. </summary>
         private const string NotApplicableValue = "NotApplicable";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveGovernedServiceItemOption"/>. </summary>
@@ -30,16 +34,16 @@ namespace Azure.ResourceManager.Enclave.Models
             _value = value;
         }
 
-        /// <summary> Gets the Allow. </summary>
+        /// <summary> Allow the governed service. </summary>
         public static VirtualEnclaveGovernedServiceItemOption Allow { get; } = new VirtualEnclaveGovernedServiceItemOption(AllowValue);
 
-        /// <summary> Gets the Deny. </summary>
+        /// <summary> Deny the governed service. </summary>
         public static VirtualEnclaveGovernedServiceItemOption Deny { get; } = new VirtualEnclaveGovernedServiceItemOption(DenyValue);
 
-        /// <summary> Gets the ExceptionOnly. </summary>
+        /// <summary> Allow only configured exceptions for the governed service. </summary>
         public static VirtualEnclaveGovernedServiceItemOption ExceptionOnly { get; } = new VirtualEnclaveGovernedServiceItemOption(ExceptionOnlyValue);
 
-        /// <summary> Gets the NotApplicable. </summary>
+        /// <summary> The governance option does not apply to the governed service. </summary>
         public static VirtualEnclaveGovernedServiceItemOption NotApplicable { get; } = new VirtualEnclaveGovernedServiceItemOption(NotApplicableValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclaveGovernedServiceItemOption"/> values are the same. </summary>

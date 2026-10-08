@@ -10,13 +10,14 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Datastore Service Principal secrets. </summary>
-    internal partial class MachineLearningServicePrincipalDatastoreSecrets : MachineLearningDatastoreSecrets
+    public partial class MachineLearningServicePrincipalDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         private BicepValue<string> _clientSecret;
 
         /// <summary> Creates a new MachineLearningServicePrincipalDatastoreSecrets. </summary>
         public MachineLearningServicePrincipalDatastoreSecrets()
         {
+            SecretsType.Assign(MachineLearning.SecretsType.ServicePrincipal);
         }
 
         /// <summary> Gets or sets the ClientSecret. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("secretsType", new string[] { "secretsType" }, defaultValue: "ServicePrincipal");
             _clientSecret = DefineProperty<string>(nameof(ClientSecret), new string[] { "clientSecret" });
             DefineAdditionalProperties();
         }

@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Sql
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeletedServerData"/>. </summary>
+        public DeletedServerData()
+        {
+        }
+
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
         internal DeletedServerProperties Properties { get; }
@@ -66,6 +71,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary> The resource group of the original server before deletion. </summary>
+        [WirePath("properties.originalResourceGroup")]
+        public string OriginalResourceGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginalResourceGroup;
+            }
+        }
+
         /// <summary> The fully qualified domain name of the server. </summary>
         [WirePath("properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName
@@ -73,6 +88,16 @@ namespace Azure.ResourceManager.Sql
             get
             {
                 return Properties is null ? default : Properties.FullyQualifiedDomainName;
+            }
+        }
+
+        /// <summary> The date and time when the deleted server will be permanently deleted (purged). </summary>
+        [WirePath("properties.scheduledPurgeTime")]
+        public DateTimeOffset? ScheduledPurgeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledPurgeOn;
             }
         }
     }

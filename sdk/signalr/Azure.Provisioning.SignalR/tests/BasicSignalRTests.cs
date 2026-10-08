@@ -102,6 +102,10 @@ public class BasicSignalRTests
             resource signalr 'Microsoft.SignalRService/signalR@2022-02-01' = {
               name: take('signalr-${uniqueString(resourceGroup().id)}', 63)
               location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
+              kind: 'SignalR'
               properties: {
                 cors: {
                   allowedOrigins: [
@@ -122,16 +126,8 @@ public class BasicSignalRTests
                     value: 'true'
                   }
                 ]
-                tls: {
-                  clientCertEnabled: false
-                }
                 networkACLs: {
                   defaultAction: 'Deny'
-                  publicNetwork: {
-                    allow: [
-                      'ClientConnection'
-                    ]
-                  }
                   privateEndpoints: [
                     {
                       allow: [
@@ -140,25 +136,29 @@ public class BasicSignalRTests
                       name: endpointName
                     }
                   ]
+                  publicNetwork: {
+                    allow: [
+                      'ClientConnection'
+                    ]
+                  }
+                }
+                tls: {
+                  clientCertEnabled: false
                 }
                 upstream: {
                   templates: [
                     {
-                      hubPattern: '*'
-                      eventPattern: 'connect,disconnect'
                       categoryPattern: '*'
+                      eventPattern: 'connect,disconnect'
+                      hubPattern: '*'
                       urlTemplate: 'https://example.com/chat/api/connect'
                     }
                   ]
                 }
               }
-              identity: {
-                type: 'SystemAssigned'
-              }
-              kind: 'SignalR'
               sku: {
-                name: 'Standard_S1'
                 capacity: 1
+                name: 'Standard_S1'
               }
             }
             """);

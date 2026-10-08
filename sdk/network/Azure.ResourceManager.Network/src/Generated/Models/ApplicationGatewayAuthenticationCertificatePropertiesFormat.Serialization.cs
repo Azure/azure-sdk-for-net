@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteBase64StringValue(Data.ToArray(), "D");
+                writer.WriteBase64StringValue(Data, "D");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplicationGatewayAuthenticationCertificatePropertiesFormat(data, provisioningState, additionalBinaryDataProperties);

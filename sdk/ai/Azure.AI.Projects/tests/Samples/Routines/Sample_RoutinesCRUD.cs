@@ -37,7 +37,8 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
         #endregion
         // Clean up any pre-existing routine with the same name.
         try
-        { await routinesClient.DeleteAsync(routineName); } catch { }
+        { await routinesClient.DeleteAsync(routineName); }
+        catch { }
 
         #region Snippet:Sample_CreateRoutine_RoutinesCRUD_Async
         RoutineAction action = new AgentResponsesApiRoutineAction
@@ -105,7 +106,9 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
         // Clean up any pre-existing routine with the same name.
-        try { routinesClient.Delete(routineName); } catch { }
+        try
+        { routinesClient.Delete(routineName); }
+        catch { }
         #region Snippet:Sample_GetHostedAgent_RoutinesCRUD_Sync
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgent(
             agentName: agentName).Value.GetLatestVersion();

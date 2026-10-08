@@ -21,6 +21,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new SimpleSchedulePolicyV2. </summary>
         public SimpleSchedulePolicyV2()
         {
+            SchedulePolicyType.Assign("SimpleSchedulePolicyV2");
         }
 
         /// <summary> Gets or sets the ScheduleRunFrequency. </summary>
@@ -104,7 +105,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("schedulePolicyType", new string[] { "schedulePolicyType" }, defaultValue: "SimpleSchedulePolicyV2");
             _scheduleRunFrequency = DefineProperty<ScheduleRunType>(nameof(ScheduleRunFrequency), new string[] { "scheduleRunFrequency" });
             _hourlySchedule = DefineModelProperty<BackupHourlySchedule>(nameof(HourlySchedule), new string[] { "hourlySchedule" });
             _dailySchedule = DefineModelProperty<DailySchedule>(nameof(DailySchedule), new string[] { "dailySchedule" });

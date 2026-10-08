@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "BulletPointsEnum",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Documentation.Lists.BulletPointsEnum",
       "valueType": {
         "$id": "2",
@@ -94,6 +95,7 @@
       "$id": "8",
       "kind": "model",
       "name": "BulletPointsModelRequest",
+      "apiVersions": [],
       "namespace": "Documentation.Lists",
       "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.Request.anonymous",
       "usage": "Spread,Json",
@@ -109,11 +111,13 @@
           "$id": "9",
           "kind": "property",
           "name": "input",
+          "apiVersions": [],
           "serializedName": "input",
           "type": {
             "$id": "10",
             "kind": "model",
             "name": "BulletPointsModel",
+            "apiVersions": [],
             "namespace": "Documentation.Lists",
             "crossLanguageDefinitionId": "Documentation.Lists.BulletPointsModel",
             "usage": "Input,Json",
@@ -130,6 +134,7 @@
                 "$id": "11",
                 "kind": "property",
                 "name": "prop",
+                "apiVersions": [],
                 "serializedName": "prop",
                 "doc": "This property uses an enum with bullet point documentation. The enum documentation includes various formatting styles to test rendering. The styles are:\n- Simple bullet point. This bullet point is going to be very long to test how text wrapping is handled in bullet points within documentation comments. It should properly indent the wrapped lines.\n- Bullet point with **bold text**. This bullet point is also intentionally long to see how the formatting is preserved when the text wraps onto multiple\n- Bullet point with *italic text*. Similar to the previous points, this one is extended to ensure that the wrapping and formatting are correctly applied in the output.\n- Complex bullet point with **bold** and *italic* combined. This bullet point combines both bold and italic formatting and is long enough to test the wrapping behavior in such cases.\n- **Bold bullet point**\n- *Italic bullet point*",
                 "type": {

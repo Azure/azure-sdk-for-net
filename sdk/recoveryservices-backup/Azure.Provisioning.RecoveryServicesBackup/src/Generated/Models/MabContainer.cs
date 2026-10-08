@@ -23,6 +23,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new MabContainer. </summary>
         public MabContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.Windows);
         }
 
         /// <summary> Gets or sets the CanReRegister. </summary>
@@ -134,7 +135,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "Windows");
             _canReRegister = DefineProperty<bool>(nameof(CanReRegister), new string[] { "canReRegister" });
             _containerId = DefineProperty<long>(nameof(ContainerId), new string[] { "containerId" });
             _protectedItemCount = DefineProperty<long>(nameof(ProtectedItemCount), new string[] { "protectedItemCount" });

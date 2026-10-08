@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
-
 namespace Azure.Provisioning.Cdn
 {
     /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>
@@ -17,10 +15,11 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new CdnManagedHttpsContent. </summary>
         public CdnManagedHttpsContent()
         {
+            CertificateSource.Assign(Cdn.CertificateSource.Cdn);
         }
 
         /// <summary> Gets or sets the CertificateSourceParameters. </summary>
-        internal CdnCertificateSource CertificateSourceParameters
+        public CdnCertificateSource CertificateSourceParameters
         {
             get
             {
@@ -34,28 +33,10 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets or sets the CertificateType. </summary>
-        public BicepValue<CdnManagedCertificateType> CertificateType
-        {
-            get
-            {
-                return CertificateSourceParameters is null ? default : CertificateSourceParameters.CertificateType;
-            }
-            set
-            {
-                if (CertificateSourceParameters is null)
-                {
-                    CertificateSourceParameters = new CdnCertificateSource();
-                }
-                CertificateSourceParameters.CertificateType = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CdnManagedHttpsContent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("certificateSource", new string[] { "certificateSource" }, defaultValue: "Cdn");
             _certificateSourceParameters = DefineModelProperty<CdnCertificateSource>(nameof(CertificateSourceParameters), new string[] { "certificateSourceParameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

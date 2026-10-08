@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from a delete request. </summary>
+    /// <summary> The result of a bulk delete action. </summary>
     public partial class DeleteResourceOperationResult : IJsonModel<DeleteResourceOperationResult>
     {
         /// <summary> Initializes a new instance of <see cref="DeleteResourceOperationResult"/> for deserialization. </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeleteResourceOperationResult(description, resourceTypeName, location, results ?? new ChangeTrackingList<ComputeBulkOperationResult>(), additionalBinaryDataProperties);

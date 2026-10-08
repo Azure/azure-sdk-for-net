@@ -63,6 +63,8 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>>> GetAccessPolicyAsync(Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>>> GetAccessPolicyAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Storage.Files.Shares.ShareDirectoryClient GetDirectoryClient(string directoryName) { throw null; }
+        public virtual Azure.Storage.Files.Shares.ShareDirectoryClient GetDirectoryClientByFileId(string fileId) { throw null; }
+        public virtual Azure.Storage.Files.Shares.ShareFileClient GetFileClientByFileId(string fileId) { throw null; }
         protected internal virtual Azure.Storage.Files.Shares.ShareServiceClient GetParentServiceClientCore() { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFilePermission> GetPermission(string filePermissionKey, Azure.Storage.Files.Shares.Models.FilePermissionFormat? filePermissionFormat = default(Azure.Storage.Files.Shares.Models.FilePermissionFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> GetPermission(string filePermissionKey, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -73,10 +75,12 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareProperties>> GetPropertiesAsync(Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Storage.Files.Shares.ShareDirectoryClient GetRootDirectoryClient() { throw null; }
+        protected static Azure.Storage.StorageSharedKeyCredential GetSharedKeyCredential(Azure.Storage.Files.Shares.ShareClient client) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareStatistics> GetStatistics(Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareStatistics> GetStatistics(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareStatistics>> GetStatisticsAsync(Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareStatistics>> GetStatisticsAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected static Azure.Core.TokenCredential GetTokenCredential(Azure.Storage.Files.Shares.ShareClient client) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier> permissions, Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier> permissions, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo>> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier> permissions, Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -158,6 +162,7 @@ namespace Azure.Storage.Files.Shares
         public ShareDirectoryClient(System.Uri directoryUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
         public virtual bool CanGenerateSasUri { get { throw null; } }
+        public virtual string FileId { get { throw null; } }
         public virtual string Name { get { throw null; } }
         public virtual string Path { get { throw null; } }
         public virtual string ShareName { get { throw null; } }
@@ -229,6 +234,7 @@ namespace Azure.Storage.Files.Shares
         public ShareFileClient(System.Uri fileUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
         public virtual bool CanGenerateSasUri { get { throw null; } }
+        public virtual string FileId { get { throw null; } }
         public virtual string Name { get { throw null; } }
         public virtual string Path { get { throw null; } }
         public virtual string ShareName { get { throw null; } }
@@ -280,6 +286,8 @@ namespace Azure.Storage.Files.Shares
         public virtual Azure.Pageable<Azure.Storage.Files.Shares.Models.ShareFileRange> GetAllRangeListDiff(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListDiffOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.Models.ShareFileRange> GetAllRangeListDiffAsync(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListDiffOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected static System.Threading.Tasks.Task<Azure.HttpAuthorization> GetCopyAuthorizationHeaderAsync(Azure.Storage.Files.Shares.ShareFileClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileLinks> GetFileLinks(Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileLinks>> GetFileLinksAsync(Azure.Storage.Files.Shares.Models.ShareFileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.Shares.Models.ShareFileHandle> GetHandles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.Models.ShareFileHandle> GetHandlesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal virtual Azure.Storage.Files.Shares.ShareClient GetParentShareClientCore() { throw null; }
@@ -372,8 +380,10 @@ namespace Azure.Storage.Files.Shares
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareServiceProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareServiceProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.Shares.ShareClient GetShareClient(string shareName) { throw null; }
+        protected static Azure.Storage.StorageSharedKeyCredential GetSharedKeyCredential(Azure.Storage.Files.Shares.ShareServiceClient client) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.Shares.Models.ShareItem> GetShares(Azure.Storage.Files.Shares.Models.ShareTraits traits = Azure.Storage.Files.Shares.Models.ShareTraits.None, Azure.Storage.Files.Shares.Models.ShareStates states = Azure.Storage.Files.Shares.Models.ShareStates.None, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.Models.ShareItem> GetSharesAsync(Azure.Storage.Files.Shares.Models.ShareTraits traits = Azure.Storage.Files.Shares.Models.ShareTraits.None, Azure.Storage.Files.Shares.Models.ShareStates states = Azure.Storage.Files.Shares.Models.ShareStates.None, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected static Azure.Core.TokenCredential GetTokenCredential(Azure.Storage.Files.Shares.ShareServiceClient client) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.UserDelegationKey> GetUserDelegationKey(Azure.Storage.Files.Shares.Models.ShareGetUserDelegationKeyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.UserDelegationKey> GetUserDelegationKey(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.UserDelegationKey>> GetUserDelegationKeyAsync(Azure.Storage.Files.Shares.Models.ShareGetUserDelegationKeyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -388,6 +398,7 @@ namespace Azure.Storage.Files.Shares
         public ShareUriBuilder(System.Uri uri) { }
         public string AccountName { get { throw null; } set { } }
         public string DirectoryOrFilePath { get { throw null; } set { } }
+        public string FileId { get { throw null; } set { } }
         public string Host { get { throw null; } set { } }
         public int Port { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
@@ -488,9 +499,13 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public static Azure.Storage.Files.Shares.Models.FilePosixProperties FilePosixProperties(Azure.Storage.Files.Shares.Models.NfsFileMode fileMode, string owner, string group, Azure.Storage.Files.Shares.Models.NfsFileType fileType, long? linkCount) { throw null; }
         public static Azure.Storage.Files.Shares.Models.FileSmbProperties FileSmbProperties(System.DateTimeOffset? fileChangedOn, string fileId, string parentId) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareFileItem ShareFileItem(bool isDirectory = false, string name = null, long? fileSize = default(long?), string id = null, Azure.Storage.Files.Shares.Models.ShareFileItemProperties properties = null, Azure.Storage.Files.Shares.Models.NtfsFileAttributes? fileAttributes = default(Azure.Storage.Files.Shares.Models.NtfsFileAttributes?), string permissionKey = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileItem ShareFileItem(bool isDirectory, string name, long? fileSize, string id, Azure.Storage.Files.Shares.Models.ShareFileItemProperties properties, Azure.Storage.Files.Shares.Models.NtfsFileAttributes? fileAttributes, string permissionKey) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileItem ShareFileItem(bool isDirectory = false, string name = null, long? fileSize = default(long?), string id = null, Azure.Storage.Files.Shares.Models.ShareFileItemProperties properties = null, Azure.Storage.Files.Shares.Models.NtfsFileAttributes? fileAttributes = default(Azure.Storage.Files.Shares.Models.NtfsFileAttributes?), string permissionKey = null, long? linkCount = default(long?), Azure.Storage.Files.Shares.Models.FileType? fileType = default(Azure.Storage.Files.Shares.Models.FileType?), string linkText = null, long? deviceMajor = default(long?), long? deviceMinor = default(long?)) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileLink ShareFileLink(string parentId, string name) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileLinks ShareFileLinks(Azure.Storage.Files.Shares.Models.ShareFileProperties properties, System.Collections.Generic.IReadOnlyList<Azure.Storage.Files.Shares.Models.ShareFileLink> links) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareDirectoryInfo StorageDirectoryInfo(Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, Azure.Storage.Files.Shares.Models.FilePosixProperties posixProperties = null) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareDirectoryProperties StorageDirectoryProperties(System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), bool isServerEncrypted = false, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, Azure.Storage.Files.Shares.Models.FilePosixProperties posixProperties = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareDirectoryProperties StorageDirectoryProperties(System.Collections.Generic.IDictionary<string, string> metadata, Azure.ETag eTag, System.DateTimeOffset lastModified, bool isServerEncrypted, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties, Azure.Storage.Files.Shares.Models.FilePosixProperties posixProperties) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareDirectoryProperties StorageDirectoryProperties(System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), bool isServerEncrypted = false, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, Azure.Storage.Files.Shares.Models.FilePosixProperties posixProperties = null, string fileName = null) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareDirectoryProperties StorageDirectoryProperties(System.Collections.Generic.IDictionary<string, string> metadata, Azure.ETag eTag, System.DateTimeOffset lastModified, bool isServerEncrypted, string fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string filePermissionKey, string fileId, string fileParentId) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileDownloadInfo StorageFileDownloadInfo(System.DateTimeOffset lastModified = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<string> contentLanguage = null, string acceptRanges = null, System.DateTimeOffset copyCompletionTime = default(System.DateTimeOffset), string copyStatusDescription = null, string contentDisposition = null, string copyProgress = null, System.Uri copySource = null, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus = Azure.Storage.Files.Shares.Models.CopyStatus.Pending, byte[] fileContentHash = null, bool isServerEncrypted = false, string cacheControl = null, string fileAttributes = null, System.Collections.Generic.IEnumerable<string> contentEncoding = null, System.DateTimeOffset fileCreationTime = default(System.DateTimeOffset), byte[] contentHash = null, System.DateTimeOffset fileLastWriteTime = default(System.DateTimeOffset), Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset fileChangeTime = default(System.DateTimeOffset), string contentRange = null, string filePermissionKey = null, string contentType = null, string fileId = null, long contentLength = (long)0, string fileParentId = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.IO.Stream content = null, string copyId = null) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileDownloadDetails StorageFileDownloadProperties(System.DateTimeOffset lastModified = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, string> metadata = null, string contentRange = null, Azure.ETag eTag = default(Azure.ETag), System.Collections.Generic.IEnumerable<string> contentEncoding = null, string cacheControl = null, string contentDisposition = null, System.Collections.Generic.IEnumerable<string> contentLanguage = null, string acceptRanges = null, System.DateTimeOffset copyCompletedOn = default(System.DateTimeOffset), string copyStatusDescription = null, string copyId = null, string copyProgress = null, System.Uri copySource = null, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus = Azure.Storage.Files.Shares.Models.CopyStatus.Pending, byte[] fileContentHash = null, bool isServiceEncrypted = false, Azure.Storage.Files.Shares.Models.ShareLeaseDuration leaseDuration = Azure.Storage.Files.Shares.Models.ShareLeaseDuration.Infinite, Azure.Storage.Files.Shares.Models.ShareLeaseState leaseState = Azure.Storage.Files.Shares.Models.ShareLeaseState.Available, Azure.Storage.Files.Shares.Models.ShareLeaseStatus leaseStatus = Azure.Storage.Files.Shares.Models.ShareLeaseStatus.Locked, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, Azure.Storage.Files.Shares.Models.FilePosixProperties posixProperties = null) { throw null; }
@@ -499,9 +514,20 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileInfo StorageFileInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, bool isServerEncrypted, string filePermissionKey, string fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string fileId, string fileParentId, Azure.Storage.Files.Shares.Models.NfsFileMode nfsFileMode, string owner, string group, Azure.Storage.Files.Shares.Models.NfsFileType nfsFileType) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileInfo StorageFileInfo(Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), bool isServerEncrypted = false, string filePermissionKey = null, string fileAttributes = null, System.DateTimeOffset fileCreationTime = default(System.DateTimeOffset), System.DateTimeOffset fileLastWriteTime = default(System.DateTimeOffset), System.DateTimeOffset fileChangeTime = default(System.DateTimeOffset), string fileId = null, string fileParentId = null, Azure.Storage.Files.Shares.Models.NfsFileMode nfsFileMode = null, string owner = null, string group = null, Azure.Storage.Files.Shares.Models.NfsFileType nfsFileType = default(Azure.Storage.Files.Shares.Models.NfsFileType), byte[] contentHash = null) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileItem StorageFileItem(bool isDirectory, string name, long? fileSize) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, string> metadata = null, long contentLength = (long)0, string contentType = null, Azure.ETag eTag = default(Azure.ETag), byte[] contentHash = null, System.Collections.Generic.IEnumerable<string> contentEncoding = null, string cacheControl = null, string contentDisposition = null, System.Collections.Generic.IEnumerable<string> contentLanguage = null, System.DateTimeOffset copyCompletedOn = default(System.DateTimeOffset), string copyStatusDescription = null, string copyId = null, string copyProgress = null, string copySource = null, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus = Azure.Storage.Files.Shares.Models.CopyStatus.Pending, bool isServerEncrypted = false, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, Azure.Storage.Files.Shares.Models.FilePosixProperties posixProperties = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, string copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, bool isServerEncrypted, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties, Azure.Storage.Files.Shares.Models.FilePosixProperties posixProperties) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, string> metadata = null, long contentLength = (long)0, string contentType = null, Azure.ETag eTag = default(Azure.ETag), byte[] contentHash = null, System.Collections.Generic.IEnumerable<string> contentEncoding = null, string cacheControl = null, string contentDisposition = null, System.Collections.Generic.IEnumerable<string> contentLanguage = null, System.DateTimeOffset copyCompletedOn = default(System.DateTimeOffset), string copyStatusDescription = null, string copyId = null, string copyProgress = null, string copySource = null, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus = Azure.Storage.Files.Shares.Models.CopyStatus.Pending, bool isServerEncrypted = false, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, Azure.Storage.Files.Shares.Models.FilePosixProperties posixProperties = null, string fileName = null) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, string copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, bool isServerEncrypted, Azure.Storage.Files.Shares.Models.NtfsFileAttributes fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string filePermissionKey, string fileId, string fileParentId) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, string copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, bool isServerEncrypted, string fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string filePermissionKey, string fileId, string fileParentId) { throw null; }
+    }
+    public enum FileType
+    {
+        Regular = 0,
+        Directory = 1,
+        SymLink = 2,
+        BlockDevice = 3,
+        CharacterDevice = 4,
+        Socket = 5,
+        Fifo = 6,
     }
     public enum ModeCopyMode
     {
@@ -645,6 +671,8 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public ShareCreateOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareAccessTier? AccessTier { get { throw null; } set { } }
+        public int? ChangeFeedRetentionInDays { get { throw null; } set { } }
+        public bool? EnableChangeFeed { get { throw null; } set { } }
         public bool? EnablePaidBursting { get { throw null; } set { } }
         public bool? EnableSnapshotVirtualDirectoryAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
@@ -690,6 +718,7 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal ShareDirectoryProperties() { }
         public Azure.ETag ETag { get { throw null; } }
+        public string FileName { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
@@ -954,10 +983,15 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileItem
     {
         internal ShareFileItem() { }
+        public long? DeviceMajor { get { throw null; } }
+        public long? DeviceMinor { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.NtfsFileAttributes? FileAttributes { get { throw null; } }
         public long? FileSize { get { throw null; } }
+        public Azure.Storage.Files.Shares.Models.FileType? FileType { get { throw null; } }
         public string Id { get { throw null; } }
         public bool IsDirectory { get { throw null; } }
+        public long? LinkCount { get { throw null; } }
+        public string LinkText { get { throw null; } }
         public string Name { get { throw null; } }
         public string PermissionKey { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.ShareFileItemProperties Properties { get { throw null; } }
@@ -968,9 +1002,12 @@ namespace Azure.Storage.Files.Shares.Models
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
+        public Azure.Storage.Files.Shares.Models.NfsFileMode FileMode { get { throw null; } }
+        public string Group { get { throw null; } }
         public System.DateTimeOffset? LastAccessedOn { get { throw null; } }
         public System.DateTimeOffset? LastModified { get { throw null; } }
         public System.DateTimeOffset? LastWrittenOn { get { throw null; } }
+        public string Owner { get { throw null; } }
     }
     public partial class ShareFileLease
     {
@@ -979,6 +1016,18 @@ namespace Azure.Storage.Files.Shares.Models
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string LeaseId { get { throw null; } }
         public int? LeaseTime { get { throw null; } }
+    }
+    public partial class ShareFileLink
+    {
+        internal ShareFileLink() { }
+        public string Name { get { throw null; } }
+        public string ParentId { get { throw null; } }
+    }
+    public partial class ShareFileLinks
+    {
+        internal ShareFileLinks() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Storage.Files.Shares.Models.ShareFileLink> Links { get { throw null; } }
+        public Azure.Storage.Files.Shares.Models.ShareFileProperties Properties { get { throw null; } }
     }
     public partial class ShareFileModifiedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
@@ -1030,6 +1079,7 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.Storage.Files.Shares.Models.CopyStatus CopyStatus { get { throw null; } }
         public string CopyStatusDescription { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
+        public string FileName { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.ShareLeaseDuration LeaseDuration { get { throw null; } }
@@ -1103,6 +1153,9 @@ namespace Azure.Storage.Files.Shares.Models
         ETag = 2,
         Attributes = 4,
         PermissionKey = 8,
+        Permissions = 16,
+        LinkCount = 32,
+        NfsAttributes = 64,
     }
     public partial class ShareFileUploadInfo
     {
@@ -1199,7 +1252,8 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?), Azure.Storage.Files.Shares.Models.ShareFileHandleAccessRights? accessRights = default(Azure.Storage.Files.Shares.Models.ShareFileHandleAccessRights?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string clientName, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?), Azure.Storage.Files.Shares.Models.ShareFileHandleAccessRights? accessRights = default(Azure.Storage.Files.Shares.Models.ShareFileHandleAccessRights?)) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareFileItemProperties ShareFileItemProperties(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastAccessedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastWrittenOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileItemProperties ShareFileItemProperties(System.DateTimeOffset? createdOn, System.DateTimeOffset? lastAccessedOn, System.DateTimeOffset? lastWrittenOn, System.DateTimeOffset? changedOn, System.DateTimeOffset? lastModified, Azure.ETag? etag) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileItemProperties ShareFileItemProperties(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastAccessedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastWrittenOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), Azure.ETag? etag = default(Azure.ETag?), string owner = null, string group = null, Azure.Storage.Files.Shares.Models.NfsFileMode fileMode = null) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileLease ShareFileLease(Azure.ETag eTag, System.DateTimeOffset lastModified, string leaseId) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileRange ShareFileRange(Azure.HttpRange range, bool isClear) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileRangeInfo ShareFileRangeInfo(System.DateTimeOffset lastModified, Azure.ETag eTag, long fileContentLength, System.Collections.Generic.IEnumerable<Azure.HttpRange> ranges) { throw null; }
@@ -1217,7 +1271,8 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(string accessTier = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), int? provisionedIops = default(int?), int? provisionedIngressMBps = default(int?), int? provisionedEgressMBps = default(int?), System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), Azure.ETag? eTag = default(Azure.ETag?), System.DateTimeOffset? accessTierChangeTime = default(System.DateTimeOffset?), string accessTierTransitionState = null, Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus = default(Azure.Storage.Files.Shares.Models.ShareLeaseStatus?), Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState = default(Azure.Storage.Files.Shares.Models.ShareLeaseState?), Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration = default(Azure.Storage.Files.Shares.Models.ShareLeaseDuration?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.ShareProtocols? protocols = default(Azure.Storage.Files.Shares.Models.ShareProtocols?), Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash = default(Azure.Storage.Files.Shares.Models.ShareRootSquash?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(string accessTier, System.DateTimeOffset? lastModified, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, System.DateTimeOffset? nextAllowedQuotaDowngradeTime, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ETag? eTag, System.DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus, Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState, Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.Shares.Models.ShareProtocols? protocols, Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(string accessTier, System.DateTimeOffset? lastModified, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, System.DateTimeOffset? nextAllowedQuotaDowngradeTime, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ETag? eTag, System.DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus, Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState, Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.Shares.Models.ShareProtocols? protocols, Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? enablePaidBursting, long? paidBurstingMaxIops, long? paidBustingMaxBandwidthMibps) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(string accessTier = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), int? provisionedIops = default(int?), int? provisionedIngressMBps = default(int?), int? provisionedEgressMBps = default(int?), System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), Azure.ETag? eTag = default(Azure.ETag?), System.DateTimeOffset? accessTierChangeTime = default(System.DateTimeOffset?), string accessTierTransitionState = null, Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus = default(Azure.Storage.Files.Shares.Models.ShareLeaseStatus?), Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState = default(Azure.Storage.Files.Shares.Models.ShareLeaseState?), Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration = default(Azure.Storage.Files.Shares.Models.ShareLeaseDuration?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.ShareProtocols? protocols = default(Azure.Storage.Files.Shares.Models.ShareProtocols?), Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash = default(Azure.Storage.Files.Shares.Models.ShareRootSquash?), bool? enableSnapshotVirtualDirectoryAccess = default(bool?), bool? enablePaidBursting = default(bool?), long? paidBurstingMaxIops = default(long?), long? paidBustingMaxBandwidthMibps = default(long?), long? includedBurstIops = default(long?), long? maxBurstCreditsForIops = default(long?), System.DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default(System.DateTimeOffset?), System.DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(string accessTier, System.DateTimeOffset? lastModified, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, System.DateTimeOffset? nextAllowedQuotaDowngradeTime, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ETag? eTag, System.DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus, Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState, Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.Shares.Models.ShareProtocols? protocols, Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? enablePaidBursting, long? paidBurstingMaxIops, long? paidBustingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, System.DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime, System.DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(string accessTier = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), int? provisionedIops = default(int?), int? provisionedIngressMBps = default(int?), int? provisionedEgressMBps = default(int?), System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), Azure.ETag? eTag = default(Azure.ETag?), System.DateTimeOffset? accessTierChangeTime = default(System.DateTimeOffset?), string accessTierTransitionState = null, Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus = default(Azure.Storage.Files.Shares.Models.ShareLeaseStatus?), Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState = default(Azure.Storage.Files.Shares.Models.ShareLeaseState?), Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration = default(Azure.Storage.Files.Shares.Models.ShareLeaseDuration?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.ShareProtocols? protocols = default(Azure.Storage.Files.Shares.Models.ShareProtocols?), Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash = default(Azure.Storage.Files.Shares.Models.ShareRootSquash?), bool? enableSnapshotVirtualDirectoryAccess = default(bool?), bool? enablePaidBursting = default(bool?), long? paidBurstingMaxIops = default(long?), long? paidBustingMaxBandwidthMibps = default(long?), long? includedBurstIops = default(long?), long? maxBurstCreditsForIops = default(long?), System.DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default(System.DateTimeOffset?), System.DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default(System.DateTimeOffset?), bool? enableChangeFeed = default(bool?), int? changeFeedRetentionInDays = default(int?), string changeFeedBlobContainerName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareProtocolSettings ShareProtocolSettings(Azure.Storage.Files.Shares.Models.ShareSmbSettings smb = null, Azure.Storage.Files.Shares.Models.ShareNfsSettings nfs = null) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareRetentionPolicy ShareRetentionPolicy(bool enabled = false, int? days = default(int?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareServiceProperties ShareServiceProperties(Azure.Storage.Files.Shares.Models.ShareMetrics hourMetrics = null, Azure.Storage.Files.Shares.Models.ShareMetrics minuteMetrics = null, Azure.Storage.Files.Shares.Models.ShareProtocolSettings protocol = null, System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareCorsRule> cors = null) { throw null; }
@@ -1259,7 +1314,11 @@ namespace Azure.Storage.Files.Shares.Models
         public string AccessTier { get { throw null; } }
         public System.DateTimeOffset? AccessTierChangeTime { get { throw null; } }
         public string AccessTierTransitionState { get { throw null; } }
+        public string ChangeFeedBlobContainerName { get { throw null; } }
+        public int? ChangeFeedRetentionInDays { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        public bool? EnableChangeFeed { get { throw null; } }
         public bool? EnablePaidBursting { get { throw null; } }
         public bool? EnableSnapshotVirtualDirectoryAccess { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -1337,7 +1396,9 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public ShareSetPropertiesOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareAccessTier? AccessTier { get { throw null; } set { } }
+        public int? ChangeFeedRetentionInDays { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
+        public bool? EnableChangeFeed { get { throw null; } set { } }
         public bool? EnablePaidBursting { get { throw null; } set { } }
         public bool? EnableSnapshotVirtualDirectoryAccess { get { throw null; } set { } }
         public long? PaidBurstingMaxBandwidthMibps { get { throw null; } set { } }

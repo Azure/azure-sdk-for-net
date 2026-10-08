@@ -40,19 +40,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Name of the image that will be used for the environment.
         /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </param>
-        /// <param name="imageDetails"> Environment image details. </param>
         /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
         /// <param name="osType"> The type of operating system. </param>
         /// <param name="provisioningState"> Provisioning state for the environment version. </param>
         /// <param name="stage"> Stage in the environment lifecycle assigned to this environment. </param>
-        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, ImageDetails imageDetails, MachineLearningInferenceContainerProperties inferenceConfig, MachineLearningOperatingSystemType? osType, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, additionalBinaryDataProperties, isAnonymous, isArchived)
+        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, MachineLearningOperatingSystemType? osType, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, additionalBinaryDataProperties, isAnonymous, isArchived)
         {
             AutoRebuild = autoRebuild;
             Build = build;
             CondaFile = condaFile;
             EnvironmentType = environmentType;
             Image = image;
-            ImageDetails = imageDetails;
             InferenceConfig = inferenceConfig;
             OSType = osType;
             ProvisioningState = provisioningState;
@@ -87,10 +85,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         [WirePath("image")]
         public string Image { get; set; }
-
-        /// <summary> Environment image details. </summary>
-        [WirePath("imageDetails")]
-        public ImageDetails ImageDetails { get; set; }
 
         /// <summary> Defines configuration specific to inference. </summary>
         [WirePath("inferenceConfig")]

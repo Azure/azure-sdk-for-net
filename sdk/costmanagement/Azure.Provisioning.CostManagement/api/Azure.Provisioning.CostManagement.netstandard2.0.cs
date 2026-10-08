@@ -120,8 +120,8 @@ namespace Azure.Provisioning.CostManagement
     public partial class BudgetTimePeriod : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BudgetTimePeriod() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CategoryType
@@ -487,7 +487,7 @@ namespace Azure.Provisioning.CostManagement
     public partial class ExportRun : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ExportRun() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.CostManagement.ExportRunErrorDetails Error { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionType> ExecutionType { get { throw null; } }
@@ -495,10 +495,10 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ManifestFile { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingEndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingEndsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingStartsOn { get { throw null; } }
         public Azure.Provisioning.CostManagement.CommonExportProperties RunSettings { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionStatus> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SubmittedBy { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> SubmittedOn { get { throw null; } }
@@ -817,10 +817,10 @@ namespace Azure.Provisioning.CostManagement
         public ScheduleProperties() { }
         public Azure.Provisioning.BicepValue<int> DayOfMonth { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CostManagement.ScheduledActionDaysOfWeek> DaysOfWeek { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ScheduleFrequency> Frequency { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> HourOfDay { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CostManagement.ScheduledActionWeeksOfMonth> WeeksOfMonth { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }

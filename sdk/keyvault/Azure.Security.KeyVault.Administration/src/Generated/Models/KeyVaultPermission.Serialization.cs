@@ -244,7 +244,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KeyVaultPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<KeyVaultDataAction>(), notDataActions ?? new ChangeTrackingList<KeyVaultDataAction>(), additionalBinaryDataProperties);

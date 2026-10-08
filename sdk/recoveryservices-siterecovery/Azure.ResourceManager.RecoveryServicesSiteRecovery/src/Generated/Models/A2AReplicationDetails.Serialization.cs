@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("agentReinstallAttemptToVersion"u8);
                 writer.WriteStringValue(AgentReinstallAttemptToVersion);
             }
-            if (Optional.IsDefined(OsFamilyName))
+            if (Optional.IsDefined(OSFamilyName))
             {
                 writer.WritePropertyName("osFamilyName"u8);
-                writer.WriteStringValue(OsFamilyName);
+                writer.WriteStringValue(OSFamilyName);
             }
             if (Optional.IsDefined(DistroName))
             {
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new A2AReplicationDetails(

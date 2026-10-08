@@ -43,6 +43,7 @@
       "$id": "5",
       "kind": "model",
       "name": "ModelWithDefaultValues",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.ModelWithDefaultValues",
       "usage": "Input,Output,Json",
@@ -59,6 +60,7 @@
           "$id": "6",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "Name property with no default value.",
           "type": {
@@ -86,6 +88,7 @@
           "$id": "8",
           "kind": "property",
           "name": "timeout",
+          "apiVersions": [],
           "serializedName": "timeout",
           "doc": "Timeout property with client default value of 30.",
           "type": {
@@ -113,6 +116,7 @@
           "$id": "10",
           "kind": "property",
           "name": "tier",
+          "apiVersions": [],
           "serializedName": "tier",
           "doc": "Tier property with client default value of 'standard'.",
           "type": {
@@ -140,6 +144,7 @@
           "$id": "12",
           "kind": "property",
           "name": "retry",
+          "apiVersions": [],
           "serializedName": "retry",
           "doc": "Retry property with client default value of true.",
           "type": {

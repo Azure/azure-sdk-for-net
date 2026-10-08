@@ -9,6 +9,10 @@
       "$id": "1",
       "kind": "enum",
       "name": "EnumV1",
+      "apiVersions": [
+        "v1",
+        "v2preview"
+      ],
       "crossLanguageDefinitionId": "Versioning.Removed.EnumV1",
       "valueType": {
         "$id": "2",
@@ -44,6 +48,10 @@
       "$id": "4",
       "kind": "enum",
       "name": "EnumV2",
+      "apiVersions": [
+        "v1",
+        "v2preview"
+      ],
       "crossLanguageDefinitionId": "Versioning.Removed.EnumV2",
       "valueType": {
         "$id": "5",
@@ -93,6 +101,10 @@
       "$id": "8",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "v1",
+        "v2preview"
+      ],
       "crossLanguageDefinitionId": "Versioning.Removed.Versions",
       "valueType": {
         "$id": "9",
@@ -285,6 +297,10 @@
       "$id": "28",
       "kind": "model",
       "name": "ModelV1",
+      "apiVersions": [
+        "v1",
+        "v2preview"
+      ],
       "namespace": "Versioning.Removed",
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV1",
       "usage": "Input,Output,Json",
@@ -300,6 +316,10 @@
           "$id": "29",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [
+            "v1",
+            "v2preview"
+          ],
           "serializedName": "prop",
           "type": {
             "$id": "30",
@@ -326,6 +346,10 @@
           "$id": "31",
           "kind": "property",
           "name": "enumProp",
+          "apiVersions": [
+            "v1",
+            "v2preview"
+          ],
           "serializedName": "enumProp",
           "type": {
             "$ref": "1"
@@ -348,6 +372,10 @@
           "$id": "32",
           "kind": "property",
           "name": "unionProp",
+          "apiVersions": [
+            "v1",
+            "v2preview"
+          ],
           "serializedName": "unionProp",
           "type": {
             "$id": "33",
@@ -393,6 +421,10 @@
       "$id": "36",
       "kind": "model",
       "name": "ModelV2",
+      "apiVersions": [
+        "v1",
+        "v2preview"
+      ],
       "namespace": "Versioning.Removed",
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV2",
       "usage": "Input,Output,Json",
@@ -408,6 +440,10 @@
           "$id": "37",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [
+            "v1",
+            "v2preview"
+          ],
           "serializedName": "prop",
           "type": {
             "$id": "38",
@@ -434,6 +470,10 @@
           "$id": "39",
           "kind": "property",
           "name": "removedProp",
+          "apiVersions": [
+            "v1",
+            "v2preview"
+          ],
           "serializedName": "removedProp",
           "type": {
             "$id": "40",
@@ -460,6 +500,10 @@
           "$id": "41",
           "kind": "property",
           "name": "enumProp",
+          "apiVersions": [
+            "v1",
+            "v2preview"
+          ],
           "serializedName": "enumProp",
           "type": {
             "$ref": "4"
@@ -482,6 +526,10 @@
           "$id": "42",
           "kind": "property",
           "name": "unionProp",
+          "apiVersions": [
+            "v1",
+            "v2preview"
+          ],
           "serializedName": "unionProp",
           "type": {
             "$id": "43",
@@ -541,6 +589,10 @@
       "$id": "48",
       "kind": "model",
       "name": "ModelV3",
+      "apiVersions": [
+        "v1",
+        "v2preview"
+      ],
       "namespace": "Versioning.Removed",
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV3",
       "usage": "Input,Output,Json",
@@ -556,6 +608,10 @@
           "$id": "49",
           "kind": "property",
           "name": "id",
+          "apiVersions": [
+            "v1",
+            "v2preview"
+          ],
           "serializedName": "id",
           "type": {
             "$id": "50",

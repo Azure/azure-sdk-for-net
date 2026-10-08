@@ -1,17 +1,31 @@
 # Release History
 
-## 12.30.0-beta.2 (Unreleased)
+## 12.30.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+- Changed the default value of `StorageTransferOptions.InitialTransferSize` used by partitioned uploads and downloads when it is not set by the caller. It now matches the default size of subsequent chunks instead of 256 MB:
+  - Downloads (`BlobBaseClient.DownloadTo`/`DownloadToAsync`): the first range request now defaults to 4 MB, the same as subsequent ranges. Previously, it was 256 MB when no transfer checksum was used.
+  - Uploads (`BlobClient.Upload`/`UploadAsync`, `BlockBlobClient.Upload`/`UploadAsync`): a blob is now uploaded in a single Put Blob request only if its content is smaller than the default block size (4 MB, or 8 MB for content of 100 MB or more). Previously, content smaller than 256 MB was uploaded in a single request.
+  - This means uploads and downloads may be partitioned more often, leading to more requests.
+  - Explicitly set `InitialTransferSize` and `MaximumTransferSize` values are still respected. To restore the previous behavior, set `StorageTransferOptions.InitialTransferSize` to 256 MB.
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 12.29.2 (2026-08-24)
+
+### Bugs Fixed
 - Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
 - Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
 
-### Other Changes
+## 12.30.0-beta.2 (2026-08-24)
+
+### Bugs Fixed
+- Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
+- Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
 
 ## 12.30.0-beta.1 (2026-07-21)
 

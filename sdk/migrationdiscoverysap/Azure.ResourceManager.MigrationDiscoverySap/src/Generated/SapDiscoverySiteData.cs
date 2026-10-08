@@ -13,87 +13,91 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
-    /// <summary>
-    /// A class representing the SapDiscoverySite data model.
-    /// Define the SAP Migration discovery site resource.
-    /// </summary>
+    /// <summary> Define the SAP Migration discovery site resource. </summary>
     public partial class SapDiscoverySiteData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapDiscoverySiteData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SapDiscoverySiteData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SapDiscoverySiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extended location definition. </param>
-        /// <param name="masterSiteId"> The master site ID from Azure Migrate. </param>
-        /// <param name="migrateProjectId"> The migrate project ID from Azure Migrate. </param>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Indicates any errors on the SAP Migration discovery site resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapDiscoverySiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SapDiscoveryExtendedLocation extendedLocation, string masterSiteId, string migrateProjectId, SapDiscoveryProvisioningState? provisioningState, SapMigrateError errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapDiscoverySiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SAPDiscoverySiteProperties properties, SapDiscoveryExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            MasterSiteId = masterSiteId;
-            MigrateProjectId = migrateProjectId;
-            ProvisioningState = provisioningState;
-            Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SapDiscoverySiteData"/> for deserialization. </summary>
-        internal SapDiscoverySiteData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal SAPDiscoverySiteProperties Properties { get; set; }
 
         /// <summary> The extended location definition. </summary>
         public SapDiscoveryExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> The master site ID from Azure Migrate. </summary>
-        public string MasterSiteId { get; set; }
+        public string MasterSiteId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MasterSiteId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SAPDiscoverySiteProperties();
+                }
+                Properties.MasterSiteId = value;
+            }
+        }
+
         /// <summary> The migrate project ID from Azure Migrate. </summary>
-        public string MigrateProjectId { get; set; }
+        public string MigrateProjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigrateProjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SAPDiscoverySiteProperties();
+                }
+                Properties.MigrateProjectId = value;
+            }
+        }
+
         /// <summary> Defines the provisioning states. </summary>
-        public SapDiscoveryProvisioningState? ProvisioningState { get; }
+        public SapDiscoveryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Indicates any errors on the SAP Migration discovery site resource. </summary>
-        public SapMigrateError Errors { get; }
+        public SapMigrateError Errors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Errors;
+            }
+        }
     }
 }

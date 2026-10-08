@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Quantum.Mocking
     {
         private ClientDiagnostics _workspacesClientDiagnostics;
         private Workspaces _workspacesRestClient;
-        private ClientDiagnostics _suiteOffersClientDiagnostics;
-        private SuiteOffers _suiteOffersRestClient;
         private ClientDiagnostics _offeringsClientDiagnostics;
         private Offerings _offeringsRestClient;
+        private ClientDiagnostics _suiteOffersClientDiagnostics;
+        private SuiteOffers _suiteOffersRestClient;
 
         /// <summary> Initializes a new instance of MockableQuantumSubscriptionResource for mocking. </summary>
         protected MockableQuantumSubscriptionResource()
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Quantum.Mocking
 
         private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-15-preview");
 
-        private ClientDiagnostics SuiteOffersClientDiagnostics => _suiteOffersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SuiteOffers SuiteOffersRestClient => _suiteOffersRestClient ??= new SuiteOffers(SuiteOffersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-15-preview");
-
         private ClientDiagnostics OfferingsClientDiagnostics => _offeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Offerings OfferingsRestClient => _offeringsRestClient ??= new Offerings(OfferingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-15-preview");
+
+        private ClientDiagnostics SuiteOffersClientDiagnostics => _suiteOffersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SuiteOffers SuiteOffersRestClient => _suiteOffersRestClient ??= new SuiteOffers(SuiteOffersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-15-preview");
 
         /// <summary>
         /// Gets the list of Workspaces within a Subscription.
@@ -106,62 +106,6 @@ namespace Azure.ResourceManager.Quantum.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuantumSubscriptionResource.GetQuantumWorkspaces"), data => new QuantumWorkspaceResource(Client, data));
-        }
-
-        /// <summary>
-        /// Returns the SuiteOffer resource associated with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/suiteOffers. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SuiteOffers_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuantumSuiteOffer> GetSuiteOfferAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new SuiteOffersGetSuiteOfferAsyncCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuantumSubscriptionResource.GetSuiteOffer");
-        }
-
-        /// <summary>
-        /// Returns the SuiteOffer resource associated with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/suiteOffers. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SuiteOffers_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuantumSuiteOffer> GetSuiteOffer(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new SuiteOffersGetSuiteOfferCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuantumSubscriptionResource.GetSuiteOffer");
         }
 
         /// <summary>
@@ -332,6 +276,62 @@ namespace Azure.ResourceManager.Quantum.Mocking
                 filter,
                 context,
                 "MockableQuantumSubscriptionResource.GetProviderOfferings");
+        }
+
+        /// <summary>
+        /// Returns the SuiteOffer resource associated with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/suiteOffers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SuiteOffers_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuantumSuiteOffer> GetSuiteOfferAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SuiteOffersGetSuiteOfferAsyncCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuantumSubscriptionResource.GetSuiteOffer");
+        }
+
+        /// <summary>
+        /// Returns the SuiteOffer resource associated with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/suiteOffers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SuiteOffers_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuantumSuiteOffer> GetSuiteOffer(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SuiteOffersGetSuiteOfferCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuantumSubscriptionResource.GetSuiteOffer");
         }
     }
 }

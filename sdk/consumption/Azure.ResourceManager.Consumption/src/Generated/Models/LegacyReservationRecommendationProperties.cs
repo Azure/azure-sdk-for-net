@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary>
     /// The properties of the reservation recommendation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LegacySingleScopeReservationRecommendationProperties"/> and <see cref="LegacySharedScopeReservationRecommendationProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LegacySharedScopeReservationRecommendationProperties"/> and <see cref="LegacySingleScopeReservationRecommendationProperties"/>.
     /// </summary>
     public abstract partial class LegacyReservationRecommendationProperties
     {

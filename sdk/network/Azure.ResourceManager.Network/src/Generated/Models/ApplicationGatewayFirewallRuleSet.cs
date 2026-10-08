@@ -42,6 +42,16 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
         /// <summary> The rule groups of the web application firewall rule set. </summary>
         [WirePath("properties.ruleGroups")]
         public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups
