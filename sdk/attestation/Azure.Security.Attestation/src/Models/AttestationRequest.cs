@@ -8,7 +8,8 @@ using System.Text;
 namespace Azure.Security.Attestation
 {
     /// <summary>
-    /// Represents the data sent to the Attestation Service for a call to the <see cref="AttestationClient.AttestOpenEnclave(AttestationRequest, System.Threading.CancellationToken)"/> or <see cref="AttestationClient.AttestSgxEnclave(AttestationRequest, System.Threading.CancellationToken)"/> APIs.
+    /// Represents the data sent to the Attestation Service for a call to the <see cref="AttestationClient.AttestOpenEnclave(AttestationRequest, System.Threading.CancellationToken)"/>, <see cref="AttestationClient.AttestSgxEnclave(AttestationRequest, System.Threading.CancellationToken)"/>,
+    /// <see cref="AttestationClient.AttestTdxVm(AttestationRequest, System.Threading.CancellationToken)"/>, or <see cref="AttestationClient.AttestSevSnpVm(AttestationRequest, System.Threading.CancellationToken)"/> APIs.
     ///
     /// An Attestation Request has three elements:
     /// <list type="bullet">
@@ -39,8 +40,9 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// The attestation evidence generated from inside the target environment (often an Intel SGX or OpenEnclave enclave).
-        /// The 'Evidence' is normally an SGX Quote, an OpenEnclave Report, or OpenEnclave Evidence.
+        /// The attestation evidence generated from inside the target environment.
+        /// The 'Evidence' is an SGX Quote, an OpenEnclave Report or OpenEnclave Evidence, a TDX quote, or SEV-SNP evidence,
+        /// depending on the attestation API being called.
         /// </summary>
         public BinaryData Evidence { get; set; }
 
@@ -61,5 +63,10 @@ namespace Azure.Security.Attestation
         /// This allows a caller to test various policy documents against actual data before applying the policy document via the <see cref="AttestationAdministrationClient.SetPolicy(AttestationType, string, AttestationTokenSigningKey, System.Threading.CancellationToken)"/> API.
         /// </summary>
         public string DraftPolicyForAttestation { get; set; }
+
+        /// <summary>
+        /// Optional nonce for the request. The service returns it in the <c>nonce</c> claim of the attestation token.
+        /// </summary>
+        public string Nonce { get; set; }
     }
 }
