@@ -6,8 +6,3 @@
 
 - Initial preview of `Azure.Provisioning.CertificateRegistration`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
