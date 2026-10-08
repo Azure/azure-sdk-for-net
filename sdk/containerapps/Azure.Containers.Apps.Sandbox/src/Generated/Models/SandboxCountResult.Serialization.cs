@@ -15,7 +15,7 @@ using Azure.Containers.Apps.Sandbox;
 namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Response containing the total number of sandboxes in a scope. </summary>
-    public partial class SandboxCountResult : IJsonModel<SandboxCountResult>
+    internal partial class SandboxCountResult : IJsonModel<SandboxCountResult>
     {
         /// <summary> Initializes a new instance of <see cref="SandboxCountResult"/> for deserialization. </summary>
         internal SandboxCountResult()

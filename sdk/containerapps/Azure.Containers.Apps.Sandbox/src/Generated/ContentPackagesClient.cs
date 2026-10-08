@@ -15,8 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary> The ContentPackagesClient sub-client. </summary>
-    public partial class ContentPackagesClient
+    internal partial class ContentPackagesClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -64,8 +63,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The content package identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteContentPackage(string id, RequestContext context)
@@ -74,8 +71,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDeleteContentPackageRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -96,8 +91,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The content package identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteContentPackageAsync(string id, RequestContext context)
@@ -106,8 +99,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDeleteContentPackageRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -121,26 +112,18 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Deletes a content package by ID. </summary>
         /// <param name="id"> The content package identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteContentPackage(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return DeleteContentPackage(id, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a content package by ID. </summary>
         /// <param name="id"> The content package identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteContentPackageAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return await DeleteContentPackageAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -210,8 +193,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The content package identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetContentPackage(string id, RequestContext context)
@@ -220,8 +201,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetContentPackageRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -242,8 +221,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The content package identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetContentPackageAsync(string id, RequestContext context)
@@ -252,8 +229,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetContentPackageRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -267,13 +242,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific content package by ID. </summary>
         /// <param name="id"> The content package identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<ContentPackage> GetContentPackage(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = GetContentPackage(id, cancellationToken.ToRequestContext());
             return Response.FromValue((ContentPackage)result, result);
         }
@@ -281,13 +252,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific content package by ID. </summary>
         /// <param name="id"> The content package identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<ContentPackage>> GetContentPackageAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await GetContentPackageAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ContentPackage)result, result);
         }
@@ -304,7 +271,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="contentType"> Media type of the uploaded content. </param>
         /// <param name="labels"> Comma-separated key=value labels that all resources must match. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UploadContentPackage(RequestContent content, string contentType = default, string labels = default, RequestContext context = null)
@@ -313,8 +279,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUploadContentPackageRequest(content, contentType, labels, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -337,7 +301,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="contentType"> Media type of the uploaded content. </param>
         /// <param name="labels"> Comma-separated key=value labels that all resources must match. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UploadContentPackageAsync(RequestContent content, string contentType = default, string labels = default, RequestContext context = null)
@@ -346,8 +309,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUploadContentPackageRequest(content, contentType, labels, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }

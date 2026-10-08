@@ -15,8 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary> The PublicDiskImagesClient sub-client. </summary>
-    public partial class PublicDiskImagesClient
+    internal partial class PublicDiskImagesClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -116,8 +115,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="name"> The public image name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPublicDiskImage(string name, RequestContext context)
@@ -126,8 +123,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
                 using HttpMessage message = CreateGetPublicDiskImageRequest(name, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -148,8 +143,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="name"> The public image name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetPublicDiskImageAsync(string name, RequestContext context)
@@ -158,8 +151,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
                 using HttpMessage message = CreateGetPublicDiskImageRequest(name, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -173,13 +164,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Public images are global and shared across all sandbox groups. </summary>
         /// <param name="name"> The public image name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PublicDiskImage> GetPublicDiskImage(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             Response result = GetPublicDiskImage(name, cancellationToken.ToRequestContext());
             return Response.FromValue((PublicDiskImage)result, result);
         }
@@ -187,13 +174,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Public images are global and shared across all sandbox groups. </summary>
         /// <param name="name"> The public image name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PublicDiskImage>> GetPublicDiskImageAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             Response result = await GetPublicDiskImageAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PublicDiskImage)result, result);
         }

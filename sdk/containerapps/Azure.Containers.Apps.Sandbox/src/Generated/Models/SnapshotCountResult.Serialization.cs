@@ -15,7 +15,7 @@ using Azure.Containers.Apps.Sandbox;
 namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Response containing the total number of snapshots in a scope. </summary>
-    public partial class SnapshotCountResult : IJsonModel<SnapshotCountResult>
+    internal partial class SnapshotCountResult : IJsonModel<SnapshotCountResult>
     {
         /// <summary> Initializes a new instance of <see cref="SnapshotCountResult"/> for deserialization. </summary>
         internal SnapshotCountResult()

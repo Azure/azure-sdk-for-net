@@ -15,7 +15,7 @@ using Azure.Containers.Apps.Sandbox;
 namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Volume counts grouped by type. </summary>
-    public partial class VolumeCountResult : IJsonModel<VolumeCountResult>
+    internal partial class VolumeCountResult : IJsonModel<VolumeCountResult>
     {
         /// <summary> Initializes a new instance of <see cref="VolumeCountResult"/> for deserialization. </summary>
         internal VolumeCountResult()

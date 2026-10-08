@@ -15,8 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary> The DiskImagesClient sub-client. </summary>
-    public partial class DiskImagesClient
+    internal partial class DiskImagesClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -64,8 +63,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Disk image identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteDiskImage(string id, RequestContext context)
@@ -74,8 +71,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDeleteDiskImageRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -96,8 +91,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Disk image identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteDiskImageAsync(string id, RequestContext context)
@@ -106,8 +99,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDeleteDiskImageRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -121,26 +112,18 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Deletes a disk image by ID. </summary>
         /// <param name="id"> Disk image identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteDiskImage(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return DeleteDiskImage(id, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a disk image by ID. </summary>
         /// <param name="id"> Disk image identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteDiskImageAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return await DeleteDiskImageAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -210,8 +193,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Disk image identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDiskImage(string id, RequestContext context)
@@ -220,8 +201,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetDiskImageRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -242,8 +221,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Disk image identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetDiskImageAsync(string id, RequestContext context)
@@ -252,8 +229,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetDiskImageRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -267,13 +242,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific disk image by ID. </summary>
         /// <param name="id"> Disk image identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<DiskImage> GetDiskImage(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = GetDiskImage(id, cancellationToken.ToRequestContext());
             return Response.FromValue((DiskImage)result, result);
         }
@@ -281,13 +252,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific disk image by ID. </summary>
         /// <param name="id"> Disk image identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<DiskImage>> GetDiskImageAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await GetDiskImageAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DiskImage)result, result);
         }
@@ -302,7 +269,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateDiskImage(RequestContent content, RequestContext context = null)
@@ -311,8 +277,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateDiskImageRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -333,7 +297,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateDiskImageAsync(RequestContent content, RequestContext context = null)
@@ -342,8 +305,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateDiskImageRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -357,12 +318,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Creates a new disk image from an OCI image reference. </summary>
         /// <param name="body"> The source and metadata for the new disk image. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<DiskImage> CreateDiskImage(CreateDiskImageContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = CreateDiskImage(body, cancellationToken.ToRequestContext());
             return Response.FromValue((DiskImage)result, result);
         }
@@ -370,12 +328,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Creates a new disk image from an OCI image reference. </summary>
         /// <param name="body"> The source and metadata for the new disk image. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<DiskImage>> CreateDiskImageAsync(CreateDiskImageContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await CreateDiskImageAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DiskImage)result, result);
         }

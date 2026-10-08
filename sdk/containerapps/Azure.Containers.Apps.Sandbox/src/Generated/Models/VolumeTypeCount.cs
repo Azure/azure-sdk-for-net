@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> The number of volumes of one type. </summary>
-    public partial class VolumeTypeCount
+    internal partial class VolumeTypeCount
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

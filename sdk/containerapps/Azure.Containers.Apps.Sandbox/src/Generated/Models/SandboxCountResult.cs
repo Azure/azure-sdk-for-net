@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Response containing the total number of sandboxes in a scope. </summary>
-    public partial class SandboxCountResult
+    internal partial class SandboxCountResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
