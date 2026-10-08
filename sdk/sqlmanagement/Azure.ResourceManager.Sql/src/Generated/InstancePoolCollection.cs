@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolsGetByResourceGroupAsyncCollectionResultOfT(_instancePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InstancePoolCollection.GetAll"), data => new InstancePoolResource(Client, data));
+            return new AsyncPageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolDataAsyncCollectionResultOfT(_instancePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InstancePoolCollection.GetAll"), data => new InstancePoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolsGetByResourceGroupCollectionResultOfT(_instancePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InstancePoolCollection.GetAll"), data => new InstancePoolResource(Client, data));
+            return new PageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolDataCollectionResultOfT(_instancePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InstancePoolCollection.GetAll"), data => new InstancePoolResource(Client, data));
         }
 
         /// <summary>

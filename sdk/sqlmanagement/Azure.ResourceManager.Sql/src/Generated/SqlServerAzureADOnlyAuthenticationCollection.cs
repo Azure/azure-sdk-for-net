@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerAzureADOnlyAuthenticationData, SqlServerAzureADOnlyAuthenticationResource>(new ServerAzureADOnlyAuthenticationsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerAzureADOnlyAuthenticationData, SqlServerAzureADOnlyAuthenticationResource>(new SqlServerAzureADOnlyAuthenticationDataAsyncCollectionResultOfT(
                 _serverAzureADOnlyAuthenticationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerAzureADOnlyAuthenticationData, SqlServerAzureADOnlyAuthenticationResource>(new ServerAzureADOnlyAuthenticationsGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlServerAzureADOnlyAuthenticationData, SqlServerAzureADOnlyAuthenticationResource>(new SqlServerAzureADOnlyAuthenticationDataCollectionResultOfT(
                 _serverAzureADOnlyAuthenticationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewDataAsyncCollectionResultOfT(
                 _standbyContainerGroupPoolRuntimeViewsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(
+            return new PageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewDataCollectionResultOfT(
                 _standbyContainerGroupPoolRuntimeViewsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

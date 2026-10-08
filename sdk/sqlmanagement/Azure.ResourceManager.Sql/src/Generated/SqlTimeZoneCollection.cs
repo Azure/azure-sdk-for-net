@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlTimeZoneData, SqlTimeZoneResource>(new TimeZonesGetByLocationAsyncCollectionResultOfT(_timeZonesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SqlTimeZoneCollection.GetAll"), data => new SqlTimeZoneResource(Client, data));
+            return new AsyncPageableWrapper<SqlTimeZoneData, SqlTimeZoneResource>(new SqlTimeZoneDataAsyncCollectionResultOfT(_timeZonesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SqlTimeZoneCollection.GetAll"), data => new SqlTimeZoneResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlTimeZoneData, SqlTimeZoneResource>(new TimeZonesGetByLocationCollectionResultOfT(_timeZonesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SqlTimeZoneCollection.GetAll"), data => new SqlTimeZoneResource(Client, data));
+            return new PageableWrapper<SqlTimeZoneData, SqlTimeZoneResource>(new SqlTimeZoneDataCollectionResultOfT(_timeZonesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SqlTimeZoneCollection.GetAll"), data => new SqlTimeZoneResource(Client, data));
         }
 
         /// <summary>

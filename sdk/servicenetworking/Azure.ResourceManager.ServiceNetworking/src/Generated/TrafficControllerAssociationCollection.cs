@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new TrafficControllerAssociationDataAsyncCollectionResultOfT(
                 _associationsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerCollectionResultOfT(
+            return new PageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new TrafficControllerAssociationDataCollectionResultOfT(
                 _associationsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

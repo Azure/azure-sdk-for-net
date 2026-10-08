@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereProductData, SphereProductResource>(new ProductsGetByCatalogAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SphereProductData, SphereProductResource>(new SphereProductDataAsyncCollectionResultOfT(
                 _productsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereProductData, SphereProductResource>(new ProductsGetByCatalogCollectionResultOfT(
+            return new PageableWrapper<SphereProductData, SphereProductResource>(new SphereProductDataCollectionResultOfT(
                 _productsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

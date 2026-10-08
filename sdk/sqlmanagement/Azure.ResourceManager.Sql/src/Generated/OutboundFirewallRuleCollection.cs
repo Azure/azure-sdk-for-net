@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OutboundFirewallRuleData, OutboundFirewallRuleResource>(new OutboundFirewallRulesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OutboundFirewallRuleData, OutboundFirewallRuleResource>(new OutboundFirewallRuleDataAsyncCollectionResultOfT(
                 _outboundFirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OutboundFirewallRuleData, OutboundFirewallRuleResource>(new OutboundFirewallRulesGetByServerCollectionResultOfT(
+            return new PageableWrapper<OutboundFirewallRuleData, OutboundFirewallRuleResource>(new OutboundFirewallRuleDataCollectionResultOfT(
                 _outboundFirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

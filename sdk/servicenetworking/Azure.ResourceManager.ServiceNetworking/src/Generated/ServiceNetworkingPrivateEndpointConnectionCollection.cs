@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceNetworkingPrivateEndpointConnectionData, ServiceNetworkingPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceNetworkingPrivateEndpointConnectionData, ServiceNetworkingPrivateEndpointConnectionResource>(new ServiceNetworkingPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceNetworkingPrivateEndpointConnectionData, ServiceNetworkingPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsInterfaceGetByTrafficControllerCollectionResultOfT(
+            return new PageableWrapper<ServiceNetworkingPrivateEndpointConnectionData, ServiceNetworkingPrivateEndpointConnectionResource>(new ServiceNetworkingPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

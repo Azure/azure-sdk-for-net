@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupDataAsync3CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationCollectionResultOfT(
+            return new LongTermRetentionBackupData3CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupDataAsync4CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerCollectionResultOfT(
+            return new LongTermRetentionBackupData4CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationAsyncCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupDataAsync3CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupData3CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceAsyncCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupDataAsync4CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupData4CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServerTrustCertificateData, ManagedInstanceServerTrustCertificateResource>(new ServerTrustCertificatesGetByInstanceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServerTrustCertificateData, ManagedInstanceServerTrustCertificateResource>(new ServerTrustCertificateDataAsyncCollectionResultOfT(
                 _serverTrustCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServerTrustCertificateData, ManagedInstanceServerTrustCertificateResource>(new ServerTrustCertificatesGetByInstanceCollectionResultOfT(
+            return new PageableWrapper<ServerTrustCertificateData, ManagedInstanceServerTrustCertificateResource>(new ServerTrustCertificateDataCollectionResultOfT(
                 _serverTrustCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

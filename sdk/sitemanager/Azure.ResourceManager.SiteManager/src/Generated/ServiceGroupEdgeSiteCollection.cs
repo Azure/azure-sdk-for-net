@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SiteManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSiteData, ServiceGroupEdgeSiteResource>(new ServiceGroupEdgeSiteGetByServiceGroupAsyncCollectionResultOfT(_serviceGroupEdgeSiteRestClient, Id.Name, context, "ServiceGroupEdgeSiteCollection.GetAll"), data => new ServiceGroupEdgeSiteResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSiteData, ServiceGroupEdgeSiteResource>(new EdgeSiteDataAsync1CollectionResultOfT(_serviceGroupEdgeSiteRestClient, Id.Name, context, "ServiceGroupEdgeSiteCollection.GetAll"), data => new ServiceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SiteManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSiteData, ServiceGroupEdgeSiteResource>(new ServiceGroupEdgeSiteGetByServiceGroupCollectionResultOfT(_serviceGroupEdgeSiteRestClient, Id.Name, context, "ServiceGroupEdgeSiteCollection.GetAll"), data => new ServiceGroupEdgeSiteResource(Client, data));
+            return new PageableWrapper<EdgeSiteData, ServiceGroupEdgeSiteResource>(new EdgeSiteData1CollectionResultOfT(_serviceGroupEdgeSiteRestClient, Id.Name, context, "ServiceGroupEdgeSiteCollection.GetAll"), data => new ServiceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>

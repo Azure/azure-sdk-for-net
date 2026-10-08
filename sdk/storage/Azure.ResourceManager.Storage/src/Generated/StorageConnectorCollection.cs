@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageConnectorData, StorageConnectorResource>(new ConnectorsGetByStorageAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageConnectorData, StorageConnectorResource>(new StorageConnectorDataAsyncCollectionResultOfT(
                 _connectorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageConnectorData, StorageConnectorResource>(new ConnectorsGetByStorageAccountCollectionResultOfT(
+            return new PageableWrapper<StorageConnectorData, StorageConnectorResource>(new StorageConnectorDataCollectionResultOfT(
                 _connectorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

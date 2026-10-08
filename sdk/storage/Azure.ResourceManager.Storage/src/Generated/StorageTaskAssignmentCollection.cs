@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageTaskAssignmentData, StorageTaskAssignmentResource>(new StorageTaskAssignmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageTaskAssignmentData, StorageTaskAssignmentResource>(new StorageTaskAssignmentDataAsyncCollectionResultOfT(
                 _storageTaskAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageTaskAssignmentData, StorageTaskAssignmentResource>(new StorageTaskAssignmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<StorageTaskAssignmentData, StorageTaskAssignmentResource>(new StorageTaskAssignmentDataCollectionResultOfT(
                 _storageTaskAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

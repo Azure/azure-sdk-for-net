@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncGroupsGetHubSchemasAsyncCollectionResultOfT(
+            return new SyncFullSchemaPropertiesAsyncCollectionResultOfT(
                 _syncGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncGroupsGetHubSchemasCollectionResultOfT(
+            return new SyncFullSchemaPropertiesCollectionResultOfT(
                 _syncGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncGroupsGetLogsAsyncCollectionResultOfT(
+            return new SyncGroupLogPropertiesAsyncCollectionResultOfT(
                 _syncGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncGroupsGetLogsCollectionResultOfT(
+            return new SyncGroupLogPropertiesCollectionResultOfT(
                 _syncGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

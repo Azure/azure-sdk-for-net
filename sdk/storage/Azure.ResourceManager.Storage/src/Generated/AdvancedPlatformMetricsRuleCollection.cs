@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvancedPlatformMetricsRuleData, AdvancedPlatformMetricsRuleResource>(new AdvancedPlatformMetricsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvancedPlatformMetricsRuleData, AdvancedPlatformMetricsRuleResource>(new AdvancedPlatformMetricsRuleDataAsyncCollectionResultOfT(
                 _advancedPlatformMetricsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvancedPlatformMetricsRuleData, AdvancedPlatformMetricsRuleResource>(new AdvancedPlatformMetricsGetAllCollectionResultOfT(
+            return new PageableWrapper<AdvancedPlatformMetricsRuleData, AdvancedPlatformMetricsRuleResource>(new AdvancedPlatformMetricsRuleDataCollectionResultOfT(
                 _advancedPlatformMetricsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

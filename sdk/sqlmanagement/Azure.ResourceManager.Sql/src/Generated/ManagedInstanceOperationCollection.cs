@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedInstanceOperationData, ManagedInstanceOperationResource>(new ManagedInstanceOperationsGetByManagedInstanceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedInstanceOperationData, ManagedInstanceOperationResource>(new ManagedInstanceOperationDataAsyncCollectionResultOfT(
                 _managedInstanceOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedInstanceOperationData, ManagedInstanceOperationResource>(new ManagedInstanceOperationsGetByManagedInstanceCollectionResultOfT(
+            return new PageableWrapper<ManagedInstanceOperationData, ManagedInstanceOperationResource>(new ManagedInstanceOperationDataCollectionResultOfT(
                 _managedInstanceOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

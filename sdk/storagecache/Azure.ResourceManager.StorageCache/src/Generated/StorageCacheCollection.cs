@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageCacheData, StorageCacheResource>(new CachesGetByResourceGroupAsyncCollectionResultOfT(_cachesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "StorageCacheCollection.GetAll"), data => new StorageCacheResource(Client, data));
+            return new AsyncPageableWrapper<StorageCacheData, StorageCacheResource>(new StorageCacheDataAsyncCollectionResultOfT(_cachesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "StorageCacheCollection.GetAll"), data => new StorageCacheResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageCacheData, StorageCacheResource>(new CachesGetByResourceGroupCollectionResultOfT(_cachesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "StorageCacheCollection.GetAll"), data => new StorageCacheResource(Client, data));
+            return new PageableWrapper<StorageCacheData, StorageCacheResource>(new StorageCacheDataCollectionResultOfT(_cachesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "StorageCacheCollection.GetAll"), data => new StorageCacheResource(Client, data));
         }
 
         /// <summary>

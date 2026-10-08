@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContextCacheContainerData, ContextCacheContainerResource>(new ContextCacheContainersGetByContextCacheAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContextCacheContainerData, ContextCacheContainerResource>(new ContextCacheContainerDataAsyncCollectionResultOfT(
                 _contextCacheContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContextCacheContainerData, ContextCacheContainerResource>(new ContextCacheContainersGetByContextCacheCollectionResultOfT(
+            return new PageableWrapper<ContextCacheContainerData, ContextCacheContainerResource>(new ContextCacheContainerDataCollectionResultOfT(
                 _contextCacheContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

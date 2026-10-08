@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FailoverGroupData, FailoverGroupResource>(new FailoverGroupsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FailoverGroupData, FailoverGroupResource>(new FailoverGroupDataAsyncCollectionResultOfT(
                 _failoverGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FailoverGroupData, FailoverGroupResource>(new FailoverGroupsGetByServerCollectionResultOfT(
+            return new PageableWrapper<FailoverGroupData, FailoverGroupResource>(new FailoverGroupDataCollectionResultOfT(
                 _failoverGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

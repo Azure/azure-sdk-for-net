@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new SignalRReplicaDataAsyncCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllCollectionResultOfT(
+            return new PageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new SignalRReplicaDataCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
