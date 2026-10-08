@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetAllAsyncCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new CostManagementAlertDataAsyncCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetAllCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
+            return new PageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new CostManagementAlertDataCollectionResultOfT(_alertsRestClient, Id.ToString(), context, "CostManagementAlertCollection.GetAll"), data => new CostManagementAlertResource(Client, data));
         }
 
         /// <summary>

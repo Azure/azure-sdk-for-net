@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapDataAsyncCollectionResultOfT(
                 _scopeMapsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapsGetAllCollectionResultOfT(
+            return new PageableWrapper<ScopeMapData, ScopeMapResource>(new ScopeMapDataCollectionResultOfT(
                 _scopeMapsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetAllAsyncCollectionResultOfT(RegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries"), data => new ContainerRegistryResource(Client, data));
+            return new AsyncPageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new ContainerRegistryDataAsync0CollectionResultOfT(RegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries"), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetAllCollectionResultOfT(RegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries"), data => new ContainerRegistryResource(Client, data));
+            return new PageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new ContainerRegistryData0CollectionResultOfT(RegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries"), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>

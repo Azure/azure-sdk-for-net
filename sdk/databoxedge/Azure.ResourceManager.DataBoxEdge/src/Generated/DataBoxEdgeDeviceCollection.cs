@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DataBoxEdgeDeviceDataAsyncCollectionResultOfT(
                 _devicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DataBoxEdgeDeviceDataCollectionResultOfT(
                 _devicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

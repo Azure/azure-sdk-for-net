@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new DataBoxJobDataAsyncCollectionResultOfT(
                 _jobResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new DataBoxJobDataCollectionResultOfT(
                 _jobResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

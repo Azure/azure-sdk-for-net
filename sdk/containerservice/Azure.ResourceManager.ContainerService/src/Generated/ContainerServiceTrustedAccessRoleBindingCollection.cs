@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceTrustedAccessRoleBindingData, ContainerServiceTrustedAccessRoleBindingResource>(new TrustedAccessRoleBindingsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceTrustedAccessRoleBindingData, ContainerServiceTrustedAccessRoleBindingResource>(new ContainerServiceTrustedAccessRoleBindingDataAsyncCollectionResultOfT(
                 _trustedAccessRoleBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceTrustedAccessRoleBindingData, ContainerServiceTrustedAccessRoleBindingResource>(new TrustedAccessRoleBindingsGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceTrustedAccessRoleBindingData, ContainerServiceTrustedAccessRoleBindingResource>(new ContainerServiceTrustedAccessRoleBindingDataCollectionResultOfT(
                 _trustedAccessRoleBindingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

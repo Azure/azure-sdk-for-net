@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthScheduleDataAsyncCollectionResultOfT(
                 _bandwidthSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceCollectionResultOfT(
+            return new PageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthScheduleDataCollectionResultOfT(
                 _bandwidthSchedulesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

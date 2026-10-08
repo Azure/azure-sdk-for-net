@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, TenantScheduledActionResource>(new ScheduledActionsGetAllAsyncCollectionResultOfT(_scheduledActionsRestClient, filter, context, "TenantScheduledActionCollection.GetAll"), data => new TenantScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, TenantScheduledActionResource>(new ScheduledActionDataAsyncCollectionResultOfT(_scheduledActionsRestClient, filter, context, "TenantScheduledActionCollection.GetAll"), data => new TenantScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, TenantScheduledActionResource>(new ScheduledActionsGetAllCollectionResultOfT(_scheduledActionsRestClient, filter, context, "TenantScheduledActionCollection.GetAll"), data => new TenantScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, TenantScheduledActionResource>(new ScheduledActionDataCollectionResultOfT(_scheduledActionsRestClient, filter, context, "TenantScheduledActionCollection.GetAll"), data => new TenantScheduledActionResource(Client, data));
         }
 
         /// <summary>

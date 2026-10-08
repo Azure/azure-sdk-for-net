@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoDBDatabaseData, MongoDBDatabaseResource>(new MongoDBResourcesGetMongoDBDatabasesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MongoDBDatabaseData, MongoDBDatabaseResource>(new MongoDBDatabaseDataAsyncCollectionResultOfT(
                 _mongoDBResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoDBDatabaseData, MongoDBDatabaseResource>(new MongoDBResourcesGetMongoDBDatabasesCollectionResultOfT(
+            return new PageableWrapper<MongoDBDatabaseData, MongoDBDatabaseResource>(new MongoDBDatabaseDataCollectionResultOfT(
                 _mongoDBResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

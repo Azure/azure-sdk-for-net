@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementViewData, TenantsCostManagementViewsResource>(new ViewsGetAllAsyncCollectionResultOfT(_viewsRestClient, context, "TenantsCostManagementViewsCollection.GetAll"), data => new TenantsCostManagementViewsResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementViewData, TenantsCostManagementViewsResource>(new CostManagementViewDataAsyncCollectionResultOfT(_viewsRestClient, context, "TenantsCostManagementViewsCollection.GetAll"), data => new TenantsCostManagementViewsResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementViewData, TenantsCostManagementViewsResource>(new ViewsGetAllCollectionResultOfT(_viewsRestClient, context, "TenantsCostManagementViewsCollection.GetAll"), data => new TenantsCostManagementViewsResource(Client, data));
+            return new PageableWrapper<CostManagementViewData, TenantsCostManagementViewsResource>(new CostManagementViewDataCollectionResultOfT(_viewsRestClient, context, "TenantsCostManagementViewsCollection.GetAll"), data => new TenantsCostManagementViewsResource(Client, data));
         }
 
         /// <summary>

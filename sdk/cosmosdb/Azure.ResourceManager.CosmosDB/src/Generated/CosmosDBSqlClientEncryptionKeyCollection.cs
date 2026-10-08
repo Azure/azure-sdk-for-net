@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBSqlClientEncryptionKeyData, CosmosDBSqlClientEncryptionKeyResource>(new SqlResourcesGetClientEncryptionKeysAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBSqlClientEncryptionKeyData, CosmosDBSqlClientEncryptionKeyResource>(new CosmosDBSqlClientEncryptionKeyDataAsyncCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBSqlClientEncryptionKeyData, CosmosDBSqlClientEncryptionKeyResource>(new SqlResourcesGetClientEncryptionKeysCollectionResultOfT(
+            return new PageableWrapper<CosmosDBSqlClientEncryptionKeyData, CosmosDBSqlClientEncryptionKeyResource>(new CosmosDBSqlClientEncryptionKeyDataCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

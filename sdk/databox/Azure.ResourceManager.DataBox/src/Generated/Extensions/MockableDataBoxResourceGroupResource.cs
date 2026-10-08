@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceOperationGroupGetAvailableSkusAsyncCollectionResultOfT(
+            return new DataBoxSkuInformationAsyncCollectionResultOfT(
                 ServiceOperationGroupRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceOperationGroupGetAvailableSkusCollectionResultOfT(
+            return new DataBoxSkuInformationCollectionResultOfT(
                 ServiceOperationGroupRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

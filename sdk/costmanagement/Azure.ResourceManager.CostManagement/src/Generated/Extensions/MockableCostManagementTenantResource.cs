@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetCostManagementAlertsAsyncCollectionResultOfT(AlertsRestClient, externalCloudProviderType.ToString(), externalCloudProviderId, context, "MockableCostManagementTenantResource.GetCostManagementAlerts"), data => new CostManagementAlertResource(Client, data));
+            return new AsyncPageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new CostManagementAlertDataAsync0CollectionResultOfT(AlertsRestClient, externalCloudProviderType.ToString(), externalCloudProviderId, context, "MockableCostManagementTenantResource.GetCostManagementAlerts"), data => new CostManagementAlertResource(Client, data));
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new AlertsGetCostManagementAlertsCollectionResultOfT(AlertsRestClient, externalCloudProviderType.ToString(), externalCloudProviderId, context, "MockableCostManagementTenantResource.GetCostManagementAlerts"), data => new CostManagementAlertResource(Client, data));
+            return new PageableWrapper<CostManagementAlertData, CostManagementAlertResource>(new CostManagementAlertData0CollectionResultOfT(AlertsRestClient, externalCloudProviderType.ToString(), externalCloudProviderId, context, "MockableCostManagementTenantResource.GetCostManagementAlerts"), data => new CostManagementAlertResource(Client, data));
         }
 
         /// <summary>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DimensionsByExternalCloudProviderTypeDimensionsAsyncCollectionResultOfT(
+            return new CostManagementDimensionAsync0CollectionResultOfT(
                 DimensionsRestClient,
                 externalCloudProviderType.ToString(),
                 externalCloudProviderId,
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DimensionsByExternalCloudProviderTypeDimensionsCollectionResultOfT(
+            return new CostManagementDimension0CollectionResultOfT(
                 DimensionsRestClient,
                 externalCloudProviderType.ToString(),
                 externalCloudProviderId,
