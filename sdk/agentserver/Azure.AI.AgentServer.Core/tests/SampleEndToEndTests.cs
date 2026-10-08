@@ -195,36 +195,47 @@ public class SampleEndToEndTests
     }
 
     [Test]
+    [NonParallelizable]
     public async Task ReadMe_SnapshotLifecycle_AfterRestoreReturns200()
     {
-        var builder = AgentHost.CreateBuilder();
-        builder.WebApplicationBuilder.WebHost.UseTestServer();
-        builder.Services.AddSingleton<
-            IAgentSnapshotLifecycle,
-            Snippets.ReadMeSnippets.DatabaseSnapshotLifecycle>();
+        const string sessionIdEnvironmentVariable = "FOUNDRY_AGENT_SESSION_ID";
+        var originalSessionId = Environment.GetEnvironmentVariable(sessionIdEnvironmentVariable);
+        try
+        {
+            var builder = AgentHost.CreateBuilder();
+            builder.WebApplicationBuilder.WebHost.UseTestServer();
+            builder.Services.AddSingleton<
+                IAgentSnapshotLifecycle,
+                Snippets.ReadMeSnippets.DatabaseSnapshotLifecycle>();
 
-        var app = builder.Build();
-        await app.App.StartAsync();
+            var app = builder.Build();
+            await app.App.StartAsync();
 
-        var client = app.App.GetTestClient();
-        var response = await client.PostAsync(
-            "/_agent/after-restore",
-            new StringContent(
-                """
-                {
-                  "session_context": {
-                    "session_id": "session-1",
-                    "restore_id": "restore-1"
-                  }
-                }
-                """,
-                System.Text.Encoding.UTF8,
-                "application/json"));
+            var client = app.App.GetTestClient();
+            var response = await client.PostAsync(
+                "/_agent/after-restore",
+                new StringContent(
+                    """
+                    {
+                      "session_context": {
+                        "session_id": "session-1",
+                        "restore_id": "restore-1"
+                      }
+                    }
+                    """,
+                    System.Text.Encoding.UTF8,
+                    "application/json"));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(await response.Content.ReadAsStringAsync(), Is.EqualTo("""{"status":"ok"}"""));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(await response.Content.ReadAsStringAsync(), Is.EqualTo("""{"status":"ok"}"""));
 
-        await app.App.StopAsync();
+            await app.App.StopAsync();
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(sessionIdEnvironmentVariable, originalSessionId);
+            FoundryEnvironment.Reload();
+        }
     }
 
     // Helper types

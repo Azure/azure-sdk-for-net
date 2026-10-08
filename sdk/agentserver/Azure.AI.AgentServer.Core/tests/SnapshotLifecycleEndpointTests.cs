@@ -17,7 +17,15 @@ namespace Azure.AI.AgentServer.Core.Tests;
 [NonParallelizable]
 public class SnapshotLifecycleEndpointTests
 {
+    private const string SessionIdEnvironmentVariable = "FOUNDRY_AGENT_SESSION_ID";
+
     private readonly Dictionary<string, string?> _originalEnvironment = new(StringComparer.Ordinal);
+
+    [SetUp]
+    public void SetUp()
+    {
+        RememberEnvironment(SessionIdEnvironmentVariable);
+    }
 
     [TearDown]
     public void TearDown()
@@ -91,7 +99,6 @@ public class SnapshotLifecycleEndpointTests
     {
         const string customVariable = "AGENTSERVER_TEST_SESSION_VALUE";
         RememberEnvironment(customVariable);
-        RememberEnvironment("FOUNDRY_AGENT_SESSION_ID");
 
         AgentRestoreContext? observedContext = null;
         string? observedEnvironment = null;
@@ -140,9 +147,7 @@ public class SnapshotLifecycleEndpointTests
     [Test]
     public async Task AfterRestore_AppliesSessionIdWhenOverridesAreOmitted()
     {
-        const string sessionIdEnvironmentVariable = "FOUNDRY_AGENT_SESSION_ID";
-        RememberEnvironment(sessionIdEnvironmentVariable);
-        Environment.SetEnvironmentVariable(sessionIdEnvironmentVariable, "captured-session");
+        Environment.SetEnvironmentVariable(SessionIdEnvironmentVariable, "captured-session");
         FoundryEnvironment.Reload();
 
         string? observedEnvironment = null;
@@ -152,7 +157,7 @@ public class SnapshotLifecycleEndpointTests
         {
             AfterRestore = (_, _) =>
             {
-                observedEnvironment = Environment.GetEnvironmentVariable(sessionIdEnvironmentVariable);
+                observedEnvironment = Environment.GetEnvironmentVariable(SessionIdEnvironmentVariable);
                 observedCachedSessionId = FoundryEnvironment.SessionId;
                 observedRequestContextSessionId = FoundryAgentRequestContext.Current.SessionId;
                 return Task.CompletedTask;
@@ -207,6 +212,56 @@ public class SnapshotLifecycleEndpointTests
         Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(secondResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(observedValues, Is.EqualTo(new[] { "restored-value", "captured-value" }));
+    }
+
+    [Test]
+    public async Task AfterRestore_RestoresBaselineWhenVariableIsFirstOverriddenByLaterRestore()
+    {
+        const string customVariable = "AGENTSERVER_TEST_LATE_OVERRIDE";
+        RememberEnvironment(customVariable);
+        Environment.SetEnvironmentVariable(customVariable, "captured-value");
+
+        var callbackCount = 0;
+        var observedValues = new List<string?>();
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = (_, _) =>
+            {
+                observedValues.Add(Environment.GetEnvironmentVariable(customVariable));
+                if (Interlocked.Increment(ref callbackCount) == 1)
+                {
+                    Environment.SetEnvironmentVariable(customVariable, "callback-value");
+                }
+
+                return Task.CompletedTask;
+            },
+        };
+
+        await using var app = await StartAppAsync(lifecycle);
+        using var client = app.GetTestClient();
+        using var firstResponse = await PostAfterRestoreAsync(client, "session-1", "restore-1");
+        using var secondResponse = await PostJsonAsync(
+            client,
+            "/_agent/after-restore",
+            $$"""
+            {
+              "session_context": {
+                "session_id": "session-1",
+                "restore_id": "restore-2",
+                "session_env_overrides": {
+                  "{{customVariable}}": "restored-value"
+                }
+              }
+            }
+            """);
+        using var thirdResponse = await PostAfterRestoreAsync(client, "session-1", "restore-3");
+
+        Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(secondResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(thirdResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(
+            observedValues,
+            Is.EqualTo(new[] { "captured-value", "restored-value", "captured-value" }));
     }
 
     [Test]
@@ -364,6 +419,39 @@ public class SnapshotLifecycleEndpointTests
             failedBody,
             Is.EqualTo("""{"error":{"code":"after_restore_failed","message":"The after-restore hook failed."}}"""));
         Assert.That(failedBody, Does.Not.Contain("secret connection string"));
+        Assert.That(retryResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(callbackCount, Is.EqualTo(2));
+    }
+
+    [Test]
+    public async Task FailedHook_PinsProcessToOriginalSession()
+    {
+        var callbackCount = 0;
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = (_, _) =>
+            {
+                if (Interlocked.Increment(ref callbackCount) == 1)
+                {
+                    throw new InvalidOperationException("restore failed");
+                }
+
+                return Task.CompletedTask;
+            },
+        };
+
+        await using var app = await StartAppAsync(lifecycle);
+        using var client = app.GetTestClient();
+
+        using var failedResponse = await PostAfterRestoreAsync(client, "session-1", "restore-1");
+        using var mismatchResponse = await PostAfterRestoreAsync(client, "session-2", "restore-2");
+        using var retryResponse = await PostAfterRestoreAsync(client, "session-1", "restore-1");
+
+        Assert.That(failedResponse.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+        Assert.That(mismatchResponse.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+        Assert.That(
+            await mismatchResponse.Content.ReadAsStringAsync(),
+            Is.EqualTo("""{"error":{"code":"session_mismatch","message":"The restored process is already assigned to another session."}}"""));
         Assert.That(retryResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(callbackCount, Is.EqualTo(2));
     }
