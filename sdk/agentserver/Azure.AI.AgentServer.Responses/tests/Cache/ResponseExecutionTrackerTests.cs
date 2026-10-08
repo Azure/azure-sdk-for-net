@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
-using Azure.AI.AgentServer.Core;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Cache;
