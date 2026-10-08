@@ -62,7 +62,7 @@ namespace Azure.Generator.Management
         private readonly Dictionary<(ClientProvider Client, InputOperation Operation, bool HasItemType, bool IsAsync), string> _regularCollectionResultNames = new();
         private readonly Dictionary<TypeProvider, string> _regularCollectionResultProviderNames = new();
         private HashSet<string>? _customReferencedCollectionResults;
-        private readonly Dictionary<string, HashSet<(string Namespace, string? OriginalName)>> _preservedCollectionResultNames = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, List<(IReadOnlySet<string>? Namespaces, string? OriginalName)>> _preservedCollectionResultNames = new(StringComparer.Ordinal);
         private HashSet<(string Namespace, string Name)>? _originalCollectionResultNames;
 
         internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
@@ -98,7 +98,7 @@ namespace Azure.Generator.Management
 
             foreach (var owner in owners)
             {
-                if (@namespace != owner.Namespace || originalName is null)
+                if (originalName is null || @namespace is null || (owner.Namespaces is not null && !owner.Namespaces.Contains(@namespace)))
                 {
                     return false;
                 }
@@ -106,7 +106,8 @@ namespace Azure.Generator.Management
                 if (owner.OriginalName is not null)
                 {
                     if (owner.OriginalName != originalName &&
-                        (owner.OriginalName != name || OriginalCollectionResultNames.Contains((owner.Namespace, owner.OriginalName))))
+                        (owner.OriginalName != name || OriginalCollectionResultNames.Any(identity => identity.Name == owner.OriginalName &&
+                            (owner.Namespaces is null || owner.Namespaces.Contains(identity.Namespace)))))
                     {
                         // A mapping of an upstream operation name belongs only to that operation.
                         // A mapping of a previously emitted compact identity belongs to the helper
@@ -114,7 +115,8 @@ namespace Azure.Generator.Management
                         return false;
                     }
                 }
-                else if (name != originalName && OriginalCollectionResultNames.Contains((owner.Namespace, name)))
+                else if (name != originalName && OriginalCollectionResultNames.Any(identity => identity.Name == name &&
+                    owner.Namespaces!.Contains(identity.Namespace)))
                 {
                     // An operation-based identity belongs to that operation, not to another helper
                     // whose compact item-based name happens to match it.
@@ -228,28 +230,20 @@ namespace Azure.Generator.Management
                 {
                     if (node is TypeDeclarationSyntax declaration && model.GetDeclaredSymbol(declaration) is INamedTypeSymbol type)
                     {
-                        var originalName = type.GetAttributes()
-                            .FirstOrDefault(attribute => attribute.AttributeClass?.Name == "CodeGenTypeAttribute")?
-                            .ConstructorArguments.FirstOrDefault().Value as string;
+                        var originalName = GetCodeGenTypeOriginalName(type);
                         var @namespace = type.ContainingNamespace.ToDisplayString();
-                        ReserveCollectionResultName(type.Name, @namespace, originalName);
-                        if (originalName is not null)
+                        // Upstream resolves CodeGenType lookup keys independently of the alias namespace.
+                        // A same-name mapping can also move the type to another namespace.
+                        ReserveCollectionResultName(type.Name, type.Name == originalName ? null : @namespace, originalName);
+                        if (originalName is not null && originalName != type.Name)
                         {
-                            // Update(name: ...) resolves this lookup key as well as the declared alias.
-                            ReserveCollectionResultName(originalName, @namespace, originalName);
+                            ReserveCollectionResultName(originalName, null, originalName);
                         }
                     }
                     else if (node is IdentifierNameSyntax identifier && IsCollectionResultName(identifier.Identifier.ValueText))
                     {
-                        var referencedType = model.GetSymbolInfo(identifier).Symbol as INamedTypeSymbol;
-                        var qualifiedNamespace = identifier.Parent is QualifiedNameSyntax qualified && qualified.Right == identifier
-                            ? model.GetSymbolInfo(qualified.Left).Symbol as INamespaceSymbol : null;
-                        var container = identifier.Ancestors().OfType<TypeDeclarationSyntax>().FirstOrDefault();
-                        var @namespace = referencedType is { TypeKind: not TypeKind.Error } ? referencedType.ContainingNamespace.ToDisplayString()
-                            : qualifiedNamespace is not null ? qualifiedNamespace.ToDisplayString()
-                            : container is not null && model.GetDeclaredSymbol(container) is INamedTypeSymbol containingType
-                                ? containingType.ContainingNamespace.ToDisplayString() : "";
-                        if (ReserveCollectionResultName(identifier.Identifier.ValueText, @namespace, null))
+                        var namespaces = GetReferenceNamespaces(identifier, model, customization);
+                        if (ReserveCollectionResultName(identifier.Identifier.ValueText, null, null, namespaces))
                         {
                             _customReferencedCollectionResults.Add(identifier.Identifier.ValueText);
                         }
@@ -261,7 +255,77 @@ namespace Azure.Generator.Management
         private static bool IsCollectionResultName(string name) =>
             name.EndsWith("CollectionResultOfT", StringComparison.Ordinal) || name.EndsWith("CollectionResult", StringComparison.Ordinal);
 
-        private bool ReserveCollectionResultName(string name, string @namespace, string? originalName)
+        private static string? GetCodeGenTypeOriginalName(INamedTypeSymbol type)
+        {
+            foreach (var attribute in type.GetAttributes())
+            {
+                for (var attributeType = attribute.AttributeClass; attributeType is not null; attributeType = attributeType.BaseType)
+                {
+                    if (attributeType.Name == "CodeGenTypeAttribute" && attribute.ConstructorArguments.Length > 0)
+                    {
+                        return attribute.ConstructorArguments[0].Value as string;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private static IReadOnlySet<string> GetReferenceNamespaces(IdentifierNameSyntax identifier, SemanticModel model, Compilation customization)
+        {
+            var referencedType = model.GetSymbolInfo(identifier).Symbol as INamedTypeSymbol;
+            if (referencedType is { TypeKind: not TypeKind.Error })
+            {
+                return new HashSet<string>(StringComparer.Ordinal) { referencedType.ContainingNamespace.ToDisplayString() };
+            }
+            if (identifier.Parent is QualifiedNameSyntax qualified && qualified.Right == identifier)
+            {
+                var qualifiedNamespace = model.GetSymbolInfo(qualified.Left).Symbol as INamespaceSymbol;
+                if (qualifiedNamespace is not null)
+                {
+                    return new HashSet<string>(StringComparer.Ordinal) { qualifiedNamespace.ToDisplayString() };
+                }
+            }
+
+            // Generated helpers are absent from this compilation. Keep all namespaces in scope
+            // as alternatives for this reference, rather than treating each import as a new owner.
+            var namespaces = new HashSet<string>(StringComparer.Ordinal) { "" };
+            foreach (var scope in identifier.Ancestors())
+            {
+                if (scope is BaseNamespaceDeclarationSyntax namespaceDeclaration && model.GetDeclaredSymbol(namespaceDeclaration) is INamespaceSymbol namespaceSymbol)
+                {
+                    namespaces.Add(namespaceSymbol.ToDisplayString());
+                }
+                var usings = scope switch
+                {
+                    BaseNamespaceDeclarationSyntax declaration => declaration.Usings,
+                    CompilationUnitSyntax unit => unit.Usings,
+                    _ => default
+                };
+                foreach (var directive in usings)
+                {
+                    AddImport(directive, model);
+                }
+            }
+            foreach (var tree in customization.SyntaxTrees)
+            {
+                foreach (var directive in tree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>().Where(directive => directive.GlobalKeyword.RawKind != 0))
+                {
+                    AddImport(directive, customization.GetSemanticModel(tree));
+                }
+            }
+            return namespaces;
+
+            void AddImport(UsingDirectiveSyntax directive, SemanticModel semanticModel)
+            {
+                if (directive.Alias is null && directive.StaticKeyword.RawKind == 0 && directive.Name is not null)
+                {
+                    var importedNamespace = semanticModel.GetSymbolInfo(directive.Name).Symbol as INamespaceSymbol;
+                    namespaces.Add(importedNamespace?.ToDisplayString() ?? directive.Name.ToString().Replace("global::", ""));
+                }
+            }
+        }
+
+        private bool ReserveCollectionResultName(string name, string? @namespace, string? originalName, IReadOnlySet<string>? referenceNamespaces = null)
         {
             if (!IsCollectionResultName(name))
             {
@@ -273,7 +337,7 @@ namespace Azure.Generator.Management
                 owners = new();
                 _preservedCollectionResultNames.Add(name, owners);
             }
-            owners.Add((@namespace, originalName));
+            owners.Add((referenceNamespaces ?? (@namespace is null ? null : new HashSet<string>(StringComparer.Ordinal) { @namespace }), originalName));
             return true;
         }
 
