@@ -1,6 +1,7 @@
 # Azure Attestation client library for .NET
 
-The Microsoft Azure Attestation (MAA) service is a unified solution for remotely verifying the trustworthiness of a platform and integrity of the binaries running inside it. The service supports attestation of the platforms backed by Trusted Platform Modules (TPMs) alongside the ability to attest to the state of Trusted Execution Environments (TEEs) such as Intel® Software Guard Extensions (SGX) enclaves and Virtualization-based Security (VBS) enclaves.
+<!-- cspell:ignore mrtd sevsnpvm vcek -->
+The Microsoft Azure Attestation (MAA) service is a unified solution for remotely verifying the trustworthiness of a platform and integrity of the binaries running inside it. The service supports attestation of the platforms backed by Trusted Platform Modules (TPMs) alongside the ability to attest to the state of Trusted Execution Environments (TEEs) such as Intel® Software Guard Extensions (SGX) enclaves, Virtualization-based Security (VBS) enclaves, and Intel® TDX and AMD SEV-SNP confidential virtual machines.
 
 Attestation is a process for demonstrating that software binaries were properly instantiated on a trusted platform. Remote relying parties can then gain confidence that only such intended software is running on trusted hardware. Azure Attestation is a unified customer-facing service and framework for attestation.
 
@@ -87,7 +88,7 @@ For more information about the Azure Identity APIs and how to use them, see [Azu
 
 There are four major families of functionality provided in this preview SDK:
 
-* [SGX and TPM enclave attestation.](#attestation)
+* [Attestation of SGX enclaves, TDX and SEV-SNP confidential VMs, and TPMs.](#attestation)
 * [MAA Attestation Token signing certificate discovery and validation.](#attestation-token-signing-certificate-discovery-and-validation)
 * [Attestation Policy management.](#policy-management)
 * [Attestation policy management certificate management](#policy-management-certificate-management) (yes, policy management management).
@@ -96,13 +97,13 @@ The Microsoft Azure Attestation service runs in two separate modes: "Isolated" a
 provide additional information beyond their authentication credentials to verify that they are authorized to modify the state of an attestation instance.
 
 Finally, each region in which the Microsoft Azure Attestation service is available supports a "shared" instance, which
-can be used to attest SGX enclaves which only need verification against the azure baseline (there are no policies applied to the shared instance). TPM attestation is not available in the shared instance.
+can be used to attest SGX enclaves and TDX and SEV-SNP confidential VMs which only need verification against the azure baseline (there are no policies applied to the shared instance). TPM attestation is not available in the shared instance.
 While the shared instance requires AAD authentication, it does not have any RBAC policies - any customer with a valid AAD bearer token can attest using the shared instance.
 
 ### Attestation
 
-SGX or TPM attestation is the process of validating evidence collected from
-a trusted execution environment to ensure that it meets both the Azure baseline for that environment and customer defined policies applied to that environment.
+Attestation is the process of validating evidence collected from
+a trusted execution environment (an SGX enclave, a TDX or SEV-SNP confidential VM, or a TPM) to ensure that it meets both the Azure baseline for that environment and customer defined policies applied to that environment.
 
 ### Attestation service token signing certificate discovery and validation
 
@@ -142,10 +143,15 @@ Currently, MAA supports the following Trusted Execution environments:
 * OpenEnclave - An Intel(tm) Processor running code in an SGX Enclave where the attestation evidence was collected using the OpenEnclave [`oe_get_report`](https://openenclave.io/apidocs/v0.14/enclave_8h_aefcb89c91a9078d595e255bd7901ac71.html#aefcb89c91a9078d595e255bd7901ac71) or [`oe_get_evidence`](https://openenclave.io/apidocs/v0.14/attester_8h_a7d197e42468636e95a6ab97b8e74c451.html#a7d197e42468636e95a6ab97b8e74c451) API.
 * SgxEnclave - An Intel(tm) Processor running code in an SGX Enclave where the attestation evidence was collected using the Intel SGX SDK.
 * Tpm - A Virtualization Based Security environment where the Trusted Platform Module of the processor is used to provide the attestation evidence.
+* SevSnpVm - A confidential virtual machine protected by AMD SEV-SNP. Attested with `AttestSevSnpVm`.
+* TdxVm - A confidential virtual machine protected by Intel(tm) TDX. Attested with `AttestTdxVm`, which requires service version `V2025_06_01` (the default) or later.
+* AzureGuest - An Azure confidential or Trusted Launch virtual machine. This library manages its attestation policy; to attest the virtual machine itself, use the [guest attestation library](https://github.com/Azure/confidential-computing-cvm-guest-attestation) or the Guest Attestation VM extension, which run inside the virtual machine.
 
 ### Runtime Data and Inittime Data
 
 RuntimeData refers to data which is presented to the Intel SGX Quote generation logic or the `oe_get_report`/`oe_get_evidence` APIs. The Azure Attestation service will validate that the first 32 bytes of the `report_data` field in the SGX Quote/OE Report/OE Evidence matches the SHA256 hash of the RuntimeData.
+
+TDX and SEV-SNP evidence must likewise bind the RuntimeData through its report data; the service rejects RuntimeData that the evidence does not bind. RuntimeData supplied as JSON is returned as claims in `AttestationResult.RuntimeClaims`.
 
 InitTime data refers to data which is used to configure the SGX enclave being attested.
 
@@ -169,10 +175,12 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Examples
 
 * [Create an attestation client instance](#create-client-instance)
-* [Attest an SGX enclave](#attest-sgx-enclave)
 * [Get attestation policy](#get-attestation-policy)
+* [Set an attestation policy](#set-an-attestation-policy-for-a-specified-attestation-type)
+* [Attest an SGX enclave](#attest-sgx-enclave)
+* [Attest a TDX confidential VM](#attest-a-tdx-confidential-vm)
+* [Attest an SEV-SNP confidential VM](#attest-an-sev-snp-confidential-vm)
 * [Retrieve token validation certificates](#retrieve-token-certificates)
-* [Create an attestation client instance](#create-client-instance)
 
 ### Create client instance
 
@@ -285,6 +293,43 @@ var encryptedData = SendTokenToRelyingParty(attestationResult.Token);
 ```
 
 Additional information on how to perform attestation token validation can be found in the [MAA Service Attestation Sample](https://github.com/gkostal/attestation/tree/d6a216cd6af5a509e20ac0a752197fdb242fabc3/sgx.attest.sample).
+
+### Attest a TDX confidential VM
+
+Use the `AttestTdxVm` method to attest an Intel(tm) TDX confidential virtual machine. The evidence is a TDX quote generated inside the virtual machine. TDX attestation requires service version `V2025_06_01` (the default) or later.
+
+Claims specific to TDX, such as `tdx_mrtd`, have no dedicated property on `AttestationResult`; read them from `AdditionalClaims`, whose values are the claims' JSON values.
+
+```C# Snippet:AttestTdxVm
+AttestationResponse<AttestationResult> tdxResult = await client.AttestTdxVmAsync(new AttestationRequest
+{
+    Evidence = BinaryData.FromBytes(tdxQuote),
+    RuntimeData = new AttestationData(BinaryData.FromBytes(runtimeData), dataIsJson: true),
+    Nonce = nonce,
+});
+
+// TDX claims have no dedicated properties; read them from AdditionalClaims.
+string mrtd = tdxResult.Value.AdditionalClaims["tdx_mrtd"].ToObjectFromJson<string>();
+bool tdxIsDebuggable = tdxResult.Value.AdditionalClaims["tdx_td_attributes_debug"].ToObjectFromJson<bool>();
+```
+
+### Attest an SEV-SNP confidential VM
+
+Use the `AttestSevSnpVm` method to attest an AMD SEV-SNP confidential virtual machine. The evidence is the JSON evidence document produced inside the virtual machine.
+
+```C# Snippet:AttestSevSnpVm
+// The evidence is the JSON document containing SnpReport, VcekCertChain and, optionally, Endorsements.
+AttestationResponse<AttestationResult> snpResult = await client.AttestSevSnpVmAsync(new AttestationRequest
+{
+    Evidence = BinaryData.FromBytes(snpEvidence),
+    RuntimeData = new AttestationData(BinaryData.FromBytes(runtimeData), dataIsJson: true),
+    Nonce = nonce,
+});
+
+// SEV-SNP claims have no dedicated properties; read them from AdditionalClaims.
+string launchMeasurement = snpResult.Value.AdditionalClaims["x-ms-sevsnpvm-launchmeasurement"].ToObjectFromJson<string>();
+bool snpIsDebuggable = snpResult.Value.AdditionalClaims["x-ms-sevsnpvm-is-debuggable"].ToObjectFromJson<bool>();
+```
 
 ### Retrieve Token Certificates
 
