@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -445,7 +446,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByBillingProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestDataAsync1CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -494,7 +495,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByBillingProfileCollectionResultOfT(
+            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestData1CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -747,7 +748,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new InvoicesGetByBillingProfileAsyncCollectionResultOfT(
+            return new BillingInvoiceDataAsync0CollectionResultOfT(
                 _invoicesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -800,7 +801,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new InvoicesGetByBillingProfileCollectionResultOfT(
+            return new BillingInvoiceData0CollectionResultOfT(
                 _invoicesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -845,7 +846,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingProfilesGetBillingPermissionsAsyncCollectionResultOfT(_billingProfilesRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetBillingPermissions");
+            return new BillingPermissionAsync0CollectionResultOfT(_billingProfilesRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -877,7 +878,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingProfilesGetBillingPermissionsCollectionResultOfT(_billingProfilesRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetBillingPermissions");
+            return new BillingPermission0CollectionResultOfT(_billingProfilesRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -915,7 +916,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationDataAsync1CollectionResultOfT(
                 _reservationsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -964,7 +965,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingProfileCollectionResultOfT(
+            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationData1CollectionResultOfT(
                 _reservationsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -1130,7 +1131,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByBillingProfileAsyncCollectionResultOfT(
+            return new BillingTransactionDataAsync0CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -1185,7 +1186,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByBillingProfileCollectionResultOfT(
+            return new BillingTransactionData0CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -1516,10 +1517,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1558,10 +1558,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

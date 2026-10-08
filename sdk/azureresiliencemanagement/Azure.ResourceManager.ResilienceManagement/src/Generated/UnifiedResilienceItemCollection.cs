@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UnifiedResilienceItemData, UnifiedResilienceItemResource>(new UnifiedResilienceItemsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<UnifiedResilienceItemData, UnifiedResilienceItemResource>(new UnifiedResilienceItemDataAsyncCollectionResultOfT(
                 _unifiedResilienceItemsRestClient,
                 Id.Name,
                 skipToken,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UnifiedResilienceItemData, UnifiedResilienceItemResource>(new UnifiedResilienceItemsGetAllCollectionResultOfT(
+            return new PageableWrapper<UnifiedResilienceItemData, UnifiedResilienceItemResource>(new UnifiedResilienceItemDataCollectionResultOfT(
                 _unifiedResilienceItemsRestClient,
                 Id.Name,
                 skipToken,

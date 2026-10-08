@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupAsyncCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProviderDataAsyncCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProviderDataCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>

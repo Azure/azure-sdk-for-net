@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AuthorizationRoleDefinitionData, AuthorizationRoleDefinitionResource>(new RoleDefinitionsGetAllAsyncCollectionResultOfT(_roleDefinitionsRestClient, Id.ToString(), filter, context, "AuthorizationRoleDefinitionCollection.GetAll"), data => new AuthorizationRoleDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<AuthorizationRoleDefinitionData, AuthorizationRoleDefinitionResource>(new AuthorizationRoleDefinitionDataAsyncCollectionResultOfT(_roleDefinitionsRestClient, Id.ToString(), filter, context, "AuthorizationRoleDefinitionCollection.GetAll"), data => new AuthorizationRoleDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AuthorizationRoleDefinitionData, AuthorizationRoleDefinitionResource>(new RoleDefinitionsGetAllCollectionResultOfT(_roleDefinitionsRestClient, Id.ToString(), filter, context, "AuthorizationRoleDefinitionCollection.GetAll"), data => new AuthorizationRoleDefinitionResource(Client, data));
+            return new PageableWrapper<AuthorizationRoleDefinitionData, AuthorizationRoleDefinitionResource>(new AuthorizationRoleDefinitionDataCollectionResultOfT(_roleDefinitionsRestClient, Id.ToString(), filter, context, "AuthorizationRoleDefinitionCollection.GetAll"), data => new AuthorizationRoleDefinitionResource(Client, data));
         }
 
         /// <summary>

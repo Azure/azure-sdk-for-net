@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryResourcesGetAllAsyncCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryMembersDataAsyncCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryResourcesGetAllCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
+            return new PageableWrapper<RecoveryMembersData, RecoveryMembersResource>(new RecoveryMembersDataCollectionResultOfT(_recoveryResourcesRestClient, Id.Parent.Name, Id.Name, context, "RecoveryMembersCollection.GetAll"), data => new RecoveryMembersResource(Client, data));
         }
 
         /// <summary>

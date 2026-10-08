@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetBySubscriptionAsyncCollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
+            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinkDataAsync0CollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetBySubscriptionCollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
+            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinkData0CollectionResultOfT(AppLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppNetworkSubscriptionResource.GetAppLinks"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationAsyncCollectionResultOfT(
+            return new AppLinkAvailableVersionAsyncCollectionResultOfT(
                 AvailableVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableVersionsGetAppLinkAvailableVersionsByLocationCollectionResultOfT(
+            return new AppLinkAvailableVersionCollectionResultOfT(
                 AvailableVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,

@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchAccountPoolData, BatchAccountPoolResource>(new PoolGetByBatchAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BatchAccountPoolData, BatchAccountPoolResource>(new BatchAccountPoolDataAsyncCollectionResultOfT(
                 _poolRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchAccountPoolData, BatchAccountPoolResource>(new PoolGetByBatchAccountCollectionResultOfT(
+            return new PageableWrapper<BatchAccountPoolData, BatchAccountPoolResource>(new BatchAccountPoolDataCollectionResultOfT(
                 _poolRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

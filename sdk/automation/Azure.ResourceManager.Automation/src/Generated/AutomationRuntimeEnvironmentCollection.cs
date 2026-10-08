@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationRuntimeEnvironmentData, AutomationRuntimeEnvironmentResource>(new RuntimeEnvironmentsGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationRuntimeEnvironmentData, AutomationRuntimeEnvironmentResource>(new AutomationRuntimeEnvironmentDataAsyncCollectionResultOfT(
                 _runtimeEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationRuntimeEnvironmentData, AutomationRuntimeEnvironmentResource>(new RuntimeEnvironmentsGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationRuntimeEnvironmentData, AutomationRuntimeEnvironmentResource>(new AutomationRuntimeEnvironmentDataCollectionResultOfT(
                 _runtimeEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

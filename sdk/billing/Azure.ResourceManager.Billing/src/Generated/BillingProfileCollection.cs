@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingProfileData, BillingProfileResource>(new BillingProfilesGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingProfileData, BillingProfileResource>(new BillingProfileDataAsyncCollectionResultOfT(
                 _billingProfilesRestClient,
                 Id.Name,
                 includeDeleted,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingProfileData, BillingProfileResource>(new BillingProfilesGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingProfileData, BillingProfileResource>(new BillingProfileDataCollectionResultOfT(
                 _billingProfilesRestClient,
                 Id.Name,
                 includeDeleted,

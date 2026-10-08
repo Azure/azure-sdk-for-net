@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleManagementPolicyData, RoleManagementPolicyResource>(new RoleManagementPoliciesGetForScopeAsyncCollectionResultOfT(_roleManagementPoliciesRestClient, Id.ToString(), context, "RoleManagementPolicyCollection.GetAll"), data => new RoleManagementPolicyResource(Client, data));
+            return new AsyncPageableWrapper<RoleManagementPolicyData, RoleManagementPolicyResource>(new RoleManagementPolicyDataAsyncCollectionResultOfT(_roleManagementPoliciesRestClient, Id.ToString(), context, "RoleManagementPolicyCollection.GetAll"), data => new RoleManagementPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleManagementPolicyData, RoleManagementPolicyResource>(new RoleManagementPoliciesGetForScopeCollectionResultOfT(_roleManagementPoliciesRestClient, Id.ToString(), context, "RoleManagementPolicyCollection.GetAll"), data => new RoleManagementPolicyResource(Client, data));
+            return new PageableWrapper<RoleManagementPolicyData, RoleManagementPolicyResource>(new RoleManagementPolicyDataCollectionResultOfT(_roleManagementPoliciesRestClient, Id.ToString(), context, "RoleManagementPolicyCollection.GetAll"), data => new RoleManagementPolicyResource(Client, data));
         }
 
         /// <summary>

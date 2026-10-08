@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleManagementAlertIncidentData, RoleManagementAlertIncidentResource>(new AlertIncidentsGetForScopeAsyncCollectionResultOfT(_alertIncidentsRestClient, Id.Parent.ToString(), Id.Name, context, "RoleManagementAlertIncidentCollection.GetAll"), data => new RoleManagementAlertIncidentResource(Client, data));
+            return new AsyncPageableWrapper<RoleManagementAlertIncidentData, RoleManagementAlertIncidentResource>(new RoleManagementAlertIncidentDataAsyncCollectionResultOfT(_alertIncidentsRestClient, Id.Parent.ToString(), Id.Name, context, "RoleManagementAlertIncidentCollection.GetAll"), data => new RoleManagementAlertIncidentResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleManagementAlertIncidentData, RoleManagementAlertIncidentResource>(new AlertIncidentsGetForScopeCollectionResultOfT(_alertIncidentsRestClient, Id.Parent.ToString(), Id.Name, context, "RoleManagementAlertIncidentCollection.GetAll"), data => new RoleManagementAlertIncidentResource(Client, data));
+            return new PageableWrapper<RoleManagementAlertIncidentData, RoleManagementAlertIncidentResource>(new RoleManagementAlertIncidentDataCollectionResultOfT(_alertIncidentsRestClient, Id.Parent.ToString(), Id.Name, context, "RoleManagementAlertIncidentCollection.GetAll"), data => new RoleManagementAlertIncidentResource(Client, data));
         }
 
         /// <summary>

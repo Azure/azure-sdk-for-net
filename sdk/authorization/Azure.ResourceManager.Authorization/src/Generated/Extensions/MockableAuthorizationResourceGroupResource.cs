@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentDataAsync2CollectionResultOfT(
                 DenyAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentData2CollectionResultOfT(
                 DenyAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentDataAsync1CollectionResultOfT(
                 RoleAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceGroupCollectionResultOfT(
+            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentData1CollectionResultOfT(
                 RoleAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PermissionsGetAzurePermissionsForResourceGroupsAsyncCollectionResultOfT(PermissionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups");
+            return new RoleDefinitionPermissionAsyncCollectionResultOfT(PermissionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups");
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PermissionsGetAzurePermissionsForResourceGroupsCollectionResultOfT(PermissionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups");
+            return new RoleDefinitionPermissionCollectionResultOfT(PermissionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups");
         }
     }
 }

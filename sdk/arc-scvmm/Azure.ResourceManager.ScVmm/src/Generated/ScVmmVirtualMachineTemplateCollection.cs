@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new VirtualMachineTemplatesGetByResourceGroupAsyncCollectionResultOfT(_virtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmVirtualMachineTemplateCollection.GetAll"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
+            return new AsyncPageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateDataAsyncCollectionResultOfT(_virtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmVirtualMachineTemplateCollection.GetAll"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ScVmm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new VirtualMachineTemplatesGetByResourceGroupCollectionResultOfT(_virtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmVirtualMachineTemplateCollection.GetAll"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
+            return new PageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new ScVmmVirtualMachineTemplateDataCollectionResultOfT(_virtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScVmmVirtualMachineTemplateCollection.GetAll"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
         }
 
         /// <summary>

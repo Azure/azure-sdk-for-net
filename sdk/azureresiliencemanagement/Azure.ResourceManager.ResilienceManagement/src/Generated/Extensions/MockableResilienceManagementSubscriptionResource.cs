@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlansGetBySubscriptionAsyncCollectionResultOfT(UsagePlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResilienceManagementSubscriptionResource.GetUsagePlans"), data => new UsagePlanResource(Client, data));
+            return new AsyncPageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlanDataAsync0CollectionResultOfT(UsagePlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResilienceManagementSubscriptionResource.GetUsagePlans"), data => new UsagePlanResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlansGetBySubscriptionCollectionResultOfT(UsagePlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResilienceManagementSubscriptionResource.GetUsagePlans"), data => new UsagePlanResource(Client, data));
+            return new PageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlanData0CollectionResultOfT(UsagePlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResilienceManagementSubscriptionResource.GetUsagePlans"), data => new UsagePlanResource(Client, data));
         }
     }
 }

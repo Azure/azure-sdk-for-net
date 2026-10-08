@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcxEnterpriseSiteData, HcxEnterpriseSiteResource>(new HcxEnterpriseSitesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HcxEnterpriseSiteData, HcxEnterpriseSiteResource>(new HcxEnterpriseSiteDataAsyncCollectionResultOfT(
                 _hcxEnterpriseSitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcxEnterpriseSiteData, HcxEnterpriseSiteResource>(new HcxEnterpriseSitesGetAllCollectionResultOfT(
+            return new PageableWrapper<HcxEnterpriseSiteData, HcxEnterpriseSiteResource>(new HcxEnterpriseSiteDataCollectionResultOfT(
                 _hcxEnterpriseSitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

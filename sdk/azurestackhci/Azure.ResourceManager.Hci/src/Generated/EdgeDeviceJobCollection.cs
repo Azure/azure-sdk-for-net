@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDeviceJobData, EdgeDeviceJobResource>(new EdgeDeviceJobsGetByEdgeDeviceAsyncCollectionResultOfT(_edgeDeviceJobsRestClient, Id.Parent.ToString(), Id.Name, context, "EdgeDeviceJobCollection.GetAll"), data => new EdgeDeviceJobResource(Client, data));
+            return new AsyncPageableWrapper<EdgeDeviceJobData, EdgeDeviceJobResource>(new EdgeDeviceJobDataAsyncCollectionResultOfT(_edgeDeviceJobsRestClient, Id.Parent.ToString(), Id.Name, context, "EdgeDeviceJobCollection.GetAll"), data => new EdgeDeviceJobResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDeviceJobData, EdgeDeviceJobResource>(new EdgeDeviceJobsGetByEdgeDeviceCollectionResultOfT(_edgeDeviceJobsRestClient, Id.Parent.ToString(), Id.Name, context, "EdgeDeviceJobCollection.GetAll"), data => new EdgeDeviceJobResource(Client, data));
+            return new PageableWrapper<EdgeDeviceJobData, EdgeDeviceJobResource>(new EdgeDeviceJobDataCollectionResultOfT(_edgeDeviceJobsRestClient, Id.Parent.ToString(), Id.Name, context, "EdgeDeviceJobCollection.GetAll"), data => new EdgeDeviceJobResource(Client, data));
         }
 
         /// <summary>

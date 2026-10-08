@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessReviewScheduleDefinitionData, AccessReviewScheduleDefinitionResource>(new AccessReviewScheduleDefinitionsGetAllAsyncCollectionResultOfT(_accessReviewScheduleDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewScheduleDefinitionCollection.GetAll"), data => new AccessReviewScheduleDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<AccessReviewScheduleDefinitionData, AccessReviewScheduleDefinitionResource>(new AccessReviewScheduleDefinitionDataAsyncCollectionResultOfT(_accessReviewScheduleDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewScheduleDefinitionCollection.GetAll"), data => new AccessReviewScheduleDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessReviewScheduleDefinitionData, AccessReviewScheduleDefinitionResource>(new AccessReviewScheduleDefinitionsGetAllCollectionResultOfT(_accessReviewScheduleDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewScheduleDefinitionCollection.GetAll"), data => new AccessReviewScheduleDefinitionResource(Client, data));
+            return new PageableWrapper<AccessReviewScheduleDefinitionData, AccessReviewScheduleDefinitionResource>(new AccessReviewScheduleDefinitionDataCollectionResultOfT(_accessReviewScheduleDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewScheduleDefinitionCollection.GetAll"), data => new AccessReviewScheduleDefinitionResource(Client, data));
         }
 
         /// <summary>

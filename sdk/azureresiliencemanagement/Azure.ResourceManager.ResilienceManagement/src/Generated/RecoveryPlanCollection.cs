@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryPlanData, RecoveryPlanResource>(new RecoveryPlansGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RecoveryPlanData, RecoveryPlanResource>(new RecoveryPlanDataAsyncCollectionResultOfT(
                 _recoveryPlansRestClient,
                 Id.Name,
                 skipToken,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryPlanData, RecoveryPlanResource>(new RecoveryPlansGetAllCollectionResultOfT(
+            return new PageableWrapper<RecoveryPlanData, RecoveryPlanResource>(new RecoveryPlanDataCollectionResultOfT(
                 _recoveryPlansRestClient,
                 Id.Name,
                 skipToken,

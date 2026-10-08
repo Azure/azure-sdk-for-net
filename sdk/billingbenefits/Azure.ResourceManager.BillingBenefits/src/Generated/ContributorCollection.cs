@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromPrimaryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContributorData, ContributorResource>(new ContributorDataAsyncCollectionResultOfT(
                 _contributorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContributorData, ContributorResource>(new ContributorsGetFromPrimaryCollectionResultOfT(
+            return new PageableWrapper<ContributorData, ContributorResource>(new ContributorDataCollectionResultOfT(
                 _contributorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

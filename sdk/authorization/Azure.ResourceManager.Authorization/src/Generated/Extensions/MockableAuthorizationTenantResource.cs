@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewScheduleDefinitionsAssignedForMyApprovalGetAllAsyncCollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
+            return new AccessReviewScheduleDefinitionDataAsync1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
         }
 
         /// <summary>
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewScheduleDefinitionsAssignedForMyApprovalGetAllCollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
+            return new AccessReviewScheduleDefinitionData1CollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
         }
 
         /// <summary>

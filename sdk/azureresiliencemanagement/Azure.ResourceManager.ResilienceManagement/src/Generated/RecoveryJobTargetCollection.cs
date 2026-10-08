@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryJobTargetData, RecoveryJobTargetResource>(new RecoveryJobResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RecoveryJobTargetData, RecoveryJobTargetResource>(new RecoveryJobTargetDataAsyncCollectionResultOfT(
                 _recoveryJobResourcesRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryJobTargetData, RecoveryJobTargetResource>(new RecoveryJobResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<RecoveryJobTargetData, RecoveryJobTargetResource>(new RecoveryJobTargetDataCollectionResultOfT(
                 _recoveryJobResourcesRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,

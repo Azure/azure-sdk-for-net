@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllAsyncCollectionResultOfT(_edgeDevicesRestClient, Id.ToString(), context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
+            return new AsyncPageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new HciEdgeDeviceDataAsyncCollectionResultOfT(_edgeDevicesRestClient, Id.ToString(), context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new EdgeDevicesGetAllCollectionResultOfT(_edgeDevicesRestClient, Id.ToString(), context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
+            return new PageableWrapper<HciEdgeDeviceData, HciEdgeDeviceResource>(new HciEdgeDeviceDataCollectionResultOfT(_edgeDevicesRestClient, Id.ToString(), context, "HciEdgeDeviceCollection.GetAll"), data => new HciEdgeDeviceResource(Client, data));
         }
 
         /// <summary>

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrdersGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrderModelDataAsyncCollectionResultOfT(
                 _savingsPlanOrdersRestClient,
                 Id.Name,
                 filter,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrdersGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrderModelDataCollectionResultOfT(
                 _savingsPlanOrdersRestClient,
                 Id.Name,
                 filter,

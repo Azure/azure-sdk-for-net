@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CreditSourceData, CreditSourceResource>(new SourcesGetByCreditAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CreditSourceData, CreditSourceResource>(new CreditSourceDataAsyncCollectionResultOfT(
                 _sourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CreditSourceData, CreditSourceResource>(new SourcesGetByCreditCollectionResultOfT(
+            return new PageableWrapper<CreditSourceData, CreditSourceResource>(new CreditSourceDataCollectionResultOfT(
                 _sourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

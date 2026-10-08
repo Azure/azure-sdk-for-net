@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new AssociatedTenantsGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new BillingAssociatedTenantDataAsyncCollectionResultOfT(
                 _associatedTenantsRestClient,
                 Id.Name,
                 includeRevoked,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new AssociatedTenantsGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingAssociatedTenantData, BillingAssociatedTenantResource>(new BillingAssociatedTenantDataCollectionResultOfT(
                 _associatedTenantsRestClient,
                 Id.Name,
                 includeRevoked,

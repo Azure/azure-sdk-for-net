@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByCustomerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestDataAsync2CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByCustomerCollectionResultOfT(
+            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestData2CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByCustomerAsyncCollectionResultOfT(
+            return new BillingSubscriptionDataAsync1CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingSubscriptionsGetByCustomerCollectionResultOfT(
+            return new BillingSubscriptionData1CollectionResultOfT(
                 _billingSubscriptionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomersGetBillingPermissionsAsyncCollectionResultOfT(
+            return new BillingPermissionAsync1CollectionResultOfT(
                 _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomersGetBillingPermissionsCollectionResultOfT(
+            return new BillingPermission1CollectionResultOfT(
                 _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByCustomerAsyncCollectionResultOfT(
+            return new BillingTransactionDataAsync1CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByCustomerCollectionResultOfT(
+            return new BillingTransactionData1CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,

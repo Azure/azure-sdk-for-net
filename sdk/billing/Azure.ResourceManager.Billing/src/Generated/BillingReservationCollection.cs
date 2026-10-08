@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByReservationOrderAsyncCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
+            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationDataAsyncCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByReservationOrderCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
+            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationDataCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
         }
 
         /// <summary>
