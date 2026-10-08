@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new IpExtendedCommunitiesGetByResourceGroupAsyncCollectionResultOfT(_ipExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPExtendedCommunityCollection.GetAll"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new NetworkFabricIPExtendedCommunityDataAsyncCollectionResultOfT(_ipExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPExtendedCommunityCollection.GetAll"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new IpExtendedCommunitiesGetByResourceGroupCollectionResultOfT(_ipExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPExtendedCommunityCollection.GetAll"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
+            return new PageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new NetworkFabricIPExtendedCommunityDataCollectionResultOfT(_ipExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPExtendedCommunityCollection.GetAll"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
         }
 
         /// <summary>

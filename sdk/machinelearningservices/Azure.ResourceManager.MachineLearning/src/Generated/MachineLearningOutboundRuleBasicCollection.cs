@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningOutboundRuleBasicData, MachineLearningOutboundRuleBasicResource>(new ManagedNetworkSettingsRuleGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningOutboundRuleBasicData, MachineLearningOutboundRuleBasicResource>(new MachineLearningOutboundRuleBasicDataAsyncCollectionResultOfT(
                 _managedNetworkSettingsRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningOutboundRuleBasicData, MachineLearningOutboundRuleBasicResource>(new ManagedNetworkSettingsRuleGetAllCollectionResultOfT(
+            return new PageableWrapper<MachineLearningOutboundRuleBasicData, MachineLearningOutboundRuleBasicResource>(new MachineLearningOutboundRuleBasicDataCollectionResultOfT(
                 _managedNetworkSettingsRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

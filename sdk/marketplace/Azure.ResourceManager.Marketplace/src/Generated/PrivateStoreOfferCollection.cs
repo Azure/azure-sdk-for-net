@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllAsyncCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
+            return new AsyncPageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreOfferDataAsyncCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
+            return new PageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreOfferDataCollectionResultOfT(_privateStoreCollectionOfferRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
         }
 
         /// <summary>

@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricAccessControlListData, NetworkFabricAccessControlListResource>(new AccessControlListsGetBySubscriptionAsyncCollectionResultOfT(AccessControlListsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricAccessControlLists"), data => new NetworkFabricAccessControlListResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricAccessControlListData, NetworkFabricAccessControlListResource>(new NetworkFabricAccessControlListDataAsync0CollectionResultOfT(AccessControlListsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricAccessControlLists"), data => new NetworkFabricAccessControlListResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricAccessControlListData, NetworkFabricAccessControlListResource>(new AccessControlListsGetBySubscriptionCollectionResultOfT(AccessControlListsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricAccessControlLists"), data => new NetworkFabricAccessControlListResource(Client, data));
+            return new PageableWrapper<NetworkFabricAccessControlListData, NetworkFabricAccessControlListResource>(new NetworkFabricAccessControlListData0CollectionResultOfT(AccessControlListsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricAccessControlLists"), data => new NetworkFabricAccessControlListResource(Client, data));
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricInternetGatewayRuleData, NetworkFabricInternetGatewayRuleResource>(new InternetGatewayRulesGetBySubscriptionAsyncCollectionResultOfT(InternetGatewayRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGatewayRules"), data => new NetworkFabricInternetGatewayRuleResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricInternetGatewayRuleData, NetworkFabricInternetGatewayRuleResource>(new NetworkFabricInternetGatewayRuleDataAsync0CollectionResultOfT(InternetGatewayRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGatewayRules"), data => new NetworkFabricInternetGatewayRuleResource(Client, data));
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricInternetGatewayRuleData, NetworkFabricInternetGatewayRuleResource>(new InternetGatewayRulesGetBySubscriptionCollectionResultOfT(InternetGatewayRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGatewayRules"), data => new NetworkFabricInternetGatewayRuleResource(Client, data));
+            return new PageableWrapper<NetworkFabricInternetGatewayRuleData, NetworkFabricInternetGatewayRuleResource>(new NetworkFabricInternetGatewayRuleData0CollectionResultOfT(InternetGatewayRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGatewayRules"), data => new NetworkFabricInternetGatewayRuleResource(Client, data));
         }
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricInternetGatewayData, NetworkFabricInternetGatewayResource>(new InternetGatewaysGetBySubscriptionAsyncCollectionResultOfT(InternetGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGateways"), data => new NetworkFabricInternetGatewayResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricInternetGatewayData, NetworkFabricInternetGatewayResource>(new NetworkFabricInternetGatewayDataAsync0CollectionResultOfT(InternetGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGateways"), data => new NetworkFabricInternetGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricInternetGatewayData, NetworkFabricInternetGatewayResource>(new InternetGatewaysGetBySubscriptionCollectionResultOfT(InternetGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGateways"), data => new NetworkFabricInternetGatewayResource(Client, data));
+            return new PageableWrapper<NetworkFabricInternetGatewayData, NetworkFabricInternetGatewayResource>(new NetworkFabricInternetGatewayData0CollectionResultOfT(InternetGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGateways"), data => new NetworkFabricInternetGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new IpCommunitiesGetBySubscriptionAsyncCollectionResultOfT(IpCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities"), data => new NetworkFabricIPCommunityResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityDataAsync0CollectionResultOfT(IpCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities"), data => new NetworkFabricIPCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new IpCommunitiesGetBySubscriptionCollectionResultOfT(IpCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities"), data => new NetworkFabricIPCommunityResource(Client, data));
+            return new PageableWrapper<NetworkFabricIPCommunityData, NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityData0CollectionResultOfT(IpCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities"), data => new NetworkFabricIPCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new IpExtendedCommunitiesGetBySubscriptionAsyncCollectionResultOfT(IpExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new NetworkFabricIPExtendedCommunityDataAsync0CollectionResultOfT(IpExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new IpExtendedCommunitiesGetBySubscriptionCollectionResultOfT(IpExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
+            return new PageableWrapper<NetworkFabricIPExtendedCommunityData, NetworkFabricIPExtendedCommunityResource>(new NetworkFabricIPExtendedCommunityData0CollectionResultOfT(IpExtendedCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities"), data => new NetworkFabricIPExtendedCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new IpPrefixesGetBySubscriptionAsyncCollectionResultOfT(IpPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes"), data => new NetworkFabricIPPrefixResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixDataAsync0CollectionResultOfT(IpPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes"), data => new NetworkFabricIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new IpPrefixesGetBySubscriptionCollectionResultOfT(IpPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes"), data => new NetworkFabricIPPrefixResource(Client, data));
+            return new PageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixData0CollectionResultOfT(IpPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes"), data => new NetworkFabricIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricL2IsolationDomainData, NetworkFabricL2IsolationDomainResource>(new L2IsolationDomainsGetBySubscriptionAsyncCollectionResultOfT(L2IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL2IsolationDomains"), data => new NetworkFabricL2IsolationDomainResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricL2IsolationDomainData, NetworkFabricL2IsolationDomainResource>(new NetworkFabricL2IsolationDomainDataAsync0CollectionResultOfT(L2IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL2IsolationDomains"), data => new NetworkFabricL2IsolationDomainResource(Client, data));
         }
 
         /// <summary>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricL2IsolationDomainData, NetworkFabricL2IsolationDomainResource>(new L2IsolationDomainsGetBySubscriptionCollectionResultOfT(L2IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL2IsolationDomains"), data => new NetworkFabricL2IsolationDomainResource(Client, data));
+            return new PageableWrapper<NetworkFabricL2IsolationDomainData, NetworkFabricL2IsolationDomainResource>(new NetworkFabricL2IsolationDomainData0CollectionResultOfT(L2IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL2IsolationDomains"), data => new NetworkFabricL2IsolationDomainResource(Client, data));
         }
 
         /// <summary>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new L3IsolationDomainsGetBySubscriptionAsyncCollectionResultOfT(L3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL3IsolationDomains"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new NetworkFabricL3IsolationDomainDataAsync0CollectionResultOfT(L3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL3IsolationDomains"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
         }
 
         /// <summary>
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new L3IsolationDomainsGetBySubscriptionCollectionResultOfT(L3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL3IsolationDomains"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
+            return new PageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new NetworkFabricL3IsolationDomainData0CollectionResultOfT(L3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL3IsolationDomains"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
         }
 
         /// <summary>
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricNeighborGroupData, NetworkFabricNeighborGroupResource>(new NeighborGroupsGetBySubscriptionAsyncCollectionResultOfT(NeighborGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricNeighborGroups"), data => new NetworkFabricNeighborGroupResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricNeighborGroupData, NetworkFabricNeighborGroupResource>(new NetworkFabricNeighborGroupDataAsync0CollectionResultOfT(NeighborGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricNeighborGroups"), data => new NetworkFabricNeighborGroupResource(Client, data));
         }
 
         /// <summary>
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricNeighborGroupData, NetworkFabricNeighborGroupResource>(new NeighborGroupsGetBySubscriptionCollectionResultOfT(NeighborGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricNeighborGroups"), data => new NetworkFabricNeighborGroupResource(Client, data));
+            return new PageableWrapper<NetworkFabricNeighborGroupData, NetworkFabricNeighborGroupResource>(new NetworkFabricNeighborGroupData0CollectionResultOfT(NeighborGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricNeighborGroups"), data => new NetworkFabricNeighborGroupResource(Client, data));
         }
 
         /// <summary>
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkDeviceData, NetworkDeviceResource>(new NetworkDevicesGetBySubscriptionAsyncCollectionResultOfT(NetworkDevicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkDevices"), data => new NetworkDeviceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkDeviceData, NetworkDeviceResource>(new NetworkDeviceDataAsync0CollectionResultOfT(NetworkDevicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkDevices"), data => new NetworkDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkDeviceData, NetworkDeviceResource>(new NetworkDevicesGetBySubscriptionCollectionResultOfT(NetworkDevicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkDevices"), data => new NetworkDeviceResource(Client, data));
+            return new PageableWrapper<NetworkDeviceData, NetworkDeviceResource>(new NetworkDeviceData0CollectionResultOfT(NetworkDevicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkDevices"), data => new NetworkDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricControllerData, NetworkFabricControllerResource>(new NetworkFabricControllersGetBySubscriptionAsyncCollectionResultOfT(NetworkFabricControllersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricControllers"), data => new NetworkFabricControllerResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricControllerData, NetworkFabricControllerResource>(new NetworkFabricControllerDataAsync0CollectionResultOfT(NetworkFabricControllersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricControllers"), data => new NetworkFabricControllerResource(Client, data));
         }
 
         /// <summary>
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricControllerData, NetworkFabricControllerResource>(new NetworkFabricControllersGetBySubscriptionCollectionResultOfT(NetworkFabricControllersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricControllers"), data => new NetworkFabricControllerResource(Client, data));
+            return new PageableWrapper<NetworkFabricControllerData, NetworkFabricControllerResource>(new NetworkFabricControllerData0CollectionResultOfT(NetworkFabricControllersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricControllers"), data => new NetworkFabricControllerResource(Client, data));
         }
 
         /// <summary>
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricData, NetworkFabricResource>(new NetworkFabricsGetBySubscriptionAsyncCollectionResultOfT(NetworkFabricsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabrics"), data => new NetworkFabricResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricData, NetworkFabricResource>(new NetworkFabricDataAsync0CollectionResultOfT(NetworkFabricsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabrics"), data => new NetworkFabricResource(Client, data));
         }
 
         /// <summary>
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricData, NetworkFabricResource>(new NetworkFabricsGetBySubscriptionCollectionResultOfT(NetworkFabricsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabrics"), data => new NetworkFabricResource(Client, data));
+            return new PageableWrapper<NetworkFabricData, NetworkFabricResource>(new NetworkFabricData0CollectionResultOfT(NetworkFabricsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabrics"), data => new NetworkFabricResource(Client, data));
         }
 
         /// <summary>
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkPacketBrokerData, NetworkPacketBrokerResource>(new NetworkPacketBrokersGetBySubscriptionAsyncCollectionResultOfT(NetworkPacketBrokersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkPacketBrokers"), data => new NetworkPacketBrokerResource(Client, data));
+            return new AsyncPageableWrapper<NetworkPacketBrokerData, NetworkPacketBrokerResource>(new NetworkPacketBrokerDataAsync0CollectionResultOfT(NetworkPacketBrokersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkPacketBrokers"), data => new NetworkPacketBrokerResource(Client, data));
         }
 
         /// <summary>
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkPacketBrokerData, NetworkPacketBrokerResource>(new NetworkPacketBrokersGetBySubscriptionCollectionResultOfT(NetworkPacketBrokersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkPacketBrokers"), data => new NetworkPacketBrokerResource(Client, data));
+            return new PageableWrapper<NetworkPacketBrokerData, NetworkPacketBrokerResource>(new NetworkPacketBrokerData0CollectionResultOfT(NetworkPacketBrokersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkPacketBrokers"), data => new NetworkPacketBrokerResource(Client, data));
         }
 
         /// <summary>
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRacksGetBySubscriptionAsyncCollectionResultOfT(NetworkRacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkRacks"), data => new NetworkRackResource(Client, data));
+            return new AsyncPageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRackDataAsync0CollectionResultOfT(NetworkRacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkRacks"), data => new NetworkRackResource(Client, data));
         }
 
         /// <summary>
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRacksGetBySubscriptionCollectionResultOfT(NetworkRacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkRacks"), data => new NetworkRackResource(Client, data));
+            return new PageableWrapper<NetworkRackData, NetworkRackResource>(new NetworkRackData0CollectionResultOfT(NetworkRacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkRacks"), data => new NetworkRackResource(Client, data));
         }
 
         /// <summary>
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRulesGetBySubscriptionAsyncCollectionResultOfT(NetworkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkTapRules"), data => new NetworkTapRuleResource(Client, data));
+            return new AsyncPageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRuleDataAsync0CollectionResultOfT(NetworkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkTapRules"), data => new NetworkTapRuleResource(Client, data));
         }
 
         /// <summary>
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRulesGetBySubscriptionCollectionResultOfT(NetworkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkTapRules"), data => new NetworkTapRuleResource(Client, data));
+            return new PageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRuleData0CollectionResultOfT(NetworkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkTapRules"), data => new NetworkTapRuleResource(Client, data));
         }
 
         /// <summary>
@@ -1142,7 +1142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapsGetBySubscriptionAsyncCollectionResultOfT(NetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkTaps"), data => new NetworkTapResource(Client, data));
+            return new AsyncPageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapDataAsync0CollectionResultOfT(NetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkTaps"), data => new NetworkTapResource(Client, data));
         }
 
         /// <summary>
@@ -1170,7 +1170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapsGetBySubscriptionCollectionResultOfT(NetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkTaps"), data => new NetworkTapResource(Client, data));
+            return new PageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapData0CollectionResultOfT(NetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkTaps"), data => new NetworkTapResource(Client, data));
         }
 
         /// <summary>
@@ -1198,7 +1198,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new RoutePoliciesGetBySubscriptionAsyncCollectionResultOfT(RoutePoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricRoutePolicies"), data => new NetworkFabricRoutePolicyResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyDataAsync0CollectionResultOfT(RoutePoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricRoutePolicies"), data => new NetworkFabricRoutePolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1226,7 +1226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new RoutePoliciesGetBySubscriptionCollectionResultOfT(RoutePoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricRoutePolicies"), data => new NetworkFabricRoutePolicyResource(Client, data));
+            return new PageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyData0CollectionResultOfT(RoutePoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricRoutePolicies"), data => new NetworkFabricRoutePolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkMonitorData, NetworkMonitorResource>(new NetworkMonitorsGetBySubscriptionAsyncCollectionResultOfT(NetworkMonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkMonitors"), data => new NetworkMonitorResource(Client, data));
+            return new AsyncPageableWrapper<NetworkMonitorData, NetworkMonitorResource>(new NetworkMonitorDataAsync0CollectionResultOfT(NetworkMonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkMonitors"), data => new NetworkMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -1282,7 +1282,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkMonitorData, NetworkMonitorResource>(new NetworkMonitorsGetBySubscriptionCollectionResultOfT(NetworkMonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkMonitors"), data => new NetworkMonitorResource(Client, data));
+            return new PageableWrapper<NetworkMonitorData, NetworkMonitorResource>(new NetworkMonitorData0CollectionResultOfT(NetworkMonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkMonitors"), data => new NetworkMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkBootstrapDeviceData, NetworkBootstrapDeviceResource>(new NetworkBootstrapDevicesGetBySubscriptionAsyncCollectionResultOfT(NetworkBootstrapDevicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkBootstrapDevices"), data => new NetworkBootstrapDeviceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkBootstrapDeviceData, NetworkBootstrapDeviceResource>(new NetworkBootstrapDeviceDataAsync0CollectionResultOfT(NetworkBootstrapDevicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkBootstrapDevices"), data => new NetworkBootstrapDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkBootstrapDeviceData, NetworkBootstrapDeviceResource>(new NetworkBootstrapDevicesGetBySubscriptionCollectionResultOfT(NetworkBootstrapDevicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkBootstrapDevices"), data => new NetworkBootstrapDeviceResource(Client, data));
+            return new PageableWrapper<NetworkBootstrapDeviceData, NetworkBootstrapDeviceResource>(new NetworkBootstrapDeviceData0CollectionResultOfT(NetworkBootstrapDevicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedNetworkFabricSubscriptionResource.GetNetworkBootstrapDevices"), data => new NetworkBootstrapDeviceResource(Client, data));
         }
     }
 }

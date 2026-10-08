@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRulesGetByResourceGroupAsyncCollectionResultOfT(_dataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataCollectionRuleCollection.GetAll"), data => new DataCollectionRuleResource(Client, data));
+            return new AsyncPageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRuleDataAsyncCollectionResultOfT(_dataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataCollectionRuleCollection.GetAll"), data => new DataCollectionRuleResource(Client, data));
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRulesGetByResourceGroupCollectionResultOfT(_dataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataCollectionRuleCollection.GetAll"), data => new DataCollectionRuleResource(Client, data));
+            return new PageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRuleDataCollectionResultOfT(_dataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataCollectionRuleCollection.GetAll"), data => new DataCollectionRuleResource(Client, data));
         }
 
         /// <summary>

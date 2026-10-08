@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkBootstrapDeviceData, NetworkBootstrapDeviceResource>(new NetworkBootstrapDevicesGetByResourceGroupAsyncCollectionResultOfT(_networkBootstrapDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkBootstrapDeviceCollection.GetAll"), data => new NetworkBootstrapDeviceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkBootstrapDeviceData, NetworkBootstrapDeviceResource>(new NetworkBootstrapDeviceDataAsyncCollectionResultOfT(_networkBootstrapDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkBootstrapDeviceCollection.GetAll"), data => new NetworkBootstrapDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkBootstrapDeviceData, NetworkBootstrapDeviceResource>(new NetworkBootstrapDevicesGetByResourceGroupCollectionResultOfT(_networkBootstrapDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkBootstrapDeviceCollection.GetAll"), data => new NetworkBootstrapDeviceResource(Client, data));
+            return new PageableWrapper<NetworkBootstrapDeviceData, NetworkBootstrapDeviceResource>(new NetworkBootstrapDeviceDataCollectionResultOfT(_networkBootstrapDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkBootstrapDeviceCollection.GetAll"), data => new NetworkBootstrapDeviceResource(Client, data));
         }
 
         /// <summary>

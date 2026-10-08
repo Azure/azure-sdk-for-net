@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkPacketBrokerData, NetworkPacketBrokerResource>(new NetworkPacketBrokersGetByResourceGroupAsyncCollectionResultOfT(_networkPacketBrokersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkPacketBrokerCollection.GetAll"), data => new NetworkPacketBrokerResource(Client, data));
+            return new AsyncPageableWrapper<NetworkPacketBrokerData, NetworkPacketBrokerResource>(new NetworkPacketBrokerDataAsyncCollectionResultOfT(_networkPacketBrokersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkPacketBrokerCollection.GetAll"), data => new NetworkPacketBrokerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkPacketBrokerData, NetworkPacketBrokerResource>(new NetworkPacketBrokersGetByResourceGroupCollectionResultOfT(_networkPacketBrokersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkPacketBrokerCollection.GetAll"), data => new NetworkPacketBrokerResource(Client, data));
+            return new PageableWrapper<NetworkPacketBrokerData, NetworkPacketBrokerResource>(new NetworkPacketBrokerDataCollectionResultOfT(_networkPacketBrokersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkPacketBrokerCollection.GetAll"), data => new NetworkPacketBrokerResource(Client, data));
         }
 
         /// <summary>

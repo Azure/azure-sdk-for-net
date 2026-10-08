@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupAsyncCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
+            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertDataAsyncCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
+            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertDataCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>

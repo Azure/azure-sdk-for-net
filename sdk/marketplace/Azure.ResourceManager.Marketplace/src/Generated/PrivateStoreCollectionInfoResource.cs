@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateStoreCollectionOfferGetPrivateStoreCollectionOffersByContextsAsyncCollectionResultOfT(
+            return new CollectionOffersByContextAsyncCollectionResultOfT(
                 _privateStoreCollectionOfferRestClient,
                 Guid.Parse(Id.Parent.Name),
                 Guid.Parse(Id.Name),
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateStoreCollectionOfferGetPrivateStoreCollectionOffersByContextsCollectionResultOfT(
+            return new CollectionOffersByContextCollectionResultOfT(
                 _privateStoreCollectionOfferRestClient,
                 Guid.Parse(Id.Parent.Name),
                 Guid.Parse(Id.Name),
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceClientQueryRulesAsyncCollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoResource.QueryRules");
+            return new MarketplaceRuleAsync0CollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoResource.QueryRules");
         }
 
         /// <summary>
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new MarketplaceClientQueryRulesCollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoResource.QueryRules");
+            return new MarketplaceRule0CollectionResultOfT(_marketplaceClientRestClient, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoResource.QueryRules");
         }
 
         /// <summary>

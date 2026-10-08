@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new OnlineDeploymentsGetSkusAsyncCollectionResultOfT(
+            return new MachineLearningSkuDetailAsyncCollectionResultOfT(
                 _onlineDeploymentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new OnlineDeploymentsGetSkusCollectionResultOfT(
+            return new MachineLearningSkuDetailCollectionResultOfT(
                 _onlineDeploymentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

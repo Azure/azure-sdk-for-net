@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetBySubscriptionAsyncCollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
+            return new AsyncPageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ManagedApplicationDataAsync0CollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetBySubscriptionCollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
+            return new PageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ManagedApplicationData0CollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionsGetBySubscriptionAsyncCollectionResultOfT(ApplicationDefinitionsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplicationDefinitions"), data => new ApplicationDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionDataAsync0CollectionResultOfT(ApplicationDefinitionsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplicationDefinitions"), data => new ApplicationDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionsGetBySubscriptionCollectionResultOfT(ApplicationDefinitionsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplicationDefinitions"), data => new ApplicationDefinitionResource(Client, data));
+            return new PageableWrapper<ApplicationDefinitionData, ApplicationDefinitionResource>(new ApplicationDefinitionData0CollectionResultOfT(ApplicationDefinitionsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplicationDefinitions"), data => new ApplicationDefinitionResource(Client, data));
         }
 
         /// <summary>

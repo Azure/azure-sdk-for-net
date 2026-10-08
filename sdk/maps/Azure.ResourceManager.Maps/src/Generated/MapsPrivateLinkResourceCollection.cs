@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new PrivateLinkResourcesGetByAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new MapsPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Maps
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new PrivateLinkResourcesGetByAccountCollectionResultOfT(
+            return new PageableWrapper<MapsPrivateLinkResourceData, MapsPrivateLinkResource>(new MapsPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
