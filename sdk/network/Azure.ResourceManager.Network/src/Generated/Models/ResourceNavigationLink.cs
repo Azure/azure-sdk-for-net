@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Network.Models
             ETag = eTag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceNavigationLink"/>. </summary>
+        public ResourceNavigationLink() : this(default)
+        {
+        }
+
         /// <summary> Resource navigation link properties format. </summary>
         [WirePath("properties")]
         internal ResourceNavigationLinkFormat Properties { get; }

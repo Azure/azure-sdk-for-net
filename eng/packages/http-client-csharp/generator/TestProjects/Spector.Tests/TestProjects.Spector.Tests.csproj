@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\access\src\_Specs_.Azure.ClientGenerator.Core.Access.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\client-api-versions\src\Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\header\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Header.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\path\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Path.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\query\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Query.csproj" />
@@ -64,6 +65,7 @@
     <ProjectReference Include="..\Spector\http\client\structure\two-operation-group\src\Client.Structure.Service.TwoOperationGroup.csproj" Aliases="ClientStructureTwoOperationGroup" />
     <ProjectReference Include="..\Spector\http\documentation\src\Documentation.csproj" />
     <ProjectReference Include="..\Spector\http\encode\array\src\Encode.Array.csproj" />
+    <ProjectReference Include="..\Spector\http\encode\boolean\src\Encode.Boolean.csproj" />
     <ProjectReference Include="..\Spector\http\encode\bytes\src\Encode.Bytes.csproj" />
     <ProjectReference Include="..\Spector\http\encode\datetime\src\Encode.Datetime.csproj" />
     <ProjectReference Include="..\Spector\http\encode\duration\src\Encode.Duration.csproj" />

@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary>
         /// Account details of the data to be transferred
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedDiskDetails"/> and <see cref="Models.DataBoxStorageAccountDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxStorageAccountDetails"/> and <see cref="Models.ManagedDiskDetails"/>.
         /// </summary>
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
@@ -1538,7 +1538,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary>
         /// Minimum fields that must be present in any type of validation request.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxValidateAddressContent"/>, <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="Models.DataTransferDetailsValidationContent"/>, <see cref="Models.PreferencesValidationContent"/>, <see cref="Models.SkuAvailabilityValidationContent"/>, and <see cref="Models.SubscriptionIsAllowedToCreateJobValidationContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="Models.DataBoxValidateAddressContent"/>, <see cref="Models.DataTransferDetailsValidationContent"/>, <see cref="Models.PreferencesValidationContent"/>, <see cref="Models.SkuAvailabilityValidationContent"/>, and <see cref="Models.SubscriptionIsAllowedToCreateJobValidationContent"/>.
         /// </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
         /// <returns> A new <see cref="Models.DataBoxValidationInputContent"/> instance for mocking. </returns>
@@ -1787,6 +1787,176 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DataBoxSkuCost DataBoxSkuCost(Guid? meterId = default, string meterType = default, double? multiplier = default)
         {
             return new DataBoxSkuCost(meterId, meterType, multiplier, default);
+        }
+
+        /// <summary> Request to validate create order limit for current subscription. </summary>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName deviceType)
+        {
+            return new CreateOrderLimitForSubscriptionValidationContent(default, default, deviceType, default);
+        }
+
+        /// <summary> Request body to get the availability for scheduling data box orders orders. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <returns> A new <see cref="Models.DataBoxScheduleAvailabilityContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(AzureLocation storageLocation, string country)
+        {
+            return new DataBoxScheduleAvailabilityContent(storageLocation, default, country, default, default);
+        }
+
+        /// <summary> Request to validate export and import data details. </summary>
+        /// <param name="dataExportDetails"> List of DataTransfer details to be used to export data from azure. </param>
+        /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
+        /// <param name="deviceType"> Device type. </param>
+        /// <param name="transferType"> Type of the transfer. </param>
+        /// <returns> A new <see cref="Models.DataTransferDetailsValidationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataTransferDetailsValidationContent DataTransferDetailsValidationContent(IEnumerable<DataExportDetails> dataExportDetails, IEnumerable<DataImportDetails> dataImportDetails, DataBoxSkuName deviceType, DataBoxJobTransferType transferType)
+        {
+            return new DataTransferDetailsValidationContent(
+                default,
+                default,
+                (dataExportDetails ?? new ChangeTrackingList<DataExportDetails>()).ToList(),
+                (dataImportDetails ?? new ChangeTrackingList<DataImportDetails>()).ToList(),
+                deviceType,
+                transferType,
+                default);
+        }
+
+        /// <summary> Request body to get the availability for scheduling disk orders. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
+        /// <returns> A new <see cref="Models.DiskScheduleAvailabilityContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(AzureLocation storageLocation, string country, int expectedDataSizeInTerabytes)
+        {
+            return new DiskScheduleAvailabilityContent(
+                storageLocation,
+                default,
+                country,
+                default,
+                default,
+                expectedDataSizeInTerabytes);
+        }
+
+        /// <summary> Request body to get the availability for scheduling heavy orders. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <returns> A new <see cref="Models.HeavyScheduleAvailabilityContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(AzureLocation storageLocation, string country)
+        {
+            return new HeavyScheduleAvailabilityContent(storageLocation, default, country, default, default);
+        }
+
+        /// <summary> Request to validate preference of transport and data center. </summary>
+        /// <param name="preference"> Preference of transport and data center. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <returns> A new <see cref="Models.PreferencesValidationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PreferencesValidationContent PreferencesValidationContent(DataBoxOrderPreferences preference, DataBoxSkuName deviceType)
+        {
+            return new PreferencesValidationContent(default, default, preference, deviceType, default);
+        }
+
+        /// <summary> The requirements to validate customer address where the device needs to be shipped. </summary>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
+        /// <returns> A new <see cref="Models.DataBoxValidateAddressContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxValidateAddressContent DataBoxValidateAddressContent(DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences)
+        {
+            return new DataBoxValidateAddressContent(
+                default,
+                default,
+                shippingAddress,
+                deviceType,
+                transportPreferences,
+                default);
+        }
+
+        /// <summary> Request to validate sku availability. </summary>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transferType"> Type of the transfer. </param>
+        /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
+        /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <returns> A new <see cref="Models.SkuAvailabilityValidationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType, DataBoxJobTransferType transferType, string country, AzureLocation location)
+        {
+            return new SkuAvailabilityValidationContent(
+                default,
+                default,
+                deviceType,
+                transferType,
+                country,
+                location,
+                default);
+        }
+
+        /// <summary> Job Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="transferType"> Type of the data transfer. </param>
+        /// <param name="isCancellable"> Describes whether the job is cancellable or not. </param>
+        /// <param name="isDeletable"> Describes whether the job is deletable or not. </param>
+        /// <param name="isShippingAddressEditable"> Describes whether the shipping address is editable or not. </param>
+        /// <param name="reverseShippingDetailsUpdate"> The Editable status for Reverse Shipping Address and Contact Info. </param>
+        /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
+        /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
+        /// <param name="status"> Name of the stage which is in progress. </param>
+        /// <param name="startOn"></param>
+        /// <param name="error"> Top level error for the job. </param>
+        /// <param name="details"> Details of a job run. This field will only be sent for expand details filter. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="deliveryType"> Delivery type of Job. </param>
+        /// <param name="deliveryInfoScheduledOn"> Scheduled date time. </param>
+        /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
+        /// <param name="sku"> The sku type. </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <returns> A new <see cref="DataBox.DataBoxJobData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, DateTimeOffset? deliveryInfoScheduledOn, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity)
+        {
+            return new DataBoxJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new JobProperties(
+                    transferType,
+                    isCancellable,
+                    isDeletable,
+                    isShippingAddressEditable,
+                    reverseShippingDetailsUpdate,
+                    reverseTransportPreferenceUpdate,
+                    isPrepareToShipEnabled,
+                    status,
+                    default,
+                    default,
+                    error,
+                    details,
+                    cancellationReason,
+                    deliveryType,
+                    deliveryInfoScheduledOn is null ? default : new JobDeliveryInfo(deliveryInfoScheduledOn, default),
+                    isCancellableWithoutFee,
+                    default,
+                    default),
+                sku,
+                identity,
+                default);
         }
 
         /// <summary> Job Resource. </summary>

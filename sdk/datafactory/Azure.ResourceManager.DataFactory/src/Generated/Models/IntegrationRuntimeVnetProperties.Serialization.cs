@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     subnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new IntegrationRuntimeVnetProperties(vnetId, subnet, publicIPs ?? new ChangeTrackingList<string>(), subnetId, additionalProperties);
         }

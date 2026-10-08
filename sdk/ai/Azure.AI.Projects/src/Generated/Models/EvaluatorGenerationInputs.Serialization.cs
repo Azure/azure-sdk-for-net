@@ -183,7 +183,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
             }
             return new EvaluatorGenerationInputs(
-                sources,
+                sources ?? new ChangeTrackingList<EvaluatorGenerationJobSource>(),
                 model,
                 evaluatorName,
                 evaluatorDisplayName,

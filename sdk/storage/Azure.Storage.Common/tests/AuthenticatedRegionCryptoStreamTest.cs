@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -39,6 +40,7 @@ namespace Azure.Storage.Test
             public int TagLength { get; }
             public byte RepeatingNonceByte { get; }
             public byte RepeatingTagByte { get; }
+            public int DisposeCount { get; private set; }
 
             public MockEncryptTransform(int nonceLength, int tagLength, byte repeatingNonceByte, byte repeatingTagByte)
             {
@@ -72,6 +74,7 @@ namespace Azure.Storage.Test
 
             public void Dispose()
             {
+                DisposeCount++;
             }
         }
 
@@ -102,6 +105,42 @@ namespace Azure.Storage.Test
             {
             }
         }
+
+        /// <summary>
+        /// Inner stream whose writes always fail, to exercise a final flush that throws
+        /// out of Dispose.
+        /// </summary>
+        private class ThrowOnWriteStream : MemoryStream
+        {
+            public bool Disposed { get; private set; }
+
+            public override void Write(byte[] buffer, int offset, int count)
+                => throw new IOException("inner stream write failed");
+
+            protected override void Dispose(bool disposing)
+            {
+                Disposed = true;
+                base.Dispose(disposing);
+            }
+        }
+
+        /// <summary>
+        /// The stream accepts every pairing of transform direction (encrypt/decrypt) and stream
+        /// direction (read/write), and sizes its buffer differently depending on the pairing, so
+        /// disposal tests cover all four.
+        /// </summary>
+        private static AuthenticatedRegionCryptoStream CreateStreamForDisposalTest(
+            bool encrypt,
+            CryptoStreamMode streamMode,
+            ArrayPool<byte> arrayPool = default)
+            => new AuthenticatedRegionCryptoStream(
+                new MemoryStream(GetRandomBytes(_totalAuthRegionLength)),
+                encrypt
+                    ? new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte)
+                    : (IAuthenticatedCryptographicTransform)new MockDecryptTransform(_nonceLength, _tagLength),
+                _authRegionDataLength,
+                streamMode,
+                arrayPool);
 
         private static byte[] GetRandomBytes(int length)
         {
@@ -533,6 +572,101 @@ namespace Azure.Storage.Test
             {
                 Assert.DoesNotThrow(action);
             }
+        }
+
+        /// <summary>
+        /// Disposal must be idempotent, per .NET conventions.
+        /// </summary>
+        [Test]
+        [Combinatorial]
+        public void MultipleDisposeDoesNotThrow(
+            [Values(true, false)] bool encrypt,
+            [Values(CryptoStreamMode.Read, CryptoStreamMode.Write)] CryptoStreamMode streamMode)
+        {
+            AuthenticatedRegionCryptoStream stream = CreateStreamForDisposalTest(encrypt, streamMode);
+
+            stream.Dispose();
+
+            Assert.DoesNotThrow(() => stream.Dispose());
+            Assert.DoesNotThrow(() => stream.Dispose());
+        }
+
+        /// <summary>
+        /// A repeated Dispose used to return the rented buffer to the <see cref="ArrayPool{T}"/>
+        /// more than once, which lets two unrelated callers rent the same array instance and
+        /// silently corrupt each other's data.
+        /// </summary>
+        [Test]
+        [Combinatorial]
+        public void MultipleDisposeReturnsBufferToPoolOnce(
+            [Values(true, false)] bool encrypt,
+            [Values(CryptoStreamMode.Read, CryptoStreamMode.Write)] CryptoStreamMode streamMode)
+        {
+            // Given mock array pool that actually calls to a real one
+            Mock<ArrayPool<byte>> arrayPool = new Mock<ArrayPool<byte>>();
+            arrayPool.Setup(pool => pool.Rent(It.IsAny<int>()))
+                .Returns<int>(size => ArrayPool<byte>.Shared.Rent(size));
+            arrayPool.Setup(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()))
+                .Callback<byte[], bool>((array, clear) => ArrayPool<byte>.Shared.Return(array, clear));
+
+            // and a stream that is disposed more than once without ever being read or written
+            AuthenticatedRegionCryptoStream stream = CreateStreamForDisposalTest(encrypt, streamMode, arrayPool.Object);
+            stream.Dispose();
+            stream.Dispose();
+            stream.Dispose();
+
+            // assert the one rental, the stream's own buffer, was returned exactly once
+            arrayPool.Verify(pool => pool.Rent(It.IsAny<int>()), Times.Once(),
+                "expected only the stream buffer to be rented");
+            arrayPool.Verify(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Once(),
+                "the stream buffer must be returned to the pool exactly once");
+        }
+
+        /// <summary>
+        /// Dispose flushes the final block before releasing anything, and that flush writes to
+        /// the inner stream, so it can throw. Since the idempotence gate stops any later Dispose
+        /// call from getting that far, cleanup has to happen on the way out regardless.
+        /// </summary>
+        [Test]
+        public void DisposeCleansUpWhenFinalFlushThrows()
+        {
+            // Given mock array pool that actually calls to a real one
+            Mock<ArrayPool<byte>> arrayPool = new Mock<ArrayPool<byte>>();
+            arrayPool.Setup(pool => pool.Rent(It.IsAny<int>()))
+                .Returns<int>(size => ArrayPool<byte>.Shared.Rent(size));
+            arrayPool.Setup(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()))
+                .Callback<byte[], bool>((array, clear) => ArrayPool<byte>.Shared.Return(array, clear));
+
+            MockEncryptTransform transform = new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte);
+            ThrowOnWriteStream innerStream = new ThrowOnWriteStream();
+            AuthenticatedRegionCryptoStream stream = new AuthenticatedRegionCryptoStream(
+                innerStream,
+                transform,
+                _authRegionDataLength,
+                CryptoStreamMode.Write,
+                arrayPool.Object);
+
+            // partial region, so nothing is written until Dispose forces the final flush
+            stream.Write(GetRandomBytes(16), 0, 16);
+
+            Assert.Throws<IOException>(() => stream.Dispose());
+
+            Assert.IsTrue(innerStream.Disposed, "inner stream was left undisposed");
+            Assert.AreEqual(1, transform.DisposeCount, "transform was left undisposed");
+            // both rentals, the stream's buffer and the final flush's scratch buffer, were returned
+            arrayPool.Verify(pool => pool.Rent(It.IsAny<int>()), Times.Exactly(2),
+                "expected the stream buffer and the flush scratch buffer to be rented");
+            arrayPool.Verify(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Exactly(2),
+                "every rented array must be returned exactly once");
+            // and with the buffer gone, the stream no longer accepts writes
+            Assert.Throws<NotSupportedException>(() => stream.Write(new byte[1], 0, 1));
+
+            // the failed Dispose still counts as the one Dispose that does the work
+            arrayPool.Invocations.Clear();
+            Assert.DoesNotThrow(() => stream.Dispose());
+            Assert.AreEqual(1, transform.DisposeCount, "transform was disposed more than once");
+            arrayPool.Verify(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Never(),
+                "a later Dispose must not return anything to the pool again");
         }
 
         private void Swap(byte[] buf, int i, int j)

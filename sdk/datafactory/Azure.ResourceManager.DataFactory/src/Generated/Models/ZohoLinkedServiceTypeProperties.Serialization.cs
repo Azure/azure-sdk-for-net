@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectionProperties = BinaryData.FromString(prop.Value.GetRawText());
+                    connectionProperties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("endpoint"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ZohoLinkedServiceTypeProperties(

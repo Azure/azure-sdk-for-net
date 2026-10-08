@@ -299,7 +299,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 majority,
                 minority,
                 unique,
-                histogram,
+                histogram ?? new ChangeTrackingList<IList<float>>(),
                 validPercent,
                 maskedPixels,
                 validPixels,

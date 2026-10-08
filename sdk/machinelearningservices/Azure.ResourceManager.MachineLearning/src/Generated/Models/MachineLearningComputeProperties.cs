@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Machine Learning compute object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAksCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningVirtualMachineCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, and <see cref="MachineLearningSynapseSpark"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmlCompute"/>, <see cref="MachineLearningAksCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="MachineLearningSynapseSpark"/>, and <see cref="MachineLearningVirtualMachineCompute"/>.
     /// </summary>
     public abstract partial class MachineLearningComputeProperties
     {

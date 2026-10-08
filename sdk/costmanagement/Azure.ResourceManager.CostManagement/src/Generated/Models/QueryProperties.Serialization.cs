@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                                 }
                                 else
                                 {
-                                    array0.Add(BinaryData.FromString(item0.GetRawText()));
+                                    array0.Add(item0.GetUtf8Bytes());
                                 }
                             }
                             array.Add(array0);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new QueryProperties(nextLink, columns ?? new ChangeTrackingList<QueryColumn>(), rows ?? new ChangeTrackingList<IList<BinaryData>>(), additionalBinaryDataProperties);

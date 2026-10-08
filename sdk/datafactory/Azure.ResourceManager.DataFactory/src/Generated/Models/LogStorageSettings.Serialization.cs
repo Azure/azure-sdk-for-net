@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadEnableReliableLogging(prop, ref enableReliableLogging);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new LogStorageSettings(linkedServiceName, path, logLevel, enableReliableLogging, additionalProperties);
         }
