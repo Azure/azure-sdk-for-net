@@ -116,14 +116,16 @@ public class ConversationChainIdentityTests
     }
 
     [Test]
-    public void SessionGuidScopesPhysicalTaskIdWithoutChangingPublicChainId()
+    public void SessionInstanceIdScopesPhysicalTaskIdWithoutChangingPublicChainId()
     {
         const string sessionId = "same-public-name";
-        const string sessionGuid = "11111111111111111111111111111111";
+        Guid sessionInstanceId =
+            Guid.ParseExact("11111111111111111111111111111111", "N");
 
         string publicChainId = ConversationChainIdDerivation.Derive(
             "conv_abc", null, "caresp_x", "agent-x", sessionId, true);
-        string taskScope = TaskIdDerivation.DeriveSessionScope(sessionId, sessionGuid);
+        string taskScope =
+            TaskIdDerivation.DeriveSessionScope(sessionId, sessionInstanceId);
         string physicalTaskId = TaskIdDerivation.Derive(
             "conv_abc", null, "caresp_x", "agent-x", sessionId, taskScope, true);
 
@@ -131,7 +133,7 @@ public class ConversationChainIdentityTests
     }
 
     [Test]
-    public void DifferentSessionGuidsProduceDifferentPhysicalTaskIds()
+    public void DifferentSessionInstanceIdsProduceDifferentPhysicalTaskIds()
     {
         string first = TaskIdDerivation.Derive(
             "conv_abc",
@@ -141,7 +143,7 @@ public class ConversationChainIdentityTests
             "same-public-name",
             TaskIdDerivation.DeriveSessionScope(
                 "same-public-name",
-                "11111111111111111111111111111111"),
+                Guid.ParseExact("11111111111111111111111111111111", "N")),
             true);
         string recreated = TaskIdDerivation.Derive(
             "conv_abc",
@@ -151,14 +153,14 @@ public class ConversationChainIdentityTests
             "same-public-name",
             TaskIdDerivation.DeriveSessionScope(
                 "same-public-name",
-                "22222222222222222222222222222222"),
+                Guid.ParseExact("22222222222222222222222222222222", "N")),
             true);
 
         Assert.That(first, Is.Not.EqualTo(recreated));
     }
 
     [Test]
-    public void MissingSessionGuidPreservesLegacyTaskId()
+    public void MissingSessionInstanceIdPreservesLegacyTaskId()
     {
         const string sessionId = "public-session";
         string legacy = ConversationChainIdDerivation.Derive(
@@ -178,15 +180,28 @@ public class ConversationChainIdentityTests
     [Test]
     public void SessionScopeIncludesPublicSessionId()
     {
-        const string guid = "11111111111111111111111111111111";
+        Guid sessionInstanceId =
+            Guid.ParseExact("11111111111111111111111111111111", "N");
 
         Assert.That(
-            TaskIdDerivation.DeriveSessionScope("session-a", guid),
-            Is.Not.EqualTo(TaskIdDerivation.DeriveSessionScope("session-b", guid)));
+            TaskIdDerivation.DeriveSessionScope("session-a", sessionInstanceId),
+            Is.Not.EqualTo(
+                TaskIdDerivation.DeriveSessionScope("session-b", sessionInstanceId)));
     }
 
     [Test]
-    public void SessionGuidDoesNotChangeOneShotTaskId()
+    public void SessionScopeUsesLowercaseNFormatting()
+    {
+        Guid sessionInstanceId =
+            Guid.ParseExact("ABCDEFABCDEFABCDEFABCDEFABCDEFAB", "N");
+
+        Assert.That(
+            TaskIdDerivation.DeriveSessionScope("session-a", sessionInstanceId),
+            Is.EqualTo("abcdefabcdefabcdefabcdefabcdefab\u001fsession-a"));
+    }
+
+    [Test]
+    public void SessionInstanceIdDoesNotChangeOneShotTaskId()
     {
         string taskId = TaskIdDerivation.Derive(
             conversationId: null,
@@ -196,7 +211,7 @@ public class ConversationChainIdentityTests
             sessionId: "public-session",
             taskSessionId: TaskIdDerivation.DeriveSessionScope(
                 "public-session",
-                "11111111111111111111111111111111"),
+                Guid.ParseExact("11111111111111111111111111111111", "N")),
             steerable: false);
 
         Assert.That(taskId, Is.EqualTo("caresp_one_shot"));

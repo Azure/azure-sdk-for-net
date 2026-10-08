@@ -269,6 +269,115 @@ public sealed class ResilientTaskEnablementTests
     }
 
     [Test]
+    public async Task RecoveredHandler_CanInvokeTaskDefinitionBeforeStartupScanCompletes()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-recovery-nested-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        const string ParentTaskId = "a-recovered-parent";
+        const string BlockerTaskId = "b-recovery-blocker";
+        TaskTestHost? seed = null;
+        try
+        {
+            seed = TaskTestHost.Create(
+                root,
+                agentName: TaskEngineConstants.DefaultAgentName,
+                sessionId: TaskEngineConstants.DefaultSessionId);
+            TaskDefinition<string, string> parent =
+                seed.Builder.AddTask<string, string>(
+                    "recovered-parent",
+                    async (ctx, ct) =>
+                    {
+                        await ctx.ExitForRecoveryAsync(ct);
+                        return ctx.Input;
+                    });
+            TaskDefinition<string, string> blocker =
+                seed.Builder.AddTask<string, string>(
+                    "recovery-blocker",
+                    async (ctx, ct) =>
+                    {
+                        await ctx.ExitForRecoveryAsync(ct);
+                        return ctx.Input;
+                    });
+
+            seed.SignalShutdown();
+            await parent.StartAsync(
+                "parent-input",
+                new RunOptions { TaskId = ParentTaskId });
+            await blocker.StartAsync(
+                "blocker-input",
+                new RunOptions { TaskId = BlockerTaskId });
+            await seed.WaitUntilInactiveAsync(ParentTaskId, TimeSpan.FromSeconds(5));
+            await seed.WaitUntilInactiveAsync(BlockerTaskId, TimeSpan.FromSeconds(5));
+
+            var childInvocationStarted =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var childResult =
+                new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var store = new RecoveryOrderingStore(
+                new LocalTaskStore(root),
+                ParentTaskId,
+                BlockerTaskId,
+                childInvocationStarted.Task);
+
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(store);
+            TaskDefinition<string, string> child =
+                builder.Services.AddResilientTask<string, string>(
+                    "recovery-child",
+                    (ctx, ct) => Task.FromResult("child:" + ctx.Input));
+            builder.Services.AddResilientTask<string, string>(
+                "recovered-parent",
+                async (ctx, ct) =>
+                {
+                    if (ctx.EntryMode == EntryMode.Recovered)
+                    {
+                        childInvocationStarted.TrySetResult();
+                        try
+                        {
+                            childResult.TrySetResult(
+                                await child.RunAsync("nested", cancellationToken: ct));
+                        }
+                        catch (Exception ex)
+                        {
+                            childResult.TrySetException(ex);
+                            throw;
+                        }
+                    }
+
+                    return ctx.Input;
+                });
+            builder.Services.AddResilientTask<string, string>(
+                "recovery-blocker",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            Task start = host.StartAsync();
+            await store.BlockerGetEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.ThrowsAsync<InvalidOperationException>(
+                () => child.RunAsync("external-before-ready"));
+            store.ReleaseBlocker.TrySetResult();
+            await start.WaitAsync(TimeSpan.FromSeconds(10));
+
+            Assert.That(
+                await childResult.Task.WaitAsync(TimeSpan.FromSeconds(5)),
+                Is.EqualTo("child:nested"));
+
+            await host.StopAsync();
+        }
+        finally
+        {
+            seed?.Dispose();
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+    }
+
+    [Test]
     public async Task Shutdown_CancelsAdmittedStartBeforeItCanBecomeActive()
     {
         string root = Path.Combine(
@@ -626,6 +735,77 @@ public sealed class ResilientTaskEnablementTests
             TaskListQuery query,
             CancellationToken cancellationToken = default)
             => inner.ListAsync(query, cancellationToken);
+    }
+
+    private sealed class RecoveryOrderingStore(
+        ITaskStore inner,
+        string parentTaskId,
+        string blockerTaskId,
+        Task childInvocationStarted) : ITaskStore
+    {
+        private int _scanListed;
+
+        public TaskCompletionSource BlockerGetEntered { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource ReleaseBlocker { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+            => inner.CreateAsync(request, cancellationToken);
+
+        public async Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+        {
+            if (Volatile.Read(ref _scanListed) != 0
+                && string.Equals(taskId, blockerTaskId, StringComparison.Ordinal))
+            {
+                BlockerGetEntered.TrySetResult();
+                await childInvocationStarted.WaitAsync(cancellationToken);
+                await ReleaseBlocker.Task.WaitAsync(cancellationToken);
+            }
+
+            return await inner.GetAsync(taskId, cancellationToken);
+        }
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public async Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            TaskListResult result = await inner.ListAsync(query, cancellationToken);
+            if (query.Status == TaskWireKeys.StatusInProgress)
+            {
+                result.Items = result.Items
+                    .OrderBy(item =>
+                        string.Equals(item.Record.Id, parentTaskId, StringComparison.Ordinal)
+                            ? 0
+                            : string.Equals(item.Record.Id, blockerTaskId, StringComparison.Ordinal)
+                                ? 1
+                                : 2)
+                    .ToArray();
+                Volatile.Write(ref _scanListed, 1);
+            }
+
+            return result;
+        }
     }
 
     private sealed class TaskDefinitionHolder

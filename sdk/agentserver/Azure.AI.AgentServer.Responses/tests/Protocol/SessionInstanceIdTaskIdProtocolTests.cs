@@ -16,14 +16,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 [TestFixture]
 [NonParallelizable]
-public sealed class SessionGuidTaskIdProtocolTests
+public sealed class SessionInstanceIdTaskIdProtocolTests
 {
     private const string PublicSessionId = "same-public-name";
     private const string ConversationId = "conv-session-guid";
     private const string AgentName = "server-default-agent";
 
     [Test]
-    public async Task HostedSessionGuidScopesMultiTurnPhysicalTaskId()
+    public async Task HostedSessionInstanceIdScopesMultiTurnPhysicalTaskId()
     {
         string root = CreateRoot();
         string? previousHosted = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
@@ -48,7 +48,9 @@ public sealed class SessionGuidTaskIdProtocolTests
                 AgentName,
                 PublicSessionId,
                 steerable: false);
-            string taskScope = TaskIdDerivation.DeriveSessionScope(PublicSessionId, sessionGuid);
+            string taskScope = TaskIdDerivation.DeriveSessionScope(
+                PublicSessionId,
+                Guid.ParseExact(sessionGuid, "N"));
             string physicalTaskId = TaskIdDerivation.Derive(
                 ConversationId,
                 previousResponseId: null,
@@ -72,7 +74,7 @@ public sealed class SessionGuidTaskIdProtocolTests
     }
 
     [Test]
-    public async Task HostedSessionGuidReusesSuspendedLegacyTask()
+    public async Task HostedSessionInstanceIdReusesSuspendedLegacyTask()
     {
         string root = CreateRoot();
         string tasksDirectory = Path.Combine(root, "tasks");

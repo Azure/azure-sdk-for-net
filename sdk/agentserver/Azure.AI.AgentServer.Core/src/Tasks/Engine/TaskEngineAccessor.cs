@@ -15,6 +15,7 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 /// </summary>
 internal sealed class TaskEngineAccessor
 {
+    private static readonly AsyncLocal<RecoveryHandlerScope?> s_recoveryHandlerScope = new();
     private readonly ResilientTaskEnablementState _enablement;
     private TaskEngine? _engine;
 
@@ -47,15 +48,48 @@ internal sealed class TaskEngineAccessor
                 "Resilient tasks are disabled for this host. Call SetResilientTasksEnabled() before host startup.");
         }
 
-        if (!_enablement.IsReady)
+        TaskEngine? engine = Volatile.Read(ref _engine);
+        if (!_enablement.IsReady
+            && s_recoveryHandlerScope.Value?.Allows(engine) != true)
         {
             throw new InvalidOperationException(
                 "The resilient-task runtime is not ready. Task definitions can run only after " +
                 "host startup recovery has completed and before host shutdown begins.");
         }
 
-        return Volatile.Read(ref _engine) ?? throw new InvalidOperationException(
+        return engine ?? throw new InvalidOperationException(
             "The task engine is not available yet. A task definition can only be run after the " +
             "enabled application host has started.");
+    }
+
+    internal static IDisposable EnterRecoveryHandlerScope(TaskEngine engine)
+    {
+        var scope = new RecoveryHandlerScope(engine, s_recoveryHandlerScope.Value);
+        s_recoveryHandlerScope.Value = scope;
+        return scope;
+    }
+
+    private sealed class RecoveryHandlerScope(
+        TaskEngine engine,
+        RecoveryHandlerScope? priorScope) : IDisposable
+    {
+        private int _active = 1;
+        private int _disposed;
+
+        public bool Allows(TaskEngine? candidate)
+            => Volatile.Read(ref _active) != 0
+                && ReferenceEquals(engine, candidate);
+
+        public void Dispose()
+        {
+            if (Interlocked.Exchange(ref _disposed, 1) == 0)
+            {
+                Volatile.Write(ref _active, 0);
+                if (ReferenceEquals(s_recoveryHandlerScope.Value, this))
+                {
+                    s_recoveryHandlerScope.Value = priorScope;
+                }
+            }
+        }
     }
 }

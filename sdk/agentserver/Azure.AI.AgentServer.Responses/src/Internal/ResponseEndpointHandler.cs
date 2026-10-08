@@ -785,8 +785,10 @@ internal sealed class ResponseEndpointHandler
         string sessionId = request.AgentSessionId is { Length: > 0 } sid
             ? sid
             : SessionIdDerivation.Derive(conversationId, request.PreviousResponseId, responseId, agentReference);
-        string? sessionGuid = FoundryEnvironment.IsHosted ? FoundryEnvironment.SessionGuid : null;
-        string taskSessionId = TaskIdDerivation.DeriveSessionScope(sessionId, sessionGuid);
+        Guid? sessionInstanceId =
+            FoundryEnvironment.IsHosted ? FoundryEnvironment.SessionInstanceId : null;
+        string taskSessionId =
+            TaskIdDerivation.DeriveSessionScope(sessionId, sessionInstanceId);
 
         return TaskIdDerivation.Derive(
             conversationId,

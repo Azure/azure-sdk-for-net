@@ -69,8 +69,8 @@ namespace Azure.AI.AgentServer.Core
         public static int Port { get { throw null; } }
         public static string? ProjectArmId { get { throw null; } }
         public static string? ProjectEndpoint { get { throw null; } }
-        public static string? SessionGuid { get { throw null; } }
         public static string? SessionId { get { throw null; } }
+        public static System.Guid? SessionInstanceId { get { throw null; } }
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
         public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
     }

@@ -46,7 +46,7 @@ public static class FoundryEnvironment
     public static string? SessionId { get; private set; }
 
     /// <summary>
-    /// The system-generated session incarnation GUID. Sourced from the
+    /// The system-generated session incarnation identifier. Sourced from the
     /// <c>FOUNDRY_AGENT_SESSION_GUID</c> environment variable.
     /// </summary>
     /// <remarks>
@@ -56,7 +56,7 @@ public static class FoundryEnvironment
     /// durable task ID whose prior session was deleted and tombstoned by the service. In hosted
     /// environments, a non-empty value must be exactly 32 lowercase hexadecimal characters.
     /// </remarks>
-    public static string? SessionGuid { get; private set; }
+    public static Guid? SessionInstanceId { get; private set; }
 
     /// <summary>
     /// The HTTP listen port. Sourced from the <c>PORT</c> environment variable. Default: 8088.
@@ -157,15 +157,23 @@ public static class FoundryEnvironment
     {
         bool isHosted =
             !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
-        string? sessionGuid = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
-        if (isHosted && !string.IsNullOrEmpty(sessionGuid) && !IsLowercaseHexGuid(sessionGuid))
+        string? sessionInstanceIdValue =
+            Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
+        Guid? sessionInstanceId = null;
+        if (!string.IsNullOrEmpty(sessionInstanceIdValue))
         {
-            throw new InvalidOperationException(
-                "FOUNDRY_AGENT_SESSION_GUID must be a 32-character lowercase hexadecimal GUID.");
+            if (!IsLowercaseHexGuid(sessionInstanceIdValue)
+                || !Guid.TryParseExact(sessionInstanceIdValue, "N", out Guid parsedSessionInstanceId))
+            {
+                throw new InvalidOperationException(
+                    "FOUNDRY_AGENT_SESSION_GUID must be a 32-character lowercase hexadecimal GUID.");
+            }
+
+            sessionInstanceId = parsedSessionInstanceId;
         }
 
         IsHosted = isHosted;
-        SessionGuid = sessionGuid;
+        SessionInstanceId = sessionInstanceId;
         AgentName = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME");
         AgentId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         AgentVersion = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_VERSION");

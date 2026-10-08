@@ -1224,6 +1224,9 @@ internal sealed partial class TaskEngine : IDisposable
                     return;
                 }
 
+                using IDisposable? recoveryHandlerScope = currentMode == EntryMode.Recovered
+                    ? TaskEngineAccessor.EnterRecoveryHandlerScope(this)
+                    : null;
                 TurnOutcome<TOutput> outcome = await RunTurnAsync(
                     registration, handler, scopedHandler, retry, activeRun, currentRun, currentInput, taskId, currentInputId,
                     currentMode, steered, TaskEngineConstants.ResolveTaskTimeout(registration.Options?.Timeout), currentCts).ConfigureAwait(false);

@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added `FoundryEnvironment.SessionGuid`, sourced from `FOUNDRY_AGENT_SESSION_GUID`, and
+- Added `FoundryEnvironment.SessionInstanceId`, sourced from `FOUNDRY_AGENT_SESSION_GUID`, and
   validation of the hosted platform's 32-character lowercase hexadecimal session-incarnation ID.
 - Added `TaskDefinition<TInput, TOutput>.GetStatusAsync()` for task-ID migration and compatibility
   probes without activating or reclaiming the task.
@@ -43,6 +43,8 @@
 
 ### Bugs Fixed
 
+- Recovered handlers can invoke other registered task definitions while the cold-start scan is
+  still running. External callers remain gated until startup recovery completes.
 - Multi-turn suspension now coordinates the empty-queue decision and execution
   retirement with steering admission. Inputs waiting at that boundary are drained
   or resumed with their own identity instead of being accepted and then erased.

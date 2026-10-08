@@ -8,11 +8,11 @@ internal static class TaskIdDerivation
 {
     private const char SessionScopeSeparator = '\x1f';
 
-    /// <summary>Combines a hosted session incarnation GUID with its public session identity.</summary>
-    public static string DeriveSessionScope(string sessionId, string? sessionGuid)
-        => string.IsNullOrEmpty(sessionGuid)
+    /// <summary>Combines a hosted session incarnation identifier with its public session identity.</summary>
+    public static string DeriveSessionScope(string sessionId, Guid? sessionInstanceId)
+        => sessionInstanceId is null
             ? sessionId
-            : $"{sessionGuid}{SessionScopeSeparator}{sessionId}";
+            : $"{sessionInstanceId.Value.ToString("N")}{SessionScopeSeparator}{sessionId}";
 
     /// <summary>
     /// Derives a physical task ID using a private session scope while preserving the public
