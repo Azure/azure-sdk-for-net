@@ -22,11 +22,11 @@ internal sealed class SnapshotLifecycleCoordinator
     private readonly ILogger<SnapshotLifecycleCoordinator> _logger;
     private readonly SemaphoreSlim _gate = new(1, 1);
     private readonly Dictionary<string, string?> _capturedEnvironmentValues = new(StringComparer.Ordinal);
+    private readonly HashSet<string> _completedRestoreIds = new(StringComparer.Ordinal);
     private HashSet<string> _appliedEnvironmentVariables = new(StringComparer.Ordinal);
     private bool _beforeSnapshotCompleted;
     private bool _environmentBaselineCaptured;
     private string? _sessionId;
-    private string? _restoreId;
 
     public SnapshotLifecycleCoordinator(
         IAgentSnapshotLifecycle lifecycle,
@@ -76,7 +76,7 @@ internal sealed class SnapshotLifecycleCoordinator
                     return AfterRestoreResult.SessionMismatch;
                 }
 
-                if (string.Equals(_restoreId, context.RestoreId, StringComparison.Ordinal))
+                if (_completedRestoreIds.Contains(context.RestoreId))
                 {
                     return AfterRestoreResult.Success;
                 }
@@ -102,7 +102,7 @@ internal sealed class SnapshotLifecycleCoordinator
                 FoundryAgentRequestContext.Exchange(previousRequestContext);
             }
 
-            _restoreId = context.RestoreId;
+            _completedRestoreIds.Add(context.RestoreId);
             return AfterRestoreResult.Success;
         }
         catch (Exception exception) when (exception is not OperationCanceledException)

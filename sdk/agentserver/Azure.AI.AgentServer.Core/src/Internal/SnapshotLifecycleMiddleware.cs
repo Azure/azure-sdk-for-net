@@ -187,6 +187,7 @@ internal sealed class SnapshotLifecycleMiddleware : IMiddleware
                     : null;
                 if (!IsValidEnvironmentVariableName(property.Name)
                     || string.IsNullOrEmpty(value)
+                    || value.Contains('\0')
                     || !overrides.TryAdd(property.Name, value))
                 {
                     return null;
@@ -222,7 +223,7 @@ internal sealed class SnapshotLifecycleMiddleware : IMiddleware
         }
 
         value = property.GetString()!;
-        return !string.IsNullOrWhiteSpace(value);
+        return !string.IsNullOrWhiteSpace(value) && !value.Contains('\0');
     }
 
     private static bool IsValidEnvironmentVariableName(string name) =>

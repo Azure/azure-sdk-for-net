@@ -339,10 +339,12 @@ public class SnapshotLifecycleEndpointTests
         using var firstResponse = await PostAfterRestoreAsync(client, "session-1", "restore-1");
         using var retryResponse = await PostAfterRestoreAsync(client, "session-1", "restore-1");
         using var laterRestoreResponse = await PostAfterRestoreAsync(client, "session-1", "restore-2");
+        using var delayedRetryResponse = await PostAfterRestoreAsync(client, "session-1", "restore-1");
 
         Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(retryResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(laterRestoreResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(delayedRetryResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(contexts.Select(context => context.RestoreId), Is.EqualTo(new[] { "restore-1", "restore-2" }));
     }
 
@@ -490,8 +492,10 @@ public class SnapshotLifecycleEndpointTests
     [TestCase("application/json", "[]", HttpStatusCode.BadRequest)]
     [TestCase("application/json", """{"session_context":null}""", HttpStatusCode.BadRequest)]
     [TestCase("application/json", """{"session_context":{"session_id":" ","restore_id":"restore-1"}}""", HttpStatusCode.BadRequest)]
+    [TestCase("application/json", """{"session_context":{"session_id":"session-\u0000x","restore_id":"restore-1"}}""", HttpStatusCode.BadRequest)]
     [TestCase("application/json", """{"session_context":{"session_id":"session-1","restore_id":"restore-1","session_env_overrides":{"INVALID=NAME":"value"}}}""", HttpStatusCode.BadRequest)]
     [TestCase("application/json", """{"session_context":{"session_id":"session-1","restore_id":"restore-1","session_env_overrides":{"EMPTY_VALUE":""}}}""", HttpStatusCode.BadRequest)]
+    [TestCase("application/json", """{"session_context":{"session_id":"session-1","restore_id":"restore-1","session_env_overrides":{"INVALID_VALUE":"value\u0000suffix"}}}""", HttpStatusCode.BadRequest)]
     [TestCase("application/json", """{"session_context":{"session_id":"session-1","restore_id":"restore-1","session_env_overrides":{"FOUNDRY_AGENT_SESSION_ID":"session-2"}}}""", HttpStatusCode.BadRequest)]
     public async Task AfterRestore_InvalidRequestReturnsStableError(
         string? contentType,
