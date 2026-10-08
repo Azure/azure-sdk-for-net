@@ -156,7 +156,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                     }
@@ -238,7 +238,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                     }
@@ -303,7 +303,7 @@ namespace Azure.Security.Attestation
                 Response<AttestationResponse> response = async
                     ? await _restClient.AttestTdxVmAsync(request.Evidence, runtimeData, initTimeData, request.Nonce, cancellationToken).ConfigureAwait(false)
                     : _restClient.AttestTdxVm(request.Evidence, runtimeData, initTimeData, request.Nonce, cancellationToken);
-                return await ValidateAttestationResponseAsync(response, async, cancellationToken).ConfigureAwait(false);
+                return await ValidateAttestationResponseAsync(response, isDraftPolicy: false, async, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -354,7 +354,7 @@ namespace Azure.Security.Attestation
                 Response<AttestationResponse> response = async
                     ? await _restClient.AttestSevSnpVmAsync(report, runtimeData, initTimeData, request.DraftPolicyForAttestation, request.Nonce, cancellationToken).ConfigureAwait(false)
                     : _restClient.AttestSevSnpVm(report, runtimeData, initTimeData, request.DraftPolicyForAttestation, request.Nonce, cancellationToken);
-                return await ValidateAttestationResponseAsync(response, async, cancellationToken).ConfigureAwait(false);
+                return await ValidateAttestationResponseAsync(response, request.DraftPolicyForAttestation != null, async, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -369,13 +369,13 @@ namespace Azure.Security.Attestation
         private static InitTimeData ToInitTimeData(AttestationData data)
             => data == null ? null : new InitTimeData { Data = data.BinaryData, DataType = data.DataIsJson ? DataType.JSON : DataType.Binary };
 
-        private async Task<AttestationResponse<AttestationResult>> ValidateAttestationResponseAsync(Response<AttestationResponse> response, bool async, CancellationToken cancellationToken)
+        private async Task<AttestationResponse<AttestationResult>> ValidateAttestationResponseAsync(Response<AttestationResponse> response, bool isDraftPolicy, bool async, CancellationToken cancellationToken)
         {
             var attestationToken = AttestationToken.Deserialize(response.Value.Token, _clientDiagnostics);
             if (_options.TokenOptions.ValidateToken)
             {
                 var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
+                if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken, allowUnsecured: isDraftPolicy).ConfigureAwait(false))
                 {
                     AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                 }

@@ -293,10 +293,11 @@ namespace Azure.Security.Attestation
         /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
         /// <param name="async">If true, execute the function asynchronously.</param>
         /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
+        /// <param name="allowUnsecured">True only for the response to a draft-policy attestation, which the service never signs.</param>
         /// <returns>true if the token was valid, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
-        internal async Task<bool> ValidateTokenInternal(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default)
+        internal async Task<bool> ValidateTokenInternal(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default, bool allowUnsecured = false)
         {
             // Early out if the caller doesn't want us to validate the token.
             if (!options.ValidateToken)
@@ -304,12 +305,17 @@ namespace Azure.Security.Attestation
                 return true;
             }
 
-            // An unsecured token carries no signature, so there is nothing to verify and it cannot be trusted.
-            // Reject it outright rather than falling through to the validation callback, whose result defaults
-            // to true and would otherwise allow an unsigned token to pass. See RFC 8725 section 3.1.
+            // An unsecured token carries no signature, so it cannot be trusted (RFC 8725 section 3.1). The one exception
+            // is the response to a draft-policy attestation the caller asked for, which the service never signs.
             if (Header.Algorithm.Equals("none", StringComparison.OrdinalIgnoreCase))
             {
-                return false;
+                if (!allowUnsecured || !ValidateCommonProperties(options))
+                {
+                    return false;
+                }
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                return await CallValidationCallbackAsync(options, this, SigningCertificate, ClientDiagnostics, !async, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             }
 
             // This token is a secured attestation token. If the caller provided signing certificates, then

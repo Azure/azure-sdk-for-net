@@ -61,6 +61,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Optional 'draft' policy for attestation. If this field is provided, then this policy document will be used for the attestation request.
         /// This allows a caller to test various policy documents against actual data before applying the policy document via the <see cref="AttestationAdministrationClient.SetPolicy(AttestationType, string, AttestationTokenSigningKey, System.Threading.CancellationToken)"/> API.
+        /// The service does not sign the resulting token, so its signature cannot be validated: use it only to evaluate the policy, never as proof of attestation.
         /// </summary>
         public string DraftPolicyForAttestation { get; set; }
 

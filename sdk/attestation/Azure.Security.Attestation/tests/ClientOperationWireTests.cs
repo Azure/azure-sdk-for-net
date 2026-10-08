@@ -206,6 +206,54 @@ namespace Azure.Security.Attestation.Tests
             Assert.AreEqual("n3", body.RootElement.GetProperty("nonce").GetString());
         }
 
+        // The service never signs the token for a draft-policy attestation; 1.0.0 returned it, and so must 1.1.0.
+        [Test]
+        public async System.Threading.Tasks.Task DraftPolicyAttestationReturnsUnsignedToken([Values("SgxEnclave", "OpenEnclave", "SevSnpVm")] string type, [Values] bool async)
+        {
+            AttestationClient client = ValidatingClient("{\"nonce\":\"d1\"}");
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            AttestationResponse<AttestationResult> response = await Attest(client, type, request, async);
+
+            Assert.AreEqual("none", response.Token.Algorithm);
+            Assert.AreEqual("d1", response.Value.Nonce);
+        }
+
+        [Test]
+        public void AttestationWithoutDraftPolicyRejectsUnsignedToken([Values("SgxEnclave", "OpenEnclave", "SevSnpVm", "TdxVm")] string type, [Values] bool async)
+        {
+            AttestationClient client = ValidatingClient("{\"nonce\":\"d1\"}");
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}") };
+
+            Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, type, request, async));
+        }
+
+        [Test]
+        public void DraftPolicyAttestationStillChecksExpiration([Values] bool async)
+        {
+            long expired = DateTimeOffset.UtcNow.AddHours(-1).ToUnixTimeSeconds();
+            AttestationClient client = ValidatingClient($"{{\"exp\":{expired}}}");
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            Exception ex = Assert.CatchAsync(() => Attest(client, "SevSnpVm", request, async));
+            Assert.AreEqual("Attestation token expired.", ex.Message);
+        }
+
+        [Test]
+        public void DraftPolicyAttestationStillRaisesTokenValidated([Values] bool async)
+        {
+            var tokenOptions = new AttestationTokenValidationOptions();
+            tokenOptions.TokenValidated += args =>
+            {
+                args.IsValid = false;
+                return System.Threading.Tasks.Task.CompletedTask;
+            };
+            AttestationClient client = ValidatingClient("{}", tokenOptions);
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, "SgxEnclave", request, async));
+        }
+
         [Test]
         public void AttestTpm()
         {
@@ -360,6 +408,23 @@ namespace Azure.Security.Attestation.Tests
             => new CertificateRequest("CN=ClientOperationWireTests", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1)
                 .CreateSelfSigned(DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddDays(1));
 #endif
+
+        // Default token validation; /certs returns no keys, and every attestation returns an unsigned token.
+        private static AttestationClient ValidatingClient(string tokenBody, AttestationTokenValidationOptions tokenOptions = null)
+            => new AttestationClient(new Uri(Endpoint), new MockCredential(), new AttestationClientOptions(tokenOptions: tokenOptions)
+            {
+                Transport = new MockTransport(request => new MockResponse(200).SetContent(
+                    request.Uri.Path == "/certs" ? "{\"keys\":[]}" : TokenResponse(tokenBody))),
+            });
+
+        private static async System.Threading.Tasks.Task<AttestationResponse<AttestationResult>> Attest(AttestationClient client, string type, AttestationRequest request, bool async)
+            => type switch
+            {
+                "SgxEnclave" => async ? await client.AttestSgxEnclaveAsync(request) : client.AttestSgxEnclave(request),
+                "OpenEnclave" => async ? await client.AttestOpenEnclaveAsync(request) : client.AttestOpenEnclave(request),
+                "SevSnpVm" => async ? await client.AttestSevSnpVmAsync(request) : client.AttestSevSnpVm(request),
+                _ => async ? await client.AttestTdxVmAsync(request) : client.AttestTdxVm(request),
+            };
 
         private static AttestationClientOptions Options(List<CapturedRequest> captured, string responseBody, AttestationClientOptions.ServiceVersion version = AttestationClientOptions.ServiceVersion.V2025_06_01)
             => new AttestationClientOptions(version, new AttestationTokenValidationOptions { ValidateToken = false })
