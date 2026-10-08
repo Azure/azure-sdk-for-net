@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -94,6 +95,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new NspAccessRuleProperties();
                 }
                 return Properties.FullyQualifiedDomainNames;
+            }
+        }
+
+        /// <summary> List of subscription ids. </summary>
+        [WirePath("properties.subscriptions")]
+        public IList<WritableSubResource> Subscriptions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAccessRuleProperties();
+                }
+                return Properties.Subscriptions;
             }
         }
 

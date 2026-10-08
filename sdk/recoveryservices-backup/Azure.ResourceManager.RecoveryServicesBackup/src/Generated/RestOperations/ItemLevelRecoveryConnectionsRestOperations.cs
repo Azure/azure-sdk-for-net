@@ -107,5 +107,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _userAgent.Apply(message);
             return message;
         }
+
+        internal HttpMessage CreateGetInstantItemRecoveryOperationResultRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/backupFabrics/", false);
+            uri.AppendPath(fabricName, true);
+            uri.AppendPath("/protectionContainers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/protectedItems/", false);
+            uri.AppendPath(protectedItemName, true);
+            uri.AppendPath("/recoveryPoints/", false);
+            uri.AppendPath(recoveryPointId, true);
+            uri.AppendPath("/listInstantItemRecoveryOperationResult", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
     }
 }

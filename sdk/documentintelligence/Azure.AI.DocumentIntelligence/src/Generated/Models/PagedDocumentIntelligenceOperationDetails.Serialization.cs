@@ -170,7 +170,7 @@ namespace Azure.AI.DocumentIntelligence
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedDocumentIntelligenceOperationDetails(value, nextLink, clientRequestId, additionalBinaryDataProperties);
+            return new PagedDocumentIntelligenceOperationDetails(value ?? new ChangeTrackingList<DocumentIntelligenceOperationDetails>(), nextLink, clientRequestId, additionalBinaryDataProperties);
         }
     }
 }

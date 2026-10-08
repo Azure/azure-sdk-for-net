@@ -592,7 +592,7 @@ namespace Azure.AI.Agents.Persistent
                 lastError,
                 model,
                 instructions,
-                tools,
+                tools ?? new ChangeTrackingList<ToolDefinition>(),
                 createdAt,
                 expiresAt,
                 startedAt,

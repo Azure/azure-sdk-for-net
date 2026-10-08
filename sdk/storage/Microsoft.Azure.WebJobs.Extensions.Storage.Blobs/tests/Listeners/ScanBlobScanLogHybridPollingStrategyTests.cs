@@ -548,6 +548,57 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             RunExecuteWithMultiPollingInterval(secondSetExpectedNames, product, executor, blobItemsUpdated.Count);
         }
 
+        [Test]
+        public async Task ExecuteAsync_CompleteListing_IncludesBlobsModifiedAfterPollStart()
+        {
+            IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(new TestBlobScanInfoManager(), _exceptionHandler, NullLogger<BlobListener>.Instance);
+            LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
+
+            List<string> expectedNames = new List<string>();
+            expectedNames.Add(CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems, lastModified: DateTimeOffset.UtcNow.AddMinutes(-1)));
+            expectedNames.Add(CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems, lastModified: DateTimeOffset.UtcNow.AddSeconds(5)));
+
+            await product.RegisterAsync(_blobClientMock.Object, _blobContainerMock.Object, executor, CancellationToken.None);
+
+            RunExecuterWithExpectedBlobs(expectedNames, product, executor);
+        }
+
+        [Test]
+        public async Task ExecuteAsync_EmptyContinuationToken_StartsNewCycleAndFindsLaterBlobs()
+        {
+            IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(new TestBlobScanInfoManager(), _exceptionHandler, NullLogger<BlobListener>.Instance);
+            LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
+
+            Uri uri = new Uri("https://fakeaccount.blob.core.windows.net/fakecontainer");
+            Mock<BlobContainerClient> containerMock = new Mock<BlobContainerClient>(uri, null);
+            containerMock.Setup(x => x.Uri).Returns(uri);
+            containerMock.Setup(x => x.Name).Returns(ContainerName);
+            containerMock.Setup(x => x.AccountName).Returns(AccountName);
+
+            List<BlobItem> firstPage = new List<BlobItem>();
+            List<string> firstExpected = new List<string>
+            {
+                CreateBlobAndUploadToContainer(containerMock, firstPage, lastModified: DateTimeOffset.UtcNow.AddMinutes(-1))
+            };
+
+            List<BlobItem> secondPage = new List<BlobItem>();
+            List<string> secondExpected = new List<string>
+            {
+                CreateBlobAndUploadToContainer(containerMock, secondPage, lastModified: DateTimeOffset.UtcNow.AddSeconds(2))
+            };
+
+            // Azure listing often returns NextMarker "" instead of null at end of listing (#61660).
+            containerMock.SetupSequence(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(() => new TestAsyncPageableWithContinuationToken(firstPage, string.Empty))
+                .Returns(() => new TestAsyncPageableWithContinuationToken(secondPage, string.Empty));
+
+            await product.RegisterAsync(_blobClientMock.Object, containerMock.Object, executor, CancellationToken.None);
+
+            RunExecuterWithExpectedBlobs(firstExpected, product, executor);
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            RunExecuterWithExpectedBlobs(secondExpected, product, executor);
+        }
+
         private void RunExecuterWithExpectedBlobsInternal(IDictionary<string, int> blobNameMap, IBlobListenerStrategy product, LambdaBlobTriggerExecutor executor, int expectedCount)
         {
             if (blobNameMap.Count == 0)

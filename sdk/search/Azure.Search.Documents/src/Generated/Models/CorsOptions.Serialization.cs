@@ -175,7 +175,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CorsOptions(allowedOrigins, maxAgeInSeconds, additionalBinaryDataProperties);
+            return new CorsOptions(allowedOrigins ?? new ChangeTrackingList<string>(), maxAgeInSeconds, additionalBinaryDataProperties);
         }
     }
 }

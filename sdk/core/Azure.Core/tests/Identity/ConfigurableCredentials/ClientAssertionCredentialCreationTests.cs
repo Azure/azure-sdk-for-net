@@ -233,6 +233,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ClientAssertion
             {
                 IConfiguration config = Helper.GetConfiguration();
                 SetRequiredConfig(config, managedIdentityIdKind: "ClientId", managedIdentityId: "mi-client-id-123");
+                config["MyClient:Credential:EnableMtlsProofOfPossession"] = "true";
 
                 var cred = GetUnderlying(CreateFromConfig(config));
 

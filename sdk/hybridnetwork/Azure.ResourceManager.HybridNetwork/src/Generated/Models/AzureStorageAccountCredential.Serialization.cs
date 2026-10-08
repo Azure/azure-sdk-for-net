@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AzureStorageAccountCredential(credentialType, additionalBinaryDataProperties, storageAccountId, containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>(), expiryOn);

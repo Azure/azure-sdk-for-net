@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.Avs.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsHostProperties"/>. </summary>
+        protected AvsHostProperties() : this(default)
+        {
+        }
+
         /// <summary> The kind of host. </summary>
         internal HostKind Kind { get; set; }
 

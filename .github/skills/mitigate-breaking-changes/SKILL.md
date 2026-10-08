@@ -10,6 +10,34 @@ Patterns and techniques for mitigating breaking changes when regenerating Azure 
 
 Trigger phrases: "mitigate breaking changes", "fix breaking change", "customization patterns", "how to keep backward compat", "CodeGenType", "CodeGenSuppress", "markAsPageable", "hierarchyBuilding", "base type change".
 
+## Common breaking-change workflow
+
+When invoked from `azsdk-common-sdk-breaking-change`, use the
+[.NET pattern catalog](../../../doc/dev/SDKBreakingChanges.md) and the original
+`azsdk_package_detect_breaking_change` result. Preserve the ApiCompat diagnostics,
+previous signatures, additions, and `originBreaks`; a removal/addition pair is
+not proof of a rename.
+
+- For a user-selected `mitigation: generator` change, verify the documented
+  preconditions and matching previous contract. Reuse the management generator's
+  existing conditional-header and model-factory compatibility overload support.
+  Regenerate; do not write a second synthesizer or patch generated files.
+- For `mitigation: client customization`, use `azsdk_customized_code_update`
+  with the user's selected change and permitted edit scope. `CustomCode` cannot
+  edit TypeSpec inputs or change the pinned spec commit; `SpecChangeRequired`
+  requires a spec-owner handoff, not an automatic retry with broader scope.
+- For `mitigation: manual`, missing evidence, or unsupported generator output,
+  explain the decision needed and stop automatic mitigation.
+
+This skill's ARM patterns are management-specific. Do not apply resource
+hierarchy, ARM identifier, or conditional-header transformations to data-plane
+libraries without separately verified support.
+
+After a change, regenerate and compile fresh artifacts as needed, rerun the
+standalone detector, then run ordinary builds, analyzers, and tests separately.
+Do not treat a missing GA baseline, stale artifact, or detector failure as a
+compatibility pass. Never add suppressions without explicit owner approval.
+
 ## SDK-Side Customizations (in SDK repo)
 
 Use **Custom/*.cs** or **Customization/*.cs** partial classes (follow the package's existing structure) for .NET-side fixes.

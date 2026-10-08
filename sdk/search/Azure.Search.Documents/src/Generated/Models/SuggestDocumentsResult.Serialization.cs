@@ -167,7 +167,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SuggestDocumentsResult(results, coverage, additionalBinaryDataProperties);
+            return new SuggestDocumentsResult(results ?? new ChangeTrackingList<SuggestResult>(), coverage, additionalBinaryDataProperties);
         }
     }
 }
