@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -485,6 +486,30 @@ namespace Azure.ResourceManager.CostManagement
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Create or update a shared scheduled action within the given scope. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<ScheduledActionResource> Update(WaitUntil waitUntil, ScheduledActionData data, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return Update(waitUntil, data, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary> Create or update a shared scheduled action within the given scope. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<ScheduledActionResource>> UpdateAsync(WaitUntil waitUntil, ScheduledActionData data, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return UpdateAsync(waitUntil, data, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
         }
     }
 }

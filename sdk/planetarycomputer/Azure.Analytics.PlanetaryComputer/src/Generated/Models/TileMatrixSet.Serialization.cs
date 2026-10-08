@@ -327,7 +327,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 crs,
                 wellKnownScaleSet,
                 boundingBox,
-                tileMatrices,
+                tileMatrices ?? new ChangeTrackingList<TileMatrix>(),
                 additionalBinaryDataProperties);
         }
     }

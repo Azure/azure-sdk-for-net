@@ -184,7 +184,7 @@ namespace Azure.AI.AnomalyDetector
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VariableValues(variable, timestamps, values, additionalBinaryDataProperties);
+            return new VariableValues(variable, timestamps ?? new ChangeTrackingList<string>(), values ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties);
         }
     }
 }

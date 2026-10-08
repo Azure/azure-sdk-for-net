@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.DataBox.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="GranularCopyLogDetails"/>. </summary>
+        protected GranularCopyLogDetails() : this(default)
+        {
+        }
+
         /// <summary> Indicates the type of job details. </summary>
         internal DataBoxOrderType CopyLogDetailsType { get; set; }
     }

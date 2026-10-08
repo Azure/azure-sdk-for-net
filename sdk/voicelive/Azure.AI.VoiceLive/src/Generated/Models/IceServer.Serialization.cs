@@ -180,7 +180,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IceServer(uris, username, credential, additionalBinaryDataProperties);
+            return new IceServer(uris ?? new ChangeTrackingList<Uri>(), username, credential, additionalBinaryDataProperties);
         }
     }
 }

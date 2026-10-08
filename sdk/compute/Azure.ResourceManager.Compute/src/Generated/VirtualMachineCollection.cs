@@ -726,5 +726,41 @@ namespace Azure.ResourceManager.Compute
             return CreateOrUpdate(waitUntil: waitUntil, vmName: vmName, data: data, matchConditions: default, cancellationToken: cancellationToken);
         }
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}.Operation Id.VirtualMachines_CreateOrUpdate.Default Api Version.2026-03-01. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="vmName"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="ifNoneMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData data, string ifMatch, string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdateAsync(waitUntil, vmName, data, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
+        }
+
+        /// <summary> The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}.Operation Id.VirtualMachines_CreateOrUpdate.Default Api Version.2026-03-01. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="vmName"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="ifNoneMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData data, string ifMatch, string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdate(waitUntil, vmName, data, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
+        }
     }
 }
