@@ -12,8 +12,11 @@ using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
-    /// <summary> Properties of the Resiliency Drill Resource. </summary>
-    public partial class DrillResourceProperties
+    /// <summary>
+    /// Properties of the Resiliency Drill Resource
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegionalDrillResourceProperties"/> and <see cref="ZonalDrillResourceProperties"/>.
+    /// </summary>
+    public abstract partial class DrillResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,14 +24,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="DrillResourceProperties"/>. </summary>
         /// <param name="resourceId"> ARM Id of the underlying resource. </param>
         /// <param name="resourceType"> Type of the Drill resource. </param>
-        internal DrillResourceProperties(ResourceIdentifier resourceId, string resourceType)
+        private protected DrillResourceProperties(ResourceIdentifier resourceId, string resourceType)
         {
             ResourceId = resourceId;
             ResourceType = resourceType;
             ActiveLocations = new ChangeTrackingList<string>();
             RecoveryLocations = new ChangeTrackingList<string>();
-            ActivePhysicalZones = new ChangeTrackingList<string>();
-            RecoveryPhysicalZones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DrillResourceProperties"/>. </summary>
@@ -36,8 +37,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="resourceType"> Type of the Drill resource. </param>
         /// <param name="activeLocations"> Active location and zones of the Azure resource. </param>
         /// <param name="recoveryLocations"> List of recovery locations and zones of the Azure resource. </param>
-        /// <param name="activePhysicalZones"> Active Resource location and physical zones of Azure Resource. </param>
-        /// <param name="recoveryPhysicalZones"> Recovery Resource location and physical zones of HA Azure Resource. </param>
         /// <param name="inclusionState"> Inclusion State of the Drill resource in Drill. </param>
         /// <param name="recoveryPlanInclusionState"> Inclusion State of the Drill resource in Recovery Plan. </param>
         /// <param name="recoveryPlanExclusionReason"> Exclusion reason of the Drill resource in Recovery Plan. </param>
@@ -46,22 +45,30 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="faultState"> Fault State of the Drill resource. </param>
         /// <param name="faultProperties"> Fault Properties. </param>
         /// <param name="forceInclusionState"> ForceInclusion status for this resource. Has the customer forceIncluded it?. </param>
-        /// <param name="haStatus"> HA status of the Drill resource. </param>
         /// <param name="attentionReason"> Attention reason if the Status is 'NeedsAttention'. </param>
         /// <param name="advisorRecommendationTypeId"> Recommendation Type Id for the recommendation. </param>
-        /// <param name="advisorHaRecommendationId"> Associated Advisor Recommendation link, if HA is not enabled on this resource. </param>
         /// <param name="rbacAssignmentError"> Last RBAC assignment error, if any. </param>
         /// <param name="monitoringRbacAssignmentError"> Monitoring RBAC assignment error, if any. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="drillType"> The discriminator for the Drill Resource object hierarchy. Matches the parent Drill type. </param>
+        /// <param name="faultEligibility">
+        /// Normal fault eligibility for a drill resource. Currently populated for regional resources only.
+        /// Omitted until evaluated. Eligibility does not indicate inclusion or readiness,
+        /// and force inclusion does not change this value.
+        /// </param>
+        /// <param name="faultIneligibleReason">
+        /// Reason the resource is ineligible under normal fault inclusion policy. Currently populated for regional resources only.
+        /// Contains the single applicable recovery-plan reason when Ineligible.
+        /// Omitted when Eligible, Unknown, or not yet evaluated. Failed or incomplete recovery-plan reads do not establish non-inclusion.
+        /// Binding and permission errors are reported separately in attentionReason and error fields.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryPhysicalZones, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionState? forceInclusionState, HighAvailabilityStatus? haStatus, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResourceIdentifier advisorHaRecommendationId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionState? forceInclusionState, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, DrillType drillType, FaultEligibility? faultEligibility, FaultIneligibleReason? faultIneligibleReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ResourceType = resourceType;
             ActiveLocations = activeLocations;
             RecoveryLocations = recoveryLocations;
-            ActivePhysicalZones = activePhysicalZones;
-            RecoveryPhysicalZones = recoveryPhysicalZones;
             InclusionState = inclusionState;
             RecoveryPlanInclusionState = recoveryPlanInclusionState;
             RecoveryPlanExclusionReason = recoveryPlanExclusionReason;
@@ -70,13 +77,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             FaultState = faultState;
             FaultProperties = faultProperties;
             ForceInclusionState = forceInclusionState;
-            HaStatus = haStatus;
             AttentionReason = attentionReason;
             AdvisorRecommendationTypeId = advisorRecommendationTypeId;
-            AdvisorHaRecommendationId = advisorHaRecommendationId;
             RbacAssignmentError = rbacAssignmentError;
             MonitoringRbacAssignmentError = monitoringRbacAssignmentError;
             ProvisioningState = provisioningState;
+            DrillType = drillType;
+            FaultEligibility = faultEligibility;
+            FaultIneligibleReason = faultIneligibleReason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -91,12 +99,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> List of recovery locations and zones of the Azure resource. </summary>
         public IReadOnlyList<string> RecoveryLocations { get; }
-
-        /// <summary> Active Resource location and physical zones of Azure Resource. </summary>
-        public IReadOnlyList<string> ActivePhysicalZones { get; }
-
-        /// <summary> Recovery Resource location and physical zones of HA Azure Resource. </summary>
-        public IReadOnlyList<string> RecoveryPhysicalZones { get; }
 
         /// <summary> Inclusion State of the Drill resource in Drill. </summary>
         public DrillResourceInclusionState? InclusionState { get; }
@@ -122,17 +124,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> ForceInclusion status for this resource. Has the customer forceIncluded it?. </summary>
         public ForceInclusionState? ForceInclusionState { get; }
 
-        /// <summary> HA status of the Drill resource. </summary>
-        public HighAvailabilityStatus? HaStatus { get; }
-
         /// <summary> Attention reason if the Status is 'NeedsAttention'. </summary>
         public DrillResourceAttentionReason AttentionReason { get; }
 
         /// <summary> Recommendation Type Id for the recommendation. </summary>
         public string AdvisorRecommendationTypeId { get; }
-
-        /// <summary> Associated Advisor Recommendation link, if HA is not enabled on this resource. </summary>
-        public ResourceIdentifier AdvisorHaRecommendationId { get; }
 
         /// <summary> Last RBAC assignment error, if any. </summary>
         public ResilienceManagementErrorDetail RbacAssignmentError { get; }
@@ -142,5 +138,23 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Provisioning state. </summary>
         public ResilienceManagementProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The discriminator for the Drill Resource object hierarchy. Matches the parent Drill type. </summary>
+        internal DrillType DrillType { get; set; }
+
+        /// <summary>
+        /// Normal fault eligibility for a drill resource. Currently populated for regional resources only.
+        /// Omitted until evaluated. Eligibility does not indicate inclusion or readiness,
+        /// and force inclusion does not change this value.
+        /// </summary>
+        public FaultEligibility? FaultEligibility { get; }
+
+        /// <summary>
+        /// Reason the resource is ineligible under normal fault inclusion policy. Currently populated for regional resources only.
+        /// Contains the single applicable recovery-plan reason when Ineligible.
+        /// Omitted when Eligible, Unknown, or not yet evaluated. Failed or incomplete recovery-plan reads do not establish non-inclusion.
+        /// Binding and permission errors are reported separately in attentionReason and error fields.
+        /// </summary>
+        public FaultIneligibleReason? FaultIneligibleReason { get; }
     }
 }

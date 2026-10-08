@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public readonly partial struct VmPresent : IEquatable<VmPresent>
     {
         private readonly string _value;
-        /// <summary> Atleast one VM Present. </summary>
+        /// <summary> At least one VM is present. </summary>
         private const string PresentValue = "Present";
         /// <summary> No VM present. </summary>
         private const string AbsentValue = "Absent";
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             _value = value;
         }
 
-        /// <summary> Atleast one VM Present. </summary>
+        /// <summary> At least one VM is present. </summary>
         public static VmPresent Present { get; } = new VmPresent(PresentValue);
 
         /// <summary> No VM present. </summary>

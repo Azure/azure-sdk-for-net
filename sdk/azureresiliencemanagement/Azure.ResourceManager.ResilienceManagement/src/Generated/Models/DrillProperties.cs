@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> Status of the last operation. </param>
         /// <param name="serviceGroupId"> Parent SG resource. </param>
         /// <param name="recoveryPlanProperties"> ROPlan properties. </param>
+        /// <param name="goalAssignmentProperties"> Goal Assignment properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
         /// <param name="executionState"> Execution state of the Drill. Whether it is currently running or not. </param>
@@ -42,16 +43,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="lastRunProperties"> Last run properties. </param>
         /// <param name="lastSyncOn"> Last sync time. </param>
         /// <param name="lastResyncReadinessCheckOn"> Last resync and readiness check time. </param>
-        /// <param name="managedOnBehalfOfConfiguration"> Managed RG v2 properties. </param>
         /// <param name="drillType"> The discriminator for the Drill object hierarchy. </param>
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
+        /// <param name="healthModelMonitoringProperties"> Azure Health Model monitoring properties of the Drill. </param>
+        /// <param name="sliMonitoringProperties"> SLI monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillProperties(ResilienceManagementProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ExecutionState? executionState, ExecutionReadinessState? executionReadinessState, ResilienceManagementRbacSetupMode? rbacSetupMode, AttentionReason attentionReason, DrillSystemMetadata systemMetadata, LastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillProperties(ResilienceManagementProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, GoalAssignmentPropertiesOfDrill goalAssignmentProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ExecutionState? executionState, ExecutionReadinessState? executionReadinessState, ResilienceManagementRbacSetupMode? rbacSetupMode, AttentionReason attentionReason, DrillSystemMetadata systemMetadata, LastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, HealthModelMonitoringProperties healthModelMonitoringProperties, SliMonitoringProperties sliMonitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ServiceGroupId = serviceGroupId;
             RecoveryPlanProperties = recoveryPlanProperties;
+            GoalAssignmentProperties = goalAssignmentProperties;
             DrillAssetProperties = drillAssetProperties;
             ChaosResourceProperties = chaosResourceProperties;
             ExecutionState = executionState;
@@ -62,9 +65,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             LastRunProperties = lastRunProperties;
             LastSyncOn = lastSyncOn;
             LastResyncReadinessCheckOn = lastResyncReadinessCheckOn;
-            ManagedOnBehalfOfConfiguration = managedOnBehalfOfConfiguration;
             DrillType = drillType;
             MonitoringProperties = monitoringProperties;
+            HealthModelMonitoringProperties = healthModelMonitoringProperties;
+            SliMonitoringProperties = sliMonitoringProperties;
             ErrorDetails = errorDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -77,6 +81,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> ROPlan properties. </summary>
         public RecoveryPlanPropertiesOfDrill RecoveryPlanProperties { get; set; }
+
+        /// <summary> Goal Assignment properties. </summary>
+        public GoalAssignmentPropertiesOfDrill GoalAssignmentProperties { get; set; }
 
         /// <summary> Properties for internal resources that are created for the Drill. </summary>
         public AssetPropertiesOfDrill DrillAssetProperties { get; set; }
@@ -108,25 +115,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Last resync and readiness check time. </summary>
         public DateTimeOffset? LastResyncReadinessCheckOn { get; }
 
-        /// <summary> Managed RG v2 properties. </summary>
-        internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }
-
         /// <summary> The discriminator for the Drill object hierarchy. </summary>
         internal DrillType DrillType { get; set; }
 
         /// <summary> Monitoring properties of the Drill. </summary>
         public MonitoringPropertiesOfDrill MonitoringProperties { get; set; }
 
+        /// <summary> Azure Health Model monitoring properties of the Drill. </summary>
+        public HealthModelMonitoringProperties HealthModelMonitoringProperties { get; set; }
+
+        /// <summary> SLI monitoring properties of the Drill. </summary>
+        public SliMonitoringProperties SliMonitoringProperties { get; set; }
+
         /// <summary> Error details associated with the resource. </summary>
         public ResponseError ErrorDetails { get; }
-
-        /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<ManagedBrokerTarget> ManagedOnBehalfOfMoboBrokerResources
-        {
-            get
-            {
-                return ManagedOnBehalfOfConfiguration is null ? default : ManagedOnBehalfOfConfiguration.MoboBrokerResources;
-            }
-        }
     }
 }

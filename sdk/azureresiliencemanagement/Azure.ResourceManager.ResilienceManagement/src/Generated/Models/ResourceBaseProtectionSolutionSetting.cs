@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Definition of recovery orchestration resource protection solution setting with recovery orchestration plan.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceCustomProtectionSetting"/>, <see cref="ResourceNativeProtectionSolutionSetting"/>, and <see cref="ResourceSiteRecoveryProtectionSetting"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceAzureTemplateProtectionSetting"/>, <see cref="ResourceCosmosDBProtectionSetting"/>, <see cref="ResourceCrossZoneVmRecoveryProtectionSetting"/>, <see cref="ResourceCustomProtectionSetting"/>, <see cref="ResourceNativeProtectionSolutionSetting"/>, <see cref="ResourceNetAppFilesProtectionSetting"/>, <see cref="ResourceServiceBusProtectionSetting"/>, <see cref="ResourceSiteRecoveryProtectionSetting"/>, and <see cref="ResourceStorageAccountProtectionSetting"/>.
     /// </summary>
     public abstract partial class ResourceBaseProtectionSolutionSetting
     {

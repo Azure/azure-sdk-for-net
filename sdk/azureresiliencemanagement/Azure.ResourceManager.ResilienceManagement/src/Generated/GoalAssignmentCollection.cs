@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(GoalAssignmentResource.ResourceType, out string goalAssignmentApiVersion);
             _goalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", GoalAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _goalAssignmentsRestClient = new GoalAssignments(_goalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, goalAssignmentApiVersion ?? "2026-04-01-preview");
+            _goalAssignmentsRestClient = new GoalAssignments(_goalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, goalAssignmentApiVersion ?? "2026-10-31-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Create a GoalAssignment
+        /// Creates or updates a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> or <paramref name="data"/> is null. </exception>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Create a GoalAssignment
+        /// Creates or updates a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> or <paramref name="data"/> is null. </exception>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Get a GoalAssignment
+        /// Gets a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Get a GoalAssignment
+        /// Gets a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// List GoalAssignment resources by tenant
+        /// Lists goal assignments in a service group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// List GoalAssignment resources by tenant
+        /// Lists goal assignments in a service group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -398,11 +398,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -455,11 +455,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -516,11 +516,11 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>

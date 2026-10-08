@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public readonly partial struct ResourceTypeCategories : IEquatable<ResourceTypeCategories>
     {
         private readonly string _value;
-        /// <summary> Indicates that alteast one Azure Site Recovery VMs are present. </summary>
+        /// <summary> Indicates that at least one Azure Site Recovery VM is present. </summary>
         private const string AzureSiteRecoveryVMsPresentValue = "AzureSiteRecoveryVMsPresent";
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeCategories"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             _value = value;
         }
 
-        /// <summary> Indicates that alteast one Azure Site Recovery VMs are present. </summary>
+        /// <summary> Indicates that at least one Azure Site Recovery VM is present. </summary>
         public static ResourceTypeCategories AzureSiteRecoveryVMsPresent { get; } = new ResourceTypeCategories(AzureSiteRecoveryVMsPresentValue);
 
         /// <summary> Determines if two <see cref="ResourceTypeCategories"/> values are the same. </summary>

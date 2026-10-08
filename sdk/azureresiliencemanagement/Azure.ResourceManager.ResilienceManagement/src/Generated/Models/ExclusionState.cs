@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public readonly partial struct ExclusionState : IEquatable<ExclusionState>
     {
         private readonly string _value;
-        /// <summary> Resource is not included in the goals. </summary>
+        /// <summary> The resource is excluded from the goals. </summary>
         private const string ExcludedValue = "Excluded";
-        /// <summary> Resource is excluded from the goals. </summary>
+        /// <summary> The resource is included in the goals. </summary>
         private const string IncludedValue = "Included";
 
         /// <summary> Initializes a new instance of <see cref="ExclusionState"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             _value = value;
         }
 
-        /// <summary> Resource is not included in the goals. </summary>
+        /// <summary> The resource is excluded from the goals. </summary>
         public static ExclusionState Excluded { get; } = new ExclusionState(ExcludedValue);
 
-        /// <summary> Resource is excluded from the goals. </summary>
+        /// <summary> The resource is included in the goals. </summary>
         public static ExclusionState Included { get; } = new ExclusionState(IncludedValue);
 
         /// <summary> Determines if two <see cref="ExclusionState"/> values are the same. </summary>

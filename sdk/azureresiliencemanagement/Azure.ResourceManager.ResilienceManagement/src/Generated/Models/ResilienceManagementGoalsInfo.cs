@@ -18,73 +18,50 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResilienceManagementGoalsInfo"/>. </summary>
-        /// <param name="templateId"> Arm id of the goal template. </param>
         /// <param name="assignmentId"> Arm id of the goal assignment. </param>
-        /// <param name="regionalRecoveryPointObjectiveStatus"> Regional RPO status of the service group. </param>
-        /// <param name="regionalRecoveryTimeObjectiveStatus"> Regional RTO status of the service group. </param>
-        internal ResilienceManagementGoalsInfo(ResourceIdentifier templateId, ResourceIdentifier assignmentId, ResilienceHealthStatus regionalRecoveryPointObjectiveStatus, ResilienceHealthStatus regionalRecoveryTimeObjectiveStatus)
+        internal ResilienceManagementGoalsInfo(ResourceIdentifier assignmentId)
         {
-            TemplateId = templateId;
             AssignmentId = assignmentId;
-            RegionalRecoveryPointObjectiveStatus = regionalRecoveryPointObjectiveStatus;
-            RegionalRecoveryTimeObjectiveStatus = regionalRecoveryTimeObjectiveStatus;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResilienceManagementGoalsInfo"/>. </summary>
-        /// <param name="templateId"> Arm id of the goal template. </param>
         /// <param name="assignmentId"> Arm id of the goal assignment. </param>
-        /// <param name="regionalRecoveryPointObjectiveInMinutes"> Regional RPO set in resilience goal in minutes. </param>
-        /// <param name="regionalRecoveryPointEstimatedInMinutes"> Computed recovery point estimated for the service group in minutes. </param>
-        /// <param name="regionalRecoveryPointObjectiveStatus"> Regional RPO status of the service group. </param>
-        /// <param name="regionalRecoveryTimeObjectiveInMinutes"> Regional RTO set in resilience goal in minutes. </param>
-        /// <param name="regionalRecoveryTimeActualInMinutes"> Computed RTA for the service group in minutes. </param>
-        /// <param name="regionalRecoveryTimeObjectiveStatus"> Regional RTO status of the service group. </param>
-        /// <param name="requireHighAvailability"> Whether the resource is required for high availability. </param>
-        /// <param name="requireDisasterRecovery"> Whether the resource is required for disaster recovery. </param>
+        /// <param name="zonalResiliency"> Zonal resiliency goal copied from the goal assignment. </param>
+        /// <param name="regionalResiliency"> Regional resiliency goal copied from the goal assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResilienceManagementGoalsInfo(ResourceIdentifier templateId, ResourceIdentifier assignmentId, IsoDuration? regionalRecoveryPointObjectiveInMinutes, IsoDuration? regionalRecoveryPointEstimatedInMinutes, ResilienceHealthStatus regionalRecoveryPointObjectiveStatus, IsoDuration? regionalRecoveryTimeObjectiveInMinutes, IsoDuration? regionalRecoveryTimeActualInMinutes, ResilienceHealthStatus regionalRecoveryTimeObjectiveStatus, UnifiedResilienceItemRequirementSelected? requireHighAvailability, UnifiedResilienceItemRequirementSelected? requireDisasterRecovery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResilienceManagementGoalsInfo(ResourceIdentifier assignmentId, UnifiedResilienceItemGoalRequirement zonalResiliency, UnifiedResilienceItemGoalRequirement regionalResiliency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TemplateId = templateId;
             AssignmentId = assignmentId;
-            RegionalRecoveryPointObjectiveInMinutes = regionalRecoveryPointObjectiveInMinutes;
-            RegionalRecoveryPointEstimatedInMinutes = regionalRecoveryPointEstimatedInMinutes;
-            RegionalRecoveryPointObjectiveStatus = regionalRecoveryPointObjectiveStatus;
-            RegionalRecoveryTimeObjectiveInMinutes = regionalRecoveryTimeObjectiveInMinutes;
-            RegionalRecoveryTimeActualInMinutes = regionalRecoveryTimeActualInMinutes;
-            RegionalRecoveryTimeObjectiveStatus = regionalRecoveryTimeObjectiveStatus;
-            RequireHighAvailability = requireHighAvailability;
-            RequireDisasterRecovery = requireDisasterRecovery;
+            ZonalResiliency = zonalResiliency;
+            RegionalResiliency = regionalResiliency;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Arm id of the goal template. </summary>
-        public ResourceIdentifier TemplateId { get; }
 
         /// <summary> Arm id of the goal assignment. </summary>
         public ResourceIdentifier AssignmentId { get; }
 
-        /// <summary> Regional RPO set in resilience goal in minutes. </summary>
-        public IsoDuration? RegionalRecoveryPointObjectiveInMinutes { get; }
+        /// <summary> Zonal resiliency goal copied from the goal assignment. </summary>
+        internal UnifiedResilienceItemGoalRequirement ZonalResiliency { get; }
 
-        /// <summary> Computed recovery point estimated for the service group in minutes. </summary>
-        public IsoDuration? RegionalRecoveryPointEstimatedInMinutes { get; }
+        /// <summary> Regional resiliency goal copied from the goal assignment. </summary>
+        internal UnifiedResilienceItemGoalRequirement RegionalResiliency { get; }
 
-        /// <summary> Regional RPO status of the service group. </summary>
-        public ResilienceHealthStatus RegionalRecoveryPointObjectiveStatus { get; }
+        /// <summary> Whether the goal is required for the service group. </summary>
+        public bool? Required
+        {
+            get
+            {
+                return ZonalResiliency is null ? (bool?)default : ZonalResiliency.Required;
+            }
+        }
 
-        /// <summary> Regional RTO set in resilience goal in minutes. </summary>
-        public IsoDuration? RegionalRecoveryTimeObjectiveInMinutes { get; }
-
-        /// <summary> Computed RTA for the service group in minutes. </summary>
-        public IsoDuration? RegionalRecoveryTimeActualInMinutes { get; }
-
-        /// <summary> Regional RTO status of the service group. </summary>
-        public ResilienceHealthStatus RegionalRecoveryTimeObjectiveStatus { get; }
-
-        /// <summary> Whether the resource is required for high availability. </summary>
-        public UnifiedResilienceItemRequirementSelected? RequireHighAvailability { get; }
-
-        /// <summary> Whether the resource is required for disaster recovery. </summary>
-        public UnifiedResilienceItemRequirementSelected? RequireDisasterRecovery { get; }
+        /// <summary> Whether the goal is required for the service group. </summary>
+        public bool? Required
+        {
+            get
+            {
+                return RegionalResiliency is null ? (bool?)default : RegionalResiliency.Required;
+            }
+        }
     }
 }

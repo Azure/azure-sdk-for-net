@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <summary> Initializes a new instance of GoalResourcesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GoalResources client used to send requests. </param>
         /// <param name="serviceGroupName"> The name of the service group. </param>
-        /// <param name="goalAssignmentName"> The name of the GoalAssignment. </param>
+        /// <param name="goalAssignmentName"> The name of the goal assignment. </param>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="maxCount"> Number of elements to return when retrieving results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>

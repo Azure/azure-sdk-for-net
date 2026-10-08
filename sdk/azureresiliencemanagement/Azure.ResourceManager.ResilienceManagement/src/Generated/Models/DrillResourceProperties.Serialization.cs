@@ -7,15 +7,17 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
-    /// <summary> Properties of the Resiliency Drill Resource. </summary>
-    public partial class DrillResourceProperties : IJsonModel<DrillResourceProperties>
+    /// <summary>
+    /// Properties of the Resiliency Drill Resource
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegionalDrillResourceProperties"/> and <see cref="ZonalDrillResourceProperties"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownDrillResourceProperties))]
+    public abstract partial class DrillResourceProperties : IJsonModel<DrillResourceProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DrillResourceProperties"/> for deserialization. </summary>
         internal DrillResourceProperties()
@@ -114,36 +116,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActivePhysicalZones))
-            {
-                writer.WritePropertyName("activePhysicalZones"u8);
-                writer.WriteStartArray();
-                foreach (string item in ActivePhysicalZones)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RecoveryPhysicalZones))
-            {
-                writer.WritePropertyName("recoveryPhysicalZones"u8);
-                writer.WriteStartArray();
-                foreach (string item in RecoveryPhysicalZones)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(InclusionState))
             {
                 writer.WritePropertyName("inclusionState"u8);
@@ -184,11 +156,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("forceInclusionState"u8);
                 writer.WriteStringValue(ForceInclusionState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HaStatus))
-            {
-                writer.WritePropertyName("haStatus"u8);
-                writer.WriteStringValue(HaStatus.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(AttentionReason))
             {
                 writer.WritePropertyName("attentionReason"u8);
@@ -198,11 +165,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("advisorRecommendationTypeId"u8);
                 writer.WriteStringValue(AdvisorRecommendationTypeId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AdvisorHaRecommendationId))
-            {
-                writer.WritePropertyName("advisorHaRecommendationId"u8);
-                writer.WriteStringValue(AdvisorHaRecommendationId);
             }
             if (options.Format != "W" && Optional.IsDefined(RbacAssignmentError))
             {
@@ -218,6 +180,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("drillType"u8);
+                writer.WriteStringValue(DrillType.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FaultEligibility))
+            {
+                writer.WritePropertyName("faultEligibility"u8);
+                writer.WriteStringValue(FaultEligibility.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FaultIneligibleReason))
+            {
+                writer.WritePropertyName("faultIneligibleReason"u8);
+                writer.WriteStringValue(FaultIneligibleReason.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -261,283 +238,17 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            ResourceIdentifier resourceId = default;
-            string resourceType = default;
-            IReadOnlyList<string> activeLocations = default;
-            IReadOnlyList<string> recoveryLocations = default;
-            IReadOnlyList<string> activePhysicalZones = default;
-            IReadOnlyList<string> recoveryPhysicalZones = default;
-            DrillResourceInclusionState? inclusionState = default;
-            ResourceInclusionState? recoveryPlanInclusionState = default;
-            RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default;
-            ResourceProtectionSolutionType? resourceProtectionSolutionType = default;
-            DrillResourceReadinessState? readinessState = default;
-            DrillResourceFaultState? faultState = default;
-            FaultProperties faultProperties = default;
-            ForceInclusionState? forceInclusionState = default;
-            HighAvailabilityStatus? haStatus = default;
-            DrillResourceAttentionReason attentionReason = default;
-            string advisorRecommendationTypeId = default;
-            ResourceIdentifier advisorHaRecommendationId = default;
-            ResilienceManagementErrorDetail rbacAssignmentError = default;
-            ResilienceManagementErrorDetail monitoringRbacAssignmentError = default;
-            ResilienceManagementProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("drillType"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("resourceId"u8))
+                switch (discriminator.GetString())
                 {
-                    resourceId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("resourceType"u8))
-                {
-                    resourceType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("activeLocations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    activeLocations = array;
-                    continue;
-                }
-                if (prop.NameEquals("recoveryLocations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    recoveryLocations = array;
-                    continue;
-                }
-                if (prop.NameEquals("activePhysicalZones"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    activePhysicalZones = array;
-                    continue;
-                }
-                if (prop.NameEquals("recoveryPhysicalZones"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    recoveryPhysicalZones = array;
-                    continue;
-                }
-                if (prop.NameEquals("inclusionState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    inclusionState = new DrillResourceInclusionState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("recoveryPlanInclusionState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryPlanInclusionState = new ResourceInclusionState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("recoveryPlanExclusionReason"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryPlanExclusionReason = new RecoveryPlanExclusionReason(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("resourceProtectionSolutionType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceProtectionSolutionType = new ResourceProtectionSolutionType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("readinessState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    readinessState = new DrillResourceReadinessState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("faultState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    faultState = new DrillResourceFaultState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("faultProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    faultProperties = FaultProperties.DeserializeFaultProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("forceInclusionState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    forceInclusionState = new ForceInclusionState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("haStatus"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    haStatus = new HighAvailabilityStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("attentionReason"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    attentionReason = DrillResourceAttentionReason.DeserializeDrillResourceAttentionReason(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("advisorRecommendationTypeId"u8))
-                {
-                    advisorRecommendationTypeId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("advisorHaRecommendationId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    advisorHaRecommendationId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("rbacAssignmentError"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rbacAssignmentError = ResilienceManagementErrorDetail.DeserializeResilienceManagementErrorDetail(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("monitoringRbacAssignmentError"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    monitoringRbacAssignmentError = ResilienceManagementErrorDetail.DeserializeResilienceManagementErrorDetail(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("provisioningState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new ResilienceManagementProvisioningState(prop.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    case "Regional":
+                        return RegionalDrillResourceProperties.DeserializeRegionalDrillResourceProperties(element, options);
+                    case "Zonal":
+                        return ZonalDrillResourceProperties.DeserializeZonalDrillResourceProperties(element, options);
                 }
             }
-            return new DrillResourceProperties(
-                resourceId,
-                resourceType,
-                activeLocations ?? new ChangeTrackingList<string>(),
-                recoveryLocations ?? new ChangeTrackingList<string>(),
-                activePhysicalZones ?? new ChangeTrackingList<string>(),
-                recoveryPhysicalZones ?? new ChangeTrackingList<string>(),
-                inclusionState,
-                recoveryPlanInclusionState,
-                recoveryPlanExclusionReason,
-                resourceProtectionSolutionType,
-                readinessState,
-                faultState,
-                faultProperties,
-                forceInclusionState,
-                haStatus,
-                attentionReason,
-                advisorRecommendationTypeId,
-                advisorHaRecommendationId,
-                rbacAssignmentError,
-                monitoringRbacAssignmentError,
-                provisioningState,
-                additionalBinaryDataProperties);
+            return UnknownDrillResourceProperties.DeserializeUnknownDrillResourceProperties(element, options);
         }
     }
 }

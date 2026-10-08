@@ -18,26 +18,28 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="UnifiedResilienceItemProperties"/>. </summary>
         /// <param name="goals"> Computed and copied data of resilience goals. </param>
-        /// <param name="recommendations"> Computed and copied data of Azure recommendations. </param>
+        /// <param name="resiliencyPosture"> Resiliency posture computed for the service group. </param>
         /// <param name="lastModifiedOn"> Last modified time of the unified resilience item. </param>
-        internal UnifiedResilienceItemProperties(ResilienceManagementGoalsInfo goals, RecommendationsData recommendations, DateTimeOffset lastModifiedOn)
+        internal UnifiedResilienceItemProperties(ResilienceManagementGoalsInfo goals, UnifiedResilienceItemResiliencyPosture resiliencyPosture, DateTimeOffset lastModifiedOn)
         {
             Goals = goals;
-            Recommendations = recommendations;
+            ResiliencyPosture = resiliencyPosture;
             LastModifiedOn = lastModifiedOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnifiedResilienceItemProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="goals"> Computed and copied data of resilience goals. </param>
-        /// <param name="recommendations"> Computed and copied data of Azure recommendations. </param>
+        /// <param name="resiliencyPosture"> Resiliency posture computed for the service group. </param>
+        /// <param name="billingInfo"> Usage plan and enrollment billing information for the service group. </param>
         /// <param name="lastModifiedOn"> Last modified time of the unified resilience item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnifiedResilienceItemProperties(ResilienceManagementProvisioningState? provisioningState, ResilienceManagementGoalsInfo goals, RecommendationsData recommendations, DateTimeOffset lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnifiedResilienceItemProperties(ResilienceManagementProvisioningState? provisioningState, ResilienceManagementGoalsInfo goals, UnifiedResilienceItemResiliencyPosture resiliencyPosture, UnifiedResilienceItemBillingInfo billingInfo, DateTimeOffset lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Goals = goals;
-            Recommendations = recommendations;
+            ResiliencyPosture = resiliencyPosture;
+            BillingInfo = billingInfo;
             LastModifiedOn = lastModifiedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,19 +50,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Computed and copied data of resilience goals. </summary>
         public ResilienceManagementGoalsInfo Goals { get; }
 
-        /// <summary> Computed and copied data of Azure recommendations. </summary>
-        internal RecommendationsData Recommendations { get; }
+        /// <summary> Resiliency posture computed for the service group. </summary>
+        public UnifiedResilienceItemResiliencyPosture ResiliencyPosture { get; }
+
+        /// <summary> Usage plan and enrollment billing information for the service group. </summary>
+        public UnifiedResilienceItemBillingInfo BillingInfo { get; }
 
         /// <summary> Last modified time of the unified resilience item. </summary>
         public DateTimeOffset LastModifiedOn { get; }
-
-        /// <summary> The high availability section of resilience recommendation. </summary>
-        public RecommendationsHighAvailabilityInfo RecommendationsHighAvailability
-        {
-            get
-            {
-                return Recommendations.HighAvailability;
-            }
-        }
     }
 }

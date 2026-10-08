@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(ResourceType, out string goalAssignmentApiVersion);
             _goalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _goalAssignmentsRestClient = new GoalAssignments(_goalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, goalAssignmentApiVersion ?? "2026-04-01-preview");
+            _goalAssignmentsRestClient = new GoalAssignments(_goalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, goalAssignmentApiVersion ?? "2026-10-31-preview");
             ValidateResourceId(id);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Get a GoalAssignment
+        /// Gets a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Get a GoalAssignment
+        /// Gets a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Update a GoalAssignment
+        /// Updates a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Update a GoalAssignment
+        /// Updates a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Delete a GoalAssignment
+        /// Deletes a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Delete a GoalAssignment
+        /// Deletes a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Recommends capacity improvements for resources under the goal assignments scope. Returns AI-powered capacity assessments and recommendations.
+        /// Recommends capacity improvements for resources under the goal assignment's scope. Returns AI-powered capacity assessments and recommendations.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Recommends capacity improvements for resources under the goal assignments scope. Returns AI-powered capacity assessments and recommendations.
+        /// Recommends capacity improvements for resources under the goal assignment's scope. Returns AI-powered capacity assessments and recommendations.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Action to exclude a resource from goal assignment.
+        /// Updates goal resources under a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         }
 
         /// <summary>
-        /// Action to exclude a resource from goal assignment.
+        /// Updates goal resources under a goal assignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-10-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -707,8 +707,8 @@ namespace Azure.ResourceManager.ResilienceManagement
             return GetCachedClient(client => new GoalMembersCollection(client, Id));
         }
 
-        /// <summary> Get a GoalResource. </summary>
-        /// <param name="goalResourceName"> The name of the GoalAssignment. </param>
+        /// <summary> Gets a goal resource. </summary>
+        /// <param name="goalResourceName"> The name of the goal resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -720,8 +720,8 @@ namespace Azure.ResourceManager.ResilienceManagement
             return await GetAllGoalMembers().GetAsync(goalResourceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a GoalResource. </summary>
-        /// <param name="goalResourceName"> The name of the GoalAssignment. </param>
+        /// <summary> Gets a goal resource. </summary>
+        /// <param name="goalResourceName"> The name of the goal resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="goalResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="goalResourceName"/> is an empty string, and was expected to be non-empty. </exception>
