@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Network.Models
             ETag = eTag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
+        public NetworkIPConfiguration() : this(default)
+        {
+        }
+
         /// <summary> Properties of the IP configuration. </summary>
         [WirePath("properties")]
         internal IPConfigurationPropertiesFormat Properties { get; }

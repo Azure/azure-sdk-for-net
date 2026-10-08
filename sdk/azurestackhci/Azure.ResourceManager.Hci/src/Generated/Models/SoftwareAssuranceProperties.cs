@@ -38,5 +38,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Customer Intent for Software Assurance Benefit. </summary>
         [WirePath("softwareAssuranceIntent")]
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent { get; set; }
+
+        /// <summary> TimeStamp denoting the latest SA benefit applicability is validated. </summary>
+        [WirePath("lastUpdated")]
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

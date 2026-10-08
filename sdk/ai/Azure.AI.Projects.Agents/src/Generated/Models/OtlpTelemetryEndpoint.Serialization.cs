@@ -151,12 +151,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OtlpTelemetryEndpoint(
                 kind,
-                exportedDataTypes,
+                exportedDataTypes ?? new ChangeTrackingList<ExportedDataTypes>(),
                 authentication,
                 additionalBinaryDataProperties,
                 endpoint,

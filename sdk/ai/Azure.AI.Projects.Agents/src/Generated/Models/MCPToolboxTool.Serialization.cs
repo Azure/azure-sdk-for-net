@@ -241,7 +241,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     toolConfigs = dictionary;
@@ -313,7 +313,7 @@ namespace Azure.AI.Projects.Agents
                         allowedTools = null;
                         continue;
                     }
-                    allowedTools = BinaryData.FromString(prop.Value.GetRawText());
+                    allowedTools = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("allowed_callers"u8))
@@ -337,7 +337,7 @@ namespace Azure.AI.Projects.Agents
                         requireApprovalInternal = null;
                         continue;
                     }
-                    requireApprovalInternal = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApprovalInternal = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("defer_loading"u8))
@@ -356,7 +356,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MCPToolboxTool(

@@ -2,12 +2,51 @@
 // Licensed under the MIT License.
 
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec.Tests;
 
 public class VersioningTests
 {
+    [TestCase("PreviewRetainedResource")]
+    [TestCase("PreviewRetainedResourceProperties")]
+    [TestCase("LatestStableResource")]
+    [TestCase("LatestStableResourceProperties")]
+    [TestCase("VersionedResource")]
+    [TestCase("VersionedResourceProperties")]
+    public void StableProjectionTypesAreNotExperimental(string typeName)
+    {
+        var type = typeof(VersionedResource).Assembly.GetType(
+            $"Azure.Provisioning.ProvisioningTypeSpec.{typeName}");
+
+        Assert.That(type, Is.Not.Null);
+        AssertNotExperimental(type!);
+    }
+
+    [TestCase("InitialStableProperty")]
+    [TestCase("PreviewRetainedProperty")]
+    [TestCase("LatestStableProperty")]
+    public void StableProjectionPropertiesAreNotExperimental(string propertyName)
+    {
+        var property = typeof(VersionedResourceProperties).GetProperty(propertyName);
+
+        Assert.That(property, Is.Not.Null);
+        AssertNotExperimental(property!);
+    }
+
+    [Test]
+    public void StableResourceVersionsAreNotExperimental()
+    {
+        var fields = typeof(VersionedResource.ResourceVersions).GetFields();
+
+        Assert.That(fields, Is.Not.Empty);
+        foreach (var field in fields)
+        {
+            AssertNotExperimental(field);
+        }
+    }
+
     [Test]
     public void StableProjectionContainsExpectedApis()
     {
@@ -24,4 +63,8 @@ public class VersioningTests
         Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.PreviewRetainedProperty)));
         Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.LatestStableProperty)));
     }
+
+    private static void AssertNotExperimental(MemberInfo member)
+        => Assert.That(member.CustomAttributes.Any(attribute =>
+            attribute.AttributeType.FullName == "System.Diagnostics.CodeAnalysis.ExperimentalAttribute"), Is.False);
 }

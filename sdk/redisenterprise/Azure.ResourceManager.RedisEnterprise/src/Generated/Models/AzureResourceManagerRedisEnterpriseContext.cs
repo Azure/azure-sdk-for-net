@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentList))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentProperties))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentPropertiesUser))]
+    [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentProvisioningError))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(AzureCacheForRedisMigrationProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterCreateProperties))]

@@ -159,7 +159,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobSignedIdentifiers(items);
+            return new BlobSignedIdentifiers(items ?? new ChangeTrackingList<BlobSignedIdentifier>());
         }
 
         /// <param name="writer"> The XML writer. </param>

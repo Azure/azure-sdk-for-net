@@ -285,6 +285,11 @@ internal sealed class ResponseOrchestrator
         // In-progress: signal cancellation (B11).
         execution.CancelRequested = true;
 
+        // Surface the explicit client-cancel cause on the handler's context so a cooperative
+        // handler can distinguish it (ClientCancellation / IsClientCancelled) from a graceful
+        // shutdown or a client disconnect, rather than only observing the generic cancellation token.
+        execution.Context?.SignalClientCancellation();
+
         await _cancellationProvider.CancelResponseAsync(responseId);
 
         // Cancel the execution's CTS so the handler's CancellationToken fires.
@@ -452,7 +457,7 @@ internal sealed class ResponseOrchestrator
                         // published to the wire stream (the publish now happens only AFTER a
                         // successful persist, below). Null out Response so the error handling path
                         // treats this as a pre-creation failure → standalone "error" SSE event per
-                        // spec (B8), for both the yield path and the registry relay path. Record the
+                        // spec (B8), for both the yield path and the task-stream relay path. Record the
                         // original persistence exception so the resilient relay can surface it with
                         // full fidelity (storage_error) instead of the generic server_error the relay
                         // would otherwise derive from the execution-CTS cancellation below — the real
@@ -684,15 +689,24 @@ internal sealed class ResponseOrchestrator
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        // A replay-capable registry publisher is needed whenever a second subscriber consumes the
-        // per-response wire stream instead of the direct yield path: background responses (SSE replay
-        // via GET ?stream=true, B2) AND every resilient (task-wrapped) streaming turn, whose client
-        // connection relays the wire stream because the handler runs inside a decoupled Core task
-        // (execution.RelayViaRegistry). A plain foreground non-resilient stream delivers events straight
-        // from the yield path — no second subscriber ever connects — so it uses a NullPublisher.
-        var publisher = (execution.IsBackground || execution.RelayViaRegistry)
-            ? await EventStreamObserver.CreateAsync(await _eventStreamRegistry.GetOrCreateAsync(execution.ResponseId, ct).ConfigureAwait(false), ct).ConfigureAwait(false)
-            : (IAsyncObserver<ResponseStreamEvent>)new NullPublisher();
+        // A stream publisher is needed whenever a second subscriber consumes events instead of the
+        // direct yield path: background responses (SSE replay via GET ?stream=true, B2) and every
+        // resilient streaming turn, whose client connection relays TaskRun.Stream because the handler
+        // runs inside a decoupled Core task. A plain foreground non-resilient stream delivers events
+        // straight from the yield path, so it uses a NullPublisher.
+        IAsyncObserver<ResponseStreamEvent> publisher;
+        if (execution.IsBackground || execution.RelayViaTaskStream)
+        {
+            publisher = execution.TaskStreamWriter is { } taskStream
+                ? await EventStreamObserver.CreateAsync(taskStream, ct).ConfigureAwait(false)
+                : await EventStreamObserver.CreateAsync(
+                    await _eventStreamRegistry.GetOrCreateAsync(execution.ResponseId, ct).ConfigureAwait(false),
+                    ct).ConfigureAwait(false);
+        }
+        else
+        {
+            publisher = new NullPublisher();
+        }
         var enumerator = ProcessEventsAsync(request, execution, context, publisher, ct)
             .GetAsyncEnumerator(ct);
         var terminalEventYielded = false;

@@ -33,8 +33,8 @@ namespace AzureExampleBasicClient
 
         public virtual Task<Response> BasicActionAsync(string queryParam, string headerParam, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ActionResponse> BasicAction(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<ActionResult> BasicAction(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ActionResponse>> BasicActionAsync(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<ActionResult>> BasicActionAsync(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
     }
 }

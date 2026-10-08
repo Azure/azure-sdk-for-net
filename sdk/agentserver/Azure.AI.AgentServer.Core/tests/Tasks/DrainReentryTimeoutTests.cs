@@ -46,11 +46,15 @@ public sealed class DrainReentryTimeoutTests
         TaskRun<string> run2 = await host.Invoker.StartAsync<string, string>(
             "chat", "in2", new RunOptions { TaskId = "t1", InputId = "i2" });
         Assert.That(run2.IsQueued, Is.True);
+        TaskRecord queuedRecord = (await host.Store.GetAsync("t1"))!;
+        Assert.That(ParseStamp(queuedRecord), Is.EqualTo(stamp1));
+        Assert.That((string?)queuedRecord.Payload[TaskWireKeys.PayloadLastInputId], Is.EqualTo("i2"));
+        Assert.That((string?)queuedRecord.Payload[TaskWireKeys.PayloadActiveInputId], Is.EqualTo("i1"));
 
         firstGate.SetResult();
         Assert.That(await run1.Completion, Is.EqualTo("first:in1"));
 
-        // Wait until the steered turn has been driven (last_input_id advances to i2).
+        // Acceptance already advanced the head; wait until i2 actually becomes active.
         DateTimeOffset stamp2 = await WaitForSteeredTurnStampAsync(host, "i2", TimeSpan.FromSeconds(5));
 
         // The per-turn budget is re-based on each drained turn (FR-015): the new turn-start is
@@ -69,7 +73,7 @@ public sealed class DrainReentryTimeoutTests
         {
             TaskRecord? record = await host.Store.GetAsync("t1");
             if (record is not null
-                && (string?)record.Payload[TaskWireKeys.PayloadLastInputId] == expectedInputId)
+                && (string?)record.Payload[TaskWireKeys.PayloadActiveInputId] == expectedInputId)
             {
                 return ParseStamp(record);
             }

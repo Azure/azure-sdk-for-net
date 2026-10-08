@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,7 +6,7 @@ using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 
@@ -18,9 +18,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     public sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
         private readonly ITransmitter _transmitter;
-        private readonly IMultiTenantTransmitter? _multiTenantTransmitter;
+        private readonly IMultiEndpointTransmitter? _multiEndpointTransmitter;
         private readonly string _instrumentationKey;
-        private readonly bool _multiTenantEnabled;
+        private readonly bool _multiEndpointEnabled;
         private AzureMonitorResource? _resource;
         private EndpointRouteBatch? _routeBatch;
         private bool _disposed;
@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         internal AzureMonitorLogExporter(ITransmitter transmitter)
-            : this(transmitter, MultiTenantConfig.Enabled)
+            : this(transmitter, MultiEndpointConfig.Enabled)
         {
         }
 
@@ -42,26 +42,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// The gate is a constructor parameter so a test can exercise either path without mutating
         /// process-wide state that other tests observe.
         /// </remarks>
-        internal AzureMonitorLogExporter(ITransmitter transmitter, bool multiTenantEnabled)
+        internal AzureMonitorLogExporter(ITransmitter transmitter, bool multiEndpointEnabled)
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
-            _multiTenantEnabled = multiTenantEnabled;
+            _multiEndpointEnabled = multiEndpointEnabled;
 
-            if (_multiTenantEnabled)
+            if (_multiEndpointEnabled)
             {
-                if (transmitter is not IMultiTenantTransmitter multiTenantTransmitter)
+                if (transmitter is not IMultiEndpointTransmitter multiEndpointTransmitter)
                 {
                     // The caller already took a reference on the shared transmitter, which owns
                     // storage timers and statsbeat, so it has to be released before unwinding.
                     transmitter.Dispose();
 
-                    throw new NotSupportedException($"Multi-tenant export requires a transmitter implementing {nameof(IMultiTenantTransmitter)}.");
+                    throw new NotSupportedException($"Multi-endpoint routing requires a transmitter implementing {nameof(IMultiEndpointTransmitter)}.");
                 }
 
-                _multiTenantTransmitter = multiTenantTransmitter;
+                _multiEndpointTransmitter = multiEndpointTransmitter;
 
-                AzureMonitorExporterEventSource.Log.MultiTenantExportEnabled();
+                AzureMonitorExporterEventSource.Log.MultiEndpointRoutingEnabled();
             }
         }
 
@@ -75,9 +75,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
-            if (_multiTenantEnabled)
+            if (_multiEndpointEnabled)
             {
-                return ExportMultiTenant(batch);
+                return ExportMultiEndpoint(batch);
             }
 
             ExportResult exportResult = ExportResult.Failure;
@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return exportResult;
         }
 
-        private ExportResult ExportMultiTenant(in Batch<LogRecord> batch)
+        private ExportResult ExportMultiEndpoint(in Batch<LogRecord> batch)
         {
             // A concurrent Export takes a fresh batch rather than sharing the cached one.
             var routeBatch = Interlocked.Exchange(ref _routeBatch, null) ?? new EndpointRouteBatch();
@@ -106,19 +106,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                LogsHelper.OtelToAzureMonitorLogsMultiTenant(batch, LogResource, routeBatch);
+                LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, LogResource, routeBatch);
 
                 if (routeBatch.Count == 0)
                 {
                     // Routing attributes are stamped upstream only on records meant to be routed;
-                    // a batch where nothing carried them is not addressed to any tenant, so report
+                    // a batch where nothing carried them is not addressed to any endpoint, so report
                     // success rather than treating an empty routed batch as a failed export.
                     return ExportResult.Success;
                 }
 
                 // Blocks until every group has been sent, so Reset cannot run under a consumer that
                 // still holds a group's item list.
-                return _multiTenantTransmitter!.Track(routeBatch, TelemetryItemOrigin.AzureMonitorLogExporter, CancellationToken.None);
+                return _multiEndpointTransmitter!.Track(routeBatch, TelemetryItemOrigin.AzureMonitorLogExporter, CancellationToken.None);
             }
             catch (Exception ex)
             {

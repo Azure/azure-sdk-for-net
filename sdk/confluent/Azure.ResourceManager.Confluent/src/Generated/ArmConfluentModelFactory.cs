@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     ssoUri,
                     offerDetail,
                     userDetail,
-                    new LinkOrganization(linkOrganizationToken, default),
+                    linkOrganizationToken is null ? default : new LinkOrganization(linkOrganizationToken, default),
                     default),
                 default);
         }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="privateOfferIds"> Array of Private Offer Ids. </param>
         /// <param name="status"> SaaS Offer Status. </param>
         /// <returns> A new <see cref="Models.ConfluentOfferDetail"/> instance for mocking. </returns>
-        public static ConfluentOfferDetail ConfluentOfferDetail(string publisherId = default, string id = default, string planId = default, string planName = default, string termUnit = default, string termId = default, string privateOfferId = default, IEnumerable<string> privateOfferIds = default, ConfluentSaaSOfferStatus? status = default)
+        public static ConfluentOfferDetail ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, string termId, string privateOfferId, IEnumerable<string> privateOfferIds = default, ConfluentSaaSOfferStatus? status = default)
         {
             privateOfferIds ??= new ChangeTrackingList<string>();
 
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 resourceType,
                 systemData,
                 kind,
-                streamGovernanceConfigPackage is null && metadata is null ? default : new EnvironmentProperties(new StreamGovernanceConfig(streamGovernanceConfigPackage, default), metadata, default),
+                streamGovernanceConfigPackage is null && metadata is null ? default : new EnvironmentProperties(streamGovernanceConfigPackage is null ? default : new StreamGovernanceConfig(streamGovernanceConfigPackage, default), metadata, default),
                 default);
         }
 
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.SchemaRegistryClusterRecord"/> instance for mocking. </returns>
         public static SchemaRegistryClusterRecord SchemaRegistryClusterRecord(string kind = default, string id = default, SCMetadataEntity metadata = default, SchemaRegistryClusterSpecEntity spec = default, string statusPhase = default)
         {
-            return new SchemaRegistryClusterRecord(kind, id, metadata is null && spec is null && statusPhase is null ? default : new SchemaRegistryClusterProperties(metadata, spec, new SchemaRegistryClusterStatusEntity(statusPhase, default), default), default);
+            return new SchemaRegistryClusterRecord(kind, id, metadata is null && spec is null && statusPhase is null ? default : new SchemaRegistryClusterProperties(metadata, spec, statusPhase is null ? default : new SchemaRegistryClusterStatusEntity(statusPhase, default), default), default);
         }
 
         /// <summary> Details of schema registry cluster spec. </summary>
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="network"> Specification of the cluster network. </param>
         /// <param name="byok"> Specification of the cluster byok. </param>
         /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
-        public static SCClusterSpecEntity SCClusterSpecEntity(string name = default, string availability = default, string cloud = default, string zone = default, ConfluentPackage? package = default, string region = default, string kafkaBootstrapEndpoint = default, string httpEndpoint = default, string apiEndpoint = default, string configKind = default, SCClusterNetworkEnvironmentEntity environment = default, SCClusterNetworkEnvironmentEntity network = default, SCClusterByokEntity byok = default)
+        public static SCClusterSpecEntity SCClusterSpecEntity(string name, string availability, string cloud, string zone, ConfluentPackage? package, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, string configKind, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok)
         {
             return new SCClusterSpecEntity(
                 name,
@@ -1081,10 +1081,10 @@ namespace Azure.ResourceManager.Confluent.Models
                     kind,
                     topicId,
                     metadata,
-                    new TopicsRelatedLink(partitionsRelated, default),
-                    new TopicsRelatedLink(configsRelated, default),
+                    partitionsRelated is null ? default : new TopicsRelatedLink(partitionsRelated, default),
+                    configsRelated is null ? default : new TopicsRelatedLink(configsRelated, default),
                     (inputConfigs ?? new ChangeTrackingList<TopicsInputConfig>()).ToList(),
-                    new TopicsRelatedLink(partitionsReassignmentsRelated, default),
+                    partitionsReassignmentsRelated is null ? default : new TopicsRelatedLink(partitionsReassignmentsRelated, default),
                     partitionsCount,
                     replicationFactor,
                     default),

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="encryption"> CMK Encryption property. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTestingResourceData"/> instance for mocking. </returns>
-        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, LoadTestingProvisioningState? provisioningState = default, string dataPlaneUri = default, LoadTestingCmkEncryptionProperties encryption = default, ManagedServiceIdentity identity = default)
+        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, LoadTestingProvisioningState? provisioningState, string dataPlaneUri, LoadTestingCmkEncryptionProperties encryption, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

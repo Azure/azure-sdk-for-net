@@ -36,8 +36,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="parentPoolName"> String representing parent IpamPool resource name. If empty the IpamPool will be a root pool. </param>
         /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
         /// <param name="provisioningState"> Provisioning states of a resource. </param>
+        /// <param name="minAllocationSize"> Minimum number of IP addresses required for allocations from this IpamPool to be compliant. Must be less than or equal to the maximum allocation size. If not specified or empty, no minimum is enforced. </param>
+        /// <param name="maxAllocationSize"> Maximum number of IP addresses allowed for allocations from this IpamPool to be compliant. Must be greater than or equal to the minimum allocation size. If not specified or empty, no maximum is enforced. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpamPoolProperties(string description, string displayName, IReadOnlyList<IpamIPType> ipAddressType, string parentPoolName, IList<string> addressPrefixes, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IpamPoolProperties(string description, string displayName, IReadOnlyList<IpamIPType> ipAddressType, string parentPoolName, IList<string> addressPrefixes, NetworkProvisioningState? provisioningState, string minAllocationSize, string maxAllocationSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DisplayName = displayName;
@@ -45,6 +47,8 @@ namespace Azure.ResourceManager.Network.Models
             ParentPoolName = parentPoolName;
             AddressPrefixes = addressPrefixes;
             ProvisioningState = provisioningState;
+            MinAllocationSize = minAllocationSize;
+            MaxAllocationSize = maxAllocationSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,5 +71,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of IP address prefixes of the resource. </summary>
         [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
+
+        /// <summary> Minimum number of IP addresses required for allocations from this IpamPool to be compliant. Must be less than or equal to the maximum allocation size. If not specified or empty, no minimum is enforced. </summary>
+        [WirePath("minAllocationSize")]
+        public string MinAllocationSize { get; set; }
+
+        /// <summary> Maximum number of IP addresses allowed for allocations from this IpamPool to be compliant. Must be greater than or equal to the minimum allocation size. If not specified or empty, no maximum is enforced. </summary>
+        [WirePath("maxAllocationSize")]
+        public string MaxAllocationSize { get; set; }
     }
 }

@@ -13,7 +13,6 @@ using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -46,14 +45,50 @@ public class HostedResilienceFailureTests
 
     [Test]
     [NonParallelizable]
-    public void HostedMode_ExplicitCoreCredentialReplacesResponsesDefault()
+    public void HostedMode_ComposesWhenCoreCredentialIsRegisteredFirst()
     {
         ConfigureHostedEnvironment();
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddResponsesServer(o => o.ResilientBackground = true);
         var credential = new TestCredential();
+        services.AddResilientTasks(credential);
 
+        Assert.DoesNotThrow(() =>
+            services.AddResponsesServerCore(
+                o => o.ResilientBackground = true,
+                CreateHostedStorage(credential)));
+
+        using ServiceProvider provider = services.BuildServiceProvider();
+        Assert.That(
+            provider.GetRequiredService<TokenCredential>(),
+            Is.SameAs(credential));
+        Assert.That(
+            provider.GetRequiredService<ITaskStore>(),
+            Is.InstanceOf<HostedTaskStore>());
+        Assert.That(
+            provider.GetRequiredService<TaskHostEnvironment>().Credential,
+            Is.SameAs(credential));
+        Assert.That(
+            ((FoundryStorageProvider)provider.GetRequiredService<ResponsesProvider>()).Pipeline,
+            Is.Not.Null);
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void HostedMode_ComposesWhenCoreCredentialIsRegisteredAfter()
+    {
+        ConfigureHostedEnvironment();
+        var services = new ServiceCollection();
+        services.AddLogging();
+        var credential = new TestCredential();
+        services.AddResponsesServerCore(
+            o => o.ResilientBackground = true,
+            CreateHostedStorage(credential));
+
+        Assert.That(
+            services.Any(descriptor => descriptor.ServiceType == typeof(TokenCredential)),
+            Is.False,
+            "Settings-bound hosted storage must not publish an ambient credential.");
         Assert.DoesNotThrow(() => services.AddResilientTasks(credential));
 
         using ServiceProvider provider = services.BuildServiceProvider();
@@ -66,47 +101,9 @@ public class HostedResilienceFailureTests
         Assert.That(
             provider.GetRequiredService<TaskHostEnvironment>().Credential,
             Is.SameAs(credential));
-    }
-
-    [Test]
-    [TestCase(true)]
-    [TestCase(false)]
-    [NonParallelizable]
-    public void HostedMode_UsesEffectiveFactoryCredentialForResponsesAndTasks(
-        bool credentialRegisteredFirst)
-    {
-        ConfigureHostedEnvironment();
-        var services = new ServiceCollection();
-        services.AddLogging();
-        var credential = new TestCredential();
-
-        void AddCredential() =>
-            services.AddSingleton<TokenCredential>(_ => credential);
-        void AddResponses() =>
-            services.AddResponsesServer(o => o.ResilientBackground = true);
-
-        if (credentialRegisteredFirst)
-        {
-            AddCredential();
-            AddResponses();
-        }
-        else
-        {
-            AddResponses();
-            AddCredential();
-        }
-
-        using ServiceProvider provider = services.BuildServiceProvider();
         Assert.That(
-            provider.GetRequiredService<TokenCredential>(),
-            Is.SameAs(credential));
-        Assert.That(
-            provider.GetRequiredService<ITaskStore>(),
-            Is.InstanceOf<HostedTaskStore>());
-        Assert.That(
-            provider.GetRequiredService<TaskHostEnvironment>().Credential,
-            Is.SameAs(credential));
-        Assert.That(provider.GetRequiredService<HttpPipeline>(), Is.Not.Null);
+            ((FoundryStorageProvider)provider.GetRequiredService<ResponsesProvider>()).Pipeline,
+            Is.Not.Null);
     }
 
     [Test]
@@ -121,7 +118,9 @@ public class HostedResilienceFailureTests
             (ctx, ct) => Task.FromResult(ctx.Input));
 
         Assert.DoesNotThrow(() =>
-            services.AddResponsesServer(o => o.ResilientBackground = true));
+            services.AddResponsesServerCore(
+                o => o.ResilientBackground = true,
+                CreateHostedStorage()));
     }
 
     [Test]
@@ -175,9 +174,28 @@ public class HostedResilienceFailureTests
         services.AddRouting();
         services.AddAgentServerCore();
         services.AddSingleton<ResponseHandler>(new TestHandler());
-        services.AddResponsesServer(o => o.ResilientBackground = true);
+
+        // Hosted registration binds the Foundry credential + endpoint from settings in production;
+        // this unit test drives the shared core directly with a fake credential and the hosted
+        // storage endpoint so it can assert the hosted composition without a live backend.
+        services.AddResponsesServerCore(
+            o => o.ResilientBackground = true,
+            CreateHostedStorage());
 
         return services.BuildServiceProvider();
+    }
+
+    private static ResponsesHostedStorage CreateHostedStorage(
+        TokenCredential? credential = null)
+    {
+        var projectEndpoint = new Uri("https://example.com/project");
+        var storageBaseUri = ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
+            projectEndpoint,
+            isDevelopment: false);
+        return new ResponsesHostedStorage(
+            credential ?? new FakeTokenCredential(),
+            projectEndpoint,
+            storageBaseUri);
     }
 
     private static void ConfigureHostedEnvironment()

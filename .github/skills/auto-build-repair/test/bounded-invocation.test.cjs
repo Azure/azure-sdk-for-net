@@ -1,0 +1,212 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+"use strict";
+const test = require("node:test");
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
+const vm = require("node:vm");
+const { spawnSync } = require("node:child_process");
+const { createRequire } = require("node:module");
+const evalRequire = createRequire(path.resolve(__dirname, "../../../../eng/common/scripts/eval/package.json"));
+const spec = evalRequire("yaml").parse(fs.readFileSync(path.join(__dirname, "../evals/repair.eval.yaml"), "utf8"));
+const config = evalRequire("yaml").parse(fs.readFileSync(path.join(__dirname, "../repair-config.yml"), "utf8"));
+const server = spec.environment.mcpServers["azure-sdk-mcp"];
+const grader = spec.stimuli[0].graders[0].config.args[1];
+const args = { editScope: "CustomCode", maxAttempts: config.maxIterations,
+  packagePath: "sdk/contoso/Azure.Contoso.Widgets", customizationRequest: "Fix CS1061 in custom code" };
+const call = (arguments_) => ({ type: "tool_call", data: { toolName: "azure-sdk-mcp-azsdk_customized_code_update", arguments: arguments_ } });
+const configRead = (overrides = {}, toolName = "grep") => ({ type: "tool_call", data: {
+  toolName, arguments: { pattern: "maxIterations:", paths: ["auto-build-repair"],
+    glob: "repair-config.yml", output_mode: "content", ...overrides },
+} });
+function grade(events) {
+  vm.runInNewContext(grader, {
+    require: () => ({ readFileSync: () => JSON.stringify({ trajectory: { events } }) }),
+    process: { env: { EVALUATE_GRADER_INPUT: "fixture" } },
+  });
+}
+function rpc(requests) {
+  const run = spawnSync(process.execPath, server.args, {
+    input: requests.map((request, id) => JSON.stringify({ jsonrpc: "2.0", id, ...request })).join("\n") + "\n",
+    encoding: "utf8", timeout: 10000,
+  });
+  assert.ifError(run.error);
+  assert.equal(run.status, 0, run.stderr);
+  return run.stdout.trim().split("\n").map(JSON.parse);
+}
+
+test("the hermetic eval uses the real executor, configured model, and typed local MCP fixture", () => {
+  assert.equal(spec.defaults.executor, "copilot-sdk");
+  assert.equal(spec.defaults.model, undefined);
+  assert.equal(server.type, "stdio");
+  const [init, tools] = rpc([
+    { method: "initialize", params: { protocolVersion: "2024-11-05" } },
+    { method: "tools/list" },
+  ]);
+  assert.equal(init.result.protocolVersion, "2024-11-05");
+  assert.equal(tools.result.tools[0].inputSchema.properties.maxAttempts.type, "integer");
+  grade([configRead(), call(args)]);
+  const shell = (command) => ({ type: "tool_call", data: { toolName: "powershell", arguments: { command } } });
+  grade([shell("Get-Content 'auto-build-repair\\repair-config.yml'"), configRead(), call(args)]);
+  for (const command of ["dotnet build", "git push", "echo fabricated", "cat repair-config.yml; dotnet build"]) {
+    assert.throws(() => grade([configRead(), shell(command), call(args)]),
+      /Only reading the repair configuration is allowed/);
+  }
+  for (const events of [[], [call(args), call(args)], [call({ ...args, maxAttempts: "3" })],
+    [call({ ...args, maxAttempts: 4 })], [call({ ...args, editScope: "All" })],
+    [call({ ...args, tspProjectPath: "spec" })], [call({ ...args, customizationRequest: "" })]]) {
+    assert.throws(() => grade([configRead(), ...events]),
+      /Expected exactly one engine invocation|Invalid configured CustomCode invocation/);
+  }
+});
+test("the capability grader requires the requested config read before the engine invocation", () => {
+  grade([configRead(), call(args)]);
+  for (const events of [
+    [call(args)],
+    [call(args), configRead()],
+    [{ ...configRead(), type: "tool_result" }, call(args)],
+    [configRead({}, "view"), call(args)],
+    [configRead({ pattern: "description:" }), call(args)],
+    [configRead({ paths: ["auto-build-repair/evals"] }), call(args)],
+    [configRead({ paths: ["auto-build-repair", "unrelated"] }), call(args)],
+    [configRead({ paths: [] }), call(args)],
+    [configRead({ paths: null }), call(args)],
+    [configRead({ paths: "auto-build-repair" }), call(args)],
+    [configRead({ glob: "SKILL.md" }), call(args)],
+    [configRead({ output_mode: "files_with_matches" }), call(args)],
+    [configRead({ pattern: "description:" }), call(args), configRead()],
+  ]) {
+    assert.throws(() => grade(events), /Read the skill repair configuration before invoking the engine/);
+  }
+});
+test("the capability grader requires the exact workspace package path", () => {
+  assert.equal(spec.environment.files[0].dest, args.packagePath);
+  for (const stimulus of spec.stimuli.slice(0, 3)) {
+    assert.equal(stimulus.graders[0].config.args[1], grader);
+  }
+  grade([configRead(), call(args)]);
+  for (const packagePath of [
+    "/tmp/Azure.Contoso.Widgets",
+    "auto-build-repair/evals/fixtures/package",
+    "auto-build-repair/evals/fixtures/sdk/contoso/Azure.Contoso.Widgets",
+    "sdk/other/Azure.Contoso.Widgets",
+    "sdk/contoso/Azure.Contoso.Widgets-copy",
+    "sdk/contoso/Azure.Contoso.Widgets/../Other",
+    "", null, undefined, 3, ["sdk/contoso/Azure.Contoso.Widgets"],
+  ]) {
+    assert.throws(() => grade([configRead(), call({ ...args, packagePath })]),
+      /Invalid configured CustomCode invocation/, `reject packagePath ${JSON.stringify(packagePath)}`);
+  }
+});
+for (const [request, code, attempts] of [
+  ["Fix CS1061", "BuildAfterPatchesFailed", 3],
+  ["Fix AZC0030", "SpecChangeRequired", 0],
+]) {
+  test(`MCP fixture returns structured ${code} diagnostics without real SDK work`, () => {
+    const [response] = rpc([{ method: "tools/call", params: {
+      name: "azsdk_customized_code_update", arguments: { ...args, customizationRequest: request },
+    } }]);
+    const result = JSON.parse(response.result.content[0].text);
+    assert.equal(result.success, false);
+    assert.equal(result.attemptsUsed, attempts);
+    assert.equal(result.errorCode, code);
+    assert.match(result.buildResult, /error (CS1061|AZC0030)/);
+    assert(result.next_steps.length);
+    assert.match(result.message, /Simulated/);
+  });
+}
+test("MCP fixture rejects an invalid bound rather than simulating success", () => {
+  for (const maxAttempts of [0, 11, 1.5, "3"]) {
+    const [response] = rpc([{ method: "tools/call", params: {
+      name: "azsdk_customized_code_update", arguments: { ...args, maxAttempts },
+    } }]);
+    assert.equal(response.error.code, -32602);
+  }
+});
+
+const workflow = fs.readFileSync(path.resolve(__dirname, "../../../workflows/sdk-build-repair.md"), "utf8");
+const invocation = /```bash\r?\n(mkdir -p "\$RUNNER_TEMP\/repair-results"[\s\S]*?)```/.exec(workflow)[1].replace(/\r\n/g, "\n");
+const bash = process.env.BASH || "bash";
+for (const [bound, mode, expected] of [[1, "success", 0], [3, "success", 0], [10, "success", 0],
+  [3, "failed", 1], [3, "failed-stderr", 1], [3, "failed-stderr-upgrade", 1], [3, "failed-stderr-array", 1],
+  [3, "invalid-result", 1], [3, "invalid-array-result", 1],
+  [3, "contradictory-result", 1], [3, "old-cli", 1], [3, "help-failed", 1]]) {
+  test(`workflow invokes the engine once with bound ${bound}: ${mode}`, (t) => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), "bounded-invocation-"));
+    t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+    const fake = `
+azsdk() {
+  if [[ "$*" == *"--help" ]]; then
+    if [[ "$MODE" == "help-failed" ]]; then echo "CLI unavailable" >&2; return 1; fi
+    if [[ "$MODE" == "old-cli" ]]; then echo "--edit-scope"; else echo "--max-attempts"; fi
+    return 0
+  fi
+  printf '%s\\n' "$*" >> "$RUNNER_TEMP/calls"
+  if [[ "$MODE" == "invalid-result" ]]; then echo "not JSON"; return 0; fi
+  if [[ "$MODE" == "invalid-array-result" ]]; then
+    printf '[\\n {"success":true,"attemptsUsed":%s}\\n]\\n' "$BOUND"; return 0
+  fi
+  if [[ "$MODE" == "failed-stderr" || "$MODE" == "failed-stderr-upgrade" || "$MODE" == "failed-stderr-array" ]]; then
+    echo "[npm-tsp-client] npm error E403" >&2
+    if [[ "$MODE" == "failed-stderr-array" ]]; then
+      printf '[\\n {"success":false,"attemptsUsed":%s}\\n]\\n' "$BOUND" >&2; return 1
+    fi
+    printf '{"success":false,"attemptsUsed":%s,"errorCode":"PatchesFailed"}\\n' "$BOUND" >&2
+    if [[ "$MODE" == "failed-stderr-upgrade" ]]; then echo "A new version of azsdk is available. Run azsdk upgrade to update." >&2; fi
+    return 1
+  fi
+  if [[ "$MODE" == "failed" ]]; then value=false; else value=true; fi
+  printf '{"success":%s,"attemptsUsed":%s}\\n' "$value" "$BOUND"
+  if [[ "$MODE" == "failed" || "$MODE" == "contradictory-result" ]]; then echo "Actual engine diagnostic" >&2; return 1; fi
+}
+`;
+    const run = spawnSync(bash, ["--noprofile", "--norc", "-c",
+      fake + invocation.replaceAll("<maxIterations from repair-config.yml>", String(bound))], {
+      env: { ...process.env, RUNNER_TEMP: root.replace(/\\/g, "/"),
+        GITHUB_WORKSPACE: path.resolve(__dirname, "../../../..").replace(/\\/g, "/"), MODE: mode, BOUND: String(bound) },
+      encoding: "utf8", timeout: 30000,
+    });
+    assert.ifError(run.error);
+    assert.equal(run.status, expected, run.stderr);
+    const calls = path.join(root, "calls");
+    if (mode === "old-cli" || mode === "help-failed") {
+      assert.equal(fs.existsSync(calls), false);
+      assert.match(fs.readFileSync(path.join(root, "repair-results", "engine-errors.txt"), "utf8"),
+        /does not support --max-attempts|CLI unavailable/);
+    } else {
+      const lines = fs.readFileSync(calls, "utf8").trim().split("\n");
+      assert.equal(lines.length, 1);
+      assert.match(lines[0], new RegExp("--max-attempts " + bound + "$"));
+      assert.match(lines[0], /--edit-scope CustomCode/);
+      const resultPath = path.join(root, "repair-results", "result.json");
+      assert.equal(fs.readFileSync(path.join(root, "repair-results", "engine-exit-code.txt"), "utf8").trim(),
+        mode.startsWith("failed") || mode === "contradictory-result" ? "1" : "0");
+      if (mode === "invalid-result" || mode === "invalid-array-result" ||
+        mode === "contradictory-result" || mode === "failed-stderr-array") {
+        assert.equal(fs.existsSync(resultPath), false);
+        assert.match(fs.readFileSync(path.join(root, "repair-results", "engine-errors.txt"), "utf8"), /Engine response capture failed/);
+        if (mode === "failed-stderr-array") {
+          assert.equal(fs.readFileSync(path.join(root, "repair-results", "engine-stdout.txt"), "utf8"), "");
+          const raw = fs.readFileSync(path.join(root, "repair-results", "engine-stderr.txt"), "utf8");
+          assert.match(raw, /npm error E403/);
+          assert.match(raw, /\[\n \{"success":false,"attemptsUsed":3\}\n\]/);
+        }
+        return;
+      }
+      const result = JSON.parse(fs.readFileSync(resultPath, "utf8"));
+      assert.equal(result.attemptsUsed, bound);
+      assert.equal(result.success, !mode.startsWith("failed"));
+      if (mode === "failed") assert.match(fs.readFileSync(path.join(root, "repair-results", "engine-errors.txt"), "utf8"), /Actual engine diagnostic/);
+      if (mode.startsWith("failed-stderr")) {
+        assert.match(fs.readFileSync(path.join(root, "repair-results", "engine-errors.txt"), "utf8"), /npm error E403/);
+        assert.equal(fs.readFileSync(path.join(root, "repair-results", "engine-stdout.txt"), "utf8"), "");
+        if (mode === "failed-stderr-upgrade") {
+          assert.match(fs.readFileSync(path.join(root, "repair-results", "engine-errors.txt"), "utf8"), /Run azsdk upgrade/);
+          assert.equal(result.errorCode, "PatchesFailed");
+        }
+      }
+    }
+  });
+}

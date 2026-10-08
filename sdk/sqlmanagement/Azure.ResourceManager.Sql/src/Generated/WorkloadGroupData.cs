@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.MinResourcePercent;
+                return Properties is null ? (int?)default : Properties.MinResourcePercent;
             }
             set
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.MaxResourcePercent;
+                return Properties is null ? (int?)default : Properties.MaxResourcePercent;
             }
             set
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.MinResourcePercentPerRequest;
+                return Properties is null ? (double?)default : Properties.MinResourcePercentPerRequest;
             }
             set
             {

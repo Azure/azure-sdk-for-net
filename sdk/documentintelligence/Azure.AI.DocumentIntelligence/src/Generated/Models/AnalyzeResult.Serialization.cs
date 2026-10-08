@@ -416,7 +416,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AnalyzeResult(
@@ -425,7 +425,7 @@ namespace Azure.AI.DocumentIntelligence
                 stringIndexType,
                 contentFormat,
                 content,
-                pages,
+                pages ?? new ChangeTrackingList<DocumentPage>(),
                 paragraphs ?? new ChangeTrackingList<DocumentParagraph>(),
                 tables ?? new ChangeTrackingList<DocumentTable>(),
                 figures ?? new ChangeTrackingList<DocumentFigure>(),

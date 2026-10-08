@@ -13,14 +13,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The request to cancel an occurrence. </summary>
+    /// <summary> Request body for canceling a scheduled action occurrence. </summary>
     public partial class CancelOccurrenceRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CancelOccurrenceRequestContent"/>. </summary>
-        /// <param name="resourceIds"> The resources the cancellation should act on. If no resource is passed in the list, Scheduled Action will cancel the occurrence for all resources. </param>
+        /// <param name="resourceIds"> The resources for which operations should be canceled. An empty array cancels all operations for all resources for the occurrence. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceIds"/> is null. </exception>
         public CancelOccurrenceRequestContent(IEnumerable<ResourceIdentifier> resourceIds)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CancelOccurrenceRequestContent"/>. </summary>
-        /// <param name="resourceIds"> The resources the cancellation should act on. If no resource is passed in the list, Scheduled Action will cancel the occurrence for all resources. </param>
+        /// <param name="resourceIds"> The resources for which operations should be canceled. An empty array cancels all operations for all resources for the occurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CancelOccurrenceRequestContent(IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The resources the cancellation should act on. If no resource is passed in the list, Scheduled Action will cancel the occurrence for all resources. </summary>
+        /// <summary> The resources for which operations should be canceled. An empty array cancels all operations for all resources for the occurrence. </summary>
         public IList<ResourceIdentifier> ResourceIds { get; }
     }
 }

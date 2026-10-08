@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.Mode;
+                return Properties is null ? (GalleryInVmAccessControlRulesMode?)default : Properties.Mode;
             }
             set
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.DefaultAccess;
+                return Properties is null ? (ComputeGalleryEndpointAccess?)default : Properties.DefaultAccess;
             }
             set
             {

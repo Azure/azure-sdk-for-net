@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Azure SDK client library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
-    <Version>1.6.1</Version>
+    <Version>1.6.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.5.0</ApiCompatVersion>
     <PackageTags>Azure, WebPubSub</PackageTags>
@@ -24,12 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
-    <!--
-      TODO:Changing to a PackageReference since we only want to depend on the already GA'ed version of WebPubSub.  Change back after release.
-        -->
-    <!--<ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />-->
+    <!-- TODO: Change to a PackageReference before release since we only want to depend on the already GA'ed version of WebPubSub.
+               Change back after release for development if required. -->
+    <!-- <ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />-->
+    <!-- <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" /> -->
+
     <PackageReference Include="Azure.Messaging.WebPubSub" />
+    <PackageReference Include="Microsoft.Azure.WebPubSub.Common" />
   </ItemGroup>
 
 </Project>

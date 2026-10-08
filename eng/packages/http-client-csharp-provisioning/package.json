@@ -36,19 +36,21 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260911.2",
-    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260914.1",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260910.2"
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260922.2",
+    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260929.3",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20261005.4",
+    "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.72.0",
-    "@azure-tools/typespec-azure-core": "0.72.0",
+    "@azure-tools/typespec-azure-core": "0.72.1",
     "@azure-tools/typespec-azure-resource-manager": "0.72.0",
     "@azure-tools/typespec-azure-rulesets": "0.72.0",
-    "@azure-tools/typespec-client-generator-core": "0.72.0",
+    "@azure-tools/typespec-client-generator-core": "0.72.2",
     "@azure-tools/typespec-liftr-base": "0.14.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "~26.0.1",
+    "@types/pluralize": "^0.0.33",
     "@typespec/compiler": "1.16.0",
     "@typespec/events": "0.86.0",
     "@typespec/http": "1.16.0",
@@ -67,9 +69,6 @@
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.62.0",
     "vitest": "^4.1.9"
-  },
-  "overrides": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260910.2"
   },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-autorest",
