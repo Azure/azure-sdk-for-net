@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             TryGetApiVersion(ResourceType, out string deviceProvisioningServicesPrivateLinkResourceApiVersion);
             _groupIdInformationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            _groupIdInformationsRestClient = new GroupIdInformations(_groupIdInformationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateLinkResourceApiVersion ?? "2025-02-01-preview");
+            _groupIdInformationsRestClient = new GroupIdInformations(_groupIdInformationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateLinkResourceApiVersion ?? "2026-08-31");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2026-08-31. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2026-08-31. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
     public static partial class ArmNapsterOmniagentApiModelFactory
     {
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -50,7 +51,6 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerApplication"> Application name. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerApplication"/> is null. </exception>
         /// <returns> A new <see cref="Models.NapsterOrganizationProperties"/> instance for mocking. </returns>
         public static NapsterOrganizationProperties NapsterOrganizationProperties(NapsterMarketplaceDetails marketplace = default, NapsterUserDetails user = default, NapsterProvisioningState? provisioningState = default, string partnerApplication = default, NapsterSingleSignOnProperties singleSignOnProperties = default)
         {
@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                 default);
         }
 
+        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="saaSId"> Marketplace SaaS Resource Id. </param>
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
             return new NapsterMarketplaceDetails(subscriptionId, subscriptionStatus, saaSId, offerDetails, default);
         }
 
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
         /// <param name="planId"> Plan Id for the marketplace offer. </param>
@@ -92,6 +94,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                 default);
         }
 
+        /// <summary> User details for an organization. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
@@ -109,6 +112,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                 default);
         }
 
+        /// <summary> Properties specific to Single Sign On Resource. </summary>
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
         /// <param name="state"> State of the Single Sign On for the resource. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
@@ -128,6 +132,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the Organization Resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NapsterOrganizationPatch"/> instance for mocking. </returns>
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
             return new NapsterOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
+        /// <summary> SaaS-related data properties. </summary>
         /// <param name="saaSId"> SaaS resource id. </param>
         /// <returns> A new <see cref="Models.SaaSInfo"/> instance for mocking. </returns>
         public static SaaSInfo SaaSInfo(string saaSId = default)
@@ -145,6 +151,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
             return new SaaSInfo(saaSId, default);
         }
 
+        /// <summary> Response of get latest linked SaaS resource operation. </summary>
         /// <param name="saaSId"> SaaS resource id. </param>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <returns> A new <see cref="Models.LatestLinkedSaaSResult"/> instance for mocking. </returns>
@@ -153,6 +160,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
             return new LatestLinkedSaaSResult(saaSId, isHiddenSaaS, default);
         }
 
+        /// <summary> SaaS guid &amp; PublishedId for Activate and Validate SaaS Resource. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="publisherId"> Publisher Id for Napster resource. </param>
         /// <returns> A new <see cref="Models.ActivateSaaSParameterContent"/> instance for mocking. </returns>
@@ -161,6 +169,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
             return new ActivateSaaSParameterContent(saasGuid, publisherId, default);
         }
 
+        /// <summary> Marketplace SaaS resource details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

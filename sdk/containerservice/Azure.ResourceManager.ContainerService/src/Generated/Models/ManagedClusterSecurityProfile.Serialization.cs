@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("azureKeyVaultKms"u8);
                 writer.WriteObjectValue(AzureKeyVaultKms, options);
             }
+            if (Optional.IsDefined(KubernetesResourceObjectEncryptionProfile))
+            {
+                writer.WritePropertyName("kubernetesResourceObjectEncryptionProfile"u8);
+                writer.WriteObjectValue(KubernetesResourceObjectEncryptionProfile, options);
+            }
             if (Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
@@ -143,6 +148,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ManagedClusterSecurityProfileDefender defender = default;
             ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default;
+            KubernetesResourceObjectEncryptionProfile kubernetesResourceObjectEncryptionProfile = default;
             ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity = default;
             ManagedClusterSecurityProfileImageCleaner imageCleaner = default;
             IList<byte[]> customCATrustCertificates = default;
@@ -165,6 +171,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("kubernetesResourceObjectEncryptionProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kubernetesResourceObjectEncryptionProfile = KubernetesResourceObjectEncryptionProfile.DeserializeKubernetesResourceObjectEncryptionProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("workloadIdentity"u8))
@@ -192,12 +207,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedClusterSecurityProfile(
                 defender,
                 azureKeyVaultKms,
+                kubernetesResourceObjectEncryptionProfile,
                 workloadIdentity,
                 imageCleaner,
                 customCATrustCertificates ?? new ChangeTrackingList<byte[]>(),

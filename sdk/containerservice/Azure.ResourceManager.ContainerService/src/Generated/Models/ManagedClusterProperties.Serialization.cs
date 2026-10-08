@@ -191,6 +191,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("supportPlan"u8);
                 writer.WriteStringValue(SupportPlan.Value.ToString());
             }
+            if (Optional.IsDefined(IsFipsEnabled))
+            {
+                writer.WritePropertyName("enableFIPS"u8);
+                writer.WriteBooleanValue(IsFipsEnabled.Value);
+            }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
@@ -395,6 +400,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile = default;
             bool? isRbacEnabled = default;
             KubernetesSupportPlan? supportPlan = default;
+            bool? isFipsEnabled = default;
             ContainerServiceNetworkProfile networkProfile = default;
             ManagedClusterAadProfile aadProfile = default;
             ManagedClusterAutoUpgradeProfile autoUpgradeProfile = default;
@@ -585,6 +591,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     supportPlan = new KubernetesSupportPlan(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("enableFIPS"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isFipsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -833,7 +848,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ManagedClusterProperties(
@@ -858,6 +873,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 nodeResourceGroupProfile,
                 isRbacEnabled,
                 supportPlan,
+                isFipsEnabled,
                 networkProfile,
                 aadProfile,
                 autoUpgradeProfile,

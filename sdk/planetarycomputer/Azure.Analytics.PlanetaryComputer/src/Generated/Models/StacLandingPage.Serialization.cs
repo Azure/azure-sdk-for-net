@@ -311,7 +311,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StacLandingPage(
@@ -323,8 +323,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 description,
                 title,
                 stacVersion,
-                conformsTo,
-                links,
+                conformsTo ?? new ChangeTrackingList<Uri>(),
+                links ?? new ChangeTrackingList<StacLink>(),
                 kind,
                 additionalBinaryDataProperties);
         }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -41,6 +42,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Array of references to application gateway trusted client certificates. </summary>
+        [WirePath("properties.trustedClientCertificates")]
+        public IList<WritableSubResource> TrustedClientCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewaySslProfilePropertiesFormat();
+                }
+                return Properties.TrustedClientCertificates;
+            }
+        }
 
         /// <summary> SSL policy of the application gateway resource. </summary>
         [WirePath("properties.sslPolicy")]

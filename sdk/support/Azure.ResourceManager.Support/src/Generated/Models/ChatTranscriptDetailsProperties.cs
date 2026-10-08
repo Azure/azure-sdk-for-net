@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Initializes a new instance of <see cref="ChatTranscriptDetailsProperties"/>. </summary>
         /// <param name="messages"> List of chat transcript communication resources. </param>
-        /// <param name="startOn"> Time in UTC (ISO 8601 format) when the chat began. </param>
+        /// <param name="startsOn"> Time in UTC (ISO 8601 format) when the chat began. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatTranscriptDetailsProperties(IList<ChatTranscriptMessageProperties> messages, DateTimeOffset? startOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatTranscriptDetailsProperties(IList<ChatTranscriptMessageProperties> messages, DateTimeOffset? startsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Messages = messages;
-            StartOn = startOn;
+            StartsOn = startsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Support.Models
         public IList<ChatTranscriptMessageProperties> Messages { get; } = new ChangeTrackingList<ChatTranscriptMessageProperties>();
 
         /// <summary> Time in UTC (ISO 8601 format) when the chat began. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
     }
 }

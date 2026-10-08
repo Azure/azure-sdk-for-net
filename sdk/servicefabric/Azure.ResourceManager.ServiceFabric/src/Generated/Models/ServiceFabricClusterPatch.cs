@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseStartOn;
+                return Properties is null ? default : Properties.UpgradePauseStartsOn;
             }
             set
             {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     Properties = new ClusterPropertiesUpdateParameters();
                 }
-                Properties.UpgradePauseStartOn = value;
+                Properties.UpgradePauseStartsOn = value;
             }
         }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseEndOn;
+                return Properties is null ? default : Properties.UpgradePauseEndsOn;
             }
             set
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     Properties = new ClusterPropertiesUpdateParameters();
                 }
-                Properties.UpgradePauseEndOn = value;
+                Properties.UpgradePauseEndsOn = value;
             }
         }
 

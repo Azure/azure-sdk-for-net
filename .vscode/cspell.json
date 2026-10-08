@@ -245,12 +245,6 @@
       ]
     },
     {
-      "filename": "**/sdk/astronomer/**/*.cs",
-      "words": [
-        "astro"
-      ]
-    },
-    {
       "filename": "**/sdk/automanage/**/*.cs",
       "words": [
         "hcrp"
@@ -1284,21 +1278,6 @@
       ]
     },
     {
-      "filename": "**/sdk/sqlmanagement/**/*.cs",
-      "words": [
-        "cias",
-        "droppeded",
-        "dtcs",
-        "freemium",
-        "nchar",
-        "ntext",
-        "nvarchar",
-        "stdev",
-        "unrestorable",
-        "vcores"
-      ]
-    },
-    {
       "filename": "**/sdk/sqlvirtualmachine/**/*.cs",
       "words": [
         "ahub",
@@ -1571,6 +1550,14 @@
         "deidentified",
         "deidentify",
         "healthdataaiservices"
+      ]
+    },
+    {
+      "filename": "**/sdk/dataai/**/*",
+      "words": [
+        "apim",
+        "rerank",
+        "reranker"
       ]
     },
     {

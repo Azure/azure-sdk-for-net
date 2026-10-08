@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AgentPoolNetworkProfile(nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(), allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>(), applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>(), dranet, additionalBinaryDataProperties);

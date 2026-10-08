@@ -204,24 +204,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The profile for Linux VMs in the Managed Cluster. </summary>
-        [WirePath("properties.linuxProfile")]
-        public ContainerServiceLinuxProfile LinuxProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinuxProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.LinuxProfile = value;
-            }
-        }
-
         /// <summary> The profile for Windows VMs in the Managed Cluster. </summary>
         [WirePath("properties.windowsProfile")]
         public ManagedClusterWindowsProfile WindowsProfile
@@ -359,6 +341,24 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.SupportPlan = value;
+            }
+        }
+
+        /// <summary> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. Although this property is available in a stable API version, cluster-wide FIPS remains a preview feature. Write requests whose resulting cluster state has this property set to true require the `Microsoft.ContainerService/EnableFIPSPreview` subscription feature registration. </summary>
+        [WirePath("properties.enableFIPS")]
+        public bool? IsFipsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFipsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsFipsEnabled = value;
             }
         }
 

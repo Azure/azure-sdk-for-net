@@ -17,6 +17,12 @@ namespace Azure.Messaging.ServiceBus.Core
     internal abstract class TransportReceiver
     {
         /// <summary>
+        /// Indicates whether the receiver has been closed. The transport owns this state, so callers should read it
+        /// rather than tracking a copy that a concurrent close could leave stale.
+        /// </summary>
+        public abstract bool IsClosed { get; }
+
+        /// <summary>
         /// Indicates whether the session link has been closed. This is useful for session receiver scenarios because once the link is closed for a
         /// session receiver it will not be reopened.
         /// </summary>

@@ -67,20 +67,20 @@ namespace Azure.ResourceManager.Commerce.Models
         }
 
         /// <summary> UTC start time for the usage bucket to which this usage aggregate belongs. </summary>
-        public DateTimeOffset? UsageStartOn
+        public DateTimeOffset? UsageStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.UsageStartOn;
+                return Properties is null ? default : Properties.UsageStartsOn;
             }
         }
 
         /// <summary> UTC end time for the usage bucket to which this usage aggregate belongs. </summary>
-        public DateTimeOffset? UsageEndOn
+        public DateTimeOffset? UsageEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.UsageEndOn;
+                return Properties is null ? default : Properties.UsageEndsOn;
             }
         }
 

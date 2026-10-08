@@ -31,8 +31,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createdOn"> The Unix timestamp (in seconds) when the session was created. </param>
         /// <param name="lastAccessedOn"> The Unix timestamp (in seconds) when the session was last accessed. </param>
         /// <param name="expiresOn"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
+        /// <param name="stoppedOn"> The Unix timestamp (in seconds) when the session sandbox was last observed to stop or go idle. Present only after the session has gone idle at least once, used for accurate idle-billing reconciliation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectAgentSession(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status, DateTimeOffset createdOn, DateTimeOffset lastAccessedOn, DateTimeOffset expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectAgentSession(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status, DateTimeOffset createdOn, DateTimeOffset lastAccessedOn, DateTimeOffset expiresOn, DateTimeOffset? stoppedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentSessionId = agentSessionId;
             VersionIndicator = versionIndicator;
@@ -40,6 +41,7 @@ namespace Azure.AI.Projects.Agents
             CreatedOn = createdOn;
             LastAccessedOn = lastAccessedOn;
             ExpiresOn = expiresOn;
+            StoppedOn = stoppedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,5 +62,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </summary>
         public DateTimeOffset ExpiresOn { get; }
+
+        /// <summary> The Unix timestamp (in seconds) when the session sandbox was last observed to stop or go idle. Present only after the session has gone idle at least once, used for accurate idle-billing reconciliation. </summary>
+        public DateTimeOffset? StoppedOn { get; }
     }
 }

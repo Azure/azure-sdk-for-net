@@ -146,10 +146,10 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DenseCaptionsResult(values, additionalBinaryDataProperties);
+            return new DenseCaptionsResult(values ?? new ChangeTrackingList<DenseCaption>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
 
         private ClientDiagnostics PoolsClientDiagnostics => _poolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Pools PoolsRestClient => _poolsRestClient ??= new Pools(PoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-20");
+        private Pools PoolsRestClient => _poolsRestClient ??= new Pools(PoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         private ClientDiagnostics SkuClientDiagnostics => _skuClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Sku SkuRestClient => _skuRestClient ??= new Sku(SkuClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-20");
+        private Sku SkuRestClient => _skuRestClient ??= new Sku(SkuClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         private ClientDiagnostics SubscriptionUsagesClientDiagnostics => _subscriptionUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionUsages SubscriptionUsagesRestClient => _subscriptionUsagesRestClient ??= new SubscriptionUsages(SubscriptionUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-20");
+        private SubscriptionUsages SubscriptionUsagesRestClient => _subscriptionUsagesRestClient ??= new SubscriptionUsages(SubscriptionUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         /// <summary>
         /// List Pool resources by subscription ID
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

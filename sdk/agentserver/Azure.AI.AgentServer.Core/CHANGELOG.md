@@ -1,14 +1,69 @@
 # Release History
 
-## 1.0.0-beta.29 (Unreleased)
+## 1.0.0-beta.30 (Unreleased)
 
 ### Features Added
 
+- Added constructor-injected resilient task handlers through
+  `IResilientTaskHandler<TInput, TOutput>` registration overloads. The task engine creates
+  and asynchronously disposes a fresh dependency-injection scope for every execution
+  attempt, including retries, steered turns, and recovered attempts.
+- Added deterministic event-stream backing composition and
+  `IHostApplicationBuilder.AddAgentEventStreams(sectionName)`. Explicit application
+  configuration now overrides protocol defaults regardless of registration order,
+  identical selections are idempotent, and conflicting same-precedence selections fail
+  with source diagnostics instead of silently discarding durability settings.
+- Added lazy task-bound stream capabilities: handlers emit through
+  `TaskContext<TInput>.Stream`, and callers subscribe through `TaskRun<TOutput>.Stream`.
+  Streams use the per-turn `InputId`, remain open across retry and recovery deferral, and
+  close only after the existing terminal task-store transition succeeds.
+- Added `ResilientTaskSettings : ClientSettings` and configuration-bound
+  `IHostApplicationBuilder.AddResilientTasks(sectionName)` overloads. Hosted task storage
+  now accepts its credential and project endpoint from one settings object.
+
 ### Breaking Changes
+
+- `UseInMemoryReplay()` now defaults to a bounded 10-minute retention window instead of
+  retaining closed streams indefinitely.
+- State-store optimistic-concurrency values now use the standard `Azure.ETag` type.
+  This includes `StateStoreItem.Etag`, `StateStoreItemRef.Etag`,
+  `StateStoreItemKey.Etag`, `FoundryStoragePreconditionException.CurrentETag`, the
+  corresponding model-factory parameters, and `FoundryStateStore.SetItemAsync` /
+  `DeleteItemAsync` `ifMatch` parameters.
 
 ### Bugs Fixed
 
+- Multi-turn suspension now coordinates the empty-queue decision and execution
+  retirement with steering admission. Inputs waiting at that boundary are drained
+  or resumed with their own identity instead of being accepted and then erased.
+- Queued input acceptance now advances the last-input precondition atomically with
+  persistence. Active input identity is stored separately for recovery and stream
+  cleanup, and rejected appends cannot be promoted or restored by a stale queue snapshot.
+- Task deletion now coordinates stream closure with confirmed storage deletion and
+  producer unwind. Failed or cancelled deletes preserve recoverable streams without
+  undoing cancellation, including inputs being promoted or removed from the queue.
+- Concurrent first starts within one task engine now coordinate task creation before
+  routing subsequent multi-turn inputs to steering, preserving each input's own handle.
+  Recovery no longer mistakes an unpublished initial start for an abandoned task, and
+  duplicate creation by another engine reports a task-level conflict.
+- Task-bound streams now record their owning task and reject cross-task reuse of an
+  explicit input id. File-backed replay persists the ownership beside the stream log so
+  isolation is enforced after process restart.
+- Closed replay streams are swept after their retention window, closed live streams are
+  removed immediately, and ownership entries are released with the stream.
+- Task-stream closure is synchronized with lazy materialization so a terminal transition
+  cannot miss a concurrently created stream. Deleting a task abandoned for recovery closes
+  its existing persisted turn stream without creating a stream that was never used.
+
 ### Other Changes
+
+- Azure Monitor now uses 100% trace sampling by default while preserving explicit sampler environment settings. Azure SDK and outbound `HttpClient` dependency spans are disabled by default and can be re-enabled through `AgentHostBuilder.ConfigureTracing`.
+
+## 1.0.0-beta.29 (2026-09-08)
+
+### Other Changes
+
+- Released to provide the public `Azure.AI.AgentServer.Core` dependency required by `Azure.AI.AgentServer.Invocations` 1.0.0-beta.7.
 
 ## 1.0.0-beta.28 (2026-08-12)
 
@@ -18,8 +73,8 @@
   the ambient `FoundryAgentRequestContext.Current.CallId` by default. Resilient
   task handlers restore a top-level persisted `call_id` for every execution attempt.
 - Added resilient **task** and **streaming** primitives for building durable, long-running agents (`Azure.AI.AgentServer.Core.Tasks` and `Azure.AI.AgentServer.Core.Streaming`):
-  - Register one-shot and multi-turn tasks with `IServiceCollection.AddResilientTasks()` and the `ResilientTaskBuilder` (`AddTask` / `AddMultiTurnTask`), including overloads that accept a source-generated `JsonTypeInfo<TInput>` for Native-AOT / trimming-safe input serialization. The reflection-based overloads carry `[RequiresUnreferencedCode]` / `[RequiresDynamicCode]` so trimming/AOT builds get a compile-time warning steering them to the `JsonTypeInfo<TInput>` overloads.
-  - Run and resume tasks through `ITaskInvoker` (`RunAsync`, `StartAsync`, `GetActiveRunAsync`) with the `TaskRun<TOutput>` handle (await its `Completion` task, or `Completion.WaitAsync(token)` to cancel only your wait) and the `TaskContext<TInput>` handler surface (entry mode, retry attempt, cooperative cancellation, shutdown, and steering signals).
+  - Register one-shot and multi-turn tasks with the flat `IServiceCollection.AddResilientTask()` / `AddResilientMultiTurnTask()` extension methods, including overloads that accept a source-generated `JsonTypeInfo<TInput>` for Native-AOT / trimming-safe input serialization. The reflection-based overloads carry `[RequiresUnreferencedCode]` / `[RequiresDynamicCode]` so trimming/AOT builds get a compile-time warning steering them to the `JsonTypeInfo<TInput>` overloads. Each call self-initializes the resilient-tasks services on first use (`AddResilientTasks(credential)` or a DI-registered `TokenCredential` may supply the hosted-storage identity before or after task registrations; both forms must resolve to the same instance) and returns a typed `TaskDefinition<TInput, TOutput>` handle that binds the task name and its input/output types once, so invocation is strongly typed (a mismatched input or output is a compile error).
+  - Run and resume tasks through the mockable `TaskDefinition<TInput, TOutput>` handle (`RunAsync`, `StartAsync`, `GetActiveRunAsync`) with the `TaskRun<TOutput>` handle (await its `Completion` task, or `Completion.WaitAsync(token)` to cancel only your wait) and the `TaskContext<TInput>` handler surface (entry mode, retry attempt, cooperative cancellation, shutdown, and steering signals). Each registered handle is also registered as a keyed singleton service (keyed by task name — resolution is never ambiguous even when multiple tasks share the same input/output types); resolve it in a request handler with `IServiceProvider.GetResilientTask<TInput, TOutput>(name)`. The protected constructor and virtual members support consumer unit-test substitutes.
   - Configure per-task durability with `TaskRegistrationOptions` (title, timeout, retry) and `TaskRetryPolicy` (attempt count + an `Azure.Core.DelayStrategy` for the backoff).
   - Resumable event streaming with `AgentEventStreamRegistry` / `AgentEventStream` and `AddAgentEventStreams()`, supporting in-memory live, in-memory replay, and file-backed replay backings via `AgentEventStreamOptions`. The event representation is `System.Net.ServerSentEvents.SseItem<string>`: the caller places the serialized event text in `SseItem<string>.Data` and an opaque `SseItem<string>.EventId` is the resume/reconnect token (`Subscribe(afterEventId)`, `GetLastEventIdAsync()`). Because the data is already a string, there is no payload codec — `SseFormatter` can frame a `Subscribe(...)` stream directly onto an HTTP response.
   - A single `ResilientTaskException` carrying an extensible `ResilientTaskErrorCode` (`HandlerError`, `ExhaustedRetries`, `Conflict`, `PreconditionFailed`, `QueueFull`) with code-specific data exposed as nullable properties (`CurrentStatus`, `ActualLastInputId`, `Failure`). Argument validation surfaces as `ArgumentException` and cancellation as `OperationCanceledException`; recovery deferral (`ExitForRecoveryAsync`) is an internal lifecycle handoff and never surfaces as an exception. The streaming layer keeps its `AgentEventStreamException` hierarchy.

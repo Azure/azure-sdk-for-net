@@ -10,6 +10,11 @@
       "$id": "1",
       "kind": "enum",
       "name": "ApiVersions",
+      "apiVersions": [
+        "2024-01-01",
+        "2024-06-01",
+        "2024-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.ApiVersions",
       "valueType": {
         "$id": "2",
@@ -166,6 +171,11 @@
       "$id": "16",
       "kind": "model",
       "name": "Widget",
+      "apiVersions": [
+        "2024-01-01",
+        "2024-06-01",
+        "2024-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Versioning.PreviewVersion",
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.Widget",
       "usage": "Output,Json",
@@ -182,6 +192,11 @@
           "$id": "17",
           "kind": "property",
           "name": "id",
+          "apiVersions": [
+            "2024-01-01",
+            "2024-06-01",
+            "2024-12-01-preview"
+          ],
           "serializedName": "id",
           "doc": "Widget identifier.",
           "type": {
@@ -209,6 +224,11 @@
           "$id": "19",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2024-01-01",
+            "2024-06-01",
+            "2024-12-01-preview"
+          ],
           "serializedName": "name",
           "doc": "Widget name.",
           "type": {
@@ -236,6 +256,9 @@
           "$id": "21",
           "kind": "property",
           "name": "color",
+          "apiVersions": [
+            "2024-12-01-preview"
+          ],
           "serializedName": "color",
           "doc": "Widget color, only available in preview version.",
           "type": {
@@ -265,6 +288,11 @@
       "$id": "23",
       "kind": "model",
       "name": "UpdateWidgetColorRequest",
+      "apiVersions": [
+        "2024-01-01",
+        "2024-06-01",
+        "2024-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Versioning.PreviewVersion",
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.UpdateWidgetColorRequest",
       "usage": "Input,JsonMergePatch,Json",
@@ -281,6 +309,11 @@
           "$id": "24",
           "kind": "property",
           "name": "color",
+          "apiVersions": [
+            "2024-01-01",
+            "2024-06-01",
+            "2024-12-01-preview"
+          ],
           "serializedName": "color",
           "doc": "New color for the widget.",
           "type": {
@@ -310,6 +343,11 @@
       "$id": "26",
       "kind": "model",
       "name": "ListWidgetsResponse",
+      "apiVersions": [
+        "2024-01-01",
+        "2024-06-01",
+        "2024-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Versioning.PreviewVersion",
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.Response.anonymous",
       "usage": "Output,Json",
@@ -325,6 +363,11 @@
           "$id": "27",
           "kind": "property",
           "name": "widgets",
+          "apiVersions": [
+            "2024-01-01",
+            "2024-06-01",
+            "2024-12-01-preview"
+          ],
           "serializedName": "widgets",
           "type": {
             "$id": "28",

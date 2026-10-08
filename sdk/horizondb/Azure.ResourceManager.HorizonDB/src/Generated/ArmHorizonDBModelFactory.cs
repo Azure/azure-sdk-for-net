@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
     public static partial class ArmHorizonDBModelFactory
     {
 
+        /// <summary> Represents the HorizonDB cluster. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -90,6 +91,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Connection information for HorizonDB parameter group. </summary>
         /// <param name="id"> The resource ID of the connected parameter group. </param>
         /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDB resource. </param>
         /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
@@ -99,6 +101,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, shouldApplyImmediately, default);
         }
 
+        /// <summary> Authentication configuration for a HorizonDB cluster. </summary>
         /// <param name="entraIdAuth"> Indicates whether Microsoft Entra ID authentication is enabled or disabled. </param>
         /// <param name="tenantId"> The Microsoft Entra tenant ID. </param>
         /// <param name="passwordAuth"> Indicates whether password authentication is enabled or disabled. </param>
@@ -108,6 +111,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBClusterAuthConfig(entraIdAuth, tenantId, passwordAuth, default);
         }
 
+        /// <summary> The compute model for a HorizonDB cluster. </summary>
         /// <param name="type"> The compute model type. Supported values: 'Provisioned', 'Serverless'. </param>
         /// <param name="vCores"> The fixed vCore count for Provisioned compute. </param>
         /// <param name="minvCores"> The minimum vCores for Serverless compute. Defines the lower autoscaling bound. </param>
@@ -118,6 +122,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBComputeModel(@type, vCores, minvCores, maxvCores, default);
         }
 
+        /// <summary> Mirroring configuration for a HorizonDB cluster. </summary>
         /// <param name="databaseNames"> The names of the databases to mirror. </param>
         /// <param name="userAssignedIdentityId"> The resource ID of the user-assigned managed identity used for mirroring. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterMirroring"/> instance for mocking. </returns>
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBClusterMirroring((databaseNames ?? new ChangeTrackingList<string>()).ToList(), userAssignedIdentityId, default);
         }
 
+        /// <summary> HorizonDB cluster for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDB cluster. </param>
@@ -139,6 +145,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, default);
         }
 
+        /// <summary> Properties of a HorizonDB cluster for update operations. </summary>
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
         /// <param name="vCores"> Number of vCores. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
@@ -158,6 +165,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Represents the HorizonDB pool. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -179,6 +187,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Properties of a HorizonDB pool. </summary>
         /// <param name="location"> The location of the HorizonDB pool. </param>
         /// <param name="state"> Current state of the pool. </param>
         /// <param name="replicaCount"> Number of replicas in the pool. </param>
@@ -198,6 +207,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Represents the HorizonDB replica. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -215,6 +225,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Properties of a HorizonDB replica. </summary>
         /// <param name="role"> Role of the replica. </param>
         /// <param name="status"> Current status of the replica. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the replica. </param>
@@ -239,6 +250,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBReplicaPatch(horizonDBReplicaPropertiesForPatchUpdateRole is null ? default : new HorizonDBReplicaPropertiesForPatchUpdate(horizonDBReplicaPropertiesForPatchUpdateRole, default), default);
         }
 
+        /// <summary> Represents the HorizonDB firewall rule. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -256,6 +268,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Properties of a HorizonDB firewall rule. </summary>
         /// <param name="startIPAddress"> The start IP address of the firewall rule (IPv4). </param>
         /// <param name="endIPAddress"> The end IP address of the firewall rule (IPv4). </param>
         /// <param name="description"> The description of the HorizonDB firewall rule. </param>
@@ -266,6 +279,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBFirewallRuleProperties(startIPAddress, endIPAddress, description, provisioningState, default);
         }
 
+        /// <summary> A private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -295,6 +309,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -304,6 +319,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Represents the HorizonDB private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -321,6 +337,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
@@ -333,6 +350,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Represents the HorizonDB parameter group. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -356,6 +374,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Properties of a HorizonDB parameter group. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="postgreSqlVersion"> PostgreSQL version for the parameter group. </param>
@@ -377,6 +396,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Properties of a HorizonDB parameters. </summary>
         /// <param name="name"> The name of the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="value"> The value of the configuration. </param>
@@ -402,6 +422,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> HorizonDB parameter group for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDB parameter group. </param>
         /// <returns> A new <see cref="Models.HorizonDBParameterGroupPatch"/> instance for mocking. </returns>
@@ -412,6 +433,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBParameterGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> Properties of a HorizonDB parameter group for update operations. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
@@ -423,6 +445,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBParameterGroupPatchProperties((parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>()).ToList(), description, shouldApplyImmediately, default);
         }
 
+        /// <summary> Connection information for HorizonDB parameter group. </summary>
         /// <param name="name"> The name of the connected resource. </param>
         /// <param name="id"> The resource ID of the connected resource. </param>
         /// <param name="type"> The type of the resource. </param>
@@ -432,6 +455,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBParameterGroupConnectionProperties(name, id, @type, default);
         }
 
+        /// <summary> Represents an Entra ID administrator configured on a HorizonDB cluster. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -449,6 +473,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Properties of a HorizonDB administrator. </summary>
         /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
         /// <param name="principalType"> The type of the Entra ID principal. </param>
         /// <param name="objectId"> The Entra ID object identifier of the principal (an RFC 4122 GUID). On PUT requests, this value comes from the URI path parameter. </param>
@@ -466,6 +491,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> The request body for adding a HorizonDB administrator. </summary>
         /// <param name="properties"> The properties for adding a HorizonDB administrator. </param>
         /// <returns> A new <see cref="Models.HorizonDBAdministratorContent"/> instance for mocking. </returns>
         public static HorizonDBAdministratorContent HorizonDBAdministratorContent(HorizonDBAdministratorContentProperties properties = default)
@@ -473,6 +499,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBAdministratorContent(properties, default);
         }
 
+        /// <summary> The properties for adding a HorizonDB administrator. </summary>
         /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
         /// <param name="principalType"> The type of the Entra ID principal. </param>
         /// <param name="tenantId"> The Entra ID tenant identifier (an RFC 4122 GUID). If omitted, defaults to the tenant of the subscription. </param>

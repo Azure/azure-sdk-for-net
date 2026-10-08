@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "Status",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstNamespace.Status",
       "valueType": {
         "$id": "2",
@@ -58,6 +59,7 @@
       "$id": "5",
       "kind": "enum",
       "name": "SecondStatus",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.Status",
       "valueType": {
         "$id": "6",
@@ -182,6 +184,7 @@
       "$id": "17",
       "kind": "model",
       "name": "FirstModel",
+      "apiVersions": [],
       "namespace": "Client.Naming.EnumConflict.FirstNamespace",
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstNamespace.FirstModel",
       "usage": "Input,Output,Json",
@@ -197,6 +200,7 @@
           "$id": "18",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "Status from first namespace",
           "type": {
@@ -220,6 +224,7 @@
           "$id": "19",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "Name of the item",
           "type": {
@@ -249,6 +254,7 @@
       "$id": "21",
       "kind": "model",
       "name": "SecondModel",
+      "apiVersions": [],
       "namespace": "Client.Naming.EnumConflict.SecondNamespace",
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.SecondModel",
       "usage": "Input,Output,Json",
@@ -264,6 +270,7 @@
           "$id": "22",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "Status from second namespace",
           "type": {
@@ -287,6 +294,7 @@
           "$id": "23",
           "kind": "property",
           "name": "description",
+          "apiVersions": [],
           "serializedName": "description",
           "doc": "Description of the item",
           "type": {

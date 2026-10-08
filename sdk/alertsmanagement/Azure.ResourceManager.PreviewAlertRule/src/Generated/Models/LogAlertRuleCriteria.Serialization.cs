@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new LogAlertRuleCriteria(allOf ?? new ChangeTrackingList<LogAlertRuleCondition>(), additionalBinaryDataProperties);

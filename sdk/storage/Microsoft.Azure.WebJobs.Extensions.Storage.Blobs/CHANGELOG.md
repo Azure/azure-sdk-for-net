@@ -7,8 +7,15 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a regression from 5.3.8 where a complete (single-page) container scan could skip blobs whose `LastModified` was after `PollingStartTime`, then advance the stored scan watermark past those blobs so listing never notified them (#62763).
+- Fixed container scan not starting a new cycle when the listing API returns an empty continuation marker instead of null, which left `PollingStartTime` stuck and hid blobs uploaded after the first sweep (#61660).
 
 ### Other Changes
+
+## 5.3.9 (2026-09-08)
+
+### Other Changes
+- This release contains bug fixes to improve quality.
 
 ## 5.3.8 (2026-03-19)
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
 
         private ClientDiagnostics ImageVersionsClientDiagnostics => _imageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ImageVersions ImageVersionsRestClient => _imageVersionsRestClient ??= new ImageVersions(ImageVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-20");
+        private ImageVersions ImageVersionsRestClient => _imageVersionsRestClient ??= new ImageVersions(ImageVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         /// <summary> Gets a collection of DevOpsPools in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DevOpsPools and their operations over a DevOpsPoolResource. </returns>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-20. </description>
+        /// <description> 2026-07-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

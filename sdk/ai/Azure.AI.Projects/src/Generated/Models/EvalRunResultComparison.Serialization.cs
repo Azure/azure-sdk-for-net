@@ -173,7 +173,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EvalRunResultComparison(
@@ -181,7 +181,7 @@ namespace Azure.AI.Projects.Evaluation
                 metricName,
                 evaluatorName,
                 baselineRunSummary,
-                compareItems,
+                compareItems ?? new ChangeTrackingList<EvalRunResultCompareItem>(),
                 additionalBinaryDataProperties);
         }
     }

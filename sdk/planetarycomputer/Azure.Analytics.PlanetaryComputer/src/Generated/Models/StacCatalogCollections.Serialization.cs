@@ -172,10 +172,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StacCatalogCollections(links, collections, additionalBinaryDataProperties);
+            return new StacCatalogCollections(links ?? new ChangeTrackingList<StacLink>(), collections ?? new ChangeTrackingList<StacCollection>(), additionalBinaryDataProperties);
         }
     }
 }
