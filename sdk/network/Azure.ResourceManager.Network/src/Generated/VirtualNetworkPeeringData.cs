@@ -297,6 +297,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The resourceGuid property of the Virtual Network peering resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> Whether complete virtual network address space is peered. </summary>
         [WirePath("properties.peerCompleteVnets")]
         public bool? AreCompleteVnetsPeered

@@ -117,6 +117,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The resource GUID property of the local network gateway resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> The provisioning state of the local network gateway resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

@@ -69,6 +69,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Guid of network security group to which flow log will be applied. </summary>
+        [WirePath("properties.targetResourceGuid")]
+        public Guid? TargetResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceGuid;
+            }
+        }
+
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
         [WirePath("properties.storageId")]
         public ResourceIdentifier StorageId

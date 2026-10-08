@@ -104,6 +104,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The resource GUID property of the virtual network appliance resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> The reference to the subnet resource. </summary>
         [WirePath("properties.subnet")]
         public SubnetData Subnet

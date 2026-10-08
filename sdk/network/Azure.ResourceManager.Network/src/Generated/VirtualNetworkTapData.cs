@@ -58,6 +58,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The resource GUID property of the virtual network tap resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> The provisioning state of the virtual network tap resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

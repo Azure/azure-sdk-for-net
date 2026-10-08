@@ -220,6 +220,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The resource GUID property of the custom IP prefix resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> The reason why resource is in failed state. </summary>
         [WirePath("properties.failedReason")]
         public string FailedReason

@@ -60,6 +60,24 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> The Tenant ID of the Microsoft Entra ID application. </summary>
+        [WirePath("properties.tenantId")]
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayEntraJWTValidationConfigPropertiesFormat();
+                }
+                Properties.TenantId = value;
+            }
+        }
+
         /// <summary> The Client ID of the Microsoft Entra ID application. </summary>
         [WirePath("properties.clientId")]
         public string ClientId

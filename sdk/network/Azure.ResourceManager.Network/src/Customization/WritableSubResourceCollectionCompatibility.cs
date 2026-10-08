@@ -21,12 +21,6 @@ namespace Azure.ResourceManager.Network
         public static IList<WritableSubResource> AsList(IList<NetworkSubResource> source) => source is null ? default : new NetworkSubResourceList(source);
         /// <summary> Invokes the AsList compatibility operation. </summary>
         public static IList<WritableSubResource> AsList(IList<WritableSubResource> source) => source;
-        /// <summary> Invokes the ParseGuid compatibility operation. </summary>
-        public static Guid? ParseGuid(string value) => ResourceGuidCompatibility.Parse(value);
-        /// <summary> Invokes the ParseGuid compatibility operation. </summary>
-        public static Guid? ParseGuid(Guid? value) => value;
-        /// <summary> Invokes the FormatGuid compatibility operation. </summary>
-        public static Guid? FormatGuid(Guid? value) => value;
         /// <summary> Invokes the ParseUri compatibility operation. </summary>
         public static Uri ParseUri(string value) => Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out Uri uri) ? uri : default;
         /// <summary> Invokes the ParseUri compatibility operation. </summary>

@@ -117,5 +117,15 @@ namespace Azure.ResourceManager.Network
                 return Properties is null ? default : Properties.ProvisioningState;
             }
         }
+
+        /// <summary> The resource GUID property of the route table. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
     }
 }

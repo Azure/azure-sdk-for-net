@@ -5,12 +5,10 @@
 
 using System;
 using System.Globalization;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Compatibility declaration for the VirtualNetworkApplianceData type. </summary>
-    [CodeGenSuppress("ResourceGuid")]
     public partial class VirtualNetworkApplianceData
     {
         /// <summary> Gets or sets the bandwidth in gigabits per second as an invariant-culture string. </summary>
@@ -25,9 +23,5 @@ namespace Azure.ResourceManager.Network
                 ? (double?)null
                 : double.Parse(value, NumberStyles.Float, CultureInfo.InvariantCulture);
         }
-
-        /// <summary> Gets the ResourceGuid compatibility property. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid => ResourceGuidCompatibility.Parse(Properties?.ResourceGuid);
     }
 }
