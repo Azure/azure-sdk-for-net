@@ -1,20 +1,26 @@
 # Release History
 
-## 1.10.0-beta.2 (Unreleased)
+## 1.11.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.10.0 (2026-10-05)
 
 ### Features Added
 
 - Added the `Azure.Monitor.OpenTelemetry.Exporter.StorageSubDirectory` AppContext value, settable with `AppContext.SetData` or a `runtimeconfig.json` configProperty, so that the processes or entry points of one application can share a persistent storage directory. By default the directory name is derived from the process name and `AppContext.BaseDirectory`, which splits storage when components of one application differ in either, and a component that runs rarely never drains its backlog. When set, the value replaces those two inputs; the instrumentation key and user name still contribute, so different users and resources stay isolated. Behaviour is unchanged when the value is not set.
   ([#62997](https://github.com/Azure/azure-sdk-for-net/issues/62997))
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - SDK statistics sent to the Microsoft OpenTelemetry distro's configured ingestion endpoint (the `Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint` AppContext switch) now carry the same region-matched SDK statistics instrumentation key as the existing SDK statistics endpoint, instead of an all-zero placeholder. Only the destination differs on the distro path.
   ([#63342](https://github.com/Azure/azure-sdk-for-net/pull/63342))
-
-### Other Changes
 
 ## 1.10.0-beta.1 (2026-09-16)
 

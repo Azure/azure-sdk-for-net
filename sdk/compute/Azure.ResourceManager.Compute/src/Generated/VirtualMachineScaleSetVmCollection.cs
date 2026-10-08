@@ -673,5 +673,41 @@ namespace Azure.ResourceManager.Compute
             return CreateOrUpdate(waitUntil: waitUntil, instanceId: instanceId, data: data, matchConditions: default, cancellationToken: cancellationToken);
         }
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> Updates a virtual machine of a VM scale set. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}.Operation Id.VirtualMachineScaleSetVMS_Update.Default Api Version.2026-03-01. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="instanceId"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="ifNoneMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<VirtualMachineScaleSetVmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string instanceId, VirtualMachineScaleSetVmData data, string ifMatch, string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdateAsync(waitUntil, instanceId, data, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
+        }
+
+        /// <summary> Updates a virtual machine of a VM scale set. Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}.Operation Id.VirtualMachineScaleSetVMS_Update.Default Api Version.2026-03-01. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="instanceId"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="ifNoneMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<VirtualMachineScaleSetVmResource> CreateOrUpdate(WaitUntil waitUntil, string instanceId, VirtualMachineScaleSetVmData data, string ifMatch, string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdate(waitUntil, instanceId, data, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch != null ? new ETag(ifMatch) : null,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
+        }
     }
 }

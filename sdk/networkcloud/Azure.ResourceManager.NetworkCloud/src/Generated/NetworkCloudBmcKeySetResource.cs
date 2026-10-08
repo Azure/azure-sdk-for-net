@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudBmcKeySetApiVersion);
             _bmcKeySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _bmcKeySetsRestClient = new BmcKeySets(_bmcKeySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudBmcKeySetApiVersion ?? "2026-05-01-preview");
+            _bmcKeySetsRestClient = new BmcKeySets(_bmcKeySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudBmcKeySetApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

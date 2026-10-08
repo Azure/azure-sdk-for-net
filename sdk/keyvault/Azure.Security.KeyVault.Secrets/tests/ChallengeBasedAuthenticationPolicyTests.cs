@@ -34,6 +34,12 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             ChallengeBasedAuthenticationPolicy.ClearCache();
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
         [Test]
         public async Task SingleRequest()
         {
@@ -47,6 +53,79 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
             Assert.AreEqual("secret-value", secret.Value);
+        }
+
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        [TestCase(true, true)]
+        [TestCase(false, true)]
+        public async Task StrictClientRevalidatesChallengeSeededByLenientClient(bool async, bool strictFirst)
+        {
+            Uri sharedAuthority = new Uri("https://cache-integration.vault.azure.net");
+            const string foreignResource = "https://attacker.example";
+            const string foreignScope = foreignResource + "/.default";
+
+            MockResponse Challenge() => new MockResponse(401).WithHeader(
+                "WWW-Authenticate", $"Bearer authorization=\"https://login.windows.net/{TenantId}\", resource=\"{foreignResource}\"");
+            MockResponse Success() => new MockResponse(200)
+            {
+                ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+            };
+
+            int seedTokenRequests = 0;
+            CallbackTokenCredential seedCredential = new((context, _) =>
+            {
+                seedTokenRequests++;
+                CollectionAssert.AreEqual(new[] { foreignScope }, context.Scopes);
+                return new AccessToken("seed-token", DateTimeOffset.MaxValue);
+            });
+            MockTransport seedTransport = new(Challenge(), Success());
+            using SecretClient lenientClient = new(
+                sharedAuthority,
+                seedCredential,
+                new SecretClientOptions
+                {
+                    DisableChallengeResourceVerification = true,
+                    Transport = seedTransport,
+                });
+
+            int strictTokenRequests = 0;
+            CallbackTokenCredential strictCredential = new((_, _) =>
+            {
+                strictTokenRequests++;
+                return new AccessToken("strict-token", DateTimeOffset.MaxValue);
+            });
+            MockTransport strictTransport = new(Challenge(), Success());
+            using SecretClient strictClient = new(
+                sharedAuthority,
+                strictCredential,
+                new SecretClientOptions { Transport = strictTransport });
+
+            async Task<Response<KeyVaultSecret>> GetSecret(SecretClient client) => async
+                ? await client.GetSecretAsync("test-secret").ConfigureAwait(false)
+                : client.GetSecret("test-secret");
+
+            if (strictFirst)
+            {
+                Assert.ThrowsAsync<InvalidOperationException>(() => GetSecret(strictClient));
+                Assert.AreEqual(0, strictTokenRequests);
+                Assert.AreEqual(1, strictTransport.Requests.Count);
+                Assert.IsFalse(strictTransport.SingleRequest.Headers.Contains("Authorization"));
+            }
+
+            Assert.AreEqual("secret-value", (await GetSecret(lenientClient)).Value.Value);
+            Assert.AreEqual(1, seedTokenRequests);
+            Assert.AreEqual(2, seedTransport.Requests.Count);
+            Assert.IsTrue(seedTransport.Requests[1].Headers.Contains("Authorization"));
+
+            int requestsBeforeRejection = strictTransport.Requests.Count;
+            for (int i = 0; i < 2; i++)
+            {
+                InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => GetSecret(strictClient));
+                StringAssert.Contains("The challenge resource 'attacker.example' does not match", ex.Message);
+            }
+            Assert.AreEqual(0, strictTokenRequests);
+            Assert.AreEqual(requestsBeforeRejection, strictTransport.Requests.Count);
         }
 
         // Test concurrent authentication requests with immediate, fast, and slow network simulations.

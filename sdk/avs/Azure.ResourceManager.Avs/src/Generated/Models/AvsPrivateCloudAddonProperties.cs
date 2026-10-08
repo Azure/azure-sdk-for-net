@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Avs.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonProperties"/>. </summary>
+        protected AvsPrivateCloudAddonProperties() : this(default)
+        {
+        }
+
         /// <summary> Addon type. </summary>
         internal AddonType AddonType { get; set; }
 

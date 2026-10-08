@@ -264,7 +264,7 @@ namespace Azure.Search.Documents.Indexes.Models
             return new SearchIndexerSkillset(
                 name,
                 description,
-                skills,
+                skills ?? new ChangeTrackingList<SearchIndexerSkill>(),
                 cognitiveServicesAccount,
                 knowledgeStore,
                 indexProjection,

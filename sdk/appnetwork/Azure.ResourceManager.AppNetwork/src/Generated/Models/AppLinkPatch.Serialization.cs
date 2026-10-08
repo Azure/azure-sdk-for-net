@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -144,6 +149,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
+            AppNetworkManagedServiceIdentityPatch identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,12 +174,21 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = AppNetworkManagedServiceIdentityPatch.DeserializeAppNetworkManagedServiceIdentityPatch(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppLinkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new AppLinkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
         }
     }
 }

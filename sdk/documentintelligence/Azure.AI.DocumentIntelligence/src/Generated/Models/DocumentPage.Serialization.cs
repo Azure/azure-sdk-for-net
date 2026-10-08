@@ -345,7 +345,7 @@ namespace Azure.AI.DocumentIntelligence
                 width,
                 height,
                 unit,
-                spans,
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
                 words ?? new ChangeTrackingList<DocumentWord>(),
                 selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),
                 lines ?? new ChangeTrackingList<DocumentLine>(),

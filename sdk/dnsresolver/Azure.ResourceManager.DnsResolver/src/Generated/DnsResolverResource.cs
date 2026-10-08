@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -747,6 +748,64 @@ namespace Azure.ResourceManager.DnsResolver
             Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
 
             return GetDnsResolverOutboundEndpoints().Get(outboundEndpointName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes a DNS resolver. WARNING: This operation cannot be undone.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}Operation IdDnsResolvers_DeleteDefault Api Version2025-05-01Resource<see cref="DnsResolverResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes a DNS resolver. WARNING: This operation cannot be undone.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}Operation IdDnsResolvers_DeleteDefault Api Version2025-05-01Resource<see cref="DnsResolverResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates a DNS resolver.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}Operation IdDnsResolvers_UpdateDefault Api Version2025-05-01Resource<see cref="DnsResolverResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<DnsResolverResource>> UpdateAsync(WaitUntil waitUntil, DnsResolverPatch patch, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return UpdateAsync(waitUntil, patch, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates a DNS resolver.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}Operation IdDnsResolvers_UpdateDefault Api Version2025-05-01Resource<see cref="DnsResolverResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<DnsResolverResource> Update(WaitUntil waitUntil, DnsResolverPatch patch, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return Update(waitUntil, patch, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
         }
     }
 }
