@@ -82,7 +82,7 @@ namespace Azure.Security.Attestation.Tests
         public async System.Threading.Tasks.Task AttestTdxVm(bool async)
         {
             var captured = new List<CapturedRequest>();
-            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{\"nonce\":\"n1\",\"x-ms-attestation-type\":\"tdxvm\"}")));
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{\"nonce\":\"n1\",\"x-ms-attestation-type\":\"tdxvm\",\"tdx_mrtd\":\"abc\"}")));
             var attestationRequest = new AttestationRequest
             {
                 Evidence = BinaryData.FromBytes(s_evidence),
@@ -107,6 +107,7 @@ namespace Azure.Security.Attestation.Tests
                 request.Body);
             Assert.AreEqual("n1", result.Nonce);
             Assert.AreEqual("tdxvm", result.VerifierType);
+            Assert.AreEqual("abc", result.AdditionalClaims["tdx_mrtd"].ToObjectFromJson<string>());
         }
 
         [TestCase(false)]
@@ -114,7 +115,7 @@ namespace Azure.Security.Attestation.Tests
         public async System.Threading.Tasks.Task AttestSevSnpVm(bool async)
         {
             var captured = new List<CapturedRequest>();
-            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{\"nonce\":\"n2\",\"x-ms-attestation-type\":\"sevsnpvm\"}")));
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{\"nonce\":\"n2\",\"x-ms-attestation-type\":\"sevsnpvm\",\"x-ms-sevsnpvm-guestsvn\":7}")));
             const string Evidence = "{\"SnpReport\":\"AQID\",\"VcekCertChain\":\"BAUG\"}";
             var attestationRequest = new AttestationRequest
             {
@@ -140,6 +141,7 @@ namespace Azure.Security.Attestation.Tests
                 request.Body);
             Assert.AreEqual("n2", result.Nonce);
             Assert.AreEqual("sevsnpvm", result.VerifierType);
+            Assert.AreEqual(7, result.AdditionalClaims["x-ms-sevsnpvm-guestsvn"].ToObjectFromJson<int>());
         }
 
         [Test]

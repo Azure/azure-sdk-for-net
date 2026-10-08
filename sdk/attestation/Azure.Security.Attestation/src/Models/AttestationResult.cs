@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -80,6 +81,16 @@ namespace Azure.Security.Attestation
         /// Gets the RFC 7519 "jti" claim name (https://tools.ietf.org/html/rfc7519#section-4)
         /// </summary>
         public string UniqueIdentifier { get => Jti; }
+
+        /// <summary>
+        /// Gets the token's claims that have no dedicated property on this type, keyed by claim name; each value is the claim's JSON value.
+        /// These include the TDX (<c>tdx_*</c>) and SEV-SNP (<c>x-ms-sevsnpvm-*</c>) claims and any claims issued by attestation policy.
+        /// Values are raw JSON, so read a string claim with <c>ToObjectFromJson&lt;string&gt;()</c> rather than <c>ToString()</c>.
+        /// </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalClaims
+            => _additionalClaims ??= new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties ?? new Dictionary<string, BinaryData>());
+
+        private IReadOnlyDictionary<string, BinaryData> _additionalClaims;
 
         /// <summary>
         /// A copy of the RuntimeData specified as an input to the attest call, if the <see cref="AttestationRequest.RuntimeData"/>'s <see cref="AttestationData"/> was specified as binary.
@@ -176,15 +187,16 @@ namespace Azure.Security.Attestation
 
         internal partial class AttestationResultConverter : System.Text.Json.Serialization.JsonConverter<AttestationResult>
         {
+            // "J" rather than the wire format, so claims without a dedicated property are kept for AdditionalClaims.
             public override AttestationResult Read(ref System.Text.Json.Utf8JsonReader reader, Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
             {
                 using System.Text.Json.JsonDocument document = System.Text.Json.JsonDocument.ParseValue(ref reader);
-                return DeserializeAttestationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+                return DeserializeAttestationResult(document.RootElement, ModelReaderWriterOptions.Json);
             }
 
             public override void Write(System.Text.Json.Utf8JsonWriter writer, AttestationResult value, System.Text.Json.JsonSerializerOptions options)
             {
-                ((System.ClientModel.Primitives.IJsonModel<AttestationResult>)value).Write(writer, ModelSerializationExtensions.WireOptions);
+                ((System.ClientModel.Primitives.IJsonModel<AttestationResult>)value).Write(writer, ModelReaderWriterOptions.Json);
             }
         }
     }

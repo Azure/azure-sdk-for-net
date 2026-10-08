@@ -9,6 +9,7 @@
 - Added the `AttestationType.AzureGuest`, `AttestationType.SevSnpVm`, and `AttestationType.TdxVm` values. `TdxVm` requires service version `V2025_06_01`.
 - Added `AttestationClient.AttestTdxVm` and `AttestationClient.AttestSevSnpVm` (and their async counterparts) to attest Intel TDX and AMD SEV-SNP confidential virtual machines. `AttestTdxVm` requires service version `V2025_06_01`.
 - Added `AttestationRequest.Nonce`, which the service returns in the `nonce` claim of the attestation token.
+- Added `AttestationResult.AdditionalClaims`, which exposes the token's claims that have no dedicated property, such as the TDX and SEV-SNP claims and claims issued by attestation policy.
 - Model types now implement `IJsonModel<T>` and `IPersistableModel<T>`, and `AzureSecurityAttestationContext` was added, for use with `System.ClientModel.Primitives.ModelReaderWriter`.
 
 ### Bugs Fixed

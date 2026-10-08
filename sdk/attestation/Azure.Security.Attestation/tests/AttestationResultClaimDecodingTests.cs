@@ -154,6 +154,45 @@ namespace Azure.Security.Attestation.Tests
             Assert.IsFalse(written.RootElement.TryGetProperty("cnf", out _));
         }
 
+        private const string ConfidentialVmClaims =
+            @"{""nonce"":""n1"",""tdx_mrtd"":""abc"",""tdx_td_attributes_debug"":false,""x-ms-sevsnpvm-guestsvn"":7,""x-ms-isolation-tee"":{""x-ms-attestation-type"":""sevsnpvm""}}";
+
+        [Test]
+        public void AdditionalClaimsHoldClaimsWithoutAProperty()
+        {
+            AttestationResult result = Parse(ConfidentialVmClaims);
+
+            Assert.AreEqual("abc", result.AdditionalClaims["tdx_mrtd"].ToObjectFromJson<string>());
+            Assert.AreEqual(false, result.AdditionalClaims["tdx_td_attributes_debug"].ToObjectFromJson<bool>());
+            Assert.AreEqual(7, result.AdditionalClaims["x-ms-sevsnpvm-guestsvn"].ToObjectFromJson<int>());
+            using JsonDocument tee = JsonDocument.Parse(result.AdditionalClaims["x-ms-isolation-tee"]);
+            Assert.AreEqual("sevsnpvm", tee.RootElement.GetProperty("x-ms-attestation-type").GetString());
+            Assert.AreEqual("n1", result.Nonce);
+            Assert.IsFalse(result.AdditionalClaims.ContainsKey("nonce"), "claims with a dedicated property are not repeated");
+            Assert.AreEqual(4, result.AdditionalClaims.Count);
+        }
+
+        [Test]
+        public void AdditionalClaimsAreWrittenBack()
+        {
+            using JsonDocument expected = JsonDocument.Parse(ConfidentialVmClaims);
+            using JsonDocument written = JsonDocument.Parse(ModelReaderWriter.Write(Parse(ConfidentialVmClaims)));
+            using JsonDocument writtenBySystemTextJson = JsonDocument.Parse(JsonSerializer.Serialize(Parse(ConfidentialVmClaims)));
+
+            foreach (JsonProperty claim in expected.RootElement.EnumerateObject())
+            {
+                Assert.AreEqual(claim.Value.GetRawText(), written.RootElement.GetProperty(claim.Name).GetRawText(), claim.Name);
+                Assert.AreEqual(claim.Value.GetRawText(), writtenBySystemTextJson.RootElement.GetProperty(claim.Name).GetRawText(), claim.Name);
+            }
+        }
+
+        [Test]
+        public void AdditionalClaimsAreEmptyWhenAllClaimsHaveProperties()
+        {
+            Assert.IsEmpty(Parse(AllClaims).AdditionalClaims);
+            Assert.IsEmpty(AttestationModelFactory.AttestationResult(jti: "id-1").AdditionalClaims);
+        }
+
         [Test]
         public void ModelFactoryCnfRoundTrips()
         {

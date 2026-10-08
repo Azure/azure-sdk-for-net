@@ -81,6 +81,7 @@ namespace Azure.Security.Attestation
     public partial class AttestationResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>
     {
         internal AttestationResult() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalClaims { get { throw null; } }
         public object Confirmation { get { throw null; } }
         [System.ObsoleteAttribute("DeprecatedEnclaveHeldData is deprecated, use EnclaveHeldData instead")]
         public System.BinaryData DeprecatedEnclaveHeldData { get { throw null; } }
