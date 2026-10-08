@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
+            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new PurviewAccountDataAsync0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
+            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new PurviewAccountData0CollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context, "MockablePurviewSubscriptionResource.GetPurviewAccounts"), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(
+            return new PurviewUsageAsyncCollectionResultOfT(
                 UsagesRestClient,
                 Id.SubscriptionId,
                 location,
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Purview.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(
+            return new PurviewUsageCollectionResultOfT(
                 UsagesRestClient,
                 Id.SubscriptionId,
                 location,

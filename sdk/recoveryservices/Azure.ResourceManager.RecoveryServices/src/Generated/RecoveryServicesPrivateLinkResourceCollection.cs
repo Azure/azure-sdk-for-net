@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new RecoveryServicesPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourceOperationGroupRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllCollectionResultOfT(
+            return new PageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new RecoveryServicesPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourceOperationGroupRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutsGetByProviderRegistrationAsyncCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
+            return new AsyncPageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutDataAsyncCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutsGetByProviderRegistrationCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
+            return new PageableWrapper<CustomRolloutData, CustomRolloutResource>(new CustomRolloutDataCollectionResultOfT(_customRolloutsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "CustomRolloutCollection.GetAll"), data => new CustomRolloutResource(Client, data));
         }
 
         /// <summary>

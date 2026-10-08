@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Quantum
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "QuantumWorkspaceCollection.GetAll"), data => new QuantumWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new QuantumWorkspaceDataAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "QuantumWorkspaceCollection.GetAll"), data => new QuantumWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Quantum
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "QuantumWorkspaceCollection.GetAll"), data => new QuantumWorkspaceResource(Client, data));
+            return new PageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new QuantumWorkspaceDataCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "QuantumWorkspaceCollection.GetAll"), data => new QuantumWorkspaceResource(Client, data));
         }
 
         /// <summary>

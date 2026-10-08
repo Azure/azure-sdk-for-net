@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationRegistrationData, NotificationRegistrationResource>(new NotificationRegistrationsGetByProviderRegistrationAsyncCollectionResultOfT(_notificationRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "NotificationRegistrationCollection.GetAll"), data => new NotificationRegistrationResource(Client, data));
+            return new AsyncPageableWrapper<NotificationRegistrationData, NotificationRegistrationResource>(new NotificationRegistrationDataAsyncCollectionResultOfT(_notificationRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "NotificationRegistrationCollection.GetAll"), data => new NotificationRegistrationResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationRegistrationData, NotificationRegistrationResource>(new NotificationRegistrationsGetByProviderRegistrationCollectionResultOfT(_notificationRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "NotificationRegistrationCollection.GetAll"), data => new NotificationRegistrationResource(Client, data));
+            return new PageableWrapper<NotificationRegistrationData, NotificationRegistrationResource>(new NotificationRegistrationDataCollectionResultOfT(_notificationRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "NotificationRegistrationCollection.GetAll"), data => new NotificationRegistrationResource(Client, data));
         }
 
         /// <summary>

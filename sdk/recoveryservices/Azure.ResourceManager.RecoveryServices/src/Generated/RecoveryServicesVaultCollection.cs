@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetByResourceGroupAsyncCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RecoveryServicesVaultCollection.GetAll"), data => new RecoveryServicesVaultResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new RecoveryServicesVaultDataAsync0CollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RecoveryServicesVaultCollection.GetAll"), data => new RecoveryServicesVaultResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetByResourceGroupCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RecoveryServicesVaultCollection.GetAll"), data => new RecoveryServicesVaultResource(Client, data));
+            return new PageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new RecoveryServicesVaultData0CollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RecoveryServicesVaultCollection.GetAll"), data => new RecoveryServicesVaultResource(Client, data));
         }
 
         /// <summary>

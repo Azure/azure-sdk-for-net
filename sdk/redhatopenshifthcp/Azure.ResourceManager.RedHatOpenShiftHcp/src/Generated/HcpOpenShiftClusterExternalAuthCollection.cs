@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcpOpenShiftClusterExternalAuthData, HcpOpenShiftClusterExternalAuthResource>(new HcpOpenShiftClusterExternalAuthsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HcpOpenShiftClusterExternalAuthData, HcpOpenShiftClusterExternalAuthResource>(new HcpOpenShiftClusterExternalAuthDataAsyncCollectionResultOfT(
                 _hcpOpenShiftClusterExternalAuthsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcpOpenShiftClusterExternalAuthData, HcpOpenShiftClusterExternalAuthResource>(new HcpOpenShiftClusterExternalAuthsGetByParentCollectionResultOfT(
+            return new PageableWrapper<HcpOpenShiftClusterExternalAuthData, HcpOpenShiftClusterExternalAuthResource>(new HcpOpenShiftClusterExternalAuthDataCollectionResultOfT(
                 _hcpOpenShiftClusterExternalAuthsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

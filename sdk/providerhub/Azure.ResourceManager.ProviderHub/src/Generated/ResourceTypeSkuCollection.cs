@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new ResourceTypeSkuGetByResourceTypeRegistrationsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new ResourceTypeSkuDataAsync0CollectionResultOfT(
                 _resourceTypeSkuRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new ResourceTypeSkuGetByResourceTypeRegistrationsCollectionResultOfT(
+            return new PageableWrapper<ResourceTypeSkuData, ResourceTypeSkuResource>(new ResourceTypeSkuData0CollectionResultOfT(
                 _resourceTypeSkuRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,

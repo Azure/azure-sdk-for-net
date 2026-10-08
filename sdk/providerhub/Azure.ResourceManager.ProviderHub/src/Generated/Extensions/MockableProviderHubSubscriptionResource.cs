@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetBySubscriptionAsyncCollectionResultOfT(ProviderMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProviderHubSubscriptionResource.GetProviderMonitorSettings"), data => new ProviderMonitorSettingResource(Client, data));
+            return new AsyncPageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingDataAsync0CollectionResultOfT(ProviderMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProviderHubSubscriptionResource.GetProviderMonitorSettings"), data => new ProviderMonitorSettingResource(Client, data));
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetBySubscriptionCollectionResultOfT(ProviderMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProviderHubSubscriptionResource.GetProviderMonitorSettings"), data => new ProviderMonitorSettingResource(Client, data));
+            return new PageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingData0CollectionResultOfT(ProviderMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProviderHubSubscriptionResource.GetProviderMonitorSettings"), data => new ProviderMonitorSettingResource(Client, data));
         }
     }
 }
