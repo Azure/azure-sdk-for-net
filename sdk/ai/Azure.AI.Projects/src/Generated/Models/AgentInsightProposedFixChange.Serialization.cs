@@ -95,29 +95,43 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(OldValue))
+            if (_oldValueIsDefined || Optional.IsDefined(OldValue))
             {
-                writer.WritePropertyName("old_value"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(OldValue);
-#else
-                using (JsonDocument document = JsonDocument.Parse(OldValue))
+                if (OldValue != null)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName("old_value"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(OldValue);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(OldValue))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("old_value"u8);
+                }
             }
-            if (Optional.IsDefined(NewValue))
+            if (_newValueIsDefined || Optional.IsDefined(NewValue))
             {
-                writer.WritePropertyName("new_value"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(NewValue);
-#else
-                using (JsonDocument document = JsonDocument.Parse(NewValue))
+                if (NewValue != null)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName("new_value"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(NewValue);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(NewValue))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("new_value"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,7 +180,9 @@ namespace Azure.AI.Projects
             string diff = default;
             AgentInsightPromptSurface? surface = default;
             string target = default;
+            bool oldValueIsDefined = false;
             BinaryData oldValue = default;
+            bool newValueIsDefined = false;
             BinaryData newValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -202,6 +218,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("old_value"u8))
                 {
+                    oldValueIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         oldValue = null;
@@ -212,6 +229,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("new_value"u8))
                 {
+                    newValueIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         newValue = null;
@@ -233,7 +251,11 @@ namespace Azure.AI.Projects
                 target,
                 oldValue,
                 newValue,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _oldValueIsDefined = oldValueIsDefined,
+                _newValueIsDefined = newValueIsDefined
+            };
         }
     }
 }

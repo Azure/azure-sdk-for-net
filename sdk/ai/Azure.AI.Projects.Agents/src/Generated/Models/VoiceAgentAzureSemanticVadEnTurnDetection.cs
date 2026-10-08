@@ -12,6 +12,9 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public partial class VoiceAgentAzureSemanticVadEnTurnDetection : VoiceAgentTurnDetectionConfig
     {
+        private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;
+        internal bool _endOfUtteranceDetectionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAzureSemanticVadEnTurnDetection"/>. </summary>
         public VoiceAgentAzureSemanticVadEnTurnDetection() : base(VoiceAgentTurnDetectionType.AzureSemanticVadEn)
         {
@@ -36,7 +39,7 @@ namespace Azure.AI.Projects.Agents
             PrefixPaddingMs = prefixPaddingMs;
             SilenceDurationMs = silenceDurationMs;
             IdleTimeoutMs = idleTimeoutMs;
-            EndOfUtteranceDetection = endOfUtteranceDetection;
+            _endOfUtteranceDetection = endOfUtteranceDetection;
             SpeechDurationMs = speechDurationMs;
             RemoveFillerWords = removeFillerWords;
             CreateResponse = createResponse;
@@ -56,7 +59,18 @@ namespace Azure.AI.Projects.Agents
         public TimeSpan? IdleTimeoutMs { get; set; }
 
         /// <summary> Semantic end-of-utterance detection configuration. Set to null to disable it. </summary>
-        public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection { get; set; }
+        public VoiceAgentEndOfUtteranceDetection EndOfUtteranceDetection
+        {
+            get
+            {
+                return _endOfUtteranceDetection;
+            }
+            set
+            {
+                _endOfUtteranceDetection = value;
+                _endOfUtteranceDetectionIsDefined = true;
+            }
+        }
 
         /// <summary> Minimum speech duration required to trigger detection, in milliseconds. </summary>
         public TimeSpan? SpeechDurationMs { get; set; }
