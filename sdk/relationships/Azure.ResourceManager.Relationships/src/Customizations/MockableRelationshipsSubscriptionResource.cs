@@ -9,6 +9,23 @@ namespace Azure.ResourceManager.Relationships.Mocking
 {
     public partial class MockableRelationshipsSubscriptionResource
     {
+        // TODO: Remove this workaround after regenerating with the fix for
+        // https://github.com/Azure/azure-sdk-for-net/issues/62600 (resource-type API-version overrides).
+        private ContainsRelationships ContainsRelationshipsRestClient
+        {
+            get
+            {
+                if (_containsRelationshipsRestClient == null)
+                {
+                    TryGetApiVersion("Microsoft.Relationships/contains", out string apiVersion);
+                    _containsRelationshipsRestClient = new ContainsRelationships(
+                        ContainsRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint,
+                        apiVersion ?? "2026-08-01");
+                }
+                return _containsRelationshipsRestClient;
+            }
+        }
+
         // Remove after regenerating with the fixes for:
         // https://github.com/Azure/azure-sdk-for-net/issues/63507 (relative continuation tokens).
         // https://github.com/Azure/azure-sdk-for-net/issues/63508 (enumeration cancellation).

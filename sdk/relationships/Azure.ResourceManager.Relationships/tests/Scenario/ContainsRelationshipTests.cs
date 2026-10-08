@@ -97,6 +97,58 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.AreEqual(new Uri(nextLink).PathAndQuery, transport.Requests[1].Uri.PathAndQuery);
         }
 
+        [Test]
+        public async Task ContainsListHonorsApiVersionOverride(
+            [Values(false, true)] bool subscriptionScope,
+            [Values(false, true)] bool async,
+            [Values(null, "2026-03-01-preview")] string apiVersionOverride)
+        {
+            string sourceId = subscriptionScope ? $"/subscriptions/{SubscriptionId}" : $"/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}";
+            string nextLink = $"https://management.azure.com{sourceId}/providers/Microsoft.Relationships/contains?api-version=2026-08-01&$skiptoken=page2";
+            var transport = new MockTransport(
+                CreateResponse("{\"value\":[],\"nextLink\":\"" + nextLink + "\"}"),
+                CreateResponse("{\"value\":[]}"),
+                CreateResponse("{\"value\":[]}"));
+            var options = new ArmClientOptions { Transport = transport };
+            if (apiVersionOverride != null)
+            {
+                options.SetApiVersion("Microsoft.Relationships/contains", apiVersionOverride);
+            }
+            var client = new ArmClient(new MockCredential(), SubscriptionId, options);
+            ResourceGroupResource resourceGroup = client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(SubscriptionId, ResourceGroupName));
+            SubscriptionResource subscription = client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(SubscriptionId));
+
+            // Verify the initial request, normal nextLink traversal, and explicit token resume.
+            foreach (string token in new[] { null, nextLink })
+            {
+                if (async)
+                {
+                    AsyncPageable<ContainsRelationship> pageable = subscriptionScope
+                        ? subscription.GetBySubscriptionContainsRelationshipsAsync()
+                        : resourceGroup.GetByResourceGroupContainsRelationshipsAsync();
+                    await foreach (Page<ContainsRelationship> page in pageable.AsPages(token))
+                    {
+                        Assert.IsEmpty(page.Values);
+                    }
+                }
+                else
+                {
+                    Pageable<ContainsRelationship> pageable = subscriptionScope
+                        ? subscription.GetBySubscriptionContainsRelationships()
+                        : resourceGroup.GetByResourceGroupContainsRelationships();
+                    Assert.IsTrue(pageable.AsPages(token).All(page => page.Values.Count == 0));
+                }
+            }
+
+            Assert.AreEqual(3, transport.Requests.Count);
+            foreach (Request request in transport.Requests)
+            {
+                StringAssert.Contains("api-version=" + (apiVersionOverride ?? "2026-08-01"), request.Uri.Query);
+            }
+            StringAssert.Contains("$skiptoken=page2", transport.Requests[1].Uri.Query);
+            StringAssert.Contains("$skiptoken=page2", transport.Requests[2].Uri.Query);
+        }
+
         private static ArmClient CreateClient(MockTransport transport)
         {
             var options = new ArmClientOptions { Transport = transport };

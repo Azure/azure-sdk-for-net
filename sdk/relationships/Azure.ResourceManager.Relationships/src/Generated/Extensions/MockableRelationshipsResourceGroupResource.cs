@@ -32,7 +32,5 @@ namespace Azure.ResourceManager.Relationships.Mocking
         }
 
         private ClientDiagnostics ContainsRelationshipsClientDiagnostics => _containsRelationshipsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relationships.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ContainsRelationships ContainsRelationshipsRestClient => _containsRelationshipsRestClient ??= new ContainsRelationships(ContainsRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
     }
 }
