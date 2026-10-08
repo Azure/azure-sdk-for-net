@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MpiDistributionConfiguration. </summary>
         public MpiDistributionConfiguration()
         {
+            DistributionType.Assign(MachineLearning.DistributionType.Mpi);
         }
 
         /// <summary> Gets or sets the ProcessCountPerInstance. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("distributionType", new string[] { "distributionType" }, defaultValue: "Mpi");
             _processCountPerInstance = DefineProperty<int>(nameof(ProcessCountPerInstance), new string[] { "processCountPerInstance" });
             DefineAdditionalProperties();
         }

@@ -20,7 +20,7 @@ public partial class ProjectsRoutineOptions
     /// <param name="description">A human-readable description of the routine.</param>
     /// <param name="enabled">Whether the routine is enabled.</param>
     /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
-    public ProjectsRoutineOptions(RoutineAction action, string description=default, bool? enabled=default)
+    public ProjectsRoutineOptions(RoutineAction action, string description = default, bool? enabled = default)
     {
         Argument.AssertNotNull(action, nameof(action));
 

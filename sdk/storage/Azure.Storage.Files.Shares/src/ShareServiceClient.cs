@@ -344,6 +344,26 @@ namespace Azure.Storage.Files.Shares
                 _uri,
                 _clientConfiguration.ClientOptions.Version.ToVersionString(),
                 fileRequestIntent: null);
+
+        /// <summary>
+        /// Returns the shared key credential associated with this client so that derived
+        /// classes in other assemblies (e.g., Files Change Feed) can propagate
+        /// authentication without needing <c>InternalsVisibleTo</c>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static StorageSharedKeyCredential GetSharedKeyCredential(
+            ShareServiceClient client)
+            => client._clientConfiguration?.SharedKeyCredential;
+
+        /// <summary>
+        /// Returns the token credential associated with this client so that derived
+        /// classes in other assemblies (e.g., Files Change Feed) can propagate
+        /// authentication without needing <c>InternalsVisibleTo</c>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static TokenCredential GetTokenCredential(
+            ShareServiceClient client)
+            => client._clientConfiguration?.TokenCredential;
         #endregion ctors
 
         /// <summary>
@@ -920,6 +940,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.ProvisionedMaxIops,
                 provisionedMaxBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableChangeFeed: options?.EnableChangeFeed,
+                changeFeedRetentionInDays: options?.ChangeFeedRetentionInDays,
                 //enableDirectoryLease: options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken: cancellationToken,
@@ -977,6 +999,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.ProvisionedMaxIops,
                 provisionedMaxBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableChangeFeed: options?.EnableChangeFeed,
+                changeFeedRetentionInDays: options?.ChangeFeedRetentionInDays,
                 //enableDirectoryLease: options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken: cancellationToken,
@@ -1039,6 +1063,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 async: false,
                 cancellationToken: cancellationToken,
@@ -1101,6 +1127,8 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableChangeFeed: default,
+                changeFeedRetentionInDays: default,
                 //enableDirectoryLease: default,
                 async: true,
                 cancellationToken: cancellationToken,

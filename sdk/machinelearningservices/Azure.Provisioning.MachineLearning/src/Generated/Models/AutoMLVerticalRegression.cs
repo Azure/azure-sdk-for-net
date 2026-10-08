@@ -27,6 +27,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AutoMLVerticalRegression. </summary>
         public AutoMLVerticalRegression()
         {
+            TaskType.Assign(MachineLearning.TaskType.Regression);
         }
 
         /// <summary> Gets or sets the CvSplitColumnNames. </summary>
@@ -198,7 +199,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("taskType", new string[] { "taskType" }, defaultValue: "Regression");
             _cvSplitColumnNames = DefineListProperty<string>(nameof(CvSplitColumnNames), new string[] { "cvSplitColumnNames" });
             _featurizationSettings = DefineModelProperty<TableVerticalFeaturizationSettings>(nameof(FeaturizationSettings), new string[] { "featurizationSettings" });
             _limitSettings = DefineModelProperty<TableVerticalLimitSettings>(nameof(LimitSettings), new string[] { "limitSettings" });

@@ -527,7 +527,7 @@ namespace Azure.AI.Agents.Persistent
                         toolChoice = null;
                         continue;
                     }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    toolChoice = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("response_format"u8))
@@ -537,7 +537,7 @@ namespace Azure.AI.Agents.Persistent
                         responseFormat = null;
                         continue;
                     }
-                    responseFormat = BinaryData.FromString(prop.Value.GetRawText());
+                    responseFormat = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -579,7 +579,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ThreadRun(

@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new WorkloadSapAsePointInTimeRecoveryPoint. </summary>
         public WorkloadSapAsePointInTimeRecoveryPoint()
         {
+            ObjectType.Assign("AzureWorkloadSAPAsePointInTimeRecoveryPoint");
         }
 
         /// <summary> Define all the provisionable properties for WorkloadSapAsePointInTimeRecoveryPoint. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("objectType", new string[] { "objectType" }, defaultValue: "AzureWorkloadSAPAsePointInTimeRecoveryPoint");
             DefineAdditionalProperties();
         }
 

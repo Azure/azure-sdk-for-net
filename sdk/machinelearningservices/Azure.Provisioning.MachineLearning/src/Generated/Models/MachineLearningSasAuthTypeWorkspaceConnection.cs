@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningSasAuthTypeWorkspaceConnection. </summary>
         public MachineLearningSasAuthTypeWorkspaceConnection()
         {
+            AuthType.Assign(ConnectionAuthType.SAS);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -55,7 +56,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "SAS");
             _credentials = DefineModelProperty<WorkspaceConnectionSharedAccessSignature>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

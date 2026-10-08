@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataMount"/>. </summary>
-        public MachineLearningComputeInstanceDataMount()
+        internal MachineLearningComputeInstanceDataMount()
         {
         }
 
@@ -51,42 +51,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Source of the ComputeInstance data mount. </summary>
         [WirePath("source")]
-        public string Source { get; set; }
+        public string Source { get; }
 
         /// <summary> Data source type. </summary>
         [WirePath("sourceType")]
-        public MachineLearningSourceType? SourceType { get; set; }
+        public MachineLearningSourceType? SourceType { get; }
 
         /// <summary> name of the ComputeInstance data mount. </summary>
         [WirePath("mountName")]
-        public string MountName { get; set; }
+        public string MountName { get; }
 
         /// <summary> Mount Action. </summary>
         [WirePath("mountAction")]
-        public MachineLearningMountAction? MountAction { get; set; }
+        public MachineLearningMountAction? MountAction { get; }
 
         /// <summary> Mount Mode. </summary>
         [WirePath("mountMode")]
-        public MountMode? MountMode { get; set; }
+        public MountMode? MountMode { get; }
 
         /// <summary> who this data mount created by. </summary>
         [WirePath("createdBy")]
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; }
 
         /// <summary> Path of this data mount. </summary>
         [WirePath("mountPath")]
-        public string MountPath { get; set; }
+        public string MountPath { get; }
 
         /// <summary> Mount state. </summary>
         [WirePath("mountState")]
-        public MachineLearningMountState? MountState { get; set; }
+        public MachineLearningMountState? MountState { get; }
 
         /// <summary> The time when the disk mounted. </summary>
         [WirePath("mountedOn")]
-        public DateTimeOffset? MountedOn { get; set; }
+        public DateTimeOffset? MountedOn { get; }
 
         /// <summary> Error of this data mount. </summary>
         [WirePath("error")]
-        public string Error { get; set; }
+        public string Error { get; }
     }
 }

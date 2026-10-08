@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -96,6 +97,20 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> Array of references to application gateway trusted root certificates. </summary>
+        [WirePath("properties.trustedRootCertificates")]
+        public IList<WritableSubResource> TrustedRootCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                return Properties.TrustedRootCertificates;
+            }
+        }
+
         /// <summary> Server name indication to be sent to the backend servers for Tls protocol. </summary>
         [WirePath("properties.hostName")]
         public string HostName
@@ -129,24 +144,6 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
                 }
                 Properties.PickHostNameFromBackendAddress = value;
-            }
-        }
-
-        /// <summary> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </summary>
-        [WirePath("properties.enableL4ClientIpPreservation")]
-        public bool? EnableL4ClientIpPreservation
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableL4ClientIpPreservation;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
-                }
-                Properties.EnableL4ClientIpPreservation = value;
             }
         }
 

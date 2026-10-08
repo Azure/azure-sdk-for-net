@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -19,7 +18,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="activitySource"> The source activity ID for the reference. </param>
         internal KnowledgeBaseWorkIQReference(string id, int activitySource) : base(KnowledgeBaseReferenceType.WorkIQ, id, activitySource)
         {
-            Attributions = new ChangeTrackingList<WorkIQAttribution>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseWorkIQReference"/>. </summary>
@@ -29,13 +27,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="sourceData"> The source data for the reference. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="attributions"> The attributions for the reference. </param>
-        internal KnowledgeBaseWorkIQReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<WorkIQAttribution> attributions) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
+        internal KnowledgeBaseWorkIQReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, PurviewSensitivityLabelInfo searchSensitivityLabelInfo) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
-            Attributions = attributions;
+            SearchSensitivityLabelInfo = searchSensitivityLabelInfo;
         }
 
-        /// <summary> The attributions for the reference. </summary>
-        public IList<WorkIQAttribution> Attributions { get; }
+        /// <summary> The sensitivity label information for the reference. </summary>
+        public PurviewSensitivityLabelInfo SearchSensitivityLabelInfo { get; }
     }
 }

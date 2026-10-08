@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            ChaosRecommendationStatus recommendationStatus = default;
+            RecommendationStatus recommendationStatus = default;
             DateTimeOffset? evaluationRunOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("recommendationStatus"u8))
                 {
-                    recommendationStatus = new ChaosRecommendationStatus(prop.Value.GetString());
+                    recommendationStatus = new RecommendationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("evaluationRunAt"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ChaosScenarioRecommendation(recommendationStatus, evaluationRunOn, additionalBinaryDataProperties);

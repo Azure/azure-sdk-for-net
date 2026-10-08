@@ -22,6 +22,7 @@ namespace Azure.Provisioning.FrontDoor
         /// <summary> Creates a new RedirectConfiguration. </summary>
         public RedirectConfiguration()
         {
+            OdataType.Assign("#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration");
         }
 
         /// <summary> Gets or sets the RedirectType. </summary>
@@ -118,7 +119,6 @@ namespace Azure.Provisioning.FrontDoor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("@odata.type", new string[] { "@odata.type" }, defaultValue: "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration");
             _redirectType = DefineProperty<FrontDoorRedirectType>(nameof(RedirectType), new string[] { "redirectType" });
             _redirectProtocol = DefineProperty<FrontDoorRedirectProtocol>(nameof(RedirectProtocol), new string[] { "redirectProtocol" });
             _customHost = DefineProperty<string>(nameof(CustomHost), new string[] { "customHost" });

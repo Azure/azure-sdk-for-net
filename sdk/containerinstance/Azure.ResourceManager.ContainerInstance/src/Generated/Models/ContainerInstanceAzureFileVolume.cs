@@ -36,14 +36,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
         /// <param name="storageAccountKey"> The storage account access key used to access the Azure File share. </param>
         /// <param name="storageAccountKeyReference"> The reference to the storage account access key used to access the Azure File share. </param>
+        /// <param name="userAssignedIdentityClientId"> The client id of the user-assigned managed identity that has access to the Azure File share. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerInstanceAzureFileVolume(string shareName, bool? isReadOnly, string storageAccountName, string storageAccountKey, string storageAccountKeyReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerInstanceAzureFileVolume(string shareName, bool? isReadOnly, string storageAccountName, string storageAccountKey, string storageAccountKeyReference, string userAssignedIdentityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ShareName = shareName;
             IsReadOnly = isReadOnly;
             StorageAccountName = storageAccountName;
             StorageAccountKey = storageAccountKey;
             StorageAccountKeyReference = storageAccountKeyReference;
+            UserAssignedIdentityClientId = userAssignedIdentityClientId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -61,5 +63,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The reference to the storage account access key used to access the Azure File share. </summary>
         public string StorageAccountKeyReference { get; set; }
+
+        /// <summary> The client id of the user-assigned managed identity that has access to the Azure File share. </summary>
+        public string UserAssignedIdentityClientId { get; set; }
     }
 }

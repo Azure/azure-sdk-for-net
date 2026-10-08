@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.SpotExpirationOn;
+                return Properties is null ? default : Properties.SpotExpiresOn;
             }
             set
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new AppServicePlanPatchResourceProperties();
                 }
-                Properties.SpotExpirationOn = value;
+                Properties.SpotExpiresOn = value;
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.FreeOfferExpirationOn;
+                return Properties is null ? default : Properties.FreeOfferExpiresOn;
             }
             set
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new AppServicePlanPatchResourceProperties();
                 }
-                Properties.FreeOfferExpirationOn = value;
+                Properties.FreeOfferExpiresOn = value;
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the virtual network appliance ip configuration. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VirtualNetworkApplianceIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualNetworkApplianceIpConfigurationProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal VirtualNetworkApplianceIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualNetworkApplianceIPConfigurationProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
             ETag = eTag;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the virtual network appliance ip configuration. </summary>
         [WirePath("properties")]
-        internal VirtualNetworkApplianceIpConfigurationProperties Properties { get; }
+        internal VirtualNetworkApplianceIPConfigurationProperties Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

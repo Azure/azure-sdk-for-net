@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(MinInstancePercentage))
             {
                 writer.WritePropertyName("minInstancePercentage"u8);
-                writer.WriteBase64StringValue(MinInstancePercentage.ToArray(), "D");
+                writer.WriteBase64StringValue(MinInstancePercentage, "D");
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StatelessServiceProperties(

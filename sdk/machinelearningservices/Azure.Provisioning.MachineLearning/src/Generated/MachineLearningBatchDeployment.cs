@@ -186,7 +186,7 @@ namespace Azure.Provisioning.MachineLearning
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _sku = DefineModelProperty<MachineLearningSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<MachineLearningBatchEndpoint>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<MachineLearningBatchEndpoint>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

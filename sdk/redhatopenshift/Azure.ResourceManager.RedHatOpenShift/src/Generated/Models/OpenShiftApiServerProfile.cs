@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         {
             Visibility = visibility;
             Uri = uri;
-            Ip = ip;
+            IP = ip;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public Uri Uri { get; }
 
         /// <summary> The IP of the cluster API server. </summary>
-        public IPAddress Ip { get; }
+        public IPAddress IP { get; }
     }
 }

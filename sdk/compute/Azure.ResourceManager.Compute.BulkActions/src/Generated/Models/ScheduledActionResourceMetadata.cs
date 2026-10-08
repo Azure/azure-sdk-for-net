@@ -12,17 +12,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Represents an scheduled action resource metadata. </summary>
+    /// <summary> A compute resource associated with a scheduled action. </summary>
     public partial class ScheduledActionResourceMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceMetadata"/>. </summary>
-        /// <param name="resourceId">
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
         internal ScheduledActionResourceMetadata(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
@@ -30,14 +27,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceMetadata"/>. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="id"> The compute RP resource id of the resource in the scheduled actions scope. . </param>
-        /// <param name="type"> The type of resource. </param>
-        /// <param name="resourceId">
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </param>
-        /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
+        /// <param name="name"> Read-only. The name of the association resource. </param>
+        /// <param name="id"> Read-only. The Azure resource ID of the association resource. </param>
+        /// <param name="type"> Read-only. The Azure resource type of the associated resource. </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
+        /// <param name="notificationSettings"> Notification settings that apply only to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScheduledActionResourceMetadata(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -49,22 +43,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the resource. </summary>
+        /// <summary> Read-only. The name of the association resource. </summary>
         public string Name { get; }
 
-        /// <summary> The compute RP resource id of the resource in the scheduled actions scope. . </summary>
+        /// <summary> Read-only. The Azure resource ID of the association resource. </summary>
         public ResourceIdentifier Id { get; }
 
-        /// <summary> The type of resource. </summary>
+        /// <summary> Read-only. The Azure resource type of the associated resource. </summary>
         public string Type { get; }
 
-        /// <summary>
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </summary>
+        /// <summary> The Azure resource ID of the targeted virtual machine. </summary>
         public ResourceIdentifier ResourceId { get; }
 
-        /// <summary> The desired notification settings for the specified resource. </summary>
+        /// <summary> Notification settings that apply only to this resource. </summary>
         public IList<NotificationProperties> NotificationSettings { get; }
     }
 }

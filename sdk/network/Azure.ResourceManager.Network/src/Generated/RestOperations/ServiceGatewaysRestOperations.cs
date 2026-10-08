@@ -250,6 +250,7 @@ namespace Azure.ResourceManager.Network
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -275,6 +276,7 @@ namespace Azure.ResourceManager.Network
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }

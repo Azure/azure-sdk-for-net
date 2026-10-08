@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile, options);
             }
-            if (Optional.IsDefined(OsImageNotificationProfile))
+            if (Optional.IsDefined(OSImageNotificationProfile))
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
-                writer.WriteObjectValue(OsImageNotificationProfile, options);
+                writer.WriteObjectValue(OSImageNotificationProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduledEventsProfile(terminateNotificationProfile, osImageNotificationProfile, additionalBinaryDataProperties);

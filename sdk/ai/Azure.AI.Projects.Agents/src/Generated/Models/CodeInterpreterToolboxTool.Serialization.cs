@@ -6,6 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -71,6 +73,16 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(CodeInterpreterToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(InternalContainer))
             {
                 writer.WritePropertyName("container"u8);
@@ -115,6 +127,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<CallableToolAllowedCaller> allowedCallers = default;
             BinaryData internalContainer = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,9 +155,30 @@ namespace Azure.AI.Projects.Agents
                     Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                        }
                     }
                     toolConfigs = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                    }
+                    allowedCallers = array;
                     continue;
                 }
                 if (prop.NameEquals("container"u8))
@@ -153,12 +187,12 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    internalContainer = BinaryData.FromString(prop.Value.GetRawText());
+                    internalContainer = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CodeInterpreterToolboxTool(
@@ -167,6 +201,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
+                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
                 internalContainer);
         }
     }

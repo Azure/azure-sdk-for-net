@@ -96,7 +96,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.ObjectId;
+                return Properties is null ? default : Properties.ObjectId;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.FriendlyName;
+                return Properties is null ? default : Properties.FriendlyName;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.IconHash;
+                return Properties is null ? default : Properties.IconHash;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.IconContent;
+                return Properties is null ? default : Properties.IconContent;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.DesktopVirtualization
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DesktopProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualApplicationGroup>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualApplicationGroup>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
