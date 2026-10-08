@@ -110,21 +110,51 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsNull(data.TrafficManagementProfileId);
             using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write<T>(data, new ModelReaderWriterOptions(format)));
             JsonElement properties = document.RootElement.GetProperty("properties");
-            Assert.IsFalse(properties.TryGetProperty("trafficManagementProfile", out _));
+            Assert.AreEqual("{}", properties.GetProperty("trafficManagementProfile").GetRawText());
             Assert.AreEqual(300, properties.GetProperty("ttl").GetInt32());
             Assert.AreEqual("value", properties.GetProperty("metadata").GetProperty("key").GetString());
         }
 
-        [Test]
-        public void SettingNullOnNewModelDoesNotCreateProfile()
+        [TestCase("J")]
+        [TestCase("W")]
+        public void SettingNullOnNewModelCreatesEmptyProfileLikePublicDns(string format)
         {
             var data = new T { TrafficManagementProfileId = null };
             Assert.IsNull(data.TrafficManagementProfileId);
             Assert.IsNull(data.ProvisioningState);
-            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write<T>(data, ModelReaderWriterOptions.Json));
-            if (document.RootElement.TryGetProperty("properties", out JsonElement properties))
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write<T>(data, new ModelReaderWriterOptions(format)));
+            Assert.AreEqual("{}", document.RootElement.GetProperty("properties").GetProperty("trafficManagementProfile").GetRawText());
+        }
+
+        [TestCase(false, "J")]
+        [TestCase(false, "W")]
+        [TestCase(true, "J")]
+        [TestCase(true, "W")]
+        public void UpdatingProfileIdRetainsNestedResponseData(bool clear, string format)
+        {
+            BinaryData response = BinaryData.FromObjectAsJson(new
             {
-                Assert.IsFalse(properties.TryGetProperty("trafficManagementProfile", out _));
+                properties = new
+                {
+                    trafficManagementProfile = new { id = ProfileId, futureProperty = "preserved" }
+                }
+            });
+            T data = ModelReaderWriter.Read<T>(response, ModelReaderWriterOptions.Json);
+            ResourceIdentifier replacementId = clear ? null : new ResourceIdentifier(ProfileId + "-replacement");
+            data.TrafficManagementProfileId = replacementId;
+
+            Assert.AreEqual(replacementId, data.TrafficManagementProfileId);
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write<T>(data, new ModelReaderWriterOptions(format)));
+            JsonElement profile = document.RootElement.GetProperty("properties").GetProperty("trafficManagementProfile");
+            Assert.AreEqual(!clear, profile.TryGetProperty("id", out JsonElement id));
+            if (!clear)
+            {
+                Assert.AreEqual(replacementId.ToString(), id.GetString());
+            }
+            Assert.AreEqual(format == "J", profile.TryGetProperty("futureProperty", out JsonElement futureProperty));
+            if (format == "J")
+            {
+                Assert.AreEqual("preserved", futureProperty.GetString());
             }
         }
 

@@ -315,36 +315,36 @@ namespace Azure.ResourceManager.PrivateDns
         /// Returns the private DNS zone records specified by the referencing targetResourceIds.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePrivateDnsSubscriptionResource.GetByTargetResourcesAsync(PrivateDnsResourceReferenceContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePrivateDnsSubscriptionResource.GetPrivateDnsResourceReferencesByTargetResourcesAsync(PrivateDnsResourceReferenceContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<PrivateDnsResourceReferenceResult>> GetByTargetResourcesAsync(this SubscriptionResource subscriptionResource, PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PrivateDnsResourceReferenceResult>> GetPrivateDnsResourceReferencesByTargetResourcesAsync(this SubscriptionResource subscriptionResource, PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePrivateDnsSubscriptionResource(subscriptionResource).GetByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePrivateDnsSubscriptionResource(subscriptionResource).GetPrivateDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the private DNS zone records specified by the referencing targetResourceIds.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePrivateDnsSubscriptionResource.GetByTargetResources(PrivateDnsResourceReferenceContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePrivateDnsSubscriptionResource.GetPrivateDnsResourceReferencesByTargetResources(PrivateDnsResourceReferenceContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<PrivateDnsResourceReferenceResult> GetByTargetResources(this SubscriptionResource subscriptionResource, PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public static Response<PrivateDnsResourceReferenceResult> GetPrivateDnsResourceReferencesByTargetResources(this SubscriptionResource subscriptionResource, PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePrivateDnsSubscriptionResource(subscriptionResource).GetByTargetResources(content, cancellationToken);
+            return GetMockablePrivateDnsSubscriptionResource(subscriptionResource).GetPrivateDnsResourceReferencesByTargetResources(content, cancellationToken);
         }
     }
 }

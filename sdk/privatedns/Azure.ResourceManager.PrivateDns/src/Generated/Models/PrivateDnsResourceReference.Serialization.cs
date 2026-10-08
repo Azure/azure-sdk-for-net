@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 writer.WritePropertyName("privateDnsResources"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in PrivateDnsResources)
+                foreach (PrivateDnsSubResourceInfo item in PrivateDnsResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            IList<SubResource> privateDnsResources = default;
-            SubResource targetResource = default;
+            IList<PrivateDnsSubResourceInfo> privateDnsResources = default;
+            PrivateDnsSubResourceInfo targetResource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<PrivateDnsSubResourceInfo> array = new List<PrivateDnsSubResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(PrivateDnsSubResourceInfo.DeserializePrivateDnsSubResourceInfo(item, options));
                     }
                     privateDnsResources = array;
                     continue;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     {
                         continue;
                     }
-                    targetResource = SubResource.DeserializeSubResource(prop.Value, options);
+                    targetResource = PrivateDnsSubResourceInfo.DeserializePrivateDnsSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateDnsResourceReference(privateDnsResources ?? new ChangeTrackingList<SubResource>(), targetResource, additionalBinaryDataProperties);
+            return new PrivateDnsResourceReference(privateDnsResources ?? new ChangeTrackingList<PrivateDnsSubResourceInfo>(), targetResource, additionalBinaryDataProperties);
         }
     }
 }

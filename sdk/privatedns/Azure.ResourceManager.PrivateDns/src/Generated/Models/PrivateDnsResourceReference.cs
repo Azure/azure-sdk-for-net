@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
@@ -20,14 +21,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <summary> Initializes a new instance of <see cref="PrivateDnsResourceReference"/>. </summary>
         internal PrivateDnsResourceReference()
         {
-            PrivateDnsResources = new ChangeTrackingList<SubResource>();
+            PrivateDnsResources = new ChangeTrackingList<PrivateDnsSubResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateDnsResourceReference"/>. </summary>
         /// <param name="privateDnsResources"> A list of private DNS record sets that reference the target resource. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the private DNS resource value is taken. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsResourceReference(IList<SubResource> privateDnsResources, SubResource targetResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateDnsResourceReference(IList<PrivateDnsSubResourceInfo> privateDnsResources, PrivateDnsSubResourceInfo targetResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateDnsResources = privateDnsResources;
             TargetResource = targetResource;
@@ -36,15 +37,15 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <summary> A list of private DNS record sets that reference the target resource. </summary>
         [WirePath("privateDnsResources")]
-        public IList<SubResource> PrivateDnsResources { get; }
+        public IList<PrivateDnsSubResourceInfo> PrivateDnsResources { get; }
 
         /// <summary> A reference to an azure resource from where the private DNS resource value is taken. </summary>
         [WirePath("targetResource")]
-        internal SubResource TargetResource { get; }
+        internal PrivateDnsSubResourceInfo TargetResource { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("targetResource.id")]
-        public string TargetResourceId
+        public ResourceIdentifier TargetResourceId
         {
             get
             {

@@ -7,25 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> Reference to another subresource. </summary>
-    public partial class SubResource
+    public partial class PrivateDnsSubResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
-        public SubResource()
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsSubResourceInfo"/>. </summary>
+        public PrivateDnsSubResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsSubResourceInfo"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubResource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateDnsSubResourceInfo(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +34,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

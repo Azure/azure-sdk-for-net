@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <summary> Initializes a new instance of <see cref="PrivateDnsResourceReferenceRequestProperties"/>. </summary>
         public PrivateDnsResourceReferenceRequestProperties()
         {
-            TargetResources = new ChangeTrackingList<SubResource>();
+            TargetResources = new ChangeTrackingList<PrivateDnsSubResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateDnsResourceReferenceRequestProperties"/>. </summary>
         /// <param name="targetResources"> A list of references to azure resources for which referencing private DNS records need to be queried. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsResourceReferenceRequestProperties(IList<SubResource> targetResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateDnsResourceReferenceRequestProperties(IList<PrivateDnsSubResourceInfo> targetResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResources = targetResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <summary> A list of references to azure resources for which referencing private DNS records need to be queried. </summary>
         [WirePath("targetResources")]
-        public IList<SubResource> TargetResources { get; } = new ChangeTrackingList<SubResource>();
+        public IList<PrivateDnsSubResourceInfo> TargetResources { get; } = new ChangeTrackingList<PrivateDnsSubResourceInfo>();
     }
 }

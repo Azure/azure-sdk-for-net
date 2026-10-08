@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 writer.WritePropertyName("targetResources"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in TargetResources)
+                foreach (PrivateDnsSubResourceInfo item in TargetResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            IList<SubResource> targetResources = default;
+            IList<PrivateDnsSubResourceInfo> targetResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<PrivateDnsSubResourceInfo> array = new List<PrivateDnsSubResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(PrivateDnsSubResourceInfo.DeserializePrivateDnsSubResourceInfo(item, options));
                     }
                     targetResources = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrivateDnsResourceReferenceRequestProperties(targetResources ?? new ChangeTrackingList<SubResource>(), additionalBinaryDataProperties);
+            return new PrivateDnsResourceReferenceRequestProperties(targetResources ?? new ChangeTrackingList<PrivateDnsSubResourceInfo>(), additionalBinaryDataProperties);
         }
     }
 }

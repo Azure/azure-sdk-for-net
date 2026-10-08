@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <summary> A list of references to azure resources for which referencing private DNS records need to be queried. </summary>
         [WirePath("properties.targetResources")]
-        public IList<SubResource> TargetResources
+        public IList<PrivateDnsSubResourceInfo> TargetResources
         {
             get
             {

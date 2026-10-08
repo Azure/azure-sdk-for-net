@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PrivateDnsResourceReferenceResult>> GetByTargetResourcesAsync(PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsResourceReferenceResult>> GetPrivateDnsResourceReferencesByTargetResourcesAsync(PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PrivateDnsResourceReferenceClientDiagnostics.CreateScope("MockablePrivateDnsSubscriptionResource.GetByTargetResources");
+            using DiagnosticScope scope = PrivateDnsResourceReferenceClientDiagnostics.CreateScope("MockablePrivateDnsSubscriptionResource.GetPrivateDnsResourceReferencesByTargetResources");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateDnsResourceReferenceRestClient.CreateGetByTargetResourcesRequest(Id.SubscriptionId, PrivateDnsResourceReferenceContent.ToRequestContent(content), context);
+                HttpMessage message = PrivateDnsResourceReferenceRestClient.CreateGetPrivateDnsResourceReferencesByTargetResourcesRequest(Id.SubscriptionId, PrivateDnsResourceReferenceContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateDnsResourceReferenceResult> response = Response.FromValue(PrivateDnsResourceReferenceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PrivateDnsResourceReferenceResult> GetByTargetResources(PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsResourceReferenceResult> GetPrivateDnsResourceReferencesByTargetResources(PrivateDnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PrivateDnsResourceReferenceClientDiagnostics.CreateScope("MockablePrivateDnsSubscriptionResource.GetByTargetResources");
+            using DiagnosticScope scope = PrivateDnsResourceReferenceClientDiagnostics.CreateScope("MockablePrivateDnsSubscriptionResource.GetPrivateDnsResourceReferencesByTargetResources");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateDnsResourceReferenceRestClient.CreateGetByTargetResourcesRequest(Id.SubscriptionId, PrivateDnsResourceReferenceContent.ToRequestContent(content), context);
+                HttpMessage message = PrivateDnsResourceReferenceRestClient.CreateGetPrivateDnsResourceReferencesByTargetResourcesRequest(Id.SubscriptionId, PrivateDnsResourceReferenceContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateDnsResourceReferenceResult> response = Response.FromValue(PrivateDnsResourceReferenceResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             PrivateDnsSoaRecordInfo privateDnsSoaRecord = default;
             IList<PrivateDnsSrvRecordInfo> privateDnsSrvRecords = default;
             IList<PrivateDnsTxtRecordInfo> privateDnsTxtRecords = default;
-            SubResource trafficManagementProfile = default;
+            PrivateDnsSubResourceInfo trafficManagementProfile = default;
             PrivateDnsProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     {
                         continue;
                     }
-                    trafficManagementProfile = SubResource.DeserializeSubResource(prop.Value, options);
+                    trafficManagementProfile = PrivateDnsSubResourceInfo.DeserializePrivateDnsSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

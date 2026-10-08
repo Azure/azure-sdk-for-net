@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <summary> Reference to another subresource. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <returns> A new <see cref="Models.SubResource"/> instance for mocking. </returns>
-        public static SubResource SubResource(string id = default)
+        /// <returns> A new <see cref="Models.PrivateDnsSubResourceInfo"/> instance for mocking. </returns>
+        public static PrivateDnsSubResourceInfo PrivateDnsSubResourceInfo(ResourceIdentifier id = default)
         {
-            return new SubResource(id, default);
+            return new PrivateDnsSubResourceInfo(id, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <param name="targetResources"> A list of references to azure resources for which referencing private DNS records need to be queried. </param>
         /// <returns> A new <see cref="Models.PrivateDnsResourceReferenceContent"/> instance for mocking. </returns>
-        public static PrivateDnsResourceReferenceContent PrivateDnsResourceReferenceContent(IEnumerable<SubResource> targetResources = default)
+        public static PrivateDnsResourceReferenceContent PrivateDnsResourceReferenceContent(IEnumerable<PrivateDnsSubResourceInfo> targetResources = default)
         {
-            return new PrivateDnsResourceReferenceContent(targetResources is null ? default : new PrivateDnsResourceReferenceRequestProperties((targetResources ?? new ChangeTrackingList<SubResource>()).ToList(), default), default);
+            return new PrivateDnsResourceReferenceContent(targetResources is null ? default : new PrivateDnsResourceReferenceRequestProperties((targetResources ?? new ChangeTrackingList<PrivateDnsSubResourceInfo>()).ToList(), default), default);
         }
 
         /// <param name="privateDnsResourceReferences"> The result of private dns resource reference request. A list of private dns resource references for each of the azure resource in the request. </param>
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="privateDnsResources"> A list of private DNS record sets that reference the target resource. </param>
         /// <param name="targetResourceId"> Resource ID. </param>
         /// <returns> A new <see cref="Models.PrivateDnsResourceReference"/> instance for mocking. </returns>
-        public static PrivateDnsResourceReference PrivateDnsResourceReference(IEnumerable<SubResource> privateDnsResources = default, string targetResourceId = default)
+        public static PrivateDnsResourceReference PrivateDnsResourceReference(IEnumerable<PrivateDnsSubResourceInfo> privateDnsResources = default, ResourceIdentifier targetResourceId = default)
         {
-            privateDnsResources ??= new ChangeTrackingList<SubResource>();
+            privateDnsResources ??= new ChangeTrackingList<PrivateDnsSubResourceInfo>();
 
-            return new PrivateDnsResourceReference((privateDnsResources ?? new ChangeTrackingList<SubResource>()).ToList(), targetResourceId is null ? default : new SubResource(targetResourceId, default), default);
+            return new PrivateDnsResourceReference((privateDnsResources ?? new ChangeTrackingList<PrivateDnsSubResourceInfo>()).ToList(), targetResourceId is null ? default : new PrivateDnsSubResourceInfo(targetResourceId, default), default);
         }
 
         /// <summary> Describes a Private DNS zone. </summary>
