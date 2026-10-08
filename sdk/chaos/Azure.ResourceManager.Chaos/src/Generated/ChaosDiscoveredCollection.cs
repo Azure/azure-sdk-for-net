@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosDiscoveredData, ChaosDiscoveredResource>(new DiscoveredResourcesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosDiscoveredData, ChaosDiscoveredResource>(new ChaosDiscoveredDataAsyncCollectionResultOfT(
                 _discoveredResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosDiscoveredData, ChaosDiscoveredResource>(new DiscoveredResourcesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<ChaosDiscoveredData, ChaosDiscoveredResource>(new ChaosDiscoveredDataCollectionResultOfT(
                 _discoveredResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

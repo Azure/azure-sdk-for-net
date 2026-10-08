@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnWebApplicationFirewallPolicyData, CdnWebApplicationFirewallPolicyResource>(new PoliciesGetAllAsyncCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebApplicationFirewallPolicyCollection.GetAll"), data => new CdnWebApplicationFirewallPolicyResource(Client, data));
+            return new AsyncPageableWrapper<CdnWebApplicationFirewallPolicyData, CdnWebApplicationFirewallPolicyResource>(new CdnWebApplicationFirewallPolicyDataAsyncCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebApplicationFirewallPolicyCollection.GetAll"), data => new CdnWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnWebApplicationFirewallPolicyData, CdnWebApplicationFirewallPolicyResource>(new PoliciesGetAllCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebApplicationFirewallPolicyCollection.GetAll"), data => new CdnWebApplicationFirewallPolicyResource(Client, data));
+            return new PageableWrapper<CdnWebApplicationFirewallPolicyData, CdnWebApplicationFirewallPolicyResource>(new CdnWebApplicationFirewallPolicyDataCollectionResultOfT(_policiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CdnWebApplicationFirewallPolicyCollection.GetAll"), data => new CdnWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>

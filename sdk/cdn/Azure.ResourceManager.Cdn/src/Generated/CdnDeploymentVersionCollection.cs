@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new DeploymentVersionsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new CdnDeploymentVersionDataAsyncCollectionResultOfT(
                 _deploymentVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new DeploymentVersionsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<CdnDeploymentVersionData, CdnDeploymentVersionResource>(new CdnDeploymentVersionDataCollectionResultOfT(
                 _deploymentVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

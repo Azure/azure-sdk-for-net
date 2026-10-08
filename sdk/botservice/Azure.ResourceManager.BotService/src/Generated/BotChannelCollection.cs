@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotChannelData, BotChannelResource>(new BotChannelsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BotChannelData, BotChannelResource>(new BotChannelDataAsyncCollectionResultOfT(
                 _botChannelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotChannelData, BotChannelResource>(new BotChannelsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<BotChannelData, BotChannelResource>(new BotChannelDataCollectionResultOfT(
                 _botChannelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthModelSignalDefinitionData, HealthModelSignalDefinitionResource>(new SignalDefinitionsGetByHealthModelAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthModelSignalDefinitionData, HealthModelSignalDefinitionResource>(new HealthModelSignalDefinitionDataAsyncCollectionResultOfT(
                 _signalDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthModelSignalDefinitionData, HealthModelSignalDefinitionResource>(new SignalDefinitionsGetByHealthModelCollectionResultOfT(
+            return new PageableWrapper<HealthModelSignalDefinitionData, HealthModelSignalDefinitionResource>(new HealthModelSignalDefinitionDataCollectionResultOfT(
                 _signalDefinitionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

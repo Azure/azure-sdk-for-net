@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotServiceNetworkSecurityPerimeterConfigurationData, BotServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BotServiceNetworkSecurityPerimeterConfigurationData, BotServiceNetworkSecurityPerimeterConfigurationResource>(new BotServiceNetworkSecurityPerimeterConfigurationDataAsyncCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotServiceNetworkSecurityPerimeterConfigurationData, BotServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<BotServiceNetworkSecurityPerimeterConfigurationData, BotServiceNetworkSecurityPerimeterConfigurationResource>(new BotServiceNetworkSecurityPerimeterConfigurationDataCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

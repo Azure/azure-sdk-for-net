@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new DomainsGetByEmailServiceResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new CommunicationDomainResourceDataAsyncCollectionResultOfT(
                 _domainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Communication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new DomainsGetByEmailServiceResourceCollectionResultOfT(
+            return new PageableWrapper<CommunicationDomainResourceData, CommunicationDomainResource>(new CommunicationDomainResourceDataCollectionResultOfT(
                 _domainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

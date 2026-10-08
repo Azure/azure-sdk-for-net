@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new RuleSetsGetResourceUsagesAsyncCollectionResultOfT(
+            return new FrontDoorUsageAsync2CollectionResultOfT(
                 _ruleSetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new RuleSetsGetResourceUsagesCollectionResultOfT(
+            return new FrontDoorUsage2CollectionResultOfT(
                 _ruleSetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

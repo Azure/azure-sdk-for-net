@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CdnWebAgentKnowledgeSourceData, CdnWebAgentKnowledgeSourceResource>(new KnowledgeSourcesGetByWebAgentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CdnWebAgentKnowledgeSourceData, CdnWebAgentKnowledgeSourceResource>(new CdnWebAgentKnowledgeSourceDataAsyncCollectionResultOfT(
                 _knowledgeSourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CdnWebAgentKnowledgeSourceData, CdnWebAgentKnowledgeSourceResource>(new KnowledgeSourcesGetByWebAgentCollectionResultOfT(
+            return new PageableWrapper<CdnWebAgentKnowledgeSourceData, CdnWebAgentKnowledgeSourceResource>(new CdnWebAgentKnowledgeSourceDataCollectionResultOfT(
                 _knowledgeSourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

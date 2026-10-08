@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
+            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new CognitiveServicesAccountDataAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
+            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new CognitiveServicesAccountDataCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CognitiveServicesAccountCollection.GetAll"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>

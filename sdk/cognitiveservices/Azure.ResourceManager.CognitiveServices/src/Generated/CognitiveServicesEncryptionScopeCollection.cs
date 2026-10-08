@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesEncryptionScopeData, CognitiveServicesEncryptionScopeResource>(new EncryptionScopesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CognitiveServicesEncryptionScopeData, CognitiveServicesEncryptionScopeResource>(new CognitiveServicesEncryptionScopeDataAsyncCollectionResultOfT(
                 _encryptionScopesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesEncryptionScopeData, CognitiveServicesEncryptionScopeResource>(new EncryptionScopesGetAllCollectionResultOfT(
+            return new PageableWrapper<CognitiveServicesEncryptionScopeData, CognitiveServicesEncryptionScopeResource>(new CognitiveServicesEncryptionScopeDataCollectionResultOfT(
                 _encryptionScopesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

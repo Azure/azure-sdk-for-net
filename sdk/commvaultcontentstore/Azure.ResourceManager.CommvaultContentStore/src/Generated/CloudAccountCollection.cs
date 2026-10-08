@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountsGetByResourceGroupAsyncCollectionResultOfT(_cloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudAccountCollection.GetAll"), data => new CloudAccountResource(Client, data));
+            return new AsyncPageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountDataAsyncCollectionResultOfT(_cloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudAccountCollection.GetAll"), data => new CloudAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountsGetByResourceGroupCollectionResultOfT(_cloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudAccountCollection.GetAll"), data => new CloudAccountResource(Client, data));
+            return new PageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountDataCollectionResultOfT(_cloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudAccountCollection.GetAll"), data => new CloudAccountResource(Client, data));
         }
 
         /// <summary>

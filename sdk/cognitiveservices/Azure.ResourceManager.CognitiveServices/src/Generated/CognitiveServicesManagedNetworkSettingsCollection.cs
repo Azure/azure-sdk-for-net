@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CognitiveServicesManagedNetworkSettingsData, CognitiveServicesManagedNetworkSettingsResource>(new ManagedNetworkSettingsPropertiesBasicResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CognitiveServicesManagedNetworkSettingsData, CognitiveServicesManagedNetworkSettingsResource>(new CognitiveServicesManagedNetworkSettingsDataAsyncCollectionResultOfT(
                 _managedNetworkSettingsPropertiesBasicResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CognitiveServicesManagedNetworkSettingsData, CognitiveServicesManagedNetworkSettingsResource>(new ManagedNetworkSettingsPropertiesBasicResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<CognitiveServicesManagedNetworkSettingsData, CognitiveServicesManagedNetworkSettingsResource>(new CognitiveServicesManagedNetworkSettingsDataCollectionResultOfT(
                 _managedNetworkSettingsPropertiesBasicResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
