@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values, (e.g. `AccountSasBuilder`). Times are now converted to UTC before formatting/signing to prevent unintended validity windows in st/se and related delegation key time fields.
 
 ### Other Changes
 

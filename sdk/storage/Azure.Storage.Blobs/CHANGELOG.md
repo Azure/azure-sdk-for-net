@@ -7,6 +7,13 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `BlobBaseClient.GenerateSasUri(...)`
+  - `BlobBaseClient.GenerateUserDelegationSasUri(...)`
+  - `BlobContainerClient.GenerateSasUri(...)`
+  - `BlobContainerClient.GenerateUserDelegationSasUri(...)`
+  - `BlobServiceClient.GenerateAccountSasUri(...)`
+  - `BlobSasBuilder`
 
 ### Other Changes
 
