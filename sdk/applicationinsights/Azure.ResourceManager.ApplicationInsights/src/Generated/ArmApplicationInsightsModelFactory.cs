@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
-        /// <param name="etag"> Resource etag. </param>
+        /// <param name="eTag"> Resource etag. </param>
         /// <param name="applicationId"> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </param>
         /// <param name="appId"> Application Insights Unique ID for your Application. </param>
         /// <param name="namePropertiesName"> Application name. </param>
@@ -729,8 +729,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="ingestionMode"> Indicates the flow of the ingestion. </param>
         /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
         /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
+        /// <param name="azureMonitorWorkspaceResourceId"> Resource Id of the Azure Monitor workspace which the OpenTelemetry data will be ingested to. </param>
+        /// <param name="azureMonitorWorkspaceIngestionMode"> Indicates the state of the OpenTelemetry ingestion into the linked Azure Monitor workspace. Clients may set this to `NotOptedIn` or `Enabled`; `Disabled` is set only by the service when the link to the Azure Monitor workspace is broken. </param>
+        /// <param name="dataCollectionRuleResourceId"> Resource Id of the data collection rule that routes the OpenTelemetry data ingested through the OTLP endpoints of this component. </param>
+        /// <param name="otlpMetricsEndpoint"> The OTLP endpoint to which OpenTelemetry metrics for this component are sent. </param>
+        /// <param name="otlpLogsEndpoint"> The OTLP endpoint to which OpenTelemetry logs for this component are sent. </param>
+        /// <param name="otlpTracesEndpoint"> The OTLP endpoint to which OpenTelemetry traces for this component are sent. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsComponentData"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string kind = default, ETag? etag = default, string applicationId = default, string appId = default, string namePropertiesName = default, ApplicationInsightsApplicationType? applicationType = default, ComponentFlowType? flowType = default, ComponentRequestSource? requestSource = default, string instrumentationKey = default, DateTimeOffset? createdOn = default, Guid? tenantId = default, string hockeyAppId = default, string hockeyAppToken = default, string provisioningState = default, double? samplingPercentage = default, string connectionString = default, int? retentionInDays = default, bool? isDisableIPMasking = default, bool? isImmediatePurgeDataOn30Days = default, ResourceIdentifier workspaceResourceId = default, DateTimeOffset? laMigrationOn = default, IEnumerable<PrivateLinkScopedResourceReference> privateLinkScopedResources = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, ComponentIngestionMode? ingestionMode = default, bool? isDisableLocalAuth = default, bool? isForceCustomerStorageForProfiler = default)
+        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? eTag, string applicationId, string appId, string namePropertiesName, ApplicationInsightsApplicationType? applicationType, ComponentFlowType? flowType, ComponentRequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, ResourceIdentifier workspaceResourceId, DateTimeOffset? laMigrationOn, IEnumerable<PrivateLinkScopedResourceReference> privateLinkScopedResources, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, ComponentIngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, ResourceIdentifier azureMonitorWorkspaceResourceId, ComponentAzureMonitorWorkspaceIngestionMode? azureMonitorWorkspaceIngestionMode = default, ResourceIdentifier dataCollectionRuleResourceId = default, Uri otlpMetricsEndpoint = default, Uri otlpLogsEndpoint = default, Uri otlpTracesEndpoint = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -742,8 +748,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 kind,
-                etag,
-                applicationId is null && appId is null && namePropertiesName is null && applicationType is null && flowType is null && requestSource is null && instrumentationKey is null && createdOn is null && tenantId is null && hockeyAppId is null && hockeyAppToken is null && provisioningState is null && samplingPercentage is null && connectionString is null && retentionInDays is null && isDisableIPMasking is null && isImmediatePurgeDataOn30Days is null && workspaceResourceId is null && laMigrationOn is null && privateLinkScopedResources is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && ingestionMode is null && isDisableLocalAuth is null && isForceCustomerStorageForProfiler is null ? default : new ApplicationInsightsComponentProperties(
+                eTag,
+                applicationId is null && appId is null && namePropertiesName is null && applicationType is null && flowType is null && requestSource is null && instrumentationKey is null && createdOn is null && tenantId is null && hockeyAppId is null && hockeyAppToken is null && provisioningState is null && samplingPercentage is null && connectionString is null && retentionInDays is null && isDisableIPMasking is null && isImmediatePurgeDataOn30Days is null && workspaceResourceId is null && laMigrationOn is null && privateLinkScopedResources is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && ingestionMode is null && isDisableLocalAuth is null && isForceCustomerStorageForProfiler is null && azureMonitorWorkspaceResourceId is null && azureMonitorWorkspaceIngestionMode is null && dataCollectionRuleResourceId is null && otlpMetricsEndpoint is null && otlpLogsEndpoint is null && otlpTracesEndpoint is null ? default : new ApplicationInsightsComponentProperties(
                     applicationId,
                     appId,
                     namePropertiesName,
@@ -769,6 +775,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     ingestionMode,
                     isDisableLocalAuth,
                     isForceCustomerStorageForProfiler,
+                    azureMonitorWorkspaceResourceId,
+                    azureMonitorWorkspaceIngestionMode,
+                    dataCollectionRuleResourceId,
+                    otlpMetricsEndpoint,
+                    otlpLogsEndpoint,
+                    otlpTracesEndpoint,
                     default),
                 default);
         }
@@ -942,6 +954,89 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static ApplicationInsightsComponentWebTestLocation ApplicationInsightsComponentWebTestLocation(string displayName = default, string tag = default)
         {
             return new ApplicationInsightsComponentWebTestLocation(displayName, tag, default);
+        }
+
+        /// <summary> An Application Insights component definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
+        /// <param name="etag"> Resource etag. </param>
+        /// <param name="applicationId"> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </param>
+        /// <param name="appId"> Application Insights Unique ID for your Application. </param>
+        /// <param name="namePropertiesName"> Application name. </param>
+        /// <param name="applicationType"> Type of application being monitored. </param>
+        /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </param>
+        /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </param>
+        /// <param name="instrumentationKey"> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </param>
+        /// <param name="createdOn"> Creation Date for the Application Insights component, in ISO 8601 format. </param>
+        /// <param name="tenantId"> Azure Tenant Id. </param>
+        /// <param name="hockeyAppId"> The unique application ID created when a new application is added to HockeyApp, used for communications with HockeyApp. </param>
+        /// <param name="hockeyAppToken"> Token used to authenticate communications with between Application Insights and HockeyApp. </param>
+        /// <param name="provisioningState"> Current state of this component: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
+        /// <param name="samplingPercentage"> Percentage of the data produced by the application being monitored that is being sampled for Application Insights telemetry. </param>
+        /// <param name="connectionString"> Application Insights component connection string. </param>
+        /// <param name="retentionInDays"> Retention period in days. </param>
+        /// <param name="isDisableIPMasking"> Disable IP masking. </param>
+        /// <param name="isImmediatePurgeDataOn30Days"> Purge data immediately after 30 days. </param>
+        /// <param name="workspaceResourceId"> Resource Id of the log analytics workspace which the data will be ingested to. This property is required to create an application with this API version. Applications from older versions will not have this property. </param>
+        /// <param name="laMigrationOn"> The date which the component got migrated to LA, in ISO 8601 format. </param>
+        /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
+        /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Application Insights ingestion. </param>
+        /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Application Insights query. </param>
+        /// <param name="ingestionMode"> Indicates the flow of the ingestion. </param>
+        /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
+        /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
+        /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsComponentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string kind = default, ETag? etag = default, string applicationId = default, string appId = default, string namePropertiesName = default, ApplicationInsightsApplicationType? applicationType = default, ComponentFlowType? flowType = default, ComponentRequestSource? requestSource = default, string instrumentationKey = default, DateTimeOffset? createdOn = default, Guid? tenantId = default, string hockeyAppId = default, string hockeyAppToken = default, string provisioningState = default, double? samplingPercentage = default, string connectionString = default, int? retentionInDays = default, bool? isDisableIPMasking = default, bool? isImmediatePurgeDataOn30Days = default, ResourceIdentifier workspaceResourceId = default, DateTimeOffset? laMigrationOn = default, IEnumerable<PrivateLinkScopedResourceReference> privateLinkScopedResources = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, ComponentIngestionMode? ingestionMode = default, bool? isDisableLocalAuth = default, bool? isForceCustomerStorageForProfiler = default)
+        {
+            return new ApplicationInsightsComponentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                etag,
+                applicationId is null && appId is null && namePropertiesName is null && applicationType is null && flowType is null && requestSource is null && instrumentationKey is null && createdOn is null && tenantId is null && hockeyAppId is null && hockeyAppToken is null && provisioningState is null && samplingPercentage is null && connectionString is null && retentionInDays is null && isDisableIPMasking is null && isImmediatePurgeDataOn30Days is null && workspaceResourceId is null && laMigrationOn is null && privateLinkScopedResources is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && ingestionMode is null && isDisableLocalAuth is null && isForceCustomerStorageForProfiler is null ? default : new ApplicationInsightsComponentProperties(
+                    applicationId,
+                    appId,
+                    namePropertiesName,
+                    applicationType.GetValueOrDefault(),
+                    flowType,
+                    requestSource,
+                    instrumentationKey,
+                    createdOn,
+                    tenantId,
+                    hockeyAppId,
+                    hockeyAppToken,
+                    provisioningState,
+                    samplingPercentage,
+                    connectionString,
+                    retentionInDays,
+                    isDisableIPMasking,
+                    isImmediatePurgeDataOn30Days,
+                    workspaceResourceId,
+                    laMigrationOn,
+                    (privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceReference>()).ToList(),
+                    publicNetworkAccessForIngestion,
+                    publicNetworkAccessForQuery,
+                    ingestionMode,
+                    isDisableLocalAuth,
+                    isForceCustomerStorageForProfiler,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default),
+                default);
         }
 
         /// <summary> An Application Insights WebTest definition. </summary>

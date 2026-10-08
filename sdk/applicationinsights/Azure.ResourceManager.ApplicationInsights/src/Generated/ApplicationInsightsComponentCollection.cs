@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             TryGetApiVersion(ApplicationInsightsComponentResource.ResourceType, out string applicationInsightsComponentApiVersion);
             _componentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsComponentResource.ResourceType.Namespace, Diagnostics);
-            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2020-02-02");
+            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2025-01-23-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2020-02-02. </description>
+        /// <description> 2025-01-23-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

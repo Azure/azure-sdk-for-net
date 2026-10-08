@@ -430,5 +430,81 @@ namespace Azure.ResourceManager.ApplicationInsights
                 Properties.IsForceCustomerStorageForProfiler = value;
             }
         }
+
+        /// <summary> Resource Id of the Azure Monitor workspace which the OpenTelemetry data will be ingested to. </summary>
+        [WirePath("properties.AzureMonitorWorkspaceResourceId")]
+        public ResourceIdentifier AzureMonitorWorkspaceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureMonitorWorkspaceResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.AzureMonitorWorkspaceResourceId = value;
+            }
+        }
+
+        /// <summary> Indicates the state of the OpenTelemetry ingestion into the linked Azure Monitor workspace. Clients may set this to `NotOptedIn` or `Enabled`; `Disabled` is set only by the service when the link to the Azure Monitor workspace is broken. </summary>
+        [WirePath("properties.AzureMonitorWorkspaceIngestionMode")]
+        public ComponentAzureMonitorWorkspaceIngestionMode? AzureMonitorWorkspaceIngestionMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureMonitorWorkspaceIngestionMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.AzureMonitorWorkspaceIngestionMode = value;
+            }
+        }
+
+        /// <summary> Resource Id of the data collection rule that routes the OpenTelemetry data ingested through the OTLP endpoints of this component. </summary>
+        [WirePath("properties.DataCollectionRuleResourceId")]
+        public ResourceIdentifier DataCollectionRuleResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataCollectionRuleResourceId;
+            }
+        }
+
+        /// <summary> The OTLP endpoint to which OpenTelemetry metrics for this component are sent. </summary>
+        [WirePath("properties.OTLPMetricsEndpoint")]
+        public Uri OtlpMetricsEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OtlpMetricsEndpoint;
+            }
+        }
+
+        /// <summary> The OTLP endpoint to which OpenTelemetry logs for this component are sent. </summary>
+        [WirePath("properties.OTLPLogsEndpoint")]
+        public Uri OtlpLogsEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OtlpLogsEndpoint;
+            }
+        }
+
+        /// <summary> The OTLP endpoint to which OpenTelemetry traces for this component are sent. </summary>
+        [WirePath("properties.OTLPTracesEndpoint")]
+        public Uri OtlpTracesEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OtlpTracesEndpoint;
+            }
+        }
     }
 }
