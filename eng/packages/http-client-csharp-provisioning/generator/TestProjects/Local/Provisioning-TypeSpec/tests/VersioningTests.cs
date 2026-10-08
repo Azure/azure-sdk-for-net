@@ -15,6 +15,9 @@ public class VersioningTests
     [TestCase("LatestStableResourceProperties")]
     [TestCase("VersionedResource")]
     [TestCase("VersionedResourceProperties")]
+    [TestCase("InitialStableEnum")]
+    [TestCase("PreviewRetainedEnum")]
+    [TestCase("LatestStableEnum")]
     public void StableProjectionTypesAreNotExperimental(string typeName)
     {
         var type = typeof(VersionedResource).Assembly.GetType(
@@ -27,6 +30,9 @@ public class VersioningTests
     [TestCase("InitialStableProperty")]
     [TestCase("PreviewRetainedProperty")]
     [TestCase("LatestStableProperty")]
+    [TestCase("InitialStableEnum")]
+    [TestCase("PreviewRetainedEnum")]
+    [TestCase("LatestStableEnum")]
     public void StableProjectionPropertiesAreNotExperimental(string propertyName)
     {
         var property = typeof(VersionedResourceProperties).GetProperty(propertyName);
@@ -58,6 +64,7 @@ public class VersioningTests
         Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.PreviewOnlyResource"), Is.Null);
         Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.PreviewRetainedResource"), Is.Not.Null);
         Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.LatestStableResource"), Is.Not.Null);
+        Assert.That(assembly.GetType("Azure.Provisioning.ProvisioningTypeSpec.PreviewOnlyEnum"), Is.Null);
         Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.InitialStableProperty)));
         Assert.That(propertyNames, Does.Not.Contain("PreviewOnlyProperty"));
         Assert.That(propertyNames, Does.Contain(nameof(VersionedResourceProperties.PreviewRetainedProperty)));

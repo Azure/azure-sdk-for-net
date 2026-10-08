@@ -17,6 +17,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         private BicepValue<string> _initialStableProperty;
         private BicepValue<string> _previewOnlyProperty;
         private BicepValue<string> _previewRetainedProperty;
+        private BicepValue<InitialStableEnum> _initialStableEnum;
+        private BicepValue<PreviewOnlyEnum> _previewOnlyEnum;
+        private BicepValue<PreviewRetainedEnum> _previewRetainedEnum;
 
         /// <summary> Creates a new VersionedResourceProperties. </summary>
         public VersionedResourceProperties()
@@ -70,6 +73,53 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             }
         }
 
+        /// <summary> Gets or sets the InitialStableEnum. </summary>
+        public BicepValue<InitialStableEnum> InitialStableEnum
+        {
+            get
+            {
+                Initialize();
+                return _initialStableEnum;
+            }
+            set
+            {
+                Initialize();
+                _initialStableEnum.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewOnlyEnum. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<PreviewOnlyEnum> PreviewOnlyEnum
+        {
+            get
+            {
+                Initialize();
+                return _previewOnlyEnum;
+            }
+            set
+            {
+                Initialize();
+                _previewOnlyEnum.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewRetainedEnum. </summary>
+        [Experimental("AZPROVISION001")]
+        public BicepValue<PreviewRetainedEnum> PreviewRetainedEnum
+        {
+            get
+            {
+                Initialize();
+                return _previewRetainedEnum;
+            }
+            set
+            {
+                Initialize();
+                _previewRetainedEnum.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VersionedResourceProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -77,6 +127,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             _initialStableProperty = DefineProperty<string>(nameof(InitialStableProperty), new string[] { "initialStableProperty" });
             _previewOnlyProperty = DefineProperty<string>(nameof(PreviewOnlyProperty), new string[] { "previewOnlyProperty" });
             _previewRetainedProperty = DefineProperty<string>(nameof(PreviewRetainedProperty), new string[] { "previewRetainedProperty" });
+            _initialStableEnum = DefineProperty<InitialStableEnum>(nameof(InitialStableEnum), new string[] { "initialStableEnum" });
+            _previewOnlyEnum = DefineProperty<PreviewOnlyEnum>(nameof(PreviewOnlyEnum), new string[] { "previewOnlyEnum" });
+            _previewRetainedEnum = DefineProperty<PreviewRetainedEnum>(nameof(PreviewRetainedEnum), new string[] { "previewRetainedEnum" });
             DefineAdditionalProperties();
         }
 

@@ -382,13 +382,16 @@ and should match the Bicep resource versions that exist for that resource type.
 The default version should follow the provisioning library's version policy,
 including preview filtering when a stable default is available.
 
-Resources, models, and properties available only in preview API versions receive
-`[Experimental("AZPROVISION001")]`. Availability is evaluated through the selected
-generation API version: a resource or property introduced in preview remains
+Resources, models, enum types, and properties available only in preview API
+versions receive `[Experimental("AZPROVISION001")]`. Availability is evaluated through the selected
+generation API version: a type or property introduced in preview remains
 experimental in that preview's output even if a later stable API retains it.
 Generating that later stable API removes the attribute. An API available in any
 stable version through the selected version is not experimental. Individual
 preview `ResourceVersions` fields remain experimental.
+
+Enum types carry API-version metadata, but individual enum values do not.
+Experimental marking therefore applies to enum types, not individual values.
 
 If a candidate's body shape cannot be matched to the Bicep shape for its API
 version, the safer result is to skip that candidate or that version.
