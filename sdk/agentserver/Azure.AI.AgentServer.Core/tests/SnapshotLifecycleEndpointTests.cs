@@ -228,11 +228,17 @@ public class SnapshotLifecycleEndpointTests
         Environment.SetEnvironmentVariable(capturedVariable, "captured-value");
 
         var observedValues = new List<string?>();
+        string? observedOverride = null;
         var lifecycle = new TestSnapshotLifecycle
         {
-            AfterRestore = (_, _) =>
+            AfterRestore = (context, _) =>
             {
                 observedValues.Add(Environment.GetEnvironmentVariable(capturedVariable));
+                if (context.RestoreId == "restore-1")
+                {
+                    observedOverride = context.SessionEnvironmentOverrides[capturedVariable];
+                }
+
                 return Task.CompletedTask;
             },
         };
@@ -257,6 +263,7 @@ public class SnapshotLifecycleEndpointTests
 
         Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(secondResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(observedOverride, Is.EqualTo("restored-value"));
         Assert.That(observedValues, Is.EqualTo(new[] { "restored-value", "captured-value" }));
     }
 
