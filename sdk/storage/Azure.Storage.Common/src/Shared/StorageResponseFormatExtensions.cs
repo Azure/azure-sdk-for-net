@@ -7,10 +7,10 @@ namespace Azure.Storage
     {
         public static StorageResponseFormat ResolveAuto(this StorageResponseFormat responseFormat)
         {
-            // Auto maps to Xml today, may change in the future.
+            // Auto maps to Arrow today, may change in the future.
             if (responseFormat == StorageResponseFormat.Auto)
             {
-                return StorageResponseFormat.Xml;
+                return StorageResponseFormat.Arrow;
             }
             return responseFormat;
         }

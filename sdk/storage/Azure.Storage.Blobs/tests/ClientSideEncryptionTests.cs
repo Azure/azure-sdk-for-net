@@ -645,7 +645,7 @@ namespace Azure.Storage.Blobs.Test
                 byte[] downloadData;
                 using (var stream = new MemoryStream())
                 {
-                    using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize }, cancellationToken: s_cancellationToken);
+                    using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize, LayoutAwareRouting = LayoutAwareRouting.Disabled }, cancellationToken: s_cancellationToken);
                     if (IsAsync)
                     {
                         await blobStream.CopyToAsync(stream, bufferSize, s_cancellationToken);
@@ -1020,7 +1020,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
 
                 var downloadStream = new MemoryStream();
-                using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize });
+                using var blobStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false) { BufferSize = bufferSize, LayoutAwareRouting = LayoutAwareRouting.Disabled });
                 await blobStream.CopyToAsync(downloadStream);
 
                 Assert.AreEqual(data, downloadStream.ToArray());

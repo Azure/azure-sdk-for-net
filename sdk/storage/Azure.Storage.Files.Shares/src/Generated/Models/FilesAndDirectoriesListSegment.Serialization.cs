@@ -117,6 +117,51 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteObjectValue(item, options);
                 writer.WriteEndElement();
             }
+            if (Optional.IsCollectionDefined(SymLinkItems))
+            {
+                foreach (SymLinkItem item in SymLinkItems)
+                {
+                    writer.WriteStartElement("SymLink");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(BlockDeviceItems))
+            {
+                foreach (BlockDeviceItem item in BlockDeviceItems)
+                {
+                    writer.WriteStartElement("BlockDevice");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(CharDeviceItems))
+            {
+                foreach (CharDeviceItem item in CharDeviceItems)
+                {
+                    writer.WriteStartElement("CharDevice");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(FifoItems))
+            {
+                foreach (FifoItem item in FifoItems)
+                {
+                    writer.WriteStartElement("Fifo");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(SocketItems))
+            {
+                foreach (SocketItem item in SocketItems)
+                {
+                    writer.WriteStartElement("Socket");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
         }
 
         /// <param name="element"> The xml element to deserialize. </param>
@@ -130,6 +175,11 @@ namespace Azure.Storage.Files.Shares.Models
 
             IList<DirectoryItem> directoryItems = new List<DirectoryItem>();
             IList<FileItem> fileItems = new List<FileItem>();
+            IList<SymLinkItem> symLinkItems = default;
+            IList<BlockDeviceItem> blockDeviceItems = default;
+            IList<CharDeviceItem> charDeviceItems = default;
+            IList<FifoItem> fifoItems = default;
+            IList<SocketItem> socketItems = default;
 
             foreach (var child in element.Elements())
             {
@@ -144,8 +194,60 @@ namespace Azure.Storage.Files.Shares.Models
                     fileItems.Add(FileItem.DeserializeFileItem(child, options));
                     continue;
                 }
+                if (localName == "SymLink")
+                {
+                    if (symLinkItems == null)
+                    {
+                        symLinkItems = new List<SymLinkItem>();
+                    }
+                    symLinkItems.Add(SymLinkItem.DeserializeSymLinkItem(child, options));
+                    continue;
+                }
+                if (localName == "BlockDevice")
+                {
+                    if (blockDeviceItems == null)
+                    {
+                        blockDeviceItems = new List<BlockDeviceItem>();
+                    }
+                    blockDeviceItems.Add(BlockDeviceItem.DeserializeBlockDeviceItem(child, options));
+                    continue;
+                }
+                if (localName == "CharDevice")
+                {
+                    if (charDeviceItems == null)
+                    {
+                        charDeviceItems = new List<CharDeviceItem>();
+                    }
+                    charDeviceItems.Add(CharDeviceItem.DeserializeCharDeviceItem(child, options));
+                    continue;
+                }
+                if (localName == "Fifo")
+                {
+                    if (fifoItems == null)
+                    {
+                        fifoItems = new List<FifoItem>();
+                    }
+                    fifoItems.Add(FifoItem.DeserializeFifoItem(child, options));
+                    continue;
+                }
+                if (localName == "Socket")
+                {
+                    if (socketItems == null)
+                    {
+                        socketItems = new List<SocketItem>();
+                    }
+                    socketItems.Add(SocketItem.DeserializeSocketItem(child, options));
+                    continue;
+                }
             }
-            return new FilesAndDirectoriesListSegment(directoryItems, fileItems);
+            return new FilesAndDirectoriesListSegment(
+                directoryItems,
+                fileItems,
+                symLinkItems ?? new ChangeTrackingList<SymLinkItem>(),
+                blockDeviceItems ?? new ChangeTrackingList<BlockDeviceItem>(),
+                charDeviceItems ?? new ChangeTrackingList<CharDeviceItem>(),
+                fifoItems ?? new ChangeTrackingList<FifoItem>(),
+                socketItems ?? new ChangeTrackingList<SocketItem>());
         }
 
         /// <param name="writer"> The XML writer. </param>

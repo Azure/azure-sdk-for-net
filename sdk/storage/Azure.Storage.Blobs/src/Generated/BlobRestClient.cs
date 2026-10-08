@@ -2140,5 +2140,131 @@ namespace Azure.Storage.Blobs
         {
             return await SetTagsAsync(tags, timeout, versionId, transactionalContentMD5, transactionalContentCrc64, ifTags, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// [Protocol Method] The Get Blob Layout operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob.  In addition, it may optionally return the layout of the blob.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="versionId"> Specifies the version ID of the blob. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetLayout(string snapshot, string versionId, string marker, int? maxresults, int? timeout, string range, string leaseId, string ifTags, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.GetLayout");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetLayoutRequest(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Get Blob Layout operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob.  In addition, it may optionally return the layout of the blob.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="versionId"> Specifies the version ID of the blob. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetLayoutAsync(string snapshot, string versionId, string marker, int? maxresults, int? timeout, string range, string leaseId, string ifTags, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.GetLayout");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetLayoutRequest(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Get Blob Layout operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob.  In addition, it may optionally return the layout of the blob. </summary>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="versionId"> Specifies the version ID of the blob. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual NullableResponse<BlobLayout> GetLayout(string snapshot = default, string versionId = default, string marker = default, int? maxresults = default, int? timeout = default, string range = default, string leaseId = default, string ifTags = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, CancellationToken cancellationToken = default)
+        {
+            Response result = GetLayout(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext());
+            if (result.Status == 204)
+            {
+                return new NoValueResponse<BlobLayout>(result);
+            }
+            return Response.FromValue((BlobLayout)result, result);
+        }
+
+        /// <summary> The Get Blob Layout operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob.  In addition, it may optionally return the layout of the blob. </summary>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="versionId"> Specifies the version ID of the blob. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the encryption key is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Must be provided if the encryption key is provided. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual async Task<NullableResponse<BlobLayout>> GetLayoutAsync(string snapshot = default, string versionId = default, string marker = default, int? maxresults = default, int? timeout = default, string range = default, string leaseId = default, string ifTags = default, RequestConditions requestConditions = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetLayoutAsync(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, requestConditions, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 204)
+            {
+                return new NoValueResponse<BlobLayout>(result);
+            }
+            return Response.FromValue((BlobLayout)result, result);
+        }
     }
 }

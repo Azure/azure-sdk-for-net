@@ -1000,6 +1000,42 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task CreateSessionAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            // Act
+            AuthenticationType authType = AuthenticationType.Hmac;
+            CreateSessionConfiguration config = new CreateSessionConfiguration(authType);
+            Response<CreateSessionResponse> response = await test.Container.CreateSessionAsync(config: config);
+
+            // Assert
+            Assert.IsNotNull(response.Value.Id);
+            Assert.IsTrue(response.Value.Expiration > Recording.UtcNow);
+            Assert.AreEqual(authType, response.Value.AuthenticationType);
+            Assert.IsNotNull(response.Value.Credentials.SessionToken);
+            Assert.IsNotNull(response.Value.Credentials.SessionKey);
+        }
+
+        [RecordedTest]
+        public async Task CreateSessionAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_OAuth();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            AuthenticationType authType = AuthenticationType.Hmac;
+            CreateSessionConfiguration config = new CreateSessionConfiguration(authType);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                container.CreateSessionAsync(config: config),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task ExistsAsync_Exists()
         {
             // Arrange
@@ -2423,9 +2459,14 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await SetUpContainerForListing(test.Container);
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                ResponseFormat = StorageResponseFormat.Xml
+            };
+
             // Act
             var blobs = new List<BlobItem>();
-            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync().AsPages())
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
@@ -2454,6 +2495,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions getBlobsOptions = new GetBlobsOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Traits = BlobTraits.Tags
             };
 
@@ -2490,8 +2532,13 @@ namespace Azure.Storage.Blobs.Test
                     rehydratePriority: rehydratePriority.Value);
             }
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                ResponseFormat = StorageResponseFormat.Xml
+            };
+
             // Act
-            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync().ToListAsync();
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(rehydratePriority, blobItems[0].Properties.RehydratePriority);
@@ -2506,8 +2553,13 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await SetUpContainerForListing(test.Container);
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                ResponseFormat = StorageResponseFormat.Xml
+            };
+
             // Act
-            Page<BlobItem> page = await test.Container.GetBlobsAsync().AsPages(pageSizeHint: 2).FirstAsync();
+            Page<BlobItem> page = await test.Container.GetBlobsAsync(options).AsPages(pageSizeHint: 2).FirstAsync();
 
             // Assert
             Assert.AreEqual(2, page.Values.Count);
@@ -2526,6 +2578,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Traits = BlobTraits.Metadata
             };
 
@@ -2548,8 +2601,13 @@ namespace Azure.Storage.Blobs.Test
 
             await blob.CreateIfNotExistsAsync();
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                ResponseFormat = StorageResponseFormat.Xml
+            };
+
             // Act
-            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(TestConfigDefault.EncryptionScope, blobs.First().Properties.EncryptionScope);
@@ -2568,6 +2626,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 States = BlobStates.Deleted
             };
 
@@ -2599,6 +2658,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 States = BlobStates.Uncommitted
             };
 
@@ -2622,6 +2682,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 States = BlobStates.Snapshots
             };
 
@@ -2643,6 +2704,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Prefix = "foo"
             };
 
@@ -2661,9 +2723,14 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             var id = Recording.Random.NewGuid().ToString();
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                ResponseFormat = StorageResponseFormat.Xml
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                container.GetBlobsAsync().ToListAsync(),
+                container.GetBlobsAsync(options).ToListAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
@@ -2679,7 +2746,11 @@ namespace Azure.Storage.Blobs.Test
                 await using DisposingContainer test = await GetTestContainerAsync();
                 BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
                 await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("data")));
-                BlobItem blobItem = await test.Container.GetBlobsAsync().FirstAsync();
+                GetBlobsOptions options = new GetBlobsOptions
+                {
+                    ResponseFormat = StorageResponseFormat.Xml
+                };
+                BlobItem blobItem = await test.Container.GetBlobsAsync(options).FirstAsync();
                 Assert.AreEqual(blobName, blobItem.Name);
             }
         }
@@ -2698,6 +2769,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 States = BlobStates.Version
             };
 
@@ -2728,8 +2800,13 @@ namespace Azure.Storage.Blobs.Test
             // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
             BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                ResponseFormat = StorageResponseFormat.Xml
+            };
+
             // Act
-            IList<BlobItem> blobs = await sourceContainer.GetBlobsAsync().ToListAsync();
+            IList<BlobItem> blobs = await sourceContainer.GetBlobsAsync(options).ToListAsync();
 
             // Assert
             // Since this is a PLAYBACK ONLY test. We expect all the blobs in this source container/account
@@ -2746,9 +2823,14 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await SetUpContainerForListing(test.Container);
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                ResponseFormat = StorageResponseFormat.Xml
+            };
+
             // Act
             var blobs = new List<BlobItem>();
-            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync().AsPages())
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
@@ -2772,6 +2854,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 States = BlobStates.DeletedWithVersions
             };
 
@@ -2798,8 +2881,13 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
             await blob.CreateAsync();
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                ResponseFormat = StorageResponseFormat.Xml
+            };
+
             // Act
-            BlobItem blobItem = await test.Container.GetBlobsAsync().FirstAsync();
+            BlobItem blobItem = await test.Container.GetBlobsAsync(options).FirstAsync();
 
             // Assert
             Assert.AreEqual(blobName, blobItem.Name);
@@ -2816,6 +2904,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 StartFrom = "foo"
             };
 
@@ -3345,6 +3434,26 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_DefaultsToApacheArrow()
+        {
+            // Arrange
+            BlobClientOptions options = GetOptions();
+            AcceptHeaderPolicy acceptPolicy = new AcceptHeaderPolicy();
+            options.AddPolicy(acceptPolicy, HttpPipelinePosition.PerCall);
+            BlobServiceClient service = GetServiceClient_SharedKey(options);
+            await using DisposingContainer test = await GetTestContainerAsync(service: service);
+            await SetUpContainerForListing(test.Container);
+
+            // Act - no ResponseFormat specified, so it defaults to Auto
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(BlobNames.Length, blobs.Count);
+            StringAssert.StartsWith(Constants.Blob.ApacheArrowContentType, acceptPolicy.LastListAccept);
+        }
+
+        [RecordedTest]
         [PlaybackOnly("Service bug - https://github.com/Azure/azure-sdk-for-net/issues/16516")]
         public async Task ListBlobsHierarchySegmentAsync()
         {
@@ -3359,6 +3468,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = delimiter,
             };
 
@@ -3409,6 +3519,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions getBlobsByHierarchyOptions = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = delimiter,
                 Traits = BlobTraits.Tags
             };
@@ -3449,6 +3560,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/"
             };
             IList<BlobHierarchyItem> blobItems = await test.Container.GetBlobsByHierarchyAsync(options).ToListAsync();
@@ -3469,6 +3581,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/"
             };
 
@@ -3493,6 +3606,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/",
                 Traits = BlobTraits.Metadata,
             };
@@ -3515,6 +3629,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/",
                 Traits = BlobTraits.Metadata
             };
@@ -3541,6 +3656,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/"
             };
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
@@ -3562,6 +3678,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/",
                 States = BlobStates.Deleted
             };
@@ -3594,6 +3711,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/",
                 States = BlobStates.Uncommitted,
             };
@@ -3618,6 +3736,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/",
                 States = BlobStates.Snapshots,
             };
@@ -3645,6 +3764,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/",
                 States = BlobStates.Version,
             };
@@ -3673,6 +3793,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/",
                 Prefix = "foo",
             };
@@ -3694,6 +3815,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/"
             };
 
@@ -3718,6 +3840,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/"
             };
             BlobHierarchyItem item = await sourceContainer.GetBlobsByHierarchyAsync(options).FirstAsync();
@@ -3743,6 +3866,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/"
             };
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options).FirstAsync();
@@ -3769,6 +3893,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/",
                 States = BlobStates.DeletedWithVersions,
             };
@@ -3804,7 +3929,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     Delimiter = "/",
                     Prefix = "dir1/dir2/",
-                    ResponseFormat = StorageResponseFormat.Arrow
+                    ResponseFormat = StorageResponseFormat.Xml
                 };
                 item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
 
@@ -3816,6 +3941,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
                 {
+                    ResponseFormat = StorageResponseFormat.Xml,
                     Delimiter = ".b",
                 };
 
@@ -3841,6 +3967,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 States = BlobStates.Version,
                 Delimiter = "/",
                 Prefix = "baz"
@@ -3879,6 +4006,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                ResponseFormat = StorageResponseFormat.Xml,
                 Delimiter = "/",
                 StartFrom = "foo"
             };
@@ -4482,6 +4610,31 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(2, blobHierachyItems.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_DefaultsToApacheArrow()
+        {
+            // Arrange
+            BlobClientOptions clientOptions = GetOptions();
+            AcceptHeaderPolicy acceptPolicy = new AcceptHeaderPolicy();
+            clientOptions.AddPolicy(acceptPolicy, HttpPipelinePosition.PerCall);
+            BlobServiceClient service = GetServiceClient_SharedKey(clientOptions);
+            await using DisposingContainer test = await GetTestContainerAsync(service: service);
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Delimiter = "/"
+            };
+
+            // Act - no ResponseFormat specified, so it defaults to Auto
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.IsNotEmpty(blobHierachyItems);
+            StringAssert.StartsWith(Constants.Blob.ApacheArrowContentType, acceptPolicy.LastListAccept);
         }
 
         [RecordedTest]
@@ -5898,6 +6051,23 @@ namespace Azure.Storage.Blobs.Test
             public DateTimeOffset? IfModifiedSince { get; set; }
             public DateTimeOffset? IfUnmodifiedSince { get; set; }
             public string LeaseId { get; set; }
+        }
+
+        /// <summary>
+        /// Captures the Accept header sent on list blobs requests.
+        /// </summary>
+        private class AcceptHeaderPolicy : HttpPipelineSynchronousPolicy
+        {
+            public string LastListAccept { get; private set; }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                if (message.Request.Uri.Query.Contains("comp=list")
+                    && message.Request.Headers.TryGetValue("Accept", out string accept))
+                {
+                    LastListAccept = accept;
+                }
+            }
         }
     }
 }

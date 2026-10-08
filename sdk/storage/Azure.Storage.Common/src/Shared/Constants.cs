@@ -237,6 +237,15 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// URI query parameter names used by the Storage REST protocol.
+        /// </summary>
+        internal static class UriQueryParameters
+        {
+            public const string Comp = "comp";
+            public const string ResType = "restype";
+        }
+
+        /// <summary>
         /// Blob constant values.
         /// </summary>
         internal static class Blob
@@ -318,6 +327,7 @@ namespace Azure.Storage
             public const int DefaultGetRangeListPageSize = 10000;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
             public const string SnapshotParameterName = "sharesnapshot";
+            public const string FileIdParameterName = "fileid";
 
             public const string SmbProtocol = "SMB";
             public const string NfsProtocol = "NFS";
