@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisIotFhirDestinationData, HealthcareApisIotFhirDestinationResource>(new FhirDestinationsGetByIotConnectorAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthcareApisIotFhirDestinationData, HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationDataAsyncCollectionResultOfT(
                 _fhirDestinationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisIotFhirDestinationData, HealthcareApisIotFhirDestinationResource>(new FhirDestinationsGetByIotConnectorCollectionResultOfT(
+            return new PageableWrapper<HealthcareApisIotFhirDestinationData, HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationDataCollectionResultOfT(
                 _fhirDestinationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

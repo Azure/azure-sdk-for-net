@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DicomServiceData, DicomServiceResource>(new DicomServicesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DicomServiceData, DicomServiceResource>(new DicomServiceDataAsyncCollectionResultOfT(
                 _dicomServicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DicomServiceData, DicomServiceResource>(new DicomServicesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<DicomServiceData, DicomServiceResource>(new DicomServiceDataCollectionResultOfT(
                 _dicomServicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

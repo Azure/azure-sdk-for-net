@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageTemplateRunOutputData, ImageTemplateRunOutputResource>(new VirtualMachineImageTemplatesGetRunOutputsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImageTemplateRunOutputData, ImageTemplateRunOutputResource>(new ImageTemplateRunOutputDataAsyncCollectionResultOfT(
                 _virtualMachineImageTemplatesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageTemplateRunOutputData, ImageTemplateRunOutputResource>(new VirtualMachineImageTemplatesGetRunOutputsCollectionResultOfT(
+            return new PageableWrapper<ImageTemplateRunOutputData, ImageTemplateRunOutputResource>(new ImageTemplateRunOutputDataCollectionResultOfT(
                 _virtualMachineImageTemplatesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

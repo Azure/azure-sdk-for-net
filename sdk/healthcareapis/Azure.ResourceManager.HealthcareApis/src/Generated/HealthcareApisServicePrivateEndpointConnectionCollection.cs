@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisServicePrivateEndpointConnectionsGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _healthcareApisServicePrivateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisServicePrivateEndpointConnectionsGetByServiceCollectionResultOfT(
+            return new PageableWrapper<HealthcareApisPrivateEndpointConnectionData, HealthcareApisServicePrivateEndpointConnectionResource>(new HealthcareApisPrivateEndpointConnectionDataCollectionResultOfT(
                 _healthcareApisServicePrivateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

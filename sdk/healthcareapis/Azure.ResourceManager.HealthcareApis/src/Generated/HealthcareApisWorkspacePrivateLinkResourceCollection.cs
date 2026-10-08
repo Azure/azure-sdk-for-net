@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisPrivateLinkResourceData, HealthcareApisWorkspacePrivateLinkResource>(new HealthcareApisWorkspacePrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HealthcareApisPrivateLinkResourceData, HealthcareApisWorkspacePrivateLinkResource>(new HealthcareApisPrivateLinkResourceDataAsync0CollectionResultOfT(
                 _healthcareApisWorkspacePrivateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisPrivateLinkResourceData, HealthcareApisWorkspacePrivateLinkResource>(new HealthcareApisWorkspacePrivateLinkResourcesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<HealthcareApisPrivateLinkResourceData, HealthcareApisWorkspacePrivateLinkResource>(new HealthcareApisPrivateLinkResourceData0CollectionResultOfT(
                 _healthcareApisWorkspacePrivateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

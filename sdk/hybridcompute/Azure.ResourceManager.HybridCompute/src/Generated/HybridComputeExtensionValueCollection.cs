@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputeExtensionValueData, HybridComputeExtensionValueResource>(new ExtensionMetadataGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HybridComputeExtensionValueData, HybridComputeExtensionValueResource>(new HybridComputeExtensionValueDataAsyncCollectionResultOfT(
                 _extensionMetadataRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputeExtensionValueData, HybridComputeExtensionValueResource>(new ExtensionMetadataGetAllCollectionResultOfT(
+            return new PageableWrapper<HybridComputeExtensionValueData, HybridComputeExtensionValueResource>(new HybridComputeExtensionValueDataCollectionResultOfT(
                 _extensionMetadataRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,

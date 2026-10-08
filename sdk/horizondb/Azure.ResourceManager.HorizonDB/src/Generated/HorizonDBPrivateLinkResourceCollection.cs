@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _horizonDBPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<HorizonDBPrivateLinkResourceData, HorizonDBPrivateLinkResource>(new HorizonDBPrivateLinkResourceDataCollectionResultOfT(
                 _horizonDBPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArtifactManifestData, ArtifactManifestResource>(new ArtifactManifestsGetByArtifactStoreAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ArtifactManifestData, ArtifactManifestResource>(new ArtifactManifestDataAsyncCollectionResultOfT(
                 _artifactManifestsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArtifactManifestData, ArtifactManifestResource>(new ArtifactManifestsGetByArtifactStoreCollectionResultOfT(
+            return new PageableWrapper<ArtifactManifestData, ArtifactManifestResource>(new ArtifactManifestDataCollectionResultOfT(
                 _artifactManifestsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

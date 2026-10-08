@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllAsyncCollectionResultOfT(OperationsRestClient, context, "MockableHybridComputeTenantResource.GetAll");
+            return new HybridComputeOperationValueAsyncCollectionResultOfT(OperationsRestClient, context, "MockableHybridComputeTenantResource.GetAll");
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllCollectionResultOfT(OperationsRestClient, context, "MockableHybridComputeTenantResource.GetAll");
+            return new HybridComputeOperationValueCollectionResultOfT(OperationsRestClient, context, "MockableHybridComputeTenantResource.GetAll");
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ExtensionTypeGetAllAsyncCollectionResultOfT(ExtensionTypeRestClient, location, publisher, context, "MockableHybridComputeTenantResource.GetAll");
+            return new HybridComputeExtensionTypeAsyncCollectionResultOfT(ExtensionTypeRestClient, location, publisher, context, "MockableHybridComputeTenantResource.GetAll");
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ExtensionTypeGetAllCollectionResultOfT(ExtensionTypeRestClient, location, publisher, context, "MockableHybridComputeTenantResource.GetAll");
+            return new HybridComputeExtensionTypeCollectionResultOfT(ExtensionTypeRestClient, location, publisher, context, "MockableHybridComputeTenantResource.GetAll");
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ExtensionPublisherGetAllAsyncCollectionResultOfT(ExtensionPublisherRestClient, location, context, "MockableHybridComputeTenantResource.GetAll");
+            return new HybridComputeExtensionPublisherAsyncCollectionResultOfT(ExtensionPublisherRestClient, location, context, "MockableHybridComputeTenantResource.GetAll");
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ExtensionPublisherGetAllCollectionResultOfT(ExtensionPublisherRestClient, location, context, "MockableHybridComputeTenantResource.GetAll");
+            return new HybridComputeExtensionPublisherCollectionResultOfT(ExtensionPublisherRestClient, location, context, "MockableHybridComputeTenantResource.GetAll");
         }
     }
 }

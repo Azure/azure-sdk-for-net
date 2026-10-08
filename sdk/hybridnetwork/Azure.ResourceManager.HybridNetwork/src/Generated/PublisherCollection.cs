@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublisherData, PublisherResource>(new PublishersGetByResourceGroupAsyncCollectionResultOfT(_publishersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PublisherCollection.GetAll"), data => new PublisherResource(Client, data));
+            return new AsyncPageableWrapper<PublisherData, PublisherResource>(new PublisherDataAsyncCollectionResultOfT(_publishersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PublisherCollection.GetAll"), data => new PublisherResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublisherData, PublisherResource>(new PublishersGetByResourceGroupCollectionResultOfT(_publishersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PublisherCollection.GetAll"), data => new PublisherResource(Client, data));
+            return new PageableWrapper<PublisherData, PublisherResource>(new PublisherDataCollectionResultOfT(_publishersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PublisherCollection.GetAll"), data => new PublisherResource(Client, data));
         }
 
         /// <summary>

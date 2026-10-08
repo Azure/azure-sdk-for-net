@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HDInsightPrivateEndpointConnectionData, HDInsightPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HDInsightPrivateEndpointConnectionData, HDInsightPrivateEndpointConnectionResource>(new HDInsightPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HDInsightPrivateEndpointConnectionData, HDInsightPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByClusterCollectionResultOfT(
+            return new PageableWrapper<HDInsightPrivateEndpointConnectionData, HDInsightPrivateEndpointConnectionResource>(new HDInsightPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

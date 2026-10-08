@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisWorkspaceData, HealthcareApisWorkspaceResource>(new HealthcareApisWorkspacesGetBySubscriptionAsyncCollectionResultOfT(HealthcareApisWorkspacesRestClient, Id.SubscriptionId, context, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces"), data => new HealthcareApisWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<HealthcareApisWorkspaceData, HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceDataAsync0CollectionResultOfT(HealthcareApisWorkspacesRestClient, Id.SubscriptionId, context, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces"), data => new HealthcareApisWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisWorkspaceData, HealthcareApisWorkspaceResource>(new HealthcareApisWorkspacesGetBySubscriptionCollectionResultOfT(HealthcareApisWorkspacesRestClient, Id.SubscriptionId, context, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces"), data => new HealthcareApisWorkspaceResource(Client, data));
+            return new PageableWrapper<HealthcareApisWorkspaceData, HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceData0CollectionResultOfT(HealthcareApisWorkspacesRestClient, Id.SubscriptionId, context, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces"), data => new HealthcareApisWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthcareApisServiceData, HealthcareApisServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(ServicesRestClient, Id.SubscriptionId, context, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisServices"), data => new HealthcareApisServiceResource(Client, data));
+            return new AsyncPageableWrapper<HealthcareApisServiceData, HealthcareApisServiceResource>(new HealthcareApisServiceDataAsync0CollectionResultOfT(ServicesRestClient, Id.SubscriptionId, context, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisServices"), data => new HealthcareApisServiceResource(Client, data));
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthcareApisServiceData, HealthcareApisServiceResource>(new ServicesGetAllCollectionResultOfT(ServicesRestClient, Id.SubscriptionId, context, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisServices"), data => new HealthcareApisServiceResource(Client, data));
+            return new PageableWrapper<HealthcareApisServiceData, HealthcareApisServiceResource>(new HealthcareApisServiceData0CollectionResultOfT(ServicesRestClient, Id.SubscriptionId, context, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisServices"), data => new HealthcareApisServiceResource(Client, data));
         }
 
         /// <summary>

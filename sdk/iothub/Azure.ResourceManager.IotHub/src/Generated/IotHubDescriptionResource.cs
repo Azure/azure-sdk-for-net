@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
@@ -536,7 +537,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetEndpointHealthAsyncCollectionResultOfT(
+            return new IotHubEndpointHealthInfoAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -574,7 +575,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetEndpointHealthCollectionResultOfT(
+            return new IotHubEndpointHealthInfoCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -824,7 +825,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetQuotaMetricsAsyncCollectionResultOfT(
+            return new IotHubQuotaMetricInfoAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -862,7 +863,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetQuotaMetricsCollectionResultOfT(
+            return new IotHubQuotaMetricInfoCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -900,7 +901,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetValidSkusAsyncCollectionResultOfT(
+            return new IotHubSkuDescriptionAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -938,7 +939,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetValidSkusCollectionResultOfT(
+            return new IotHubSkuDescriptionCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1080,7 +1081,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetJobsAsyncCollectionResultOfT(
+            return new IotHubJobInfoAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1118,7 +1119,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetJobsCollectionResultOfT(
+            return new IotHubJobInfoCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1156,7 +1157,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetKeysAsyncCollectionResultOfT(
+            return new SharedAccessSignatureAuthorizationRuleAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1194,7 +1195,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetKeysCollectionResultOfT(
+            return new SharedAccessSignatureAuthorizationRuleCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1627,10 +1628,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1670,10 +1670,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

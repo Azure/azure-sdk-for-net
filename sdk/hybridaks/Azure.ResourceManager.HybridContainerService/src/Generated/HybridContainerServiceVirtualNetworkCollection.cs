@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridContainerServiceVirtualNetworkCollection.GetAll"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
+            return new AsyncPageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkDataAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridContainerServiceVirtualNetworkCollection.GetAll"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new VirtualNetworksGetByResourceGroupCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridContainerServiceVirtualNetworkCollection.GetAll"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
+            return new PageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new HybridContainerServiceVirtualNetworkDataCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridContainerServiceVirtualNetworkCollection.GetAll"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
