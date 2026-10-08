@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.ObjectModel;
+using Azure.AI.AgentServer.Core.Internal;
 
 namespace Azure.AI.AgentServer.Core;
 
@@ -30,8 +31,8 @@ public sealed class AgentRestoreContext
         RestoreId = restoreId;
         SessionEnvironmentOverrides = new ReadOnlyDictionary<string, string>(
             sessionEnvironmentOverrides is null
-                ? new Dictionary<string, string>(StringComparer.Ordinal)
-                : new Dictionary<string, string>(sessionEnvironmentOverrides, StringComparer.Ordinal));
+                ? new Dictionary<string, string>(EnvironmentVariableNames.Comparer)
+                : new Dictionary<string, string>(sessionEnvironmentOverrides, EnvironmentVariableNames.Comparer));
     }
 
     /// <summary>
