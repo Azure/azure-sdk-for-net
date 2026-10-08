@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
-            PublicCloudConnectorPropertiesUpdate properties = default;
+            PublicCloudConnectorPropertiesPatch properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    properties = PublicCloudConnectorPropertiesUpdate.DeserializePublicCloudConnectorPropertiesUpdate(prop.Value, options);
+                    properties = PublicCloudConnectorPropertiesPatch.DeserializePublicCloudConnectorPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

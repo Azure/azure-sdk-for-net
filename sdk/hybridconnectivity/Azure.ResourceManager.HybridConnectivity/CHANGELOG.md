@@ -1,14 +1,25 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
 
+- Upgraded API version to `2027-01-01`.
+- Added support for Google Cloud Platform (GCP) public cloud connectors:
+  - Added `PublicCloudHostType.Gcp`.
+  - Added `GcpCloudProfile`, `GcpProjectProperties`, and `GcpOrganizationProperties` models, exposed via `PublicCloudConnectorProperties.GcpCloudProfile`.
+  - Added `SubscriptionResource.PostGenerateGcpTemplate` and `PostGenerateGcpTemplateAsync` for retrieving a GCP access control template, along with the `GenerateGcpTemplateContent`, `GenerateGcpTemplateResult`, and `GcpTemplateFormat` models.
+- Added `PublicCloudConnectorData.Kind` identifying which public cloud a connector targets.
+- Added `SupportedHostTypes` to `PublicCloudConnectorSolutionTypeProperties` and `PublicCloudConnectorSolutionTypeSettingsProperties`.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- `PublicCloudConnectorPatch.AwsCloudExcludedAccounts` has moved to `PublicCloudConnectorPatch.Properties.AwsCloudExcludedAccounts`. The patch payload now carries a `PublicCloudConnectorPropertiesPatch` because the connector properties can describe either an AWS or a GCP profile, so the single-property flattening used in earlier versions no longer applies.
+- `PublicCloudConnectorProperties.AwsCloudProfile` is now optional, since a connector may instead be configured with a GCP profile.
 
 ### Other Changes
+
+- Regenerated from the `2027-01-01` TypeSpec specification.
 
 ## 1.1.1 (2026-04-27)
 
