@@ -172,7 +172,7 @@ internal sealed class SnapshotLifecycleMiddleware : IMiddleware
             return null;
         }
 
-        var overrides = new Dictionary<string, string>(StringComparer.Ordinal);
+        var overrides = new Dictionary<string, string>(EnvironmentVariableNames.Comparer);
         if (sessionContext.TryGetProperty("session_env_overrides", out var overridesElement))
         {
             if (overridesElement.ValueKind != JsonValueKind.Object)
