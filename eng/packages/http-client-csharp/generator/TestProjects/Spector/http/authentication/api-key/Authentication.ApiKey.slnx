@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Authentication.ApiKey.csproj" />
+  <Project Path="tests/Authentication.ApiKey.Tests.csproj" />
 </Solution>

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary>
         /// SignalDefinition properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceMetricSignalDefinitionProperties"/>, <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/>, and <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/>, <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>, and <see cref="Models.ResourceMetricSignalDefinitionProperties"/>.
         /// </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary>
         /// Additional properties for signal instances assigned to an entity
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceSignal"/>, <see cref="Models.LogAnalyticsSignal"/>, <see cref="Models.PrometheusMetricsSignal"/>, and <see cref="Models.ExternalSignal"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ExternalSignal"/>, <see cref="Models.LogAnalyticsSignal"/>, <see cref="Models.PrometheusMetricsSignal"/>, and <see cref="Models.ResourceSignal"/>.
         /// </summary>
         /// <param name="signalKind"> Kind of the signal instance. </param>
         /// <param name="name"> Unique name of the signal within the entity. </param>
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary>
         /// Base model for discovery rule specifications
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceGraphQuerySpecification"/> and <see cref="Models.ApplicationInsightsTopologySpecification"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ApplicationInsightsTopologySpecification"/> and <see cref="Models.ResourceGraphQuerySpecification"/>.
         /// </summary>
         /// <param name="kind"> Kind of the discovery rule specification. </param>
         /// <returns> A new <see cref="Models.DiscoveryRuleSpecification"/> instance for mocking. </returns>

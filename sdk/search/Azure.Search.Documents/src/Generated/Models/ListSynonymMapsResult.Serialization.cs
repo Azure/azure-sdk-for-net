@@ -163,7 +163,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListSynonymMapsResult(value, odataNextLink, additionalBinaryDataProperties);
+            return new ListSynonymMapsResult(value ?? new ChangeTrackingList<SynonymMap>(), odataNextLink, additionalBinaryDataProperties);
         }
     }
 }

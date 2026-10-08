@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
     /// Class to contain criteria for item level restore
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="RangeBasedItemLevelRestoreCriteria"/>, <see cref="GenericRestoreDataSourceCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, and <see cref="KubernetesClusterVaultTierRestoreCriteria"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GenericRestoreDataSourceCriteria"/>, <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, <see cref="KubernetesClusterVaultTierRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/>, and <see cref="RangeBasedItemLevelRestoreCriteria"/>.
     /// </summary>
     public abstract partial class ItemLevelRestoreCriteria
     {

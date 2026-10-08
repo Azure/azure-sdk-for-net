@@ -64,15 +64,9 @@ namespace Azure.Generator.Management
                 // shape/order. This keeps both current factory bodies and EBV overloads aligned with the final constructors.
                 ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
-                ModelFactoryBackwardCompatHelper.ValidateBackwardCompatArguments(modelFactory);
             }
             else
             {
-                if (provider is ModelProvider model)
-                {
-                    ModelCompatibilityValidator.ValidateProperties(model);
-                    ModelCompatibilityValidator.ValidateFlattenedConstructors(model);
-                }
                 SerializationConstructorCallHelper.FixConstructorCalls(provider.Methods);
             }
 
@@ -98,6 +92,7 @@ namespace Azure.Generator.Management
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());
             AddVisitor(new RestClientVisitor());
+            AddVisitor(new RawRequestUriBuilderVisitor());
             AddVisitor(new ResourceVisitor());
             AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new FlattenPropertyVisitor());

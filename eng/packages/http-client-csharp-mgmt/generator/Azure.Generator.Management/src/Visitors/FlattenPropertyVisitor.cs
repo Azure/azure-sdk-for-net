@@ -4,7 +4,6 @@
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
-using Microsoft.TypeSpec.Generator.EmitterRpc;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -777,22 +776,18 @@ namespace Azure.Generator.Management.Visitors
         {
             var currentType = lifted ? innerProperty.Type.WithNullable(true) : innerProperty.Type;
             var previous = model.LastContractView?.Properties.FirstOrDefault(p => p.Name == name && IsPublicApi(p.Modifiers));
-            if (previous is null || previous.Type.Equals(currentType)
+            if (previous is null || previous.Type.HasSamePublicType(currentType)
                 || model.CustomCodeView?.Properties.Any(p => p.Name == name) == true
                 || ModelCompatibilityValidator.IsPropertyRemovalAccepted(model, previous))
             {
                 return currentType;
             }
 
-            if (previous.Type.WithNullable(false).Equals(currentType.WithNullable(false)))
+            if (previous.Type.HasSamePublicType(currentType, ignoreNullable: true))
             {
                 return currentType.IsValueType ? previous.Type : currentType;
             }
 
-            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-error",
-                $"Cannot preserve flattened property '{model.Name}.{name}' of type '{previous.Type}' using '{currentType}'. "
-                + "Provide a customization with an explicit mapping to the current wire model.",
-                severity: EmitterDiagnosticSeverity.Error);
             return currentType;
         }
 
@@ -800,14 +795,14 @@ namespace Azure.Generator.Management.Visitors
         {
             // Constructor restoration clones AsParameter, not the historical parameter. Keep
             // its exact value-type nullability independently of the property's wrapper lifting.
-            // Mixed T/T? overloads cannot share one type; ValidateFlattenedConstructors reports
-            // any signatures still missing after restoration and custom-code filtering.
+            // Mixed T/T? overloads cannot share one type; keep the representable
+            // signature without inventing a mapping for the other overload.
             var parameter = flattenedProperty.AsParameter;
             var previousTypes = model.LastContractView?.Constructors
                 .Where(c => IsPublicApi(c.Signature.Modifiers)
                     && !ModelCompatibilityValidator.IsConstructorRemovalAccepted(model, c.Signature))
                 .SelectMany(c => c.Signature.Parameters)
-                .Where(p => p.Name == parameter.Name && p.Type.WithNullable(false).Equals(parameter.Type.WithNullable(false)))
+                .Where(p => p.Name == parameter.Name && p.Type.HasSamePublicType(parameter.Type, ignoreNullable: true))
                 .Select(p => p.Type)
                 .Distinct()
                 .ToArray();
@@ -826,7 +821,7 @@ namespace Azure.Generator.Management.Visitors
             return model.LastContractView?.Properties.Any(p =>
                 IsPublicApi(p.Modifiers) &&
                 p.Name == property.Name &&
-                p.Type.WithNullable(false).Equals(property.Type.WithNullable(false))) == true;
+                p.Type.HasSamePublicType(property.Type, ignoreNullable: true)) == true;
         }
 
         private static bool ShouldPreserveLastContractSetter(ModelProvider model, string propertyName)
@@ -849,7 +844,7 @@ namespace Azure.Generator.Management.Visitors
             if (lastContractProperties is null ||
                 lastContractProperties.Any(p =>
                     p.Name == currentName &&
-                    p.Type.WithNullable(false).Equals(innerProperty.Type.WithNullable(false))))
+                    p.Type.HasSamePublicType(innerProperty.Type, ignoreNullable: true)))
             {
                 return currentName;
             }
@@ -863,7 +858,7 @@ namespace Azure.Generator.Management.Visitors
             var historicalName = buildHistoricalFlattenedName(historicalInnerName);
             var previousProperty = lastContractProperties.FirstOrDefault(p =>
                 p.Name == historicalName &&
-                p.Type.WithNullable(false).Equals(innerProperty.Type.WithNullable(false)));
+                p.Type.HasSamePublicType(innerProperty.Type, ignoreNullable: true));
             if (previousProperty is null ||
                 model.Properties.Any(p => p.Name == historicalName) ||
                 model.CustomCodeView?.Properties.Any(p => p.Name == historicalName) == true ||
