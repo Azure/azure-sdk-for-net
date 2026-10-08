@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppPrivateEndpointConnectionData, ContainerAppContainerPrivateEndpointConnectionResource>(new ContainerAppContainerPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerAppPrivateEndpointConnectionData, ContainerAppContainerPrivateEndpointConnectionResource>(new ContainerAppPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _containerAppContainerPrivateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppPrivateEndpointConnectionData, ContainerAppContainerPrivateEndpointConnectionResource>(new ContainerAppContainerPrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerAppPrivateEndpointConnectionData, ContainerAppContainerPrivateEndpointConnectionResource>(new ContainerAppPrivateEndpointConnectionDataCollectionResultOfT(
                 _containerAppContainerPrivateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

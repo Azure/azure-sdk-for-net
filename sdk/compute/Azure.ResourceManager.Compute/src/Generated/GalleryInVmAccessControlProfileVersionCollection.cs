@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GalleryInVmAccessControlProfileVersionData, GalleryInVmAccessControlProfileVersionResource>(new GalleryInVMAccessControlProfileVersionsGetByGalleryInVMAccessControlProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GalleryInVmAccessControlProfileVersionData, GalleryInVmAccessControlProfileVersionResource>(new GalleryInVmAccessControlProfileVersionDataAsyncCollectionResultOfT(
                 _galleryInVMAccessControlProfileVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GalleryInVmAccessControlProfileVersionData, GalleryInVmAccessControlProfileVersionResource>(new GalleryInVMAccessControlProfileVersionsGetByGalleryInVMAccessControlProfileCollectionResultOfT(
+            return new PageableWrapper<GalleryInVmAccessControlProfileVersionData, GalleryInVmAccessControlProfileVersionResource>(new GalleryInVmAccessControlProfileVersionDataCollectionResultOfT(
                 _galleryInVMAccessControlProfileVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

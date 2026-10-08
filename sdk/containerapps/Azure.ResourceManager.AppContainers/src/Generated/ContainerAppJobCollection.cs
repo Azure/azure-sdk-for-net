@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobsGetByResourceGroupAsyncCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobDataAsyncCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobsGetByResourceGroupCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
+            return new PageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobDataCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
         }
 
         /// <summary>

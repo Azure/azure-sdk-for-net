@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SessionPoolData, SessionPoolResource>(new ContainerAppsSessionPoolsGetBySubscriptionAsyncCollectionResultOfT(ContainerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSessionPools"), data => new SessionPoolResource(Client, data));
+            return new AsyncPageableWrapper<SessionPoolData, SessionPoolResource>(new SessionPoolDataAsync0CollectionResultOfT(ContainerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSessionPools"), data => new SessionPoolResource(Client, data));
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SessionPoolData, SessionPoolResource>(new ContainerAppsSessionPoolsGetBySubscriptionCollectionResultOfT(ContainerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSessionPools"), data => new SessionPoolResource(Client, data));
+            return new PageableWrapper<SessionPoolData, SessionPoolResource>(new SessionPoolData0CollectionResultOfT(ContainerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSessionPools"), data => new SessionPoolResource(Client, data));
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SandboxGroupData, SandboxGroupResource>(new SandboxGroupsGetBySubscriptionAsyncCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSandboxGroups"), data => new SandboxGroupResource(Client, data));
+            return new AsyncPageableWrapper<SandboxGroupData, SandboxGroupResource>(new SandboxGroupDataAsync0CollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSandboxGroups"), data => new SandboxGroupResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SandboxGroupData, SandboxGroupResource>(new SandboxGroupsGetBySubscriptionCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSandboxGroups"), data => new SandboxGroupResource(Client, data));
+            return new PageableWrapper<SandboxGroupData, SandboxGroupResource>(new SandboxGroupData0CollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSandboxGroups"), data => new SandboxGroupResource(Client, data));
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppsGetBySubscriptionAsyncCollectionResultOfT(ContainerAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerApps"), data => new ContainerAppResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppDataAsync0CollectionResultOfT(ContainerAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerApps"), data => new ContainerAppResource(Client, data));
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppsGetBySubscriptionCollectionResultOfT(ContainerAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerApps"), data => new ContainerAppResource(Client, data));
+            return new PageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppData0CollectionResultOfT(ContainerAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerApps"), data => new ContainerAppResource(Client, data));
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppConnectedEnvironmentData, ContainerAppConnectedEnvironmentResource>(new ConnectedEnvironmentsGetBySubscriptionAsyncCollectionResultOfT(ConnectedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppConnectedEnvironments"), data => new ContainerAppConnectedEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppConnectedEnvironmentData, ContainerAppConnectedEnvironmentResource>(new ContainerAppConnectedEnvironmentDataAsync0CollectionResultOfT(ConnectedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppConnectedEnvironments"), data => new ContainerAppConnectedEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppConnectedEnvironmentData, ContainerAppConnectedEnvironmentResource>(new ConnectedEnvironmentsGetBySubscriptionCollectionResultOfT(ConnectedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppConnectedEnvironments"), data => new ContainerAppConnectedEnvironmentResource(Client, data));
+            return new PageableWrapper<ContainerAppConnectedEnvironmentData, ContainerAppConnectedEnvironmentResource>(new ContainerAppConnectedEnvironmentData0CollectionResultOfT(ConnectedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppConnectedEnvironments"), data => new ContainerAppConnectedEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentsGetBySubscriptionAsyncCollectionResultOfT(ContainerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppManagedEnvironments"), data => new ContainerAppManagedEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentDataAsync0CollectionResultOfT(ContainerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppManagedEnvironments"), data => new ContainerAppManagedEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentsGetBySubscriptionCollectionResultOfT(ContainerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppManagedEnvironments"), data => new ContainerAppManagedEnvironmentResource(Client, data));
+            return new PageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentData0CollectionResultOfT(ContainerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppManagedEnvironments"), data => new ContainerAppManagedEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobsGetBySubscriptionAsyncCollectionResultOfT(ContainerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppJobs"), data => new ContainerAppJobResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobDataAsync0CollectionResultOfT(ContainerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppJobs"), data => new ContainerAppJobResource(Client, data));
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobsGetBySubscriptionCollectionResultOfT(ContainerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppJobs"), data => new ContainerAppJobResource(Client, data));
+            return new PageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobData0CollectionResultOfT(ContainerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppJobs"), data => new ContainerAppJobResource(Client, data));
         }
 
         /// <summary>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableWorkloadProfilesGetAvailableWorkloadProfilesAsyncCollectionResultOfT(AvailableWorkloadProfilesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles");
+            return new ContainerAppAvailableWorkloadProfileAsyncCollectionResultOfT(AvailableWorkloadProfilesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles");
         }
 
         /// <summary>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableWorkloadProfilesGetAvailableWorkloadProfilesCollectionResultOfT(AvailableWorkloadProfilesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles");
+            return new ContainerAppAvailableWorkloadProfileCollectionResultOfT(AvailableWorkloadProfilesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles");
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableEnvironmentModesGetAvailableEnvironmentModesAsyncCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableEnvironmentModes");
+            return new ContainerAppAvailableEnvironmentModeAsyncCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableEnvironmentModes");
         }
 
         /// <summary>
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableEnvironmentModesGetAvailableEnvironmentModesCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableEnvironmentModes");
+            return new ContainerAppAvailableEnvironmentModeCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableEnvironmentModes");
         }
 
         /// <summary>
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingMetersGetBillingMetersAsyncCollectionResultOfT(BillingMetersRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetBillingMeters");
+            return new ContainerAppBillingMeterAsyncCollectionResultOfT(BillingMetersRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetBillingMeters");
         }
 
         /// <summary>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingMetersGetBillingMetersCollectionResultOfT(BillingMetersRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetBillingMeters");
+            return new ContainerAppBillingMeterCollectionResultOfT(BillingMetersRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetBillingMeters");
         }
 
         /// <summary>
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetUsages");
+            return new ContainerAppUsageAsync0CollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetUsages");
+            return new ContainerAppUsage0CollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetUsages");
         }
     }
 }

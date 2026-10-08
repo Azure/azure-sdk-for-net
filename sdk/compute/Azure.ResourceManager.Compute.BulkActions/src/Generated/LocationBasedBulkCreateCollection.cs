@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new BulkCreateGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new LocationBasedBulkCreateDataAsyncCollectionResultOfT(
                 _bulkCreateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new BulkCreateGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new LocationBasedBulkCreateDataCollectionResultOfT(
                 _bulkCreateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

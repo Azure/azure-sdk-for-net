@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentsGetByResourceGroupAsyncCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentDataAsyncCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentsGetByResourceGroupCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
+            return new PageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentDataCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
         }
 
         /// <summary>

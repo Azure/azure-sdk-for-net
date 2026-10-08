@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GalleryImageData, GalleryImageResource>(new GalleryImagesGetByGalleryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GalleryImageData, GalleryImageResource>(new GalleryImageDataAsyncCollectionResultOfT(
                 _galleryImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GalleryImageData, GalleryImageResource>(new GalleryImagesGetByGalleryCollectionResultOfT(
+            return new PageableWrapper<GalleryImageData, GalleryImageResource>(new GalleryImageDataCollectionResultOfT(
                 _galleryImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

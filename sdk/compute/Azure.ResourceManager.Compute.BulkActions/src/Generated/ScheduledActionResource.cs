@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetResourcesAsyncCollectionResultOfT(
+            return new ScheduledActionResourceMetadataAsyncCollectionResultOfT(
                 _scheduledActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetResourcesCollectionResultOfT(
+            return new ScheduledActionResourceMetadataCollectionResultOfT(
                 _scheduledActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfluentAccessPointData, ConfluentAccessPointResource>(new AccessPointResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfluentAccessPointData, ConfluentAccessPointResource>(new ConfluentAccessPointDataAsyncCollectionResultOfT(
                 _accessPointResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfluentAccessPointData, ConfluentAccessPointResource>(new AccessPointResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<ConfluentAccessPointData, ConfluentAccessPointResource>(new ConfluentAccessPointDataCollectionResultOfT(
                 _accessPointResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

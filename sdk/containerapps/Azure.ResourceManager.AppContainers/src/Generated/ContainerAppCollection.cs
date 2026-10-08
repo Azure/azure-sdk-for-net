@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppsGetByResourceGroupAsyncCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppDataAsyncCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppsGetByResourceGroupCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
+            return new PageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppDataCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
         }
 
         /// <summary>

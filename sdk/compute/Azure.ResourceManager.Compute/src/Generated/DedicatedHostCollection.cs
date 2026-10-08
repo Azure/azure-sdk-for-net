@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHostData, DedicatedHostResource>(new DedicatedHostsGetByHostGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DedicatedHostData, DedicatedHostResource>(new DedicatedHostDataAsyncCollectionResultOfT(
                 _dedicatedHostsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHostData, DedicatedHostResource>(new DedicatedHostsGetByHostGroupCollectionResultOfT(
+            return new PageableWrapper<DedicatedHostData, DedicatedHostResource>(new DedicatedHostDataCollectionResultOfT(
                 _dedicatedHostsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

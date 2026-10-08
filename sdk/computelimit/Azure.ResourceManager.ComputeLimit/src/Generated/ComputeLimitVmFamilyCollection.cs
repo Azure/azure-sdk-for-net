@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputeLimitVmFamilyData, ComputeLimitVmFamilyResource>(new VmFamiliesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ComputeLimitVmFamilyData, ComputeLimitVmFamilyResource>(new ComputeLimitVmFamilyDataAsyncCollectionResultOfT(
                 _vmFamiliesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputeLimitVmFamilyData, ComputeLimitVmFamilyResource>(new VmFamiliesGetBySubscriptionLocationResourceCollectionResultOfT(
+            return new PageableWrapper<ComputeLimitVmFamilyData, ComputeLimitVmFamilyResource>(new ComputeLimitVmFamilyDataCollectionResultOfT(
                 _vmFamiliesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,

@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrustedHostSubscriptionData, TrustedHostSubscriptionResource>(new TrustedHostSubscriptionsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_trustedHostSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "TrustedHostSubscriptionCollection.GetAll"), data => new TrustedHostSubscriptionResource(Client, data));
+            return new AsyncPageableWrapper<TrustedHostSubscriptionData, TrustedHostSubscriptionResource>(new TrustedHostSubscriptionDataAsyncCollectionResultOfT(_trustedHostSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "TrustedHostSubscriptionCollection.GetAll"), data => new TrustedHostSubscriptionResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrustedHostSubscriptionData, TrustedHostSubscriptionResource>(new TrustedHostSubscriptionsGetBySubscriptionLocationResourceCollectionResultOfT(_trustedHostSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "TrustedHostSubscriptionCollection.GetAll"), data => new TrustedHostSubscriptionResource(Client, data));
+            return new PageableWrapper<TrustedHostSubscriptionData, TrustedHostSubscriptionResource>(new TrustedHostSubscriptionDataCollectionResultOfT(_trustedHostSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "TrustedHostSubscriptionCollection.GetAll"), data => new TrustedHostSubscriptionResource(Client, data));
         }
 
         /// <summary>
