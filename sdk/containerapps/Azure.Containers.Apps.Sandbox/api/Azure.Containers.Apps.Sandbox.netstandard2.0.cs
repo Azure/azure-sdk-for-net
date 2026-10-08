@@ -133,8 +133,8 @@ namespace Azure.Containers.Apps.Sandbox
     public enum SandboxExecEventType
     {
         SessionId = 0,
-        Stdout = 1,
-        Stderr = 2,
+        StandardOutput = 1,
+        StandardError = 2,
         ExitCode = 3,
         Error = 4,
         Closed = 5,
@@ -2784,13 +2784,13 @@ namespace Azure.Containers.Apps.Sandbox.Models
     public partial class SandboxExecStartRequest
     {
         public SandboxExecStartRequest(string command) { }
+        public bool AllocateTerminal { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
         public string Command { get { throw null; } }
-        public bool Detach { get { throw null; } set { } }
+        public bool EnableStandardInput { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Environment { get { throw null; } }
         public uint Height { get { throw null; } set { } }
-        public bool Stdin { get { throw null; } set { } }
-        public bool Tty { get { throw null; } set { } }
+        public bool RunDetached { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
         public uint Width { get { throw null; } set { } }
         public string WorkingDirectory { get { throw null; } set { } }

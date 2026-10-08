@@ -160,8 +160,8 @@ using Azure.Containers.Apps.Sandbox.Models;
 
 SandboxExecStartRequest request = new SandboxExecStartRequest("/bin/sh")
 {
-    Tty = false,
-    Stdin = false
+    AllocateTerminal = false,
+    EnableStandardInput = false
 };
 request.Arguments.Add("-c");
 request.Arguments.Add("echo hello");
@@ -174,7 +174,7 @@ if (started.Type != SandboxExecEventType.SessionId)
 SandboxExecEvent execEvent;
 while ((execEvent = await session.ReceiveAsync()).Type != SandboxExecEventType.Closed)
 {
-    if (execEvent.Type == SandboxExecEventType.Stdout)
+    if (execEvent.Type == SandboxExecEventType.StandardOutput)
         Console.WriteLine(execEvent.Data);
     if (execEvent.Type == SandboxExecEventType.Error)
         throw new InvalidOperationException(execEvent.Text);

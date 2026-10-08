@@ -42,11 +42,11 @@ namespace Azure.Containers.Apps.Sandbox
                     writer.WriteString("workingDirectory", request.WorkingDirectory);
                 if (request.User != null)
                     writer.WriteString("user", request.User);
-                writer.WriteBoolean("tty", request.Tty);
-                writer.WriteBoolean("stdin", request.Stdin);
+                writer.WriteBoolean("tty", request.AllocateTerminal);
+                writer.WriteBoolean("stdin", request.EnableStandardInput);
                 writer.WriteNumber("height", request.Height);
                 writer.WriteNumber("width", request.Width);
-                writer.WriteBoolean("detach", request.Detach);
+                writer.WriteBoolean("detach", request.RunDetached);
                 writer.WriteEndObject();
             }, cancellationToken, MaximumStartMessageSize);
         }
@@ -117,9 +117,9 @@ namespace Azure.Containers.Apps.Sandbox
                 case "session_id":
                     return new SandboxExecEvent(SandboxExecEventType.SessionId, text: GetString(root, "data"));
                 case "stdout":
-                    return new SandboxExecEvent(SandboxExecEventType.Stdout, data: DecodeOutput(root));
+                    return new SandboxExecEvent(SandboxExecEventType.StandardOutput, data: DecodeOutput(root));
                 case "stderr":
-                    return new SandboxExecEvent(SandboxExecEventType.Stderr, data: DecodeOutput(root));
+                    return new SandboxExecEvent(SandboxExecEventType.StandardError, data: DecodeOutput(root));
                 case "exit_code":
                     if (root.TryGetProperty("exitCode", out JsonElement code) && code.TryGetInt32(out int value))
                         return new SandboxExecEvent(SandboxExecEventType.ExitCode, exitCode: value);

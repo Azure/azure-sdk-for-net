@@ -128,8 +128,12 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             socket.Enqueue("{\"type\":\"exit_code\",\"exitCode\":0}");
             socket.Enqueue("{\"type\":\"error\",\"data\":\"failed\"}");
             Assert.That((await session.ReceiveAsync()).Text, Is.EqualTo("abc"));
-            Assert.That((await session.ReceiveAsync()).Data.ToArray(), Is.EqualTo(new byte[] { 0, 255 }));
-            Assert.That((await session.ReceiveAsync()).Type, Is.EqualTo(SandboxExecEventType.Stderr));
+            SandboxExecEvent standardOutput = await session.ReceiveAsync();
+            Assert.That(standardOutput.Type, Is.EqualTo(SandboxExecEventType.StandardOutput));
+            Assert.That(standardOutput.Data.ToArray(), Is.EqualTo(new byte[] { 0, 255 }));
+            SandboxExecEvent standardError = await session.ReceiveAsync();
+            Assert.That(standardError.Type, Is.EqualTo(SandboxExecEventType.StandardError));
+            Assert.That(standardError.Data.ToString(), Is.EqualTo("hi"));
             Assert.That((await session.ReceiveAsync()).ExitCode, Is.EqualTo(0));
             Assert.That((await session.ReceiveAsync()).Text, Is.EqualTo("failed"));
             Assert.That((await session.ReceiveAsync()).Type, Is.EqualTo(SandboxExecEventType.Closed));
@@ -143,11 +147,11 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             client.WebSocketConnector = (_, _, _) => Task.FromResult<ISandboxWebSocketClient>(socket);
             var request = new Models.SandboxExecStartRequest("sh")
             {
-                Tty = false,
-                Stdin = false,
+                AllocateTerminal = false,
+                EnableStandardInput = false,
                 Height = 40,
                 Width = 120,
-                Detach = true
+                RunDetached = true
             };
             await using SandboxExecSession session = await client.StartSandboxExecSessionAsync("sandbox-id", request);
 

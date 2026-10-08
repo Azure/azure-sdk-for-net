@@ -34,10 +34,10 @@ namespace Azure.Containers.Apps.Sandbox.Models
         public string User { get; set; }
 
         /// <summary> Whether to allocate a terminal. Defaults to true. </summary>
-        public bool Tty { get; set; } = true;
+        public bool AllocateTerminal { get; set; } = true;
 
         /// <summary> Whether to enable standard input. Defaults to true. </summary>
-        public bool Stdin { get; set; } = true;
+        public bool EnableStandardInput { get; set; } = true;
 
         /// <summary> The initial terminal height in rows. Defaults to 24. </summary>
         public uint Height { get; set; } = 24;
@@ -46,7 +46,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
         public uint Width { get; set; } = 80;
 
         /// <summary> Whether the command is detached from the session. Defaults to false. </summary>
-        public bool Detach { get; set; }
+        public bool RunDetached { get; set; }
     }
 #pragma warning restore AZC0030
 }

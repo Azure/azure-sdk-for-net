@@ -31,8 +31,8 @@ namespace Azure.Containers.Apps.Sandbox.Tests
 
             SandboxExecStartRequest request = new SandboxExecStartRequest("/bin/sh")
             {
-                Tty = false,
-                Stdin = false
+                AllocateTerminal = false,
+                EnableStandardInput = false
             };
             request.Arguments.Add("-c");
             request.Arguments.Add("echo sdk-ws-ok");
@@ -51,10 +51,10 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 events.Append(next.Type).Append(", ");
                 switch (next.Type)
                 {
-                    case SandboxExecEventType.Stdout:
+                    case SandboxExecEventType.StandardOutput:
                         stdout.Append(next.Data.ToString());
                         break;
-                    case SandboxExecEventType.Stderr:
+                    case SandboxExecEventType.StandardError:
                     case SandboxExecEventType.Error:
                         Assert.Fail($"Exec failed: {next.Text ?? next.Data?.ToString()}");
                         break;
@@ -86,7 +86,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             string content = $"sdk-ws-stdin-{Guid.NewGuid():N}\n";
             string path = $"/tmp/sdk-ws-stdin-{Guid.NewGuid():N}.txt";
             // TTY forwards stdin; a fixed byte count lets the process exit without terminal EOF.
-            SandboxExecStartRequest write = new SandboxExecStartRequest("/bin/sh") { Tty = true, Stdin = true };
+            SandboxExecStartRequest write = new SandboxExecStartRequest("/bin/sh") { AllocateTerminal = true, EnableStandardInput = true };
             write.Arguments.Add("-c");
             write.Arguments.Add($"head -c {Encoding.UTF8.GetByteCount(content)} > '{path}'");
 
@@ -100,7 +100,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 Assert.That((await ReadUntilExitAsync(session, streamTimeout.Token)).ExitCode, Is.Zero);
             }
 
-            SandboxExecStartRequest read = new SandboxExecStartRequest("/bin/cat") { Tty = false, Stdin = false };
+            SandboxExecStartRequest read = new SandboxExecStartRequest("/bin/cat") { AllocateTerminal = false, EnableStandardInput = false };
             read.Arguments.Add(path);
             await using (SandboxExecSession session = await client.StartSandboxExecSessionAsync(
                 sandbox.Id, read, cancellationToken: streamTimeout.Token))
@@ -128,7 +128,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             Assert.That(snapshot, Is.Not.Null.And.Not.Empty);
         }
 
-        private static async Task<(string Stdout, int ExitCode)> ReadUntilExitAsync(
+        private static async Task<(string StandardOutput, int ExitCode)> ReadUntilExitAsync(
             SandboxExecSession session, CancellationToken cancellationToken)
         {
             StringBuilder stdout = new StringBuilder();
@@ -137,10 +137,10 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 SandboxExecEvent next = await session.ReceiveAsync(cancellationToken);
                 switch (next.Type)
                 {
-                    case SandboxExecEventType.Stdout:
+                    case SandboxExecEventType.StandardOutput:
                         stdout.Append(next.Data.ToString());
                         break;
-                    case SandboxExecEventType.Stderr:
+                    case SandboxExecEventType.StandardError:
                     case SandboxExecEventType.Error:
                         Assert.Fail($"Exec failed: {next.Text ?? next.Data?.ToString()}");
                         break;

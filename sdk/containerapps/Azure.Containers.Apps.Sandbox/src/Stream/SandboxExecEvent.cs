@@ -11,9 +11,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> The service assigned a session ID. </summary>
         SessionId,
         /// <summary> Standard output bytes are available. </summary>
-        Stdout,
+        StandardOutput,
         /// <summary> Standard error bytes are available. </summary>
-        Stderr,
+        StandardError,
         /// <summary> The process exited. </summary>
         ExitCode,
         /// <summary> The service reported an error. </summary>
