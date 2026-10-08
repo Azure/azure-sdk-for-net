@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataMigrationServiceCollection.GetAll"), data => new DataMigrationServiceResource(Client, data));
+            return new AsyncPageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new DataMigrationServiceDataAsyncCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataMigrationServiceCollection.GetAll"), data => new DataMigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataMigrationServiceCollection.GetAll"), data => new DataMigrationServiceResource(Client, data));
+            return new PageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new DataMigrationServiceDataCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataMigrationServiceCollection.GetAll"), data => new DataMigrationServiceResource(Client, data));
         }
 
         /// <summary>

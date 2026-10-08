@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourceDataAsyncCollectionResultOfT(
                 _resourceGuardProxyBaseResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<ResourceGuardProxyBaseResourceData, ResourceGuardProxyBaseResource>(new ResourceGuardProxyBaseResourceDataCollectionResultOfT(
                 _resourceGuardProxyBaseResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

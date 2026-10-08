@@ -1480,7 +1480,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new IntegrationRuntimeResourcesGetAllIntegrationRuntimeObjectMetadataAsyncCollectionResultOfT(
+            return new SsisObjectMetadataAsyncCollectionResultOfT(
                 _integrationRuntimeResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1521,7 +1521,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new IntegrationRuntimeResourcesGetAllIntegrationRuntimeObjectMetadataCollectionResultOfT(
+            return new SsisObjectMetadataCollectionResultOfT(
                 _integrationRuntimeResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1657,7 +1657,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new IntegrationRuntimeResourcesGetOutboundNetworkDependenciesAsyncCollectionResultOfT(
+            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointAsyncCollectionResultOfT(
                 _integrationRuntimeResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1696,7 +1696,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new IntegrationRuntimeResourcesGetOutboundNetworkDependenciesCollectionResultOfT(
+            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointCollectionResultOfT(
                 _integrationRuntimeResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

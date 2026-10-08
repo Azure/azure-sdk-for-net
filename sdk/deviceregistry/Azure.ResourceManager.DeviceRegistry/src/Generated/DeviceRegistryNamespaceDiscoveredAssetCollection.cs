@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new NamespaceDiscoveredAssetsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new DeviceRegistryNamespaceDiscoveredAssetDataAsyncCollectionResultOfT(
                 _namespaceDiscoveredAssetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new NamespaceDiscoveredAssetsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new DeviceRegistryNamespaceDiscoveredAssetDataCollectionResultOfT(
                 _namespaceDiscoveredAssetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

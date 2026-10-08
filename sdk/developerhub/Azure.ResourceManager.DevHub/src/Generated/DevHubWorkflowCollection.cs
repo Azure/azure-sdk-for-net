@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new DevHubWorkflowDataAsyncCollectionResultOfT(
                 _workflowRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new DevHubWorkflowDataCollectionResultOfT(
                 _workflowRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

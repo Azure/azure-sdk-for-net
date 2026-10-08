@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -852,7 +853,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new DataFlowDebugSessionGetDataFlowDebugSessionsAsyncCollectionResultOfT(
+            return new DataFlowDebugSessionInfoAsyncCollectionResultOfT(
                 _dataFlowDebugSessionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -890,7 +891,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new DataFlowDebugSessionGetDataFlowDebugSessionsCollectionResultOfT(
+            return new DataFlowDebugSessionInfoCollectionResultOfT(
                 _dataFlowDebugSessionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1464,7 +1465,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new FactoriesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new DataFactoryPrivateLinkResourceAsyncCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1502,7 +1503,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new FactoriesGetPrivateLinkResourcesCollectionResultOfT(
+            return new DataFactoryPrivateLinkResourceCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1544,7 +1545,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new FactoriesGetPipelineRunsAsyncCollectionResultOfT(
+            return new DataFactoryPipelineRunInfoAsyncCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1587,7 +1588,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new FactoriesGetPipelineRunsCollectionResultOfT(
+            return new DataFactoryPipelineRunInfoCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1633,7 +1634,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new FactoriesGetActivityRunAsyncCollectionResultOfT(
+            return new PipelineActivityRunInformationAsyncCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1680,7 +1681,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new FactoriesGetActivityRunCollectionResultOfT(
+            return new PipelineActivityRunInformationCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1828,7 +1829,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new FactoriesGetTriggerRunsAsyncCollectionResultOfT(
+            return new DataFactoryTriggerRunAsyncCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1871,7 +1872,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new FactoriesGetTriggerRunsCollectionResultOfT(
+            return new DataFactoryTriggerRunCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1914,7 +1915,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new FactoriesGetTriggersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new DataFactoryTriggerDataAsyncCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1957,7 +1958,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new FactoriesGetTriggersCollectionResultOfT(
+            return new PageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new DataFactoryTriggerDataCollectionResultOfT(
                 _factoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2077,10 +2078,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -2120,10 +2120,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

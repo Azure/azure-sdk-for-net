@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetBySubscriptionAsyncCollectionResultOfT(AppAttachPackageRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableDesktopVirtualizationSubscriptionResource.GetAppAttachPackages"), data => new AppAttachPackageResource(Client, data));
+            return new AsyncPageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageDataAsync0CollectionResultOfT(AppAttachPackageRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableDesktopVirtualizationSubscriptionResource.GetAppAttachPackages"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetBySubscriptionCollectionResultOfT(AppAttachPackageRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableDesktopVirtualizationSubscriptionResource.GetAppAttachPackages"), data => new AppAttachPackageResource(Client, data));
+            return new PageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageData0CollectionResultOfT(AppAttachPackageRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableDesktopVirtualizationSubscriptionResource.GetAppAttachPackages"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new ApplicationGroupsGetBySubscriptionAsyncCollectionResultOfT(ApplicationGroupsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableDesktopVirtualizationSubscriptionResource.GetVirtualApplicationGroups"), data => new VirtualApplicationGroupResource(Client, data));
+            return new AsyncPageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new VirtualApplicationGroupDataAsync0CollectionResultOfT(ApplicationGroupsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableDesktopVirtualizationSubscriptionResource.GetVirtualApplicationGroups"), data => new VirtualApplicationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new ApplicationGroupsGetBySubscriptionCollectionResultOfT(ApplicationGroupsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableDesktopVirtualizationSubscriptionResource.GetVirtualApplicationGroups"), data => new VirtualApplicationGroupResource(Client, data));
+            return new PageableWrapper<VirtualApplicationGroupData, VirtualApplicationGroupResource>(new VirtualApplicationGroupData0CollectionResultOfT(ApplicationGroupsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableDesktopVirtualizationSubscriptionResource.GetVirtualApplicationGroups"), data => new VirtualApplicationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HostPoolData, HostPoolResource>(new HostPoolsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HostPoolData, HostPoolResource>(new HostPoolDataAsync0CollectionResultOfT(
                 HostPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 pageSize,
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HostPoolData, HostPoolResource>(new HostPoolsGetAllCollectionResultOfT(
+            return new PageableWrapper<HostPoolData, HostPoolResource>(new HostPoolData0CollectionResultOfT(
                 HostPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 pageSize,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlanDataAsync0CollectionResultOfT(
                 ScalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 pageSize,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlanData0CollectionResultOfT(
                 ScalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 pageSize,
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualWorkspaceData, VirtualWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDesktopVirtualizationSubscriptionResource.GetVirtualWorkspaces"), data => new VirtualWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<VirtualWorkspaceData, VirtualWorkspaceResource>(new VirtualWorkspaceDataAsync0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDesktopVirtualizationSubscriptionResource.GetVirtualWorkspaces"), data => new VirtualWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualWorkspaceData, VirtualWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDesktopVirtualizationSubscriptionResource.GetVirtualWorkspaces"), data => new VirtualWorkspaceResource(Client, data));
+            return new PageableWrapper<VirtualWorkspaceData, VirtualWorkspaceResource>(new VirtualWorkspaceData0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDesktopVirtualizationSubscriptionResource.GetVirtualWorkspaces"), data => new VirtualWorkspaceResource(Client, data));
         }
     }
 }

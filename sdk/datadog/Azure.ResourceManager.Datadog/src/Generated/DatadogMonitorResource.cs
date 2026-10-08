@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
@@ -942,7 +943,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetApiKeysAsyncCollectionResultOfT(
+            return new DatadogApiKeyAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -980,7 +981,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetApiKeysCollectionResultOfT(
+            return new DatadogApiKeyCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1018,7 +1019,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsAsyncCollectionResultOfT(
+            return new DatadogHostAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1056,7 +1057,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetHostsCollectionResultOfT(
+            return new DatadogHostCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1094,7 +1095,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesAsyncCollectionResultOfT(
+            return new DatadogLinkedResourceResultAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1132,7 +1133,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetLinkedResourcesCollectionResultOfT(
+            return new DatadogLinkedResourceResultCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1170,7 +1171,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesAsyncCollectionResultOfT(
+            return new DatadogMonitoredResourceResultAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1208,7 +1209,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsGetMonitoredResourcesCollectionResultOfT(
+            return new DatadogMonitoredResourceResultCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1250,7 +1251,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsManageSreAgentConnectorsAsyncCollectionResultOfT(
+            return new DatadogSreAgentConfigurationAsyncCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1293,7 +1294,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new MonitorsManageSreAgentConnectorsCollectionResultOfT(
+            return new DatadogSreAgentConfigurationCollectionResultOfT(
                 _monitorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1709,10 +1710,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1752,10 +1752,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

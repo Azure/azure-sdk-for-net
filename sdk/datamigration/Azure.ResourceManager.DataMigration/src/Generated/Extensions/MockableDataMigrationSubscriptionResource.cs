@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServicesGetBySubscriptionAsyncCollectionResultOfT(MigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetMigrationServices"), data => new MigrationServiceResource(Client, data));
+            return new AsyncPageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServiceDataAsync0CollectionResultOfT(MigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetMigrationServices"), data => new MigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServicesGetBySubscriptionCollectionResultOfT(MigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetMigrationServices"), data => new MigrationServiceResource(Client, data));
+            return new PageableWrapper<MigrationServiceData, MigrationServiceResource>(new MigrationServiceData0CollectionResultOfT(MigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetMigrationServices"), data => new MigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServicesGetBySubscriptionAsyncCollectionResultOfT(SqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices"), data => new SqlMigrationServiceResource(Client, data));
+            return new AsyncPageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServiceDataAsync0CollectionResultOfT(SqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices"), data => new SqlMigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServicesGetBySubscriptionCollectionResultOfT(SqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices"), data => new SqlMigrationServiceResource(Client, data));
+            return new PageableWrapper<SqlMigrationServiceData, SqlMigrationServiceResource>(new SqlMigrationServiceData0CollectionResultOfT(SqlMigrationServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices"), data => new SqlMigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices"), data => new DataMigrationServiceResource(Client, data));
+            return new AsyncPageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new DataMigrationServiceDataAsync0CollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices"), data => new DataMigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new ServicesGetAllCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices"), data => new DataMigrationServiceResource(Client, data));
+            return new PageableWrapper<DataMigrationServiceData, DataMigrationServiceResource>(new DataMigrationServiceData0CollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices"), data => new DataMigrationServiceResource(Client, data));
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusGetSkusResourceSkusAsyncCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus");
+            return new DataMigrationSkuAsyncCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus");
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusGetSkusResourceSkusCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus");
+            return new DataMigrationSkuCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus");
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetUsages");
+            return new DataMigrationQuotaAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetUsages");
+            return new DataMigrationQuotaCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableDataMigrationSubscriptionResource.GetUsages");
         }
     }
 }

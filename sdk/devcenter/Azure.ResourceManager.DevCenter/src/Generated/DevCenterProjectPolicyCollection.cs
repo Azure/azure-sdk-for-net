@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new ProjectPoliciesGetByDevCenterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new DevCenterProjectPolicyDataAsyncCollectionResultOfT(
                 _projectPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new ProjectPoliciesGetByDevCenterCollectionResultOfT(
+            return new PageableWrapper<DevCenterProjectPolicyData, DevCenterProjectPolicyResource>(new DevCenterProjectPolicyDataCollectionResultOfT(
                 _projectPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
