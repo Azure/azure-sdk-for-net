@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from listing bulk operation errors. </summary>
+    /// <summary> A paged list of recent bulk action errors. </summary>
     internal partial class ListBulkOperationErrorsResponse : IJsonModel<ListBulkOperationErrorsResponse>
     {
         /// <summary> Initializes a new instance of <see cref="ListBulkOperationErrorsResponse"/> for deserialization. </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ListBulkOperationErrorsResponse(value, nextLink, additionalBinaryDataProperties);

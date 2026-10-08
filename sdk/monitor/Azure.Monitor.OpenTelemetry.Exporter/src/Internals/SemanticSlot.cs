@@ -74,6 +74,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         MicrosoftSyntheticSource,
         MicrosoftUserAccountId,
 
+        MicrosoftInstrumentationKey,
+        MicrosoftIngestionEndpoint,
+        MicrosoftMultiEndpointCloudRole,
+
         /// <summary>Not a slot. Sizes the backing index.</summary>
         Count,
     }

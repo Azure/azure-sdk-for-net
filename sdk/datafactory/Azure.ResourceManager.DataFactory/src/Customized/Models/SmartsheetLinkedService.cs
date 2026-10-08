@@ -31,11 +31,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.ApiToken = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public SmartsheetLinkedService(DataFactorySecret apiToken) : base("Smartsheet")
-        {
-            TypeProperties = new SmartsheetLinkedServiceTypeProperties(apiToken);
-        }
     }
 }

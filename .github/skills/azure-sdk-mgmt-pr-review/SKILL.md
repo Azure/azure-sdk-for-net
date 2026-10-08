@@ -14,7 +14,7 @@ Check the package `.csproj`, `CHANGELOG.md`, and compatibility files. Comment on
 Rules:
 - **No major version bump** unless .NET architects explicitly require a coordinated management-SDK major bump. Flag `1.x` -> `2.0.0` as Critical.
 - **Do not remove `ApiCompatVersion`**. It enforces compatibility against the last stable release. If removed, recover the prior value from base branch or latest released tag for later phases.
-- **No new ApiCompat baseline entries**. Do not suppress compatibility errors; mitigate with customization code or generator/spec fixes. Exception: MPG migration `WirePathAttribute` removal diffs may use targeted entries in `eng/apicompatbaselines/<Project>.xml`.
+- **No new ApiCompat baseline entries**. Do not suppress compatibility errors; mitigate with customization code or generator/spec fixes. Exception: `WirePathAttribute` removal diffs may use targeted entries in `eng/apicompatbaselines/<Project>.xml` when they are the only remaining ApiCompat differences.
 
 Continue to Phase 2 unless the versioning issue makes the API-review scope impossible to determine, e.g. `ApiCompatVersion` was removed and no prior stable baseline can be recovered. In that narrow case, request changes and say API review was skipped because the baseline is unknown.
 
@@ -117,10 +117,10 @@ Naming fix recommendation:
 - If the symbol is defined in TypeSpec, recommend `@@clientName(..., "csharp")` in `client.tsp`, e.g. `@@clientName(PublicNetworkAccess, "DurableTaskPublicNetworkAccess", "csharp");`.
 - For exact enum member names, recommend `@@clientName(..., Azure.ClientGenerator.Core.exact("Old_Name"), "csharp")`.
 - If not defined in TypeSpec, recommend SDK customization such as `[CodeGenType("OriginalGeneratedName")]` on a renamed partial class.
-- For migration PRs, compare against previous GA API first. If the generated name is a rename of shipped API, restore the shipped name rather than inventing a third stylistic name.
+- Compare against the previous GA API first. If the generated name is a rename of shipped API, restore the shipped name rather than inventing a third stylistic name.
 
 TypeSpec-backed rename customization (`TSPRENAME001`):
-- Apply this rule to every package with `tsp-location.yaml`, including brand-new packages, feature/refresh PRs, and migrations.
+- Apply this rule to every package with `tsp-location.yaml`, including brand-new packages and feature/refresh PRs.
 - Inspect added or modified SDK customization files containing `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`, wrapper members, or forwarding methods.
 - If custom code is used only to rename an API that is directly defined in the service TypeSpec, report `TSPRENAME001` as blocking. Require scoped `@@clientName(TypeSpecTarget, "CSharpName", "csharp")` in the spec repository's `client.tsp` and regeneration; do not accept SDK custom code as an alternative.
 - SDK rename customizations are allowed only for synthesized artifacts that TypeSpec cannot target or necessary compatibility shims that cannot be replaced by renaming the generated API.
@@ -143,7 +143,7 @@ Duration/interval TypeSpec format:
 - ISO 8601 duration (`P1DT2H59M59S`): `duration` scalar.
 - Constant duration (`2.2:59:59.5000000`): `@encode(DurationConstant)`.
 
-SDK migration method renames:
+Generated method renames:
 - If a shipped method name changes, prefer renaming the generated API back to the shipped name.
 - Do not keep old and new names just because generation changed the name.
 - Keep a new name only when the old name is clearly wrong and the rename is intentional; then treat the old member as a compatibility shim and document why.
@@ -163,7 +163,7 @@ Report every finding and recommend resolving it in the current PR. Do not defer 
 
 | Severity | Finding categories | Review event |
 |----------|--------------------|--------------|
-| Blocking | Phase 1 versioning violations; deterministic scanner findings other than advisory `TYPE001` and `TYPE003` findings; all contextual naming findings; naming, suffix, acronym, resource-name, and ARM common-type violations; `TSPRENAME001`; sole-overload `OPTPARAM001` breaks; unmitigated breaking changes; manual generated-code edits; and migration-specific violations | `REQUEST_CHANGES` |
+| Blocking | Phase 1 versioning violations; deterministic scanner findings other than advisory `TYPE001` and `TYPE003` findings; all contextual naming findings; naming, suffix, acronym, resource-name, and ARM common-type violations; `TSPRENAME001`; sole-overload `OPTPARAM001` breaks; unmitigated breaking changes; and manual generated-code edits | `REQUEST_CHANGES` |
 | Non-blocking | Advisory type-formatting recommendations, including scanner rules `TYPE001` and `TYPE003` and recommendations explicitly phrased as `Consider`, such as using `ResourceIdentifier`, `AzureLocation`, or a numeric type instead of `string`, when they do not also violate a blocking compatibility or API rule | `COMMENT` |
 
 When a review contains both severities, use `REQUEST_CHANGES`. Do not label a naming finding as non-blocking.

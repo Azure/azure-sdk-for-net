@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
     public static partial class ArmProgrammableConnectivityModelFactory
     {
 
+        /// <summary> A Programmable Connectivity Gateway resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Gateway resource properties. </summary>
         /// <param name="operatorApiConnections"> List of Operator API Connections selected by the user. </param>
         /// <param name="gatewayBaseUri"> Base URL of the Gateway resource. This is the URL that the users would use to make Network API requests to the Operators via Azure. </param>
         /// <param name="provisioningState"> The status of the last operation on the Gateway resource. </param>
@@ -60,6 +62,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Details about the Application that would use the Operator's Network APIs. </summary>
         /// <param name="name"> Name of the application. </param>
         /// <param name="applicationDescription"> Description of the application. </param>
         /// <param name="category"> The category of the application. </param>
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Details about the Application Owner (i.e. organization) that would use the Operator's Network APIs. </summary>
         /// <param name="name"> Common name of the organization owning the application. </param>
         /// <param name="legalName"> Legal name of the organization owning the application. </param>
         /// <param name="tradingName"> Trading name of the organization owning the application. </param>
@@ -120,6 +124,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Model defining a contactable person. </summary>
         /// <param name="familyName"> Family name of the contactable person. </param>
         /// <param name="givenName"> Given name of the contactable person. </param>
         /// <param name="emailAddress"> Email address of the contactable person. </param>
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             return new ApplicationContactPerson(familyName, givenName, emailAddress, default);
         }
 
+        /// <summary> Model defining a geographic address. </summary>
         /// <param name="streetNumber"> Street Number of the address. </param>
         /// <param name="streetName"> Street Name of the address. </param>
         /// <param name="locality"> Locality of the address. </param>
@@ -150,6 +156,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Model defining a local representative for a country/region. </summary>
         /// <param name="countryCode"> Country code for the country/region the local representative is representing. </param>
         /// <param name="representative"> Local representative for this country/region. </param>
         /// <returns> A new <see cref="Models.ApplicationLocalRepresentative"/> instance for mocking. </returns>
@@ -158,6 +165,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             return new ApplicationLocalRepresentative(countryCode, representative, default);
         }
 
+        /// <summary> The type used for updating tags in Gateway resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ProgrammableConnectivityGatewayPatch"/> instance for mocking. </returns>
         public static ProgrammableConnectivityGatewayPatch ProgrammableConnectivityGatewayPatch(IDictionary<string, string> tags = default)
@@ -167,6 +175,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             return new ProgrammableConnectivityGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> A Programmable Connectivity Operator API Connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -190,6 +199,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Operator API Connection resource properties that cannot be updated once a resource has been created. </summary>
         /// <param name="operatorApiPlanId"> Reference to the Operator API Plan Resource ID. </param>
         /// <param name="gatewayId"> Reference to the APC Gateway resource ID. </param>
         /// <param name="operatorName"> Name of the Operator in the linked Operator API Plan belongs to. </param>
@@ -228,6 +238,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Description of the current status of the OperatorApiConnection resource. </summary>
         /// <param name="state"> Current state of the OperatorApiConnection resource. </param>
         /// <param name="reason"> Explanation of the current state of the OperatorApiConnection resource. </param>
         /// <returns> A new <see cref="Models.OperatorApiConnectionStatus"/> instance for mocking. </returns>
@@ -236,6 +247,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             return new OperatorApiConnectionStatus(state, reason, default);
         }
 
+        /// <summary> Model defining how received data is processed. </summary>
         /// <param name="processingOperation"> The operation that is performed on the data received. </param>
         /// <param name="contexts"> The contexts in which the data is processed. </param>
         /// <param name="duration"> The duration or temporal limitation of the data processing. </param>
@@ -259,6 +271,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Model defining the information required about the countries/regions the data transits through or is stored in. </summary>
         /// <param name="countryCode"> The country code of the country/region the data transits through or is stored in. </param>
         /// <param name="commercialOrganization"> The commercial organization who is managing the data. </param>
         /// <param name="isCommercialActivity"> Flag to indicate if commercial activity applies to this data management. </param>
@@ -269,6 +282,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             return new OperatorApiConnectionDataRegion(countryCode, commercialOrganization, isCommercialActivity, dataPrivacyFrameworkUri, default);
         }
 
+        /// <summary> The type used for update operations of the OperatorApiConnection. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.OperatorApiConnectionPatch"/> instance for mocking. </returns>
@@ -279,6 +293,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             return new OperatorApiConnectionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the OperatorApiConnection. </summary>
         /// <param name="operatorApiPlanId"> Reference to the Operator API Plan Resource ID. </param>
         /// <param name="isPlanTermsAndConditionsAccepted">
         /// Whether the caller has accepted the Terms and Conditions of the associated Operator API Plan.
@@ -304,6 +319,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> A Programmable Connectivity Operator API Plans resource. This is a readonly resource that indicates which Operator Network APIs are available in the user's subscription. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -321,6 +337,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Operator API Plan properties. </summary>
         /// <param name="operatorName"> Name of the Operator this plan belongs to. </param>
         /// <param name="camaraApiName"> Standardized Network API name defined by CAMARA specifications. </param>
         /// <param name="supportedLocations"> List of Azure regions where this offer is supported. </param>
@@ -348,6 +365,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 default);
         }
 
+        /// <summary> Azure marketplace properties for a plan. </summary>
         /// <param name="offerId"> Azure marketplace Offer ID for this plan. </param>
         /// <param name="publisherId"> Azure marketplace Publisher ID for this plan. </param>
         /// <param name="planId"> Azure marketplace Plan ID for this plan. </param>

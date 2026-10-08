@@ -204,24 +204,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The profile for Linux VMs in the Managed Cluster. </summary>
-        [WirePath("properties.linuxProfile")]
-        public ContainerServiceLinuxProfile LinuxProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinuxProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.LinuxProfile = value;
-            }
-        }
-
         /// <summary> The profile for Windows VMs in the Managed Cluster. </summary>
         [WirePath("properties.windowsProfile")]
         public ManagedClusterWindowsProfile WindowsProfile

@@ -26,6 +26,23 @@ namespace Azure.Security.CodeTransparency
 
         private static ResponseClassifier PipelineMessageClassifier201303 => _pipelineMessageClassifier201303 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 303 });
 
+        internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jwks", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetScittKeysRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -61,7 +78,7 @@ namespace Azure.Security.CodeTransparency
             return message;
         }
 
-        internal HttpMessage CreateCreateEntryV09Request(RequestContent content, bool? waitForCommit, RequestContext context)
+        internal HttpMessage CreateCreateEntryRequest(RequestContent content, bool? waitForCommit, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -102,7 +119,7 @@ namespace Azure.Security.CodeTransparency
             return message;
         }
 
-        internal HttpMessage CreateGetEntryV09Request(string entryId, RequestContext context)
+        internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -120,7 +137,7 @@ namespace Azure.Security.CodeTransparency
             return message;
         }
 
-        internal HttpMessage CreateGetEntryStatementV09Request(string entryId, RequestContext context)
+        internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

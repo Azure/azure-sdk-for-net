@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -598,5 +599,125 @@ namespace Azure.ResourceManager.Kusto
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
+
+        /// <summary>
+        /// Creates or updates a database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
+        /// <param name="data"> The database parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<KustoDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, CancellationToken cancellationToken)
+        {
+            return CreateOrUpdateAsync(waitUntil: waitUntil, databaseName: databaseName, data: data, callerRole: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Creates or updates a database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
+        /// <param name="data"> The database parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<KustoDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, CancellationToken cancellationToken)
+        {
+            return CreateOrUpdate(waitUntil: waitUntil, databaseName: databaseName, data: data, callerRole: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Returns the list of databases of the given Kusto cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_ListByCluster. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<KustoDatabaseResource> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(top: default, skiptoken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Returns the list of databases of the given Kusto cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_ListByCluster. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<KustoDatabaseResource> GetAll(CancellationToken cancellationToken)
+        {
+            return GetAll(top: default, skiptoken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The base class of a conversation input task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationalAITask"/> and <see cref="ConversationLanguageUnderstandingInput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationLanguageUnderstandingInput"/> and <see cref="ConversationalAITask"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationInput
     {

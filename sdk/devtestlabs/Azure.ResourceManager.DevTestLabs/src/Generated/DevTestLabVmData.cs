@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabVirtualMachineProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

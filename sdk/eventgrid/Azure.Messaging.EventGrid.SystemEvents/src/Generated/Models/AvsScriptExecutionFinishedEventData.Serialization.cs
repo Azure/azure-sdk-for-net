@@ -181,10 +181,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AvsScriptExecutionFinishedEventData(operationId, cmdletId, output ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties, namedOutputs);
+            return new AvsScriptExecutionFinishedEventData(operationId, cmdletId, output ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties, namedOutputs ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AvsScriptExecutionFinishedEventDataConverter : JsonConverter<AvsScriptExecutionFinishedEventData>

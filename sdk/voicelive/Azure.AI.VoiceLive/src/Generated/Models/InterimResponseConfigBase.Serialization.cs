@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base model for interim response configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StaticInterimResponseConfig"/> and <see cref="LlmInterimResponseConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LlmInterimResponseConfig"/> and <see cref="StaticInterimResponseConfig"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownInterimResponseConfigBase))]
     public abstract partial class InterimResponseConfigBase : IJsonModel<InterimResponseConfigBase>
@@ -144,10 +144,10 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "static_interim_response":
-                        return StaticInterimResponseConfig.DeserializeStaticInterimResponseConfig(element, options);
                     case "llm_interim_response":
                         return LlmInterimResponseConfig.DeserializeLlmInterimResponseConfig(element, options);
+                    case "static_interim_response":
+                        return StaticInterimResponseConfig.DeserializeStaticInterimResponseConfig(element, options);
                 }
             }
             return UnknownInterimResponseConfigBase.DeserializeUnknownInterimResponseConfigBase(element, options);

@@ -307,7 +307,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StacItem(
@@ -322,9 +322,9 @@ namespace Azure.Analytics.PlanetaryComputer
                 geometry,
                 id,
                 collection,
-                boundingBox,
+                boundingBox ?? new ChangeTrackingList<float>(),
                 properties,
-                assets,
+                assets ?? new ChangeTrackingDictionary<string, StacAsset>(),
                 recordedOn,
                 eTag);
         }

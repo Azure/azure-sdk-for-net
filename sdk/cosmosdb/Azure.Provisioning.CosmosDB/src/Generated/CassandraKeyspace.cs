@@ -142,23 +142,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedCassandraKeyspaceResourceInfo Resource
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Resource;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CassandraKeyspaceProperties();
-                }
-                Properties.Resource = value;
-            }
-        }
-
         /// <summary> Gets or sets the Options. </summary>
         [CodeGenMember("Options")]
         public CosmosDBCreateUpdateConfig Options
@@ -174,6 +157,23 @@ namespace Azure.Provisioning.CosmosDB
                     Properties = new CassandraKeyspaceProperties();
                 }
                 Properties.Options = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Resource. </summary>
+        public ExtendedCassandraKeyspaceResourceInfo Resource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Resource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CassandraKeyspaceProperties();
+                }
+                Properties.Resource = value;
             }
         }
 

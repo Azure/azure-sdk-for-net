@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for all non-success response details.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseIncompleteDetails"/>, and <see cref="ResponseFailedDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseFailedDetails"/>, and <see cref="ResponseIncompleteDetails"/>.
     /// </summary>
     public abstract partial class ResponseStatusDetails
     {

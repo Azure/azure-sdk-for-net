@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Paged collection of ScheduledActionResource items. </summary>
+    /// <summary> A paged list of compute resources associated with a scheduled action. </summary>
     internal partial class ResourceListResponse : IJsonModel<ResourceListResponse>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceListResponse"/> for deserialization. </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourceListResponse(value, nextLink, additionalBinaryDataProperties);

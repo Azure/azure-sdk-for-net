@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="cosmosDBAccountResourceId"> The resource ID of the Cosmos DB account used to create the data connection. </param>
         /// <param name="cosmosDBDatabase"> The name of an existing database in the Cosmos DB account. </param>
         /// <param name="cosmosDBContainer"> The name of an existing container in the Cosmos DB database. </param>
-        /// <param name="retrievalStartOn"> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </param>
+        /// <param name="retrievalStartsOn"> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBDataConnectionProperties(string tableName, string mappingRuleName, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, ResourceIdentifier cosmosDBAccountResourceId, string cosmosDBDatabase, string cosmosDBContainer, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBDataConnectionProperties(string tableName, string mappingRuleName, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, ResourceIdentifier cosmosDBAccountResourceId, string cosmosDBDatabase, string cosmosDBContainer, DateTimeOffset? retrievalStartsOn, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TableName = tableName;
             MappingRuleName = mappingRuleName;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Kusto.Models
             CosmosDBAccountResourceId = cosmosDBAccountResourceId;
             CosmosDBDatabase = cosmosDBDatabase;
             CosmosDBContainer = cosmosDBContainer;
-            RetrievalStartOn = retrievalStartOn;
+            RetrievalStartsOn = retrievalStartsOn;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </summary>
         [WirePath("retrievalStartDate")]
-        public DateTimeOffset? RetrievalStartOn { get; set; }
+        public DateTimeOffset? RetrievalStartsOn { get; set; }
 
         /// <summary> The provisioned state of the resource. </summary>
         [WirePath("provisioningState")]

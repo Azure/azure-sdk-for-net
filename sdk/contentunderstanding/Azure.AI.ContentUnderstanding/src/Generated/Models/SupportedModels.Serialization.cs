@@ -194,7 +194,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SupportedModels(completion ?? new ChangeTrackingList<string>(), embedding ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

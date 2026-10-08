@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary>
     /// Base properties for updating any task step.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="ContainerRegistryFileTaskStepUpdateContent"/>, and <see cref="ContainerRegistryEncodedTaskStepUpdateContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="ContainerRegistryEncodedTaskStepUpdateContent"/>, and <see cref="ContainerRegistryFileTaskStepUpdateContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownContainerRegistryTaskStepUpdateContent))]
     public abstract partial class ContainerRegistryTaskStepUpdateContent : IJsonModel<ContainerRegistryTaskStepUpdateContent>
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 {
                     case "Docker":
                         return ContainerRegistryDockerBuildStepUpdateContent.DeserializeContainerRegistryDockerBuildStepUpdateContent(element, options);
-                    case "FileTask":
-                        return ContainerRegistryFileTaskStepUpdateContent.DeserializeContainerRegistryFileTaskStepUpdateContent(element, options);
                     case "EncodedTask":
                         return ContainerRegistryEncodedTaskStepUpdateContent.DeserializeContainerRegistryEncodedTaskStepUpdateContent(element, options);
+                    case "FileTask":
+                        return ContainerRegistryFileTaskStepUpdateContent.DeserializeContainerRegistryFileTaskStepUpdateContent(element, options);
                 }
             }
             return UnknownContainerRegistryTaskStepUpdateContent.DeserializeUnknownContainerRegistryTaskStepUpdateContent(element, options);

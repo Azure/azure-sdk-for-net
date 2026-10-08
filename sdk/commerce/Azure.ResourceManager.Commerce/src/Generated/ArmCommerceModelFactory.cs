@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="type"> Type of the resource being returned. </param>
         /// <param name="subscriptionId"> The subscription identifier for the Azure user. </param>
         /// <param name="meterId"> Unique ID for the resource that was consumed (aka ResourceID). </param>
-        /// <param name="usageStartOn"> UTC start time for the usage bucket to which this usage aggregate belongs. </param>
-        /// <param name="usageEndOn"> UTC end time for the usage bucket to which this usage aggregate belongs. </param>
+        /// <param name="usageStartsOn"> UTC start time for the usage bucket to which this usage aggregate belongs. </param>
+        /// <param name="usageEndsOn"> UTC end time for the usage bucket to which this usage aggregate belongs. </param>
         /// <param name="quantity"> The amount of the resource consumption that occurred in this time frame. </param>
         /// <param name="unit"> The unit in which the usage for this resource is being counted, e.g. Hours, GB. </param>
         /// <param name="meterName"> Friendly name of the resource being consumed. </param>
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="infoFields"> Key-value pairs of instance details (legacy format). </param>
         /// <param name="instanceData"> Key-value pairs of instance details represented as a string. </param>
         /// <returns> A new <see cref="Models.CommerceUsageAggregation"/> instance for mocking. </returns>
-        public static CommerceUsageAggregation CommerceUsageAggregation(string id = default, string name = default, string @type = default, Guid? subscriptionId = default, string meterId = default, DateTimeOffset? usageStartOn = default, DateTimeOffset? usageEndOn = default, float? quantity = default, string unit = default, string meterName = default, string meterCategory = default, string meterSubCategory = default, string meterRegion = default, BinaryData infoFields = default, string instanceData = default)
+        public static CommerceUsageAggregation CommerceUsageAggregation(string id = default, string name = default, string @type = default, Guid? subscriptionId = default, string meterId = default, DateTimeOffset? usageStartsOn = default, DateTimeOffset? usageEndsOn = default, float? quantity = default, string unit = default, string meterName = default, string meterCategory = default, string meterSubCategory = default, string meterRegion = default, BinaryData infoFields = default, string instanceData = default)
         {
-            return new CommerceUsageAggregation(id, name, @type, subscriptionId is null && meterId is null && usageStartOn is null && usageEndOn is null && quantity is null && unit is null && meterName is null && meterCategory is null && meterSubCategory is null && meterRegion is null && infoFields is null && instanceData is null ? default : new UsageSample(
+            return new CommerceUsageAggregation(id, name, @type, subscriptionId is null && meterId is null && usageStartsOn is null && usageEndsOn is null && quantity is null && unit is null && meterName is null && meterCategory is null && meterSubCategory is null && meterRegion is null && infoFields is null && instanceData is null ? default : new UsageSample(
                 subscriptionId,
                 meterId,
-                usageStartOn,
-                usageEndOn,
+                usageStartsOn,
+                usageEndsOn,
                 quantity,
                 unit,
                 meterName,
@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Commerce.Models
                 default), default);
         }
 
+        /// <summary> Price and Metadata information for resources. </summary>
         /// <param name="currency"> The currency in which the rates are provided. </param>
         /// <param name="locale"> The culture in which the resource information is localized. </param>
         /// <param name="isTaxIncluded"> All rates are pretax, so this will always be returned as 'false'. </param>
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Commerce.Models
                 default);
         }
 
+        /// <summary> Indicates that this is a monetary credit offer. </summary>
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="credit"> The amount of credit provided under the terms of the given offer level. </param>
         /// <param name="excludedMeterIds"> An array of meter ids that are excluded from the given offer terms. </param>
@@ -81,6 +83,7 @@ namespace Azure.ResourceManager.Commerce.Models
             return new CommerceMonetaryCredit(default, effectiveOn, default, credit, (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
         }
 
+        /// <summary> Indicates that a monetary commitment is required for this offer. </summary>
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="tieredDiscount"> The list of key/value pairs for the tiered meter rates, in the format 'key':'value' where key = price, and value = the corresponding discount percentage. This field is used only by offer terms of type 'Monetary Commitment'. </param>
         /// <param name="excludedMeterIds"> An array of meter ids that are excluded from the given offer terms. </param>
@@ -93,6 +96,7 @@ namespace Azure.ResourceManager.Commerce.Models
             return new CommerceMonetaryCommitment(default, effectiveOn, default, tieredDiscount ?? new ChangeTrackingDictionary<string, decimal>(), (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
         }
 
+        /// <summary> Indicates a recurring charge is present for this offer. </summary>
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="amount"> The amount of recurring charge as per the offer term. </param>
         /// <returns> A new <see cref="Models.CommerceRecurringCharge"/> instance for mocking. </returns>
@@ -101,6 +105,7 @@ namespace Azure.ResourceManager.Commerce.Models
             return new CommerceRecurringCharge(default, effectiveOn, default, amount);
         }
 
+        /// <summary> Detailed information about the meter. </summary>
         /// <param name="meterId"> The unique identifier of the resource. </param>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, e.g., 'Cloud services', 'Networking', etc.. </param>

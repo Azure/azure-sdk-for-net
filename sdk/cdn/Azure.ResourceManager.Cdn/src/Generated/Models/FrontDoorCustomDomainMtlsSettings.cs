@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Contains the properties to configure mutual TLS for a custom domain with FQDN. Mutual TLS cannot be configured for custom domains with wildcard host names.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClientCertificateRequiredAndValidatedAdvancedSettings"/>, <see cref="ClientCertificateRequiredAndOriginValidatesAdvancedSettings"/>, <see cref="ClientCertificateValidatedIfPresentedAdvancedSettings"/>, and <see cref="CompleteMtlsPassthroughToOriginAdvancedSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClientCertificateRequiredAndOriginValidatesAdvancedSettings"/>, <see cref="ClientCertificateRequiredAndValidatedAdvancedSettings"/>, <see cref="ClientCertificateValidatedIfPresentedAdvancedSettings"/>, and <see cref="CompleteMtlsPassthroughToOriginAdvancedSettings"/>.
     /// </summary>
     public abstract partial class FrontDoorCustomDomainMtlsSettings
     {

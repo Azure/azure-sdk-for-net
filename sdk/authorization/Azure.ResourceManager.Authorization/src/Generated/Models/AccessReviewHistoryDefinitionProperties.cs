@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewHistoryDefinitionProperties"/>. </summary>
         /// <param name="displayName"> The display name for the history definition. </param>
-        /// <param name="reviewHistoryPeriodStartOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
-        /// <param name="reviewHistoryPeriodEndOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodStartsOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodEndsOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
         /// <param name="decisions"> Collection of review decisions which the history data should be filtered on. For example if Approve and Deny are supplied the data will only contain review results in which the decision maker approved or denied a review request. </param>
         /// <param name="status"> This read-only field specifies the of the requested review history data. This is either requested, in-progress, done or error. </param>
         /// <param name="createdOn"> Date time when history definition was created. </param>
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="settings"> Recurrence settings for recurring history reports, skip for one-time reports. </param>
         /// <param name="instances"> Set of access review history instances for this history definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewHistoryDefinitionProperties(string displayName, DateTimeOffset? reviewHistoryPeriodStartOn, DateTimeOffset? reviewHistoryPeriodEndOn, IList<AccessReviewResult> decisions, AccessReviewHistoryDefinitionStatus? status, DateTimeOffset? createdOn, AccessReviewActorIdentity createdBy, IList<AccessReviewScope> scopes, AccessReviewHistoryScheduleSettings settings, IList<AccessReviewHistoryInstance> instances, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewHistoryDefinitionProperties(string displayName, DateTimeOffset? reviewHistoryPeriodStartsOn, DateTimeOffset? reviewHistoryPeriodEndsOn, IList<AccessReviewResult> decisions, AccessReviewHistoryDefinitionStatus? status, DateTimeOffset? createdOn, AccessReviewActorIdentity createdBy, IList<AccessReviewScope> scopes, AccessReviewHistoryScheduleSettings settings, IList<AccessReviewHistoryInstance> instances, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
-            ReviewHistoryPeriodStartOn = reviewHistoryPeriodStartOn;
-            ReviewHistoryPeriodEndOn = reviewHistoryPeriodEndOn;
+            ReviewHistoryPeriodStartsOn = reviewHistoryPeriodStartsOn;
+            ReviewHistoryPeriodEndsOn = reviewHistoryPeriodEndsOn;
             Decisions = decisions;
             Status = status;
             CreatedOn = createdOn;
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </summary>
         [WirePath("reviewHistoryPeriodStartDateTime")]
-        public DateTimeOffset? ReviewHistoryPeriodStartOn { get; }
+        public DateTimeOffset? ReviewHistoryPeriodStartsOn { get; }
 
         /// <summary> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </summary>
         [WirePath("reviewHistoryPeriodEndDateTime")]
-        public DateTimeOffset? ReviewHistoryPeriodEndOn { get; }
+        public DateTimeOffset? ReviewHistoryPeriodEndsOn { get; }
 
         /// <summary> Collection of review decisions which the history data should be filtered on. For example if Approve and Deny are supplied the data will only contain review results in which the decision maker approved or denied a review request. </summary>
         [WirePath("decisions")]

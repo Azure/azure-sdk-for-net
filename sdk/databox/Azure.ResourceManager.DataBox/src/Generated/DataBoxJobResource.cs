@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1147,6 +1148,36 @@ namespace Azure.ResourceManager.DataBox
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Updates the properties of an existing job.
+        ///             Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}.Operation Id.JobResources_Update.Default Api Version.2025-07-01.Resource.<see cref="DataBoxJobResource"/>.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Job update parameters from request body. </param>
+        /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<DataBoxJobResource>> UpdateAsync(WaitUntil waitUntil, DataBoxJobPatch patch, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return UpdateAsync(waitUntil, patch, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates the properties of an existing job.
+        ///             Request Path./subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}.Operation Id.JobResources_Update.Default Api Version.2025-07-01.Resource.<see cref="DataBoxJobResource"/>.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Job update parameters from request body. </param>
+        /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<DataBoxJobResource> Update(WaitUntil waitUntil, DataBoxJobPatch patch, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return Update(waitUntil, patch, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
         }
     }
 }

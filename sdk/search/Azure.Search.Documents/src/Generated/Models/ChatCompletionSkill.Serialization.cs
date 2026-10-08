@@ -257,7 +257,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     extraParameters = dictionary;
@@ -283,7 +283,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ChatCompletionSkill(
@@ -291,8 +291,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 uri,
                 authIdentity,

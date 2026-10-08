@@ -31,11 +31,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.Password = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public CmdkeySetup(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecret password) : base("CmdkeySetup")
-        {
-            TypeProperties = new CmdkeySetupTypeProperties(targetName, userName, password);
-        }
     }
 }
