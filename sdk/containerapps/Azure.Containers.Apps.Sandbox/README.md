@@ -112,7 +112,7 @@ finally
 }
 ```
 
-For synchronous usage and more details, see the [samples](samples/README.md).
+For synchronous usage and more details, see the [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerapps/Azure.Containers.Apps.Sandbox/samples/README.md).
 
 ### List sandboxes
 
