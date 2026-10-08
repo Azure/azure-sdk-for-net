@@ -74,6 +74,10 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override IClientPipelineApi ClientPipelineApi => ManagementHttpPipelineProvider.Instance;
 
+        private IClientResponseApi? _clientResponseApi;
+        /// <inheritdoc/>
+        public override IClientResponseApi ClientResponseApi => _clientResponseApi ??= new ManagementClientResponseProvider(base.ClientResponseApi);
+
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
             [];
