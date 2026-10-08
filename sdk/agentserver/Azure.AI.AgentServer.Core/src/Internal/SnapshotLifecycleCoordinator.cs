@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -23,6 +24,7 @@ internal sealed class SnapshotLifecycleCoordinator
     private readonly Dictionary<string, string?> _capturedEnvironmentValues = new(StringComparer.Ordinal);
     private HashSet<string> _appliedEnvironmentVariables = new(StringComparer.Ordinal);
     private bool _beforeSnapshotCompleted;
+    private bool _environmentBaselineCaptured;
     private string? _sessionId;
     private string? _restoreId;
 
@@ -80,7 +82,9 @@ internal sealed class SnapshotLifecycleCoordinator
                 }
             }
 
+            CaptureEnvironmentBaseline();
             ApplyEnvironmentOverrides(context.SessionId, context.SessionEnvironmentOverrides);
+            _sessionId ??= context.SessionId;
 
             var currentRequestContext = FoundryAgentRequestContext.Current;
             var previousRequestContext = FoundryAgentRequestContext.Exchange(new FoundryAgentRequestContext
@@ -98,7 +102,6 @@ internal sealed class SnapshotLifecycleCoordinator
                 FoundryAgentRequestContext.Exchange(previousRequestContext);
             }
 
-            _sessionId = context.SessionId;
             _restoreId = context.RestoreId;
             return AfterRestoreResult.Success;
         }
@@ -111,6 +114,21 @@ internal sealed class SnapshotLifecycleCoordinator
         {
             _gate.Release();
         }
+    }
+
+    private void CaptureEnvironmentBaseline()
+    {
+        if (_environmentBaselineCaptured)
+        {
+            return;
+        }
+
+        foreach (DictionaryEntry variable in Environment.GetEnvironmentVariables())
+        {
+            _capturedEnvironmentValues.Add((string)variable.Key, (string?)variable.Value);
+        }
+
+        _environmentBaselineCaptured = true;
     }
 
     private void ApplyEnvironmentOverrides(
@@ -138,11 +156,10 @@ internal sealed class SnapshotLifecycleCoordinator
             {
                 var previousValue = Environment.GetEnvironmentVariable(variable);
                 previousValues.Add(variable, previousValue);
-                _capturedEnvironmentValues.TryAdd(variable, previousValue);
 
                 var value = effectiveOverrides.TryGetValue(variable, out var overrideValue)
                     ? overrideValue
-                    : _capturedEnvironmentValues[variable];
+                    : _capturedEnvironmentValues.GetValueOrDefault(variable);
                 if (value == string.Empty && Environment.Version.Major < 9)
                 {
                     throw new InvalidOperationException(
