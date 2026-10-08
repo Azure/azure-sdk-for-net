@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
 
         private ClientDiagnostics StorageDiscoveryWorkspacesClientDiagnostics => _storageDiscoveryWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageDiscovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageDiscoveryWorkspaces StorageDiscoveryWorkspacesRestClient => _storageDiscoveryWorkspacesRestClient ??= new StorageDiscoveryWorkspaces(StorageDiscoveryWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private StorageDiscoveryWorkspaces StorageDiscoveryWorkspacesRestClient => _storageDiscoveryWorkspacesRestClient ??= new StorageDiscoveryWorkspaces(StorageDiscoveryWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01-preview");
 
         /// <summary>
         /// List StorageDiscoveryWorkspace resources by subscription ID
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

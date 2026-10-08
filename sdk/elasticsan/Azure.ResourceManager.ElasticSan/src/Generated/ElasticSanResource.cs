@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ElasticSan
         {
             TryGetApiVersion(ResourceType, out string elasticSanApiVersion);
             _elasticSansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
-            _elasticSansRestClient = new ElasticSans(_elasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanApiVersion ?? "2025-09-01");
+            _elasticSansRestClient = new ElasticSans(_elasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanApiVersion ?? "2026-05-01-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanApiVersion ?? "2025-09-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

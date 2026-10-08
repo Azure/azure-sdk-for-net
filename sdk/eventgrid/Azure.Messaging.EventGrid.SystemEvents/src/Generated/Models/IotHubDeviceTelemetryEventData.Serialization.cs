@@ -158,7 +158,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IotHubDeviceTelemetryEventData(body, properties, systemProperties, additionalBinaryDataProperties);
+            return new IotHubDeviceTelemetryEventData(body, properties ?? new ChangeTrackingDictionary<string, string>(), systemProperties ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
 
         internal partial class IotHubDeviceTelemetryEventDataConverter : JsonConverter<IotHubDeviceTelemetryEventData>

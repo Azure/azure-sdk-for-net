@@ -385,7 +385,7 @@ namespace Azure.AI.Agents.Persistent
                 completedAt,
                 incompleteAt,
                 role,
-                contentItems,
+                contentItems ?? new ChangeTrackingList<MessageContent>(),
                 assistantId,
                 runId,
                 attachments,
