@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GenerateGcpTemplateContent(connectorId, solutionTypes ?? new ChangeTrackingList<PublicCloudConnectorSolutionTypeSettings>(), gcpCloudProfile, gcpTemplateFormat, additionalBinaryDataProperties);
