@@ -124,6 +124,80 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void PreviewOnlyResourceIsExperimental()
+        {
+            var model = CreateModel("PreviewWidget");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01-preview"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+
+            var provider = CreateResourceProvider(resource);
+
+            AssertExperimental(provider.Attributes);
+        }
+
+        [Test]
+        public void ResourceWithStableVersionIsNotExperimental()
+        {
+            var model = CreateModel("StableWidget");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01-preview", "2024-02-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+
+            var provider = CreateResourceProvider(resource);
+
+            Assert.That(provider.Attributes, Is.Empty);
+        }
+
+        [Test]
+        public void PreviewOnlyModelIsExperimental()
+        {
+            var model = CreateModel("PreviewModel", apiVersions: ["2024-01-01-preview"]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+
+            var provider = new ProvisioningModelProvider(model);
+
+            AssertExperimental(provider.Attributes);
+        }
+
+        [Test]
+        public void StableModelWithPreviewOnlyPropertyMarksOnlyPropertyExperimental()
+        {
+            var previewProperty = CreateProperty(
+                "PreviewValue",
+                apiVersions: ["2024-01-01-preview"]);
+            var stableProperty = CreateProperty(
+                "StableValue",
+                apiVersions: ["2024-01-01-preview", "2024-02-01"]);
+            var model = CreateModel(
+                "StableModel",
+                [previewProperty, stableProperty],
+                apiVersions: ["2024-01-01-preview", "2024-02-01"]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [model],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+
+            var provider = new ProvisioningModelProvider(model);
+            var properties = provider.Properties.ToDictionary(property => property.Name);
+
+            Assert.That(provider.Attributes, Is.Empty);
+            AssertExperimental(properties["PreviewValue"].Attributes);
+            Assert.That(properties["StableValue"].Attributes, Is.Empty);
+        }
+
+        [Test]
         public void ReadOnlyResourcePropertiesAreNotSettable()
         {
             var writableProperty = CreateProperty("WritableValue");
@@ -1155,7 +1229,8 @@ namespace Azure.Generator.Provisioning.Tests
             IReadOnlyList<InputModelType>? derivedModels = null,
             string? discriminatorValue = null,
             InputModelProperty? discriminatorProperty = null,
-            string? crossLanguageDefinitionId = null)
+            string? crossLanguageDefinitionId = null,
+            IReadOnlyList<string>? apiVersions = null)
             => new(
                 name,
                 "Sample.Models",
@@ -1174,7 +1249,8 @@ namespace Azure.Generator.Provisioning.Tests
                 null,
                 false,
                 new InputSerializationOptions(),
-                false);
+                false,
+                apiVersions);
 
         private static ResourceMethod CreateMethod(ResourceOperationKind kind, ResourceScope scope)
         {
@@ -1399,7 +1475,14 @@ namespace Azure.Generator.Provisioning.Tests
                 writableScopes.Contains(ResourceScope.Extension));
         }
 
-        private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)
+        private static InputModelProperty CreateProperty(
+            string name,
+            bool isRequired = false,
+            bool isReadOnly = false,
+            bool isDiscriminator = false,
+            InputType? type = null,
+            string? serializedName = null,
+            IReadOnlyList<string>? apiVersions = null)
             => new(
                 name: name,
                 summary: null,
@@ -1413,7 +1496,15 @@ namespace Azure.Generator.Provisioning.Tests
                 access: null,
                 isDiscriminator: isDiscriminator,
                 serializedName: serializedName ?? name.ToVariableName(),
-                serializationOptions: new(json: new(serializedName ?? name.ToVariableName())));
+                serializationOptions: new(json: new(serializedName ?? name.ToVariableName())),
+                apiVersions: apiVersions);
+
+        private static void AssertExperimental(IReadOnlyList<AttributeStatement> attributes)
+        {
+            Assert.That(attributes, Has.Count.EqualTo(1));
+            Assert.That(attributes[0].ToDisplayString(), Does.Contain("Experimental"));
+            Assert.That(attributes[0].ToDisplayString(), Does.Contain("AZPROVISION001"));
+        }
 
         private static InputEnumType CreateStringEnum(
             string name,
