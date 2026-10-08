@@ -177,7 +177,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AssetsExportRequestContent(fileName, columns, additionalBinaryDataProperties);
+            return new AssetsExportRequestContent(fileName, columns ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

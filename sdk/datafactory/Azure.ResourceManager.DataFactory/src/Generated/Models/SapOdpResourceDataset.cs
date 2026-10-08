@@ -8,12 +8,27 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SAP ODP Resource properties. </summary>
     public partial class SapOdpResourceDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="SapOdpResourceDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
+        /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/>, <paramref name="context"/> or <paramref name="objectName"/> is null. </exception>
+        public SapOdpResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> context, DataFactoryElement<string> objectName) : base("SapOdpResource", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(context, nameof(context));
+            Argument.AssertNotNull(objectName, nameof(objectName));
+
+            TypeProperties = new SapOdpResourceDatasetTypeProperties(context, objectName);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SapOdpResourceDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

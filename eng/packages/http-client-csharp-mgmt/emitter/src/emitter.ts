@@ -26,6 +26,7 @@ import type {
   CSharpEmitterContext
 } from "./code-model-types.js";
 import { ArmProviderSchema } from "./resource-metadata.js";
+import { removeReferenceIdsFromUnknownValues } from "./reference-metadata-sanitizer.js";
 
 export type ManagementCodeModelTransformer = (
   codeModel: CodeModel,
@@ -69,6 +70,7 @@ export async function emitManagementCodeModel(
     );
     setFlattenProperty(codeModel, sdkContext);
     setHasClientNameOverride(codeModel, sdkContext);
+    removeReferenceIdsFromUnknownValues(codeModel);
     return transform?.(codeModel, sdkContext, armProviderSchema) ?? codeModel;
   }
 }

@@ -37,7 +37,7 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithNextLinkCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -45,7 +45,7 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithNextLinkResponse result = (ListWithNextLinkResponse)response;
+                ListWithNextLinkResult result = (ListWithNextLinkResult)response;
                 nextPage = result.Next;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)
