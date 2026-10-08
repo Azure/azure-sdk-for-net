@@ -8,30 +8,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Billing
 {
-    // Suppress the generated ProvisioningState so the alias-specific state can be exposed
-    // with a distinct name and avoid a duplicate property inherited from BillingSubscriptionProperties.
+    // Suppress the flattened property until the generator bug is fixed; the alias
+    // inherits ProvisioningState from BillingSubscriptionProperties (tracked by #61500).
     [CodeGenSuppress("ProvisioningState")]
     internal partial class BillingSubscriptionAliasProperties
     {
-        private BicepValue<BillingProvisioningState> _subscriptionAliasProvisioningState;
-
-        // Use a distinct property name because the base subscription model already defines ProvisioningState.
-        /// <summary> Gets the SubscriptionAliasProvisioningState. </summary>
-        public BicepValue<BillingProvisioningState> SubscriptionAliasProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _subscriptionAliasProvisioningState;
-            }
-        }
-
-        partial void DefineAdditionalProperties()
-        {
-            _subscriptionAliasProvisioningState = DefineProperty<BillingProvisioningState>(
-                nameof(SubscriptionAliasProvisioningState),
-                new string[] { "provisioningState" },
-                isOutput: true);
-        }
     }
 }
