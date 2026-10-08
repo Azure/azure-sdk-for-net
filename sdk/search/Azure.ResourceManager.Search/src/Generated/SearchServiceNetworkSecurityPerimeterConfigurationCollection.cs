@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SearchServiceNetworkSecurityPerimeterConfigurationData, SearchServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SearchServiceNetworkSecurityPerimeterConfigurationData, SearchServiceNetworkSecurityPerimeterConfigurationResource>(new SearchServiceNetworkSecurityPerimeterConfigurationDataAsyncCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SearchServiceNetworkSecurityPerimeterConfigurationData, SearchServiceNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByServiceCollectionResultOfT(
+            return new PageableWrapper<SearchServiceNetworkSecurityPerimeterConfigurationData, SearchServiceNetworkSecurityPerimeterConfigurationResource>(new SearchServiceNetworkSecurityPerimeterConfigurationDataCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

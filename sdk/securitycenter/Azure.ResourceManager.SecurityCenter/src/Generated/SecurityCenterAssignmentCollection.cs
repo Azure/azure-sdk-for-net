@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new AssignmentsGetAllAsyncCollectionResultOfT(_assignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterAssignmentCollection.GetAll"), data => new SecurityCenterAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new SecurityCenterAssignmentDataAsyncCollectionResultOfT(_assignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterAssignmentCollection.GetAll"), data => new SecurityCenterAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new AssignmentsGetAllCollectionResultOfT(_assignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterAssignmentCollection.GetAll"), data => new SecurityCenterAssignmentResource(Client, data));
+            return new PageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new SecurityCenterAssignmentDataCollectionResultOfT(_assignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterAssignmentCollection.GetAll"), data => new SecurityCenterAssignmentResource(Client, data));
         }
 
         /// <summary>

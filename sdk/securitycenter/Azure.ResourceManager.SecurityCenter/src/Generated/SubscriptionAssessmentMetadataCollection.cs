@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new AssessmentsMetadataGetBySubscriptionAsyncCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new SecurityAssessmentMetadataDataAsyncCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new AssessmentsMetadataGetBySubscriptionCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
+            return new PageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new SecurityAssessmentMetadataDataCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>

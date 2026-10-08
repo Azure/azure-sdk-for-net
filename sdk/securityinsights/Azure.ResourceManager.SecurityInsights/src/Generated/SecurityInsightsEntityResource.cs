@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new EntitiesGetTimelineGetAllAsyncCollectionResultOfT(
+            return new EntityTimelineItemAsyncCollectionResultOfT(
                 _entitiesGetTimelineRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new EntitiesGetTimelineGetAllCollectionResultOfT(
+            return new EntityTimelineItemCollectionResultOfT(
                 _entitiesGetTimelineRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new EntitiesGetInsightsAsyncCollectionResultOfT(
+            return new EntityInsightItemAsyncCollectionResultOfT(
                 _entitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new EntitiesGetInsightsCollectionResultOfT(
+            return new EntityInsightItemCollectionResultOfT(
                 _entitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new EntitiesQueriesAsyncCollectionResultOfT(
+            return new EntityQueryItemAsyncCollectionResultOfT(
                 _entitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new EntitiesQueriesCollectionResultOfT(
+            return new EntityQueryItemCollectionResultOfT(
                 _entitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

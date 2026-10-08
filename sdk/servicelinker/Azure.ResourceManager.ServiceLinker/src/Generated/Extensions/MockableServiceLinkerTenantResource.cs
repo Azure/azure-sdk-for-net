@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationNamesGetAllAsyncCollectionResultOfT(ConfigurationNamesRestClient, filter, skipToken, context, "MockableServiceLinkerTenantResource.GetAll");
+            return new LinkerConfigurationNameItemAsyncCollectionResultOfT(ConfigurationNamesRestClient, filter, skipToken, context, "MockableServiceLinkerTenantResource.GetAll");
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationNamesGetAllCollectionResultOfT(ConfigurationNamesRestClient, filter, skipToken, context, "MockableServiceLinkerTenantResource.GetAll");
+            return new LinkerConfigurationNameItemCollectionResultOfT(ConfigurationNamesRestClient, filter, skipToken, context, "MockableServiceLinkerTenantResource.GetAll");
         }
     }
 }

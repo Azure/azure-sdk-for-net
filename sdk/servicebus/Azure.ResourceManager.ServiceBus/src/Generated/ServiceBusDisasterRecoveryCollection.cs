@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusDisasterRecoveryData, ServiceBusDisasterRecoveryResource>(new DisasterRecoveryConfigsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceBusDisasterRecoveryData, ServiceBusDisasterRecoveryResource>(new ServiceBusDisasterRecoveryDataAsyncCollectionResultOfT(
                 _disasterRecoveryConfigsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusDisasterRecoveryData, ServiceBusDisasterRecoveryResource>(new DisasterRecoveryConfigsGetAllCollectionResultOfT(
+            return new PageableWrapper<ServiceBusDisasterRecoveryData, ServiceBusDisasterRecoveryResource>(new ServiceBusDisasterRecoveryDataCollectionResultOfT(
                 _disasterRecoveryConfigsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
