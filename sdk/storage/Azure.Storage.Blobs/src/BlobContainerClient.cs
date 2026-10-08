@@ -1326,6 +1326,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response Delete(
             BlobRequestConditions conditions = default,
@@ -1360,6 +1370,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
             BlobRequestConditions conditions = default,
@@ -1395,6 +1415,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
             BlobRequestConditions conditions = default,
@@ -1430,6 +1460,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             BlobRequestConditions conditions = default,
