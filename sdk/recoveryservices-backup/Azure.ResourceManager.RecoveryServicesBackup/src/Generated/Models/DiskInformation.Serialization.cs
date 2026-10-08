@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(DiskSizeInGb))
+            {
+                writer.WritePropertyName("diskSizeInGb"u8);
+                writer.WriteNumberValue(DiskSizeInGb.Value);
+            }
+            if (Optional.IsDefined(StorageType))
+            {
+                writer.WritePropertyName("storageType"u8);
+                writer.WriteStringValue(StorageType);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +138,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             int? lun = default;
             string name = default;
+            int? diskSizeInGb = default;
+            string storageType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,12 +157,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("diskSizeInGb"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskSizeInGb = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("storageType"u8))
+                {
+                    storageType = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiskInformation(lun, name, additionalBinaryDataProperties);
+            return new DiskInformation(lun, name, diskSizeInGb, storageType, additionalBinaryDataProperties);
         }
     }
 }
