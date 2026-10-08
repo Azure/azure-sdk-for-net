@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AkriServiceData, AkriServiceResource>(new AkriServiceGetByInstanceResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AkriServiceData, AkriServiceResource>(new AkriServiceDataAsyncCollectionResultOfT(
                 _akriServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AkriServiceData, AkriServiceResource>(new AkriServiceGetByInstanceResourceCollectionResultOfT(
+            return new PageableWrapper<AkriServiceData, AkriServiceResource>(new AkriServiceDataCollectionResultOfT(
                 _akriServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationPrivateEndpointConnectionData, KubernetesConfigurationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByPrivateLinkScopeAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KubernetesConfigurationPrivateEndpointConnectionData, KubernetesConfigurationPrivateEndpointConnectionResource>(new KubernetesConfigurationPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationPrivateEndpointConnectionData, KubernetesConfigurationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT(
+            return new PageableWrapper<KubernetesConfigurationPrivateEndpointConnectionData, KubernetesConfigurationPrivateEndpointConnectionResource>(new KubernetesConfigurationPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

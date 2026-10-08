@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new MhsmPrivateEndpointConnectionsGetByResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new ManagedHsmPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _mhsmPrivateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new MhsmPrivateEndpointConnectionsGetByResourceCollectionResultOfT(
+            return new PageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new ManagedHsmPrivateEndpointConnectionDataCollectionResultOfT(
                 _mhsmPrivateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
