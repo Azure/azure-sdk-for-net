@@ -123,11 +123,13 @@ namespace Azure.Generator.Primitives
         private static readonly IReadOnlyDictionary<CSharpType, XmlSerializationExpression> _typeToXmlSerializationExpression = new Dictionary<CSharpType, XmlSerializationExpression>(new CSharpTypeIgnoreNullableComparer())
         {
             [typeof(ETag)] = XmlSerializeTypeWithToString,
+            [typeof(ResourceIdentifier)] = XmlSerializeTypeWithToString,
         };
 
         private static readonly IReadOnlyDictionary<CSharpType, XmlDeserializationExpression> _typeToXmlDeserializationExpression = new Dictionary<CSharpType, XmlDeserializationExpression>(new CSharpTypeIgnoreNullableComparer())
         {
             [typeof(ETag)] = XmlDeserializeNewInstanceStringLikeType,
+            [typeof(ResourceIdentifier)] = XmlDeserializeNewInstanceStringLikeType,
         };
 
         public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out Type type) => _idToTypes.TryGetValue(id, out type);

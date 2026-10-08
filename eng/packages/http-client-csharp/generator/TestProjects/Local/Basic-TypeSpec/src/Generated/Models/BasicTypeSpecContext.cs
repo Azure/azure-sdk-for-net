@@ -18,6 +18,7 @@ namespace BasicTypeSpec
     [ModelReaderWriterBuildable(typeof(ModelWithRequiredNullableProperties))]
     [ModelReaderWriterBuildable(typeof(Plant))]
     [ModelReaderWriterBuildable(typeof(RenamedModel))]
+    [ModelReaderWriterBuildable(typeof(ResourceIdentifierModel))]
     [ModelReaderWriterBuildable(typeof(ReturnsAnonymousModelResult))]
     [ModelReaderWriterBuildable(typeof(RoundTripModel))]
     [ModelReaderWriterBuildable(typeof(StreamingItem))]
