@@ -6,37 +6,87 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> Attestation request for Intel SGX enclaves. </summary>
     internal partial class AttestOpenEnclaveRequest
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="AttestOpenEnclaveRequest"/>. </summary>
-        public AttestOpenEnclaveRequest()
+        internal AttestOpenEnclaveRequest()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AttestOpenEnclaveRequest"/>. </summary>
         /// <param name="report"> OpenEnclave report from the enclave to be attested. </param>
-        /// <param name="runtimeData"> Runtime data provided by the enclave at the time of report generation. The MAA will verify that the first 32 bytes of the report_data field of the quote contains the SHA256 hash of the decoded "data" field of the runtime data. </param>
-        /// <param name="initTimeData"> Base64Url encoded "InitTime data". The MAA will verify that the init data was known to the enclave. Note that InitTimeData is invalid for CoffeeLake processors. </param>
-        /// <param name="draftPolicyForAttestation"> Attest against the provided draft policy. Note that the resulting token cannot be validated. </param>
-        internal AttestOpenEnclaveRequest(byte[] report, RuntimeData runtimeData, InitTimeData initTimeData, string draftPolicyForAttestation)
+        /// <param name="runtimeData">
+        /// Runtime data provided by the enclave at the time of report generation. The MAA
+        /// will verify that the first 32 bytes of the report_data field of the quote
+        /// contains the SHA256 hash of the decoded "data" field of the runtime data.
+        /// </param>
+        /// <param name="initTimeData">
+        /// Base64Url encoded "InitTime data". The MAA will verify that the init data was
+        /// known to the enclave. Note that InitTimeData is invalid for CoffeeLake
+        /// processors.
+        /// </param>
+        /// <param name="draftPolicyForAttestation">
+        /// Attest against the provided draft policy. Note that the resulting token cannot
+        /// be validated.
+        /// </param>
+        /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AttestOpenEnclaveRequest(BinaryData report, RuntimeData runtimeData, InitTimeData initTimeData, string draftPolicyForAttestation, string nonce, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Report = report;
             RuntimeData = runtimeData;
             InitTimeData = initTimeData;
             DraftPolicyForAttestation = draftPolicyForAttestation;
+            Nonce = nonce;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> OpenEnclave report from the enclave to be attested. </summary>
-        public byte[] Report { get; set; }
-        /// <summary> Runtime data provided by the enclave at the time of report generation. The MAA will verify that the first 32 bytes of the report_data field of the quote contains the SHA256 hash of the decoded "data" field of the runtime data. </summary>
-        public RuntimeData RuntimeData { get; set; }
-        /// <summary> Base64Url encoded "InitTime data". The MAA will verify that the init data was known to the enclave. Note that InitTimeData is invalid for CoffeeLake processors. </summary>
-        public InitTimeData InitTimeData { get; set; }
-        /// <summary> Attest against the provided draft policy. Note that the resulting token cannot be validated. </summary>
-        public string DraftPolicyForAttestation { get; set; }
+        /// <summary>
+        /// OpenEnclave report from the enclave to be attested
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Report { get; }
+
+        /// <summary>
+        /// Runtime data provided by the enclave at the time of report generation. The MAA
+        /// will verify that the first 32 bytes of the report_data field of the quote
+        /// contains the SHA256 hash of the decoded "data" field of the runtime data.
+        /// </summary>
+        public RuntimeData RuntimeData { get; }
+
+        /// <summary>
+        /// Base64Url encoded "InitTime data". The MAA will verify that the init data was
+        /// known to the enclave. Note that InitTimeData is invalid for CoffeeLake
+        /// processors.
+        /// </summary>
+        public InitTimeData InitTimeData { get; }
+
+        /// <summary>
+        /// Attest against the provided draft policy. Note that the resulting token cannot
+        /// be validated.
+        /// </summary>
+        public string DraftPolicyForAttestation { get; }
+
+        /// <summary> Nonce for incoming request - emitted in the generated attestation token. </summary>
+        public string Nonce { get; }
     }
 }

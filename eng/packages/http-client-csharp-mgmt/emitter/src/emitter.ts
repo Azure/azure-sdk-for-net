@@ -27,6 +27,7 @@ import type {
 } from "./code-model-types.js";
 import { ArmProviderSchema } from "./resource-metadata.js";
 import { removeReferenceIdsFromUnknownValues } from "./reference-metadata-sanitizer.js";
+import { markApiVersionOverrides } from "./api-version-override.js";
 
 export type ManagementCodeModelTransformer = (
   codeModel: CodeModel,
@@ -68,6 +69,7 @@ export async function emitManagementCodeModel(
       sdkContext,
       context.options
     );
+    markApiVersionOverrides(codeModel, sdkContext);
     setFlattenProperty(codeModel, sdkContext);
     setHasClientNameOverride(codeModel, sdkContext);
     removeReferenceIdsFromUnknownValues(codeModel);
