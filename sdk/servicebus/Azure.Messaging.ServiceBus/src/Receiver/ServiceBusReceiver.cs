@@ -696,14 +696,14 @@ namespace Azure.Messaging.ServiceBus
         public virtual Task<PurgeMessagesResult> PurgeMessagesAsync(
             DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default) =>
-            PurgeMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTime, cancellationToken);
+            PurgeMessagesAsync(beforeEnqueueTime, new ServiceBusPurgeMessagesOptions(), cancellationToken);
 
         /// <summary>
         /// Attempts to permanently delete all eligible messages that were enqueued before the purge started,
         /// or before the time supplied by the caller, using the requested batch size for each service call.
         /// </summary>
-        /// <param name="maxMessagesPerBatch">The positive number of messages requested in each batch-delete call. The service limit is 500 for Basic and Standard and 4,000 for Premium.</param>
-        /// <param name="beforeEnqueueTime">Only messages enqueued before this time can be deleted. The purge start time is used when omitted.</param>
+        /// <param name="beforeEnqueueTime">Only messages enqueued before this time can be deleted. Pass <c>null</c> to use the purge start time.</param>
+        /// <param name="options">The options used to configure the purge operation.</param>
         /// <param name="cancellationToken">An optional token to cancel the operation.</param>
         /// <returns>A <see cref="PurgeMessagesResult"/> containing the total number of messages actually deleted.</returns>
         /// <remarks>
@@ -714,12 +714,14 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// Currently, purge is not supported when partitioning is enabled.
         /// </remarks>
+        /// <exception cref="ArgumentNullException">The <paramref name="options"/> is <c>null</c>.</exception>
         public virtual async Task<PurgeMessagesResult> PurgeMessagesAsync(
-            int maxMessagesPerBatch,
-            DateTimeOffset? beforeEnqueueTime = null,
+            DateTimeOffset? beforeEnqueueTime,
+            ServiceBusPurgeMessagesOptions options,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertAtLeast(maxMessagesPerBatch, 1, nameof(maxMessagesPerBatch));
+            Argument.AssertNotNull(options, nameof(options));
+            int maxMessagesPerBatch = options.MaxMessagesPerBatch;
             beforeEnqueueTime ??= DateTimeOffset.UtcNow;
             Logger.PurgeMessagesStart(Identifier, beforeEnqueueTime.Value);
 

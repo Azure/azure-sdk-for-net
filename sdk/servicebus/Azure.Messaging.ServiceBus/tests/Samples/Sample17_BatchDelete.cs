@@ -55,7 +55,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string queueName = scope.QueueName;
                 await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
 #endif
-                int maxMessagesPerBatch = 4000;
+                var options = new ServiceBusPurgeMessagesOptions { MaxMessagesPerBatch = 4000 };
                 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 #if !SNIPPET
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 DateTimeOffset enqueueTimeThreshold = DateTimeOffset.UtcNow;
 
                 // Premium supports up to 4,000 messages per request.
-                PurgeMessagesResult result = await receiver.PurgeMessagesAsync(maxMessagesPerBatch, enqueueTimeThreshold);
+                PurgeMessagesResult result = await receiver.PurgeMessagesAsync(enqueueTimeThreshold, options);
                 Console.WriteLine($"Purged {result.DeletedCount} messages enqueued before {enqueueTimeThreshold:O}.");
                 #endregion
             }

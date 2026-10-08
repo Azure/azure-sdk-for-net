@@ -23,19 +23,19 @@ Console.WriteLine($"The service purged {result.DeletedCount} messages.");
 
 ## Use a larger purge batch on Premium
 
-The default batch size is 500 messages. Premium supports up to 4,000 messages per request. Purge records its start time and leaves messages that arrive later in the entity.
+The default batch size is 500 messages. Set `ServiceBusPurgeMessagesOptions.MaxMessagesPerBatch` to request up to 4,000 messages on Premium. The advanced overload requires both the cutoff and options; pass `null` for the cutoff to use the purge start time. Messages that arrive after the cutoff remain in the entity.
 
 ```C# Snippet:ServiceBusPurgeMessagesWithPremiumBatchSize
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
-int maxMessagesPerBatch = 4000;
+var options = new ServiceBusPurgeMessagesOptions { MaxMessagesPerBatch = 4000 };
 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 DateTimeOffset enqueueTimeThreshold = DateTimeOffset.UtcNow;
 
 // Premium supports up to 4,000 messages per request.
-PurgeMessagesResult result = await receiver.PurgeMessagesAsync(maxMessagesPerBatch, enqueueTimeThreshold);
+PurgeMessagesResult result = await receiver.PurgeMessagesAsync(enqueueTimeThreshold, options);
 Console.WriteLine($"Purged {result.DeletedCount} messages enqueued before {enqueueTimeThreshold:O}.");
 ```
 

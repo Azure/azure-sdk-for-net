@@ -305,6 +305,14 @@ namespace Azure.Messaging.ServiceBus
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ServiceBusPurgeMessagesOptions
+    {
+        public ServiceBusPurgeMessagesOptions() { }
+        public int MaxMessagesPerBatch { get { throw null; } set { } }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ServiceBusReceivedMessage
     {
         internal ServiceBusReceivedMessage() { }
@@ -366,7 +374,7 @@ namespace Azure.Messaging.ServiceBus
         public override int GetHashCode() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusReceivedMessage> PeekMessageAsync(long? fromSequenceNumber = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Azure.Messaging.ServiceBus.ServiceBusReceivedMessage>> PeekMessagesAsync(int maxMessages, long? fromSequenceNumber = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.PurgeMessagesResult> PurgeMessagesAsync(int maxMessagesPerBatch, System.DateTimeOffset? beforeEnqueueTime = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.PurgeMessagesResult> PurgeMessagesAsync(System.DateTimeOffset? beforeEnqueueTime, Azure.Messaging.ServiceBus.ServiceBusPurgeMessagesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.PurgeMessagesResult> PurgeMessagesAsync(System.DateTimeOffset? beforeEnqueueTime = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusReceivedMessage> ReceiveDeferredMessageAsync(long sequenceNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Azure.Messaging.ServiceBus.ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(System.Collections.Generic.IEnumerable<long> sequenceNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
