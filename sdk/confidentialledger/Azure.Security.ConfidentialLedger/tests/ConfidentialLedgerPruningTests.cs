@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
@@ -729,6 +730,99 @@ namespace Azure.Security.ConfidentialLedger.Tests
             });
 
             Assert.AreEqual(0, failoverMetadataCalls, "Unsupported GET operations must remain on the primary ledger.");
+        }
+
+        [Test]
+        public async Task Failover_IneligibleTransportFailurePreservesExceptionAndRetryBehavior(
+            [Values("create", "post", "range", "archive", "receipt", "status", "governance")] string operation,
+            [Values(false, true)] bool succeedsOnRetry,
+            [Values(false, true)] bool timeout)
+        {
+            Exception original = timeout
+                ? new RequestFailedException(0, "primary transport timed out", new TimeoutException())
+                : new IOException("primary connection failed");
+            int attempts = 0;
+            int metadataCalls = 0;
+            var transport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    metadataCalls++;
+                    return new MockResponse(404);
+                }
+
+                Assert.AreEqual("testledger.confidential-ledger.azure.com", req.Uri.Host,
+                    "Ineligible requests must stay on the primary ledger.");
+                if (operation == "archive" && req.Uri.Path.EndsWith("/current"))
+                {
+                    return new MockResponse(404);
+                }
+
+                attempts++;
+                if (!succeedsOnRetry || attempts == 1)
+                {
+                    throw original;
+                }
+
+                var response = new MockResponse(200);
+                response.AddHeader("x-ms-ccf-transaction-id", "2.7");
+                response.SetContent(
+                    @"{ ""state"": ""Ready"", ""entries"": [
+                        { ""contents"": ""latest"", ""collectionId"": ""c1"", ""transactionId"": ""2.7"" }
+                    ] }");
+                return response;
+            });
+            var client = CreateClient(transport, enableArchivedFallback: true, maxRetries: succeedsOnRetry ? 1 : 0);
+
+            if (succeedsOnRetry)
+            {
+                await InvokeIneligibleOperationAsync(client, operation);
+                Assert.AreEqual(2, attempts, "The normal retry policy must see the original transport failure.");
+            }
+            else
+            {
+                Exception thrown = Assert.CatchAsync(async () => await InvokeIneligibleOperationAsync(client, operation));
+                Assert.AreSame(original, thrown, "Do not replace the transport exception with a missing-response error.");
+                Assert.AreEqual(1, attempts, "No retry is allowed when MaxRetries is zero.");
+            }
+
+            Assert.AreEqual(0, metadataCalls, "Ineligible transport failures must not initiate failover discovery.");
+        }
+
+        private static async Task InvokeIneligibleOperationAsync(ConfidentialLedgerClient client, string operation)
+        {
+            switch (operation)
+            {
+                case "create":
+                    await client.CreateLedgerEntryAsync(RequestContent.Create(new { contents = "x" }), "c1", new RequestContext());
+                    break;
+                case "post":
+                    await client.PostLedgerEntryAsync(WaitUntil.Started, RequestContent.Create(new { contents = "x" }), "c1", new RequestContext());
+                    break;
+                case "range":
+                    await foreach (BinaryData _ in client.GetLedgerEntriesAsync("c1", null, null, null, new RequestContext()))
+                    {
+                    }
+                    break;
+                case "archive":
+                    Response response = await client.GetCurrentLedgerEntryAsync("c1", new RequestContext());
+                    using (JsonDocument document = JsonDocument.Parse(response.Content))
+                    {
+                        Assert.AreEqual("latest", document.RootElement.GetProperty("contents").GetString());
+                    }
+                    break;
+                case "receipt":
+                    await client.GetReceiptAsync("2.7", new RequestContext());
+                    break;
+                case "status":
+                    await client.GetTransactionStatusAsync("2.7", new RequestContext());
+                    break;
+                case "governance":
+                    await client.GetConstitutionAsync(new RequestContext());
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(operation));
+            }
         }
 
         [Test]

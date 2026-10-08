@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationBandwidths"/>. </summary>
+        public ExpressRoutePortsLocationBandwidths() : this(default)
+        {
+        }
+
         /// <summary> Bandwidth descriptive name. </summary>
         [WirePath("offerName")]
         public string OfferName { get; }

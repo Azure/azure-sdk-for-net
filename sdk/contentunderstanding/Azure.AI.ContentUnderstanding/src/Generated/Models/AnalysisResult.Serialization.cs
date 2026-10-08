@@ -277,7 +277,7 @@ namespace Azure.AI.ContentUnderstanding
                 warnings ?? new ChangeTrackingList<ResponseError>(),
                 infos ?? new ChangeTrackingList<ResponseError>(),
                 stringEncoding,
-                contents,
+                contents ?? new ChangeTrackingList<AnalysisContent>(),
                 additionalBinaryDataProperties);
         }
 

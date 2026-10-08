@@ -85,7 +85,6 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(ComputeFleetWindowsConfiguration))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetWinRMListener))]
-    [ModelReaderWriterBuildable(typeof(ComputeFleetZoneAllocationPolicy))]
     [ModelReaderWriterBuildable(typeof(DiskEncryptionSetParameters))]
     [ModelReaderWriterBuildable(typeof(FleetListResult))]
     [ModelReaderWriterBuildable(typeof(LocationProfile))]
@@ -101,7 +100,6 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(WindowsSetupAdditionalInformation))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
-    [ModelReaderWriterBuildable(typeof(ZonePreference))]
     public partial class AzureResourceManagerComputeFleetContext : ModelReaderWriterContext
     {
     }

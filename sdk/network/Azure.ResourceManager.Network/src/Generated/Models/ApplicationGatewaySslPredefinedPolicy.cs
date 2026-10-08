@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Network.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPredefinedPolicy"/>. </summary>
+        public ApplicationGatewaySslPredefinedPolicy() : this(default)
+        {
+        }
+
         /// <summary> Properties of the application gateway SSL predefined policy. </summary>
         [WirePath("properties")]
         internal ApplicationGatewaySslPredefinedPolicyPropertiesFormat Properties { get; }

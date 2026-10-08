@@ -171,7 +171,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EvaluationRunClusterInsightRequest(@type, additionalBinaryDataProperties, evalId, runIds, modelConfiguration);
+            return new EvaluationRunClusterInsightRequest(@type, additionalBinaryDataProperties, evalId, runIds ?? new ChangeTrackingList<string>(), modelConfiguration);
         }
     }
 }
