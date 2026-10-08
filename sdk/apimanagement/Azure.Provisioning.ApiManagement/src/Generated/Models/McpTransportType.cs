@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Transport type for Model Context Protocol API. </summary>
+    [Experimental("AZPROVISION001")]
     public enum McpTransportType
     {
         /// <summary> This API uses HTTP+SSE transport type. </summary>

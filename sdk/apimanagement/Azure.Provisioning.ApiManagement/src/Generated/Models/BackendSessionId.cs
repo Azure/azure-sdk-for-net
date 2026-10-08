@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The properties of the id that identifies the requests belonging to the same session. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BackendSessionId : ProvisionableConstruct
     {
         private BicepValue<BackendSessionIdSource> _source;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Source. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BackendSessionIdSource> Source
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get

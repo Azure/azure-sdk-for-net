@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Format of the policyContent. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PolicyContentFormat
     {
         /// <summary> The contents are inline and Content type is an XML document. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The state of a private link service connection. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppConfigurationPrivateLinkServiceConnectionState : ProvisionableConstruct
     {
         private BicepValue<AppConfigurationPrivateLinkServiceConnectionStatus> _status;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationPrivateLinkServiceConnectionStatus> Status
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ActionsRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationActionsRequired> ActionsRequired
         {
             get

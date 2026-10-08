@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> API Management gateway resource SKU properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementGatewaySkuProperties : ProvisionableConstruct
     {
         private BicepValue<ApiGatewaySkuType> _name;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiGatewaySkuType> Name
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Capacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Capacity
         {
             get

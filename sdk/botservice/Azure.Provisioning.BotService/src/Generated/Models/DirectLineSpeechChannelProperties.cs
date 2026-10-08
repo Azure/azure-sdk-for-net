@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the DirectLine Speech channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DirectLineSpeechChannelProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _cognitiveServiceResourceId;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CognitiveServiceResourceId
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceRegion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CognitiveServiceRegion
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceSubscriptionKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CognitiveServiceSubscriptionKey
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CustomVoiceDeploymentId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomVoiceDeploymentId
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CustomSpeechModelId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomSpeechModelId
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsDefaultBotForCogSvcAccount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDefaultBotForCogSvcAccount
         {
             get

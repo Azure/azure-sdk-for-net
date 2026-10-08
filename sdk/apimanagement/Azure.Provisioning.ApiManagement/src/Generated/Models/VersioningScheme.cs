@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> An value that determines where the API Version identifier will be located in a HTTP request. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VersioningScheme
     {
         /// <summary> The API Version is passed in a path segment. </summary>

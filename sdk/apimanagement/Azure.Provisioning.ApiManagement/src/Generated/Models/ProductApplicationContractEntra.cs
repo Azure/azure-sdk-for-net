@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ProductApplicationContractEntra : ProvisionableConstruct
     {
         private BicepValue<string> _applicationId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApplicationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApplicationId
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Audience. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Audience
         {
             get

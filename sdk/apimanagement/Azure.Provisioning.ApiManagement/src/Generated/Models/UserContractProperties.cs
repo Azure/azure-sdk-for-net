@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> User profile. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class UserContractProperties : UserEntityBaseParameters
     {
         private BicepValue<string> _firstName;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the FirstName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FirstName
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LastName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LastName
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Email. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Email
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the RegistriesOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> RegistriesOn
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Groups. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<GroupContractProperties> Groups
         {
             get

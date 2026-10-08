@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Email Template details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementEmailTemplate : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Subject. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Subject
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Body. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Body
         {
             get
@@ -129,6 +132,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Title. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Title
         {
             get
@@ -146,6 +150,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -163,6 +168,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the IsDefault. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDefault
         {
             get
@@ -176,6 +182,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Parameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EmailTemplateParametersContractProperties> Parameters
         {
             get

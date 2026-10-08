@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Markdown documentation details. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DocumentationContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _title;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Title. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Title
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Content. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Content
         {
             get

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> A site for the channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotChannelSite : ProvisionableConstruct
     {
         private BicepValue<Guid> _tenantId;
@@ -41,6 +43,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> TenantId
         {
             get
@@ -56,6 +59,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the SiteId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SiteId
         {
             get
@@ -66,6 +70,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the SiteName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SiteName
         {
             get
@@ -81,6 +86,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Key. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Key
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Key2. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Key2
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -116,6 +124,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the IsTokenEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsTokenEnabled
         {
             get
@@ -126,6 +135,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEndpointParametersEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEndpointParametersEnabled
         {
             get
@@ -141,6 +151,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsDetailedLoggingEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDetailedLoggingEnabled
         {
             get
@@ -156,6 +167,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsBlockUserUploadEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsBlockUserUploadEnabled
         {
             get
@@ -171,6 +183,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsNoStorageEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsNoStorageEnabled
         {
             get
@@ -186,6 +199,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -201,6 +215,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AppId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppId
         {
             get
@@ -216,6 +231,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsV1Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsV1Enabled
         {
             get
@@ -231,6 +247,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsV3Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsV3Enabled
         {
             get
@@ -246,6 +263,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsSecureSiteEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSecureSiteEnabled
         {
             get
@@ -261,6 +279,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the TrustedOrigins. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> TrustedOrigins
         {
             get
@@ -276,6 +295,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsWebChatSpeechEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsWebChatSpeechEnabled
         {
             get
@@ -291,6 +311,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsWebchatPreviewEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsWebchatPreviewEnabled
         {
             get

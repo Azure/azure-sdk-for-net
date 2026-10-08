@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Information regarding the Configuration API of the API Management service. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ConfigurationApi : ProvisionableConstruct
     {
         private BicepValue<LegacyApiState> _legacyApi;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LegacyApi. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<LegacyApiState> LegacyApi
         {
             get

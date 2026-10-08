@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization header information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BackendAuthorizationHeaderCredentials : ProvisionableConstruct
     {
         private BicepValue<string> _scheme;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Scheme. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scheme
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Parameter. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Parameter
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Workspace details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WorkspaceContract : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Details of the Backend WebProxy Server to use in the Request to Backend. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BackendProxyContract : ProvisionableConstruct
     {
         private BicepValue<Uri> _uri;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Uri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Uri
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Username. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Username
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Password. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Password
         {
             get

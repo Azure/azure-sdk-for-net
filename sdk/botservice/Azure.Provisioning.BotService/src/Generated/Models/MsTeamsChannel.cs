@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Microsoft Teams channel definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MsTeamsChannel : BotChannelProperties
     {
         private MsTeamsChannelProperties _properties;
@@ -19,6 +22,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public MsTeamsChannelProperties Properties
         {
             get

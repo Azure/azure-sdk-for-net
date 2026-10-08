@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The encryption settings for a configuration store. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AppConfigurationStoreEncryptionProperties : ProvisionableConstruct
     {
         private AppConfigurationKeyVaultProperties _keyVaultProperties;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the KeyVaultProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public AppConfigurationKeyVaultProperties KeyVaultProperties
         {
             get

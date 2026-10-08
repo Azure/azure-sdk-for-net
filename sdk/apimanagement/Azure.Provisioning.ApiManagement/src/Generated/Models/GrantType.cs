@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary></summary>
+    [Experimental("AZPROVISION001")]
     public enum GrantType
     {
         /// <summary> Authorization Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.1. </summary>

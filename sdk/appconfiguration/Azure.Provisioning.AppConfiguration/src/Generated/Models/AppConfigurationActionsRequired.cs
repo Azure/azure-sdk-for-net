@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppConfigurationActionsRequired
     {
         /// <summary> None. </summary>

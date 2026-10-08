@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties of the Service Fabric Type Backend. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BackendServiceFabricClusterProperties : ProvisionableConstruct
     {
         private BicepValue<string> _clientCertificateId;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientCertificateId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientCertificateId
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientCertificatethumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientCertificatethumbprint
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the MaxPartitionResolutionRetries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPartitionResolutionRetries
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ManagementEndpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ManagementEndpoints
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ServerCertificateThumbprints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ServerCertificateThumbprints
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ServerX509Names. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<X509CertificateName> ServerX509Names
         {
             get

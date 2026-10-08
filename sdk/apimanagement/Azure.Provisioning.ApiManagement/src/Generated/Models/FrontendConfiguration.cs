@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Information regarding how the gateway should be exposed. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class FrontendConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _defaultHostname;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the DefaultHostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultHostname
         {
             get

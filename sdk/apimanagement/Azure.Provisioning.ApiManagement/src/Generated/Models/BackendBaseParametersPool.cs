@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The BackendBaseParametersPool. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BackendBaseParametersPool : BackendPool
     {
         /// <summary> Creates a new BackendBaseParametersPool. </summary>

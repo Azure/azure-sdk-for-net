@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Gateway details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementGateway : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -112,6 +113,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LocationData. </summary>
+        [Experimental("AZPROVISION001")]
         public ResourceLocationDataContract LocationData
         {
             get
@@ -129,6 +131,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get

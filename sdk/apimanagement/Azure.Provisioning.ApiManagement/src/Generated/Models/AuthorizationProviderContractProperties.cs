@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization Provider details. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AuthorizationProviderContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IdentityProvider. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IdentityProvider
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Oauth2. </summary>
+        [Experimental("AZPROVISION001")]
         public AuthorizationProviderOAuth2Settings Oauth2
         {
             get

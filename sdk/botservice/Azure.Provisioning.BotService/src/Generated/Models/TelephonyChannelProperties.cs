@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Direct Line channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TelephonyChannelProperties : ProvisionableConstruct
     {
         private BicepList<TelephonyPhoneNumbers> _phoneNumbers;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the PhoneNumbers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<TelephonyPhoneNumbers> PhoneNumbers
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ApiConfigurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<TelephonyChannelResourceApiConfiguration> ApiConfigurations
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceSubscriptionKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CognitiveServiceSubscriptionKey
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceRegion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CognitiveServiceRegion
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the DefaultLocale. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultLocale
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the PremiumSku. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PremiumSku
         {
             get
@@ -117,6 +125,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

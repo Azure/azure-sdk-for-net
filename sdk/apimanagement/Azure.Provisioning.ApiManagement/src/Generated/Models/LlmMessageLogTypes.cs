@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary></summary>
+    [Experimental("AZPROVISION001")]
     public enum LlmMessageLogTypes
     {
         /// <summary> Log all messages. </summary>

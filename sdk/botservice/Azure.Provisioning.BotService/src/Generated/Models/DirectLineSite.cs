@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> A site for the Direct Line channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DirectLineSite : BotChannelSite
     {
         /// <summary> Creates a new DirectLineSite. </summary>

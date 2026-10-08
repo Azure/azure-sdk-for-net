@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Schema create or update contract Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class GlobalSchemaContractProperties : ProvisionableConstruct
     {
         private BicepValue<ApiSchemaType> _schemaType;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SchemaType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiSchemaType> SchemaType
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Value
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Document. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Document
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get

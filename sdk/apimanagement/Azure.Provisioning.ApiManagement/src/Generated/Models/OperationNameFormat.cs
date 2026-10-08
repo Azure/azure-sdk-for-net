@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The format of the Operation Name for Application Insights telemetries. Default is Name. </summary>
+    [Experimental("AZPROVISION001")]
     public enum OperationNameFormat
     {
         /// <summary> API_NAME;rev=API_REVISION - OPERATION_NAME. </summary>

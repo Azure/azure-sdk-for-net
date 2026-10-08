@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization type options. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ApiManagementAuthorizationType
     {
         /// <summary> OAuth2 authorization type. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The developer portal configuration contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PortalConfigProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _enableBasicAuth;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the EnableBasicAuth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableBasicAuth
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Signin. </summary>
+        [Experimental("AZPROVISION001")]
         internal PortalConfigPropertiesSignin Signin
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Signup. </summary>
+        [Experimental("AZPROVISION001")]
         internal PortalConfigPropertiesSignup Signup
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Delegation. </summary>
+        [Experimental("AZPROVISION001")]
         public PortalConfigDelegationProperties Delegation
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Cors. </summary>
+        [Experimental("AZPROVISION001")]
         internal PortalConfigCorsProperties Cors
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Csp. </summary>
+        [Experimental("AZPROVISION001")]
         public PortalConfigCspProperties Csp
         {
             get
@@ -116,6 +124,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Require. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> SigninRequire
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TermsOfService. </summary>
+        [Experimental("AZPROVISION001")]
         public PortalConfigTermsOfServiceProperties SignupTermsOfService
         {
             get
@@ -150,6 +160,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AllowedOrigins. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> CorsAllowedOrigins
         {
             get

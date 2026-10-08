@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Content type contract details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementContentType : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ContentTypeIdentifier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContentTypeIdentifier
         {
             get
@@ -114,6 +116,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ContentTypeName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContentTypeName
         {
             get
@@ -131,6 +134,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -148,6 +152,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Schema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Schema
         {
             get
@@ -165,6 +170,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get

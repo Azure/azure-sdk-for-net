@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> API Authentication Settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthenticationSettingsContract : ProvisionableConstruct
     {
         private OAuth2AuthenticationSettingsContract _oAuth2;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OAuth2. </summary>
+        [Experimental("AZPROVISION001")]
         public OAuth2AuthenticationSettingsContract OAuth2
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OpenId. </summary>
+        [Experimental("AZPROVISION001")]
         public OpenIdAuthenticationSettingsContract OpenId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OAuth2AuthenticationSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<OAuth2AuthenticationSettingsContract> OAuth2AuthenticationSettings
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OpenidAuthenticationSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<OpenIdAuthenticationSettingsContract> OpenidAuthenticationSettings
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The GatewayHostnameBindingCertificate. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GatewayHostnameBindingCertificate : ProvisionableConstruct
     {
         private BicepValue<string> _thumbprint;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Thumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Thumbprint
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Subject. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Subject
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Expiry. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> Expiry
         {
             get

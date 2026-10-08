@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> A private endpoint connection. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppConfigurationPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationProvisioningState> ProvisioningState
         {
             get
@@ -108,6 +110,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public AppConfigurationPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -125,6 +128,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

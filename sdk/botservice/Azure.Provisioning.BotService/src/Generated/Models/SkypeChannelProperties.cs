@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SkypeChannelProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isMessagingEnabled;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsMessagingEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsMessagingEnabled
         {
             get
@@ -45,6 +48,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsMediaCardsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsMediaCardsEnabled
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsVideoEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsVideoEnabled
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsCallingEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCallingEnabled
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsScreenSharingEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsScreenSharingEnabled
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsGroupsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsGroupsEnabled
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the GroupsMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GroupsMode
         {
             get
@@ -135,6 +144,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CallingWebHook. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CallingWebHook
         {
             get
@@ -150,6 +160,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IncomingCallRoute. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IncomingCallRoute
         {
             get
@@ -165,6 +176,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

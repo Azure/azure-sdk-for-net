@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </summary>
+    [Experimental("AZPROVISION001")]
     public enum CertificateConfigurationStoreName
     {
         /// <summary> CertificateAuthority. </summary>

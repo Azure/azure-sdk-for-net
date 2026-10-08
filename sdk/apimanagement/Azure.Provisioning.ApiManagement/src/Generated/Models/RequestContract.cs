@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Operation request details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RequestContract : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the QueryParameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ParameterContract> QueryParameters
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Headers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ParameterContract> Headers
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Representations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RepresentationContract> Representations
         {
             get

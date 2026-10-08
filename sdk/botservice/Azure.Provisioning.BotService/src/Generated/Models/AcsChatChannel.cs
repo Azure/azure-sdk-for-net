@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> AcsChat channel definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AcsChatChannel : BotChannelProperties
     {
         /// <summary> Creates a new AcsChatChannel. </summary>

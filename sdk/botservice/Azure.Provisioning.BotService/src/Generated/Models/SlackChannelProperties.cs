@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Slack channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SlackChannelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _clientId;
@@ -32,6 +34,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -47,6 +50,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ClientSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecret
         {
             get
@@ -62,6 +66,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the VerificationToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VerificationToken
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scopes
         {
             get
@@ -92,6 +98,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the LandingPageUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> LandingPageUri
         {
             get
@@ -107,6 +114,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the RedirectAction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RedirectAction
         {
             get
@@ -117,6 +125,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the LastSubmissionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LastSubmissionId
         {
             get
@@ -127,6 +136,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the RegisterBeforeOAuthFlow. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> RegisterBeforeOAuthFlow
         {
             get
@@ -142,6 +152,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the IsValidated. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsValidated
         {
             get
@@ -152,6 +163,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the SigningSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SigningSecret
         {
             get
@@ -167,6 +179,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

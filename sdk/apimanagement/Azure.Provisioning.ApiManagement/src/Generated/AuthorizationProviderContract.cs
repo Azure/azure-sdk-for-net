@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization Provider contract. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthorizationProviderContract : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IdentityProvider. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IdentityProvider
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Oauth2. </summary>
+        [Experimental("AZPROVISION001")]
         public AuthorizationProviderOAuth2Settings Oauth2
         {
             get

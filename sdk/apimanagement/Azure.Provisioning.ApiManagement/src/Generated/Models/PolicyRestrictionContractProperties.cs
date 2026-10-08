@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Policy restrictions contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PolicyRestrictionContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _scope;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Scope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scope
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the RequireBase. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PolicyRestrictionRequireBase> RequireBase
         {
             get

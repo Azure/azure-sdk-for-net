@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Wiki properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceProductWiki : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -90,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Documents. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WikiDocumentationContract> Documents
         {
             get

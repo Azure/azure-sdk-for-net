@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The DeletedServiceContractProperties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DeletedServiceContractProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _serviceId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ServiceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ServiceId
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ScheduledPurgeOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ScheduledPurgeOn
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the DeletedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> DeletedOn
         {
             get

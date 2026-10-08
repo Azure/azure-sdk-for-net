@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> NamedValue details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceWorkspaceNamedValue : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Tags
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSecret
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -147,6 +151,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
@@ -164,6 +169,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the KeyVaultDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public KeyVaultContractProperties KeyVaultDetails
         {
             get
@@ -181,6 +187,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get

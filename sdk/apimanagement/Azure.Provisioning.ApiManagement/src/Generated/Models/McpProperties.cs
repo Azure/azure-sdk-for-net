@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties specific to MCP API type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class McpProperties : ProvisionableConstruct
     {
         private BicepValue<McpTransportType> _transportType;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TransportType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<McpTransportType> TransportType
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Endpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<McpEndpoint> Endpoints
         {
             get

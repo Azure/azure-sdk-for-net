@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Details of the Credentials used to connect to Backend. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BackendCredentialsContract : ProvisionableConstruct
     {
         private BicepList<string> _certificateIds;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the CertificateIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> CertificateIds
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Certificate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Certificate
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Query. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<BicepList<string>> Query
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Header. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<BicepList<string>> Header
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Authorization. </summary>
+        [Experimental("AZPROVISION001")]
         public BackendAuthorizationHeaderCredentials Authorization
         {
             get

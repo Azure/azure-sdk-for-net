@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Subscriptions delegation settings properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SubscriptionDelegationSettingProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isSubscriptionDelegationEnabled;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSubscriptionDelegationEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSubscriptionDelegationEnabled
         {
             get

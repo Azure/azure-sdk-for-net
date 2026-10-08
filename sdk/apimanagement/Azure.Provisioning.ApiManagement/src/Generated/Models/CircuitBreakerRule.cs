@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Rule configuration to trip the backend. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CircuitBreakerRule : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the FailureCondition. </summary>
+        [Experimental("AZPROVISION001")]
         public CircuitBreakerFailureCondition FailureCondition
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TripDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> TripDuration
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AcceptRetryAfter. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AcceptRetryAfter
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the FailureResponse. </summary>
+        [Experimental("AZPROVISION001")]
         internal BackendFailureResponse FailureResponse
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the StatusCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> FailureResponseStatusCode
         {
             get

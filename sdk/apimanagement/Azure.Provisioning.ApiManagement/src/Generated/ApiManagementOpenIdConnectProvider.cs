@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> OpenId Connect Provider details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementOpenIdConnectProvider : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the MetadataEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MetadataEndpoint
         {
             get
@@ -147,6 +151,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -164,6 +169,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecret
         {
             get
@@ -181,6 +187,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the UseInTestConsole. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> UseInTestConsole
         {
             get
@@ -198,6 +205,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the UseInApiDocumentation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> UseInApiDocumentation
         {
             get

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> All key-value properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class KeyValueProperties : ProvisionableConstruct
     {
         private BicepValue<string> _key;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Key. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Key
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Label. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Label
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ContentType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContentType
         {
             get
@@ -80,6 +86,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -90,6 +97,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the LastModifiedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastModifiedOn
         {
             get
@@ -100,6 +108,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the IsLocked. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsLocked
         {
             get
@@ -110,6 +119,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get

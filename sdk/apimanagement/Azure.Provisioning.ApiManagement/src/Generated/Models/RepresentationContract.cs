@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Operation request/response representation details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RepresentationContract : ProvisionableConstruct
     {
         private BicepValue<string> _contentType;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ContentType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContentType
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SchemaId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SchemaId
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TypeName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TypeName
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the FormParameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ParameterContract> FormParameters
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Examples. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<ParameterExampleContract> Examples
         {
             get

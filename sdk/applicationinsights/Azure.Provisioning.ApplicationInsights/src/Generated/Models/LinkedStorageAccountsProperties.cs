@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApplicationInsights
 {
     /// <summary> An Application Insights component linked storage account. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class LinkedStorageAccountsProperties : ProvisionableConstruct
     {
         private BicepValue<string> _linkedStorageAccount;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApplicationInsights
         }
 
         /// <summary> Gets or sets the LinkedStorageAccount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LinkedStorageAccount
         {
             get

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Properties of Provisioning Issue. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ProvisioningIssueProperties : ProvisionableConstruct
     {
         private BicepValue<string> _issueType;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the IssueType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IssueType
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Severity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BotServiceSeverity> Severity
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the SuggestedResourceIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceIdentifier> SuggestedResourceIds
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the SuggestedAccessRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<NspAccessRule> SuggestedAccessRules
         {
             get

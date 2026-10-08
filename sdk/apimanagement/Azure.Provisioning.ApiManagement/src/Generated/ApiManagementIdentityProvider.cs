@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Identity Provider details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementIdentityProvider : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IdentityProviderType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IdentityProviderType> IdentityProviderType
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SignInTenant. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SignInTenant
         {
             get
@@ -129,6 +132,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AllowedTenants. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedTenants
         {
             get
@@ -146,6 +150,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Authority. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Authority
         {
             get
@@ -163,6 +168,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SignUpPolicyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SignUpPolicyName
         {
             get
@@ -180,6 +186,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SignInPolicyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SignInPolicyName
         {
             get
@@ -197,6 +204,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ProfileEditingPolicyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProfileEditingPolicyName
         {
             get
@@ -214,6 +222,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PasswordResetPolicyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PasswordResetPolicyName
         {
             get
@@ -231,6 +240,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientLibrary. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientLibrary
         {
             get
@@ -248,6 +258,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -265,6 +276,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecret
         {
             get
@@ -282,6 +294,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the CertificateId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CertificateId
         {
             get

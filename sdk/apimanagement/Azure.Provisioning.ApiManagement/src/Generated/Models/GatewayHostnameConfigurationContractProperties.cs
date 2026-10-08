@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Gateway hostname configuration details. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class GatewayHostnameConfigurationContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _hostname;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Hostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Hostname
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the CertificateId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CertificateId
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsClientCertificateRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsClientCertificateRequired
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Tls10Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Tls10Enabled
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Tls11Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Tls11Enabled
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Http2Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Http2Enabled
         {
             get

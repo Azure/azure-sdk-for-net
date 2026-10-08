@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Telemetry settings. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TelemetryProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _resourceId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ResourceId
         {
             get

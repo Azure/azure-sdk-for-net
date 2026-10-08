@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> A single API Management gateway resource in List or Get response. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiGatewayConfigConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -83,6 +84,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -108,6 +110,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -121,6 +124,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SourceId
         {
             get
@@ -138,6 +142,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the DefaultHostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultHostname
         {
             get
@@ -151,6 +156,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Hostnames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Hostnames
         {
             get

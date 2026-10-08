@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Issue Attachment Contract details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiIssueAttachment : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Title. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Title
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ContentFormat. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContentFormat
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Content. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Content
         {
             get

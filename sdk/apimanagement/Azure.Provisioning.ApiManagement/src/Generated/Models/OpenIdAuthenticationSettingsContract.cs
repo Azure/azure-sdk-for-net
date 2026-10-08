@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> API OAuth2 Authentication settings details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class OpenIdAuthenticationSettingsContract : ProvisionableConstruct
     {
         private BicepValue<string> _openIdProviderId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OpenIdProviderId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OpenIdProviderId
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the BearerTokenSendingMethods. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BearerTokenSendingMethods> BearerTokenSendingMethods
         {
             get

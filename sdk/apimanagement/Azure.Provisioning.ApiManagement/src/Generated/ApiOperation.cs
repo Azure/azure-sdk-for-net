@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> API Operation details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiOperation : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TemplateParameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ParameterContract> TemplateParameters
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Request. </summary>
+        [Experimental("AZPROVISION001")]
         public RequestContract Request
         {
             get
@@ -147,6 +151,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Responses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResponseContract> Responses
         {
             get
@@ -164,6 +169,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Policies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Policies
         {
             get
@@ -181,6 +187,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -198,6 +205,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Method. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Method
         {
             get
@@ -215,6 +223,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the UriTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UriTemplate
         {
             get

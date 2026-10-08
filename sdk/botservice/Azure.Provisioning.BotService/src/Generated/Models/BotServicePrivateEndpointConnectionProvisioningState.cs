@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The current provisioning state. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BotServicePrivateEndpointConnectionProvisioningState
     {
         /// <summary> Succeeded. </summary>

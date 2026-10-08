@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> User Entity Base Parameters set. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class UserEntityBaseParameters : ProvisionableConstruct
     {
         private BicepValue<ApiManagementUserState> _state;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementUserState> State
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Note. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Note
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Identities. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<UserIdentityContract> Identities
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Tag-API link entity properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TagApiLinkContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _apiId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApiId
         {
             get

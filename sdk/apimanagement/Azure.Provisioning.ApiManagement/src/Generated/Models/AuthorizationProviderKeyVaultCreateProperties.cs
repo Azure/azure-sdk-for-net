@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization Provider KeyVault create contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthorizationProviderKeyVaultCreateProperties : ProvisionableConstruct
     {
         private BicepValue<string> _secretIdentifier;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SecretIdentifier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecretIdentifier
         {
             get

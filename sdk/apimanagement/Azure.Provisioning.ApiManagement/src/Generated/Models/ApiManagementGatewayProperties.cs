@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties of an API Management gateway resource description. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApiManagementGatewayProperties : ApiManagementGatewayBaseProperties
     {
         /// <summary> Creates a new ApiManagementGatewayProperties. </summary>

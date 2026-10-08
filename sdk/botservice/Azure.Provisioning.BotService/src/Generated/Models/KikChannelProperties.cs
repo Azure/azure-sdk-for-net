@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Kik channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KikChannelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _userName;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the UserName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UserName
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ApiKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApiKey
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsValidated. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsValidated
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

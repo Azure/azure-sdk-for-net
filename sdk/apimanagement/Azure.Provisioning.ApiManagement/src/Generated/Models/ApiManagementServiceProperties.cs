@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties of an API Management service resource description. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApiManagementServiceProperties : ApiManagementServiceBaseProperties
     {
         private BicepValue<string> _publisherEmail;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PublisherEmail. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublisherEmail
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PublisherName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublisherName
         {
             get

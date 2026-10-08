@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Property can be used to enable NAT Gateway for this API Management service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ApiManagementNatGatewayState
     {
         /// <summary> Nat Gateway is enabled for the service. </summary>

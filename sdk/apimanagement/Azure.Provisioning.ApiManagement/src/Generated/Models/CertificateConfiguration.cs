@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Certificate configuration which consist of non-trusted intermediates and root certificates. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CertificateConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _encodedCertificate;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the EncodedCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EncodedCertificate
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the CertificatePassword. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CertificatePassword
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the StoreName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CertificateConfigurationStoreName> StoreName
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Certificate. </summary>
+        [Experimental("AZPROVISION001")]
         public CertificateInformation Certificate
         {
             get

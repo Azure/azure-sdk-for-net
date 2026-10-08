@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The verbosity level applied to traces emitted by trace policies. </summary>
+    [Experimental("AZPROVISION001")]
     public enum TraceVerbosityLevel
     {
         /// <summary> All the traces emitted by trace policies will be sent to the logger attached to this diagnostic instance. </summary>

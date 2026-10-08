@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The response to be returned when a backend fails to respond. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BackendFailureResponse : ProvisionableConstruct
     {
         private BicepValue<int> _statusCode;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the StatusCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> StatusCode
         {
             get

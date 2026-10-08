@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Line channel definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LineChannel : BotChannelProperties
     {
         private LineChannelProperties _properties;
@@ -19,6 +22,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public LineChannelProperties Properties
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Status of developer portal in this API Management service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DeveloperPortalStatus
     {
         /// <summary> Developer Portal is enabled for the service. </summary>

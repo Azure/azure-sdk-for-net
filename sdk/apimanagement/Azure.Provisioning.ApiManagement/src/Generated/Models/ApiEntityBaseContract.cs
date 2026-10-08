@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> API base contract details. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApiEntityBaseContract : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -37,6 +39,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -52,6 +55,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AuthenticationSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public AuthenticationSettingsContract AuthenticationSettings
         {
             get
@@ -67,6 +71,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SubscriptionKeyParameterNames. </summary>
+        [Experimental("AZPROVISION001")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames
         {
             get
@@ -82,6 +87,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiType> ApiType
         {
             get
@@ -97,6 +103,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiRevision. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApiRevision
         {
             get
@@ -112,6 +119,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApiVersion
         {
             get
@@ -127,6 +135,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsCurrent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCurrent
         {
             get
@@ -142,6 +151,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the IsOnline. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsOnline
         {
             get
@@ -152,6 +162,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiRevisionDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApiRevisionDescription
         {
             get
@@ -167,6 +178,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiVersionDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApiVersionDescription
         {
             get
@@ -182,6 +194,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiVersionSetId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ApiVersionSetId
         {
             get
@@ -197,6 +210,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSubscriptionRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSubscriptionRequired
         {
             get
@@ -212,6 +226,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TermsOfServiceLink. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TermsOfServiceLink
         {
             get
@@ -227,6 +242,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Contact. </summary>
+        [Experimental("AZPROVISION001")]
         public ApiContactInformation Contact
         {
             get
@@ -242,6 +258,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the License. </summary>
+        [Experimental("AZPROVISION001")]
         public ApiLicenseInformation License
         {
             get
@@ -257,6 +274,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the McpProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public McpProperties McpProperties
         {
             get

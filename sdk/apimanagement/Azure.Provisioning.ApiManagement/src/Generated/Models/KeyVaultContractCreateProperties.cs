@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Create keyVault contract details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KeyVaultContractCreateProperties : ProvisionableConstruct
     {
         private BicepValue<string> _secretIdentifier;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SecretIdentifier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecretIdentifier
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IdentityClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IdentityClientId
         {
             get

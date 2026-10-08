@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Sampling type. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SamplingType
     {
         /// <summary> Fixed-rate sampling. </summary>

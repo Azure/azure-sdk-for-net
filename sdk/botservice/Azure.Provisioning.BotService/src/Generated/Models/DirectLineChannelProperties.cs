@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Direct Line channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DirectLineChannelProperties : ProvisionableConstruct
     {
         private BicepList<DirectLineSite> _sites;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Sites. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DirectLineSite> Sites
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ExtensionKey1. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExtensionKey1
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ExtensionKey2. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExtensionKey2
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the DirectLineEmbedCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DirectLineEmbedCode
         {
             get

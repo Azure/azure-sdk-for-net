@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The session stickiness properties of the backend pool. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BackendSessionAffinity : ProvisionableConstruct
     {
         private BackendSessionId _sessionId;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SessionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BackendSessionId SessionId
         {
             get

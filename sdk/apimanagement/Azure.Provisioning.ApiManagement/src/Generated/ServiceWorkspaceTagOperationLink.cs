@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Tag-operation link details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceWorkspaceTagOperationLink : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OperationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OperationId
         {
             get

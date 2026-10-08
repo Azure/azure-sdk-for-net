@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization Access Policy details. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AuthorizationAccessPolicyContractProperties : ProvisionableConstruct
     {
         private BicepList<string> _appIds;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AppIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AppIds
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> TenantId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Email Template Contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class EmailTemplateContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _subject;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Subject. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Subject
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Body. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Body
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Title. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Title
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the IsDefault. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDefault
         {
             get
@@ -96,6 +103,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Parameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EmailTemplateParametersContractProperties> Parameters
         {
             get

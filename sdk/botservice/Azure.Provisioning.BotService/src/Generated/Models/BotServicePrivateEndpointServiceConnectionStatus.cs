@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The private endpoint connection status. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BotServicePrivateEndpointServiceConnectionStatus
     {
         /// <summary> Pending. </summary>

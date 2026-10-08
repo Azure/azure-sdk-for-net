@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The failure http status code range. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class FailureStatusCodeRange : ProvisionableConstruct
     {
         private BicepValue<int> _min;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Min. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Min
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Max. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Max
         {
             get

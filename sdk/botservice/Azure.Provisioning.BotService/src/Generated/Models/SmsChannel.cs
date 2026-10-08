@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Sms channel definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SmsChannel : BotChannelProperties
     {
         private SmsChannelProperties _properties;
@@ -19,6 +22,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public SmsChannelProperties Properties
         {
             get

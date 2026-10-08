@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> OAuth2 grant type options. </summary>
+    [Experimental("AZPROVISION001")]
     public enum OAuth2GrantType
     {
         /// <summary> Authorization Code grant. </summary>

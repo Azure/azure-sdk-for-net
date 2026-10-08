@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Policy Contract details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Format. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PolicyContentFormat> Format
         {
             get

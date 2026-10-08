@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The GatewayHostnameBindingKeyVaultLastStatus. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GatewayHostnameBindingKeyVaultLastStatus : ProvisionableConstruct
     {
         private BicepValue<KeyVaultFetchCode> _code;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Code. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<KeyVaultFetchCode> Code
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the TimeStampUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> TimeStampUtc
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the LastSuccessTimeStampUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastSuccessTimeStampUtc
         {
             get

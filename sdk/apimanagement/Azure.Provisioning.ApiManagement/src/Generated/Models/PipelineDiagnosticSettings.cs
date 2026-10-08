@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PipelineDiagnosticSettings : ProvisionableConstruct
     {
         private HttpMessageDiagnostic _request;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Request. </summary>
+        [Experimental("AZPROVISION001")]
         public HttpMessageDiagnostic Request
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Response. </summary>
+        [Experimental("AZPROVISION001")]
         public HttpMessageDiagnostic Response
         {
             get

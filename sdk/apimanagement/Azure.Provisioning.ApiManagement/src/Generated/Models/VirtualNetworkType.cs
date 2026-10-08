@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The type of VPN in which API Management gateway needs to be configured in. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualNetworkType
     {
         /// <summary> The API Management gateway is not part of any Virtual Network. </summary>

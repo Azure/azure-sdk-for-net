@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Specifies for what type of messages sampling settings should not apply. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AlwaysLog
     {
         /// <summary> Always log all erroneous request regardless of sampling settings. </summary>

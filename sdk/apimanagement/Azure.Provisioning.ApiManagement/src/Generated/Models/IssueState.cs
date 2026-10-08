@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Status of the issue. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IssueState
     {
         /// <summary> The issue is proposed. </summary>

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The mode of the developer portal Content Security Policy (CSP). </summary>
+    [Experimental("AZPROVISION001")]
     public enum PortalSettingsCspMode
     {
         /// <summary> The browser will block requests not matching allowed origins. </summary>

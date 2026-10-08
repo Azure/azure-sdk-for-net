@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Specifies Microsoft Entra settings needed to authorize product API calls using client applications. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ProductApplicationContract : ProvisionableConstruct
     {
         private ProductApplicationContractEntra _entra;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Entra. </summary>
+        [Experimental("AZPROVISION001")]
         public ProductApplicationContractEntra Entra
         {
             get

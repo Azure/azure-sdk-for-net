@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Compute Platform Version running the service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PlatformVersion
     {
         /// <summary> Platform version cannot be determined, as compute platform is not deployed. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> NamedValue Entity Base Parameters set. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class NamedValueEntityBaseParameters : ProvisionableConstruct
     {
         private BicepList<string> _tags;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Tags
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSecret
         {
             get

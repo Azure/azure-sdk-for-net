@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> NamedValue Contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class NamedValueContractProperties : NamedValueEntityBaseParameters
     {
         private BicepValue<string> _displayName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the KeyVaultDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public KeyVaultContractProperties KeyVaultDetails
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get

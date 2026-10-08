@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Properties for a Connection Setting Item. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotConnectionSettingProperties : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -45,6 +48,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the SettingId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SettingId
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ClientSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecret
         {
             get
@@ -100,6 +107,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scopes
         {
             get
@@ -115,6 +123,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ServiceProviderId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceProviderId
         {
             get
@@ -130,6 +139,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ServiceProviderDisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceProviderDisplayName
         {
             get
@@ -145,6 +155,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Parameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BotConnectionSettingParameter> Parameters
         {
             get
@@ -160,6 +171,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get

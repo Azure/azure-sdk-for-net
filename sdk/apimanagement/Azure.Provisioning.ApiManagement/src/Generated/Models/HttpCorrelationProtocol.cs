@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HttpCorrelationProtocol
     {
         /// <summary> Do not read and inject correlation headers. </summary>

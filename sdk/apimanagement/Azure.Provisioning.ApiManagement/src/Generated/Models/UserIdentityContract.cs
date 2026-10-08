@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> User identity details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class UserIdentityContract : ProvisionableConstruct
     {
         private BicepValue<string> _provider;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Provider. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Provider
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get

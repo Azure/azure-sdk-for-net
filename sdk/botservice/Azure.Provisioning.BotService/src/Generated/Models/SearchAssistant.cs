@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> SearchAssistant definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SearchAssistant : BotChannelProperties
     {
         /// <summary> Creates a new SearchAssistant. </summary>

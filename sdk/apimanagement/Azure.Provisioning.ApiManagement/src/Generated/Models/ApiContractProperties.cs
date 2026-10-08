@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> API Entity Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApiContractProperties : ApiEntityBaseContract
     {
         private BicepValue<ResourceIdentifier> _sourceApiId;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SourceApiId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SourceApiId
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ServiceLink. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceLink
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Path. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Path
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Protocols. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ApiOperationInvokableProtocol> Protocols
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiVersionSet. </summary>
+        [Experimental("AZPROVISION001")]
         public ApiVersionSetContractDetails ApiVersionSet
         {
             get
@@ -117,6 +125,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get

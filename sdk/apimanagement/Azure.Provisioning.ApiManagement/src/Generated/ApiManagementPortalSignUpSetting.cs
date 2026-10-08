@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Sign-Up settings for a developer portal. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementPortalSignUpSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -90,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSignUpDeveloperPortalEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSignUpDeveloperPortalEnabled
         {
             get
@@ -107,6 +109,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TermsOfService. </summary>
+        [Experimental("AZPROVISION001")]
         public TermsOfServiceProperties TermsOfService
         {
             get

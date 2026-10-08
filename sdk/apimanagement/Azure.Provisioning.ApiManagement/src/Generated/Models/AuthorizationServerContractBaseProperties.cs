@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> External OAuth authorization server Update settings contract. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AuthorizationServerContractBaseProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -45,6 +48,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AuthorizationMethods. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<AuthorizationMethod> AuthorizationMethods
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientAuthenticationMethods. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ClientAuthenticationMethod> ClientAuthenticationMethods
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TokenBodyParameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<TokenBodyParameterContract> TokenBodyParameters
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TokenEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TokenEndpoint
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DoesSupportState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DoesSupportState
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DefaultScope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultScope
         {
             get
@@ -135,6 +144,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the BearerTokenSendingMethods. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BearerTokenSendingMethod> BearerTokenSendingMethods
         {
             get
@@ -150,6 +160,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ResourceOwnerUsername. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceOwnerUsername
         {
             get
@@ -165,6 +176,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ResourceOwnerPassword. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceOwnerPassword
         {
             get

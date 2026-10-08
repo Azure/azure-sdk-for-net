@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The name of SKU. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BotServiceSkuName
     {
         /// <summary> F0. </summary>

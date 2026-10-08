@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Api Schema Document Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SchemaDocumentProperties : ProvisionableConstruct
     {
         private BicepValue<string> _value;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Definitions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Definitions
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Components. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Components
         {
             get
