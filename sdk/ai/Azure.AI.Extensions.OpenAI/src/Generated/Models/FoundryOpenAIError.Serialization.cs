@@ -85,10 +85,17 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(Param))
+            if (_paramIsDefined || Optional.IsDefined(Param))
             {
-                writer.WritePropertyName("param"u8);
-                writer.WriteStringValue(Param);
+                if (Param != null)
+                {
+                    writer.WritePropertyName("param"u8);
+                    writer.WriteStringValue(Param);
+                }
+                else
+                {
+                    writer.WriteNull("param"u8);
+                }
             }
             if (Optional.IsDefined(Type))
             {
@@ -195,6 +202,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string code = default;
             string message = default;
+            bool paramIsDefined = false;
             string @param = default;
             string @type = default;
             IList<FoundryOpenAIError> details = default;
@@ -220,6 +228,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("param"u8))
                 {
+                    paramIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         @param = null;
@@ -302,7 +311,10 @@ namespace Azure.AI.Extensions.OpenAI
                 details ?? new ChangeTrackingList<FoundryOpenAIError>(),
                 additionalInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 debugInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _paramIsDefined = paramIsDefined
+            };
         }
     }
 }

@@ -87,10 +87,17 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MemoryLimit))
+            if (_memoryLimitIsDefined || Optional.IsDefined(MemoryLimit))
             {
-                writer.WritePropertyName("memory_limit"u8);
-                writer.WriteStringValue(MemoryLimit.Value.ToSerialString());
+                if (MemoryLimit != null)
+                {
+                    writer.WritePropertyName("memory_limit"u8);
+                    writer.WriteStringValue(MemoryLimit.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("memory_limit"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Skills))
             {
@@ -137,6 +144,7 @@ namespace Azure.AI.Projects.Agents
             string @type = "container_auto";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> fileIds = default;
+            bool memoryLimitIsDefined = false;
             ContainerMemoryLimit? memoryLimit = default;
             IList<ContainerSkill> skills = default;
             ToolboxShellNetworkPolicy networkPolicy = default;
@@ -170,6 +178,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("memory_limit"u8))
                 {
+                    memoryLimitIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         memoryLimit = null;
@@ -212,7 +221,10 @@ namespace Azure.AI.Projects.Agents
                 fileIds ?? new ChangeTrackingList<string>(),
                 memoryLimit,
                 skills ?? new ChangeTrackingList<ContainerSkill>(),
-                networkPolicy);
+                networkPolicy)
+            {
+                _memoryLimitIsDefined = memoryLimitIsDefined
+            };
         }
     }
 }

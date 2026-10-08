@@ -180,19 +180,26 @@ namespace BasicTypeSpec
             }
             else if (Optional.IsCollectionDefined(OptionalNullableList))
             {
-                writer.WritePropertyName("optionalNullableList"u8);
-                writer.WriteStartArray();
-                bool hasPatch = Patch.Contains("$"u8, "optionalNullableList"u8);
-                for (int i = 0; i < OptionalNullableList.Count; i++)
+                if (OptionalNullableList != null)
                 {
-                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.optionalNullableList[{i}]")))
+                    writer.WritePropertyName("optionalNullableList"u8);
+                    writer.WriteStartArray();
+                    bool hasPatch = Patch.Contains("$"u8, "optionalNullableList"u8);
+                    for (int i = 0; i < OptionalNullableList.Count; i++)
                     {
-                        continue;
+                        if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.optionalNullableList[{i}]")))
+                        {
+                            continue;
+                        }
+                        writer.WriteNumberValue(OptionalNullableList[i]);
                     }
-                    writer.WriteNumberValue(OptionalNullableList[i]);
+                    Patch.WriteTo(writer, "$.optionalNullableList"u8);
+                    writer.WriteEndArray();
                 }
-                Patch.WriteTo(writer, "$.optionalNullableList"u8);
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("optionalNullableList"u8);
+                }
             }
             if (Patch.Contains("$.requiredNullableList"u8))
             {
@@ -264,7 +271,7 @@ namespace BasicTypeSpec
             ThingModelOptionalLiteralFloat? optionalLiteralFloat = default;
             bool? optionalLiteralBool = default;
             string requiredBadDescription = default;
-            IList<int> optionalNullableList = default;
+            IList<int> optionalNullableList = new ChangeTrackingList<int>();
             IList<int> requiredNullableList = default;
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
@@ -346,6 +353,7 @@ namespace BasicTypeSpec
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        optionalNullableList = null;
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -385,7 +393,7 @@ namespace BasicTypeSpec
                 optionalLiteralFloat,
                 optionalLiteralBool,
                 requiredBadDescription,
-                optionalNullableList ?? new ChangeTrackingList<int>(),
+                optionalNullableList,
                 requiredNullableList,
                 patch);
         }

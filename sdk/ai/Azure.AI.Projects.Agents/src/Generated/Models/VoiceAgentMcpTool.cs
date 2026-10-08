@@ -16,6 +16,11 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public partial class VoiceAgentMcpTool : VoiceAgentTool
     {
+        private BinaryData _allowedTools;
+        internal bool _allowedToolsIsDefined;
+        private BinaryData _requireApproval;
+        internal bool _requireApprovalIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
@@ -54,9 +59,9 @@ namespace Azure.AI.Projects.Agents
             Authorization = authorization;
             ServerDescription = serverDescription;
             Headers = headers;
-            AllowedTools = allowedTools;
+            _allowedTools = allowedTools;
             AllowedCallers = allowedCallers;
-            RequireApproval = requireApproval;
+            _requireApproval = requireApproval;
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
             ToolConfigs = toolConfigs;
@@ -119,7 +124,18 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData AllowedTools { get; set; }
+        public BinaryData AllowedTools
+        {
+            get
+            {
+                return _allowedTools;
+            }
+            set
+            {
+                _allowedTools = value;
+                _allowedToolsIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the AllowedCallers. </summary>
         public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
@@ -166,7 +182,18 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData RequireApproval { get; set; }
+        public BinaryData RequireApproval
+        {
+            get
+            {
+                return _requireApproval;
+            }
+            set
+            {
+                _requireApproval = value;
+                _requireApprovalIsDefined = true;
+            }
+        }
 
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }
