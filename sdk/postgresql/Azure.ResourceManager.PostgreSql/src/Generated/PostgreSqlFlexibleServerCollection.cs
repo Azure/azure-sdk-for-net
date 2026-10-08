@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ServersGetByResourceGroupAsyncCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PostgreSqlFlexibleServerCollection.GetAll"), data => new PostgreSqlFlexibleServerResource(Client, data));
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerDataAsyncCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PostgreSqlFlexibleServerCollection.GetAll"), data => new PostgreSqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ServersGetByResourceGroupCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PostgreSqlFlexibleServerCollection.GetAll"), data => new PostgreSqlFlexibleServerResource(Client, data));
+            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerDataCollectionResultOfT(_serversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PostgreSqlFlexibleServerCollection.GetAll"), data => new PostgreSqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>

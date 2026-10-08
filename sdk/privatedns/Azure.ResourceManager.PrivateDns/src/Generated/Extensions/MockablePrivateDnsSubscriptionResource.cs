@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateZonesGetAllAsyncCollectionResultOfT(PrivateZonesRestClient, Id.SubscriptionId, top, context, "MockablePrivateDnsSubscriptionResource.GetPrivateDnsZones"), data => new PrivateDnsZoneResource(Client, data));
+            return new AsyncPageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateDnsZoneDataAsync0CollectionResultOfT(PrivateZonesRestClient, Id.SubscriptionId, top, context, "MockablePrivateDnsSubscriptionResource.GetPrivateDnsZones"), data => new PrivateDnsZoneResource(Client, data));
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateZonesGetAllCollectionResultOfT(PrivateZonesRestClient, Id.SubscriptionId, top, context, "MockablePrivateDnsSubscriptionResource.GetPrivateDnsZones"), data => new PrivateDnsZoneResource(Client, data));
+            return new PageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateDnsZoneData0CollectionResultOfT(PrivateZonesRestClient, Id.SubscriptionId, top, context, "MockablePrivateDnsSubscriptionResource.GetPrivateDnsZones"), data => new PrivateDnsZoneResource(Client, data));
         }
     }
 }

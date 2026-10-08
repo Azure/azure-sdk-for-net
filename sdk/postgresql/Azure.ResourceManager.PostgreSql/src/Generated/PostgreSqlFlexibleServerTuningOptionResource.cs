@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new TuningOptionsGetRecommendationsAsyncCollectionResultOfT(
+            return new ObjectRecommendationAsyncCollectionResultOfT(
                 _tuningOptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new TuningOptionsGetRecommendationsCollectionResultOfT(
+            return new ObjectRecommendationCollectionResultOfT(
                 _tuningOptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

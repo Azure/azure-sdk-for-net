@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new QueryPacksGetByResourceGroupAsyncCollectionResultOfT(_queryPacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LogAnalyticsQueryPackCollection.GetAll"), data => new LogAnalyticsQueryPackResource(Client, data));
+            return new AsyncPageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new LogAnalyticsQueryPackDataAsyncCollectionResultOfT(_queryPacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LogAnalyticsQueryPackCollection.GetAll"), data => new LogAnalyticsQueryPackResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new QueryPacksGetByResourceGroupCollectionResultOfT(_queryPacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LogAnalyticsQueryPackCollection.GetAll"), data => new LogAnalyticsQueryPackResource(Client, data));
+            return new PageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new LogAnalyticsQueryPackDataCollectionResultOfT(_queryPacksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LogAnalyticsQueryPackCollection.GetAll"), data => new LogAnalyticsQueryPackResource(Client, data));
         }
 
         /// <summary>

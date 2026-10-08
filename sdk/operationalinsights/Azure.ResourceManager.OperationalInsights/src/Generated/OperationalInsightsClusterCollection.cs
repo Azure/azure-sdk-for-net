@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperationalInsightsClusterCollection.GetAll"), data => new OperationalInsightsClusterResource(Client, data));
+            return new AsyncPageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new OperationalInsightsClusterDataAsyncCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperationalInsightsClusterCollection.GetAll"), data => new OperationalInsightsClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperationalInsightsClusterCollection.GetAll"), data => new OperationalInsightsClusterResource(Client, data));
+            return new PageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new OperationalInsightsClusterDataCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperationalInsightsClusterCollection.GetAll"), data => new OperationalInsightsClusterResource(Client, data));
         }
 
         /// <summary>

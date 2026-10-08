@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentsGetBySubscriptionAsyncCollectionResultOfT(EduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgramEnrollmentSubscriptionResource.GetEduEnrollments"), data => new EduEnrollmentResource(Client, data));
+            return new AsyncPageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentDataAsync0CollectionResultOfT(EduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgramEnrollmentSubscriptionResource.GetEduEnrollments"), data => new EduEnrollmentResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentsGetBySubscriptionCollectionResultOfT(EduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgramEnrollmentSubscriptionResource.GetEduEnrollments"), data => new EduEnrollmentResource(Client, data));
+            return new PageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentData0CollectionResultOfT(EduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgramEnrollmentSubscriptionResource.GetEduEnrollments"), data => new EduEnrollmentResource(Client, data));
         }
     }
 }

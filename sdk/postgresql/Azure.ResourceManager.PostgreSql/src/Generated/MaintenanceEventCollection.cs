@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventDataAsyncCollectionResultOfT(
                 _maintenanceEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventsGetAllCollectionResultOfT(
+            return new PageableWrapper<MaintenanceEventData, MaintenanceEventResource>(new MaintenanceEventDataCollectionResultOfT(
                 _maintenanceEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDbNodesGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDBNodeDataAsyncCollectionResultOfT(
                 _exascaleDbNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDbNodesGetByParentCollectionResultOfT(
+            return new PageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDBNodeDataCollectionResultOfT(
                 _exascaleDbNodesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PowerPlatformAccountCollection.GetAll"), data => new PowerPlatformAccountResource(Client, data));
+            return new AsyncPageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new PowerPlatformAccountDataAsyncCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PowerPlatformAccountCollection.GetAll"), data => new PowerPlatformAccountResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PowerPlatformAccountCollection.GetAll"), data => new PowerPlatformAccountResource(Client, data));
+            return new PageableWrapper<PowerPlatformAccountData, PowerPlatformAccountResource>(new PowerPlatformAccountDataCollectionResultOfT(_accountsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PowerPlatformAccountCollection.GetAll"), data => new PowerPlatformAccountResource(Client, data));
         }
 
         /// <summary>

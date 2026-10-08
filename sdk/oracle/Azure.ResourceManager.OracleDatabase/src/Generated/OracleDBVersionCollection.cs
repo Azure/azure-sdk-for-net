@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDBVersionData, OracleDBVersionResource>(new DbVersionsGetByLocationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OracleDBVersionData, OracleDBVersionResource>(new OracleDBVersionDataAsyncCollectionResultOfT(
                 _dbVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDBVersionData, OracleDBVersionResource>(new DbVersionsGetByLocationCollectionResultOfT(
+            return new PageableWrapper<OracleDBVersionData, OracleDBVersionResource>(new OracleDBVersionDataCollectionResultOfT(
                 _dbVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDBServerData, OracleDBServerResource>(new DbServersGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OracleDBServerData, OracleDBServerResource>(new OracleDBServerDataAsyncCollectionResultOfT(
                 _dbServersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDBServerData, OracleDBServerResource>(new DbServersGetByParentCollectionResultOfT(
+            return new PageableWrapper<OracleDBServerData, OracleDBServerResource>(new OracleDBServerDataCollectionResultOfT(
                 _dbServersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

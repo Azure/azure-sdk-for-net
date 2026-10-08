@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionAsyncCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspaceDataAsync0CollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
+            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspaceData0CollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>

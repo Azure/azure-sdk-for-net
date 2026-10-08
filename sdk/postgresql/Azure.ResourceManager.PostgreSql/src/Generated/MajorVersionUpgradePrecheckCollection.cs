@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckDataAsyncCollectionResultOfT(
                 _majorVersionUpgradePrecheckRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckGetAllCollectionResultOfT(
+            return new PageableWrapper<MajorVersionUpgradePrecheckData, MajorVersionUpgradePrecheckResource>(new MajorVersionUpgradePrecheckDataCollectionResultOfT(
                 _majorVersionUpgradePrecheckRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
