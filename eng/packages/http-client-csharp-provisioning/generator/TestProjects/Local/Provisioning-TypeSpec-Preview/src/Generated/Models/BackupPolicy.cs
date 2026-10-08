@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
 {
     /// <summary>
     /// Base backup policy with discriminator.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="PeriodicBackupPolicy"/> and <see cref="ContinuousBackupPolicy"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ContinuousBackupPolicy"/> and <see cref="PeriodicBackupPolicy"/>.
     /// </summary>
     public partial class BackupPolicy : ProvisionableConstruct
     {

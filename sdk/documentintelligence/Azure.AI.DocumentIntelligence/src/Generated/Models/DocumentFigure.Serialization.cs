@@ -261,7 +261,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             return new DocumentFigure(
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
-                spans,
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
                 elements ?? new ChangeTrackingList<string>(),
                 caption,
                 footnotes ?? new ChangeTrackingList<DocumentFootnote>(),

@@ -17,13 +17,6 @@ namespace Azure.Search.Documents
     public partial class AutocompleteOptions
     {
         /// <summary>
-        /// Initializes new instance of <see cref="AutocompleteOptions"/>
-        /// </summary>
-        public AutocompleteOptions()
-        {
-        }
-
-        /// <summary>
         /// The search text on which to base autocomplete results.
         /// </summary>
         internal string SearchText { get; set; }

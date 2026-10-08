@@ -101,10 +101,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("baseSizeTiB"u8);
-            writer.WriteNumberValue(BaseSizeTiB);
-            writer.WritePropertyName("extendedCapacitySizeTiB"u8);
-            writer.WriteNumberValue(ExtendedCapacitySizeTiB);
+            if (Optional.IsDefined(BaseSizeTiB))
+            {
+                writer.WritePropertyName("baseSizeTiB"u8);
+                writer.WriteNumberValue(BaseSizeTiB.Value);
+            }
+            if (Optional.IsDefined(ExtendedCapacitySizeTiB))
+            {
+                writer.WritePropertyName("extendedCapacitySizeTiB"u8);
+                writer.WriteNumberValue(ExtendedCapacitySizeTiB.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(TotalVolumeSizeGiB))
             {
                 writer.WritePropertyName("totalVolumeSizeGiB"u8);
@@ -115,17 +121,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("volumeGroupCount"u8);
                 writer.WriteNumberValue(VolumeGroupCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalIops))
+            if (Optional.IsDefined(TotalIops))
             {
                 writer.WritePropertyName("totalIops"u8);
                 writer.WriteNumberValue(TotalIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalMbps))
+            if (Optional.IsDefined(TotalMbps))
             {
                 writer.WritePropertyName("totalMBps"u8);
                 writer.WriteNumberValue(TotalMbps.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalSizeTiB))
+            if (Optional.IsDefined(TotalSizeTiB))
             {
                 writer.WritePropertyName("totalSizeTiB"u8);
                 writer.WriteNumberValue(TotalSizeTiB.Value);
@@ -149,6 +155,26 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 writer.WritePropertyName("autoScaleProperties"u8);
                 writer.WriteObjectValue(AutoScaleProperties, options);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsedCapacityGiB))
+            {
+                writer.WritePropertyName("usedCapacityGiB"u8);
+                writer.WriteNumberValue(UsedCapacityGiB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalReservedIops))
+            {
+                writer.WritePropertyName("totalReservedIops"u8);
+                writer.WriteNumberValue(TotalReservedIops.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalReservedMBps))
+            {
+                writer.WritePropertyName("totalReservedMBps"u8);
+                writer.WriteNumberValue(TotalReservedMBps.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -195,8 +221,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanSku sku = default;
             IList<string> availabilityZones = default;
             ElasticSanProvisioningState? provisioningState = default;
-            long baseSizeTiB = default;
-            long extendedCapacitySizeTiB = default;
+            long? baseSizeTiB = default;
+            long? extendedCapacitySizeTiB = default;
             long? totalVolumeSizeGiB = default;
             long? volumeGroupCount = default;
             long? totalIops = default;
@@ -205,6 +231,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
             AutoScaleProperties autoScaleProperties = default;
+            ElasticSanVersion? version = default;
+            long? usedCapacityGiB = default;
+            int? totalReservedIops = default;
+            int? totalReservedMBps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -245,11 +275,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (prop.NameEquals("baseSizeTiB"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     baseSizeTiB = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("extendedCapacitySizeTiB"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     extendedCapacitySizeTiB = prop.Value.GetInt64();
                     continue;
                 }
@@ -330,9 +368,45 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     autoScaleProperties = AutoScaleProperties.DeserializeAutoScaleProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("version"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    version = new ElasticSanVersion(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("usedCapacityGiB"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    usedCapacityGiB = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("totalReservedIops"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    totalReservedIops = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("totalReservedMBps"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    totalReservedMBps = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ElasticSanProperties(
@@ -349,6 +423,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
                 publicNetworkAccess,
                 autoScaleProperties,
+                version,
+                usedCapacityGiB,
+                totalReservedIops,
+                totalReservedMBps,
                 additionalBinaryDataProperties);
         }
     }

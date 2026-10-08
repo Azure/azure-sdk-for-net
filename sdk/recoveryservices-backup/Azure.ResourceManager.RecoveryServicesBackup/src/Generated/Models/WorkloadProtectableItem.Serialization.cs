@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup item. Workload-specific backup items are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/>, and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/>, and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownWorkloadProtectableItem))]
     public abstract partial class WorkloadProtectableItem : IJsonModel<WorkloadProtectableItem>
@@ -149,24 +149,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return FileShareProtectableItem.DeserializeFileShareProtectableItem(element, options);
                     case "Microsoft.ClassicCompute/virtualMachines":
                         return IaasClassicComputeVmProtectableItem.DeserializeIaasClassicComputeVmProtectableItem(element, options);
-                    case "IaaSVMProtectableItem":
-                        return IaasVmProtectableItem.DeserializeIaasVmProtectableItem(element, options);
                     case "Microsoft.Compute/virtualMachines":
                         return IaasComputeVmProtectableItem.DeserializeIaasComputeVmProtectableItem(element, options);
+                    case "IaaSVMProtectableItem":
+                        return IaasVmProtectableItem.DeserializeIaasVmProtectableItem(element, options);
                     case "AzureVmWorkloadProtectableItem":
                         return VmWorkloadProtectableItem.DeserializeVmWorkloadProtectableItem(element, options);
                     case "SAPAseDatabase":
                         return VmWorkloadSapAseDatabaseProtectableItem.DeserializeVmWorkloadSapAseDatabaseProtectableItem(element, options);
                     case "SAPAseSystem":
                         return VmWorkloadSapAseSystemProtectableItem.DeserializeVmWorkloadSapAseSystemProtectableItem(element, options);
-                    case "SAPHanaDatabase":
-                        return VmWorkloadSapHanaDatabaseProtectableItem.DeserializeVmWorkloadSapHanaDatabaseProtectableItem(element, options);
-                    case "SAPHanaSystem":
-                        return VmWorkloadSapHanaSystemProtectableItem.DeserializeVmWorkloadSapHanaSystemProtectableItem(element, options);
                     case "SAPHanaDBInstance":
                         return VmWorkloadSapHanaDBInstance.DeserializeVmWorkloadSapHanaDBInstance(element, options);
+                    case "SAPHanaDatabase":
+                        return VmWorkloadSapHanaDatabaseProtectableItem.DeserializeVmWorkloadSapHanaDatabaseProtectableItem(element, options);
                     case "HanaHSRContainer":
                         return VmWorkloadSapHanaHsrProtectableItem.DeserializeVmWorkloadSapHanaHsrProtectableItem(element, options);
+                    case "SAPHanaSystem":
+                        return VmWorkloadSapHanaSystemProtectableItem.DeserializeVmWorkloadSapHanaSystemProtectableItem(element, options);
                     case "SQLAvailabilityGroupContainer":
                         return VmWorkloadSqlAvailabilityGroupProtectableItem.DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(element, options);
                     case "SQLDataBase":
