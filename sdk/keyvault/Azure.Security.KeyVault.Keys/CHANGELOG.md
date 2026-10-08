@@ -1,6 +1,6 @@
 # Release History
 
-## 4.11.0-beta.5 (2026-10-05)
+## 4.11.0-beta.5 (2026-10-06)
 
 ### Bugs Fixed
 
