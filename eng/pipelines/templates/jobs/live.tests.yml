@@ -35,6 +35,18 @@ parameters:
   - name: TestSetupSteps
     type: stepList
     default: []
+  - name: AdditionalTestScript
+    type: string
+    default: ''
+  - name: AdditionalTestDisplayName
+    type: string
+    default: 'Additional tests'
+  - name: TestDisplayName
+    type: string
+    default: 'Build & Test (all tests for $(TestTargetFramework))'
+  - name: InstallTargetFrameworkOnly
+    type: boolean
+    default: false
   - name: DeployTestResources
     type: boolean
     default: true
@@ -128,6 +140,7 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           Container: ${{ parameters.UsePlatformContainer }}
+          InstallTargetFrameworkOnly: ${{ parameters.InstallTargetFrameworkOnly }}
 
       - ${{ if parameters.DeployTestResources }}:
         - ${{ each directory in coalesce(parameters.TestResourceDirectories, split(parameters.ServiceDirectory, '|')) }}:
@@ -153,9 +166,13 @@ jobs:
           }
         displayName: Set Test Mode
 
+      - ${{ if ne(parameters.AdditionalTestScript, '') }}:
+        - pwsh: Write-Host '##vso[task.setvariable variable=TestSetupCompleted]true'
+          displayName: Mark test setup complete
+
       - ${{ if eq('true', parameters.UseFederatedAuth) }}:
         - task: AzurePowerShell@5
-          displayName: "Build & Test (all tests for $(TestTargetFramework)) - Federated Auth"
+          displayName: '${{ parameters.TestDisplayName }} - Federated Auth'
           inputs:
             azureSubscription: ${{ parameters.CloudConfig.ServiceConnection }}
             azurePowerShellVersion: LatestVersion
@@ -219,11 +236,44 @@ jobs:
             /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
             /p:EnableSourceLink=false
             $(AdditionalTestArguments)
-          displayName: "Build & Test (all tests for $(TestTargetFramework)) - Client Secret Auth"
+          displayName: '${{ parameters.TestDisplayName }} - Client Secret Auth'
           env:
             AZURE_TEST_MODE: $(TestMode)
             ${{ each var in parameters.EnvVars }}:
               ${{ var.key }}: ${{ var.value }}
+
+      - ${{ if ne(parameters.AdditionalTestScript, '') }}:
+        - ${{ if parameters.UseFederatedAuth }}:
+          - task: AzurePowerShell@5
+            displayName: ${{ parameters.AdditionalTestDisplayName }}
+            condition: and(succeededOrFailed(), eq(variables['RunAdditionalTests'], 'true'), eq(variables['TestSetupCompleted'], 'true'))
+            inputs:
+              azureSubscription: ${{ parameters.CloudConfig.ServiceConnection }}
+              azurePowerShellVersion: LatestVersion
+              pwsh: true
+              ScriptType: InlineScript
+              Inline: |
+                . ./eng/common/TestResources/SubConfig-Helpers.ps1
+                $serviceDirectoryPrefix = BuildServiceDirectoryPrefix '${{ parameters.ServiceDirectory }}'
+                $account = (Get-AzContext).Account
+                $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id
+                $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants
+                [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}CLIENT_ID", $account.Id)
+                [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}TENANT_ID", $account.Tenants)
+                & './${{ parameters.AdditionalTestScript }}' -TestTargetFramework '$(TestTargetFramework)'
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+              ${{ if parameters.PersistOidcToken }}:
+                ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+              ${{ each var in parameters.EnvVars }}:
+                ${{ var.key }}: ${{ var.value }}
+        - ${{ else }}:
+          - pwsh: "& './${{ parameters.AdditionalTestScript }}' -TestTargetFramework '$(TestTargetFramework)'"
+            displayName: ${{ parameters.AdditionalTestDisplayName }}
+            condition: and(succeededOrFailed(), eq(variables['RunAdditionalTests'], 'true'), eq(variables['TestSetupCompleted'], 'true'))
+            env:
+              ${{ each var in parameters.EnvVars }}:
+                ${{ var.key }}: ${{ var.value }}
 
       - ${{ if parameters.DeployTestResources }}:
         - ${{ each directory in coalesce(parameters.TestResourceDirectories, split(parameters.ServiceDirectory, '|')) }}:

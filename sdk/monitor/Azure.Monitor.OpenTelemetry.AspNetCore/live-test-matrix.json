@@ -1,0 +1,116 @@
+{
+  "matrix": {
+    "Agent": {
+      "TestsLinux8": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net8.0",
+        "BuildConfiguration": "Debug",
+        "DependencyMode": "NuGet deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false --configuration Debug",
+        "RunAdditionalTests": "true",
+        "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+      },
+      "TestsLinux9": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net9.0",
+        "BuildConfiguration": "Release",
+        "DependencyMode": "source deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=true --configuration Release",
+        "RunAdditionalTests": "true",
+        "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+      },
+      "TestsLinux10": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net10.0",
+        "BuildConfiguration": "Debug",
+        "DependencyMode": "NuGet deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false --configuration Debug",
+        "RunAdditionalTests": "true",
+        "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+      },
+      "TestsWin462": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net462",
+        "BuildConfiguration": "Release",
+        "DependencyMode": "source deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=true --configuration Release",
+        "RunAdditionalTests": "false"
+      },
+      "TestsWin8": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net8.0",
+        "BuildConfiguration": "Debug",
+        "DependencyMode": "NuGet deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false --configuration Debug",
+        "RunAdditionalTests": "true",
+        "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+      },
+      "TestsWin9": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net9.0",
+        "BuildConfiguration": "Release",
+        "DependencyMode": "source deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=true --configuration Release",
+        "RunAdditionalTests": "true",
+        "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+      },
+      "TestsWin10": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net10.0",
+        "BuildConfiguration": "Debug",
+        "DependencyMode": "NuGet deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false --configuration Debug",
+        "RunAdditionalTests": "true",
+        "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+      },
+      "TestsMac8": {
+        "OSVmImage": "env:MACVMIMAGE",
+        "Pool": "env:MACPOOL",
+        "TestTargetFramework": "net8.0",
+        "BuildConfiguration": "Release",
+        "DependencyMode": "source deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=true --configuration Release",
+        "RunAdditionalTests": "true",
+        "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+      },
+      "TestsMac9": {
+        "OSVmImage": "env:MACVMIMAGE",
+        "Pool": "env:MACPOOL",
+        "TestTargetFramework": "net9.0",
+        "BuildConfiguration": "Debug",
+        "DependencyMode": "NuGet deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false --configuration Debug",
+        "RunAdditionalTests": "true",
+        "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+      },
+      "TestsMac10": {
+        "OSVmImage": "env:MACVMIMAGE",
+        "Pool": "env:MACPOOL",
+        "TestTargetFramework": "net10.0",
+        "BuildConfiguration": "Release",
+        "DependencyMode": "source deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=true --configuration Release",
+        "RunAdditionalTests": "true",
+        "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+      },
+      "CoverageWin10": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net10.0",
+        "BuildConfiguration": "Debug",
+        "DependencyMode": "NuGet deps",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false --configuration Debug",
+        "SupportsRecording": true,
+        "CollectCoverage": true,
+        "RunAdditionalTests": "false"
+      }
+    }
+  }
+}

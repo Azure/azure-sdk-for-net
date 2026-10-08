@@ -47,6 +47,18 @@ parameters:
   - name: TestSetupSteps
     type: stepList
     default: []
+  - name: AdditionalTestScript
+    type: string
+    default: ''
+  - name: AdditionalTestDisplayName
+    type: string
+    default: 'Additional tests'
+  - name: TestDisplayName
+    type: string
+    default: 'Build & Test (all tests for $(TestTargetFramework))'
+  - name: InstallTargetFrameworkOnly
+    type: boolean
+    default: false
   - name: DeployTestResources
     type: boolean
     default: true
@@ -142,6 +154,10 @@ extends:
                       TestResourceDirectories: ${{ parameters.TestResourceDirectories }}
                       Project: ${{ parameters.Project }}
                       TestSetupSteps: ${{ parameters.TestSetupSteps }}
+                      AdditionalTestScript: ${{ parameters.AdditionalTestScript }}
+                      AdditionalTestDisplayName: ${{ parameters.AdditionalTestDisplayName }}
+                      TestDisplayName: ${{ parameters.TestDisplayName }}
+                      InstallTargetFrameworkOnly: ${{ parameters.InstallTargetFrameworkOnly }}
                       DeployTestResources: ${{ parameters.DeployTestResources }}
                       UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                       PersistOidcToken: ${{ parameters.PersistOidcToken }}

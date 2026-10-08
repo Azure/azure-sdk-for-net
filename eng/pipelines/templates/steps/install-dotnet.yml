@@ -2,6 +2,7 @@ parameters:
   EnableNuGetCache: true
   NuGetCacheKey: 'Build'
   Container: false
+  InstallTargetFrameworkOnly: false
 
 steps:
   # Need to authenticate so our pipeline can update packages in the feed.
@@ -32,6 +33,7 @@ steps:
       performMultiLevelLookup: true
   - task: UseDotNet@2 # We need .NET 9 for the .NET 9 tests
     displayName: 'Use .NET 9.0 SDK'
+    condition: and(succeeded(), or(${{ not(parameters.InstallTargetFrameworkOnly) }}, eq(variables['TestTargetFramework'], 'net9.0')))
     retryCountOnTaskFailure: 3
     inputs:
       # AspNetCore runtime pack can't be installed outside of SDK and we need it for integration tests
@@ -40,6 +42,7 @@ steps:
       version: "9.0.x"
   - task: UseDotNet@2 # We need .NET 8 for the .NET 8 tests
     displayName: 'Use .NET 8.0 SDK'
+    condition: and(succeeded(), or(${{ not(parameters.InstallTargetFrameworkOnly) }}, eq(variables['TestTargetFramework'], 'net8.0')))
     retryCountOnTaskFailure: 3
     inputs:
       # AspNetCore runtime pack can't be installed outside of SDK and we need it for integration tests
