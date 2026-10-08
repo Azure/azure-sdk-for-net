@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new BookshelvesGetByResourceGroupAsyncCollectionResultOfT(_bookshelvesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryBookshelfCollection.GetAll"), data => new DiscoveryBookshelfResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new DiscoveryBookshelfDataAsyncCollectionResultOfT(_bookshelvesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryBookshelfCollection.GetAll"), data => new DiscoveryBookshelfResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new BookshelvesGetByResourceGroupCollectionResultOfT(_bookshelvesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryBookshelfCollection.GetAll"), data => new DiscoveryBookshelfResource(Client, data));
+            return new PageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new DiscoveryBookshelfDataCollectionResultOfT(_bookshelvesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryBookshelfCollection.GetAll"), data => new DiscoveryBookshelfResource(Client, data));
         }
 
         /// <summary>

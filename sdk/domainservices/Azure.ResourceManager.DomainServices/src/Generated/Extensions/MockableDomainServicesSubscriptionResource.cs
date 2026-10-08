@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DomainServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DomainServiceData, DomainServiceResource>(new DomainServiceOperationGroupGetAllAsyncCollectionResultOfT(DomainServiceOperationGroupRestClient, Id.SubscriptionId, context, "MockableDomainServicesSubscriptionResource.GetDomainServices"), data => new DomainServiceResource(Client, data));
+            return new AsyncPageableWrapper<DomainServiceData, DomainServiceResource>(new DomainServiceDataAsync0CollectionResultOfT(DomainServiceOperationGroupRestClient, Id.SubscriptionId, context, "MockableDomainServicesSubscriptionResource.GetDomainServices"), data => new DomainServiceResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DomainServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DomainServiceData, DomainServiceResource>(new DomainServiceOperationGroupGetAllCollectionResultOfT(DomainServiceOperationGroupRestClient, Id.SubscriptionId, context, "MockableDomainServicesSubscriptionResource.GetDomainServices"), data => new DomainServiceResource(Client, data));
+            return new PageableWrapper<DomainServiceData, DomainServiceResource>(new DomainServiceData0CollectionResultOfT(DomainServiceOperationGroupRestClient, Id.SubscriptionId, context, "MockableDomainServicesSubscriptionResource.GetDomainServices"), data => new DomainServiceResource(Client, data));
         }
     }
 }

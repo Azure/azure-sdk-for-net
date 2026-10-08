@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new ElasticTagRuleDataAsyncCollectionResultOfT(
                 _tagRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new ElasticTagRuleDataCollectionResultOfT(
                 _tagRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

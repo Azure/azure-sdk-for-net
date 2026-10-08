@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new AddressResourcesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new EdgeOrderAddressDataAsync0CollectionResultOfT(
                 AddressResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new AddressResourcesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new EdgeOrderAddressData0CollectionResultOfT(
                 AddressResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeOrderItemData, EdgeOrderItemResource>(new OrderItemResourcesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeOrderItemData, EdgeOrderItemResource>(new EdgeOrderItemDataAsync0CollectionResultOfT(
                 OrderItemResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeOrderItemData, EdgeOrderItemResource>(new OrderItemResourcesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<EdgeOrderItemData, EdgeOrderItemResource>(new EdgeOrderItemData0CollectionResultOfT(
                 OrderItemResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProductsAndConfigurationsOperationGroupGetConfigurationsAsyncCollectionResultOfT(
+            return new ProductConfigurationAsyncCollectionResultOfT(
                 ProductsAndConfigurationsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 ConfigurationsContent.ToRequestContent(content),
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProductsAndConfigurationsOperationGroupGetConfigurationsCollectionResultOfT(
+            return new ProductConfigurationCollectionResultOfT(
                 ProductsAndConfigurationsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 ConfigurationsContent.ToRequestContent(content),
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProductsAndConfigurationsOperationGroupGetProductFamiliesAsyncCollectionResultOfT(
+            return new ProductFamilyAsyncCollectionResultOfT(
                 ProductsAndConfigurationsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 ProductFamiliesContent.ToRequestContent(content),
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProductsAndConfigurationsOperationGroupGetProductFamiliesCollectionResultOfT(
+            return new ProductFamilyCollectionResultOfT(
                 ProductsAndConfigurationsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 ProductFamiliesContent.ToRequestContent(content),
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProductsAndConfigurationsOperationGroupGetProductFamiliesMetadataAsyncCollectionResultOfT(ProductsAndConfigurationsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata");
+            return new ProductFamiliesMetadataAsyncCollectionResultOfT(ProductsAndConfigurationsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata");
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProductsAndConfigurationsOperationGroupGetProductFamiliesMetadataCollectionResultOfT(ProductsAndConfigurationsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata");
+            return new ProductFamiliesMetadataCollectionResultOfT(ProductsAndConfigurationsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata");
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroup2GetEdgeOrdersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new EdgeOrderDataAsync0CollectionResultOfT(
                 OrdersOperationGroup2RestClient,
                 Guid.Parse(Id.SubscriptionId),
                 skipToken,
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroup2GetEdgeOrdersCollectionResultOfT(
+            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new EdgeOrderData0CollectionResultOfT(
                 OrdersOperationGroup2RestClient,
                 Guid.Parse(Id.SubscriptionId),
                 skipToken,

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new StorageContainersGetByResourceGroupAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new DiscoveryStorageContainerDataAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new StorageContainersGetByResourceGroupCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
+            return new PageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new DiscoveryStorageContainerDataCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
         }
 
         /// <summary>

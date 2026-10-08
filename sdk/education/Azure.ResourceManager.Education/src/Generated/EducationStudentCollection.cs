@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EducationStudentData, EducationStudentResource>(new StudentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EducationStudentData, EducationStudentResource>(new EducationStudentDataAsyncCollectionResultOfT(
                 _studentsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EducationStudentData, EducationStudentResource>(new StudentsGetAllCollectionResultOfT(
+            return new PageableWrapper<EducationStudentData, EducationStudentResource>(new EducationStudentDataCollectionResultOfT(
                 _studentsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,

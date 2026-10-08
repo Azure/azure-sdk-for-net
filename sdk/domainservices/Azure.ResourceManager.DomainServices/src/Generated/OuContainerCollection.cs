@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DomainServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OuContainerData, OuContainerResource>(new OuContainerGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OuContainerData, OuContainerResource>(new OuContainerDataAsyncCollectionResultOfT(
                 _ouContainerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DomainServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OuContainerData, OuContainerResource>(new OuContainerGetAllCollectionResultOfT(
+            return new PageableWrapper<OuContainerData, OuContainerResource>(new OuContainerDataCollectionResultOfT(
                 _ouContainerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkspacePrivateLinkResourceData, WorkspacePrivateLinkResource>(new WorkspacePrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkspacePrivateLinkResourceData, WorkspacePrivateLinkResource>(new WorkspacePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _workspacePrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkspacePrivateLinkResourceData, WorkspacePrivateLinkResource>(new WorkspacePrivateLinkResourcesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<WorkspacePrivateLinkResourceData, WorkspacePrivateLinkResource>(new WorkspacePrivateLinkResourceDataCollectionResultOfT(
                 _workspacePrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

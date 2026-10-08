@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new DynatraceTagRuleDataAsyncCollectionResultOfT(
                 _tagRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<DynatraceTagRuleData, DynatraceTagRuleResource>(new DynatraceTagRuleDataCollectionResultOfT(
                 _tagRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

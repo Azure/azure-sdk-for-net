@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverPolicyVirtualNetworkLinkData, DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsResolverPolicyVirtualNetworkLinkData, DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinkDataAsyncCollectionResultOfT(
                 _dnsResolverPolicyVirtualNetworkLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverPolicyVirtualNetworkLinkData, DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinksGetAllCollectionResultOfT(
+            return new PageableWrapper<DnsResolverPolicyVirtualNetworkLinkData, DnsResolverPolicyVirtualNetworkLinkResource>(new DnsResolverPolicyVirtualNetworkLinkDataCollectionResultOfT(
                 _dnsResolverPolicyVirtualNetworkLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

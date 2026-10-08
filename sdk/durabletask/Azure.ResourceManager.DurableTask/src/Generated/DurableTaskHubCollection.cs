@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new DurableTaskHubDataAsyncCollectionResultOfT(
                 _taskHubsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerCollectionResultOfT(
+            return new PageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new DurableTaskHubDataCollectionResultOfT(
                 _taskHubsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

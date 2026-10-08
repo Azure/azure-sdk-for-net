@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new AddressResourcesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new EdgeOrderAddressDataAsyncCollectionResultOfT(
                 _addressResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new AddressResourcesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new EdgeOrderAddressDataCollectionResultOfT(
                 _addressResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

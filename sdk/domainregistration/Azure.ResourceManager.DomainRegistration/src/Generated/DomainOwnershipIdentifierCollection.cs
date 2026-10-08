@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifiersGetOwnershipIdentifiersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifierDataAsyncCollectionResultOfT(
                 _domainOwnershipIdentifiersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DomainRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifiersGetOwnershipIdentifiersCollectionResultOfT(
+            return new PageableWrapper<DomainOwnershipIdentifierData, DomainOwnershipIdentifierResource>(new DomainOwnershipIdentifierDataCollectionResultOfT(
                 _domainOwnershipIdentifiersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

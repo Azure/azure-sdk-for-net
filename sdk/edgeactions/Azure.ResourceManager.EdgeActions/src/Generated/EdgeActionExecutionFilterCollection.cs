@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeActionExecutionFilterData, EdgeActionExecutionFilterResource>(new EdgeActionExecutionFiltersGetByEdgeActionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeActionExecutionFilterData, EdgeActionExecutionFilterResource>(new EdgeActionExecutionFilterDataAsyncCollectionResultOfT(
                 _edgeActionExecutionFiltersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeActionExecutionFilterData, EdgeActionExecutionFilterResource>(new EdgeActionExecutionFiltersGetByEdgeActionCollectionResultOfT(
+            return new PageableWrapper<EdgeActionExecutionFilterData, EdgeActionExecutionFilterResource>(new EdgeActionExecutionFilterDataCollectionResultOfT(
                 _edgeActionExecutionFiltersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
