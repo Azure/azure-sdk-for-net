@@ -80,11 +80,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("protectionSolutionType"u8);
                 writer.WriteStringValue(ProtectionSolutionType.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationMode))
-            {
-                writer.WritePropertyName("replicationMode"u8);
-                writer.WriteStringValue(ReplicationMode.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
@@ -223,7 +218,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResourceProtectionSolutionType? protectionSolutionType = default;
-            ReplicationMode? replicationMode = default;
             ResourceProtectionStatus? protectionStatus = default;
             ResourceIdentifier resourceId = default;
             AzureLocation? activeLocation = default;
@@ -246,15 +240,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     protectionSolutionType = new ResourceProtectionSolutionType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("replicationMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    replicationMode = new ReplicationMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("protectionStatus"u8))
@@ -409,7 +394,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             return new ResourceProtectionSolutionSettings(
                 protectionSolutionType,
-                replicationMode,
                 protectionStatus,
                 resourceId,
                 activeLocation,

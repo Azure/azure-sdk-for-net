@@ -87,11 +87,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("zonalResiliency"u8);
                 writer.WriteObjectValue(ZonalResiliency, options);
             }
-            if (Optional.IsDefined(RegionalResiliency))
-            {
-                writer.WritePropertyName("regionalResiliency"u8);
-                writer.WriteObjectValue(RegionalResiliency, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,7 +131,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             ResourceIdentifier assignmentId = default;
             UnifiedResilienceItemGoalRequirement zonalResiliency = default;
-            UnifiedResilienceItemGoalRequirement regionalResiliency = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,21 +148,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     zonalResiliency = UnifiedResilienceItemGoalRequirement.DeserializeUnifiedResilienceItemGoalRequirement(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("regionalResiliency"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    regionalResiliency = UnifiedResilienceItemGoalRequirement.DeserializeUnifiedResilienceItemGoalRequirement(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResilienceManagementGoalsInfo(assignmentId, zonalResiliency, regionalResiliency, additionalBinaryDataProperties);
+            return new ResilienceManagementGoalsInfo(assignmentId, zonalResiliency, additionalBinaryDataProperties);
         }
     }
 }

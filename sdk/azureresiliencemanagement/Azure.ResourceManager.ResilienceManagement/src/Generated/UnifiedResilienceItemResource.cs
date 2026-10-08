@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(ResourceType, out string unifiedResilienceItemApiVersion);
             _unifiedResilienceItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _unifiedResilienceItemsRestClient = new UnifiedResilienceItems(_unifiedResilienceItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, unifiedResilienceItemApiVersion ?? "2026-10-31-preview");
+            _unifiedResilienceItemsRestClient = new UnifiedResilienceItems(_unifiedResilienceItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, unifiedResilienceItemApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-31-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-31-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

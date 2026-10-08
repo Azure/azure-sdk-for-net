@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(ResourceType, out string drillRunTargetApiVersion);
             _drillRunResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _drillRunResourcesRestClient = new DrillRunResources(_drillRunResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, drillRunTargetApiVersion ?? "2026-10-31-preview");
+            _drillRunResourcesRestClient = new DrillRunResources(_drillRunResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, drillRunTargetApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-31-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-31-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

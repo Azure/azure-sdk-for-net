@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResilienceManagement;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Definition of the resiliency posture computed for the unified resilience item. </summary>
-    public partial class UnifiedResilienceItemResiliencyPosture : IJsonModel<UnifiedResilienceItemResiliencyPosture>
+    internal partial class UnifiedResilienceItemResiliencyPosture : IJsonModel<UnifiedResilienceItemResiliencyPosture>
     {
         /// <summary> Initializes a new instance of <see cref="UnifiedResilienceItemResiliencyPosture"/> for deserialization. </summary>
         internal UnifiedResilienceItemResiliencyPosture()
@@ -81,11 +81,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("zonalResiliency"u8);
             writer.WriteObjectValue(ZonalResiliency, options);
-            if (Optional.IsDefined(RegionalResiliency))
-            {
-                writer.WritePropertyName("regionalResiliency"u8);
-                writer.WriteObjectValue(RegionalResiliency, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,7 +124,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             UnifiedResilienceItemZonalResiliencyPosture zonalResiliency = default;
-            UnifiedResilienceItemRegionalResiliencyPosture regionalResiliency = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,21 +132,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     zonalResiliency = UnifiedResilienceItemZonalResiliencyPosture.DeserializeUnifiedResilienceItemZonalResiliencyPosture(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("regionalResiliency"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    regionalResiliency = UnifiedResilienceItemRegionalResiliencyPosture.DeserializeUnifiedResilienceItemRegionalResiliencyPosture(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnifiedResilienceItemResiliencyPosture(zonalResiliency, regionalResiliency, additionalBinaryDataProperties);
+            return new UnifiedResilienceItemResiliencyPosture(zonalResiliency, additionalBinaryDataProperties);
         }
     }
 }

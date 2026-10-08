@@ -131,8 +131,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ResilienceManagementErrorDetail monitoringRbacAssignmentError = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             DrillType drillType = default;
-            FaultEligibility? faultEligibility = default;
-            FaultIneligibleReason? faultIneligibleReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -306,24 +304,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     drillType = new DrillType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("faultEligibility"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    faultEligibility = new FaultEligibility(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("faultIneligibleReason"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    faultIneligibleReason = new FaultIneligibleReason(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -348,8 +328,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 monitoringRbacAssignmentError,
                 provisioningState,
                 drillType,
-                faultEligibility,
-                faultIneligibleReason,
                 additionalBinaryDataProperties);
         }
     }

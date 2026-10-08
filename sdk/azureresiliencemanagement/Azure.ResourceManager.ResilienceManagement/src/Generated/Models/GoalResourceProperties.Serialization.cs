@@ -87,11 +87,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("zonalResiliency"u8);
                 writer.WriteObjectValue(ZonalResiliency, options);
             }
-            if (Optional.IsDefined(RegionalResiliency))
-            {
-                writer.WritePropertyName("regionalResiliency"u8);
-                writer.WriteObjectValue(RegionalResiliency, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -141,7 +136,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             ResourceIdentifier resourceArmId = default;
             ResiliencyProperties zonalResiliency = default;
-            ResiliencyProperties regionalResiliency = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,15 +154,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     zonalResiliency = ResiliencyProperties.DeserializeResiliencyProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("regionalResiliency"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    regionalResiliency = ResiliencyProperties.DeserializeResiliencyProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -183,7 +168,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GoalResourceProperties(resourceArmId, zonalResiliency, regionalResiliency, provisioningState, additionalBinaryDataProperties);
+            return new GoalResourceProperties(resourceArmId, zonalResiliency, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

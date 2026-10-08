@@ -81,21 +81,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 throw new FormatException($"The model {nameof(RegionalDrillResourceProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(RegionalResiliencyStatus))
-            {
-                writer.WritePropertyName("regionalResiliencyStatus"u8);
-                writer.WriteStringValue(RegionalResiliencyStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationMode))
-            {
-                writer.WritePropertyName("replicationMode"u8);
-                writer.WriteStringValue(ReplicationMode.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(AdvisorRegionalRecommendationId))
-            {
-                writer.WritePropertyName("advisorRegionalRecommendationId"u8);
-                writer.WriteStringValue(AdvisorRegionalRecommendationId);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -141,12 +126,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ResilienceManagementErrorDetail monitoringRbacAssignmentError = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             DrillType drillType = default;
-            FaultEligibility? faultEligibility = default;
-            FaultIneligibleReason? faultIneligibleReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RegionalResiliencyStatus? regionalResiliencyStatus = default;
-            ReplicationMode? replicationMode = default;
-            ResourceIdentifier advisorRegionalRecommendationId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resourceId"u8))
@@ -319,51 +299,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     drillType = new DrillType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("faultEligibility"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    faultEligibility = new FaultEligibility(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("faultIneligibleReason"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    faultIneligibleReason = new FaultIneligibleReason(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("regionalResiliencyStatus"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    regionalResiliencyStatus = new RegionalResiliencyStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("replicationMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    replicationMode = new ReplicationMode(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("advisorRegionalRecommendationId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    advisorRegionalRecommendationId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -388,12 +323,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 monitoringRbacAssignmentError,
                 provisioningState,
                 drillType,
-                faultEligibility,
-                faultIneligibleReason,
-                additionalBinaryDataProperties,
-                regionalResiliencyStatus,
-                replicationMode,
-                advisorRegionalRecommendationId);
+                additionalBinaryDataProperties);
         }
     }
 }

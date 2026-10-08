@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Definition of the resiliency posture computed for the unified resilience item. </summary>
-    public partial class UnifiedResilienceItemResiliencyPosture
+    internal partial class UnifiedResilienceItemResiliencyPosture
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,19 +25,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="UnifiedResilienceItemResiliencyPosture"/>. </summary>
         /// <param name="zonalResiliency"> The zonal resiliency section of the resiliency posture. </param>
-        /// <param name="regionalResiliency"> The regional resiliency section of the resiliency posture. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnifiedResilienceItemResiliencyPosture(UnifiedResilienceItemZonalResiliencyPosture zonalResiliency, UnifiedResilienceItemRegionalResiliencyPosture regionalResiliency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnifiedResilienceItemResiliencyPosture(UnifiedResilienceItemZonalResiliencyPosture zonalResiliency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ZonalResiliency = zonalResiliency;
-            RegionalResiliency = regionalResiliency;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The zonal resiliency section of the resiliency posture. </summary>
         public UnifiedResilienceItemZonalResiliencyPosture ZonalResiliency { get; }
-
-        /// <summary> The regional resiliency section of the resiliency posture. </summary>
-        public UnifiedResilienceItemRegionalResiliencyPosture RegionalResiliency { get; }
     }
 }

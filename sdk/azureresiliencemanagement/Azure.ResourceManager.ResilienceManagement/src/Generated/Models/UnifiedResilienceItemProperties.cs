@@ -51,12 +51,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResilienceManagementGoalsInfo Goals { get; }
 
         /// <summary> Resiliency posture computed for the service group. </summary>
-        public UnifiedResilienceItemResiliencyPosture ResiliencyPosture { get; }
+        internal UnifiedResilienceItemResiliencyPosture ResiliencyPosture { get; }
 
         /// <summary> Usage plan and enrollment billing information for the service group. </summary>
         public UnifiedResilienceItemBillingInfo BillingInfo { get; }
 
         /// <summary> Last modified time of the unified resilience item. </summary>
         public DateTimeOffset LastModifiedOn { get; }
+
+        /// <summary> The zonal resiliency section of the resiliency posture. </summary>
+        public UnifiedResilienceItemZonalResiliencyPosture ZonalResiliency
+        {
+            get
+            {
+                return ResiliencyPosture.ZonalResiliency;
+            }
+        }
     }
 }

@@ -40,57 +40,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringRbacAssignmentError"> Monitoring RBAC assignment error, if any. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="drillType"> The discriminator for the Drill Resource object hierarchy. Matches the parent Drill type. </param>
-        /// <param name="faultEligibility">
-        /// Normal fault eligibility for a drill resource. Currently populated for regional resources only.
-        /// Omitted until evaluated. Eligibility does not indicate inclusion or readiness,
-        /// and force inclusion does not change this value.
-        /// </param>
-        /// <param name="faultIneligibleReason">
-        /// Reason the resource is ineligible under normal fault inclusion policy. Currently populated for regional resources only.
-        /// Contains the single applicable recovery-plan reason when Ineligible.
-        /// Omitted when Eligible, Unknown, or not yet evaluated. Failed or incomplete recovery-plan reads do not establish non-inclusion.
-        /// Binding and permission errors are reported separately in attentionReason and error fields.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="regionalResiliencyStatus">
-        /// Regional resiliency status reported by the selected regional protection solution.
-        /// Resilient corresponds to an available true posture value; NotResilient corresponds to an available false value.
-        /// Omitted when the posture is unknown or unavailable; unavailable data is not reported as NotResilient.
-        /// </param>
-        /// <param name="replicationMode">
-        /// Replication mode of the selected regional protection solution.
-        /// Omitted when no applicable mode is available.
-        /// </param>
-        /// <param name="advisorRegionalRecommendationId">
-        /// Azure resource ID of the matching regional Advisor recommendation instance.
-        /// The recommendation type is identified separately by advisorRecommendationTypeId.
-        /// Omitted when no matching recommendation exists.
-        /// </param>
-        internal RegionalDrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionState? forceInclusionState, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, DrillType drillType, FaultEligibility? faultEligibility, FaultIneligibleReason? faultIneligibleReason, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegionalResiliencyStatus? regionalResiliencyStatus, ReplicationMode? replicationMode, ResourceIdentifier advisorRegionalRecommendationId) : base(resourceId, resourceType, activeLocations, recoveryLocations, inclusionState, recoveryPlanInclusionState, recoveryPlanExclusionReason, resourceProtectionSolutionType, readinessState, faultState, faultProperties, forceInclusionState, attentionReason, advisorRecommendationTypeId, rbacAssignmentError, monitoringRbacAssignmentError, provisioningState, drillType, faultEligibility, faultIneligibleReason, additionalBinaryDataProperties)
+        internal RegionalDrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionState? forceInclusionState, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, DrillType drillType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceId, resourceType, activeLocations, recoveryLocations, inclusionState, recoveryPlanInclusionState, recoveryPlanExclusionReason, resourceProtectionSolutionType, readinessState, faultState, faultProperties, forceInclusionState, attentionReason, advisorRecommendationTypeId, rbacAssignmentError, monitoringRbacAssignmentError, provisioningState, drillType, additionalBinaryDataProperties)
         {
-            RegionalResiliencyStatus = regionalResiliencyStatus;
-            ReplicationMode = replicationMode;
-            AdvisorRegionalRecommendationId = advisorRegionalRecommendationId;
         }
-
-        /// <summary>
-        /// Regional resiliency status reported by the selected regional protection solution.
-        /// Resilient corresponds to an available true posture value; NotResilient corresponds to an available false value.
-        /// Omitted when the posture is unknown or unavailable; unavailable data is not reported as NotResilient.
-        /// </summary>
-        public RegionalResiliencyStatus? RegionalResiliencyStatus { get; }
-
-        /// <summary>
-        /// Replication mode of the selected regional protection solution.
-        /// Omitted when no applicable mode is available.
-        /// </summary>
-        public ReplicationMode? ReplicationMode { get; }
-
-        /// <summary>
-        /// Azure resource ID of the matching regional Advisor recommendation instance.
-        /// The recommendation type is identified separately by advisorRecommendationTypeId.
-        /// Omitted when no matching recommendation exists.
-        /// </summary>
-        public ResourceIdentifier AdvisorRegionalRecommendationId { get; }
     }
 }

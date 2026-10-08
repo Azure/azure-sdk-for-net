@@ -83,16 +83,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("requireZonalResiliency"u8);
             writer.WriteBooleanValue(RequireZonalResiliency);
-            if (Optional.IsDefined(RequireRegionalResiliency))
-            {
-                writer.WritePropertyName("requireRegionalResiliency"u8);
-                writer.WriteBooleanValue(RequireRegionalResiliency.Value);
-            }
-            if (Optional.IsDefined(RegionalObjectives))
-            {
-                writer.WritePropertyName("regionalObjectives"u8);
-                writer.WriteObjectValue(RegionalObjectives, options);
-            }
             if (Optional.IsCollectionDefined(ServiceLevelResources))
             {
                 writer.WritePropertyName("serviceLevelResources"u8);
@@ -156,8 +146,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             bool requireZonalResiliency = default;
-            bool? requireRegionalResiliency = default;
-            RegionalObjectives regionalObjectives = default;
             IList<ServiceLevelTarget> serviceLevelResources = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
@@ -167,24 +155,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 if (prop.NameEquals("requireZonalResiliency"u8))
                 {
                     requireZonalResiliency = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("requireRegionalResiliency"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requireRegionalResiliency = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("regionalObjectives"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    regionalObjectives = RegionalObjectives.DeserializeRegionalObjectives(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("serviceLevelResources"u8))
@@ -224,14 +194,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GoalAssignmentProperties(
-                requireZonalResiliency,
-                requireRegionalResiliency,
-                regionalObjectives,
-                serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>(),
-                provisioningState,
-                errorDetails,
-                additionalBinaryDataProperties);
+            return new GoalAssignmentProperties(requireZonalResiliency, serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>(), provisioningState, errorDetails, additionalBinaryDataProperties);
         }
     }
 }

@@ -32,19 +32,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringRbacAssignmentError"> Monitoring RBAC assignment error, if any. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="drillType"> The discriminator for the Drill Resource object hierarchy. Matches the parent Drill type. </param>
-        /// <param name="faultEligibility">
-        /// Normal fault eligibility for a drill resource. Currently populated for regional resources only.
-        /// Omitted until evaluated. Eligibility does not indicate inclusion or readiness,
-        /// and force inclusion does not change this value.
-        /// </param>
-        /// <param name="faultIneligibleReason">
-        /// Reason the resource is ineligible under normal fault inclusion policy. Currently populated for regional resources only.
-        /// Contains the single applicable recovery-plan reason when Ineligible.
-        /// Omitted when Eligible, Unknown, or not yet evaluated. Failed or incomplete recovery-plan reads do not establish non-inclusion.
-        /// Binding and permission errors are reported separately in attentionReason and error fields.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionState? forceInclusionState, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, DrillType drillType, FaultEligibility? faultEligibility, FaultIneligibleReason? faultIneligibleReason, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceId, resourceType, activeLocations, recoveryLocations, inclusionState, recoveryPlanInclusionState, recoveryPlanExclusionReason, resourceProtectionSolutionType, readinessState, faultState, faultProperties, forceInclusionState, attentionReason, advisorRecommendationTypeId, rbacAssignmentError, monitoringRbacAssignmentError, provisioningState, drillType != default ? drillType : "unknown", faultEligibility, faultIneligibleReason, additionalBinaryDataProperties)
+        internal UnknownDrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionState? forceInclusionState, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResilienceManagementErrorDetail rbacAssignmentError, ResilienceManagementErrorDetail monitoringRbacAssignmentError, ResilienceManagementProvisioningState? provisioningState, DrillType drillType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceId, resourceType, activeLocations, recoveryLocations, inclusionState, recoveryPlanInclusionState, recoveryPlanExclusionReason, resourceProtectionSolutionType, readinessState, faultState, faultProperties, forceInclusionState, attentionReason, advisorRecommendationTypeId, rbacAssignmentError, monitoringRbacAssignmentError, provisioningState, drillType != default ? drillType : "unknown", additionalBinaryDataProperties)
         {
         }
     }
