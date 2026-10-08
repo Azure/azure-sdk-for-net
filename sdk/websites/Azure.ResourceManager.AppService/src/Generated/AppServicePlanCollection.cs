@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlansGetByResourceGroupAsyncCollectionResultOfT(_appServicePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
+            return new AsyncPageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlanDataAsync0CollectionResultOfT(_appServicePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlansGetByResourceGroupCollectionResultOfT(_appServicePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
+            return new PageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlanData0CollectionResultOfT(_appServicePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
         }
 
         /// <summary>

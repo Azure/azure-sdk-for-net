@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapMonitorData, SapMonitorResource>(new MonitorsGetAllAsyncCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapMonitorSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
+            return new AsyncPageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorDataAsync0CollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapMonitorSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapMonitorData, SapMonitorResource>(new MonitorsGetAllCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapMonitorSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
+            return new PageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorData0CollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapMonitorSubscriptionResource.GetSapMonitors"), data => new SapMonitorResource(Client, data));
         }
     }
 }

@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppCertificateData, AppCertificateResource>(new CertificatesGetByResourceGroupAsyncCollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppCertificateCollection.GetAll"), data => new AppCertificateResource(Client, data));
+            return new AsyncPageableWrapper<AppCertificateData, AppCertificateResource>(new AppCertificateDataAsync0CollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppCertificateCollection.GetAll"), data => new AppCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppCertificateData, AppCertificateResource>(new CertificatesGetByResourceGroupCollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppCertificateCollection.GetAll"), data => new AppCertificateResource(Client, data));
+            return new PageableWrapper<AppCertificateData, AppCertificateResource>(new AppCertificateData0CollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppCertificateCollection.GetAll"), data => new AppCertificateResource(Client, data));
         }
 
         /// <summary>

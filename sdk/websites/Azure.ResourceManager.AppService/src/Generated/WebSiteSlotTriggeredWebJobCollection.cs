@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TriggeredWebJobData, WebSiteSlotTriggeredWebJobResource>(new TriggeredWebJobsGetTriggeredWebJobsSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TriggeredWebJobData, WebSiteSlotTriggeredWebJobResource>(new TriggeredWebJobDataAsyncCollectionResultOfT(
                 _triggeredWebJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TriggeredWebJobData, WebSiteSlotTriggeredWebJobResource>(new TriggeredWebJobsGetTriggeredWebJobsSlotCollectionResultOfT(
+            return new PageableWrapper<TriggeredWebJobData, WebSiteSlotTriggeredWebJobResource>(new TriggeredWebJobDataCollectionResultOfT(
                 _triggeredWebJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

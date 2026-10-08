@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetDatabaseConnectionsWithDetailsAsyncCollectionResultOfT(
+            return new StaticSiteDatabaseConnectionDataAsyncCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetDatabaseConnectionsWithDetailsCollectionResultOfT(
+            return new StaticSiteDatabaseConnectionDataCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1399,7 +1399,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetStaticSiteFunctionsAsyncCollectionResultOfT(
+            return new StaticSiteFunctionOverviewAsyncCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetStaticSiteFunctionsCollectionResultOfT(
+            return new StaticSiteFunctionOverviewCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1576,7 +1576,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetUsersAsyncCollectionResultOfT(
+            return new StaticSiteUserAsyncCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1620,7 +1620,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new StaticSiteARMResourcesGetUsersCollectionResultOfT(
+            return new StaticSiteUserCollectionResultOfT(
                 _staticSiteARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

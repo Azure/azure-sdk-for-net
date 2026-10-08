@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.VerifiedId.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new AuthoritiesGetBySubscriptionAsyncCollectionResultOfT(AuthoritiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableVerifiedIdSubscriptionResource.GetVerifiedIdAuthorities"), data => new VerifiedIdAuthorityResource(Client, data));
+            return new AsyncPageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new VerifiedIdAuthorityDataAsync0CollectionResultOfT(AuthoritiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableVerifiedIdSubscriptionResource.GetVerifiedIdAuthorities"), data => new VerifiedIdAuthorityResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.VerifiedId.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new AuthoritiesGetBySubscriptionCollectionResultOfT(AuthoritiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableVerifiedIdSubscriptionResource.GetVerifiedIdAuthorities"), data => new VerifiedIdAuthorityResource(Client, data));
+            return new PageableWrapper<VerifiedIdAuthorityData, VerifiedIdAuthorityResource>(new VerifiedIdAuthorityData0CollectionResultOfT(AuthoritiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableVerifiedIdSubscriptionResource.GetVerifiedIdAuthorities"), data => new VerifiedIdAuthorityResource(Client, data));
         }
     }
 }

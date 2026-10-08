@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteRecommendationsGetHistoryForWebAppRecommendationsAsyncCollectionResultOfT(
+            return new AppServiceRecommendationAsync1CollectionResultOfT(
                 _siteRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteRecommendationsGetHistoryForWebAppRecommendationsCollectionResultOfT(
+            return new AppServiceRecommendation1CollectionResultOfT(
                 _siteRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteRecommendationsGetRecommendedRulesForWebAppRecommendationsAsyncCollectionResultOfT(
+            return new AppServiceRecommendationAsync2CollectionResultOfT(
                 _siteRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteRecommendationsGetRecommendedRulesForWebAppRecommendationsCollectionResultOfT(
+            return new AppServiceRecommendation2CollectionResultOfT(
                 _siteRecommendationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3261,7 +3261,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
+            return new AppServiceNetworkSecurityPerimeterConfigurationAsyncCollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3299,7 +3299,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
+            return new AppServiceNetworkSecurityPerimeterConfigurationCollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3338,7 +3338,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetPerfMonCountersAsyncCollectionResultOfT(
+            return new PerfMonResponseInfoAsync0CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3378,7 +3378,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetPerfMonCountersCollectionResultOfT(
+            return new PerfMonResponseInfo0CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3719,7 +3719,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetAllSiteBackupDataAsyncCollectionResultOfT(
+            return new WebAppBackupDataAsync1CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3757,7 +3757,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetAllSiteBackupDataCollectionResultOfT(
+            return new WebAppBackupData1CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3895,7 +3895,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetSlotDifferencesFromProductionAsyncCollectionResultOfT(
+            return new SlotDifferenceAsync0CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3938,7 +3938,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetSlotDifferencesFromProductionCollectionResultOfT(
+            return new SlotDifference0CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -3977,7 +3977,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetSnapshotsAsyncCollectionResultOfT(
+            return new AppSnapshotAsync1CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4015,7 +4015,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetSnapshotsCollectionResultOfT(
+            return new AppSnapshot1CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4053,7 +4053,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetSnapshotsFromDRSecondaryAsyncCollectionResultOfT(
+            return new AppSnapshotAsync2CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4091,7 +4091,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetSnapshotsFromDRSecondaryCollectionResultOfT(
+            return new AppSnapshot2CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4312,7 +4312,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetUsagesAsyncCollectionResultOfT(
+            return new CsmUsageQuotaAsync2CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4352,7 +4352,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SitesGetUsagesCollectionResultOfT(
+            return new CsmUsageQuota2CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

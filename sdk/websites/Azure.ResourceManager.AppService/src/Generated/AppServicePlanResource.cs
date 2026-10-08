@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetHybridConnectionRelaysAsyncCollectionResultOfT(
+            return new HybridConnectionDataAsyncCollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetHybridConnectionRelaysCollectionResultOfT(
+            return new HybridConnectionDataCollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetUsagesAsyncCollectionResultOfT(
+            return new CsmUsageQuotaAsync1CollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetUsagesCollectionResultOfT(
+            return new CsmUsageQuota1CollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetWebAppsAsyncCollectionResultOfT(
+            return new WebSiteDataAsync2CollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetWebAppsCollectionResultOfT(
+            return new WebSiteData2CollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

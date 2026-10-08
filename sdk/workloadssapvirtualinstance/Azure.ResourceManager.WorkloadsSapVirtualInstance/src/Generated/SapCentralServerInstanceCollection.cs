@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapCentralServerInstanceData, SapCentralServerInstanceResource>(new SapCentralServerInstancesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SapCentralServerInstanceData, SapCentralServerInstanceResource>(new SapCentralServerInstanceDataAsyncCollectionResultOfT(
                 _sapCentralServerInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapCentralServerInstanceData, SapCentralServerInstanceResource>(new SapCentralServerInstancesGetAllCollectionResultOfT(
+            return new PageableWrapper<SapCentralServerInstanceData, SapCentralServerInstanceResource>(new SapCentralServerInstanceDataCollectionResultOfT(
                 _sapCentralServerInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

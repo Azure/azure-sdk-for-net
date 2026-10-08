@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoversGetBySubscriptionAsyncCollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context, "MockableStorageMoverSubscriptionResource.GetStorageMovers"), data => new StorageMoverResource(Client, data));
+            return new AsyncPageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoverDataAsync0CollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context, "MockableStorageMoverSubscriptionResource.GetStorageMovers"), data => new StorageMoverResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoversGetBySubscriptionCollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context, "MockableStorageMoverSubscriptionResource.GetStorageMovers"), data => new StorageMoverResource(Client, data));
+            return new PageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoverData0CollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context, "MockableStorageMoverSubscriptionResource.GetStorageMovers"), data => new StorageMoverResource(Client, data));
         }
     }
 }
