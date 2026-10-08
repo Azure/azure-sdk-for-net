@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Parameter indicating how the health check should behave if this package fails staging. </summary>
+    [Experimental("AZPROVISION001")]
     public enum FailHealthCheckOnStagingFailure
     {
         /// <summary> Health Check will report unhealthy. </summary>

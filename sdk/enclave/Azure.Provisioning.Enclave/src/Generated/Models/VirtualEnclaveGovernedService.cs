@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> GovernedServiceItem Properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveGovernedService : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveGovernedServiceIdentifier> _serviceId;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ServiceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveGovernedServiceIdentifier> ServiceId
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ServiceName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceName
         {
             get
@@ -51,6 +55,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Option. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveGovernedServiceItemOption> Option
         {
             get
@@ -66,6 +71,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Enforcement. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveGovernedServiceItemEnforcement> Enforcement
         {
             get
@@ -81,6 +87,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the PolicyAction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveGovernedServiceItemPolicyAction> PolicyAction
         {
             get
@@ -96,6 +103,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the Initiatives. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Initiatives
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Region type of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridResourceRegionType
     {
         /// <summary> RegionalResource. </summary>

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Application type of application. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualApplicationType
     {
         /// <summary> Remote Applications (non-desktop). </summary>

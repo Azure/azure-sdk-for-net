@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The certificate authentication properties for the client. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClientCertificateAuthentication : ProvisionableConstruct
     {
         private BicepValue<ClientCertificateValidationScheme> _validationScheme;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ValidationScheme. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClientCertificateValidationScheme> ValidationScheme
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AllowedThumbprints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedThumbprints
         {
             get

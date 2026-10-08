@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> PersonalDesktopAssignment type for HostPool. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PersonalDesktopAssignmentType
     {
         /// <summary> Automatically assigns an available personal desktop to the user. </summary>

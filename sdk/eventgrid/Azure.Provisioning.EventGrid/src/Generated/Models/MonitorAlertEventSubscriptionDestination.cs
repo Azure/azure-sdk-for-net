@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the Monitor Alert destination for an event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorAlertEventSubscriptionDestination : EventSubscriptionDestination
     {
         private MonitorAlertEventSubscriptionDestinationProperties _properties;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal MonitorAlertEventSubscriptionDestinationProperties Properties
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Severity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorAlertSeverity> Severity
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ActionGroups. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceIdentifier> ActionGroups
         {
             get

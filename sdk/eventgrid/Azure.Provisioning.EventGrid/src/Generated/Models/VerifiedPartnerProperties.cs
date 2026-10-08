@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the verified partner. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class VerifiedPartnerProperties : ProvisionableConstruct
     {
         private BicepValue<Guid> _partnerRegistrationImmutableId;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PartnerRegistrationImmutableId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> PartnerRegistrationImmutableId
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the OrganizationName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OrganizationName
         {
             get
@@ -47,6 +51,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PartnerDisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PartnerDisplayName
         {
             get
@@ -57,6 +62,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PartnerTopicDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerDetails PartnerTopicDetails
         {
             get
@@ -67,6 +73,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PartnerDestinationDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerDetails PartnerDestinationDetails
         {
             get
@@ -77,6 +84,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VerifiedPartnerProvisioningState> ProvisioningState
         {
             get

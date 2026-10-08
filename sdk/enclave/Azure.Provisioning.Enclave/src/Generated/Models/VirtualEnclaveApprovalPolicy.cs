@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Approval Policy. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveApprovalPolicy
     {
         /// <summary> Approval will be required for the specified action. </summary>

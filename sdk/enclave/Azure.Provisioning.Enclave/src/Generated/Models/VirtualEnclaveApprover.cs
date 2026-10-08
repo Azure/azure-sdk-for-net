@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Approver Metadata for approvals request. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveApprover : ProvisionableConstruct
     {
         private BicepValue<string> _approverEntraId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ApproverEntraId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApproverEntraId
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ActionPerformed. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApproverActionPerformed> ActionPerformed
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the LastUpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastUpdatedOn
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the MandatoryApprovalGroupMembershipIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> MandatoryApprovalGroupMembershipIds
         {
             get

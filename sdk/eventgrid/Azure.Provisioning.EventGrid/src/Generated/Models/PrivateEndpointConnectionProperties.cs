@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the private endpoint connection resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private PrivateEndpoint _privateEndpoint;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PrivateEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         internal PrivateEndpoint PrivateEndpoint
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the GroupIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> GroupIds
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public EventGridPrivateEndpointConnectionState ConnectionState
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridResourceProvisioningState> ProvisioningState
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PrivateEndpointId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

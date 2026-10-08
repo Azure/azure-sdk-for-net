@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> HostPool type for desktop. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HostPoolType
     {
         /// <summary> Users will be assigned a SessionHost either by administrators (PersonalDesktopAssignmentType = Direct) or upon connecting to the pool (PersonalDesktopAssignmentType = Automatic). They will always be redirected to their assigned SessionHost. </summary>

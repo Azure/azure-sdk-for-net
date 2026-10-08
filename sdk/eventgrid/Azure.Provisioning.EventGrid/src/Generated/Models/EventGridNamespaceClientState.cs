@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Indicates if the client is enabled or not. Default value is Enabled. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridNamespaceClientState
     {
         /// <summary> Enabled. </summary>

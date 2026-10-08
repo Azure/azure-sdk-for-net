@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the partner configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PartnerConfigurationProperties : ProvisionableConstruct
     {
         private PartnerAuthorization _partnerAuthorization;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerAuthorization. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerAuthorization PartnerAuthorization
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerConfigurationProvisioningState> ProvisioningState
         {
             get

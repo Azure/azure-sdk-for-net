@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> Describes the credential parameters for accessing the source registry. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskSourceRegistryCredentials : ProvisionableConstruct
     {
         private BicepValue<string> _identity;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Identity
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the LoginMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskSourceRegistryLoginMode> LoginMode
         {
             get

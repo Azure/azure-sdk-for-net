@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The parameters that describes a set of credentials that will be used when a run is invoked. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskCredentials : ProvisionableConstruct
     {
         private ContainerRegistryTaskSourceRegistryCredentials _sourceRegistry;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the SourceRegistry. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskSourceRegistryCredentials SourceRegistry
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the CustomRegistries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<ContainerRegistryTaskCustomRegistryCredentials> CustomRegistries
         {
             get

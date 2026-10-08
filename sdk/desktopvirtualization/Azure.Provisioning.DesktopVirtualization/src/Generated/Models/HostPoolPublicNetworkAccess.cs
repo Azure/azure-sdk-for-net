@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Enabled to allow this resource to be access from the public network. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HostPoolPublicNetworkAccess
     {
         /// <summary> Allows this resource to be accessed from the public network. </summary>

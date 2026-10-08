@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The type of single sign on Secret Type. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HostPoolSsoSecretType
     {
         /// <summary> The SSO Secret is a Shared Key. </summary>

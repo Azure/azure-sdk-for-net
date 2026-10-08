@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Day of the week. Modeled as string. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ScalingScheduleDaysOfWeekItem
     {
         /// <summary> Monday. </summary>

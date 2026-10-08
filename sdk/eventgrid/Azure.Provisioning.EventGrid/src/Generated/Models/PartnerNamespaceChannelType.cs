@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The type of the event channel which represents the direction flow of events. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PartnerNamespaceChannelType
     {
         /// <summary> PartnerTopic. </summary>

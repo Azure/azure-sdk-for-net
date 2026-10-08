@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The properties of topic space. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TopicSpaceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the TopicTemplates. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> TopicTemplates
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TopicSpaceProvisioningState> ProvisioningState
         {
             get

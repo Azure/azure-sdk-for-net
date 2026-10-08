@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> TransitOptionParams Properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveTransitOptionContent : ProvisionableConstruct
     {
         private BicepValue<long> _scaleUnits;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ScaleUnits. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> ScaleUnits
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the RemoteVirtualNetworkId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> RemoteVirtualNetworkId
         {
             get

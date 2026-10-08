@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Routing identity info for topic spaces configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RoutingIdentityInfo : ProvisionableConstruct
     {
         private BicepValue<RoutingIdentityType> _identityType;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IdentityType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RoutingIdentityType> IdentityType
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the UserAssignedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UserAssignedIdentity
         {
             get

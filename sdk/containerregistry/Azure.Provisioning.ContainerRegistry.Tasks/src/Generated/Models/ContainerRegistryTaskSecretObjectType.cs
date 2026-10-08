@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
@@ -13,6 +14,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// The type of the secret object which determines how the value of the secret object has to be
     /// interpreted.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskSecretObjectType
     {
         /// <summary> Opaque. </summary>

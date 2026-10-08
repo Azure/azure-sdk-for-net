@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Resource Visibility Mode. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveResourceVisibilityMode
     {
         /// <summary> ResourceVisibilityMode Type Enabled. </summary>

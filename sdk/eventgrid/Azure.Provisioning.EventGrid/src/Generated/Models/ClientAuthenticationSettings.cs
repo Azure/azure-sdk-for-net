@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Client authentication settings for namespace resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClientAuthenticationSettings : ProvisionableConstruct
     {
         private BicepList<AlternativeAuthenticationNameSource> _alternativeAuthenticationNameSources;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AlternativeAuthenticationNameSources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<AlternativeAuthenticationNameSource> AlternativeAuthenticationNameSources
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the CustomJwtAuthentication. </summary>
+        [Experimental("AZPROVISION001")]
         public CustomJwtAuthenticationSettings CustomJwtAuthentication
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the WebhookAuthentication. </summary>
+        [Experimental("AZPROVISION001")]
         public WebhookAuthenticationSettings WebhookAuthentication
         {
             get

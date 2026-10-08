@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The configurations of a hostpool update. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HostPoolUpdateConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _shouldDeleteOriginalVm;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ShouldDeleteOriginalVm. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ShouldDeleteOriginalVm
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MaxVmsRemoved. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxVmsRemoved
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the LogOffDelayMinutes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> LogOffDelayMinutes
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the LogOffMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogOffMessage
         {
             get

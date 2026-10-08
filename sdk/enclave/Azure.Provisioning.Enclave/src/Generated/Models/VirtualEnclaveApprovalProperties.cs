@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Approval Base model. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveApprovalProperties : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveProvisioningState> _provisioningState;
@@ -35,6 +37,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveProvisioningState> ProvisioningState
         {
             get
@@ -45,6 +48,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ParentResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ParentResourceId
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the GrandparentResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> GrandparentResourceId
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Approvers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveApprover> Approvers
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the TicketId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TicketId
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the StateChangedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StateChangedOn
         {
             get
@@ -135,6 +144,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the MandatoryApprovers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveMandatoryApprover> MandatoryApprovers
         {
             get
@@ -145,6 +155,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the MinimumApproversRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MinimumApproversRequired
         {
             get
@@ -155,6 +166,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ApproversApprovedCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> ApproversApprovedCount
         {
             get
@@ -165,6 +177,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the MandatoryApproversApprovedCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MandatoryApproversApprovedCount
         {
             get
@@ -175,6 +188,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ApprovedByEntraIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ApprovedByEntraIds
         {
             get
@@ -185,6 +199,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the RequestMetadata. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalRequestMetadata RequestMetadata
         {
             get

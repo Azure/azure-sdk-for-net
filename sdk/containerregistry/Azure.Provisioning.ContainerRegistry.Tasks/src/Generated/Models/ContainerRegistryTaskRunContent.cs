@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The parameters for a task run request. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskRunContent : ContainerRegistryRunContent
     {
         private BicepValue<string> _taskId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the TaskId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TaskId
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the OverrideTaskStepProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskOverrideStepProperties OverrideTaskStepProperties
         {
             get

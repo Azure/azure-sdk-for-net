@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Maintenance Mode. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveMaintenanceModeConfiguration : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveMaintenanceModeConfigurationMode> _mode;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Mode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveMaintenanceModeConfigurationMode> Mode
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Principals. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclavePrincipal> Principals
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Justification. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveMaintenanceModeJustification> Justification
         {
             get

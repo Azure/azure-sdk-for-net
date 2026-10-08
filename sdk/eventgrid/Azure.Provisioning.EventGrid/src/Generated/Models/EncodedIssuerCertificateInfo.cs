@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the public certificate that is used for custom authentication. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EncodedIssuerCertificateInfo : ProvisionableConstruct
     {
         private BicepValue<string> _kid;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Kid. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Kid
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EncodedCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EncodedCertificate
         {
             get

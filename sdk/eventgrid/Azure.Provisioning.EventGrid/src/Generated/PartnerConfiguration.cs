@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Partner configuration information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerConfiguration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -76,6 +77,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get
@@ -91,6 +93,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -106,6 +109,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerAuthorization. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerAuthorization PartnerAuthorization
         {
             get
@@ -123,6 +127,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerConfigurationProvisioningState> ProvisioningState
         {
             get

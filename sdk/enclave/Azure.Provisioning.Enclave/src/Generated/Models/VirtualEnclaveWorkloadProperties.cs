@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Workload Resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveWorkloadProperties : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveProvisioningState> _provisioningState;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveProvisioningState> ProvisioningState
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ResourceGroupCollection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ResourceGroupCollection
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ManagedOnBehalfOfConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration
         {
             get

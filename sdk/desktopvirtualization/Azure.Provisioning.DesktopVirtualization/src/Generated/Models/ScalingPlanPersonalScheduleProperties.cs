@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> A ScalingPlanPersonalSchedule. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ScalingPlanPersonalScheduleProperties : ProvisionableConstruct
     {
         private BicepList<DesktopVirtualizationDayOfWeek> _daysOfWeek;
@@ -46,6 +48,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DaysOfWeek. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DesktopVirtualizationDayOfWeek> DaysOfWeek
         {
             get
@@ -61,6 +64,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpStartTime. </summary>
+        [Experimental("AZPROVISION001")]
         public ScalingActionTime RampUpStartTime
         {
             get
@@ -76,6 +80,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpAutoStartHosts. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<StartupBehavior> RampUpAutoStartHosts
         {
             get
@@ -91,6 +96,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpStartVmOnConnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SetStartVmOnConnect> RampUpStartVmOnConnect
         {
             get
@@ -106,6 +112,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpActionOnDisconnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHandlingOperation> RampUpActionOnDisconnect
         {
             get
@@ -121,6 +128,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpMinutesToWaitOnDisconnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampUpMinutesToWaitOnDisconnect
         {
             get
@@ -136,6 +144,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpActionOnLogoff. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHandlingOperation> RampUpActionOnLogoff
         {
             get
@@ -151,6 +160,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpMinutesToWaitOnLogoff. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampUpMinutesToWaitOnLogoff
         {
             get
@@ -166,6 +176,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PeakStartTime. </summary>
+        [Experimental("AZPROVISION001")]
         public ScalingActionTime PeakStartTime
         {
             get
@@ -181,6 +192,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PeakStartVmOnConnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SetStartVmOnConnect> PeakStartVmOnConnect
         {
             get
@@ -196,6 +208,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PeakActionOnDisconnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHandlingOperation> PeakActionOnDisconnect
         {
             get
@@ -211,6 +224,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PeakMinutesToWaitOnDisconnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PeakMinutesToWaitOnDisconnect
         {
             get
@@ -226,6 +240,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PeakActionOnLogoff. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHandlingOperation> PeakActionOnLogoff
         {
             get
@@ -241,6 +256,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PeakMinutesToWaitOnLogoff. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PeakMinutesToWaitOnLogoff
         {
             get
@@ -256,6 +272,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownStartTime. </summary>
+        [Experimental("AZPROVISION001")]
         public ScalingActionTime RampDownStartTime
         {
             get
@@ -271,6 +288,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownStartVmOnConnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SetStartVmOnConnect> RampDownStartVmOnConnect
         {
             get
@@ -286,6 +304,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownActionOnDisconnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHandlingOperation> RampDownActionOnDisconnect
         {
             get
@@ -301,6 +320,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownMinutesToWaitOnDisconnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampDownMinutesToWaitOnDisconnect
         {
             get
@@ -316,6 +336,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownActionOnLogoff. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHandlingOperation> RampDownActionOnLogoff
         {
             get
@@ -331,6 +352,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownMinutesToWaitOnLogoff. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampDownMinutesToWaitOnLogoff
         {
             get
@@ -346,6 +368,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OffPeakStartTime. </summary>
+        [Experimental("AZPROVISION001")]
         public ScalingActionTime OffPeakStartTime
         {
             get
@@ -361,6 +384,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OffPeakStartVmOnConnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SetStartVmOnConnect> OffPeakStartVmOnConnect
         {
             get
@@ -376,6 +400,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OffPeakActionOnDisconnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHandlingOperation> OffPeakActionOnDisconnect
         {
             get
@@ -391,6 +416,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OffPeakMinutesToWaitOnDisconnect. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> OffPeakMinutesToWaitOnDisconnect
         {
             get
@@ -406,6 +432,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OffPeakActionOnLogoff. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHandlingOperation> OffPeakActionOnLogoff
         {
             get
@@ -421,6 +448,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OffPeakMinutesToWaitOnLogoff. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> OffPeakMinutesToWaitOnLogoff
         {
             get

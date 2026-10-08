@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.EventGrid
     /// Partner client authentication
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AzureADPartnerClientAuthentication"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerClientAuthentication : ProvisionableConstruct
     {
         private BicepValue<PartnerClientAuthenticationType> _clientAuthenticationType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Type of client authentication. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<PartnerClientAuthenticationType> ClientAuthenticationType
         {
             get

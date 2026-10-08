@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Dns
 {
     /// <summary> Represents the properties of the records in the record set. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DnsRecordSetProperties : ProvisionableConstruct
     {
         private BicepDictionary<string> _metadata;
@@ -40,6 +42,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Metadata
         {
             get
@@ -55,6 +58,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the TtlInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> TtlInSeconds
         {
             get
@@ -70,6 +74,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the Fqdn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Fqdn
         {
             get
@@ -80,6 +85,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the TargetResource. </summary>
+        [Experimental("AZPROVISION001")]
         internal DnsSubResourceInfo TargetResource
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the TrafficManagementProfile. </summary>
+        [Experimental("AZPROVISION001")]
         internal DnsSubResourceInfo TrafficManagementProfile
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsARecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsARecordInfo> DnsARecords
         {
             get
@@ -135,6 +144,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsAaaaRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsAaaaRecordInfo> DnsAaaaRecords
         {
             get
@@ -150,6 +160,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsMXRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsMXRecordInfo> DnsMXRecords
         {
             get
@@ -165,6 +176,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsNSRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsNSRecordInfo> DnsNSRecords
         {
             get
@@ -180,6 +192,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsPtrRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsPtrRecordInfo> DnsPtrRecords
         {
             get
@@ -195,6 +208,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsSrvRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsSrvRecordInfo> DnsSrvRecords
         {
             get
@@ -210,6 +224,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsTxtRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsTxtRecordInfo> DnsTxtRecords
         {
             get
@@ -225,6 +240,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsCnameRecord. </summary>
+        [Experimental("AZPROVISION001")]
         internal DnsCnameRecordInfo DnsCnameRecord
         {
             get
@@ -240,6 +256,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsSoaRecord. </summary>
+        [Experimental("AZPROVISION001")]
         public DnsSoaRecordInfo DnsSoaRecord
         {
             get
@@ -255,6 +272,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsCaaRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsCaaRecordInfo> DnsCaaRecords
         {
             get
@@ -270,6 +288,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsDSRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsDSRecordInfo> DnsDSRecords
         {
             get
@@ -285,6 +304,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsTlsaRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsTlsaRecordInfo> DnsTlsaRecords
         {
             get
@@ -300,6 +320,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsNaptrRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsNaptrRecordInfo> DnsNaptrRecords
         {
             get
@@ -315,6 +336,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TargetResourceId
         {
             get
@@ -332,6 +354,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TrafficManagementProfileId
         {
             get
@@ -349,6 +372,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Cname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Cname
         {
             get

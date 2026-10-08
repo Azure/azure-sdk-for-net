@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The platform properties against which the run has to happen. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskPlatformProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerRegistryTaskOS> _os;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the OS. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskOS> OS
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Architecture. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskArchitecture> Architecture
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Variant. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskVariant> Variant
         {
             get

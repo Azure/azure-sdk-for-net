@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The Client resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridNamespaceClientResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -114,6 +116,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AuthenticationName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AuthenticationName
         {
             get
@@ -131,6 +134,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ClientCertificateAuthentication. </summary>
+        [Experimental("AZPROVISION001")]
         public ClientCertificateAuthentication ClientCertificateAuthentication
         {
             get
@@ -148,6 +152,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridNamespaceClientState> State
         {
             get
@@ -165,6 +170,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Attributes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<BinaryData> Attributes
         {
             get
@@ -182,6 +188,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridNamespaceClientProvisioningState> ProvisioningState
         {
             get

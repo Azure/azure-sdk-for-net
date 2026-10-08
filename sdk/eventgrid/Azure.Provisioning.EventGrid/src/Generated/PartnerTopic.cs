@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Event Grid Partner Topic. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerTopic : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -113,6 +114,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -128,6 +130,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerRegistrationImmutableId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> PartnerRegistrationImmutableId
         {
             get
@@ -145,6 +148,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Source. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Source
         {
             get
@@ -162,6 +166,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventTypeInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerTopicEventTypeInfo EventTypeInfo
         {
             get
@@ -179,6 +184,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ExpireOnIfNotActivated. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpireOnIfNotActivated
         {
             get
@@ -196,6 +202,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerTopicProvisioningState> ProvisioningState
         {
             get
@@ -209,6 +216,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ActivationState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerTopicActivationState> ActivationState
         {
             get
@@ -226,6 +234,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerTopicFriendlyDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PartnerTopicFriendlyDescription
         {
             get
@@ -243,6 +252,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MessageForActivation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MessageForActivation
         {
             get

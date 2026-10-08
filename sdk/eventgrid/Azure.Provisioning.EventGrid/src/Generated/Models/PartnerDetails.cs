@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the partner. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerDetails : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the LongDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LongDescription
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the SetupUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> SetupUri
         {
             get

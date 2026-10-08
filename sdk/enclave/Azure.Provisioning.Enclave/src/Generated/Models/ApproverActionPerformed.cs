@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Specifies the action performed by the approver. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ApproverActionPerformed
     {
         /// <summary> Action was Approved. </summary>

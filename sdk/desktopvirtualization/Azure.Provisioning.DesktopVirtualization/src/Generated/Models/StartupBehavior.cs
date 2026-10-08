@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The desired startup behavior during the ramp up period for personal vms in the hostpool. </summary>
+    [Experimental("AZPROVISION001")]
     public enum StartupBehavior
     {
         /// <summary> Session hosts will not be started by the service. This setting depends on Start VM on Connect to be enabled to start the session hosts. </summary>

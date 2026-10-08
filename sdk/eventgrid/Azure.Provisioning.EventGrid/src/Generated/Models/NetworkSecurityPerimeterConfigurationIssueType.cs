@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Provisioning issue type. </summary>
+    [Experimental("AZPROVISION001")]
     public enum NetworkSecurityPerimeterConfigurationIssueType
     {
         /// <summary> MissingPerimeterConfiguration. </summary>

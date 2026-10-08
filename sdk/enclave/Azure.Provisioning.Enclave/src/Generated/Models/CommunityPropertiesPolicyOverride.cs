@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary></summary>
+    [Experimental("AZPROVISION001")]
     public enum CommunityPropertiesPolicyOverride
     {
         /// <summary> Enclave. </summary>

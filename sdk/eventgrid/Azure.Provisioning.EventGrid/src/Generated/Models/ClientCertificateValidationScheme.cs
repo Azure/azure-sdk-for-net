@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The validation scheme used to authenticate the client. Default value is SubjectMatchesAuthenticationName. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClientCertificateValidationScheme
     {
         /// <summary> SubjectMatchesAuthenticationName. </summary>

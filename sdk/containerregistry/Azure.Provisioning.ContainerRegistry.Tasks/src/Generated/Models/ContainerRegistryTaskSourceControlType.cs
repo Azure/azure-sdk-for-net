@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The type of source control service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskSourceControlType
     {
         /// <summary> Github. </summary>

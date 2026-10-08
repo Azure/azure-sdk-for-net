@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Resource Type of ApplicationGroup. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualApplicationGroupType
     {
         /// <summary> Application group is Remote and can launch individual applications without a Desktop. </summary>

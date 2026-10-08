@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary></summary>
+    [Experimental("AZPROVISION001")]
     public enum TopicTypeSourceScope
     {
         /// <summary> Resource. </summary>

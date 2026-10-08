@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the partner. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridPartnerContent : ProvisionableConstruct
     {
         private BicepValue<Guid> _partnerRegistrationImmutableId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerRegistrationImmutableId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> PartnerRegistrationImmutableId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PartnerName
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AuthorizationExpireOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> AuthorizationExpireOn
         {
             get

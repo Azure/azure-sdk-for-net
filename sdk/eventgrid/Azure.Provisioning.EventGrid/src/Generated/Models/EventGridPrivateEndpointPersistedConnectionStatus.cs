@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Status of the connection. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridPrivateEndpointPersistedConnectionStatus
     {
         /// <summary> Pending. </summary>

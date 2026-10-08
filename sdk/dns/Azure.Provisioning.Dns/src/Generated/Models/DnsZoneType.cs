@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Dns
 {
     /// <summary> The type of this DNS zone (Public or Private). </summary>
+    [Experimental("AZPROVISION001")]
     public enum DnsZoneType
     {
         /// <summary> Public. </summary>

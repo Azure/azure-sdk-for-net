@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Principal for maintenance mode or role assignments. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclavePrincipal : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclavePrincipalType> Type
         {
             get

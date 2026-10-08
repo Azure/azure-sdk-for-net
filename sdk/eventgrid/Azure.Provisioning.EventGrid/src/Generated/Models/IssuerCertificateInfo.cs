@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the certificate that is used for token validation. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IssuerCertificateInfo : ProvisionableConstruct
     {
         private BicepValue<Uri> _certificateUri;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the CertificateUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> CertificateUri
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public CustomJwtAuthenticationManagedIdentity Identity
         {
             get

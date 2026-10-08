@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> This can be used to map properties of a source schema (or default values, for certain supported properties) to properties of the EventGridEvent schema. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class JsonInputSchemaMappingProperties : ProvisionableConstruct
     {
         private JsonField _id;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         internal JsonField Id
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Topic. </summary>
+        [Experimental("AZPROVISION001")]
         internal JsonField Topic
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventTime. </summary>
+        [Experimental("AZPROVISION001")]
         internal JsonField EventTime
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventType. </summary>
+        [Experimental("AZPROVISION001")]
         public JsonFieldWithDefault EventType
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Subject. </summary>
+        [Experimental("AZPROVISION001")]
         public JsonFieldWithDefault Subject
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DataVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public JsonFieldWithDefault DataVersion
         {
             get
@@ -116,6 +124,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the SourceField. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IdSourceField
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the SourceField. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TopicSourceField
         {
             get
@@ -150,6 +160,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the SourceField. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventTimeSourceField
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The image update trigger that caused a build. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskImageUpdateTrigger : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the OccurredOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> OccurredOn
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Images. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskImageDescriptor> Images
         {
             get

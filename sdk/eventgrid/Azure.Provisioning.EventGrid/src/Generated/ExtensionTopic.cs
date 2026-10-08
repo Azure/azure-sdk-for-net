@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Event grid Extension Topic. This is used for getting Event Grid related metrics for Azure resources. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ExtensionTopic : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -69,6 +70,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -78,6 +80,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the SystemTopic. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SystemTopic
         {
             get

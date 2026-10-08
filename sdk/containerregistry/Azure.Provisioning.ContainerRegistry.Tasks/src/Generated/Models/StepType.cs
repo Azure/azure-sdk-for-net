@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The type of the step. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum StepType
     {
         /// <summary> Docker. </summary>

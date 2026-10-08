@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The event delivery schema for the event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventDeliverySchema
     {
         /// <summary> EventGridSchema. </summary>

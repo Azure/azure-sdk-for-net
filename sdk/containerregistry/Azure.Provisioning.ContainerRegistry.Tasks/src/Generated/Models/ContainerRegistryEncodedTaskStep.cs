@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of a encoded task step. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryEncodedTaskStep : ContainerRegistryTaskStepProperties
     {
         private BicepValue<string> _encodedTaskContent;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the EncodedTaskContent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EncodedTaskContent
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the EncodedValuesContent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EncodedValuesContent
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Values. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskSetValue> Values
         {
             get

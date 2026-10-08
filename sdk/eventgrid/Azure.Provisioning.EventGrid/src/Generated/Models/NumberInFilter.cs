@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> NumberIn Filter. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NumberInFilter : EventGridFilter
     {
         private BicepList<double> _values;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Values. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<double> Values
         {
             get

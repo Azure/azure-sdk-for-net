@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,8 +15,9 @@ namespace Azure.Provisioning.EventGrid
     /// This is the base type that represents a filter. To configure a filter, do not directly instantiate an object of this class. Instead, instantiate
     /// an object of a derived class such as BoolEqualsFilter, NumberInFilter etc depending on the type of the key based on
     /// which you want to filter.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NumberInFilter"/>, <see cref="NumberNotInFilter"/>, <see cref="NumberLessThanFilter"/>, <see cref="NumberGreaterThanFilter"/>, <see cref="NumberLessThanOrEqualsFilter"/>, <see cref="NumberGreaterThanOrEqualsFilter"/>, <see cref="BoolEqualsFilter"/>, <see cref="StringInFilter"/>, <see cref="StringNotInFilter"/>, <see cref="StringBeginsWithFilter"/>, <see cref="StringEndsWithFilter"/>, <see cref="StringContainsFilter"/>, <see cref="NumberInRangeFilter"/>, <see cref="NumberNotInRangeFilter"/>, <see cref="StringNotBeginsWithFilter"/>, <see cref="StringNotEndsWithFilter"/>, <see cref="StringNotContainsFilter"/>, <see cref="IsNullOrUndefinedFilter"/>, and <see cref="IsNotNullFilter"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="BoolEqualsFilter"/>, <see cref="IsNotNullFilter"/>, <see cref="IsNullOrUndefinedFilter"/>, <see cref="NumberGreaterThanFilter"/>, <see cref="NumberGreaterThanOrEqualsFilter"/>, <see cref="NumberInFilter"/>, <see cref="NumberInRangeFilter"/>, <see cref="NumberLessThanFilter"/>, <see cref="NumberLessThanOrEqualsFilter"/>, <see cref="NumberNotInFilter"/>, <see cref="NumberNotInRangeFilter"/>, <see cref="StringBeginsWithFilter"/>, <see cref="StringContainsFilter"/>, <see cref="StringEndsWithFilter"/>, <see cref="StringInFilter"/>, <see cref="StringNotBeginsWithFilter"/>, <see cref="StringNotContainsFilter"/>, <see cref="StringNotEndsWithFilter"/>, and <see cref="StringNotInFilter"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridFilter : ProvisionableConstruct
     {
         private BicepValue<FilterOperatorType> _operatorType;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<FilterOperatorType> OperatorType
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Key. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Key
         {
             get

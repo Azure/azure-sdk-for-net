@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Azure Firewall SKU. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveFirewallSku
     {
         /// <summary> FirewallSKU Basic. </summary>

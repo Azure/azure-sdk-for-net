@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The properties that represent the Service Bus Topic destination of an event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ServiceBusTopicEventSubscriptionDestinationProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _resourceId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ResourceId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeliveryAttributeMappings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DeliveryAttributeMapping> DeliveryAttributeMappings
         {
             get

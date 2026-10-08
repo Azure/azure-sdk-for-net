@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Dns
 {
     /// <summary> Describes a DNS record set (a collection of DNS records with the same name and type). </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsTxtRecord : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -82,6 +83,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Metadata
         {
             get
@@ -129,6 +132,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the TtlInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> TtlInSeconds
         {
             get
@@ -146,6 +150,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the Fqdn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Fqdn
         {
             get
@@ -159,6 +164,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -172,6 +178,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TargetResourceId
         {
             get
@@ -189,6 +196,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TrafficManagementProfileId
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridSku
     {
         /// <summary> Basic. </summary>

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The type of run. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskRunType
     {
         /// <summary> QuickBuild. </summary>

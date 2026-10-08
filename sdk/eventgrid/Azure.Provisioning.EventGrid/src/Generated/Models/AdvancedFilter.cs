@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -12,8 +13,9 @@ namespace Azure.Provisioning.EventGrid
 {
     /// <summary>
     /// This is the base type that represents an advanced filter. To configure an advanced filter, do not directly instantiate an object of this class. Instead, instantiate an object of a derived class such as BoolEqualsAdvancedFilter, NumberInAdvancedFilter, StringEqualsAdvancedFilter etc. depending on the type of the key based on which you want to filter.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NumberInAdvancedFilter"/>, <see cref="NumberNotInAdvancedFilter"/>, <see cref="NumberLessThanAdvancedFilter"/>, <see cref="NumberGreaterThanAdvancedFilter"/>, <see cref="NumberLessThanOrEqualsAdvancedFilter"/>, <see cref="NumberGreaterThanOrEqualsAdvancedFilter"/>, <see cref="BoolEqualsAdvancedFilter"/>, <see cref="StringInAdvancedFilter"/>, <see cref="StringNotInAdvancedFilter"/>, <see cref="StringBeginsWithAdvancedFilter"/>, <see cref="StringEndsWithAdvancedFilter"/>, <see cref="StringContainsAdvancedFilter"/>, <see cref="NumberInRangeAdvancedFilter"/>, <see cref="NumberNotInRangeAdvancedFilter"/>, <see cref="StringNotBeginsWithAdvancedFilter"/>, <see cref="StringNotEndsWithAdvancedFilter"/>, <see cref="StringNotContainsAdvancedFilter"/>, <see cref="IsNullOrUndefinedAdvancedFilter"/>, and <see cref="IsNotNullAdvancedFilter"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="BoolEqualsAdvancedFilter"/>, <see cref="IsNotNullAdvancedFilter"/>, <see cref="IsNullOrUndefinedAdvancedFilter"/>, <see cref="NumberGreaterThanAdvancedFilter"/>, <see cref="NumberGreaterThanOrEqualsAdvancedFilter"/>, <see cref="NumberInAdvancedFilter"/>, <see cref="NumberInRangeAdvancedFilter"/>, <see cref="NumberLessThanAdvancedFilter"/>, <see cref="NumberLessThanOrEqualsAdvancedFilter"/>, <see cref="NumberNotInAdvancedFilter"/>, <see cref="NumberNotInRangeAdvancedFilter"/>, <see cref="StringBeginsWithAdvancedFilter"/>, <see cref="StringContainsAdvancedFilter"/>, <see cref="StringEndsWithAdvancedFilter"/>, <see cref="StringInAdvancedFilter"/>, <see cref="StringNotBeginsWithAdvancedFilter"/>, <see cref="StringNotContainsAdvancedFilter"/>, <see cref="StringNotEndsWithAdvancedFilter"/>, and <see cref="StringNotInAdvancedFilter"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AdvancedFilter : ProvisionableConstruct
     {
         private BicepValue<AdvancedFilterOperatorType> _operatorType;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<AdvancedFilterOperatorType> OperatorType
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Key. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Key
         {
             get

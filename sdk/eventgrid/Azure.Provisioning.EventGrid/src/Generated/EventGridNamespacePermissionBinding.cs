@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The Permission binding resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridNamespacePermissionBinding : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the TopicSpaceName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TopicSpaceName
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Permission. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PermissionType> Permission
         {
             get
@@ -147,6 +151,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ClientGroupName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientGroupName
         {
             get
@@ -164,6 +169,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PermissionBindingProvisioningState> ProvisioningState
         {
             get

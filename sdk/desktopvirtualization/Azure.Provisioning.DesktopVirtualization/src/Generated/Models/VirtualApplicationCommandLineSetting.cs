@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualApplicationCommandLineSetting
     {
         /// <summary> Cannot be launched with command line arguments. </summary>

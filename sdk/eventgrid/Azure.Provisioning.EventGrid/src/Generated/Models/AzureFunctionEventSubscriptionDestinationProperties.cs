@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The properties that represent the Azure Function destination of an event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AzureFunctionEventSubscriptionDestinationProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _resourceId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ResourceId
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MaxEventsPerBatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxEventsPerBatch
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PreferredBatchSizeInKilobytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PreferredBatchSizeInKilobytes
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeliveryAttributeMappings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DeliveryAttributeMapping> DeliveryAttributeMappings
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the partner registration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PartnerRegistrationProperties : ProvisionableConstruct
     {
         private BicepValue<PartnerRegistrationProvisioningState> _provisioningState;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerRegistrationProvisioningState> ProvisioningState
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerRegistrationImmutableId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> PartnerRegistrationImmutableId
         {
             get

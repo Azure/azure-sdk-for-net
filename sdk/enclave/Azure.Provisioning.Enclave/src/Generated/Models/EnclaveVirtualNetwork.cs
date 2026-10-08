@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Enclave Virtual Network Properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EnclaveVirtualNetwork : ProvisionableConstruct
     {
         private BicepValue<string> _networkName;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the NetworkName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> NetworkName
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the NetworkSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> NetworkSize
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the CustomCidrRange. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomCidrRange
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the SubnetConfigurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveSubnetConfiguration> SubnetConfigurations
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the AllowSubnetCommunication. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AllowSubnetCommunication
         {
             get

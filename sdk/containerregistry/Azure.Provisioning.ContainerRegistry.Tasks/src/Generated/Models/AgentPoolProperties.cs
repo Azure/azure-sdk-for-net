@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of agent pool. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AgentPoolProperties : ProvisionableConstruct
     {
         private BicepValue<int> _count;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Count. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Count
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Tier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Tier
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the OS. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskOS> OS
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the VirtualNetworkSubnetResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> VirtualNetworkSubnetResourceId
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskProvisioningState> ProvisioningState
         {
             get

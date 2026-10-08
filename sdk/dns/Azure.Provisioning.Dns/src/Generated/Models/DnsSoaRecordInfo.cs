@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> An SOA record. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsSoaRecordInfo : ProvisionableConstruct
     {
         private BicepValue<string> _host;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Host. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Host
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Email. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Email
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the SerialNumber. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> SerialNumber
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the RefreshTimeInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> RefreshTimeInSeconds
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the RetryTimeInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> RetryTimeInSeconds
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the ExpireTimeInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> ExpireTimeInSeconds
         {
             get
@@ -117,6 +125,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the MinimumTtlInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MinimumTtlInSeconds
         {
             get

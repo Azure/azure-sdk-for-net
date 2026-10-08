@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Enclave Endpoint Protocol Enum. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EnclaveEndpointProtocol
     {
         /// <summary> EndpointProtocol Type ANY. </summary>

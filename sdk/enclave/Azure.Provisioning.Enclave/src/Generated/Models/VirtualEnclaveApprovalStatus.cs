@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Approval Status. It can be Approved, Rejected, Pending, Deleted or Expired. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveApprovalStatus
     {
         /// <summary> ApprovalStatus Type Approved. </summary>

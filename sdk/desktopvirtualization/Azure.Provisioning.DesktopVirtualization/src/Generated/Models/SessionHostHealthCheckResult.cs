@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Represents the Health state of the health check we performed. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SessionHostHealthCheckResult
     {
         /// <summary> Health check result is not currently known. </summary>

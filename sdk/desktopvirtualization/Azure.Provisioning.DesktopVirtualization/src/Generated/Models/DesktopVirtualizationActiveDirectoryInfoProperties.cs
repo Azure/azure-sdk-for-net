@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Active directory info. Only one should be populated based on the join type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationActiveDirectoryInfoProperties : ProvisionableConstruct
     {
         private DesktopVirtualizationKeyVaultCredentialsProperties _domainCredentials;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DomainCredentials. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationKeyVaultCredentialsProperties DomainCredentials
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OuPath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OuPath
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DomainName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DomainName
         {
             get

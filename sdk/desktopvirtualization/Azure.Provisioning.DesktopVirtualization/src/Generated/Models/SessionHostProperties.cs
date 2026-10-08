@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for SessionHost properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SessionHostProperties : ProvisionableConstruct
     {
         private BicepValue<int> _activeSessions;
@@ -44,6 +46,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ActiveSessions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ActiveSessions
         {
             get
@@ -54,6 +57,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the DisconnectedSessions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> DisconnectedSessions
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the PendingSessions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PendingSessions
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -84,6 +90,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the LastHeartBeatOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastHeartBeatOn
         {
             get
@@ -94,6 +101,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the Sessions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Sessions
         {
             get
@@ -104,6 +112,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the AgentVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AgentVersion
         {
             get
@@ -114,6 +123,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the AllowNewSession. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AllowNewSession
         {
             get
@@ -129,6 +139,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the VmId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VmId
         {
             get
@@ -139,6 +150,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ResourceId
         {
             get
@@ -149,6 +161,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the AssignedUser. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AssignedUser
         {
             get
@@ -164,6 +177,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FriendlyName
         {
             get
@@ -179,6 +193,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostStatus> Status
         {
             get
@@ -189,6 +204,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the StatusTimestamp. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StatusTimestamp
         {
             get
@@ -199,6 +215,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the OSVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OSVersion
         {
             get
@@ -209,6 +226,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the SxsStackVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SxsStackVersion
         {
             get
@@ -219,6 +237,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the UpdateState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostUpdateState> UpdateState
         {
             get
@@ -229,6 +248,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the LastUpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastUpdatedOn
         {
             get
@@ -239,6 +259,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the UpdateErrorMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UpdateErrorMessage
         {
             get
@@ -249,6 +270,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the LastSessionHostUpdateOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastSessionHostUpdateOn
         {
             get
@@ -259,6 +281,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the SessionHostConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SessionHostConfiguration
         {
             get
@@ -269,6 +292,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the SessionHostHealthCheckResults. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SessionHostHealthCheckReport> SessionHostHealthCheckResults
         {
             get

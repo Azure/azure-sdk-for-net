@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Custom JWT authentication settings for namespace resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CustomJwtAuthenticationSettings : ProvisionableConstruct
     {
         private BicepValue<string> _tokenIssuer;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the TokenIssuer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TokenIssuer
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IssuerCertificates. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IssuerCertificateInfo> IssuerCertificates
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EncodedIssuerCertificates. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EncodedIssuerCertificateInfo> EncodedIssuerCertificates
         {
             get

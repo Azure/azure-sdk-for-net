@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Domain configurations of session hosts. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationDomainInfoProperties : ProvisionableConstruct
     {
         private BicepValue<DesktopVirtualizationDomainJoinType> _joinType;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the JoinType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationDomainJoinType> JoinType
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ActiveDirectoryInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationActiveDirectoryInfoProperties ActiveDirectoryInfo
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the AzureActiveDirectoryInfo. </summary>
+        [Experimental("AZPROVISION001")]
         internal AzureActiveDirectoryInfoProperties AzureActiveDirectoryInfo
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MdmProviderGuid. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureActiveDirectoryInfoMdmProviderGuid
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> Managed identity for the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskIdentityProperties : ProvisionableConstruct
     {
         private BicepValue<string> _principalId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the PrincipalId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrincipalId
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TenantId
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskResourceIdentityType> Type
         {
             get
@@ -59,6 +64,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the UserAssignedIdentities. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<ContainerRegistryTaskUserIdentityProperties> UserAssignedIdentities
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The type of image session hosts use in the hostpool. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationImageType
     {
         /// <summary> Using default marketplace images offered by Azure Marketplace. </summary>

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of a topic type info. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TopicType : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -74,6 +75,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Provider. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Provider
         {
             get
@@ -83,6 +85,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -92,6 +95,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -101,6 +105,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ResourceRegionType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridResourceRegionType> ResourceRegionType
         {
             get
@@ -110,6 +115,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TopicTypeProvisioningState> ProvisioningState
         {
             get
@@ -119,6 +125,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the SupportedLocations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> SupportedLocations
         {
             get
@@ -128,6 +135,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the SourceResourceFormat. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SourceResourceFormat
         {
             get
@@ -137,6 +145,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the SupportedScopesForSource. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<TopicTypeSourceScope> SupportedScopesForSource
         {
             get
@@ -146,6 +155,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the AreRegionalAndGlobalSourcesSupported. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AreRegionalAndGlobalSourcesSupported
         {
             get
@@ -155,6 +165,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the AdditionalEnforcedPermissions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<TopicTypeAdditionalEnforcedPermission> AdditionalEnforcedPermissions
         {
             get

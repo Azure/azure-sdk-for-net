@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Auto-scale configuration for the namespace resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AutoScaleConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _enableAutoScale;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EnableAutoScale. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableAutoScale
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MinimumThroughputUnits. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MinimumThroughputUnits
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MaximumThroughputUnits. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaximumThroughputUnits
         {
             get

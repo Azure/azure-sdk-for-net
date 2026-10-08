@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> Properties that describe a base image dependency. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskBaseImageDependency : ProvisionableConstruct
     {
         private BicepValue<ContainerRegistryTaskBaseImageDependencyType> _type;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskBaseImageDependencyType> Type
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Registry. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Registry
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Repository. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Repository
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Tag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Tag
         {
             get
@@ -65,6 +71,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Digest. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Digest
         {
             get

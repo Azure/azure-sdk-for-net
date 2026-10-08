@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The report for session host information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionHostHealthCheckReport : ProvisionableConstruct
     {
         private BicepValue<SessionHostHealthCheckName> _healthCheckName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the HealthCheckName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostHealthCheckName> HealthCheckName
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the HealthCheckResult. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostHealthCheckResult> HealthCheckResult
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the AdditionalFailureDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionHostHealthCheckFailureDetails AdditionalFailureDetails
         {
             get

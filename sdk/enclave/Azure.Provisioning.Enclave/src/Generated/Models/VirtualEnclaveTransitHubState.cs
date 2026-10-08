@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Specifies the state of the transitHub. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveTransitHubState
     {
         /// <summary> TransitHubState Type PendingApproval. </summary>

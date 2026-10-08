@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> A custom domain configuration that allows users to publish to their own domain name. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CustomDomainConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _fullyQualifiedDomainName;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the FullyQualifiedDomainName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FullyQualifiedDomainName
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ValidationState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CustomDomainValidationState> ValidationState
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public CustomDomainIdentity Identity
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the CertificateUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> CertificateUri
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ExpectedTxtRecordName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExpectedTxtRecordName
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ExpectedTxtRecordValue. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExpectedTxtRecordValue
         {
             get

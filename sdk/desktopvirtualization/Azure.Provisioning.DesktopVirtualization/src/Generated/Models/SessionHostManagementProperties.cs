@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Session Host Managements of HostPool. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionHostManagementProperties : ProvisionableConstruct
     {
         private BicepValue<string> _scheduledDateTimeZone;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ScheduledDateTimeZone. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ScheduledDateTimeZone
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Update. </summary>
+        [Experimental("AZPROVISION001")]
         public HostPoolUpdateConfigurationProperties Update
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Provisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionHostProvisioningConfigurationProperties Provisioning
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FailedSessionHostCleanupPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostConfigurationFailedSessionHostCleanupPolicy> FailedSessionHostCleanupPolicy
         {
             get

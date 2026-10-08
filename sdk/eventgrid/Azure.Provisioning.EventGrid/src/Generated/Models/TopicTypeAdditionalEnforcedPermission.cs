@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The TopicTypeAdditionalEnforcedPermission. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TopicTypeAdditionalEnforcedPermission : ProvisionableConstruct
     {
         private BicepValue<string> _permissionName;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PermissionName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PermissionName
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the IsDataAction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDataAction
         {
             get

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -16,6 +17,7 @@ namespace Azure.Provisioning.EventGrid
     /// 'eventtype' and 'dataversion' properties. This represents a field in the input event schema
     /// along with a default value to be used, and at least one of these two properties should be provided.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class JsonFieldWithDefault : ProvisionableConstruct
     {
         private BicepValue<string> _sourceField;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the SourceField. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SourceField
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DefaultValue. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultValue
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> Represents the signing key. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsSigningKey : ProvisionableConstruct
     {
         private BicepList<DelegationSignerInfo> _delegationSignerInfo;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the DelegationSignerInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DelegationSignerInfo> DelegationSignerInfo
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the Flags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Flags
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the KeyTag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> KeyTag
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the Protocol. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Protocol
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the PublicKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublicKey
         {
             get
@@ -76,6 +83,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the SecurityAlgorithmType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SecurityAlgorithmType
         {
             get

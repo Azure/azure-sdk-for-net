@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Update state of a SessionHost. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SessionHostUpdateState
     {
         /// <summary> Update is initializing. </summary>

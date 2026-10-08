@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary>
     /// This determines if traffic is allowed over public network. By default it is enabled.
     /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainProperties.InboundIpRules" /&gt;
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridPublicNetworkAccess
     {
         /// <summary> Enabled. </summary>

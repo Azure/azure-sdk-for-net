@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -12,8 +13,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary>
     /// Base properties for any task step.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryFileTaskStep"/>, and <see cref="ContainerRegistryEncodedTaskStep"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryEncodedTaskStep"/>, and <see cref="ContainerRegistryFileTaskStep"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskStepProperties : ProvisionableConstruct
     {
         private BicepValue<StepType> _type;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> The type of the step. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<StepType> Type
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the BaseImageDependencies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskBaseImageDependency> BaseImageDependencies
         {
             get
@@ -47,6 +51,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ContextPath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContextPath
         {
             get
@@ -62,6 +67,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ContextAccessToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContextAccessToken
         {
             get

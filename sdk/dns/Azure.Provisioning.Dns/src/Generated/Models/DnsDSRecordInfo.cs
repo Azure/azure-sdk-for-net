@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> A DS record. For more information about the DS record format, see RFC 4034: https://www.rfc-editor.org/rfc/rfc4034. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsDSRecordInfo : ProvisionableConstruct
     {
         private BicepValue<int> _keyTag;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the KeyTag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> KeyTag
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Algorithm. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Algorithm
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Digest. </summary>
+        [Experimental("AZPROVISION001")]
         public DSRecordDigest Digest
         {
             get

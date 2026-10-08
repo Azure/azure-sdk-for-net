@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for ApplicationGroup properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApplicationGroupProperties : ProvisionableConstruct
     {
         private BicepValue<string> _objectId;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FriendlyName
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the HostPoolId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> HostPoolId
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the WorkspaceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> WorkspaceId
         {
             get
@@ -96,6 +103,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ApplicationGroupType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualApplicationGroupType> ApplicationGroupType
         {
             get
@@ -111,6 +119,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the IsCloudPCResource. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCloudPCResource
         {
             get
@@ -121,6 +130,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ShowInFeed. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ShowInFeed
         {
             get
@@ -136,6 +146,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OboTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OboTenantId
         {
             get
@@ -151,6 +162,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the DeploymentScope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationDeploymentScope> DeploymentScope
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Type of the delivery attribute or header name. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum DeliveryAttributeMappingType
     {
         /// <summary> Static. </summary>

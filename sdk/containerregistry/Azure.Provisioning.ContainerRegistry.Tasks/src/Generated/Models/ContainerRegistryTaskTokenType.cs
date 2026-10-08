@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The type of Auth token. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskTokenType
     {
         /// <summary> PAT. </summary>
