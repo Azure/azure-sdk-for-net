@@ -14,7 +14,7 @@
 
 ### Breaking Changes
 
-- `PublicCloudConnectorPatch.AwsCloudExcludedAccounts` has moved to `PublicCloudConnectorPatch.Properties.AwsCloudExcludedAccounts`. The patch payload now carries a `PublicCloudConnectorPropertiesPatch` because the connector properties can describe either an AWS or a GCP profile, so the single-property flattening used in earlier versions no longer applies.
+- `PublicCloudConnectorPatch.AwsCloudExcludedAccounts` is obsolete in favor of `PublicCloudConnectorPatch.Properties.AwsCloudExcludedAccounts`. The patch payload now carries a `PublicCloudConnectorPropertiesPatch` because the connector properties can describe either an AWS or a GCP profile, so the single-property flattening used in earlier versions no longer applies. The original member is retained and forwards to the new location, so existing code continues to compile and run.
 - `PublicCloudConnectorProperties.AwsCloudProfile` is now optional, since a connector may instead be configured with a GCP profile.
 
 ### Other Changes
