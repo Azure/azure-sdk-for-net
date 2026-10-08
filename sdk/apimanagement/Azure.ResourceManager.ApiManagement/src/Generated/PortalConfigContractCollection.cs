@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigContractDataAsyncCollectionResultOfT(
                 _portalConfigRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceCollectionResultOfT(
+            return new PageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigContractDataCollectionResultOfT(
                 _portalConfigRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByManagementGroupAsyncCollectionResultOfT(_tenantActivityLogAlertResourcesRestClient, Id.Name, context, "TenantActivityLogAlertCollection.GetAll"), data => new TenantActivityLogAlertResource(Client, data));
+            return new AsyncPageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertDataAsync0CollectionResultOfT(_tenantActivityLogAlertResourcesRestClient, Id.Name, context, "TenantActivityLogAlertCollection.GetAll"), data => new TenantActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetByManagementGroupCollectionResultOfT(_tenantActivityLogAlertResourcesRestClient, Id.Name, context, "TenantActivityLogAlertCollection.GetAll"), data => new TenantActivityLogAlertResource(Client, data));
+            return new PageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertData0CollectionResultOfT(_tenantActivityLogAlertResourcesRestClient, Id.Name, context, "TenantActivityLogAlertCollection.GetAll"), data => new TenantActivityLogAlertResource(Client, data));
         }
 
         /// <summary>

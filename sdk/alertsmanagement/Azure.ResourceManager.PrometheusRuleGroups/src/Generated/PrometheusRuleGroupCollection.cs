@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrometheusRuleGroupData, PrometheusRuleGroupResource>(new PrometheusRuleGroupResourcesGetByResourceGroupAsyncCollectionResultOfT(_prometheusRuleGroupResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PrometheusRuleGroupCollection.GetAll"), data => new PrometheusRuleGroupResource(Client, data));
+            return new AsyncPageableWrapper<PrometheusRuleGroupData, PrometheusRuleGroupResource>(new PrometheusRuleGroupDataAsyncCollectionResultOfT(_prometheusRuleGroupResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PrometheusRuleGroupCollection.GetAll"), data => new PrometheusRuleGroupResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrometheusRuleGroupData, PrometheusRuleGroupResource>(new PrometheusRuleGroupResourcesGetByResourceGroupCollectionResultOfT(_prometheusRuleGroupResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PrometheusRuleGroupCollection.GetAll"), data => new PrometheusRuleGroupResource(Client, data));
+            return new PageableWrapper<PrometheusRuleGroupData, PrometheusRuleGroupResource>(new PrometheusRuleGroupDataCollectionResultOfT(_prometheusRuleGroupResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PrometheusRuleGroupCollection.GetAll"), data => new PrometheusRuleGroupResource(Client, data));
         }
 
         /// <summary>

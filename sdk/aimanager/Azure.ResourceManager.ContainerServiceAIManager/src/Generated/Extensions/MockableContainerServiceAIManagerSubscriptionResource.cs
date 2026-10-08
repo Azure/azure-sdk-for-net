@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AIManagerData, AIManagerResource>(new AIManagersGetBySubscriptionAsyncCollectionResultOfT(AIManagersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceAIManagerSubscriptionResource.GetAIManagers"), data => new AIManagerResource(Client, data));
+            return new AsyncPageableWrapper<AIManagerData, AIManagerResource>(new AIManagerDataAsync0CollectionResultOfT(AIManagersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceAIManagerSubscriptionResource.GetAIManagers"), data => new AIManagerResource(Client, data));
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AIManagerData, AIManagerResource>(new AIManagersGetBySubscriptionCollectionResultOfT(AIManagersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceAIManagerSubscriptionResource.GetAIManagers"), data => new AIManagerResource(Client, data));
+            return new PageableWrapper<AIManagerData, AIManagerResource>(new AIManagerData0CollectionResultOfT(AIManagersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceAIManagerSubscriptionResource.GetAIManagers"), data => new AIManagerResource(Client, data));
         }
     }
 }

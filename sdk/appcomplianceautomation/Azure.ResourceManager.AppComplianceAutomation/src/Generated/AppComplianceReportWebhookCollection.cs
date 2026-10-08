@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new WebhookGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new AppComplianceReportWebhookDataAsyncCollectionResultOfT(
                 _webhookRestClient,
                 Id.Name,
                 skipToken,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new WebhookGetAllCollectionResultOfT(
+            return new PageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new AppComplianceReportWebhookDataCollectionResultOfT(
                 _webhookRestClient,
                 Id.Name,
                 skipToken,

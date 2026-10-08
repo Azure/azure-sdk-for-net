@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new UserGroupGetAllAsyncCollectionResultOfT(
+            return new ApiManagementGroupDataAsync2CollectionResultOfT(
                 _userGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new UserGroupGetAllCollectionResultOfT(
+            return new ApiManagementGroupData2CollectionResultOfT(
                 _userGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new UserIdentitiesGetUserIdentitiesAsyncCollectionResultOfT(
+            return new UserIdentityContractAsyncCollectionResultOfT(
                 _userIdentitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new UserIdentitiesGetUserIdentitiesCollectionResultOfT(
+            return new UserIdentityContractCollectionResultOfT(
                 _userIdentitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

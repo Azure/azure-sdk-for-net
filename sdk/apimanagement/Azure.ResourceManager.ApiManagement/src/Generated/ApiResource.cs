@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiRevisionGetApiRevisionsByServiceAsyncCollectionResultOfT(
+            return new ApiRevisionContractAsync0CollectionResultOfT(
                 _apiRevisionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiRevisionGetApiRevisionsByServiceCollectionResultOfT(
+            return new ApiRevisionContract0CollectionResultOfT(
                 _apiRevisionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiProductGetApiProductsRawAsyncCollectionResultOfT(
+            return new ApiManagementProductDataAsync0CollectionResultOfT(
                 _apiProductRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiProductGetApiProductsRawCollectionResultOfT(
+            return new ApiManagementProductData0CollectionResultOfT(
                 _apiProductRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationGetOperationsByTagsAsyncCollectionResultOfT(
+            return new TagResourceContractDetailsAsync0CollectionResultOfT(
                 _operationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationGetOperationsByTagsCollectionResultOfT(
+            return new TagResourceContractDetails0CollectionResultOfT(
                 _operationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

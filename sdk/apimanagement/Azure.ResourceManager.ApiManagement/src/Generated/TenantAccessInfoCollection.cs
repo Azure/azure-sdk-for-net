@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessInfoDataAsyncCollectionResultOfT(
                 _tenantAccessRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceCollectionResultOfT(
+            return new PageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessInfoDataCollectionResultOfT(
                 _tenantAccessRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

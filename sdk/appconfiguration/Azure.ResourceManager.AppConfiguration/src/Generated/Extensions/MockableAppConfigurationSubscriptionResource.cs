@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
+            return new AsyncPageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new AppConfigurationStoreDataAsync0CollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetAllCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
+            return new PageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new AppConfigurationStoreData0CollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), skipToken, context, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores"), data => new AppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
+            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new DeletedAppConfigurationStoreDataAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAppConfigurationStoresCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
+            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new DeletedAppConfigurationStoreDataCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>

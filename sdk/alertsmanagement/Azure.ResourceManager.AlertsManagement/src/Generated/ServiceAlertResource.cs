@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertsGetEnrichmentsAsyncCollectionResultOfT(_alertsRestClient, Id.Parent.ToString(), Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
+            return new AlertEnrichmentDataAsyncCollectionResultOfT(_alertsRestClient, Id.Parent.ToString(), Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertsGetEnrichmentsCollectionResultOfT(_alertsRestClient, Id.Parent.ToString(), Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
+            return new AlertEnrichmentDataCollectionResultOfT(_alertsRestClient, Id.Parent.ToString(), Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
         }
 
         /// <summary>

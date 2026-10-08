@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsByTargetTypeAsyncCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, Id.SubscriptionId, targetType, context, "MockableAlertRuleRecommendationsSubscriptionResource.GetAlertRuleRecommendationsByTargetType");
+            return new AlertRuleRecommendationAsync0CollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, Id.SubscriptionId, targetType, context, "MockableAlertRuleRecommendationsSubscriptionResource.GetAlertRuleRecommendationsByTargetType");
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AlertRuleRecommendationsOperationGroupGetAlertRuleRecommendationsByTargetTypeCollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, Id.SubscriptionId, targetType, context, "MockableAlertRuleRecommendationsSubscriptionResource.GetAlertRuleRecommendationsByTargetType");
+            return new AlertRuleRecommendation0CollectionResultOfT(AlertRuleRecommendationsOperationGroupRestClient, Id.SubscriptionId, targetType, context, "MockableAlertRuleRecommendationsSubscriptionResource.GetAlertRuleRecommendationsByTargetType");
         }
     }
 }

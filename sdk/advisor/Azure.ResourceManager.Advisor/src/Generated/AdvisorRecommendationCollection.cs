@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new ResourceRecommendationBasesGetByTenantAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new AdvisorRecommendationDataAsyncCollectionResultOfT(
                 _resourceRecommendationBasesRestClient,
                 Id.ToString(),
                 filter,
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new ResourceRecommendationBasesGetByTenantCollectionResultOfT(
+            return new PageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new AdvisorRecommendationDataCollectionResultOfT(
                 _resourceRecommendationBasesRestClient,
                 Id.ToString(),
                 filter,

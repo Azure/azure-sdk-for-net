@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AlertProcessingRuleData, AlertProcessingRuleResource>(new AlertProcessingRulesOperationGroupGetByResourceGroupAsyncCollectionResultOfT(_alertProcessingRulesOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AlertProcessingRuleCollection.GetAll"), data => new AlertProcessingRuleResource(Client, data));
+            return new AsyncPageableWrapper<AlertProcessingRuleData, AlertProcessingRuleResource>(new AlertProcessingRuleDataAsyncCollectionResultOfT(_alertProcessingRulesOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AlertProcessingRuleCollection.GetAll"), data => new AlertProcessingRuleResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AlertProcessingRules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AlertProcessingRuleData, AlertProcessingRuleResource>(new AlertProcessingRulesOperationGroupGetByResourceGroupCollectionResultOfT(_alertProcessingRulesOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AlertProcessingRuleCollection.GetAll"), data => new AlertProcessingRuleResource(Client, data));
+            return new PageableWrapper<AlertProcessingRuleData, AlertProcessingRuleResource>(new AlertProcessingRuleDataCollectionResultOfT(_alertProcessingRulesOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AlertProcessingRuleCollection.GetAll"), data => new AlertProcessingRuleResource(Client, data));
         }
 
         /// <summary>

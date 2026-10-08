@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new CacheGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new ApiManagementCacheDataAsyncCollectionResultOfT(
                 _cacheRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new CacheGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementCacheData, ApiManagementCacheResource>(new ApiManagementCacheDataCollectionResultOfT(
                 _cacheRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

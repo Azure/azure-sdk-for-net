@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetAllAsyncCollectionResultOfT(WebTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestDataAsync0CollectionResultOfT(WebTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetAllCollectionResultOfT(WebTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
+            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestData0CollectionResultOfT(WebTestsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new WorkbooksGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new ApplicationInsightsWorkbookDataAsyncCollectionResultOfT(
                 WorkbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 category.ToString(),
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new WorkbooksGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookResource>(new ApplicationInsightsWorkbookDataCollectionResultOfT(
                 WorkbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 category.ToString(),
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ComponentsGetAllAsyncCollectionResultOfT(ComponentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents"), data => new ApplicationInsightsComponentResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ApplicationInsightsComponentDataAsync0CollectionResultOfT(ComponentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents"), data => new ApplicationInsightsComponentResource(Client, data));
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ComponentsGetAllCollectionResultOfT(ComponentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents"), data => new ApplicationInsightsComponentResource(Client, data));
+            return new PageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ApplicationInsightsComponentData0CollectionResultOfT(ComponentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents"), data => new ApplicationInsightsComponentResource(Client, data));
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedWorkbooksGetBySubscriptionAsyncCollectionResultOfT(
+            return new DeletedWorkbookAsyncCollectionResultOfT(
                 DeletedWorkbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 category?.ToString(),
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedWorkbooksGetBySubscriptionCollectionResultOfT(
+            return new DeletedWorkbookCollectionResultOfT(
                 DeletedWorkbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 category?.ToString(),
