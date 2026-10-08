@@ -4,13 +4,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: containerapps
-    SDKType: client
     SupportedClouds: 'Public'
     CloudConfig:
       Public:
         Location: 'eastus2'
-    TestSetupSteps:
-      - pwsh: |
-          Write-Host "##vso[task.setvariable variable=Record;]"
-          Write-Host "##vso[task.setvariable variable=TestMode;]Live"
-        displayName: Run sandbox tests in Live mode
