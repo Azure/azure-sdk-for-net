@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> Properties of public cloud connectors. </summary>
-    public partial class PublicCloudConnectorPropertiesUpdate
+    public partial class PublicCloudConnectorPropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorPropertiesUpdate"/>. </summary>
-        public PublicCloudConnectorPropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorPropertiesPatch"/>. </summary>
+        public PublicCloudConnectorPropertiesPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorPropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorPropertiesPatch"/>. </summary>
         /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
         /// <param name="gcpCloudProfile"> Cloud profile for GCP. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorPropertiesUpdate(AwsCloudProfileUpdate awsCloudProfile, GcpCloudProfileUpdate gcpCloudProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicCloudConnectorPropertiesPatch(AwsCloudProfileUpdate awsCloudProfile, GcpCloudProfileUpdate gcpCloudProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AwsCloudProfile = awsCloudProfile;
             GcpCloudProfile = gcpCloudProfile;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         }
 
         /// <summary> The organization properties of the GCP organization. </summary>
-        public GcpOrganizationPropertiesUpdate GcpCloudOrganizationProperties
+        public GcpOrganizationPropertiesPatch GcpCloudOrganizationProperties
         {
             get
             {

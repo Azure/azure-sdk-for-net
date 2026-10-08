@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> Initializes a new instance of <see cref="GcpCloudProfileUpdate"/>. </summary>
         /// <param name="organizationProperties"> The organization properties of the GCP organization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GcpCloudProfileUpdate(GcpOrganizationPropertiesUpdate organizationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GcpCloudProfileUpdate(GcpOrganizationPropertiesPatch organizationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrganizationProperties = organizationProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The organization properties of the GCP organization. </summary>
-        public GcpOrganizationPropertiesUpdate OrganizationProperties { get; set; }
+        public GcpOrganizationPropertiesPatch OrganizationProperties { get; set; }
     }
 }

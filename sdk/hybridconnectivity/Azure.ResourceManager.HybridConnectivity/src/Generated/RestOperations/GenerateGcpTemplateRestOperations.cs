@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreatePostRequest(Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePostGenerateGcpTemplateRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

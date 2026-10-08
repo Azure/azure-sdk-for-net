@@ -286,11 +286,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate GCP Access Control Template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GenerateGcpTemplateResult>> PostAsync(GenerateGcpTemplateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenerateGcpTemplateResult>> PostGenerateGcpTemplateAsync(GenerateGcpTemplateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = GenerateGcpTemplateClientDiagnostics.CreateScope("MockableHybridConnectivitySubscriptionResource.Post");
+            using DiagnosticScope scope = GenerateGcpTemplateClientDiagnostics.CreateScope("MockableHybridConnectivitySubscriptionResource.PostGenerateGcpTemplate");
             scope.Start();
             try
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateGcpTemplateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateGcpTemplateRestClient.CreatePostGenerateGcpTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GenerateGcpTemplateResult> response = Response.FromValue(GenerateGcpTemplateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -334,11 +334,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate GCP Access Control Template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GenerateGcpTemplateResult> Post(GenerateGcpTemplateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<GenerateGcpTemplateResult> PostGenerateGcpTemplate(GenerateGcpTemplateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = GenerateGcpTemplateClientDiagnostics.CreateScope("MockableHybridConnectivitySubscriptionResource.Post");
+            using DiagnosticScope scope = GenerateGcpTemplateClientDiagnostics.CreateScope("MockableHybridConnectivitySubscriptionResource.PostGenerateGcpTemplate");
             scope.Start();
             try
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateGcpTemplateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
+                HttpMessage message = GenerateGcpTemplateRestClient.CreatePostGenerateGcpTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GenerateGcpTemplateResult> response = Response.FromValue(GenerateGcpTemplateResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            GcpOrganizationPropertiesUpdate organizationProperties = default;
+            GcpOrganizationPropertiesPatch organizationProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    organizationProperties = GcpOrganizationPropertiesUpdate.DeserializeGcpOrganizationPropertiesUpdate(prop.Value, options);
+                    organizationProperties = GcpOrganizationPropertiesPatch.DeserializeGcpOrganizationPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

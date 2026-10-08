@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal PublicCloudConnectorPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, PublicCloudConnectorPropertiesUpdate properties) : base(id, name, resourceType, systemData, tags, additionalBinaryDataProperties)
+        internal PublicCloudConnectorPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, PublicCloudConnectorPropertiesPatch properties) : base(id, name, resourceType, systemData, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public PublicCloudConnectorPropertiesUpdate Properties { get; set; }
+        public PublicCloudConnectorPropertiesPatch Properties { get; set; }
     }
 }

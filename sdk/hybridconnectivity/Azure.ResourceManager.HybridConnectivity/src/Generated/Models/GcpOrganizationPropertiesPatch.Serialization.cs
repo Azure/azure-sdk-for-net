@@ -14,51 +14,51 @@ using Azure.ResourceManager.HybridConnectivity;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> GCP organization properties for update. </summary>
-    public partial class GcpOrganizationPropertiesUpdate : IJsonModel<GcpOrganizationPropertiesUpdate>
+    public partial class GcpOrganizationPropertiesPatch : IJsonModel<GcpOrganizationPropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GcpOrganizationPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GcpOrganizationPropertiesPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGcpOrganizationPropertiesUpdate(document.RootElement, options);
+                        return DeserializeGcpOrganizationPropertiesPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GcpOrganizationPropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpOrganizationPropertiesPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GcpOrganizationPropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpOrganizationPropertiesPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GcpOrganizationPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GcpOrganizationPropertiesPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GcpOrganizationPropertiesUpdate IPersistableModel<GcpOrganizationPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GcpOrganizationPropertiesPatch IPersistableModel<GcpOrganizationPropertiesPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GcpOrganizationPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GcpOrganizationPropertiesPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GcpOrganizationPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GcpOrganizationPropertiesPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpOrganizationPropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpOrganizationPropertiesPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(ExcludedProjectNumbers))
             {
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GcpOrganizationPropertiesUpdate IJsonModel<GcpOrganizationPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GcpOrganizationPropertiesPatch IJsonModel<GcpOrganizationPropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GcpOrganizationPropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GcpOrganizationPropertiesPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpOrganizationPropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpOrganizationPropertiesPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGcpOrganizationPropertiesUpdate(document.RootElement, options);
+            return DeserializeGcpOrganizationPropertiesPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GcpOrganizationPropertiesUpdate DeserializeGcpOrganizationPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static GcpOrganizationPropertiesPatch DeserializeGcpOrganizationPropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GcpOrganizationPropertiesUpdate(excludedProjectNumbers ?? new ChangeTrackingList<string>(), excludedFolderIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new GcpOrganizationPropertiesPatch(excludedProjectNumbers ?? new ChangeTrackingList<string>(), excludedFolderIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

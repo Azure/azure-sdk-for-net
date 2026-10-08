@@ -12,23 +12,23 @@ using Azure.ResourceManager.HybridConnectivity;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> GCP organization properties for update. </summary>
-    public partial class GcpOrganizationPropertiesUpdate
+    public partial class GcpOrganizationPropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GcpOrganizationPropertiesUpdate"/>. </summary>
-        public GcpOrganizationPropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="GcpOrganizationPropertiesPatch"/>. </summary>
+        public GcpOrganizationPropertiesPatch()
         {
             ExcludedProjectNumbers = new ChangeTrackingList<string>();
             ExcludedFolderIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GcpOrganizationPropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpOrganizationPropertiesPatch"/>. </summary>
         /// <param name="excludedProjectNumbers"> List of GCP projects which need to be excluded. </param>
         /// <param name="excludedFolderIds"> List of GCP folders which need to be excluded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GcpOrganizationPropertiesUpdate(IList<string> excludedProjectNumbers, IList<string> excludedFolderIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GcpOrganizationPropertiesPatch(IList<string> excludedProjectNumbers, IList<string> excludedFolderIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExcludedProjectNumbers = excludedProjectNumbers;
             ExcludedFolderIds = excludedFolderIds;

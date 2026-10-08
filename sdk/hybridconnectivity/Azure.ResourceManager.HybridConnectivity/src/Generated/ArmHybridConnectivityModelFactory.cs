@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorPatch"/> instance for mocking. </returns>
-        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, PublicCloudConnectorPropertiesUpdate properties)
+        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, PublicCloudConnectorPropertiesPatch properties)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -326,22 +326,22 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <param name="awsCloudExcludedAccounts"> List of AWS accounts which need to be excluded. </param>
         /// <param name="gcpCloudOrganizationProperties"> The organization properties of the GCP organization. </param>
-        /// <returns> A new <see cref="Models.PublicCloudConnectorPropertiesUpdate"/> instance for mocking. </returns>
-        public static PublicCloudConnectorPropertiesUpdate PublicCloudConnectorPropertiesUpdate(IEnumerable<string> awsCloudExcludedAccounts = default, GcpOrganizationPropertiesUpdate gcpCloudOrganizationProperties = default)
+        /// <returns> A new <see cref="Models.PublicCloudConnectorPropertiesPatch"/> instance for mocking. </returns>
+        public static PublicCloudConnectorPropertiesPatch PublicCloudConnectorPropertiesPatch(IEnumerable<string> awsCloudExcludedAccounts = default, GcpOrganizationPropertiesPatch gcpCloudOrganizationProperties = default)
         {
-            return new PublicCloudConnectorPropertiesUpdate(awsCloudExcludedAccounts is null ? default : new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), default), gcpCloudOrganizationProperties is null ? default : new GcpCloudProfileUpdate(gcpCloudOrganizationProperties, default), default);
+            return new PublicCloudConnectorPropertiesPatch(awsCloudExcludedAccounts is null ? default : new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), default), gcpCloudOrganizationProperties is null ? default : new GcpCloudProfileUpdate(gcpCloudOrganizationProperties, default), default);
         }
 
         /// <summary> GCP organization properties for update. </summary>
         /// <param name="excludedProjectNumbers"> List of GCP projects which need to be excluded. </param>
         /// <param name="excludedFolderIds"> List of GCP folders which need to be excluded. </param>
-        /// <returns> A new <see cref="Models.GcpOrganizationPropertiesUpdate"/> instance for mocking. </returns>
-        public static GcpOrganizationPropertiesUpdate GcpOrganizationPropertiesUpdate(IEnumerable<string> excludedProjectNumbers = default, IEnumerable<string> excludedFolderIds = default)
+        /// <returns> A new <see cref="Models.GcpOrganizationPropertiesPatch"/> instance for mocking. </returns>
+        public static GcpOrganizationPropertiesPatch GcpOrganizationPropertiesPatch(IEnumerable<string> excludedProjectNumbers = default, IEnumerable<string> excludedFolderIds = default)
         {
             excludedProjectNumbers ??= new ChangeTrackingList<string>();
             excludedFolderIds ??= new ChangeTrackingList<string>();
 
-            return new GcpOrganizationPropertiesUpdate((excludedProjectNumbers ?? new ChangeTrackingList<string>()).ToList(), (excludedFolderIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new GcpOrganizationPropertiesPatch((excludedProjectNumbers ?? new ChangeTrackingList<string>()).ToList(), (excludedFolderIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                awsCloudExcludedAccounts is null ? default : new PublicCloudConnectorPropertiesUpdate(awsCloudExcludedAccounts is null ? default : new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), default), default, default));
+                awsCloudExcludedAccounts is null ? default : new PublicCloudConnectorPropertiesPatch(awsCloudExcludedAccounts is null ? default : new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), default), default, default));
         }
     }
 }
