@@ -13,52 +13,52 @@ using Azure.ResourceManager.AppNetwork;
 
 namespace Azure.ResourceManager.AppNetwork.Models
 {
-    /// <summary> AppLinkMember connectivity profile. </summary>
-    public partial class AppLinkConnectivityProfile : IJsonModel<AppLinkConnectivityProfile>
+    /// <summary> The updatable AppLinkMember upgrade profile. </summary>
+    public partial class AppLinkMemberUpgradeProfilePatch : IJsonModel<AppLinkMemberUpgradeProfilePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppLinkConnectivityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppLinkMemberUpgradeProfilePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppLinkConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkMemberUpgradeProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAppLinkConnectivityProfile(document.RootElement, options);
+                        return DeserializeAppLinkMemberUpgradeProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppLinkConnectivityProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkMemberUpgradeProfilePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppLinkConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkMemberUpgradeProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AppLinkConnectivityProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkMemberUpgradeProfilePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppLinkConnectivityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppLinkMemberUpgradeProfilePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppLinkConnectivityProfile IPersistableModel<AppLinkConnectivityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppLinkMemberUpgradeProfilePatch IPersistableModel<AppLinkMemberUpgradeProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppLinkConnectivityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppLinkMemberUpgradeProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AppLinkConnectivityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppLinkMemberUpgradeProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppLinkConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkMemberUpgradeProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppLinkConnectivityProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkMemberUpgradeProfilePatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EastWestGateway))
+            if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("eastWestGateway"u8);
-                writer.WriteObjectValue(EastWestGateway, options);
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateConnect))
+            if (Optional.IsDefined(FullyManagedUpgradeProfile))
             {
-                writer.WritePropertyName("privateConnect"u8);
-                writer.WriteObjectValue(PrivateConnect, options);
+                writer.WritePropertyName("fullyManagedUpgradeProfile"u8);
+                writer.WriteObjectValue(FullyManagedUpgradeProfile, options);
             }
-            if (Optional.IsDefined(Network))
+            if (Optional.IsDefined(SelfManagedUpgradeProfile))
             {
-                writer.WritePropertyName("network"u8);
-                writer.WriteStringValue(Network);
+                writer.WritePropertyName("selfManagedUpgradeProfile"u8);
+                writer.WriteObjectValue(SelfManagedUpgradeProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,56 +108,60 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppLinkConnectivityProfile IJsonModel<AppLinkConnectivityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppLinkMemberUpgradeProfilePatch IJsonModel<AppLinkMemberUpgradeProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppLinkConnectivityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppLinkMemberUpgradeProfilePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppLinkConnectivityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkMemberUpgradeProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppLinkConnectivityProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkMemberUpgradeProfilePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppLinkConnectivityProfile(document.RootElement, options);
+            return DeserializeAppLinkMemberUpgradeProfilePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppLinkConnectivityProfile DeserializeAppLinkConnectivityProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppLinkMemberUpgradeProfilePatch DeserializeAppLinkMemberUpgradeProfilePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            EastWestGatewayProfile eastWestGateway = default;
-            PrivateConnectProfile privateConnect = default;
-            string network = default;
+            AppLinkUpgradeMode? mode = default;
+            FullyManagedUpgradeProfileUpdate fullyManagedUpgradeProfile = default;
+            SelfManagedUpgradeProfileUpdate selfManagedUpgradeProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("eastWestGateway"u8))
+                if (prop.NameEquals("mode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eastWestGateway = EastWestGatewayProfile.DeserializeEastWestGatewayProfile(prop.Value, options);
+                    mode = new AppLinkUpgradeMode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("privateConnect"u8))
+                if (prop.NameEquals("fullyManagedUpgradeProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateConnect = PrivateConnectProfile.DeserializePrivateConnectProfile(prop.Value, options);
+                    fullyManagedUpgradeProfile = FullyManagedUpgradeProfileUpdate.DeserializeFullyManagedUpgradeProfileUpdate(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("network"u8))
+                if (prop.NameEquals("selfManagedUpgradeProfile"u8))
                 {
-                    network = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    selfManagedUpgradeProfile = SelfManagedUpgradeProfileUpdate.DeserializeSelfManagedUpgradeProfileUpdate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppLinkConnectivityProfile(eastWestGateway, privateConnect, network, additionalBinaryDataProperties);
+            return new AppLinkMemberUpgradeProfilePatch(mode, fullyManagedUpgradeProfile, selfManagedUpgradeProfile, additionalBinaryDataProperties);
         }
     }
 }
