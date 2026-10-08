@@ -108,7 +108,6 @@ AgentOptimizationConfiguration conf = new(
     },
     agentOptimizationSpace: new()
     {
-        //TargetAttributes = { TargetAttribute.Skills, TargetAttribute.Instructions, TargetAttribute.Model },
         TargetAttributes = { TargetAttribute.Instructions,  TargetAttribute.Tools, TargetAttribute.Model },
         ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
     }
@@ -124,7 +123,7 @@ AgentOptimizationJob job = new()
     OptimizationModelConfiguration = new(modelDeploymentName)
 };
 OperationResult jobOperation = jobsClient.Create(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
-AgentOptimizationJob submittedJob = jobOperation.UpdateStatus().ToProjectAgentsResult<AgentOptimizationJob>();
+AgentOptimizationJob submittedJob = AgentOptimizationJob.FromClientResult(jobOperation.UpdateStatus());
 Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 ```
 
@@ -160,7 +159,7 @@ AgentOptimizationJob job = new()
     OptimizationModelConfiguration = new(modelDeploymentName)
 };
 OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
-AgentOptimizationJob submittedJob = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
+AgentOptimizationJob submittedJob = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
 Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 ```
 

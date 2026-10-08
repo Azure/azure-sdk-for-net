@@ -1007,7 +1007,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
         string opId = IsAsync ? "bdb68305-c2a7-11f1-8f16-f4289d3215d4" : "c58cf2b5-c2a7-11f1-96e3-f4289d3215d4";
         OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: false, job: GetOptimizationJob(newAgentVersion), operationId: opId, cancellationToken: default);
-        AgentOptimizationJob submittedJob1 = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
+        AgentOptimizationJob submittedJob1 = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
         Assert.That(submittedJob1?.Id, Is.Not.Null.And.Not.Empty);
         string prevID = submittedJob1.Id;
         // Attempt to create job with the same operationId should not cause an error and ID should remain the same.
@@ -1055,7 +1055,7 @@ public class AgentsTests : AgentsTestBase
         for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
             OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: false, job: GetOptimizationJob(newAgentVersion), operationId: null, cancellationToken: default);
-            AgentOptimizationJob submittedJob = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
+            AgentOptimizationJob submittedJob = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
             await jobsClient.CancelAsync(jobId: submittedJob.Id, cancellationToken: default);
         }
         List<AgentOptimizationJob> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).ToListAsync();

@@ -162,7 +162,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
             OptimizationModelConfiguration = new(modelDeploymentName)
         };
         OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
-        AgentOptimizationJob submittedJob = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
+        AgentOptimizationJob submittedJob = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
         Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Async
@@ -252,7 +252,6 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
             },
             agentOptimizationSpace: new()
             {
-                //TargetAttributes = { TargetAttribute.Skills, TargetAttribute.Instructions, TargetAttribute.Model },
                 TargetAttributes = { TargetAttribute.Instructions,  TargetAttribute.Tools, TargetAttribute.Model },
                 ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
             }
@@ -268,7 +267,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
             OptimizationModelConfiguration = new(modelDeploymentName)
         };
         OperationResult jobOperation = jobsClient.Create(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
-        AgentOptimizationJob submittedJob = jobOperation.UpdateStatus().ToProjectAgentsResult<AgentOptimizationJob>();
+        AgentOptimizationJob submittedJob = AgentOptimizationJob.FromClientResult(jobOperation.UpdateStatus());
         Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Sync

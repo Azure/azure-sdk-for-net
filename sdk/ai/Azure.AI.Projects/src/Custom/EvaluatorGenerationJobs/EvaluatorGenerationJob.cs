@@ -7,4 +7,14 @@ namespace Azure.AI.Projects.Evaluation;
 public partial class EvaluatorGenerationJob
 {
     internal FoundryOpenAIError Error { get; }
+
+    /// <summary>
+    /// Parse the raw result.
+    /// </summary>
+    /// <param name="result">The raw JSON, obtained from the service.</param>
+    /// <returns></returns>
+    public static EvaluatorGenerationJob FromClientResult(ClientResult result)
+    {
+        return result.ToProjectResult<EvaluatorGenerationJob>();
+    }
 }

@@ -3,13 +3,19 @@
 ## 3.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- `EvaluatorGenerationJobs` and `DataGenerationJob` do not require warning suppression anymore.
+- Agent optimization does not require `AAIP001` warning suppression anymore.
 
 ### Breaking Changes
+- `EvaluatorGenerationJobs.CreateAsync` and `EvaluatorGenerationJobs.Async` are now returning the LRO poller.
+- To create a data generation job `DataGenerationJobInputs` is now need to be used. It can be of three types: `EvaluationDataGenerationJobInputs`, `ReinforcementFineTuningDataGenerationJobInputs` and `SupervisedFineTuningDataGenerationJobInputs`. 
+- `DataGenerationJobOptions` was replaced by `DataGenerationJobConfiguration` subtypes.
+- `DataGenerationJobOutputOptions` was replaced by `EvaluationDataGenerationJobOutputConfiguration`.
 
 ### Bugs Fixed
 
 ### Other Changes
-- Agent optimization requests no longer require the `AgentsOptimization=V2Preview` feature opt-in.
+
 
 ## 3.0.0-beta.3 (2026-09-16)
 

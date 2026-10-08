@@ -11,6 +11,14 @@
 nowarn:AAIP001 T:Azure.AI.Projects.AIProjectClient
 nowarn:AAIP001 M:Azure.AI.Projects.InternalTool.DeserializeInternalTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluationRuleAction.DeserializeEvaluationRuleAction(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.DataGenerationJobInputs.DeserializeDataGenerationJobInputs(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.DataGenerationJob.DeserializeDataGenerationJob(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.SimpleQnADataGenerationJobConfiguration.#ctor(System.Int32)
+nowarn:AAIP001 M:Azure.AI.Projects.SimpleQnADataGenerationJobConfiguration.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.SimpleQnADataGenerationJobConfiguration.DeserializeSimpleQnADataGenerationJobConfiguration(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.DataGenerationJobOutput.DeserializeDataGenerationJobOutput(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluatorDefinition.DeserializeEvaluatorDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions()
+nowarn:AAIP001 M:Azure.AI.Projects.DataGenerationJobConfiguration.DeserializeDataGenerationJobConfiguration(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 
 # AAIP002 is the [Experimental] marker for this library's own preview surface
 # This tag is being set for experimental types, brought from OpenAI package.

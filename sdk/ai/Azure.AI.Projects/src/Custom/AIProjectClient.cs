@@ -303,7 +303,6 @@ namespace Azure.AI.Projects
         /// <summary> Gets the client for managing evaluation taxonomies. </summary>
         public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
         /// <summary> Gets the client for managing project evaluators. </summary>
-        [Experimental("AAIP001")]
         public virtual ProjectEvaluators Evaluators => GetProjectEvaluatorsClient();
         /// <summary> Gets the client for retrieving project insights. </summary>
         [Experimental("AAIP001")]
@@ -315,10 +314,8 @@ namespace Azure.AI.Projects
         [Experimental("AAIP001")]
         public virtual AIProjectModels Models => GetAIProjectModelsClient();
         /// <summary> Gets the client for managing evaluator generation jobs. </summary>
-        [Experimental("AAIP001")]
         public virtual EvaluatorGenerationJobs EvaluatorGenerationJobs => GetEvaluatorGenerationJobsClient();
         /// <summary> Gets the client for managing data generation jobs. </summary>
-        [Experimental("AAIP001")]
         public virtual DataGenerationJobs DataGenerationJobs => GetDataGenerationJobsClient();
         /// <summary> Gets the client for routines operations. </summary>
         [Experimental("AAIP001")]

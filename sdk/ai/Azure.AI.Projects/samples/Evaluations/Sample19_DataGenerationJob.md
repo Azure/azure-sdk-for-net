@@ -13,31 +13,27 @@ AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredentia
 2. In our scenario, we will generate 16 questions and answer pairs based on the provided prompt and will save them into the data set named "dataset-generation-eval-sample".
 
 ```C# Snippet:Sample_UploadFile_DataGenerationJob
-DataGenerationJobOutputOptions outputOptions = new()
+EvaluationDataGenerationJobOutputConfiguration outputOptions = new()
 {
     Name = "dataset-generation-eval-sample",
     Description = "QnA pairs generated from the Contoso refund policy prompt.",
 };
 outputOptions.Tags["sample"] = "dataset-generation-with-evaluation";
-DataGenerationJob job = new()
-{
-    Inputs = new DataGenerationJobInputs(
-        name: "sampleGeneration",
-        sources: [new PromptDataGenerationJobSource(prompt: "Contoso offers a full refund within 30 days of purchase for any product " +
-                "returned in its original condition. After 30 days, store credit may be " +
-                "issued at the discretion of customer support. Digital goods are " +
-                "non-refundable once downloaded."){
-            Description = "Contoso refund policy"
-        }],
-        options: new SimpleQnADataGenerationJobOptions(maxSamples: 16)
-        {
-            ModelOptions = new(modelDeploymentName)
-        },
-        scenario: DataGenerationJobScenario.Evaluation
-    )
+EvaluationDataGenerationJobInputs job = new(
+    name: "sampleGeneration",
+    sources: [new PromptDataGenerationJobSource(prompt: "Contoso offers a full refund within 30 days of purchase for any product " +
+            "returned in its original condition. After 30 days, store credit may be " +
+            "issued at the discretion of customer support. Digital goods are " +
+            "non-refundable once downloaded."){
+        Description = "Contoso refund policy"
+    }],
+    generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 16)
     {
-        OutputOptions = outputOptions
-    },
+        ModelOptions = new(modelDeploymentName)
+    }
+)
+{
+    OutputConfiguration = outputOptions
 };
 ```
 
@@ -104,24 +100,20 @@ outputOptions = new()
     Name = "another-dataset",
     Description = "QnA pairs generated from the Contoso refund policy prompt.",
 };
-job = new()
-{
-    Inputs = new DataGenerationJobInputs(
-        name: "sampleGeneration",
-        sources: [new PromptDataGenerationJobSource(prompt: "Zawa offers a full refund within 130 days of purchase for any product " +
-                "returned in its original condition. After 30 days, store credit may be " +
-                "issued at the discretion of customer support."){
-            Description = "Zawa refund policy"
-        }],
-        options: new SimpleQnADataGenerationJobOptions(maxSamples: 1000)
-        {
-            ModelOptions = new(modelDeploymentName)
-        },
-        scenario: DataGenerationJobScenario.Evaluation
-    )
+job = new(
+    name: "sampleGeneration",
+    sources: [new PromptDataGenerationJobSource(prompt: "Zawa offers a full refund within 130 days of purchase for any product " +
+            "returned in its original condition. After 30 days, store credit may be " +
+            "issued at the discretion of customer support."){
+        Description = "Zawa refund policy"
+    }],
+    generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 1000)
     {
-        OutputOptions = outputOptions
-    },
+        ModelOptions = new(modelDeploymentName)
+    }
+)
+{
+    OutputConfiguration = outputOptions
 };
 DataGenerationJob jobToCancel = projectClient.DataGenerationJobs.Create(job);
 jobToCancel = projectClient.DataGenerationJobs.Cancel(jobToCancel.Id);
@@ -145,24 +137,20 @@ outputOptions = new()
     Name = "another-dataset",
     Description = "QnA pairs generated from the Contoso refund policy prompt.",
 };
-job = new()
-{
-    Inputs = new DataGenerationJobInputs(
-        name: "sampleGeneration",
-        sources: [new PromptDataGenerationJobSource(prompt: "Zawa offers a full refund within 130 days of purchase for any product " +
-                "returned in its original condition. After 30 days, store credit may be " +
-                "issued at the discretion of customer support."){
-            Description = "Zawa refund policy"
-        }],
-        options: new SimpleQnADataGenerationJobOptions(maxSamples: 1000)
-        {
-            ModelOptions = new(modelDeploymentName)
-        },
-        scenario: DataGenerationJobScenario.Evaluation
-    )
+job = new(
+    name: "sampleGeneration",
+    sources: [new PromptDataGenerationJobSource(prompt: "Zawa offers a full refund within 130 days of purchase for any product " +
+            "returned in its original condition. After 30 days, store credit may be " +
+            "issued at the discretion of customer support."){
+        Description = "Zawa refund policy"
+    }],
+    generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 1000)
     {
-        OutputOptions = outputOptions
-    },
+        ModelOptions = new(modelDeploymentName)
+    }
+)
+{
+    OutputConfiguration = outputOptions
 };
 DataGenerationJob jobToCancel = await projectClient.DataGenerationJobs.CreateAsync(job);
 jobToCancel = await projectClient.DataGenerationJobs.CancelAsync(jobToCancel.Id);

@@ -91,7 +91,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
             OptimizationModelConfiguration = new(modelDeploymentName)
         };
         OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
-        AgentOptimizationJob submittedJob1 = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
+        AgentOptimizationJob submittedJob1 = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
         Console.WriteLine($"Submitted optimization job: {submittedJob1.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimization_Async
@@ -111,13 +111,13 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Async
         jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: false, job: job, operationId: null, cancellationToken: default);
-        AgentOptimizationJob submittedJob2 = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
+        AgentOptimizationJob submittedJob2 = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
         Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
         AgentOptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
         while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
             await Task.Delay(500);
-            cancelledJob = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
+            cancelledJob = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
         }
         if (cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
@@ -216,7 +216,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
 
         //
         OperationResult jobOperation = jobsClient.Create(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
-        AgentOptimizationJob submittedJob1 = jobOperation.UpdateStatus().ToProjectAgentsResult<AgentOptimizationJob>();
+        AgentOptimizationJob submittedJob1 = AgentOptimizationJob.FromClientResult(jobOperation.UpdateStatus());
         Console.WriteLine($"Submitted optimization job: {submittedJob1.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimization_Sync
@@ -241,13 +241,13 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Sync
         jobOperation = jobsClient.Create(waitUntilCompleted: false, job: job, operationId: null, cancellationToken: default);
-        AgentOptimizationJob submittedJob2 = jobOperation.UpdateStatus().ToProjectAgentsResult<AgentOptimizationJob>();
+        AgentOptimizationJob submittedJob2 = AgentOptimizationJob.FromClientResult(jobOperation.UpdateStatus());
         Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
         AgentOptimizationJob cancelledJob = jobsClient.Cancel(jobId: submittedJob2.Id, cancellationToken: default);
         while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
             Thread.Sleep(500);
-            cancelledJob = jobOperation.UpdateStatus().ToProjectAgentsResult<AgentOptimizationJob>();
+            cancelledJob = AgentOptimizationJob.FromClientResult(jobOperation.UpdateStatus());
         }
         if (cancelledJob.Status != AgentsJobStatus.Cancelled)
         {

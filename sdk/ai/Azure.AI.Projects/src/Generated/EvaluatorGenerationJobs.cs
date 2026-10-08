@@ -50,14 +50,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
         [Experimental("SCME0006")]
-        internal virtual OperationResult Create(bool waitUntilCompleted, BinaryContent content, string operationId = default, RequestOptions options = null)
+        public virtual OperationResult Create(bool waitUntilCompleted, BinaryContent content, string operationId = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Create");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(content, nameof(content));
+
                 using PipelineMessage message = CreateCreateRequest(content, operationId, options);
                 return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
             }
@@ -76,14 +79,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
         [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, BinaryContent content, string operationId = default, RequestOptions options = null)
+        public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, BinaryContent content, string operationId = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Create");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(content, nameof(content));
+
                 using PipelineMessage message = CreateCreateRequest(content, operationId, options);
                 return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
             }
@@ -102,9 +108,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="job"> The evaluator generation job inputs to create. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
         [Experimental("SCME0006")]
-        internal virtual OperationResult Create(bool waitUntilCompleted, EvaluatorGenerationInputs job, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual OperationResult Create(bool waitUntilCompleted, EvaluatorGenerationInputs job, string operationId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(job, nameof(job));
+
             OperationResult result = Create(waitUntilCompleted, job, operationId, cancellationToken.ToRequestOptions());
             return result;
         }
@@ -117,9 +126,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="job"> The evaluator generation job inputs to create. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
         [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, EvaluatorGenerationInputs job, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, EvaluatorGenerationInputs job, string operationId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(job, nameof(job));
+
             OperationResult result = await CreateAsync(waitUntilCompleted, job, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return result;
         }
@@ -134,14 +146,18 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Get(string jobId, RequestOptions options)
+        public virtual ClientResult Get(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Get");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
                 using PipelineMessage message = CreateGetRequest(jobId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
@@ -162,14 +178,18 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetAsync(string jobId, RequestOptions options)
+        public virtual async Task<ClientResult> GetAsync(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Get");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
                 using PipelineMessage message = CreateGetRequest(jobId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
@@ -180,6 +200,34 @@ namespace Azure.AI.Projects.Evaluation
             }
         }
 
+        /// <summary> Gets the details of an evaluator generation job by its ID. </summary>
+        /// <param name="jobId"> The ID of the job. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<EvaluatorGenerationJob> Get(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            ClientResult result = Get(jobId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+        }
+
+        /// <summary> Gets the details of an evaluator generation job by its ID. </summary>
+        /// <param name="jobId"> The ID of the job. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<EvaluatorGenerationJob>> GetAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            ClientResult result = await GetAsync(jobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+        }
+
         /// <summary>
         /// [Protocol Method] Cancels an evaluator generation job by its ID.
         /// <list type="bullet">
@@ -190,14 +238,18 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Cancel(string jobId, RequestOptions options)
+        public virtual ClientResult Cancel(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Cancel");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
                 using PipelineMessage message = CreateCancelRequest(jobId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
@@ -218,14 +270,18 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CancelAsync(string jobId, RequestOptions options)
+        public virtual async Task<ClientResult> CancelAsync(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Cancel");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
                 using PipelineMessage message = CreateCancelRequest(jobId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
@@ -234,6 +290,34 @@ namespace Azure.AI.Projects.Evaluation
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Cancels an evaluator generation job by its ID. </summary>
+        /// <param name="jobId"> The ID of the job to cancel. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<EvaluatorGenerationJob> Cancel(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            ClientResult result = Cancel(jobId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
+        }
+
+        /// <summary> Cancels an evaluator generation job by its ID. </summary>
+        /// <param name="jobId"> The ID of the job to cancel. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<EvaluatorGenerationJob>> CancelAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            ClientResult result = await CancelAsync(jobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -247,14 +331,18 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult Delete(string jobId, RequestOptions options)
+        public virtual ClientResult Delete(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Delete");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
                 using PipelineMessage message = CreateDeleteRequest(jobId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
@@ -276,14 +364,18 @@ namespace Azure.AI.Projects.Evaluation
         /// </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteAsync(string jobId, RequestOptions options)
+        public virtual async Task<ClientResult> DeleteAsync(string jobId, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluatorGenerationJobs.Delete");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
                 using PipelineMessage message = CreateDeleteRequest(jobId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
@@ -292,6 +384,38 @@ namespace Azure.AI.Projects.Evaluation
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Deletes an evaluator generation job by its ID. Deletes the job record only;
+        /// the generated evaluator (if any) is preserved.
+        /// </summary>
+        /// <param name="jobId"> The ID of the job to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult Delete(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            return Delete(jobId, cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Deletes an evaluator generation job by its ID. Deletes the job record only;
+        /// the generated evaluator (if any) is preserved.
+        /// </summary>
+        /// <param name="jobId"> The ID of the job to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult> DeleteAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            return await DeleteAsync(jobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }

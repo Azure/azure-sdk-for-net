@@ -641,7 +641,7 @@ AgentOptimizationJob job = new()
     OptimizationModelConfiguration = new(modelDeploymentName)
 };
 OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
-AgentOptimizationJob submittedJob = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
+AgentOptimizationJob submittedJob = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
 Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 ```
 
