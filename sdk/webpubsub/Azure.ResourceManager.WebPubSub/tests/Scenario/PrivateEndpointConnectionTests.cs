@@ -17,6 +17,8 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Tests
 {
+    // Method-level ignores do not prevent the shared OneTimeSetUp from failing on subnet-policy recordings.
+    [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
     public class PrivateEndpointConnectionTests : WebPubHubServiceClientTestBase
     {
         private ResourceGroupResource _resourceGroup;
@@ -102,7 +104,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         }
 
         [RecordedTest]
-        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Get()
         {
             await CreatePrivateEndpointConnection(_privateEndPointName);
@@ -113,7 +114,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         }
 
         [RecordedTest]
-        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task GetAll()
         {
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
@@ -124,7 +124,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         }
 
         [RecordedTest]
-        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task CheckIfExist()
         {
             await CreatePrivateEndpointConnection(_privateEndPointName);
@@ -134,7 +133,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         }
 
         [RecordedTest]
-        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task Delete()
         {
             await CreatePrivateEndpointConnection(_privateEndPointName);
