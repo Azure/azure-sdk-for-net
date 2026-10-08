@@ -30,7 +30,7 @@ To improve the development experience across Azure services, including Event Hub
 
 The new Event Hubs client library is designed to provide an approachable onboarding experience for those new to messaging and/or the Event Hubs service with the goal of enabling a quick initial feedback loop for publishing and consuming events. A gradual step-up path follows, building on the onboarding experience and shifting from exploration to tackling real-world production scenarios. For developers with high-throughput scenarios or specialized needs, a set of lower-level primitives are available to offer less abstraction and greater control.
 
-> **Important:** `WindowsAzure.ServiceBus` was retired for Event Hubs on September 30, 2026 and no longer receives official support or updates from Microsoft. Migrate to `Azure.Messaging.EventHubs` and `Azure.Messaging.EventHubs.Processor`. See the [retirement announcement](https://techcommunity.microsoft.com/blog/messagingonazureblog/some-azure-service-bus-sdk-libraries-will-be-retired-on-30-september-2026%E2%80%94migrat/3917853).
+> **Important:** `WindowsAzure.ServiceBus` was retired for Event Hubs on September 30, 2026 and no longer receives official support or updates from Microsoft. Migrate producers and consumers to `Azure.Messaging.EventHubs`. If you use `EventProcessorHost`, migrate to `EventProcessorClient` in `Azure.Messaging.EventHubs.Processor`. See the [retirement announcement](https://techcommunity.microsoft.com/blog/messagingonazureblog/some-azure-service-bus-sdk-libraries-will-be-retired-on-30-september-2026%E2%80%94migrat/3917853).
 
 ## Cross-service SDK improvements
 
