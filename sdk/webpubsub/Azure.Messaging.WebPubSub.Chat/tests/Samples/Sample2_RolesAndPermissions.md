@@ -5,9 +5,11 @@ This sample shows how to use the built-in roles and permissions shipped with the
 ## Inspect a built-in role
 
 ```C# Snippet:WebPubSubChatInspectBuiltInRole
+// <ChatDotNet_InspectBuiltInRole>
 WebPubSubChatRole memberRole = client.GetRole(BuiltInChatRoles.RoomMember).Value;
 
 Console.WriteLine($"{memberRole.Name}: {string.Join(", ", memberRole.Permissions)}");
+// </ChatDotNet_InspectBuiltInRole>
 ```
 
 ## Define a custom role
