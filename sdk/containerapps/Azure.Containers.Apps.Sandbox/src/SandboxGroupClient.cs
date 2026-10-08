@@ -711,7 +711,8 @@ namespace Azure.Containers.Apps.Sandbox
                 _apiVersion,
                 _subscriptionId,
                 _resourceGroupName,
-                _sandboxGroupName), null) ?? _cachedSandboxesClient;
+                _sandboxGroupName,
+                _webSocketCredential), null) ?? _cachedSandboxesClient;
         }
     }
 }

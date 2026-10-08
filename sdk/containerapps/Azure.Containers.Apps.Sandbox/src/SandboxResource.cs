@@ -293,117 +293,40 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Task<Response<WriteFileResult>> UploadSandboxFileAsync(string path, Stream content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default) =>
             _client.UploadSandboxFileAsync(Id, path, content, createDirs, mode, containerName, cancellationToken);
 
-        /// <summary> Starts an interactive exec session via WebSocket in a running sandbox. Uses this sandbox's identifier. </summary>
-        /// <param name="containerName"> The container where the interactive session runs. </param>
-        /// <param name="user"> The user for the interactive session. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public virtual Response GetSandboxExecStream(string containerName, string user, RequestContext context)
-        {
-            return _client.GetSandboxExecStream(Id, containerName, user, context);
-        }
+        /// <summary> Opens an interactive exec WebSocket connection for this sandbox. Dispose the returned stream. </summary>
+        /// <param name="containerName"> The container where the session runs. </param>
+        /// <param name="user"> The optional user for the session. </param>
+        /// <param name="cancellationToken"> The cancellation token for connecting. </param>
+        public virtual Task<SandboxStream> ConnectToSandboxExecStreamAsync(string containerName = default, string user = default, CancellationToken cancellationToken = default) =>
+            _client.ConnectToSandboxExecStreamAsync(Id, containerName, user, cancellationToken);
 
-        /// <summary> Starts an interactive exec session via WebSocket in a running sandbox. Uses this sandbox's identifier. </summary>
-        /// <param name="containerName"> The container where the interactive session runs. </param>
-        /// <param name="user"> The user for the interactive session. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public virtual Task<Response> GetSandboxExecStreamAsync(string containerName, string user, RequestContext context)
-        {
-            return _client.GetSandboxExecStreamAsync(Id, containerName, user, context);
-        }
+        /// <summary> Opens and starts an interactive exec session for this sandbox. Dispose the returned session. </summary>
+        /// <param name="request"> The initial WebSocket exec configuration. </param>
+        /// <param name="containerName"> The container where the session runs. </param>
+        /// <param name="cancellationToken"> The cancellation token for connecting and sending the start message. </param>
+        public virtual Task<SandboxExecSession> StartSandboxExecSessionAsync(SandboxExecStartRequest request, string containerName = default, CancellationToken cancellationToken = default) =>
+            _client.StartSandboxExecSessionAsync(Id, request, containerName, cancellationToken);
 
-        /// <summary> Starts an interactive exec session via WebSocket in a running sandbox. Uses this sandbox's identifier. </summary>
-        /// <param name="containerName"> The container where the interactive session runs. </param>
-        /// <param name="user"> The user for the interactive session. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Response GetSandboxExecStream(string containerName = default, string user = default, CancellationToken cancellationToken = default)
-        {
-            return _client.GetSandboxExecStream(Id, containerName, user, cancellationToken);
-        }
-
-        /// <summary> Starts an interactive exec session via WebSocket in a running sandbox. Uses this sandbox's identifier. </summary>
-        /// <param name="containerName"> The container where the interactive session runs. </param>
-        /// <param name="user"> The user for the interactive session. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Task<Response> GetSandboxExecStreamAsync(string containerName = default, string user = default, CancellationToken cancellationToken = default)
-        {
-            return _client.GetSandboxExecStreamAsync(Id, containerName, user, cancellationToken);
-        }
-
-        /// <summary> Streams logs from a running sandbox via WebSocket. The logs are sent as a continuous stream of text or JSON objects, depending on the specified log format. Uses this sandbox's identifier. </summary>
-        /// <param name="tailLines"> The number of recent log lines to return. </param>
-        /// <param name="logFormat"> The format of streamed log records. </param>
-        /// <param name="follow"> Whether to continue streaming new log records. </param>
+        /// <summary> Opens an unbuffered HTTP log stream for this sandbox. Dispose the returned stream. </summary>
+        /// <param name="tailLines"> The number of previous log lines. </param>
+        /// <param name="logFormat"> The format of the log records. </param>
+        /// <param name="follow"> Whether to follow new log records. </param>
         /// <param name="containerName"> The container whose logs are streamed. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public virtual Response GetSandboxLogStream(int? tailLines, int? logFormat, bool? follow, string containerName, RequestContext context)
-        {
-            return _client.GetSandboxLogStream(Id, tailLines, logFormat, follow, containerName, context);
-        }
+        /// <param name="cancellationToken"> The cancellation token for connecting. </param>
+        public virtual Task<Response<Stream>> OpenSandboxLogStreamAsync(int tailLines = 100, SandboxLogFormat logFormat = SandboxLogFormat.Text, bool follow = true, string containerName = default, CancellationToken cancellationToken = default) =>
+            _client.OpenSandboxLogStreamAsync(Id, tailLines, logFormat, follow, containerName, cancellationToken);
 
-        /// <summary> Streams logs from a running sandbox via WebSocket. The logs are sent as a continuous stream of text or JSON objects, depending on the specified log format. Uses this sandbox's identifier. </summary>
-        /// <param name="tailLines"> The number of recent log lines to return. </param>
-        /// <param name="logFormat"> The format of streamed log records. </param>
-        /// <param name="follow"> Whether to continue streaming new log records. </param>
-        /// <param name="containerName"> The container whose logs are streamed. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public virtual Task<Response> GetSandboxLogStreamAsync(int? tailLines, int? logFormat, bool? follow, string containerName, RequestContext context)
-        {
-            return _client.GetSandboxLogStreamAsync(Id, tailLines, logFormat, follow, containerName, context);
-        }
-
-        /// <summary> Streams logs from a running sandbox via WebSocket. The logs are sent as a continuous stream of text or JSON objects, depending on the specified log format. Uses this sandbox's identifier. </summary>
-        /// <param name="tailLines"> The number of recent log lines to return. </param>
-        /// <param name="logFormat"> The format of streamed log records. </param>
-        /// <param name="follow"> Whether to continue streaming new log records. </param>
-        /// <param name="containerName"> The container whose logs are streamed. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Response GetSandboxLogStream(int? tailLines = default, int? logFormat = default, bool? follow = default, string containerName = default, CancellationToken cancellationToken = default)
-        {
-            return _client.GetSandboxLogStream(Id, tailLines, logFormat, follow, containerName, cancellationToken);
-        }
-
-        /// <summary> Streams logs from a running sandbox via WebSocket. The logs are sent as a continuous stream of text or JSON objects, depending on the specified log format. Uses this sandbox's identifier. </summary>
-        /// <param name="tailLines"> The number of recent log lines to return. </param>
-        /// <param name="logFormat"> The format of streamed log records. </param>
-        /// <param name="follow"> Whether to continue streaming new log records. </param>
-        /// <param name="containerName"> The container whose logs are streamed. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Task<Response> GetSandboxLogStreamAsync(int? tailLines = default, int? logFormat = default, bool? follow = default, string containerName = default, CancellationToken cancellationToken = default)
-        {
-            return _client.GetSandboxLogStreamAsync(Id, tailLines, logFormat, follow, containerName, cancellationToken);
-        }
-
-        /// <summary> Streams the process list from a running sandbox via WebSocket. The process list is sent as a continuous stream of JSON objects. Uses this sandbox's identifier. </summary>
+        /// <summary> Opens a read-only stream of process snapshots for this sandbox. Dispose the returned stream. </summary>
         /// <param name="containerName"> The container whose processes are streamed. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public virtual Response GetSandboxProcessesStream(string containerName, RequestContext context)
-        {
-            return _client.GetSandboxProcessesStream(Id, containerName, context);
-        }
+        /// <param name="cancellationToken"> The cancellation token for connecting. </param>
+        public virtual Task<SandboxProcessStream> OpenSandboxProcessStreamAsync(string containerName = default, CancellationToken cancellationToken = default) =>
+            _client.OpenSandboxProcessStreamAsync(Id, containerName, cancellationToken);
 
-        /// <summary> Streams the process list from a running sandbox via WebSocket. The process list is sent as a continuous stream of JSON objects. Uses this sandbox's identifier. </summary>
+        /// <summary> Opens a process WebSocket connection for this sandbox. Dispose the returned stream. </summary>
         /// <param name="containerName"> The container whose processes are streamed. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public virtual Task<Response> GetSandboxProcessesStreamAsync(string containerName, RequestContext context)
-        {
-            return _client.GetSandboxProcessesStreamAsync(Id, containerName, context);
-        }
-
-        /// <summary> Streams the process list from a running sandbox via WebSocket. The process list is sent as a continuous stream of JSON objects. Uses this sandbox's identifier. </summary>
-        /// <param name="containerName"> The container whose processes are streamed. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Response GetSandboxProcessesStream(string containerName = default, CancellationToken cancellationToken = default)
-        {
-            return _client.GetSandboxProcessesStream(Id, containerName, cancellationToken);
-        }
-
-        /// <summary> Streams the process list from a running sandbox via WebSocket. The process list is sent as a continuous stream of JSON objects. Uses this sandbox's identifier. </summary>
-        /// <param name="containerName"> The container whose processes are streamed. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Task<Response> GetSandboxProcessesStreamAsync(string containerName = default, CancellationToken cancellationToken = default)
-        {
-            return _client.GetSandboxProcessesStreamAsync(Id, containerName, cancellationToken);
-        }
+        /// <param name="cancellationToken"> The cancellation token for connecting. </param>
+        public virtual Task<SandboxStream> ConnectToSandboxProcessesStreamAsync(string containerName = default, CancellationToken cancellationToken = default) =>
+            _client.ConnectToSandboxProcessesStreamAsync(Id, containerName, cancellationToken);
 
         /// <summary> Gets egress decisions for a sandbox. Uses this sandbox's identifier. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
