@@ -14,13 +14,14 @@ namespace Azure.ResourceManager.Network.Mocking
     [CodeGenSuppress("PublicIPAddressesOperationGroupRestClient")]
     public partial class MockableNetworkResourceGroupResource
     {
-        private PublicIPAddressesOperationGroup PublicIPAddressesOperationGroupRestClient => _publicIPAddressesOperationGroupRestClient ??= new PublicIPAddressesOperationGroup(PublicIPAddressesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, GetVirtualMachineScaleSetPublicIPAddressApiVersion());
-
-        private string GetVirtualMachineScaleSetPublicIPAddressApiVersion()
-        {
-            TryGetApiVersion(new ResourceType("Microsoft.Compute/virtualMachineScaleSets/publicIPAddresses"), out string apiVersion);
-            return apiVersion ?? "2018-10-01";
-        }
+        // The generated default version belongs to Microsoft.Network, but this operation targets a Microsoft.Compute resource.
+        private PublicIPAddressesOperationGroup PublicIPAddressesOperationGroupRestClient => _publicIPAddressesOperationGroupRestClient ??= new PublicIPAddressesOperationGroup(
+            PublicIPAddressesOperationGroupClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2018-10-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService compatibility operation. </summary>
         public virtual global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(global::Azure.WaitUntil waitUntil, global::Azure.Core.AzureLocation location, global::Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, global::System.Threading.CancellationToken cancellationToken)
