@@ -2765,7 +2765,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blockBlobName = GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
-            long blobSize = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes - 1;
+            long blobSize = Constants.DefaultBufferSize - 1;
             var data = GetRandomBuffer(blobSize);
             using Stream stream = new MemoryStream(data);
             var dateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fff";
@@ -2791,7 +2791,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blockBlobName = GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
-            long blobSize = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes + 1;
+            long blobSize = Constants.DefaultBufferSize + 1;
             var data = GetRandomBuffer(blobSize);
             using Stream stream = new MemoryStream(data);
 
@@ -2800,7 +2800,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlockList> blockListResponse = await blob.GetBlockListAsync();
-            Assert.AreEqual(33, blockListResponse.Value.CommittedBlocks.ToList().Count);
+            Assert.AreEqual(2, blockListResponse.Value.CommittedBlocks.ToList().Count);
         }
 
         [RecordedTest]

@@ -269,7 +269,6 @@ namespace Azure.Storage
                 [EditorBrowsable(EditorBrowsableState.Never)]
                 public const int DefaultConcurrentTransfersCount = LegacyDefaultConcurrentTransfersCount;
                 public const int LegacyDefaultConcurrentTransfersCount = 5;
-                public const int DefaultInitalDownloadRangeSize = 256 * Constants.MB; // 256 MB
                 public const int Pre_2019_12_12_MaxUploadBytes = 256 * Constants.MB; // 256 MB
                 public const long MaxUploadBytes = 5000L * Constants.MB; // 5000MB
                 public const int MaxDownloadBytes = 256 * Constants.MB; // 256MB
