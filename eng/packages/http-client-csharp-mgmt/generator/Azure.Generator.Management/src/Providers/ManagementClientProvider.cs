@@ -31,7 +31,7 @@ internal sealed class ManagementClientProvider : ClientProvider
         : base(inputClient)
     {
         _isRootClient = inputClient.Parent is null;
-        if (inputClient.HasOperationApiVersionDefaults)
+        if (inputClient.NeedsApiVersionResolver)
         {
             _apiVersionResolverField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(Func<ResourceType, string>), "_getApiVersion", this);
         }

@@ -75,10 +75,44 @@ public class ApiVersionOverrideWireTests
         else subscription.GetWireVersionTests().ToArray();
         transport.AssertVersion(Expected("opaque-read"));
         if (async) await subscription.CheckWireVersionAsync(); else subscription.CheckWireVersion();
-        // This provider action has no associated resource type and no public per-operation
-        // runtime override contract. Resource/scope selections must not change its default.
+        // This provider action's operation-group key differs from the resource and scope
+        // keys configured above, so those selections must not change its wire default.
         transport.AssertVersion("opaque-non-resource");
         Assert.That(transport.Requests, Has.Count.EqualTo(8));
+    }
+
+    [TestCase(false, "default")]
+    [TestCase(true, "default")]
+    [TestCase(false, "owning-scope")]
+    [TestCase(true, "owning-scope")]
+    [TestCase(false, "targeted")]
+    [TestCase(true, "targeted")]
+    public async Task OrdinaryMockableClientsHonorResourceAndOperationGroupOverrides(bool async, string configuration)
+    {
+        var transport = new VersionTransport();
+        var options = new ArmClientOptions { Transport = transport };
+        if (configuration == "owning-scope")
+        {
+            options.SetApiVersion(SubscriptionResource.ResourceType, "owning-version");
+        }
+        if (configuration == "targeted")
+        {
+            options.SetApiVersion(OrdinaryWireVersionTestResource.ResourceType, "runtime-resource");
+            options.SetApiVersion("MgmtTypeSpec/checkOrdinaryWireVersion", "runtime-operation-group");
+        }
+        var client = new ArmClient(new TestCredential(), SubscriptionId, options);
+        var subscription = client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SubscriptionId}"));
+
+        if (async)
+        {
+            await foreach (var _ in subscription.GetOrdinaryWireVersionTestsAsync()) { }
+        }
+        else subscription.GetOrdinaryWireVersionTests().ToArray();
+        transport.AssertVersion(configuration == "targeted" ? "runtime-resource" : "2024-05-01");
+
+        if (async) await subscription.CheckOrdinaryWireVersionAsync(); else subscription.CheckOrdinaryWireVersion();
+        transport.AssertVersion(configuration == "targeted" ? "runtime-operation-group" : "2024-05-01");
+        Assert.That(transport.Requests, Has.Count.EqualTo(2));
     }
 
     [Test]
@@ -111,9 +145,11 @@ public class ApiVersionOverrideWireTests
             var uri = message.Request.Uri.ToUri();
             Requests.Add(uri);
             var response = new TestResponse(200);
-            if (uri.AbsolutePath.EndsWith("/checkWireVersion", StringComparison.Ordinal))
+            if (uri.AbsolutePath.EndsWith("/checkWireVersion", StringComparison.Ordinal)
+                || uri.AbsolutePath.EndsWith("/checkOrdinaryWireVersion", StringComparison.Ordinal))
                 response.SetContent("\"ok\"");
-            else if (uri.AbsolutePath.EndsWith("/wireVersionTests", StringComparison.Ordinal))
+            else if (uri.AbsolutePath.EndsWith("/wireVersionTests", StringComparison.Ordinal)
+                || uri.AbsolutePath.EndsWith("/ordinaryWireVersionTests", StringComparison.Ordinal))
                 response.SetContent("{\"value\":[]}");
             else
                 response.SetContent($"{{\"id\":\"{ResourceId}\",\"name\":\"test\",\"type\":\"MgmtTypeSpec/wireVersionTests\",\"location\":\"westus\",\"properties\":{{}}}}");

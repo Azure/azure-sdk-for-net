@@ -217,7 +217,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/checkWireVersion", false);
-            uri.AppendQuery("api-version", "opaque-non-resource", true);
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/checkWireVersion") ?? "opaque-non-resource", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

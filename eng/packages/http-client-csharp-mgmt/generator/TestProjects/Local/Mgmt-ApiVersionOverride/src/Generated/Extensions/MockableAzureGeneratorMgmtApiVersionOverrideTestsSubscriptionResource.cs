@@ -25,6 +25,10 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         private EscapedWireVersionReads _escapedWireVersionReadsRestClient;
         private ClientDiagnostics _wireVersionOperationsClientDiagnostics;
         private WireVersionOperations _wireVersionOperationsRestClient;
+        private ClientDiagnostics _ordinaryWireVersionOperationsClientDiagnostics;
+        private OrdinaryWireVersionOperations _ordinaryWireVersionOperationsRestClient;
+        private ClientDiagnostics _ordinaryProviderOperationsClientDiagnostics;
+        private OrdinaryProviderOperations _ordinaryProviderOperationsRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource for mocking. </summary>
         protected MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource()
@@ -52,6 +56,26 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
 
         private WireVersionOperations WireVersionOperationsRestClient => _wireVersionOperationsRestClient ??= new WireVersionOperations(
             WireVersionOperationsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-05-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+
+        private ClientDiagnostics OrdinaryWireVersionOperationsClientDiagnostics => _ordinaryWireVersionOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OrdinaryWireVersionOperations OrdinaryWireVersionOperationsRestClient => _ordinaryWireVersionOperationsRestClient ??= new OrdinaryWireVersionOperations(
+            OrdinaryWireVersionOperationsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-05-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+
+        private ClientDiagnostics OrdinaryProviderOperationsClientDiagnostics => _ordinaryProviderOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OrdinaryProviderOperations OrdinaryProviderOperationsRestClient => _ordinaryProviderOperationsRestClient ??= new OrdinaryProviderOperations(
+            OrdinaryProviderOperationsClientDiagnostics,
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
@@ -171,6 +195,62 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         }
 
         /// <summary>
+        /// List OrdinaryWireVersionTest resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/ordinaryWireVersionTests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdinaryWireVersionReads_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OrdinaryWireVersionTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OrdinaryWireVersionTestResource> GetOrdinaryWireVersionTestsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OrdinaryWireVersionTestData, OrdinaryWireVersionTestResource>(new OrdinaryWireVersionOperationsGetBySubscriptionAsyncCollectionResultOfT(OrdinaryWireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetOrdinaryWireVersionTests"), data => new OrdinaryWireVersionTestResource(Client, data));
+        }
+
+        /// <summary>
+        /// List OrdinaryWireVersionTest resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/ordinaryWireVersionTests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdinaryWireVersionReads_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OrdinaryWireVersionTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OrdinaryWireVersionTestResource> GetOrdinaryWireVersionTests(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OrdinaryWireVersionTestData, OrdinaryWireVersionTestResource>(new OrdinaryWireVersionOperationsGetBySubscriptionCollectionResultOfT(OrdinaryWireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetOrdinaryWireVersionTests"), data => new OrdinaryWireVersionTestResource(Client, data));
+        }
+
+        /// <summary>
         /// CheckWireVersion
         /// <list type="bullet">
         /// <item>
@@ -243,6 +323,94 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = WireVersionOperationsRestClient.CreateCheckWireVersionRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// CheckOrdinaryWireVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/checkOrdinaryWireVersion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdinaryWireVersionProviderActions_CheckOrdinaryWireVersion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<string>> CheckOrdinaryWireVersionAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OrdinaryProviderOperationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.CheckOrdinaryWireVersion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrdinaryProviderOperationsRestClient.CreateCheckOrdinaryWireVersionRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// CheckOrdinaryWireVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/checkOrdinaryWireVersion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrdinaryWireVersionProviderActions_CheckOrdinaryWireVersion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<string> CheckOrdinaryWireVersion(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OrdinaryProviderOperationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.CheckOrdinaryWireVersion");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OrdinaryProviderOperationsRestClient.CreateCheckOrdinaryWireVersionRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)

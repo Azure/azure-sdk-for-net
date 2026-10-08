@@ -385,7 +385,7 @@ namespace Azure.Generator.Management.Providers
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeExpression.Namespace(), thisCollection.Diagnostics())).Terminate());
                 var effectiveApiVersion = apiVersion.NullCoalesce(Literal(inputClient.CurrentApiVersion));
-                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, [clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisCollection.Endpoint(), effectiveApiVersion, .. inputClient.HasOperationApiVersionDefaults ? new[] { InputClientExtensions.BuildApiVersionResolver(isCollection: true) } : []])).Terminate());
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, [clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisCollection.Endpoint(), effectiveApiVersion, .. inputClient.NeedsApiVersionResolver ? new[] { InputClientExtensions.BuildApiVersionResolver(isCollection: true) } : []])).Terminate());
             }
 
             if (TryGetResourceIdValidationType(out _))

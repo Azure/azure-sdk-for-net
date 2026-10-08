@@ -27,8 +27,18 @@ internal class RestClientVisitor : ScmLibraryVisitor
     {
         var client = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(serviceMethod)!;
         var apiVersionParameter = serviceMethod.Operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
-        if (createRequestMethodProvider?.BodyStatements is null || !client.HasOperationApiVersionDefaults || apiVersionParameter is not InputQueryParameter apiVersionQuery)
+        if (createRequestMethodProvider?.BodyStatements is null || !client.NeedsApiVersionResolver || apiVersionParameter is not InputQueryParameter apiVersionQuery)
         {
+            return createRequestMethodProvider;
+        }
+
+        var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
+            .Where(r => r.Methods.Any(m => ReferenceEquals(m.InputMethod, serviceMethod))).ToArray();
+        var operationGroupKey = resources.Length == 0 ? InputClientExtensions.GetOperationGroupApiVersionKey(serviceMethod) : null;
+        if (!client.HasOperationApiVersionDefaults && resources.Length == 0 && operationGroupKey is null)
+        {
+            // Adding a resolver for another operation must not change the shared constructor
+            // version used by genuinely non-resource requests in this client.
             return createRequestMethodProvider;
         }
 
@@ -43,20 +53,21 @@ internal class RestClientVisitor : ScmLibraryVisitor
             _initialRequestSignatures[key] = initialSignature;
         }
 
-        var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
-            .Where(r => r.Methods.Any(m => ReferenceEquals(m.InputMethod, serviceMethod))).ToArray();
         // A literal parameter is authoritative in the base input model, which deliberately
         // omits clientDefaultValue for constants. Preserve it in mixed clients as well.
         var wireDefault = apiVersionParameter.Type is InputLiteralType literal
             ? literal.Value
             : apiVersionParameter.DefaultValue?.Value;
         ValueExpression defaultVersion = Literal(wireDefault as string ?? client.CurrentApiVersion);
-        // SetApiVersion is targeted to the operation's resource type, never to the owning
-        // client/RP or extension scope. Truly non-resource operations have no such runtime key.
-        var effectiveVersion = resources.Length == 0
+        // Metadata takes precedence over paths so action suffixes are never part of the key.
+        // A scope-level operation group may have its own key without being an ARM resource.
+        ValueExpression? resourceType = resources.Length > 0
+            ? BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)
+            : operationGroupKey is not null ? Literal(operationGroupKey) : null;
+        var effectiveVersion = resourceType is null
             ? defaultVersion
             : ((ManagementClientProvider)enclosingType.ClientProvider).ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>()
-                .Invoke("Invoke", BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)).NullCoalesce(defaultVersion);
+                .Invoke("Invoke", resourceType).NullCoalesce(defaultVersion);
 
         var statements = new List<MethodBodyStatement>();
         foreach (var statement in createRequestMethodProvider.BodyStatements)
