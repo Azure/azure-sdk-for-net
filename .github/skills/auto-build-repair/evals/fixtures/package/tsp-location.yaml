@@ -1,0 +1,3 @@
+repo: https://github.com/Azure/azure-rest-api-specs
+commit: fixture-only
+directory: specification/contoso

@@ -90,7 +90,7 @@ namespace Azure.AI.Translation.Document
         /// <returns> The pages of DocumentTranslationClientGetTranslationsStatusCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<TranslationStatusResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

@@ -237,9 +237,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                Assert.IsFalse(_listener.Scopes.Any(scope => scope.Name == DiagnosticProperty.ReceiveActivityName));
                 for (int i = 0; i < messageCt; i++)
                 {
-                    _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessMessageActivityName);
                     Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
@@ -298,9 +298,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                Assert.IsFalse(_listener.Scopes.Any(scope => scope.Name == DiagnosticProperty.ReceiveActivityName));
                 for (int i = 0; i < messageCt; i++)
                 {
-                    _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessSessionMessageActivityName);
                     Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);

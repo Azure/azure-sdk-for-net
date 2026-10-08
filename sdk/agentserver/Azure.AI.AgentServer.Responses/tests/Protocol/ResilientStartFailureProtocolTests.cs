@@ -32,6 +32,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 /// invoked. Every other <c>ITaskStore</c> operation delegates to a real <see cref="LocalTaskStore"/>,
 /// so the endpoint's platform-tagging catch-all runs the real engine → real store call chain.
 /// </summary>
+[NonParallelizable]
 public class ResilientStartFailureProtocolTests
 {
     private static StringContent Json(object body)
@@ -102,7 +103,11 @@ public class ResilientStartFailureProtocolTests
             Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
             FoundryEnvironment.Reload();
 
-            using var factory = NewFailingStartFactory(tasksDir, responsesDir, out var spy);
+            using var factory = NewFailingStartFactory(
+                tasksDir,
+                responsesDir,
+                out var spy,
+                hosted: true);
             using var client = factory.CreateClient();
 
             var response = await client.PostAsync(
@@ -127,7 +132,11 @@ public class ResilientStartFailureProtocolTests
         }
     }
 
-    private static TestWebApplicationFactory NewFailingStartFactory(string tasksDir, string responsesDir, out SpyTaskStore spy)
+    private static TestWebApplicationFactory NewFailingStartFactory(
+        string tasksDir,
+        string responsesDir,
+        out SpyTaskStore spy,
+        bool hosted = false)
     {
         // The spy wraps a real LocalTaskStore, so all non-Create operations delegate transparently
         // and the fail-loud composition validation is satisfied. The injected InvalidOperationException
@@ -153,7 +162,8 @@ public class ResilientStartFailureProtocolTests
                 // validation because it IS an ITaskStore backed by a durable local store.
                 services.AddSingleton<ITaskStore>(spyStore);
                 services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
-            });
+            },
+            hosted: hosted);
     }
 
     private static void AssertPlatformErrorSource(HttpResponseMessage response)

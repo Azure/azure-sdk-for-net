@@ -154,7 +154,7 @@ namespace Azure.Communication.JobRouter
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkerWeightedAllocation(weight, workerSelectors, additionalBinaryDataProperties);
+            return new WorkerWeightedAllocation(weight, workerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(), additionalBinaryDataProperties);
         }
     }
 }

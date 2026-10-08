@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -591,6 +592,48 @@ namespace Azure.ResourceManager.PrivateDns
         IAsyncEnumerator<PrivateDnsZoneResource> IAsyncEnumerable<PrivateDnsZoneResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates or updates a Private DNS zone. Does not modify Links to virtual networks or DNS records within the zone.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}Operation IdPrivateZones_CreateOrUpdateDefault Api Version2024-06-01Resource<see cref="PrivateDnsZoneResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> The ETag of the Private DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new Private DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<PrivateDnsZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateZoneName, PrivateDnsZoneData data, ETag? ifMatch, string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdateAsync(waitUntil, privateZoneName, data, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates or updates a Private DNS zone. Does not modify Links to virtual networks or DNS records within the zone.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}Operation IdPrivateZones_CreateOrUpdateDefault Api Version2024-06-01Resource<see cref="PrivateDnsZoneResource"/>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> The ETag of the Private DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new Private DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<PrivateDnsZoneResource> CreateOrUpdate(WaitUntil waitUntil, string privateZoneName, PrivateDnsZoneData data, ETag? ifMatch, string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdate(waitUntil, privateZoneName, data, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
         }
     }
 }

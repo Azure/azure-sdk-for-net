@@ -182,10 +182,10 @@ public sealed class SteeringRecoveryMidDrainTests
     [Test]
     public async Task RecoveredQueuedInputKeepsItsInputIdAndAdvancesLastInputId()
     {
-        // A recovered queued steering input must keep its own per-turn InputId and advance the chain
-        // head, exactly as it would without a crash — recovery is transparent. Before the id was
+        // A recovered queued steering input must keep its own per-turn InputId without rewinding
+        // the already-accepted chain head. Before the id was
         // persisted per entry, a recovered input inherited the previous turn's id (in3 observed as
-        // "i2") and never advanced last_input_id, breaking IfLastInputId / idempotent-retry.
+        // "i2"), breaking per-input identity across recovery.
         var registry1 = new TaskRegistry();
         using var host1 = TaskTestHost.Create(sharedRegistry: registry1);
 
@@ -255,8 +255,9 @@ public sealed class SteeringRecoveryMidDrainTests
         Assert.That(seen, Does.Contain(("in2", "i2")));
         Assert.That(seen, Does.Contain(("in3", "i3")));
 
-        // The chain head advanced through the recovered input, so last_input_id ends at "i3".
+        // The accepted head remains i3 while the active identity follows the recovered turns.
         TaskRecord suspended = await host2.WaitForStatusAsync("identity", "suspended", TimeSpan.FromSeconds(5));
         Assert.That((string?)suspended.Payload[TaskWireKeys.PayloadLastInputId], Is.EqualTo("i3"));
+        Assert.That((string?)suspended.Payload[TaskWireKeys.PayloadActiveInputId], Is.EqualTo("i3"));
     }
 }
