@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubDeviceRegistry : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _namespaceResourceId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the NamespaceResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> NamespaceResourceId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the IdentityResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> IdentityResourceId
         {
             get

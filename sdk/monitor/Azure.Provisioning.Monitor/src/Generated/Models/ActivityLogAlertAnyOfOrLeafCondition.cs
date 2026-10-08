@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Monitor
@@ -18,6 +19,7 @@ namespace Azure.Provisioning.Monitor
     /// * __AnyOf Condition -__ must contain __only__ 'anyOf' (which is an array of Leaf Conditions).
     /// _Please note, 'field', 'equals' and 'containsAny' should __not__ be set in an AnyOf Condition._
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ActivityLogAlertAnyOfOrLeafCondition : AlertRuleLeafCondition
     {
         private BicepList<AlertRuleLeafCondition> _anyOf;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AnyOf. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<AlertRuleLeafCondition> AnyOf
         {
             get

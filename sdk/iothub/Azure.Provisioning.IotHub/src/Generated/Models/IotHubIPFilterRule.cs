@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The IP filter rules for the IoT hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubIPFilterRule : ProvisionableConstruct
     {
         private BicepValue<string> _filterName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the FilterName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FilterName
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Action. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubIPFilterActionType> Action
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the IPMask. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IPMask
         {
             get

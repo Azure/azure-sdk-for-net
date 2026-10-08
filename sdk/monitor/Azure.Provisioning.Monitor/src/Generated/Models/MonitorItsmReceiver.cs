@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> An Itsm receiver. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorItsmReceiver : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WorkspaceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkspaceId
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ConnectionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConnectionId
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TicketConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TicketConfiguration
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Region. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Region
         {
             get

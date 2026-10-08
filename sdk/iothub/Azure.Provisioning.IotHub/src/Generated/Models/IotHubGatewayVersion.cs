@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The IoT hub Gateway version. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubGatewayVersion
     {
         /// <summary> V1. </summary>

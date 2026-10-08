@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> A webhook receiver. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebhookReceiver : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ServiceUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceUri
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the UseCommonAlertSchema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> UseCommonAlertSchema
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the UseAadAuth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> UseAadAuth
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IdentifierUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IdentifierUri
         {
             get
@@ -117,6 +125,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TenantId
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Actions to invoke when the alert fires. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ScheduledQueryRuleActions : ProvisionableConstruct
     {
         private BicepList<string> _actionGroups;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ActionGroups. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ActionGroups
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the CustomProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> CustomProperties
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ActionProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> ActionProperties
         {
             get

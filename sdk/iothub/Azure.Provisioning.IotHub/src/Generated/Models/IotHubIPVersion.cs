@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> This property specifies the IP Version the hub is currently utilizing. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubIPVersion
     {
         /// <summary> ipv4. </summary>

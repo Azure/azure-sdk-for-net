@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> The KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties : ProvisionableConstruct
     {
         private BicepValue<string> _version;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the UnsupportedKubernetesVersions. </summary>
+        [Experimental("AZPROVISION001")]
         public KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions UnsupportedKubernetesVersions
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the SupportedClusterTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> SupportedClusterTypes
         {
             get

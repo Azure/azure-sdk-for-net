@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> OIDC Issuer Profile specifies attributes for workload identity integration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedClusterOidcIssuerProfile : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Enabled
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the IssuerUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IssuerUri
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the SelfHostedIssuerUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SelfHostedIssuerUri
         {
             get

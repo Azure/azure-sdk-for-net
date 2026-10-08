@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Agent Errors if any during agent or system component upgrade. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedClusterAgentError : ProvisionableConstruct
     {
         private BicepValue<string> _message;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the Message. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Message
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the Severity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Severity
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the Component. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Component
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the OccurredOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> OccurredOn
         {
             get

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> A private link resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorPrivateLinkResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

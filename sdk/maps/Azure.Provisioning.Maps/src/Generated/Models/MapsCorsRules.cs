@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Maps
 {
     /// <summary> Sets the CORS rules. You can include up to five CorsRule elements in the request. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class MapsCorsRules : ProvisionableConstruct
     {
         private BicepList<MapsCorsRule> _corsRules;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the CorsRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MapsCorsRule> CorsRules
         {
             get

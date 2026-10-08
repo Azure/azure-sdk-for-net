@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The source that the routing rule is to be applied to, such as DeviceMessages. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubRoutingSource
     {
         /// <summary> Invalid. </summary>

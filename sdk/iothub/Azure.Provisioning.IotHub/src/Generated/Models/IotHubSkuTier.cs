@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The billing tier for the IoT hub. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubSkuTier
     {
         /// <summary> Free. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> The Gateway. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class Gateway : ProvisionableConstruct
     {
         private BicepValue<bool> _isGatewayEnabled;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the IsGatewayEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsGatewayEnabled
         {
             get

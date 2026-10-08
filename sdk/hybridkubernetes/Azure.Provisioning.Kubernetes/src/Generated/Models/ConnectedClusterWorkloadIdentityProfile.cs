@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> The workload identity feature webhook. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ConnectedClusterWorkloadIdentityProfile : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Enabled
         {
             get

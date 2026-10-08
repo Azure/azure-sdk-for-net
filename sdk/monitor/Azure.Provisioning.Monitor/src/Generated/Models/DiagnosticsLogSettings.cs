@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular log. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DiagnosticsLogSettings : ProvisionableConstruct
     {
         private BicepValue<string> _category;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Category. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Category
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the CategoryGroup. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CategoryGroup
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Enabled
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the RetentionPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public RetentionPolicy RetentionPolicy
         {
             get

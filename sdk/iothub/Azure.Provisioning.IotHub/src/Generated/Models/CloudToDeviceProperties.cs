@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The IoT hub cloud-to-device messaging properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CloudToDeviceProperties : ProvisionableConstruct
     {
         private BicepValue<int> _maxDeliveryCount;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the MaxDeliveryCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxDeliveryCount
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the DefaultTtlAsIso8601. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> DefaultTtlAsIso8601
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Feedback. </summary>
+        [Experimental("AZPROVISION001")]
         public CloudToDeviceFeedbackQueueProperties Feedback
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Maps
 {
     /// <summary> Creator resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsCreatorProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the StorageUnits. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> StorageUnits
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the TotalStorageUnitSizeInBytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TotalStorageUnitSizeInBytes
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the ConsumedStorageUnitSizeInBytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ConsumedStorageUnitSizeInBytes
         {
             get

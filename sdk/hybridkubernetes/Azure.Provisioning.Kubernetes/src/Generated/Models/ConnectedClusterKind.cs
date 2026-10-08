@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Indicates the kind of Arc connected cluster based on host infrastructure. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ConnectedClusterKind
     {
         /// <summary> ProvisionedCluster. </summary>

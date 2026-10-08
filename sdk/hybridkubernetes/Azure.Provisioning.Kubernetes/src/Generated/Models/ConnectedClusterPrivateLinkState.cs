@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Property which describes the state of private link on a connected cluster resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ConnectedClusterPrivateLinkState
     {
         /// <summary> Enabled. </summary>

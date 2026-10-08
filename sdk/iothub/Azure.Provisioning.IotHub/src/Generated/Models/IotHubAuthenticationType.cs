@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> Specifies authentication type being used for connecting to the storage account. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubAuthenticationType
     {
         /// <summary> keyBased. </summary>

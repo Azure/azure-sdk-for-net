@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> Whether requests from Public Network are allowed. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubPublicNetworkAccess
     {
         /// <summary> Enabled. </summary>

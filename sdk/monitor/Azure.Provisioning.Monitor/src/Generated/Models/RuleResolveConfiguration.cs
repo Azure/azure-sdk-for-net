@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> TBD. Relevant only for rules of the kind LogAlert. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RuleResolveConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isAutoResolved;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IsAutoResolved. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsAutoResolved
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TimeToResolve. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> TimeToResolve
         {
             get

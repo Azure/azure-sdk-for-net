@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Maps
 {
     /// <summary> Linked resource is reference to a resource deployed in an Azure subscription, add the linked resource `uniqueName` value as an optional parameter for operations on Azure Maps Geospatial REST APIs. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsLinkedResource : ProvisionableConstruct
     {
         private BicepValue<string> _uniqueName;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the UniqueName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UniqueName
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get

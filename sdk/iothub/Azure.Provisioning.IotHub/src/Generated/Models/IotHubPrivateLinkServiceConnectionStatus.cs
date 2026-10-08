@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The status of a private endpoint connection. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubPrivateLinkServiceConnectionStatus
     {
         /// <summary> Pending. </summary>

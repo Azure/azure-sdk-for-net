@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> Encoding that is used to serialize messages to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'. Default value is 'avro'. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RoutingStorageContainerPropertiesEncoding
     {
         /// <summary> Avro. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties related to a cosmos DB sql container endpoint. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RoutingCosmosDBSqlApiProperties : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -35,6 +37,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -50,6 +53,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the SubscriptionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubscriptionId
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ResourceGroup. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceGroup
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the EndpointUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> EndpointUri
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the AuthenticationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubAuthenticationType> AuthenticationType
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedIdentity Identity
         {
             get
@@ -135,6 +144,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PrimaryKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrimaryKey
         {
             get
@@ -150,6 +160,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the SecondaryKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecondaryKey
         {
             get
@@ -165,6 +176,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the DatabaseName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DatabaseName
         {
             get
@@ -180,6 +192,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ContainerName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContainerName
         {
             get
@@ -195,6 +208,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PartitionKeyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PartitionKeyName
         {
             get
@@ -210,6 +224,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PartitionKeyTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PartitionKeyTemplate
         {
             get
@@ -225,6 +240,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the UserAssignedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> UserAssignedIdentity
         {
             get

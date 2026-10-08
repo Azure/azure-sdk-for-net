@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Represents the connectivity status of the connected cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ConnectedClusterConnectivityStatus
     {
         /// <summary> Connecting. </summary>

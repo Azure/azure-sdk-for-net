@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of a private endpoint connection. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubPrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private PrivateEndpoint _privateEndpoint;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PrivateEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         internal PrivateEndpoint PrivateEndpoint
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

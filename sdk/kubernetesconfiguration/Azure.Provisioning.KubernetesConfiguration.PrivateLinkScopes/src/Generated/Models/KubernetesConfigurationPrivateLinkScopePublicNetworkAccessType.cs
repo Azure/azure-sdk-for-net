@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> The network access policy to determine if Azure Arc agents can use public Azure Arc service endpoints. Defaults to disabled (access to Azure Arc services only via private link). </summary>
+    [Experimental("AZPROVISION001")]
     public enum KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType
     {
         /// <summary> Allows Azure Arc agents to communicate with Azure Arc services over both public (internet) and private endpoints. </summary>
