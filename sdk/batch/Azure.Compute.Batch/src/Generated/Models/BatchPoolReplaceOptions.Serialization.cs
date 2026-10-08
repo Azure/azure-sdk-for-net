@@ -190,7 +190,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchPoolReplaceOptions(startTask, applicationPackageReferences, metadata, additionalBinaryDataProperties);
+            return new BatchPoolReplaceOptions(startTask, applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(), metadata ?? new ChangeTrackingList<BatchMetadataItem>(), additionalBinaryDataProperties);
         }
     }
 }

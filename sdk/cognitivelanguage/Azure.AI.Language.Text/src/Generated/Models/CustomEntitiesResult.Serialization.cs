@@ -196,11 +196,11 @@ namespace Azure.AI.Language.Text
                 }
             }
             return new CustomEntitiesResult(
-                errors,
+                errors ?? new ChangeTrackingList<DocumentError>(),
                 statistics,
                 projectName,
                 deploymentName,
-                documents,
+                documents ?? new ChangeTrackingList<CustomEntityActionResult>(),
                 additionalBinaryDataProperties);
         }
     }

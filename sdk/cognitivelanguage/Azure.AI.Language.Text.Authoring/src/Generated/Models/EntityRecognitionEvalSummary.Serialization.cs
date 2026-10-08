@@ -215,8 +215,8 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             return new EntityRecognitionEvalSummary(
-                confusionMatrix,
-                entities,
+                confusionMatrix ?? new ChangeTrackingDictionary<string, TextAuthoringConfusionMatrixRow>(),
+                entities ?? new ChangeTrackingDictionary<string, TextAuthoringEntityEvalSummary>(),
                 microF1,
                 microPrecision,
                 microRecall,

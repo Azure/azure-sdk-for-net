@@ -92,7 +92,7 @@ namespace BasicTypeSpec
         /// <summary> Initializes a new instance of BasicTypeSpecClient from a <see cref="BasicTypeSpecClientSettings"/>. </summary>
         /// <param name="settings"> The settings for BasicTypeSpecClient. </param>
         [Experimental("SCME0002")]
-        public BasicTypeSpecClient(BasicTypeSpecClientSettings settings) : this(settings?.BasicTypeSpecUrl, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public BasicTypeSpecClient(BasicTypeSpecClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.BasicTypeSpecUrl, settings?.Options)
         {
         }
 
@@ -1261,19 +1261,19 @@ namespace BasicTypeSpec
         /// <summary> return anonymous model. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ReturnsAnonymousModelResponse> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
+        public virtual Response<ReturnsAnonymousModelResult> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
         {
             Response result = ReturnsAnonymousModel(cancellationToken.ToRequestContext());
-            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
+            return Response.FromValue((ReturnsAnonymousModelResult)result, result);
         }
 
         /// <summary> return anonymous model. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ReturnsAnonymousModelResponse>> ReturnsAnonymousModelAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReturnsAnonymousModelResult>> ReturnsAnonymousModelAsync(CancellationToken cancellationToken = default)
         {
             Response result = await ReturnsAnonymousModelAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
+            return Response.FromValue((ReturnsAnonymousModelResult)result, result);
         }
 
         /// <summary>
@@ -2785,7 +2785,7 @@ namespace BasicTypeSpec
                 using HttpMessage message = CreateReceiveJsonLinesRequest(context);
                 message.BufferResponse = false;
                 await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return AsyncStreamingResult.CreateJsonLines(new AzurePipelineResponse(message));
+                return AsyncStreamingResult.CreateJsonLines(new AzurePipelineResponse(message), context?.CancellationToken ?? default);
             }
             catch (Exception e)
             {
@@ -2825,7 +2825,7 @@ namespace BasicTypeSpec
                 using HttpMessage message = CreateReceiveSseRequest(context);
                 message.BufferResponse = false;
                 await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return AsyncStreamingResult.CreateSse(new AzurePipelineResponse(message), item => item.Data.ToString() == "[DONE]");
+                return AsyncStreamingResult.CreateSse(new AzurePipelineResponse(message), item => item.Data.ToString() == "[DONE]", context?.CancellationToken ?? default);
             }
             catch (Exception e)
             {

@@ -1,14 +1,17 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2026-10-05)
 
 ### Features Added
 
+- Updated to support API version `2026-08-01-preview`.
+- Added the `Network` property to `AppLinkConnectivityProfile` and support for updating connectivity settings with `AppLinkConnectivityProfilePatch`.
+- Added support for updating managed identities through `AppLinkPatch.Identity` and `AppNetworkManagedServiceIdentityPatch`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Changed `AppLinkMemberUpdateProperties.ConnectivityProfile` from `AppLinkConnectivityProfile` to `AppLinkConnectivityProfilePatch`, and `UpgradeProfile` from `AppLinkUpgradeProfile` to `AppLinkMemberUpgradeProfilePatch`.
+- Removed `AppLinkMemberUpdateProperties.ObservabilityMetricsEndpoint` and updated the corresponding `ArmAppNetworkModelFactory` methods to match the new models.
 
 ## 1.0.0-beta.1 (2026-03-26)
 

@@ -154,7 +154,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SendMessageResult(receipts, additionalBinaryDataProperties);
+            return new SendMessageResult(receipts ?? new ChangeTrackingList<MessageReceipt>(), additionalBinaryDataProperties);
         }
     }
 }

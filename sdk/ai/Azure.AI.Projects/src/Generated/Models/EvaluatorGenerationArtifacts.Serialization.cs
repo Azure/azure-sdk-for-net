@@ -164,7 +164,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EvaluatorGenerationArtifacts(reference, datasetRowKinds, additionalBinaryDataProperties);
+            return new EvaluatorGenerationArtifacts(reference, datasetRowKinds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

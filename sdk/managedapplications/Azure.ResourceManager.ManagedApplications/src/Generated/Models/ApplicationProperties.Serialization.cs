@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                     {
                         continue;
                     }
-                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    parameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                     {
                         continue;
                     }
-                    outputs = BinaryData.FromString(prop.Value.GetRawText());
+                    outputs = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplicationProperties(

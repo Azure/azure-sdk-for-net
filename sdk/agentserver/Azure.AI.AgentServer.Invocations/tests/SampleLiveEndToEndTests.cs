@@ -309,20 +309,15 @@ public class SampleLiveEndToEndTests
         builder.Services.AddAgentEventStreams(o => o.UseInMemoryReplay(
             ttl: TimeSpan.FromMinutes(5)));
 
-        AgentEventStreamRegistry? streamsRef = null;
         builder.Services.AddResilientMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
                  SampleResilientResearchSnippets.ResearchResult>(
             "research",
             (ctx, ct) => SampleResilientResearchSnippets.RunResearchAsync(
-                streamsRef!, model, _model, ctx,
+                model, _model, ctx,
                 numPhases: 2, callsPerPhase: 2, ct: ct),
             steerable: true);
 
         var app = builder.Build();
-
-        // Resolve the singleton AgentEventStreamRegistry from the built container so the captured
-        // delegate can reach it (registry is read lazily when a turn runs).
-        streamsRef = app.Services.GetRequiredService<AgentEventStreamRegistry>();
 
         app.MapInvocationsServer();
         await app.StartAsync();
