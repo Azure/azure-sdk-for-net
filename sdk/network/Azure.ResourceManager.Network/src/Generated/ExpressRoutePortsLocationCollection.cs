@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRoutePortsLocationData, ExpressRoutePortsLocationResource>(new ExpressRoutePortsLocationsGetAllAsyncCollectionResultOfT(_expressRoutePortsLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ExpressRoutePortsLocationCollection.GetAll"), data => new ExpressRoutePortsLocationResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRoutePortsLocationData, ExpressRoutePortsLocationResource>(new ExpressRoutePortsLocationDataAsyncCollectionResultOfT(_expressRoutePortsLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ExpressRoutePortsLocationCollection.GetAll"), data => new ExpressRoutePortsLocationResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRoutePortsLocationData, ExpressRoutePortsLocationResource>(new ExpressRoutePortsLocationsGetAllCollectionResultOfT(_expressRoutePortsLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ExpressRoutePortsLocationCollection.GetAll"), data => new ExpressRoutePortsLocationResource(Client, data));
+            return new PageableWrapper<ExpressRoutePortsLocationData, ExpressRoutePortsLocationResource>(new ExpressRoutePortsLocationDataCollectionResultOfT(_expressRoutePortsLocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "ExpressRoutePortsLocationCollection.GetAll"), data => new ExpressRoutePortsLocationResource(Client, data));
         }
 
         /// <summary>

@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetByResourceGroupAsyncCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
+            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPolicyDataAsyncCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetByResourceGroupCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
+            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPolicyDataCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>

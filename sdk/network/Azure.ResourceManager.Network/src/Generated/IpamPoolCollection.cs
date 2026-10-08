@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IpamPoolData, IpamPoolResource>(new IpamPoolsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IpamPoolData, IpamPoolResource>(new IpamPoolDataAsyncCollectionResultOfT(
                 _ipamPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IpamPoolData, IpamPoolResource>(new IpamPoolsGetAllCollectionResultOfT(
+            return new PageableWrapper<IpamPoolData, IpamPoolResource>(new IpamPoolDataCollectionResultOfT(
                 _ipamPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

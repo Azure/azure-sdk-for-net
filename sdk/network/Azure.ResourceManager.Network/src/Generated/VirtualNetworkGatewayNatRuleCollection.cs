@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkGatewayNatRuleData, VirtualNetworkGatewayNatRuleResource>(new VirtualNetworkGatewayNatRulesGetByVirtualNetworkGatewayAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualNetworkGatewayNatRuleData, VirtualNetworkGatewayNatRuleResource>(new VirtualNetworkGatewayNatRuleDataAsyncCollectionResultOfT(
                 _virtualNetworkGatewayNatRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkGatewayNatRuleData, VirtualNetworkGatewayNatRuleResource>(new VirtualNetworkGatewayNatRulesGetByVirtualNetworkGatewayCollectionResultOfT(
+            return new PageableWrapper<VirtualNetworkGatewayNatRuleData, VirtualNetworkGatewayNatRuleResource>(new VirtualNetworkGatewayNatRuleDataCollectionResultOfT(
                 _virtualNetworkGatewayNatRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

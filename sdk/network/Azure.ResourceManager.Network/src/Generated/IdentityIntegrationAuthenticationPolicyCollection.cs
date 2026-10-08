@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new AuthenticationPoliciesListAsyncCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
+            return new AsyncPageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new IdentityIntegrationAuthenticationPolicyDataAsyncCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new AuthenticationPoliciesListCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
+            return new PageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new IdentityIntegrationAuthenticationPolicyDataCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
         }
 
         /// <summary>

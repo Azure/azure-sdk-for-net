@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadBalancingRuleData, LoadBalancingRuleResource>(new LoadBalancerLoadBalancingRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LoadBalancingRuleData, LoadBalancingRuleResource>(new LoadBalancingRuleDataAsyncCollectionResultOfT(
                 _loadBalancerLoadBalancingRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadBalancingRuleData, LoadBalancingRuleResource>(new LoadBalancerLoadBalancingRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<LoadBalancingRuleData, LoadBalancingRuleResource>(new LoadBalancingRuleDataCollectionResultOfT(
                 _loadBalancerLoadBalancingRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

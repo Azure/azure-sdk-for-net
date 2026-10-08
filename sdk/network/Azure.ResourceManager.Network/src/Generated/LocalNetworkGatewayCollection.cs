@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalNetworkGatewayData, LocalNetworkGatewayResource>(new LocalNetworkGatewaysGetAllAsyncCollectionResultOfT(_localNetworkGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LocalNetworkGatewayCollection.GetAll"), data => new LocalNetworkGatewayResource(Client, data));
+            return new AsyncPageableWrapper<LocalNetworkGatewayData, LocalNetworkGatewayResource>(new LocalNetworkGatewayDataAsyncCollectionResultOfT(_localNetworkGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LocalNetworkGatewayCollection.GetAll"), data => new LocalNetworkGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalNetworkGatewayData, LocalNetworkGatewayResource>(new LocalNetworkGatewaysGetAllCollectionResultOfT(_localNetworkGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LocalNetworkGatewayCollection.GetAll"), data => new LocalNetworkGatewayResource(Client, data));
+            return new PageableWrapper<LocalNetworkGatewayData, LocalNetworkGatewayResource>(new LocalNetworkGatewayDataCollectionResultOfT(_localNetworkGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LocalNetworkGatewayCollection.GetAll"), data => new LocalNetworkGatewayResource(Client, data));
         }
 
         /// <summary>

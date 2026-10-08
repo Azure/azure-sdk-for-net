@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListAsyncCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfaceDataAsyncCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
+            return new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfaceDataCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkInterfaceCollection.GetAll"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>

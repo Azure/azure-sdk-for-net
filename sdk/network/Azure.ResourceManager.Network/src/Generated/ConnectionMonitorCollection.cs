@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectionMonitorData, ConnectionMonitorResource>(new ConnectionMonitorsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConnectionMonitorData, ConnectionMonitorResource>(new ConnectionMonitorDataAsyncCollectionResultOfT(
                 _connectionMonitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectionMonitorData, ConnectionMonitorResource>(new ConnectionMonitorsGetAllCollectionResultOfT(
+            return new PageableWrapper<ConnectionMonitorData, ConnectionMonitorResource>(new ConnectionMonitorDataCollectionResultOfT(
                 _connectionMonitorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

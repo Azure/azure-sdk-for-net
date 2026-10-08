@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new AzureADAdministratorsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new MySqlFlexibleServerAadAdministratorDataAsyncCollectionResultOfT(
                 _azureADAdministratorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new AzureADAdministratorsGetByServerCollectionResultOfT(
+            return new PageableWrapper<MySqlFlexibleServerAadAdministratorData, MySqlFlexibleServerAadAdministratorResource>(new MySqlFlexibleServerAadAdministratorDataCollectionResultOfT(
                 _azureADAdministratorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

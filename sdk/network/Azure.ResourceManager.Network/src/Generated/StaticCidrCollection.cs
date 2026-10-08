@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticCidrData, StaticCidrResource>(new StaticCidrsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticCidrData, StaticCidrResource>(new StaticCidrDataAsyncCollectionResultOfT(
                 _staticCidrsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticCidrData, StaticCidrResource>(new StaticCidrsGetAllCollectionResultOfT(
+            return new PageableWrapper<StaticCidrData, StaticCidrResource>(new StaticCidrDataCollectionResultOfT(
                 _staticCidrsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

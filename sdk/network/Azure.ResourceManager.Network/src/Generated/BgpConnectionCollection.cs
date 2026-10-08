@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BgpConnectionData, BgpConnectionResource>(new VirtualHubBgpConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BgpConnectionData, BgpConnectionResource>(new BgpConnectionDataAsyncCollectionResultOfT(
                 _virtualHubBgpConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BgpConnectionData, BgpConnectionResource>(new VirtualHubBgpConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<BgpConnectionData, BgpConnectionResource>(new BgpConnectionDataCollectionResultOfT(
                 _virtualHubBgpConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IPGroupData, IPGroupResource>(new IpGroupsGetByResourceGroupAsyncCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IPGroupCollection.GetAll"), data => new IPGroupResource(Client, data));
+            return new AsyncPageableWrapper<IPGroupData, IPGroupResource>(new IPGroupDataAsyncCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IPGroupCollection.GetAll"), data => new IPGroupResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IPGroupData, IPGroupResource>(new IpGroupsGetByResourceGroupCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IPGroupCollection.GetAll"), data => new IPGroupResource(Client, data));
+            return new PageableWrapper<IPGroupData, IPGroupResource>(new IPGroupDataCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IPGroupCollection.GetAll"), data => new IPGroupResource(Client, data));
         }
 
         /// <summary>

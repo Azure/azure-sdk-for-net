@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CapacityPoolData, CapacityPoolResource>(new PoolsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CapacityPoolData, CapacityPoolResource>(new CapacityPoolDataAsyncCollectionResultOfT(
                 _poolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CapacityPoolData, CapacityPoolResource>(new PoolsGetAllCollectionResultOfT(
+            return new PageableWrapper<CapacityPoolData, CapacityPoolResource>(new CapacityPoolDataCollectionResultOfT(
                 _poolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

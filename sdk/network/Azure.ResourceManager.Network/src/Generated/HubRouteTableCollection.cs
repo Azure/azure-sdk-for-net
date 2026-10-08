@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HubRouteTableData, HubRouteTableResource>(new HubRouteTablesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HubRouteTableData, HubRouteTableResource>(new HubRouteTableDataAsyncCollectionResultOfT(
                 _hubRouteTablesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HubRouteTableData, HubRouteTableResource>(new HubRouteTablesGetAllCollectionResultOfT(
+            return new PageableWrapper<HubRouteTableData, HubRouteTableResource>(new HubRouteTableDataCollectionResultOfT(
                 _hubRouteTablesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

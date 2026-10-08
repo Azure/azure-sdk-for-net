@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagsGetByResourceGroupAsyncCollectionResultOfT(_expressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteLagCollection.GetAll"), data => new ExpressRouteLagResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagDataAsyncCollectionResultOfT(_expressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteLagCollection.GetAll"), data => new ExpressRouteLagResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagsGetByResourceGroupCollectionResultOfT(_expressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteLagCollection.GetAll"), data => new ExpressRouteLagResource(Client, data));
+            return new PageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagDataCollectionResultOfT(_expressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteLagCollection.GetAll"), data => new ExpressRouteLagResource(Client, data));
         }
 
         /// <summary>

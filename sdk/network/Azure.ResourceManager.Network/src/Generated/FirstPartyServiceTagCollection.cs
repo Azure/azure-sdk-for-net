@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagsListAsyncCollectionResultOfT(_firstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirstPartyServiceTagCollection.GetAll"), data => new FirstPartyServiceTagResource(Client, data));
+            return new AsyncPageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagDataAsyncCollectionResultOfT(_firstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirstPartyServiceTagCollection.GetAll"), data => new FirstPartyServiceTagResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagsListCollectionResultOfT(_firstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirstPartyServiceTagCollection.GetAll"), data => new FirstPartyServiceTagResource(Client, data));
+            return new PageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagDataCollectionResultOfT(_firstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirstPartyServiceTagCollection.GetAll"), data => new FirstPartyServiceTagResource(Client, data));
         }
 
         /// <summary>

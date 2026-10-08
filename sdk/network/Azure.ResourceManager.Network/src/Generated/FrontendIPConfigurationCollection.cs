@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontendIPConfigurationData, FrontendIPConfigurationResource>(new LoadBalancerFrontendIPConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontendIPConfigurationData, FrontendIPConfigurationResource>(new FrontendIPConfigurationDataAsyncCollectionResultOfT(
                 _loadBalancerFrontendIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontendIPConfigurationData, FrontendIPConfigurationResource>(new LoadBalancerFrontendIPConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<FrontendIPConfigurationData, FrontendIPConfigurationResource>(new FrontendIPConfigurationDataCollectionResultOfT(
                 _loadBalancerFrontendIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectivityConfigurationData, ConnectivityConfigurationResource>(new ConnectivityConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConnectivityConfigurationData, ConnectivityConfigurationResource>(new ConnectivityConfigurationDataAsyncCollectionResultOfT(
                 _connectivityConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectivityConfigurationData, ConnectivityConfigurationResource>(new ConnectivityConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<ConnectivityConfigurationData, ConnectivityConfigurationResource>(new ConnectivityConfigurationDataCollectionResultOfT(
                 _connectivityConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

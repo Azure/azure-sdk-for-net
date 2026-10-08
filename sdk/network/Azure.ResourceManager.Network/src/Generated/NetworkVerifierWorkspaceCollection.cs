@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkVerifierWorkspaceData, NetworkVerifierWorkspaceResource>(new VerifierWorkspacesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkVerifierWorkspaceData, NetworkVerifierWorkspaceResource>(new NetworkVerifierWorkspaceDataAsyncCollectionResultOfT(
                 _verifierWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkVerifierWorkspaceData, NetworkVerifierWorkspaceResource>(new VerifierWorkspacesGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkVerifierWorkspaceData, NetworkVerifierWorkspaceResource>(new NetworkVerifierWorkspaceDataCollectionResultOfT(
                 _verifierWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

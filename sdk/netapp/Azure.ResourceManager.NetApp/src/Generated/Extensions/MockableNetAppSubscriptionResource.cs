@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppAccounts"), data => new NetAppAccountResource(Client, data));
+            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new NetAppAccountDataAsync0CollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppAccounts"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppAccounts"), data => new NetAppAccountResource(Client, data));
+            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new NetAppAccountData0CollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetAppSubscriptionResource.GetNetAppAccounts"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetAppResourceUsagesGetNetAppResourceUsagesAsyncCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
+            return new NetAppUsageResultAsyncCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
         }
 
         /// <summary>
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetAppResourceUsagesGetNetAppResourceUsagesCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
+            return new NetAppUsageResultCollectionResultOfT(NetAppResourceUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages");
         }
 
         /// <summary>

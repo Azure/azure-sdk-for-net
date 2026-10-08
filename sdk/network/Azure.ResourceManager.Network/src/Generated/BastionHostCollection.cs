@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BastionHostData, BastionHostResource>(new BastionHostsGetByResourceGroupAsyncCollectionResultOfT(_bastionHostsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BastionHostCollection.GetAll"), data => new BastionHostResource(Client, data));
+            return new AsyncPageableWrapper<BastionHostData, BastionHostResource>(new BastionHostDataAsyncCollectionResultOfT(_bastionHostsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BastionHostCollection.GetAll"), data => new BastionHostResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BastionHostData, BastionHostResource>(new BastionHostsGetByResourceGroupCollectionResultOfT(_bastionHostsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BastionHostCollection.GetAll"), data => new BastionHostResource(Client, data));
+            return new PageableWrapper<BastionHostData, BastionHostResource>(new BastionHostDataCollectionResultOfT(_bastionHostsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BastionHostCollection.GetAll"), data => new BastionHostResource(Client, data));
         }
 
         /// <summary>

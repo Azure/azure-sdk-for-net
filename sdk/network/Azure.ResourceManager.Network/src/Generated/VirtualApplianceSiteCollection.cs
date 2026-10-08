@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualApplianceSiteData, VirtualApplianceSiteResource>(new VirtualApplianceSitesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualApplianceSiteData, VirtualApplianceSiteResource>(new VirtualApplianceSiteDataAsyncCollectionResultOfT(
                 _virtualApplianceSitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualApplianceSiteData, VirtualApplianceSiteResource>(new VirtualApplianceSitesGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualApplianceSiteData, VirtualApplianceSiteResource>(new VirtualApplianceSiteDataCollectionResultOfT(
                 _virtualApplianceSitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

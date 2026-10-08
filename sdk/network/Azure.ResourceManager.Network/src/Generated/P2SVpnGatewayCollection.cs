@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2sVpnGatewaysGetByResourceGroupAsyncCollectionResultOfT(_p2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "P2SVpnGatewayCollection.GetAll"), data => new P2SVpnGatewayResource(Client, data));
+            return new AsyncPageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2SVpnGatewayDataAsyncCollectionResultOfT(_p2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "P2SVpnGatewayCollection.GetAll"), data => new P2SVpnGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2sVpnGatewaysGetByResourceGroupCollectionResultOfT(_p2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "P2SVpnGatewayCollection.GetAll"), data => new P2SVpnGatewayResource(Client, data));
+            return new PageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2SVpnGatewayDataCollectionResultOfT(_p2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "P2SVpnGatewayCollection.GetAll"), data => new P2SVpnGatewayResource(Client, data));
         }
 
         /// <summary>

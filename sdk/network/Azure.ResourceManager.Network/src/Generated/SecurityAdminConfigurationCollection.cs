@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAdminConfigurationData, SecurityAdminConfigurationResource>(new SecurityAdminConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityAdminConfigurationData, SecurityAdminConfigurationResource>(new SecurityAdminConfigurationDataAsyncCollectionResultOfT(
                 _securityAdminConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAdminConfigurationData, SecurityAdminConfigurationResource>(new SecurityAdminConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityAdminConfigurationData, SecurityAdminConfigurationResource>(new SecurityAdminConfigurationDataCollectionResultOfT(
                 _securityAdminConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

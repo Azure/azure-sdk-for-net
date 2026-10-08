@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkGroupStaticMemberData, NetworkGroupStaticMemberResource>(new StaticMembersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkGroupStaticMemberData, NetworkGroupStaticMemberResource>(new NetworkGroupStaticMemberDataAsyncCollectionResultOfT(
                 _staticMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkGroupStaticMemberData, NetworkGroupStaticMemberResource>(new StaticMembersGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkGroupStaticMemberData, NetworkGroupStaticMemberResource>(new NetworkGroupStaticMemberDataCollectionResultOfT(
                 _staticMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

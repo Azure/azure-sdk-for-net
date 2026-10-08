@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NapsterOrganizationCollection.GetAll"), data => new NapsterOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new NapsterOrganizationDataAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NapsterOrganizationCollection.GetAll"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NapsterOrganizationCollection.GetAll"), data => new NapsterOrganizationResource(Client, data));
+            return new PageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new NapsterOrganizationDataCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NapsterOrganizationCollection.GetAll"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>

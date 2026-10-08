@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkManagerConnectionData, ManagementGroupNetworkManagerConnectionResource>(new ManagementGroupNetworkManagerConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkManagerConnectionData, ManagementGroupNetworkManagerConnectionResource>(new NetworkManagerConnectionDataAsyncCollectionResultOfT(
                 _managementGroupNetworkManagerConnectionsRestClient,
                 Id.Name,
                 top,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkManagerConnectionData, ManagementGroupNetworkManagerConnectionResource>(new ManagementGroupNetworkManagerConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkManagerConnectionData, ManagementGroupNetworkManagerConnectionResource>(new NetworkManagerConnectionDataCollectionResultOfT(
                 _managementGroupNetworkManagerConnectionsRestClient,
                 Id.Name,
                 top,

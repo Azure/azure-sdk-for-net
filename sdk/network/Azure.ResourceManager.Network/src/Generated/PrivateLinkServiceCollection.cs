@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServicesGetAllAsyncCollectionResultOfT(_privateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkServiceCollection.GetAll"), data => new PrivateLinkServiceResource(Client, data));
+            return new AsyncPageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServiceDataAsyncCollectionResultOfT(_privateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkServiceCollection.GetAll"), data => new PrivateLinkServiceResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServicesGetAllCollectionResultOfT(_privateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkServiceCollection.GetAll"), data => new PrivateLinkServiceResource(Client, data));
+            return new PageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServiceDataCollectionResultOfT(_privateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkServiceCollection.GetAll"), data => new PrivateLinkServiceResource(Client, data));
         }
 
         /// <summary>

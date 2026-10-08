@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewaysListAsyncCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationGatewayCollection.GetAll"), data => new ApplicationGatewayResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewayDataAsyncCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationGatewayCollection.GetAll"), data => new ApplicationGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewaysListCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationGatewayCollection.GetAll"), data => new ApplicationGatewayResource(Client, data));
+            return new PageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewayDataCollectionResultOfT(_applicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationGatewayCollection.GetAll"), data => new ApplicationGatewayResource(Client, data));
         }
 
         /// <summary>

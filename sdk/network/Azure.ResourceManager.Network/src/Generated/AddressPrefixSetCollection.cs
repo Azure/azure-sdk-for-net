@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AddressPrefixSetData, AddressPrefixSetResource>(new AddressPrefixSetsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AddressPrefixSetData, AddressPrefixSetResource>(new AddressPrefixSetDataAsyncCollectionResultOfT(
                 _addressPrefixSetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AddressPrefixSetData, AddressPrefixSetResource>(new AddressPrefixSetsGetAllCollectionResultOfT(
+            return new PageableWrapper<AddressPrefixSetData, AddressPrefixSetResource>(new AddressPrefixSetDataCollectionResultOfT(
                 _addressPrefixSetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
