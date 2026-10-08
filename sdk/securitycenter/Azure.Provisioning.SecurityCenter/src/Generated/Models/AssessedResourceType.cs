@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Sub-assessment resource type. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum AssessedResourceType
     {
         /// <summary> SqlServerVulnerability. </summary>

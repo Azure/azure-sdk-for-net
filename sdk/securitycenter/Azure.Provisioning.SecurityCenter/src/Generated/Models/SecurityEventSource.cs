@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A valid event source type. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SecurityEventSource
     {
         /// <summary> Assessments. </summary>

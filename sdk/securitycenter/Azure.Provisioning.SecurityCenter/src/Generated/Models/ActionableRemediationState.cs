@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
@@ -13,6 +15,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// Enabled - ActionableRemediation is enabled.
     /// Disabled - ActionableRemediation is disabled.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum ActionableRemediationState
     {
         /// <summary> None. </summary>

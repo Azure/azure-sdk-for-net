@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describes the suppression rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityAlertsSuppressionRule : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -80,6 +81,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AlertType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AlertType
         {
             get
@@ -97,6 +99,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the LastModifiedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastModifiedOn
         {
             get
@@ -110,6 +113,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -127,6 +131,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Reason. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Reason
         {
             get
@@ -144,6 +149,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityAlertsSuppressionRuleState> State
         {
             get
@@ -161,6 +167,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Comment. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Comment
         {
             get
@@ -178,6 +185,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SuppressionAlertsScopeAllOf. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
         {
             get

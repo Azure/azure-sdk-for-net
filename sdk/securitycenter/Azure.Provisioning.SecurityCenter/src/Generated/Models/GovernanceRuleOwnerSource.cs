@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describe the owner source of governance rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GovernanceRuleOwnerSource : ProvisionableConstruct
     {
         private BicepValue<GovernanceRuleOwnerSourceType> _sourceType;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SourceType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<GovernanceRuleOwnerSourceType> SourceType
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get

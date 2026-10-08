@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The resource of the configuration or data needed to onboard the machine to MDE. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MdeOnboarding : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -70,6 +71,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the OnboardingPackageWindows. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> OnboardingPackageWindows
         {
             get
@@ -79,6 +81,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the OnboardingPackageLinux. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> OnboardingPackageLinux
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The CSPM monitoring for github offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CspmMonitorGithubOffering : SecurityCenterCloudOffering
     {
         /// <summary> Creates a new CspmMonitorGithubOffering. </summary>

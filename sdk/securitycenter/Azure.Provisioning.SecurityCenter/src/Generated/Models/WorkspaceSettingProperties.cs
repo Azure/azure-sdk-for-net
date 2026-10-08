@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Workspace setting data. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class WorkspaceSettingProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _workspaceId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the WorkspaceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> WorkspaceId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Scope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scope
         {
             get

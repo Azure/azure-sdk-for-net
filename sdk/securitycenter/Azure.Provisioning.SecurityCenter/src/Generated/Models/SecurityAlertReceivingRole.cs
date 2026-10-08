@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A possible role to configure sending security notification alerts to. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SecurityAlertReceivingRole
     {
         /// <summary> If enabled, send notification on new alerts to the account admins. </summary>

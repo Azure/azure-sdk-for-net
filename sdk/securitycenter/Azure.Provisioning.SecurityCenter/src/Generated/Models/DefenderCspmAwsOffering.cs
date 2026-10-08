@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The CSPM P1 for AWS offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderCspmAwsOffering : SecurityCenterCloudOffering
     {
         private DefenderCspmAwsOfferingVmScanners _vmScanners;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the VmScanners. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmAwsOfferingVmScanners VmScanners
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DataSensitivityDiscovery. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmAwsOfferingDataSensitivityDiscovery DataSensitivityDiscovery
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DatabasesDspm. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmAwsOfferingDatabasesDspm DatabasesDspm
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Ciem. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmAwsOfferingCiem Ciem
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdcContainersImageAssessment. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmAwsOfferingMdcContainersImageAssessment MdcContainersImageAssessment
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdcContainersAgentlessDiscoveryK8S. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S MdcContainersAgentlessDiscoveryK8S
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ServerlessContainers. </summary>
+        [Experimental("AZPROVISION001")]
         internal DefenderCspmAwsOfferingServerlessContainers ServerlessContainers
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AgentlessServerlessPosture. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmAwsOfferingAgentlessServerlessPosture AgentlessServerlessPosture
         {
             get
@@ -148,6 +158,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ServerlessContainersEnabled
         {
             get

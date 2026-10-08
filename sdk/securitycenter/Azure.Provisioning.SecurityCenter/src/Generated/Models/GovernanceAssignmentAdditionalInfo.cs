@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describe the additional data of governance assignment - optional. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GovernanceAssignmentAdditionalInfo : ProvisionableConstruct
     {
         private BicepValue<int> _ticketNumber;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the TicketNumber. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TicketNumber
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the TicketLink. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TicketLink
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the TicketStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TicketStatus
         {
             get

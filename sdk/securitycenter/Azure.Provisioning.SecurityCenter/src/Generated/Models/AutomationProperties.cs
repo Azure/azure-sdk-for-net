@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A set of properties that defines the behavior of the automation configuration. To learn more about the supported security events data models schemas - please visit https://aka.ms/ASCAutomationSchemas. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AutomationProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SecurityAutomationScope> Scopes
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Sources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SecurityAutomationSource> Sources
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Actions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SecurityAutomationAction> Actions
         {
             get

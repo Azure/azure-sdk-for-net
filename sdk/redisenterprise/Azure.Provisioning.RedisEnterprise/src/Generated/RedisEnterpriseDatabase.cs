@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Describes a database on the Redis Enterprise cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseDatabase : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the ClientProtocol. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseClientProtocol> ClientProtocol
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Port. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Port
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseProvisioningStatus> ProvisioningState
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ResourceState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseClusterResourceState> ResourceState
         {
             get
@@ -156,6 +161,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the ClusteringPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseClusteringPolicy> ClusteringPolicy
         {
             get
@@ -173,6 +179,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the EvictionPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseEvictionPolicy> EvictionPolicy
         {
             get
@@ -190,6 +197,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Persistence. </summary>
+        [Experimental("AZPROVISION001")]
         public RedisPersistenceSettings Persistence
         {
             get
@@ -207,6 +215,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Modules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RedisEnterpriseModule> Modules
         {
             get
@@ -224,6 +233,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the GeoReplication. </summary>
+        [Experimental("AZPROVISION001")]
         public RedisEnterpriseDatabaseGeoReplication GeoReplication
         {
             get
@@ -241,6 +251,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the RedisVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RedisVersion
         {
             get
@@ -254,6 +265,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the DeferUpgrade. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DeferUpgradeSetting> DeferUpgrade
         {
             get
@@ -271,6 +283,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the NotifyKeyspaceEvents. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> NotifyKeyspaceEvents
         {
             get

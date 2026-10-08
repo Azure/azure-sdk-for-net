@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
@@ -17,6 +19,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// DeletionSuccess - Deletion successful.
     /// DeletionFailure - Deletion failure.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum DevOpsProvisioningState
     {
         /// <summary> Succeeded. </summary>

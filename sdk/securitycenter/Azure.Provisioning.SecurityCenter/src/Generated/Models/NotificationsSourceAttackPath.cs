@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Attack path notification source. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NotificationsSourceAttackPath : NotificationsSource
     {
         private BicepValue<MinimalRiskLevel> _minimalRiskLevel;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MinimalRiskLevel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MinimalRiskLevel> MinimalRiskLevel
         {
             get

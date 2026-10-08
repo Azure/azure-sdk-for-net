@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Regulatory compliance standard details and state. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RegulatoryComplianceStandard : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -74,6 +75,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityAlertNotificationByRoleState> State
         {
             get
@@ -83,6 +85,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the PassedControls. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PassedControls
         {
             get
@@ -92,6 +95,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the FailedControls. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> FailedControls
         {
             get
@@ -101,6 +105,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SkippedControls. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SkippedControls
         {
             get
@@ -110,6 +115,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the UnsupportedControls. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> UnsupportedControls
         {
             get

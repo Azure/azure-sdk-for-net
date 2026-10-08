@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> The level of Redis Enterprise cluster to deploy. Possible values: ('Balanced_B5', 'MemoryOptimized_M10', 'ComputeOptimized_X5', etc.). For more information on SKUs see the latest pricing documentation. Note that additional SKUs may become supported in the future. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseSkuName
     {
         /// <summary> Enterprise_E1. </summary>

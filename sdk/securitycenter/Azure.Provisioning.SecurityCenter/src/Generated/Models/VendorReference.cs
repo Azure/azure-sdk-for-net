@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Vendor reference. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VendorReference : ProvisionableConstruct
     {
         private BicepValue<string> _title;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Title. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Title
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Link. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Link
         {
             get

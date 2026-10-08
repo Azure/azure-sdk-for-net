@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Types for inventory kind. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotSecurityInventoryKind
     {
         /// <summary> AzureDevOpsOrganization. </summary>

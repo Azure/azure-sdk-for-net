@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Security task that we recommend to do in order to strengthen security. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityTask : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -75,6 +76,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> State
         {
             get
@@ -84,6 +86,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -93,6 +96,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the LastStateChangedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastStateChangedOn
         {
             get
@@ -102,6 +106,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SubState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubState
         {
             get
@@ -111,6 +116,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the TaskName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecurityTaskName
         {
             get

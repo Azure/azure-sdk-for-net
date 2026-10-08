@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A set of properties that defines the security connector configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SecurityConnectorProperties : ProvisionableConstruct
     {
         private BicepValue<string> _hierarchyIdentifier;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the HierarchyIdentifier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HierarchyIdentifier
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the HierarchyIdentifierTrialEndsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> HierarchyIdentifierTrialEndsOn
         {
             get
@@ -51,6 +55,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnvironmentName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityCenterCloudName> EnvironmentName
         {
             get
@@ -66,6 +71,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Offerings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SecurityCenterCloudOffering> Offerings
         {
             get
@@ -81,6 +87,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnvironmentData. </summary>
+        [Experimental("AZPROVISION001")]
         public SecurityConnectorEnvironment EnvironmentData
         {
             get

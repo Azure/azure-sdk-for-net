@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Specifies configuration of a redis module. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseModule : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Args. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Args
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get

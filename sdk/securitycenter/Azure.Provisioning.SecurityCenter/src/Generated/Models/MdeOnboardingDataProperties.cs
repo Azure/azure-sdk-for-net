@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Properties of the MDE configuration or data parameter needed to onboard the machine to MDE. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class MdeOnboardingDataProperties : ProvisionableConstruct
     {
         private BicepValue<BinaryData> _onboardingPackageWindows;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the OnboardingPackageWindows. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> OnboardingPackageWindows
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the OnboardingPackageLinux. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> OnboardingPackageLinux
         {
             get

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Specifies details of a linked database resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseLinkedDatabase : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> Id
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseDatabaseLinkState> State
         {
             get

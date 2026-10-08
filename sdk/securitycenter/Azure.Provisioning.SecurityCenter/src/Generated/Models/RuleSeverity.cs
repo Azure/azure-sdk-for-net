@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The rule severity. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RuleSeverity
     {
         /// <summary> High severity vulnerability requiring immediate attention. </summary>

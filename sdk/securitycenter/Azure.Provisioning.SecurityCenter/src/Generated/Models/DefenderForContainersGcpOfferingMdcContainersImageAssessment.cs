@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Microsoft Defender Container image assessment configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForContainersGcpOfferingMdcContainersImageAssessment : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Enabled
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the WorkloadIdentityProviderId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkloadIdentityProviderId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ServiceAccountEmailAddress. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceAccountEmailAddress
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SecurityFindingsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> SecurityFindingsEnabled
         {
             get

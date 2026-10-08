@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Properties of Sensitive Data Discovery. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SensitiveDataDiscoveryProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the OperationStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public SecurityCenterOperationStatus OperationStatus
         {
             get

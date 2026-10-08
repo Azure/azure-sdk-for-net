@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Schedule details for a maintenance window. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class MaintenanceWindowSchedule : ProvisionableConstruct
     {
         private BicepValue<RedisEnterpriseMaintenanceDayOfWeek> _dayOfWeek;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the DayOfWeek. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseMaintenanceDayOfWeek> DayOfWeek
         {
             get

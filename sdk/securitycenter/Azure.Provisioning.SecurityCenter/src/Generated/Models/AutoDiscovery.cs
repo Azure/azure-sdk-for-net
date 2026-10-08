@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> AutoDiscovery states. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AutoDiscovery
     {
         /// <summary> Disabled. </summary>

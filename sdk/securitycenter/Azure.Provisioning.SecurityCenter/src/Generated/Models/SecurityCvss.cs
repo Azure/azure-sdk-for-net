@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> CVSS details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityCvss : ProvisionableConstruct
     {
         private BicepValue<float> _base;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Base. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<float> Base
         {
             get

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
@@ -14,6 +16,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// NotOnboarded - this resource has not been onboarded to any connector.
     /// NotApplicable - the onboarding state is not applicable to the current endpoint.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum OnboardingState
     {
         /// <summary> NotApplicable. </summary>

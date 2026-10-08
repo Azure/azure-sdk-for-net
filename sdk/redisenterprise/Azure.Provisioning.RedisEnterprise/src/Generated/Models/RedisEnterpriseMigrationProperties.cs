@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -16,6 +17,7 @@ namespace Azure.Provisioning.RedisEnterprise
     /// Properties for Redis Enterprise migration operation.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AzureCacheForRedisMigrationProperties"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseMigrationProperties : ProvisionableConstruct
     {
         private BicepValue<SourceType> _sourceType;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Describes the source of the migration operation. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<SourceType> SourceType
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the TargetResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TargetResourceId
         {
             get
@@ -51,6 +55,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseMigrationProvisioningState> ProvisioningState
         {
             get
@@ -61,6 +66,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the StatusDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StatusDetails
         {
             get
@@ -71,6 +77,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -81,6 +88,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the LastModifiedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastModifiedOn
         {
             get

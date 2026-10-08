@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Governance rule over a given scope. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GovernanceRule : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TenantId
         {
             get
@@ -109,6 +111,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -126,6 +129,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the RemediationTimeframe. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RemediationTimeframe
         {
             get
@@ -160,6 +165,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsGracePeriod. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsGracePeriod
         {
             get
@@ -177,6 +183,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the RulePriority. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RulePriority
         {
             get
@@ -194,6 +201,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDisabled
         {
             get
@@ -211,6 +219,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the RuleType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<GovernanceRuleType> RuleType
         {
             get
@@ -228,6 +237,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SourceResourceType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<GovernanceRuleSourceResourceType> SourceResourceType
         {
             get
@@ -245,6 +255,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExcludedScopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ExcludedScopes
         {
             get
@@ -262,6 +273,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ConditionSets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BinaryData> ConditionSets
         {
             get
@@ -279,6 +291,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsIncludeMemberScopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsIncludeMemberScopes
         {
             get
@@ -296,6 +309,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the OwnerSource. </summary>
+        [Experimental("AZPROVISION001")]
         public GovernanceRuleOwnerSource OwnerSource
         {
             get
@@ -313,6 +327,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the GovernanceEmailNotification. </summary>
+        [Experimental("AZPROVISION001")]
         public GovernanceRuleEmailNotification GovernanceEmailNotification
         {
             get
@@ -330,6 +345,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         public GovernanceRuleMetadata Metadata
         {
             get

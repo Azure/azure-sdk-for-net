@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Azure DevOps Project properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AzureDevOpsProjectProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningStatusMessage;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningStatusMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningStatusMessage
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningStatusUpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ProvisioningStatusUpdatedOn
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DevOpsProvisioningState> ProvisioningState
         {
             get
@@ -58,6 +63,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ParentOrgName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ParentOrgName
         {
             get
@@ -73,6 +79,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProjectId
         {
             get
@@ -83,6 +90,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the OnboardingState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<OnboardingState> OnboardingState
         {
             get
@@ -98,6 +106,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ActionableRemediation. </summary>
+        [Experimental("AZPROVISION001")]
         public ActionableRemediation ActionableRemediation
         {
             get

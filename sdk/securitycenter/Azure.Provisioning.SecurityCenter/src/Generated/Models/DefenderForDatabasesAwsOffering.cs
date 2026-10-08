@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Defender for Databases AWS offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForDatabasesAwsOffering : SecurityCenterCloudOffering
     {
         private DefenderForDatabasesAwsOfferingArcAutoProvisioning _arcAutoProvisioning;
@@ -21,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ArcAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForDatabasesAwsOfferingArcAutoProvisioning ArcAutoProvisioning
         {
             get
@@ -36,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Rds. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForDatabasesAwsOfferingRds Rds
         {
             get
@@ -51,6 +56,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DatabasesDspm. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForDatabasesAwsOfferingDatabasesDspm DatabasesDspm
         {
             get

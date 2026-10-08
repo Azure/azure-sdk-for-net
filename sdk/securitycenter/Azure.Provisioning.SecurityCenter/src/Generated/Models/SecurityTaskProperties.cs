@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SecurityTaskProperties : ProvisionableConstruct
     {
         private BicepValue<string> _taskName;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the TaskName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TaskName
         {
             get

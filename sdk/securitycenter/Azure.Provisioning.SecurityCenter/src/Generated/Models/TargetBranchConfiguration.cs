@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Repository branch configuration for PR Annotations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TargetBranchConfiguration : ProvisionableConstruct
     {
         private BicepList<string> _branchNames;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the BranchNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> BranchNames
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AnnotateDefaultBranch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AnnotateDefaultBranchState> AnnotateDefaultBranch
         {
             get

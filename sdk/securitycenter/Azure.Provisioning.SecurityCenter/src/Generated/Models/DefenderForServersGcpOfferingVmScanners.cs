@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForServersGcpOfferingVmScanners : VmScannersGcp
     {
         /// <summary> Creates a new DefenderForServersGcpOfferingVmScanners. </summary>

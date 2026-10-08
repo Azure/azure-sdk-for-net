@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Microsoft Defender Container image assessment configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DefenderCspmJFrogOfferingMdcContainersImageAssessment : ProvisionableConstruct
     {
         private BicepValue<bool> _isMdcContainersImageAssessmentEnabled;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsMdcContainersImageAssessmentEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsMdcContainersImageAssessmentEnabled
         {
             get

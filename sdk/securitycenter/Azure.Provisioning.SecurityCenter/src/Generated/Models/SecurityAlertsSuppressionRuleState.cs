@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Possible states of the rule. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SecurityAlertsSuppressionRuleState
     {
         /// <summary> Enabled. </summary>

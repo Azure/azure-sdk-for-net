@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The application source, what it affects, e.g. Assessments. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ApplicationSourceResourceType
     {
         /// <summary> The source of the application is assessments. </summary>

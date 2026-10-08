@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Properties of Redis Enterprise database access policy assignment. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AccessPolicyAssignmentProperties : ProvisionableConstruct
     {
         private BicepValue<RedisEnterpriseProvisioningStatus> _provisioningState;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseProvisioningStatus> ProvisioningState
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the AccessPolicyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccessPolicyName
         {
             get
@@ -51,6 +55,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the AccessString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccessString
         {
             get
@@ -66,6 +71,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ProvisioningError. </summary>
+        [Experimental("AZPROVISION001")]
         public AccessPolicyAssignmentProvisioningError ProvisioningError
         {
             get
@@ -76,6 +82,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the User. </summary>
+        [Experimental("AZPROVISION001")]
         internal AccessPolicyAssignmentPropertiesUser User
         {
             get
@@ -91,6 +98,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> UserObjectId
         {
             get

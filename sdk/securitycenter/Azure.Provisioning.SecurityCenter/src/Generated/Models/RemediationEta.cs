@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The ETA (estimated time of arrival) for remediation. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RemediationEta : ProvisionableConstruct
     {
         private BicepValue<DateTimeOffset> _eta;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Eta. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> Eta
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Justification. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Justification
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> describes properties of an auto provisioning setting. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AutoProvisioningSettingProperties : ProvisionableConstruct
     {
         private BicepValue<AutoProvisionState> _autoProvision;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AutoProvision. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AutoProvisionState> AutoProvision
         {
             get

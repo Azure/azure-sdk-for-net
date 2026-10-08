@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The GCP project connector environment data. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GcpProjectEnvironment : SecurityConnectorEnvironment
     {
         private GcpOrganizationalInfo _organizationalData;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the OrganizationalData. </summary>
+        [Experimental("AZPROVISION001")]
         public GcpOrganizationalInfo OrganizationalData
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ProjectDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public GcpProjectDetails ProjectDetails
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ScanInterval. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> ScanInterval
         {
             get

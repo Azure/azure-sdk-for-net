@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> DevOps Configuration properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DevOpsConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningStatusMessage;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningStatusMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningStatusMessage
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningStatusUpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ProvisioningStatusUpdatedOn
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DevOpsProvisioningState> ProvisioningState
         {
             get
@@ -59,6 +64,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Authorization. </summary>
+        [Experimental("AZPROVISION001")]
         internal Authorization Authorization
         {
             get
@@ -74,6 +80,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AutoDiscovery. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AutoDiscovery> AutoDiscovery
         {
             get
@@ -89,6 +96,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the TopLevelInventoryList. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> TopLevelInventoryList
         {
             get
@@ -104,6 +112,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Capabilities. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DevOpsCapability> Capabilities
         {
             get
@@ -114,6 +123,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AgentlessConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public AgentlessConfiguration AgentlessConfiguration
         {
             get
@@ -129,6 +139,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Code. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AuthorizationCode
         {
             get

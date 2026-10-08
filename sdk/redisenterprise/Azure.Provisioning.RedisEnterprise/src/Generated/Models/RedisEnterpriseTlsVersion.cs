@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseTlsVersion
     {
         /// <summary> 1.0. </summary>

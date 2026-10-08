@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> DevOps Configuration resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DevOpsConfiguration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

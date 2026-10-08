@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Configuration for servers Arc auto provisioning for a given environment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForDatabasesAwsOfferingArcAutoProvisioningConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _proxy;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Proxy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Proxy
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the PrivateLinkScope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrivateLinkScope
         {
             get

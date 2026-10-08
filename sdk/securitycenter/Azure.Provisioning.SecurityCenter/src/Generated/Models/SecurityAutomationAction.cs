@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -12,8 +13,9 @@ namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
     /// The action that should be triggered.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SecurityAutomationActionLogicApp"/>, <see cref="SecurityAutomationActionEventHub"/>, and <see cref="SecurityAutomationActionWorkspace"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/>, and <see cref="SecurityAutomationActionWorkspace"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityAutomationAction : ProvisionableConstruct
     {
         private BicepValue<ActionType> _actionType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> The type of the action that will be triggered by the Automation. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<ActionType> ActionType
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Authorization payload. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class Authorization : ProvisionableConstruct
     {
         private BicepValue<string> _code;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Code. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Code
         {
             get

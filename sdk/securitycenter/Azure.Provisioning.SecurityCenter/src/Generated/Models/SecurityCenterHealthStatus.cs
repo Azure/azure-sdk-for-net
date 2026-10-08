@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The status of the health report. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SecurityCenterHealthStatus
     {
         /// <summary> Healthy. </summary>

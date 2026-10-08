@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Microsoft information protection built-in and custom information types, labels, and integration status. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SensitivitySettingsMipInformation : ProvisionableConstruct
     {
         private BicepValue<MipIntegrationStatus> _mipIntegrationStatus;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MipIntegrationStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MipIntegrationStatus> MipIntegrationStatus
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Labels. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<InformationProtectionSensitivityLabel> Labels
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CustomInfoTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<InfoType> CustomInfoTypes
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the BuiltInInfoTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BuiltInInfoType> BuiltInInfoTypes
         {
             get

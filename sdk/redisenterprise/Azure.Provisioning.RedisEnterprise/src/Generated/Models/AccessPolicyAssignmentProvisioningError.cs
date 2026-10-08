@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Error details for access policy assignment provisioning failures. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AccessPolicyAssignmentProvisioningError : ProvisionableConstruct
     {
         private BicepValue<string> _code;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the Code. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Code
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the Message. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Message
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the Target. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Target
         {
             get

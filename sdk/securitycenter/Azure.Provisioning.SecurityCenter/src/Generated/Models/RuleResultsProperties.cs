@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Rule results properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RuleResultsProperties : ProvisionableConstruct
     {
         private BicepList<BicepList<string>> _results;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Results. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BicepList<string>> Results
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsLatestScan. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsLatestScan
         {
             get

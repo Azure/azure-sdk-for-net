@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Docker Hub connector environment data. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DockerHubEnvironmentInfo : SecurityConnectorEnvironment
     {
         private SecurityConnectorAuthentication _authentication;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Authentication. </summary>
+        [Experimental("AZPROVISION001")]
         public SecurityConnectorAuthentication Authentication
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ScanInterval. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> ScanInterval
         {
             get

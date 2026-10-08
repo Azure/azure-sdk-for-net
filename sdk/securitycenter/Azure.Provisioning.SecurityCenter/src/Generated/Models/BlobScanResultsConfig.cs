@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Optional. Write scan result on BlobIndexTags by default. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BlobScanResultsConfig
     {
         /// <summary> Write scan results on the blobs index tags. </summary>

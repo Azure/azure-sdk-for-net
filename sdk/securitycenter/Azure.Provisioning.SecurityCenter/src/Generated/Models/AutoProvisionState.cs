@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describes what kind of security agent provisioning action to take. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AutoProvisionState
     {
         /// <summary> Install missing security agent on VMs automatically. </summary>

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> describes properties of an information protection policy. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class InformationProtectionPolicyProperties : ProvisionableConstruct
     {
         private BicepValue<DateTimeOffset> _lastModifiedUtc;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the LastModifiedUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastModifiedUtc
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Labels. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<SensitivityLabel> Labels
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InformationTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<SecurityInformationTypeInfo> InformationTypes
         {
             get

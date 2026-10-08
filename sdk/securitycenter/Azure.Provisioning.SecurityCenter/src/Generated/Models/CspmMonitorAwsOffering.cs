@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The CSPM monitoring for AWS offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CspmMonitorAwsOffering : SecurityCenterCloudOffering
     {
         private CspmMonitorAwsOfferingNativeCloudConnection _nativeCloudConnection;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the NativeCloudConnection. </summary>
+        [Experimental("AZPROVISION001")]
         internal CspmMonitorAwsOfferingNativeCloudConnection NativeCloudConnection
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudRoleArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CloudRoleArn
         {
             get

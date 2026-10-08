@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Distinguishes the kind of cluster. Read-only. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseKind
     {
         /// <summary> v1. </summary>

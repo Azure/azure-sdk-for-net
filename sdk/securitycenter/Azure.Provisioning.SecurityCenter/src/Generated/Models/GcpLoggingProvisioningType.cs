@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The provisioning type for GCP logging resources. </summary>
+    [Experimental("AZPROVISION001")]
     public enum GcpLoggingProvisioningType
     {
         /// <summary> The customer provides their own GCP logging resources. </summary>

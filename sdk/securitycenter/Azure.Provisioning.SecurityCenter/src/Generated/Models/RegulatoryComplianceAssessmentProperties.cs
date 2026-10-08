@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Regulatory compliance assessment data. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class RegulatoryComplianceAssessmentProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AssessmentType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AssessmentType
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AssessmentDetailsLink. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AssessmentDetailsLink
         {
             get
@@ -58,6 +63,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityAlertNotificationByRoleState> State
         {
             get
@@ -68,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the PassedResources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PassedResources
         {
             get
@@ -78,6 +85,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the FailedResources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> FailedResources
         {
             get
@@ -88,6 +96,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SkippedResources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SkippedResources
         {
             get
@@ -98,6 +107,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the UnsupportedResources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> UnsupportedResources
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> configuration for the servers offering subPlan. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DefenderForServersGcpOfferingSubPlan : ProvisionableConstruct
     {
         private BicepValue<AvailableSubPlanType> _type;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AvailableSubPlanType> Type
         {
             get

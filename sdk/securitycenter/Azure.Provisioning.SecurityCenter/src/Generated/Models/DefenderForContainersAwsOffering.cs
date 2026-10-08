@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Defender for Containers AWS offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForContainersAwsOffering : SecurityCenterCloudOffering
     {
         private DefenderForContainersAwsOfferingKubernetesService _kubernetesService;
@@ -35,6 +37,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the KubernetesService. </summary>
+        [Experimental("AZPROVISION001")]
         internal DefenderForContainersAwsOfferingKubernetesService KubernetesService
         {
             get
@@ -50,6 +53,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the KubernetesDataCollection. </summary>
+        [Experimental("AZPROVISION001")]
         internal DefenderForContainersAwsOfferingKubernetesDataCollection KubernetesDataCollection
         {
             get
@@ -65,6 +69,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudWatchToKinesis. </summary>
+        [Experimental("AZPROVISION001")]
         internal DefenderForContainersAwsOfferingCloudWatchToKinesis CloudWatchToKinesis
         {
             get
@@ -80,6 +85,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the KinesisToS3. </summary>
+        [Experimental("AZPROVISION001")]
         internal DefenderForContainersAwsOfferingKinesisToS3 KinesisToS3
         {
             get
@@ -95,6 +101,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InstallationMethod. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<InstallationMethod> InstallationMethod
         {
             get
@@ -110,6 +117,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SecurityGatingEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> SecurityGatingEnabled
         {
             get
@@ -125,6 +133,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ContainerAntiMalwareEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ContainerAntiMalwareEnabled
         {
             get
@@ -140,6 +149,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnableAuditLogsAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableAuditLogsAutoProvisioning
         {
             get
@@ -155,6 +165,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnableDefenderAgentAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableDefenderAgentAutoProvisioning
         {
             get
@@ -170,6 +181,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnablePolicyAgentAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnablePolicyAgentAutoProvisioning
         {
             get
@@ -185,6 +197,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the KubeAuditRetentionTime. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> KubeAuditRetentionTime
         {
             get
@@ -200,6 +213,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DataCollectionExternalId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DataCollectionExternalId
         {
             get
@@ -215,6 +229,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdcContainersImageAssessment. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForContainersAwsOfferingMdcContainersImageAssessment MdcContainersImageAssessment
         {
             get
@@ -230,6 +245,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdcContainersAgentlessDiscoveryK8S. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S MdcContainersAgentlessDiscoveryK8S
         {
             get
@@ -245,6 +261,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the VmScanners. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForContainersAwsOfferingVmScanners VmScanners
         {
             get
@@ -260,6 +277,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudRoleArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KubernetesServiceCloudRoleArn
         {
             get
@@ -277,6 +295,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudRoleArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KubernetesDataCollectionCloudRoleArn
         {
             get
@@ -294,6 +313,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudRoleArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CloudRoleArn
         {
             get
@@ -311,6 +331,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudRoleArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KinesisToS3CloudRoleArn
         {
             get

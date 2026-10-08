@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
@@ -12,6 +14,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// Enabled - Resource should inherit configurations from parent.
     /// Disabled - Resource should not inherit configurations from parent.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum InheritFromParentState
     {
         /// <summary> Disabled. </summary>

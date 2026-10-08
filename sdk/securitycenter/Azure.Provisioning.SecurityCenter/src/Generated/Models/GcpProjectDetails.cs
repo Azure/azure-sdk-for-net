@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The details about the project represented by the security connector. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GcpProjectDetails : ProvisionableConstruct
     {
         private BicepValue<string> _projectNumber;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ProjectNumber. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProjectNumber
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ProjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProjectId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the WorkloadIdentityPoolId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkloadIdentityPoolId
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProjectName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProjectName
         {
             get

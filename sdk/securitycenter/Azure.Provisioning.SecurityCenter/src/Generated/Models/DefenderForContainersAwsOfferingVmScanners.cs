@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Microsoft Defender for Container K8s VM host scanning configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForContainersAwsOfferingVmScanners : VmScannersAws
     {
         /// <summary> Creates a new DefenderForContainersAwsOfferingVmScanners. </summary>

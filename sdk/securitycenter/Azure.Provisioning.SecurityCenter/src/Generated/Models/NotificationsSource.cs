@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// A valid notification source type
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NotificationsSourceAlert"/> and <see cref="NotificationsSourceAttackPath"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NotificationsSource : ProvisionableConstruct
     {
         private BicepValue<SourceType> _sourceType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> The source type that will trigger the notification. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<SourceType> SourceType
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describes properties of an sub-assessment. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SecuritySubAssessmentProperties : ProvisionableConstruct
     {
         private BicepValue<string> _vulnerabilityId;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the VulnerabilityId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VulnerabilityId
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -51,6 +55,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public SubAssessmentStatus Status
         {
             get
@@ -61,6 +66,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Remediation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Remediation
         {
             get
@@ -71,6 +77,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Impact. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Impact
         {
             get
@@ -81,6 +88,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Category. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Category
         {
             get
@@ -91,6 +99,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -101,6 +110,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the GeneratedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> GeneratedOn
         {
             get
@@ -111,6 +121,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ResourceDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public SecurityCenterResourceDetails ResourceDetails
         {
             get
@@ -121,6 +132,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the AdditionalData. </summary>
+        [Experimental("AZPROVISION001")]
         public SecuritySubAssessmentAdditionalInfo AdditionalData
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AutomationTriggeringRulePropertyType
     {
         /// <summary> String. </summary>

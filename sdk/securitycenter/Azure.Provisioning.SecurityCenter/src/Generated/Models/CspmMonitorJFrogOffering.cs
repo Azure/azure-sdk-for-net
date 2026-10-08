@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The CSPM (Cloud security posture management) monitoring for JFrog Artifactory offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CspmMonitorJFrogOffering : SecurityCenterCloudOffering
     {
         /// <summary> Creates a new CspmMonitorJFrogOffering. </summary>

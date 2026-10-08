@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Describes the current migration operation on a Redis Enterprise cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseMigration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
