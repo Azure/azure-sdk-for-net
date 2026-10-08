@@ -17,7 +17,7 @@ namespace Azure.Containers.Apps.Sandbox
     [CodeGenSuppress("DownloadVolumeFileAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("UploadVolumeFile", typeof(string), typeof(string), typeof(BinaryData), typeof(bool?), typeof(MatchConditions), typeof(CancellationToken))]
     [CodeGenSuppress("UploadVolumeFileAsync", typeof(string), typeof(string), typeof(BinaryData), typeof(bool?), typeof(MatchConditions), typeof(CancellationToken))]
-    public partial class VolumesClient
+    internal partial class VolumesClient
     {
         /// <summary> Downloads a volume file without buffering the response. The caller must dispose the returned stream. </summary>
         public virtual Response<Stream> DownloadVolumeFile(string volumeName, string path, CancellationToken cancellationToken = default)

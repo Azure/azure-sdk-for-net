@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Response containing the total number of snapshots in a scope. </summary>
-    public partial class SnapshotCountResult
+    internal partial class SnapshotCountResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

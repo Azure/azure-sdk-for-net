@@ -14,7 +14,7 @@ namespace Azure.Containers.Apps.Sandbox
 {
     [CodeGenSuppress("UploadContentPackage", typeof(BinaryData), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("UploadContentPackageAsync", typeof(BinaryData), typeof(string), typeof(string), typeof(CancellationToken))]
-    public partial class ContentPackagesClient
+    internal partial class ContentPackagesClient
     {
         /// <summary> Uploads a content package from a readable, seekable stream. The caller retains ownership of the stream. </summary>
         public virtual Response<ContentPackage> UploadContentPackage(Stream content, string contentType = default, string labels = default, CancellationToken cancellationToken = default)

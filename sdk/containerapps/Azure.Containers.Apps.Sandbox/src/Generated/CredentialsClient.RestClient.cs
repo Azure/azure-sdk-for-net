@@ -11,8 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary></summary>
-    public partial class CredentialsClient
+    internal partial class CredentialsClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier204;

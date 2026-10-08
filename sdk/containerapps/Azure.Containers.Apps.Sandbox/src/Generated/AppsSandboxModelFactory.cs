@@ -1729,14 +1729,6 @@ namespace Azure.Containers.Apps.Sandbox.Models
             return new SandboxVolumeMountContent(volumeMount, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Response containing the total number of sandboxes in a scope. </summary>
-        /// <param name="count"> Total number of resources. </param>
-        /// <returns> A new <see cref="Models.SandboxCountResult"/> instance for mocking. </returns>
-        public static SandboxCountResult SandboxCountResult(int count = default)
-        {
-            return new SandboxCountResult(count, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Current resource and network statistics for a sandbox. </summary>
         /// <param name="tokenUsage"> Token usage reported by the sandbox. </param>
         /// <param name="cpu"> CPU usage and load statistics. </param>
@@ -2242,14 +2234,6 @@ namespace Azure.Containers.Apps.Sandbox.Models
             return new SetSecretContent(values, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Response containing the total number of snapshots in a scope. </summary>
-        /// <param name="count"> Total number of resources. </param>
-        /// <returns> A new <see cref="Models.SnapshotCountResult"/> instance for mocking. </returns>
-        public static SnapshotCountResult SnapshotCountResult(int count = default)
-        {
-            return new SnapshotCountResult(count, additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// Customer-facing volume resource.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataDiskVolume"/>, <see cref="Models.ServiceManagedBlobVolume"/>, and <see cref="Models.UserProvidedBlobVolume"/>.
@@ -2396,25 +2380,6 @@ namespace Azure.Containers.Apps.Sandbox.Models
         public static DataDiskVolumeUsage DataDiskVolumeUsage(long compressedBlobSizeBytes = default, long usedSizeBytes = default, DateTimeOffset lastUploadedAtUtc = default)
         {
             return new DataDiskVolumeUsage(compressedBlobSizeBytes, usedSizeBytes, lastUploadedAtUtc, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Volume counts grouped by type. </summary>
-        /// <param name="counts"> Volume counts grouped by type. </param>
-        /// <returns> A new <see cref="Models.VolumeCountResult"/> instance for mocking. </returns>
-        public static VolumeCountResult VolumeCountResult(IEnumerable<VolumeTypeCount> counts = default)
-        {
-            counts ??= new ChangeTrackingList<VolumeTypeCount>();
-
-            return new VolumeCountResult(counts.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The number of volumes of one type. </summary>
-        /// <param name="type"> The volume type. </param>
-        /// <param name="count"> The number of volumes. </param>
-        /// <returns> A new <see cref="Models.VolumeTypeCount"/> instance for mocking. </returns>
-        public static VolumeTypeCount VolumeTypeCount(VolumeType @type = default, int count = default)
-        {
-            return new VolumeTypeCount(@type, count, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Files and directories returned from a volume path. </summary>

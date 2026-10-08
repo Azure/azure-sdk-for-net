@@ -15,8 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary> The EgressPoliciesClient sub-client. </summary>
-    public partial class EgressPoliciesClient
+    internal partial class EgressPoliciesClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -64,8 +63,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteEgressPolicy(string policyId, RequestContext context)
@@ -74,8 +71,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-
                 using HttpMessage message = CreateDeleteEgressPolicyRequest(policyId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -96,8 +91,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteEgressPolicyAsync(string policyId, RequestContext context)
@@ -106,8 +99,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-
                 using HttpMessage message = CreateDeleteEgressPolicyRequest(policyId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -121,26 +112,18 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Deletes a named egress policy by ID. </summary>
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteEgressPolicy(string policyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-
             return DeleteEgressPolicy(policyId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a named egress policy by ID. </summary>
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteEgressPolicyAsync(string policyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-
             return await DeleteEgressPolicyAsync(policyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -206,8 +189,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetEgressPolicy(string policyId, RequestContext context)
@@ -216,8 +197,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-
                 using HttpMessage message = CreateGetEgressPolicyRequest(policyId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -238,8 +217,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetEgressPolicyAsync(string policyId, RequestContext context)
@@ -248,8 +225,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-
                 using HttpMessage message = CreateGetEgressPolicyRequest(policyId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -263,13 +238,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific named egress policy by ID. </summary>
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<NamedEgressPolicy> GetEgressPolicy(string policyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-
             Response result = GetEgressPolicy(policyId, cancellationToken.ToRequestContext());
             return Response.FromValue((NamedEgressPolicy)result, result);
         }
@@ -277,13 +248,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific named egress policy by ID. </summary>
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<NamedEgressPolicy>> GetEgressPolicyAsync(string policyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-
             Response result = await GetEgressPolicyAsync(policyId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((NamedEgressPolicy)result, result);
         }
@@ -299,8 +266,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetEgressPolicy(string policyId, RequestContent content, RequestContext context = null)
@@ -309,9 +274,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetEgressPolicyRequest(policyId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -333,8 +295,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SetEgressPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
@@ -343,9 +303,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetEgressPolicyRequest(policyId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -360,14 +317,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<NamedEgressPolicy> SetEgressPolicy(string policyId, NamedEgressPolicy resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-            Argument.AssertNotNull(resource, nameof(resource));
-
             Response result = SetEgressPolicy(policyId, resource, cancellationToken.ToRequestContext());
             return Response.FromValue((NamedEgressPolicy)result, result);
         }
@@ -376,14 +328,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="policyId"> Policy identifier assigned by the service. </param>
         /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<NamedEgressPolicy>> SetEgressPolicyAsync(string policyId, NamedEgressPolicy resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
-            Argument.AssertNotNull(resource, nameof(resource));
-
             Response result = await SetEgressPolicyAsync(policyId, resource, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((NamedEgressPolicy)result, result);
         }

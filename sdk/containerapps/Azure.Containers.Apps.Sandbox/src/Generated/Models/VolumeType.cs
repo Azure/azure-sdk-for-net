@@ -12,7 +12,7 @@ using Azure.Containers.Apps.Sandbox;
 namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Represents the type of volume. </summary>
-    public readonly partial struct VolumeType : IEquatable<VolumeType>
+    internal readonly partial struct VolumeType : IEquatable<VolumeType>
     {
         private readonly string _value;
         /// <summary> A service-managed Azure Blob volume. </summary>

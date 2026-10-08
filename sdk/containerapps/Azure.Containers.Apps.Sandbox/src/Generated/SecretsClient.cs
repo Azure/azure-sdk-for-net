@@ -15,8 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary> The SecretsClient sub-client. </summary>
-    public partial class SecretsClient
+    internal partial class SecretsClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -64,8 +63,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="secretId"> Secret identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteSecret(string secretId, RequestContext context)
@@ -74,8 +71,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
                 using HttpMessage message = CreateDeleteSecretRequest(secretId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -96,8 +91,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="secretId"> Secret identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteSecretAsync(string secretId, RequestContext context)
@@ -106,8 +99,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
                 using HttpMessage message = CreateDeleteSecretRequest(secretId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -121,26 +112,18 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Deletes an entire secret. </summary>
         /// <param name="secretId"> Secret identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteSecret(string secretId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
             return DeleteSecret(secretId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes an entire secret. </summary>
         /// <param name="secretId"> Secret identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteSecretAsync(string secretId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
             return await DeleteSecretAsync(secretId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -206,8 +189,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="secretId"> The secret identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSecretKeys(string secretId, RequestContext context)
@@ -216,8 +197,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
                 using HttpMessage message = CreateGetSecretKeysRequest(secretId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -238,8 +217,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="secretId"> The secret identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSecretKeysAsync(string secretId, RequestContext context)
@@ -248,8 +225,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
                 using HttpMessage message = CreateGetSecretKeysRequest(secretId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -263,13 +238,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Lists key names of a secret (values are not returned). </summary>
         /// <param name="secretId"> The secret identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SecretKeysResult> GetSecretKeys(string secretId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
             Response result = GetSecretKeys(secretId, cancellationToken.ToRequestContext());
             return Response.FromValue((SecretKeysResult)result, result);
         }
@@ -277,13 +248,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Lists key names of a secret (values are not returned). </summary>
         /// <param name="secretId"> The secret identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SecretKeysResult>> GetSecretKeysAsync(string secretId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
             Response result = await GetSecretKeysAsync(secretId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SecretKeysResult)result, result);
         }
@@ -298,8 +265,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="secretId"> Secret identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response PeekSecret(string secretId, RequestContext context)
@@ -308,8 +273,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
                 using HttpMessage message = CreatePeekSecretRequest(secretId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -330,8 +293,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="secretId"> Secret identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> PeekSecretAsync(string secretId, RequestContext context)
@@ -340,8 +301,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
                 using HttpMessage message = CreatePeekSecretRequest(secretId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -355,13 +314,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Peeks (retrieves) all secret values. </summary>
         /// <param name="secretId"> Secret identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SecretPeekResult> PeekSecret(string secretId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
             Response result = PeekSecret(secretId, cancellationToken.ToRequestContext());
             return Response.FromValue((SecretPeekResult)result, result);
         }
@@ -369,13 +324,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Peeks (retrieves) all secret values. </summary>
         /// <param name="secretId"> Secret identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SecretPeekResult>> PeekSecretAsync(string secretId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-
             Response result = await PeekSecretAsync(secretId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SecretPeekResult)result, result);
         }
@@ -391,8 +342,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="secretId"> The secret identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetSecret(string secretId, RequestContent content, RequestContext context = null)
@@ -401,9 +350,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetSecretRequest(secretId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -425,8 +371,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="secretId"> The secret identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SetSecretAsync(string secretId, RequestContent content, RequestContext context = null)
@@ -435,9 +379,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetSecretRequest(secretId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -452,14 +393,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="secretId"> The secret identifier. </param>
         /// <param name="body"> The secret key-value pairs to store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxSecret> SetSecret(string secretId, SetSecretContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = SetSecret(secretId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxSecret)result, result);
         }
@@ -468,14 +404,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="secretId"> The secret identifier. </param>
         /// <param name="body"> The secret key-value pairs to store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxSecret>> SetSecretAsync(string secretId, SetSecretContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await SetSecretAsync(secretId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxSecret)result, result);
         }

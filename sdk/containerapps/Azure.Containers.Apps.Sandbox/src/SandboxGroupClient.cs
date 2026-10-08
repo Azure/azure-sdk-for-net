@@ -8,9 +8,20 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Containers.Apps.Sandbox.Models;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Containers.Apps.Sandbox
 {
+    [CodeGenSuppress("GetSandboxesClient")]
+    [CodeGenSuppress("GetContentPackagesClient")]
+    [CodeGenSuppress("GetVolumesClient")]
+    [CodeGenSuppress("GetConnectionsClient")]
+    [CodeGenSuppress("GetCredentialsClient")]
+    [CodeGenSuppress("GetDiskImagesClient")]
+    [CodeGenSuppress("GetPublicDiskImagesClient")]
+    [CodeGenSuppress("GetEgressPoliciesClient")]
+    [CodeGenSuppress("GetSecretsClient")]
+    [CodeGenSuppress("GetSnapshotsClient")]
     public partial class SandboxGroupClient
     {
         /// <summary> The subscription identifier of this sandbox group. </summary>
@@ -135,6 +146,22 @@ namespace Azure.Containers.Apps.Sandbox
             return new ResourceAsyncPageable<SandboxProperties, SandboxResource>(
                 GetSandboxesClient().GetSandboxesAsync(skipToken, labels, cancellationToken),
                 model => new SandboxResource(GetSandboxesClient(), model.Id, model));
+        }
+
+        /// <summary> Gets the total number of sandboxes in this group. </summary>
+        /// <param name="cancellationToken"> The cancellation token for the request. </param>
+        public virtual Response<int> GetSandboxCount(CancellationToken cancellationToken = default)
+        {
+            Response<SandboxCountResult> response = GetSandboxesClient().GetSandboxCount(cancellationToken);
+            return Response.FromValue(response.Value.Count, response.GetRawResponse());
+        }
+
+        /// <summary> Gets the total number of sandboxes in this group asynchronously. </summary>
+        /// <param name="cancellationToken"> The cancellation token for the request. </param>
+        public virtual async Task<Response<int>> GetSandboxCountAsync(CancellationToken cancellationToken = default)
+        {
+            Response<SandboxCountResult> response = await GetSandboxesClient().GetSandboxCountAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.Count, response.GetRawResponse());
         }
 
         /// <summary> Lists connections as resource clients. </summary>
@@ -307,6 +334,22 @@ namespace Azure.Containers.Apps.Sandbox
                 model => new SnapshotResource(GetSnapshotsClient(), model.Id, model));
         }
 
+        /// <summary> Gets the total number of snapshots in this group. </summary>
+        /// <param name="cancellationToken"> The cancellation token for the request. </param>
+        public virtual Response<int> GetSnapshotCount(CancellationToken cancellationToken = default)
+        {
+            Response<SnapshotCountResult> response = GetSnapshotsClient().GetSnapshotCount(cancellationToken);
+            return Response.FromValue(response.Value.Count, response.GetRawResponse());
+        }
+
+        /// <summary> Gets the total number of snapshots in this group asynchronously. </summary>
+        /// <param name="cancellationToken"> The cancellation token for the request. </param>
+        public virtual async Task<Response<int>> GetSnapshotCountAsync(CancellationToken cancellationToken = default)
+        {
+            Response<SnapshotCountResult> response = await GetSnapshotsClient().GetSnapshotCountAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.Count, response.GetRawResponse());
+        }
+
         /// <summary> Lists volumes as resource clients. </summary>
         /// <param name="skipToken"> Continuation token for paginated results. </param>
         /// <param name="labels"> Comma-separated label selector. </param>
@@ -327,6 +370,30 @@ namespace Azure.Containers.Apps.Sandbox
             return new ResourceAsyncPageable<SandboxGroupVolume, VolumeResource>(
                 GetVolumesClient().GetVolumesAsync(skipToken, labels, cancellationToken),
                 model => new VolumeResource(GetVolumesClient(), model.VolumeName, model));
+        }
+
+        /// <summary> Gets the total number of volumes across all volume types in this group. </summary>
+        /// <param name="cancellationToken"> The cancellation token for the request. </param>
+        public virtual Response<int> GetVolumeCount(CancellationToken cancellationToken = default)
+        {
+            return ToVolumeCountResponse(GetVolumesClient().GetVolumeCounts(cancellationToken));
+        }
+
+        /// <summary> Gets the total number of volumes across all volume types in this group asynchronously. </summary>
+        /// <param name="cancellationToken"> The cancellation token for the request. </param>
+        public virtual async Task<Response<int>> GetVolumeCountAsync(CancellationToken cancellationToken = default)
+        {
+            return ToVolumeCountResponse(await GetVolumesClient().GetVolumeCountsAsync(cancellationToken).ConfigureAwait(false));
+        }
+
+        private static Response<int> ToVolumeCountResponse(Response<VolumeCountResult> response)
+        {
+            int total = 0;
+            foreach (VolumeTypeCount count in response.Value?.Counts ?? throw new InvalidOperationException("The volume count response has no counts."))
+            {
+                total = checked(total + count.Count);
+            }
+            return Response.FromValue(total, response.GetRawResponse());
         }
 
         /// <summary> Creates a sandbox and returns its resource client. </summary>
@@ -525,6 +592,126 @@ namespace Azure.Containers.Apps.Sandbox
             ContentPackagesClient client = GetContentPackagesClient();
             Response<ContentPackage> response = await client.UploadContentPackageAsync(content, contentType, labels, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new ContentPackageResource(client, response.Value.Id, response.Value), response.GetRawResponse());
+        }
+
+        internal virtual ConnectionsClient GetConnectionsClient()
+        {
+            return Volatile.Read(ref _cachedConnectionsClient) ?? Interlocked.CompareExchange(ref _cachedConnectionsClient, new ConnectionsClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedConnectionsClient;
+        }
+
+        internal virtual CredentialsClient GetCredentialsClient()
+        {
+            return Volatile.Read(ref _cachedCredentialsClient) ?? Interlocked.CompareExchange(ref _cachedCredentialsClient, new CredentialsClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedCredentialsClient;
+        }
+
+        internal virtual DiskImagesClient GetDiskImagesClient()
+        {
+            return Volatile.Read(ref _cachedDiskImagesClient) ?? Interlocked.CompareExchange(ref _cachedDiskImagesClient, new DiskImagesClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedDiskImagesClient;
+        }
+
+        internal virtual PublicDiskImagesClient GetPublicDiskImagesClient()
+        {
+            return Volatile.Read(ref _cachedPublicDiskImagesClient) ?? Interlocked.CompareExchange(ref _cachedPublicDiskImagesClient, new PublicDiskImagesClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedPublicDiskImagesClient;
+        }
+
+        internal virtual EgressPoliciesClient GetEgressPoliciesClient()
+        {
+            return Volatile.Read(ref _cachedEgressPoliciesClient) ?? Interlocked.CompareExchange(ref _cachedEgressPoliciesClient, new EgressPoliciesClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedEgressPoliciesClient;
+        }
+
+        internal virtual SecretsClient GetSecretsClient()
+        {
+            return Volatile.Read(ref _cachedSecretsClient) ?? Interlocked.CompareExchange(ref _cachedSecretsClient, new SecretsClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedSecretsClient;
+        }
+
+        internal virtual SnapshotsClient GetSnapshotsClient()
+        {
+            return Volatile.Read(ref _cachedSnapshotsClient) ?? Interlocked.CompareExchange(ref _cachedSnapshotsClient, new SnapshotsClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedSnapshotsClient;
+        }
+
+        internal virtual VolumesClient GetVolumesClient()
+        {
+            return Volatile.Read(ref _cachedVolumesClient) ?? Interlocked.CompareExchange(ref _cachedVolumesClient, new VolumesClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedVolumesClient;
+        }
+
+        internal virtual ContentPackagesClient GetContentPackagesClient()
+        {
+            return Volatile.Read(ref _cachedContentPackagesClient) ?? Interlocked.CompareExchange(ref _cachedContentPackagesClient, new ContentPackagesClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedContentPackagesClient;
+        }
+
+        internal virtual SandboxesClient GetSandboxesClient()
+        {
+            return Volatile.Read(ref _cachedSandboxesClient) ?? Interlocked.CompareExchange(ref _cachedSandboxesClient, new SandboxesClient(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                _subscriptionId,
+                _resourceGroupName,
+                _sandboxGroupName), null) ?? _cachedSandboxesClient;
         }
     }
 }

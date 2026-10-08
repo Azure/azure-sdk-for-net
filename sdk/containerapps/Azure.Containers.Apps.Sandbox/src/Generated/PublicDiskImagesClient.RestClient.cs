@@ -11,8 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary></summary>
-    public partial class PublicDiskImagesClient
+    internal partial class PublicDiskImagesClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 

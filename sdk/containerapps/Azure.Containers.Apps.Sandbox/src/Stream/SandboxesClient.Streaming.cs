@@ -17,7 +17,7 @@ namespace Azure.Containers.Apps.Sandbox
     [CodeGenSuppress("DownloadSandboxFileAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("UploadSandboxFile", typeof(string), typeof(string), typeof(BinaryData), typeof(bool?), typeof(int?), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("UploadSandboxFileAsync", typeof(string), typeof(string), typeof(BinaryData), typeof(bool?), typeof(int?), typeof(string), typeof(CancellationToken))]
-    public partial class SandboxesClient
+    internal partial class SandboxesClient
     {
         /// <summary> Downloads a sandbox file without buffering the response. The caller must dispose the returned stream. </summary>
         public virtual Response<Stream> DownloadSandboxFile(string id, string path, string containerName = default, CancellationToken cancellationToken = default)

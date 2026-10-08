@@ -15,8 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary> Operations on sandboxes within the group. </summary>
-    public partial class SandboxesClient
+    internal partial class SandboxesClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -120,7 +119,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateSandbox(RequestContent content, RequestContext context = null)
@@ -129,8 +127,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateSandboxRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -151,7 +147,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateSandboxAsync(RequestContent content, RequestContext context = null)
@@ -160,8 +155,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateSandboxRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -175,12 +168,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Creates a sandbox in a scope. </summary>
         /// <param name="content"> Sandbox create request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxProperties> CreateSandbox(CreateSandboxContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             Response result = CreateSandbox(content, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -188,12 +178,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Creates a sandbox in a scope. </summary>
         /// <param name="content"> Sandbox create request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxProperties>> CreateSandboxAsync(CreateSandboxContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             Response result = await CreateSandboxAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -208,8 +195,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetProperties(string id, RequestContext context)
@@ -218,8 +203,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetPropertiesRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -240,8 +223,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetPropertiesAsync(string id, RequestContext context)
@@ -250,8 +231,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetPropertiesRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -265,13 +244,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a sandbox by identifier. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxProperties> GetProperties(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = GetProperties(id, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -279,13 +254,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a sandbox by identifier. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxProperties>> GetPropertiesAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await GetPropertiesAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -300,8 +271,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Delete(string id, RequestContext context)
@@ -310,8 +279,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDeleteRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -332,8 +299,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteAsync(string id, RequestContext context)
@@ -342,8 +307,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDeleteRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -357,26 +320,18 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Deletes a sandbox by identifier. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Delete(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return Delete(id, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a sandbox by identifier. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return await DeleteAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -393,8 +348,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteSandboxFile(string id, string path, bool? recursive, string containerName, RequestContext context)
@@ -403,9 +356,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateDeleteSandboxFileRequest(id, path, recursive, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -429,8 +379,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteSandboxFileAsync(string id, string path, bool? recursive, string containerName, RequestContext context)
@@ -439,9 +387,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateDeleteSandboxFileRequest(id, path, recursive, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -458,14 +403,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxFileOperationResult> DeleteSandboxFile(string id, string path, bool? recursive = default, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             Response result = DeleteSandboxFile(id, path, recursive, containerName, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxFileOperationResult)result, result);
         }
@@ -476,14 +416,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxFileOperationResult>> DeleteSandboxFileAsync(string id, string path, bool? recursive = default, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             Response result = await DeleteSandboxFileAsync(id, path, recursive, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxFileOperationResult)result, result);
         }
@@ -500,8 +435,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file path to download. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DownloadSandboxFile(string id, string path, string containerName, RequestContext context)
@@ -510,9 +443,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateDownloadSandboxFileRequest(id, path, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -535,8 +465,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file path to download. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DownloadSandboxFileAsync(string id, string path, string containerName, RequestContext context)
@@ -545,9 +473,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateDownloadSandboxFileRequest(id, path, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -570,8 +495,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The directory path to list. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSandboxFilesMetadata(string id, string path, string containerName, RequestContext context)
@@ -580,9 +503,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateGetSandboxFilesMetadataRequest(id, path, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -605,8 +525,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The directory path to list. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSandboxFilesMetadataAsync(string id, string path, string containerName, RequestContext context)
@@ -615,9 +533,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateGetSandboxFilesMetadataRequest(id, path, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -633,14 +548,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The directory path to list. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxDirectoryListingResult> GetSandboxFilesMetadata(string id, string path, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             Response result = GetSandboxFilesMetadata(id, path, containerName, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxDirectoryListingResult)result, result);
         }
@@ -650,14 +560,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The directory path to list. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxDirectoryListingResult>> GetSandboxFilesMetadataAsync(string id, string path, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             Response result = await GetSandboxFilesMetadataAsync(id, path, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxDirectoryListingResult)result, result);
         }
@@ -674,8 +579,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file or directory path to inspect. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSandboxFileMetadata(string id, string path, string containerName, RequestContext context)
@@ -684,9 +587,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateGetSandboxFileMetadataRequest(id, path, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -709,8 +609,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file or directory path to inspect. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSandboxFileMetadataAsync(string id, string path, string containerName, RequestContext context)
@@ -719,9 +617,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateGetSandboxFileMetadataRequest(id, path, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -737,14 +632,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file or directory path to inspect. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxFileInfo> GetSandboxFileMetadata(string id, string path, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             Response result = GetSandboxFileMetadata(id, path, containerName, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxFileInfo)result, result);
         }
@@ -754,14 +644,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file or directory path to inspect. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxFileInfo>> GetSandboxFileMetadataAsync(string id, string path, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             Response result = await GetSandboxFileMetadataAsync(id, path, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxFileInfo)result, result);
         }
@@ -778,8 +663,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateSandboxDirectory(string id, RequestContent content, string containerName = default, RequestContext context = null)
@@ -788,9 +671,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateSandboxDirectoryRequest(id, content, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -813,8 +693,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateSandboxDirectoryAsync(string id, RequestContent content, string containerName = default, RequestContext context = null)
@@ -823,9 +701,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateSandboxDirectoryRequest(id, content, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -841,14 +716,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="body"> The directory path and creation options. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxFileOperationResult> CreateSandboxDirectory(string id, SandboxDirectoryContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = CreateSandboxDirectory(id, body, containerName, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxFileOperationResult)result, result);
         }
@@ -858,14 +728,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="body"> The directory path and creation options. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxFileOperationResult>> CreateSandboxDirectoryAsync(string id, SandboxDirectoryContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await CreateSandboxDirectoryAsync(id, body, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxFileOperationResult)result, result);
         }
@@ -885,8 +750,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="mode"> The Unix mode for the uploaded file. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="path"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UploadSandboxFile(string id, string path, RequestContent content, bool? createDirs = default, int? mode = default, string containerName = default, RequestContext context = null)
@@ -895,10 +758,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUploadSandboxFileRequest(id, path, content, createDirs, mode, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -924,8 +783,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="mode"> The Unix mode for the uploaded file. </param>
         /// <param name="containerName"> The target container name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="path"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UploadSandboxFileAsync(string id, string path, RequestContent content, bool? createDirs = default, int? mode = default, string containerName = default, RequestContext context = null)
@@ -934,10 +791,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUploadSandboxFileRequest(id, path, content, createDirs, mode, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -960,8 +813,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="containerName"> The container where the interactive session runs. </param>
         /// <param name="user"> The user for the interactive session. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSandboxExecStream(string id, string containerName, string user, RequestContext context)
@@ -970,8 +821,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetSandboxExecStreamRequest(id, containerName, user, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -994,8 +843,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="containerName"> The container where the interactive session runs. </param>
         /// <param name="user"> The user for the interactive session. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSandboxExecStreamAsync(string id, string containerName, string user, RequestContext context)
@@ -1004,8 +851,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetSandboxExecStreamRequest(id, containerName, user, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1021,13 +866,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="containerName"> The container where the interactive session runs. </param>
         /// <param name="user"> The user for the interactive session. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response GetSandboxExecStream(string id, string containerName = default, string user = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return GetSandboxExecStream(id, containerName, user, cancellationToken.ToRequestContext());
         }
 
@@ -1036,13 +877,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="containerName"> The container where the interactive session runs. </param>
         /// <param name="user"> The user for the interactive session. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> GetSandboxExecStreamAsync(string id, string containerName = default, string user = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return await GetSandboxExecStreamAsync(id, containerName, user, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -1060,8 +897,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="follow"> Whether to continue streaming new log records. </param>
         /// <param name="containerName"> The container whose logs are streamed. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSandboxLogStream(string id, int? tailLines, int? logFormat, bool? follow, string containerName, RequestContext context)
@@ -1070,8 +905,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetSandboxLogStreamRequest(id, tailLines, logFormat, follow, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1096,8 +929,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="follow"> Whether to continue streaming new log records. </param>
         /// <param name="containerName"> The container whose logs are streamed. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSandboxLogStreamAsync(string id, int? tailLines, int? logFormat, bool? follow, string containerName, RequestContext context)
@@ -1106,8 +937,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetSandboxLogStreamRequest(id, tailLines, logFormat, follow, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1125,13 +954,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="follow"> Whether to continue streaming new log records. </param>
         /// <param name="containerName"> The container whose logs are streamed. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response GetSandboxLogStream(string id, int? tailLines = default, int? logFormat = default, bool? follow = default, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return GetSandboxLogStream(id, tailLines, logFormat, follow, containerName, cancellationToken.ToRequestContext());
         }
 
@@ -1142,13 +967,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="follow"> Whether to continue streaming new log records. </param>
         /// <param name="containerName"> The container whose logs are streamed. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> GetSandboxLogStreamAsync(string id, int? tailLines = default, int? logFormat = default, bool? follow = default, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return await GetSandboxLogStreamAsync(id, tailLines, logFormat, follow, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -1163,8 +984,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="containerName"> The container whose processes are streamed. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSandboxProcessesStream(string id, string containerName, RequestContext context)
@@ -1173,8 +992,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetSandboxProcessesStreamRequest(id, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1196,8 +1013,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="containerName"> The container whose processes are streamed. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSandboxProcessesStreamAsync(string id, string containerName, RequestContext context)
@@ -1206,8 +1021,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetSandboxProcessesStreamRequest(id, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1222,13 +1035,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="containerName"> The container whose processes are streamed. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response GetSandboxProcessesStream(string id, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return GetSandboxProcessesStream(id, containerName, cancellationToken.ToRequestContext());
         }
 
@@ -1236,13 +1045,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="containerName"> The container whose processes are streamed. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> GetSandboxProcessesStreamAsync(string id, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return await GetSandboxProcessesStreamAsync(id, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -1256,8 +1061,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetEgressDecisions(string id, RequestContext context)
@@ -1266,8 +1069,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetEgressDecisionsRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1288,8 +1089,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetEgressDecisionsAsync(string id, RequestContext context)
@@ -1298,8 +1097,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetEgressDecisionsRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1313,13 +1110,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets egress decisions for a sandbox. </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<EgressDecisionsResult> GetEgressDecisions(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = GetEgressDecisions(id, cancellationToken.ToRequestContext());
             return Response.FromValue((EgressDecisionsResult)result, result);
         }
@@ -1327,13 +1120,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets egress decisions for a sandbox. </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<EgressDecisionsResult>> GetEgressDecisionsAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await GetEgressDecisionsAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((EgressDecisionsResult)result, result);
         }
@@ -1348,8 +1137,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPorts(string id, RequestContext context)
@@ -1358,8 +1145,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetPortsRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1380,8 +1165,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetPortsAsync(string id, RequestContext context)
@@ -1390,8 +1173,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetPortsRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1405,13 +1186,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets the list of ports for a sandbox. </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PortsListResult> GetPorts(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = GetPorts(id, cancellationToken.ToRequestContext());
             return Response.FromValue((PortsListResult)result, result);
         }
@@ -1419,13 +1196,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets the list of ports for a sandbox. </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PortsListResult>> GetPortsAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await GetPortsAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PortsListResult)result, result);
         }
@@ -1441,8 +1214,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdatePort(string id, RequestContent content, RequestContext context = null)
@@ -1451,9 +1222,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUpdatePortRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1475,8 +1243,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UpdatePortAsync(string id, RequestContent content, RequestContext context = null)
@@ -1485,9 +1251,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUpdatePortRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1509,8 +1272,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddConnection(string id, RequestContent content, RequestContext context = null)
@@ -1519,9 +1280,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAddConnectionRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1543,8 +1301,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AddConnectionAsync(string id, RequestContent content, RequestContext context = null)
@@ -1553,9 +1309,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAddConnectionRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1570,14 +1323,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The connection to attach to the sandbox. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<ConnectionsListResult> AddConnection(string id, AddConnectionContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = AddConnection(id, body, cancellationToken.ToRequestContext());
             return Response.FromValue((ConnectionsListResult)result, result);
         }
@@ -1586,14 +1334,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The connection to attach to the sandbox. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<ConnectionsListResult>> AddConnectionAsync(string id, AddConnectionContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await AddConnectionAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ConnectionsListResult)result, result);
         }
@@ -1609,8 +1352,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetEgressPolicy(string id, RequestContent content, RequestContext context = null)
@@ -1619,9 +1360,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetEgressPolicyRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1643,8 +1381,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SetEgressPolicyAsync(string id, RequestContent content, RequestContext context = null)
@@ -1653,9 +1389,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetEgressPolicyRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1670,14 +1403,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The egress policy to apply to the sandbox. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxEgressPolicy> SetEgressPolicy(string id, SandboxEgressPolicy body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = SetEgressPolicy(id, body, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxEgressPolicy)result, result);
         }
@@ -1686,14 +1414,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The egress policy to apply to the sandbox. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxEgressPolicy>> SetEgressPolicyAsync(string id, SandboxEgressPolicy body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await SetEgressPolicyAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxEgressPolicy)result, result);
         }
@@ -1709,8 +1432,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddPort(string id, RequestContent content, RequestContext context = null)
@@ -1719,9 +1440,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAddPortRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1743,8 +1461,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AddPortAsync(string id, RequestContent content, RequestContext context = null)
@@ -1753,9 +1469,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAddPortRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1770,14 +1483,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The port configuration to add. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PortsListResult> AddPort(string id, CreateSandboxPortContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = AddPort(id, body, cancellationToken.ToRequestContext());
             return Response.FromValue((PortsListResult)result, result);
         }
@@ -1786,14 +1494,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The port configuration to add. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PortsListResult>> AddPortAsync(string id, CreateSandboxPortContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await AddPortAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PortsListResult)result, result);
         }
@@ -1809,8 +1512,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RemovePort(string id, RequestContent content, RequestContext context = null)
@@ -1819,9 +1520,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateRemovePortRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1843,8 +1541,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> RemovePortAsync(string id, RequestContent content, RequestContext context = null)
@@ -1853,9 +1549,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateRemovePortRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1870,14 +1563,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The name or number of the port to remove. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PortsListResult> RemovePort(string id, RemovePortContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = RemovePort(id, body, cancellationToken.ToRequestContext());
             return Response.FromValue((PortsListResult)result, result);
         }
@@ -1886,14 +1574,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The name or number of the port to remove. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PortsListResult>> RemovePortAsync(string id, RemovePortContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await RemovePortAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PortsListResult)result, result);
         }
@@ -1909,8 +1592,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetPorts(string id, RequestContent content, RequestContext context = null)
@@ -1919,9 +1600,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetPortsRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1943,8 +1621,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SetPortsAsync(string id, RequestContent content, RequestContext context = null)
@@ -1953,9 +1629,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetPortsRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1970,14 +1643,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="body"> The complete port configuration for the sandbox. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PortsListResult> SetPorts(string id, UpdatePortsContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = SetPorts(id, body, cancellationToken.ToRequestContext());
             return Response.FromValue((PortsListResult)result, result);
         }
@@ -1986,14 +1654,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="body"> The complete port configuration for the sandbox. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<PortsListResult>> SetPortsAsync(string id, UpdatePortsContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await SetPortsAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PortsListResult)result, result);
         }
@@ -2009,8 +1672,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Commit(string id, RequestContent content, RequestContext context = null)
@@ -2019,8 +1680,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateCommitRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2042,8 +1701,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CommitAsync(string id, RequestContent content, RequestContext context = null)
@@ -2052,8 +1709,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateCommitRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2068,13 +1723,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> Optional labels for the new disk image. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<CommitSandboxResult> Commit(string id, CommitSandboxContent body = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = Commit(id, body, cancellationToken.ToRequestContext());
             return Response.FromValue((CommitSandboxResult)result, result);
         }
@@ -2083,13 +1734,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> Optional labels for the new disk image. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<CommitSandboxResult>> CommitAsync(string id, CommitSandboxContent body = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await CommitAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((CommitSandboxResult)result, result);
         }
@@ -2105,8 +1752,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DownloadContentPackage(string id, RequestContent content, RequestContext context = null)
@@ -2115,9 +1760,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateDownloadContentPackageRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2139,8 +1781,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DownloadContentPackageAsync(string id, RequestContent content, RequestContext context = null)
@@ -2149,9 +1789,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateDownloadContentPackageRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2166,14 +1803,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The content package and destination path. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DownloadContentPackage(string id, DownloadContentPackageToSandboxContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             return DownloadContentPackage(id, body, cancellationToken.ToRequestContext());
         }
 
@@ -2181,14 +1813,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The content package and destination path. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DownloadContentPackageAsync(string id, DownloadContentPackageToSandboxContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             return await DownloadContentPackageAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -2203,8 +1830,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddPodVolumeMounts(string id, RequestContent content, RequestContext context = null)
@@ -2213,9 +1838,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAddPodVolumeMountsRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2237,8 +1859,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AddPodVolumeMountsAsync(string id, RequestContent content, RequestContext context = null)
@@ -2247,9 +1867,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAddPodVolumeMountsRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2264,14 +1881,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The pod volumes and container mounts to add. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddPodVolumeMounts(string id, PodVolumeMountsContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             return AddPodVolumeMounts(id, body, cancellationToken.ToRequestContext());
         }
 
@@ -2279,14 +1891,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The pod volumes and container mounts to add. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> AddPodVolumeMountsAsync(string id, PodVolumeMountsContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             return await AddPodVolumeMountsAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -2301,8 +1908,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateSnapshot(string id, RequestContent content, RequestContext context = null)
@@ -2311,9 +1916,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateSnapshotRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2335,8 +1937,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateSnapshotAsync(string id, RequestContent content, RequestContext context = null)
@@ -2345,9 +1945,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateSnapshotRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2362,14 +1959,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> Labels for the new snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxSnapshot> CreateSnapshot(string id, CreateSnapshotContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = CreateSnapshot(id, body, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxSnapshot)result, result);
         }
@@ -2378,14 +1970,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> Labels for the new snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxSnapshot>> CreateSnapshotAsync(string id, CreateSnapshotContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await CreateSnapshotAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxSnapshot)result, result);
         }
@@ -2402,8 +1989,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="containerName"> The container that receives the mount. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AddVolumeMount(string id, RequestContent content, string containerName = default, RequestContext context = null)
@@ -2412,9 +1997,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAddVolumeMountRequest(id, content, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2437,8 +2019,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="containerName"> The container that receives the mount. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AddVolumeMountAsync(string id, RequestContent content, string containerName = default, RequestContext context = null)
@@ -2447,9 +2027,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAddVolumeMountRequest(id, content, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2465,14 +2042,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="body"> The volume mount to add. </param>
         /// <param name="containerName"> The container that receives the mount. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddVolumeMount(string id, SandboxVolumeMountContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             return AddVolumeMount(id, body, containerName, cancellationToken.ToRequestContext());
         }
 
@@ -2481,14 +2053,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="body"> The volume mount to add. </param>
         /// <param name="containerName"> The container that receives the mount. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> AddVolumeMountAsync(string id, SandboxVolumeMountContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             return await AddVolumeMountAsync(id, body, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -2574,8 +2141,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetStats(string id, RequestContext context)
@@ -2584,8 +2149,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetStatsRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2606,8 +2169,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetStatsAsync(string id, RequestContext context)
@@ -2616,8 +2177,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateGetStatsRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2631,13 +2190,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets resource usage statistics for a sandbox. </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxStatsResult> GetStats(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = GetStats(id, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxStatsResult)result, result);
         }
@@ -2645,13 +2200,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets resource usage statistics for a sandbox. </summary>
         /// <param name="id"> The sandbox identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxStatsResult>> GetStatsAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await GetStatsAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxStatsResult)result, result);
         }
@@ -2666,8 +2217,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Disable(string id, RequestContext context)
@@ -2676,8 +2225,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDisableRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2698,8 +2245,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DisableAsync(string id, RequestContext context)
@@ -2708,8 +2253,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDisableRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2723,13 +2266,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Disables a sandbox, stopping it first if it is running. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxProperties> Disable(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = Disable(id, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -2737,13 +2276,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Disables a sandbox, stopping it first if it is running. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxProperties>> DisableAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await DisableAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -2758,8 +2293,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Enable(string id, RequestContext context)
@@ -2768,8 +2301,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateEnableRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2790,8 +2321,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> EnableAsync(string id, RequestContext context)
@@ -2800,8 +2329,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateEnableRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2815,13 +2342,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Enables a disabled sandbox. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxProperties> Enable(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = Enable(id, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -2829,13 +2352,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Enables a disabled sandbox. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxProperties>> EnableAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await EnableAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -2852,8 +2371,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="containerName"> The container where the command runs. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ExecuteCommand(string id, RequestContent content, string containerName = default, RequestContext context = null)
@@ -2862,9 +2379,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateExecuteCommandRequest(id, content, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2887,8 +2401,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="containerName"> The container where the command runs. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ExecuteCommandAsync(string id, RequestContent content, string containerName = default, RequestContext context = null)
@@ -2897,9 +2409,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateExecuteCommandRequest(id, content, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2915,14 +2424,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="body"> The executable, arguments, and execution options. </param>
         /// <param name="containerName"> The container where the command runs. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxExecuteCommandResult> ExecuteCommand(string id, ExecuteSandboxCommandContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = ExecuteCommand(id, body, containerName, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxExecuteCommandResult)result, result);
         }
@@ -2932,14 +2436,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="body"> The executable, arguments, and execution options. </param>
         /// <param name="containerName"> The container where the command runs. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxExecuteCommandResult>> ExecuteCommandAsync(string id, ExecuteSandboxCommandContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await ExecuteCommandAsync(id, body, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxExecuteCommandResult)result, result);
         }
@@ -2956,8 +2455,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="containerName"> The container where the shell command runs. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ExecuteShellCommand(string id, RequestContent content, string containerName = default, RequestContext context = null)
@@ -2966,9 +2463,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateExecuteShellCommandRequest(id, content, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2991,8 +2485,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="containerName"> The container where the shell command runs. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ExecuteShellCommandAsync(string id, RequestContent content, string containerName = default, RequestContext context = null)
@@ -3001,9 +2493,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateExecuteShellCommandRequest(id, content, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -3019,14 +2508,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="body"> The shell command and execution options. </param>
         /// <param name="containerName"> The container where the shell command runs. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxExecuteShellCommandResult> ExecuteShellCommand(string id, ExecuteSandboxShellCommandContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = ExecuteShellCommand(id, body, containerName, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxExecuteShellCommandResult)result, result);
         }
@@ -3036,14 +2520,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="body"> The shell command and execution options. </param>
         /// <param name="containerName"> The container where the shell command runs. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxExecuteShellCommandResult>> ExecuteShellCommandAsync(string id, ExecuteSandboxShellCommandContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await ExecuteShellCommandAsync(id, body, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxExecuteShellCommandResult)result, result);
         }
@@ -3059,8 +2538,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetLifecyclePolicy(string id, RequestContent content, RequestContext context = null)
@@ -3069,9 +2546,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetLifecyclePolicyRequest(id, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -3093,8 +2567,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SetLifecyclePolicyAsync(string id, RequestContent content, RequestContext context = null)
@@ -3103,9 +2575,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetLifecyclePolicyRequest(id, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -3120,14 +2589,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The automatic suspension and deletion settings. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxProperties> SetLifecyclePolicy(string id, SandboxLifecyclePolicy body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = SetLifecyclePolicy(id, body, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -3136,14 +2600,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="body"> The automatic suspension and deletion settings. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxProperties>> SetLifecyclePolicyAsync(string id, SandboxLifecyclePolicy body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await SetLifecyclePolicyAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -3158,8 +2617,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Resume(string id, RequestContext context)
@@ -3168,8 +2625,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateResumeRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -3190,8 +2645,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ResumeAsync(string id, RequestContext context)
@@ -3200,8 +2653,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateResumeRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -3215,13 +2666,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Resumes a stopped sandbox from a snapshot. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxProperties> Resume(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = Resume(id, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -3229,13 +2676,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Resumes a stopped sandbox from a snapshot. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxProperties>> ResumeAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await ResumeAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxProperties)result, result);
         }
@@ -3250,8 +2693,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Stop(string id, RequestContext context)
@@ -3260,8 +2701,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateStopRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -3282,8 +2721,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> StopAsync(string id, RequestContext context)
@@ -3292,8 +2729,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateStopRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -3307,13 +2742,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Stops a running sandbox and saves its state as a snapshot. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxSnapshot> Stop(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = Stop(id, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxSnapshot)result, result);
         }
@@ -3321,13 +2752,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Stops a running sandbox and saves its state as a snapshot. </summary>
         /// <param name="id"> Sandbox identifier assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxSnapshot>> StopAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             Response result = await StopAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxSnapshot)result, result);
         }

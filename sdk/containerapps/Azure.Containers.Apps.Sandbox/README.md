@@ -46,18 +46,9 @@ SandboxGroupClient sandboxGroupClient = new SandboxGroupClient(
 `SandboxGroupClient` is the entry point for a specific sandbox group. It contains the endpoint and Azure resource identifiers required by every request.
 Its read-only `SubscriptionId`, `ResourceGroupName`, and `Name` properties expose the identifiers supplied when the client was created. `Id` is the sandbox group's full Azure Resource Manager `ResourceIdentifier`; it does not represent an individual sandbox.
 
-### Resource subclients
+### Resource operations
 
-Operations are grouped into subclients obtained from `SandboxGroupClient`. For example:
-
-- `GetSandboxesClient()` manages sandboxes and sandbox-scoped operations such as files, networking, commands, lifecycle, and streams.
-- `GetVolumesClient()` manages sandbox-group volumes and volume files.
-- `GetSnapshotsClient()` manages snapshots.
-- `GetConnectionsClient()` and `GetCredentialsClient()` manage provider connections and credentials.
-- `GetSecretsClient()`, `GetContentPackagesClient()`, and `GetEgressPoliciesClient()` manage shared sandbox-group resources.
-- `GetDiskImagesClient()` and `GetPublicDiskImagesClient()` manage private and public disk images.
-
-The client caches and reuses each subclient.
+`SandboxGroupClient` exposes create and list operations for sandboxes and related resources. Its `GetSandbox(id)`, `GetVolume(volumeName)`, `GetConnection(id)`, and other resource factory methods provide clients for individual resources. Operations on a known resource, including sandbox files, commands, lifecycle, and streams, are available on the corresponding resource client. The generated operation subclients are internal implementation details.
 
 ### Resource clients
 
@@ -117,11 +108,9 @@ For synchronous usage and more details, see the [samples](samples/README.md).
 ### List sandboxes
 
 ```C#
-SandboxesClient sandboxesClient = sandboxGroupClient.GetSandboxesClient();
-
-await foreach (SandboxProperties sandbox in sandboxesClient.GetSandboxesAsync())
+await foreach (SandboxResource sandbox in sandboxGroupClient.GetSandboxesAsync())
 {
-    Console.WriteLine($"{sandbox.Id}: {sandbox.State}");
+    Console.WriteLine($"{sandbox.Id}: {sandbox.Data.State}");
 }
 ```
 
@@ -141,11 +130,9 @@ await foreach (SandboxResource item in sandboxGroupClient.GetSandboxesAsync())
 ### List sandbox-group volumes
 
 ```C#
-VolumesClient volumesClient = sandboxGroupClient.GetVolumesClient();
-
-await foreach (SandboxGroupVolume volume in volumesClient.GetVolumesAsync())
+await foreach (VolumeResource volume in sandboxGroupClient.GetVolumesAsync())
 {
-    Console.WriteLine($"{volume.VolumeName}: {volume.ProvisioningState}");
+    Console.WriteLine($"{volume.VolumeName}: {volume.Data.ProvisioningState}");
 }
 ```
 

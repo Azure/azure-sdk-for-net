@@ -15,8 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary> The VolumesClient sub-client. </summary>
-    public partial class VolumesClient
+    internal partial class VolumesClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -64,8 +63,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteVolume(string volumeName, RequestContext context)
@@ -74,8 +71,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
                 using HttpMessage message = CreateDeleteVolumeRequest(volumeName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -96,8 +91,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteVolumeAsync(string volumeName, RequestContext context)
@@ -106,8 +99,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
                 using HttpMessage message = CreateDeleteVolumeRequest(volumeName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -121,26 +112,18 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Deletes a volume by name. </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteVolume(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
             return DeleteVolume(volumeName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a volume by name. </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
             return await DeleteVolumeAsync(volumeName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -156,8 +139,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file or directory path to delete. </param>
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteVolumeFile(string volumeName, string path, bool? recursive, RequestContext context)
@@ -166,9 +147,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateDeleteVolumeFileRequest(volumeName, path, recursive, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -191,8 +169,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file or directory path to delete. </param>
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteVolumeFileAsync(string volumeName, string path, bool? recursive, RequestContext context)
@@ -201,9 +177,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateDeleteVolumeFileRequest(volumeName, path, recursive, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -219,14 +192,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file or directory path to delete. </param>
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteVolumeFile(string volumeName, string path, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             return DeleteVolumeFile(volumeName, path, recursive, cancellationToken.ToRequestContext());
         }
 
@@ -235,14 +203,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The file or directory path to delete. </param>
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteVolumeFileAsync(string volumeName, string path, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             return await DeleteVolumeFileAsync(volumeName, path, recursive, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -384,8 +347,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetVolume(string volumeName, RequestContext context)
@@ -394,8 +355,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
                 using HttpMessage message = CreateGetVolumeRequest(volumeName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -416,8 +375,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetVolumeAsync(string volumeName, RequestContext context)
@@ -426,8 +383,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
                 using HttpMessage message = CreateGetVolumeRequest(volumeName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -441,13 +396,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific volume by name. </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxGroupVolume> GetVolume(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
             Response result = GetVolume(volumeName, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxGroupVolume)result, result);
         }
@@ -455,13 +406,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific volume by name. </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxGroupVolume>> GetVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
             Response result = await GetVolumeAsync(volumeName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxGroupVolume)result, result);
         }
@@ -477,8 +424,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The directory path to list. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetVolumeFilesMetadata(string volumeName, string path, RequestContext context)
@@ -487,8 +432,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
                 using HttpMessage message = CreateGetVolumeFilesMetadataRequest(volumeName, path, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -510,8 +453,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The directory path to list. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetVolumeFilesMetadataAsync(string volumeName, string path, RequestContext context)
@@ -520,8 +461,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
                 using HttpMessage message = CreateGetVolumeFilesMetadataRequest(volumeName, path, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -536,13 +475,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The directory path to list. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<VolumeListDirectoryResult> GetVolumeFilesMetadata(string volumeName, string path = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
             Response result = GetVolumeFilesMetadata(volumeName, path, cancellationToken.ToRequestContext());
             return Response.FromValue((VolumeListDirectoryResult)result, result);
         }
@@ -551,13 +486,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The directory path to list. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<VolumeListDirectoryResult>> GetVolumeFilesMetadataAsync(string volumeName, string path = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-
             Response result = await GetVolumeFilesMetadataAsync(volumeName, path, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((VolumeListDirectoryResult)result, result);
         }
@@ -573,8 +504,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The file path to download. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DownloadVolumeFile(string volumeName, string path, RequestContext context)
@@ -583,9 +512,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateDownloadVolumeFileRequest(volumeName, path, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -607,8 +533,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The file path to download. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DownloadVolumeFileAsync(string volumeName, string path, RequestContext context)
@@ -617,9 +541,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateDownloadVolumeFileRequest(volumeName, path, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -641,8 +562,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The directory path to create. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateVolumeDirectory(string volumeName, string path, RequestContext context)
@@ -651,9 +570,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateCreateVolumeDirectoryRequest(volumeName, path, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -675,8 +591,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The directory path to create. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateVolumeDirectoryAsync(string volumeName, string path, RequestContext context)
@@ -685,9 +599,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-
                 using HttpMessage message = CreateCreateVolumeDirectoryRequest(volumeName, path, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -702,14 +613,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The directory path to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<VolumePathItem> CreateVolumeDirectory(string volumeName, string path, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             Response result = CreateVolumeDirectory(volumeName, path, cancellationToken.ToRequestContext());
             return Response.FromValue((VolumePathItem)result, result);
         }
@@ -718,14 +624,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="path"> The directory path to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<VolumePathItem>> CreateVolumeDirectoryAsync(string volumeName, string path, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
             Response result = await CreateVolumeDirectoryAsync(volumeName, path, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((VolumePathItem)result, result);
         }
@@ -741,8 +642,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ForkVolume(string volumeName, RequestContent content, RequestContext context = null)
@@ -751,9 +650,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateForkVolumeRequest(volumeName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -775,8 +671,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ForkVolumeAsync(string volumeName, RequestContent content, RequestContext context = null)
@@ -785,9 +679,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateForkVolumeRequest(volumeName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -802,14 +693,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="body"> The destination name and labels for the forked volume. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxGroupVolume> ForkVolume(string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = ForkVolume(volumeName, body, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxGroupVolume)result, result);
         }
@@ -818,14 +704,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="body"> The destination name and labels for the forked volume. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxGroupVolume>> ForkVolumeAsync(string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await ForkVolumeAsync(volumeName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxGroupVolume)result, result);
         }
@@ -841,8 +722,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateVolume(string volumeName, RequestContent content, RequestContext context = null)
@@ -851,9 +730,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateVolumeRequest(volumeName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -875,8 +751,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateVolumeAsync(string volumeName, RequestContent content, RequestContext context = null)
@@ -885,9 +759,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateVolumeRequest(volumeName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -902,14 +773,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="body"> The volume configuration to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxGroupVolume> CreateVolume(string volumeName, SandboxGroupVolume body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = CreateVolume(volumeName, body, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxGroupVolume)result, result);
         }
@@ -918,14 +784,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="body"> The volume configuration to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxGroupVolume>> CreateVolumeAsync(string volumeName, SandboxGroupVolume body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await CreateVolumeAsync(volumeName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxGroupVolume)result, result);
         }
@@ -944,8 +805,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="overwrite"> Whether to replace an existing file. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/>, <paramref name="path"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UploadVolumeFile(string volumeName, string path, RequestContent content, bool? overwrite = default, MatchConditions matchConditions = default, RequestContext context = null)
@@ -954,10 +813,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUploadVolumeFileRequest(volumeName, path, content, overwrite, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -982,8 +837,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="overwrite"> Whether to replace an existing file. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/>, <paramref name="path"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UploadVolumeFileAsync(string volumeName, string path, RequestContent content, bool? overwrite = default, MatchConditions matchConditions = default, RequestContext context = null)
@@ -992,10 +845,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-                Argument.AssertNotNullOrEmpty(path, nameof(path));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUploadVolumeFileRequest(volumeName, path, content, overwrite, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }

@@ -15,8 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.Apps.Sandbox
 {
-    /// <summary> The CredentialsClient sub-client. </summary>
-    public partial class CredentialsClient
+    internal partial class CredentialsClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -64,8 +63,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="credentialName"> Credential name assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteCredential(string credentialName, RequestContext context)
@@ -74,8 +71,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
                 using HttpMessage message = CreateDeleteCredentialRequest(credentialName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -96,8 +91,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="credentialName"> Credential name assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteCredentialAsync(string credentialName, RequestContext context)
@@ -106,8 +99,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
                 using HttpMessage message = CreateDeleteCredentialRequest(credentialName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -121,26 +112,18 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Deletes a credential in a sandbox group. </summary>
         /// <param name="credentialName"> Credential name assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteCredential(string credentialName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
             return DeleteCredential(credentialName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a credential in a sandbox group. </summary>
         /// <param name="credentialName"> Credential name assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteCredentialAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
             return await DeleteCredentialAsync(credentialName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -206,8 +189,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="credentialName"> Credential name assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCredential(string credentialName, RequestContext context)
@@ -216,8 +197,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
                 using HttpMessage message = CreateGetCredentialRequest(credentialName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -238,8 +217,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// </summary>
         /// <param name="credentialName"> Credential name assigned by the service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetCredentialAsync(string credentialName, RequestContext context)
@@ -248,8 +225,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
                 using HttpMessage message = CreateGetCredentialRequest(credentialName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -263,13 +238,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific credential by name in a sandbox group. </summary>
         /// <param name="credentialName"> Credential name assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxGroupCredential> GetCredential(string credentialName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
             Response result = GetCredential(credentialName, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxGroupCredential)result, result);
         }
@@ -277,13 +248,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Gets a specific credential by name in a sandbox group. </summary>
         /// <param name="credentialName"> Credential name assigned by the service. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxGroupCredential>> GetCredentialAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-
             Response result = await GetCredentialAsync(credentialName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxGroupCredential)result, result);
         }
@@ -299,8 +266,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="credentialName"> The credential name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetCredential(string credentialName, RequestContent content, RequestContext context = null)
@@ -309,9 +274,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetCredentialRequest(credentialName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -333,8 +295,6 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="credentialName"> The credential name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SetCredentialAsync(string credentialName, RequestContent content, RequestContext context = null)
@@ -343,9 +303,6 @@ namespace Azure.Containers.Apps.Sandbox
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetCredentialRequest(credentialName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -360,14 +317,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="credentialName"> The credential name. </param>
         /// <param name="body"> The credential configuration to store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SandboxGroupCredential> SetCredential(string credentialName, CreateSandboxGroupCredentialContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = SetCredential(credentialName, body, cancellationToken.ToRequestContext());
             return Response.FromValue((SandboxGroupCredential)result, result);
         }
@@ -376,14 +328,9 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="credentialName"> The credential name. </param>
         /// <param name="body"> The credential configuration to store. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SandboxGroupCredential>> SetCredentialAsync(string credentialName, CreateSandboxGroupCredentialContent body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
-            Argument.AssertNotNull(body, nameof(body));
-
             Response result = await SetCredentialAsync(credentialName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SandboxGroupCredential)result, result);
         }
