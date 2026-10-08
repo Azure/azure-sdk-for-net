@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetBySubscriptionAsyncCollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
+            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new ResourceGraphQueryDataAsync0CollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetBySubscriptionCollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
+            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new ResourceGraphQueryData0CollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
         }
     }
 }

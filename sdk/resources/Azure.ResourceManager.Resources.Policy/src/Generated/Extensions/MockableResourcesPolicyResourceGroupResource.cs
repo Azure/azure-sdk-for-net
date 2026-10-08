@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyAssignmentResource>(new PolicyAssignmentsGetForResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyAssignmentResource>(new PolicyAssignmentDataAsyncCollectionResultOfT(
                 PolicyAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyAssignmentData, PolicyAssignmentResource>(new PolicyAssignmentsGetForResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PolicyAssignmentData, PolicyAssignmentResource>(new PolicyAssignmentDataCollectionResultOfT(
                 PolicyAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetForResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionDataAsyncCollectionResultOfT(
                 PolicyExemptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetForResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionDataCollectionResultOfT(
                 PolicyExemptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

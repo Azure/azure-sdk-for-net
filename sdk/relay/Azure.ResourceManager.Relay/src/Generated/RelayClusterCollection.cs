@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayClusterData, RelayClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayClusterCollection.GetAll"), data => new RelayClusterResource(Client, data));
+            return new AsyncPageableWrapper<RelayClusterData, RelayClusterResource>(new RelayClusterDataAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayClusterCollection.GetAll"), data => new RelayClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayClusterData, RelayClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayClusterCollection.GetAll"), data => new RelayClusterResource(Client, data));
+            return new PageableWrapper<RelayClusterData, RelayClusterResource>(new RelayClusterDataCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RelayClusterCollection.GetAll"), data => new RelayClusterResource(Client, data));
         }
 
         /// <summary>

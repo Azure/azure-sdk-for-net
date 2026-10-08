@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             {
                 CancellationToken = cancellationToken
             };
-            return new ArmDeploymentsGetDeploymentOperationsAsyncCollectionResultOfT(
+            return new ArmDeploymentOperationAsyncCollectionResultOfT(
                 _armDeploymentsRestClient,
                 Id.Parent.ToString(),
                 Id.Name,
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             {
                 CancellationToken = cancellationToken
             };
-            return new ArmDeploymentsGetDeploymentOperationsCollectionResultOfT(
+            return new ArmDeploymentOperationCollectionResultOfT(
                 _armDeploymentsRestClient,
                 Id.Parent.ToString(),
                 Id.Name,

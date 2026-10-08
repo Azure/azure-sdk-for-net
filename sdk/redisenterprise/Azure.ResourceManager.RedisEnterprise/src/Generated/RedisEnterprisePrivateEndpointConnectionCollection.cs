@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisEnterprisePrivateEndpointConnectionData, RedisEnterprisePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RedisEnterprisePrivateEndpointConnectionData, RedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterprisePrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisEnterprisePrivateEndpointConnectionData, RedisEnterprisePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<RedisEnterprisePrivateEndpointConnectionData, RedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterprisePrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

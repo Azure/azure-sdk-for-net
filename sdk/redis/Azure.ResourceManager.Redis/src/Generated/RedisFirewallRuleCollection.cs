@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRuleDataAsyncCollectionResultOfT(
                 _redisFirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRuleDataCollectionResultOfT(
                 _redisFirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
