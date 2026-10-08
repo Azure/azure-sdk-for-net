@@ -242,8 +242,12 @@ namespace Azure.Generator.Management
                     }
                     else if (node is IdentifierNameSyntax identifier && IsCollectionResultName(identifier.Identifier.ValueText))
                     {
-                        var namespaces = GetReferenceNamespaces(identifier, model, customization);
-                        if (ReserveCollectionResultName(identifier.Identifier.ValueText, null, null, namespaces))
+                        var referencedType = model.GetSymbolInfo(identifier).Symbol as INamedTypeSymbol;
+                        var originalName = referencedType is { TypeKind: not TypeKind.Error } ? GetCodeGenTypeOriginalName(referencedType) : null;
+                        // A reference to a mapped partial shares the declaration's lookup-key ownership.
+                        // Its destination namespace must not restrict a same-name namespace move.
+                        var namespaces = originalName == identifier.Identifier.ValueText ? null : GetReferenceNamespaces(identifier, model, customization);
+                        if (ReserveCollectionResultName(identifier.Identifier.ValueText, null, originalName, namespaces))
                         {
                             _customReferencedCollectionResults.Add(identifier.Identifier.ValueText);
                         }
@@ -277,14 +281,25 @@ namespace Azure.Generator.Management
             {
                 return new HashSet<string>(StringComparer.Ordinal) { referencedType.ContainingNamespace.ToDisplayString() };
             }
-            if (identifier.Parent is QualifiedNameSyntax qualified && qualified.Right == identifier)
+            var qualifier = identifier.Parent is QualifiedNameSyntax qualified && qualified.Right == identifier ? qualified.Left : null;
+            if (qualifier is not null)
             {
-                var qualifiedNamespace = model.GetSymbolInfo(qualified.Left).Symbol as INamespaceSymbol;
+                var qualifiedNamespace = model.GetSymbolInfo(qualifier).Symbol as INamespaceSymbol;
                 if (qualifiedNamespace is not null)
                 {
                     return new HashSet<string>(StringComparer.Ordinal) { qualifiedNamespace.ToDisplayString() };
                 }
+                // The namespace can be missing along with its generated helper. An explicit global
+                // qualification still identifies it unambiguously without semantic binding.
+                if (qualifier.ToString().StartsWith("global::", StringComparison.Ordinal))
+                {
+                    return new HashSet<string>(StringComparer.Ordinal) { qualifier.ToString()["global::".Length..] };
+                }
             }
+
+            var qualifierRoot = qualifier?.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>().FirstOrDefault();
+            string? aliasTarget = null;
+            bool aliasTargetIsAbsolute = false;
 
             // Generated helpers are absent from this compilation. Keep all namespaces in scope
             // as alternatives for this reference, rather than treating each import as a new owner.
@@ -293,7 +308,10 @@ namespace Azure.Generator.Management
             {
                 if (scope is BaseNamespaceDeclarationSyntax namespaceDeclaration && model.GetDeclaredSymbol(namespaceDeclaration) is INamespaceSymbol namespaceSymbol)
                 {
-                    namespaces.Add(namespaceSymbol.ToDisplayString());
+                    for (var enclosingNamespace = namespaceSymbol; !enclosingNamespace.IsGlobalNamespace; enclosingNamespace = enclosingNamespace.ContainingNamespace)
+                    {
+                        namespaces.Add(enclosingNamespace.ToDisplayString());
+                    }
                 }
                 var usings = scope switch
                 {
@@ -313,14 +331,39 @@ namespace Azure.Generator.Management
                     AddImport(directive, customization.GetSemanticModel(tree));
                 }
             }
+            if (qualifier is not null)
+            {
+                // Preserve namespace aliases as well as ordinary relative qualification. For unresolved
+                // relative names, use the same enclosing/imported lookup scopes as unqualified names.
+                var qualifiedName = qualifier.ToString();
+                if (aliasTarget is not null)
+                {
+                    qualifiedName = aliasTarget + qualifiedName[qualifierRoot!.Identifier.Text.Length..];
+                    if (aliasTargetIsAbsolute)
+                    {
+                        return new HashSet<string>(StringComparer.Ordinal) { qualifiedName };
+                    }
+                }
+                return namespaces.Select(scope => scope.Length == 0 ? qualifiedName : $"{scope}.{qualifiedName}").ToHashSet(StringComparer.Ordinal);
+            }
             return namespaces;
 
             void AddImport(UsingDirectiveSyntax directive, SemanticModel semanticModel)
             {
-                if (directive.Alias is null && directive.StaticKeyword.RawKind == 0 && directive.Name is not null)
+                if (directive.Name is null || directive.StaticKeyword.RawKind != 0)
                 {
-                    var importedNamespace = semanticModel.GetSymbolInfo(directive.Name).Symbol as INamespaceSymbol;
-                    namespaces.Add(importedNamespace?.ToDisplayString() ?? directive.Name.ToString().Replace("global::", ""));
+                    return;
+                }
+                var importedNamespace = semanticModel.GetSymbolInfo(directive.Name).Symbol as INamespaceSymbol;
+                var importName = directive.Name.ToString();
+                if (directive.Alias is null)
+                {
+                    namespaces.Add(importedNamespace?.ToDisplayString() ?? importName.Replace("global::", ""));
+                }
+                else if (aliasTarget is null && directive.Alias.Name.Identifier.ValueText == qualifierRoot?.Identifier.ValueText)
+                {
+                    aliasTargetIsAbsolute = importedNamespace is not null || importName.StartsWith("global::", StringComparison.Ordinal);
+                    aliasTarget = importedNamespace?.ToDisplayString() ?? importName.Replace("global::", "");
                 }
             }
         }
