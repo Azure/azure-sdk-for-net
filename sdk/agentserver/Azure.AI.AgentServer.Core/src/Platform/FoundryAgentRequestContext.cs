@@ -50,10 +50,10 @@ public sealed class FoundryAgentRequestContext
     public string? UserId { get; init; }
 
     /// <summary>
-    /// The session ID sourced from the <c>FOUNDRY_AGENT_SESSION_ID</c> environment variable
-    /// at process start (via <see cref="FoundryEnvironment.SessionId"/>). This is a process-level
-    /// value that does not reflect per-request overrides (e.g. the <c>agent_session_id</c> query
-    /// parameter); <see langword="null"/> when the variable is absent.
+    /// The process-level session ID sourced from the <c>FOUNDRY_AGENT_SESSION_ID</c> environment
+    /// variable via <see cref="FoundryEnvironment.SessionId"/>. The value is refreshed after
+    /// snapshot restoration and does not reflect per-request overrides (e.g. the
+    /// <c>agent_session_id</c> query parameter); <see langword="null"/> when the variable is absent.
     /// </summary>
     public string? SessionId { get; init; }
 

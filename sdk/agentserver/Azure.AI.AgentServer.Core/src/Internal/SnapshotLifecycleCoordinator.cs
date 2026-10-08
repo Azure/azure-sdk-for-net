@@ -21,9 +21,9 @@ internal sealed class SnapshotLifecycleCoordinator
     private readonly IHostApplicationLifetime _applicationLifetime;
     private readonly ILogger<SnapshotLifecycleCoordinator> _logger;
     private readonly SemaphoreSlim _gate = new(1, 1);
-    private readonly Dictionary<string, string?> _capturedEnvironmentValues = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, string?> _capturedEnvironmentValues = new(EnvironmentVariableNames.Comparer);
     private readonly HashSet<string> _completedRestoreIds = new(StringComparer.Ordinal);
-    private HashSet<string> _appliedEnvironmentVariables = new(StringComparer.Ordinal);
+    private HashSet<string> _appliedEnvironmentVariables = new(EnvironmentVariableNames.Comparer);
     private bool _beforeSnapshotCompleted;
     private bool _environmentBaselineCaptured;
     private string? _sessionId;
@@ -137,19 +137,19 @@ internal sealed class SnapshotLifecycleCoordinator
     {
         var effectiveOverrides = new Dictionary<string, string>(
             overrides,
-            StringComparer.Ordinal)
+            EnvironmentVariableNames.Comparer)
         {
             [SessionIdEnvironmentVariable] = sessionId,
         };
 
         var updatedVariables = new HashSet<string>(
             _appliedEnvironmentVariables,
-            StringComparer.Ordinal);
+            EnvironmentVariableNames.Comparer);
         updatedVariables.UnionWith(effectiveOverrides.Keys);
 
         var previousValues = new Dictionary<string, string?>(
             updatedVariables.Count,
-            StringComparer.Ordinal);
+            EnvironmentVariableNames.Comparer);
         try
         {
             foreach (var variable in updatedVariables)
@@ -172,7 +172,7 @@ internal sealed class SnapshotLifecycleCoordinator
             FoundryEnvironment.Reload();
             _appliedEnvironmentVariables = new HashSet<string>(
                 effectiveOverrides.Keys,
-                StringComparer.Ordinal);
+                EnvironmentVariableNames.Comparer);
         }
         catch
         {

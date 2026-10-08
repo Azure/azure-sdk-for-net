@@ -215,6 +215,52 @@ public class SnapshotLifecycleEndpointTests
     }
 
     [Test]
+    public async Task AfterRestore_EnvironmentVariableNamesAreCaseInsensitiveOnWindows()
+    {
+        if (!OperatingSystem.IsWindows())
+        {
+            Assert.Ignore("Windows environment-variable semantics are case-insensitive.");
+        }
+
+        const string capturedVariable = "AGENTSERVER_TEST_CASE_SENSITIVE_NAME";
+        const string overriddenVariable = "agentserver_test_case_sensitive_name";
+        RememberEnvironment(capturedVariable);
+        Environment.SetEnvironmentVariable(capturedVariable, "captured-value");
+
+        var observedValues = new List<string?>();
+        var lifecycle = new TestSnapshotLifecycle
+        {
+            AfterRestore = (_, _) =>
+            {
+                observedValues.Add(Environment.GetEnvironmentVariable(capturedVariable));
+                return Task.CompletedTask;
+            },
+        };
+
+        await using var app = await StartAppAsync(lifecycle);
+        using var client = app.GetTestClient();
+        using var firstResponse = await PostJsonAsync(
+            client,
+            "/_agent/after-restore",
+            $$"""
+            {
+              "session_context": {
+                "session_id": "session-1",
+                "restore_id": "restore-1",
+                "session_env_overrides": {
+                  "{{overriddenVariable}}": "restored-value"
+                }
+              }
+            }
+            """);
+        using var secondResponse = await PostAfterRestoreAsync(client, "session-1", "restore-2");
+
+        Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(secondResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(observedValues, Is.EqualTo(new[] { "restored-value", "captured-value" }));
+    }
+
+    [Test]
     public async Task AfterRestore_RestoresBaselineWhenVariableIsFirstOverriddenByLaterRestore()
     {
         const string customVariable = "AGENTSERVER_TEST_LATE_OVERRIDE";
