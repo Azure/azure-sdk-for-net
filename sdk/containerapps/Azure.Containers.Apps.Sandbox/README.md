@@ -74,18 +74,17 @@ Sandbox file, volume file, and content package upload convenience methods accept
 
 ## Examples
 
-### Create and delete a sandbox
+### Create a sandbox, execute a command, and delete it
 
 The following example also uses types from `Azure.Containers.Apps.Sandbox.Models`.
 
-```C# Snippet:Azure_Containers_Apps_Sandbox_CreateAndDeleteAsync
+```C# Snippet:Azure_Containers_Apps_Sandbox_CreateExecuteAndDeleteAsync
 var sandboxGroup = new SandboxGroupClient(
     new Uri("<sandbox-group-endpoint>"),
     "<subscription-id>",
     "<resource-group-name>",
     "<sandbox-group-name>",
     new DefaultAzureCredential());
-SandboxesClient sandboxes = sandboxGroup.GetSandboxesClient();
 CreateSandboxContent content = new CreateSandboxContent
 {
     SourcesRef = new SandboxSource
@@ -95,15 +94,21 @@ CreateSandboxContent content = new CreateSandboxContent
     Resources = new SandboxResources("1000m", "2048Mi")
 };
 
-SandboxProperties created = (await sandboxes.CreateSandboxAsync(content)).Value;
+SandboxResource sandbox = (await sandboxGroup.CreateSandboxAsync(content)).Value;
 try
 {
-    SandboxProperties current = (await sandboxes.GetPropertiesAsync(created.Id)).Value;
-    Console.WriteLine($"Sandbox {current.Id}: {current.State}");
+    ExecuteSandboxCommandContent command = new ExecuteSandboxCommandContent("/bin/echo");
+    command.Arguments.Add("sandbox-command");
+    SandboxExecuteCommandResult result = (await sandbox.ExecuteCommandAsync(command)).Value;
+    if (result.ExitCode != 0)
+    {
+        throw new InvalidOperationException($"Command failed with exit code {result.ExitCode}: {result.StandardError}");
+    }
+    Console.WriteLine(result.StandardOutput);
 }
 finally
 {
-    await sandboxes.DeleteAsync(created.Id);
+    await sandbox.DeleteAsync();
 }
 ```
 

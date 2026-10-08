@@ -12,5 +12,5 @@ description: Samples for the Azure Container Apps Sandbox client library.
 
 Before running these samples, create a sandbox group and grant your identity access to it. See the [getting started guide](../README.md#getting-started) for prerequisites and authentication.
 
-- [Create, inspect, and delete a sandbox](Sample1_CreateAndDeleteSandbox.md)
-- [Create, inspect, and delete a sandbox asynchronously](Sample1_CreateAndDeleteSandboxAsync.md)
+- [Create a sandbox, execute a command, and delete it](Sample1_CreateExecuteAndDeleteSandbox.md)
+- [Create a sandbox, execute a command, and delete it asynchronously](Sample1_CreateExecuteAndDeleteSandboxAsync.md)
