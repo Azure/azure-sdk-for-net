@@ -135,7 +135,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentOptimizationInlineDatasetInput(@type, additionalBinaryDataProperties, items);
+            return new AgentOptimizationInlineDatasetInput(@type, additionalBinaryDataProperties, items ?? new ChangeTrackingList<AgentOptimizationDatasetItem>());
         }
     }
 }

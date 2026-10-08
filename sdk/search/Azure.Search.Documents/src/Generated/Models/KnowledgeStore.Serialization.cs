@@ -186,7 +186,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KnowledgeStore(storageConnectionString, projections, identity, parameters, additionalBinaryDataProperties);
+            return new KnowledgeStore(storageConnectionString, projections ?? new ChangeTrackingList<KnowledgeStoreProjection>(), identity, parameters, additionalBinaryDataProperties);
         }
     }
 }

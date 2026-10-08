@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string RunningValue = "Running";
         private const string CompletedValue = "Completed";
         private const string FailedValue = "Failed";
+        private const string CompleteValue = "Complete";
 
         /// <summary> Initializes a new instance of <see cref="OperationStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,6 +38,9 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Gets the Failed. </summary>
         public static OperationStatusType Failed { get; } = new OperationStatusType(FailedValue);
+
+        /// <summary> Gets the Complete. </summary>
+        public static OperationStatusType Complete { get; } = new OperationStatusType(CompleteValue);
 
         /// <summary> Determines if two <see cref="OperationStatusType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

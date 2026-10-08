@@ -169,7 +169,7 @@ namespace Azure.AI.Language.Text.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata(value, nextLink, additionalBinaryDataProperties);
+            return new PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata(value ?? new ChangeTrackingList<TextAuthoringAssignedProjectDeploymentsMetadata>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

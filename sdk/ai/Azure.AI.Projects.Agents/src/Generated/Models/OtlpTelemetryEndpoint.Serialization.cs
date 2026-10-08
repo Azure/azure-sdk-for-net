@@ -156,7 +156,7 @@ namespace Azure.AI.Projects.Agents
             }
             return new OtlpTelemetryEndpoint(
                 kind,
-                exportedDataTypes,
+                exportedDataTypes ?? new ChangeTrackingList<ExportedDataTypes>(),
                 authentication,
                 additionalBinaryDataProperties,
                 endpoint,
