@@ -4,7 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
+using System.Diagnostics.CodeAnalysis;
+using OpenAI.Containers;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -25,6 +26,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="memoryLimit"></param>
         /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
         /// <param name="networkPolicy"> The network access policy for the container. When omitted, the service defaults to disabled outbound network access. </param>
+        [Experimental("AAIP002")]
         internal ToolboxShellContainerAutoEnvironment(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> fileIds, ContainerMemoryLimit? memoryLimit, IList<ContainerSkill> skills, ToolboxShellNetworkPolicy networkPolicy) : base(@type, additionalBinaryDataProperties)
         {
             FileIds = fileIds;
@@ -37,6 +39,7 @@ namespace Azure.AI.Projects.Agents
         public IList<string> FileIds { get; }
 
         /// <summary> Gets or sets the MemoryLimit. </summary>
+        [Experimental("AAIP002")]
         public ContainerMemoryLimit? MemoryLimit { get; set; }
 
         /// <summary> An optional list of skills referenced by id or inline data. </summary>

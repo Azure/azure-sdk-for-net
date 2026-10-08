@@ -2,77 +2,111 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Chat;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 #pragma warning disable AAIP001
+#pragma warning disable SCME0006
 
 public class Sample_AgentsOptimizationCandidates : SamplesBase
 {
-    #region Snippet:Sample_OptimizationCriterion_AgentsOptimizationCandidates
-    private readonly AgentOptimizationDatasetCriterion _criterion = new(
-        name: "Groundedness",
-        instruction: """
-        You are a Groundedness Evaluator.
-
-        Your task is to evaluate how well the given response is grounded in the provided ground truth.  
-        Groundedness means the response’s statements are factually supported by the ground truth.  
-        Evaluate factual alignment only — ignore grammar, fluency, or completeness.
-        
-        ---
-        
-        ### Input:
-        Query:
-        {{query}}
-        
-        Response:
-        {{response}}
-        
-        Ground Truth:
-        {{ground_truth}}
-        
-        ---
-        
-        ### Scoring Scale (1–5):
-        5 → Fully grounded. All claims supported by ground truth.  
-        4 → Mostly grounded. Minor unsupported details.  
-        3 → Partially grounded. About half the claims supported.  
-        2 → Mostly ungrounded. Only a few details supported.  
-        1 → Not grounded. Almost all information unsupported.
-        
-        ---
-
-        ### Output Format (JSON):
-        {
-            "result": <integer from 1 to 5>,
-            "reason": "<brief explanation for the score>"
-        }
-        """
-    );
-    #endregion
     #region Snippet:Sample_Dataset_AgentsOptimizationCandidates
-    private AgentOptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
+    private static AgentOptimizationTargetCompletionEvaluationSet GetDataset(int start, int itemNumber)
     {
-        List<AgentOptimizationDatasetItem> items = [];
+        List<AgentOptimizationTargetCompletionTestCase> items = [];
         for (int i = start; i < start + itemNumber; i++)
         {
-            items.Add(new AgentOptimizationDatasetItem()
+            items.Add(new AgentOptimizationTargetCompletionTestCase()
             {
                 Query = $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.",
-                GroundTruth = $"The answer is {(42 + i * 2)}",
-                Criteria = { _criterion }
+                GroundTruth = $"The answer is {42 + i * 2}",
             });
         }
-        return new(items);
+        return new(new AgentOptimizationTargetCompletionInlineDataSource(items));
     }
     #endregion
-
+    #region Snippet:Sample_PrintMutations_AgentsOptimizationCandidates
+    private static void DisplayMutations(IList<AgentOptimizationMutation> mutations)
+    {
+        if (mutations.Count > 0)
+        {
+            Console.WriteLine("Mutations:");
+            foreach (AgentOptimizationMutation mutation in mutations)
+            {
+                if (mutation is AgentOptimizationInstructionsMutation instructionMutation)
+                {
+                    Console.WriteLine($"    Instruction mutation: {instructionMutation.Value}");
+                }
+                else if (mutation is AgentOptimizationSkillsMutation skillsMutation)
+                {
+                    Console.WriteLine("    Skill mutations:");
+                    foreach (AgentOptimizationSkill skillOptimization in skillsMutation.Value)
+                    {
+                        Console.WriteLine($"        Skill name: {skillOptimization.Name}, skill body: {skillOptimization.Body}");
+                    }
+                }
+                else if (mutation is AgentOptimizationToolsMutation toolsMutation)
+                {
+                    Console.WriteLine("    Tool mutations:");
+                    foreach (ChatTool tool in toolsMutation.Value)
+                    {
+                        Console.WriteLine($"        Tools mutation: {tool.FunctionName}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("    Unknown mutation type.");
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("<No mutations, baseline>");
+        }
+    }
+    #endregion
+    #region Snippet:Sample_AgentDefinition_AgentsOptimizationCandidates
+    private static DeclarativeAgentDefinition GetAgentDefinition(string modelDeploymentName) => new(model: modelDeploymentName)
+        {
+            // Start from bad prompt.
+            Instructions = "You are a prompt agent, who always give wrong answers.",
+            Tools =
+            {
+                new FunctionTool(
+                    functionName: "sum_numbers",
+                    functionParameters: BinaryData.FromObjectAsJson(
+                        new
+                        {
+                            type = "object",
+                            properties = new
+                            {
+                                First = new
+                                {
+                                    type = "number",
+                                    description = "First addend"
+                                },
+                                Second = new
+                                {
+                                    type = "number",
+                                    description = "Second addend"
+                                }
+                            },
+                            required = new[] { "First", "Second"},
+                            additionalProperties = false
+                        }
+                    ),
+                    strictModeEnabled: false
+                ),
+            },
+    };
+    #endregion
     [Test]
     [AsyncOnly]
     public async Task AgentsOptimizationCandidatesAsync()
@@ -89,122 +123,81 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
 #endif
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
+        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidatesClient();
         #endregion
-
         #region Snippet:Sample_CreateAgent_AgentsOptimizationCandidates_Async
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            // Start from bad prompt.
-            Instructions = "You are a prompt agent, who always give wrong answers."
-        };
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
             agentName: "cs-e2e-tests-client",
-            options: new(agentDefinition));
+            options: new(GetAgentDefinition(modelDeploymentName)));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Async
-        AgentOptimizationJob job = new()
-        {
-            Inputs = new(
-                agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
-                {
-                    AgentVersion = agentVersion.Version
-                },
-                trainDataset: GetDataset(0, 7),
-                evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
+        AgentOptimizationConfiguration conf = new(
+            evaluationConfiguration: new(
+                trainingSet: GetDataset(0, 7),
+                evaluators: [new AgentOptimizationEvaluator(name: "builtin.meteor_score")],
+                evaluationModel: new(modelDeploymentName)
             )
             {
-                ValidationDataset = GetDataset(7, 3),
-                Options = new AgentOptimizationOptions()
-                {
-                    OptimizationModel = modelDeploymentName,
-                    EvalModel = modelDeploymentName,
-                    MaxCandidates = 3,
-                    OptimizationConfig =
-                    {
-                        // Start from bad prompt.
-                        {"system_prompt", BinaryData.FromString(JsonSerializer.Serialize("You are a prompt agent, who always give wrong answers.")) },
-                        {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                        {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) },
-                        {"skills", BinaryData.FromObjectAsJson(new[]
-                            {new {
-                                name = "add two numbers",
-                                description = "Adds two numbers",
-                                body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
-                            }}
-                        )},
-                        {"tools",  BinaryData.FromObjectAsJson(new[]{
-                            new
-                            {
-                                type = "function",
-                                function = new
-                                {
-                                    name = "sum_numbers",
-                                    description = "Sum two numbers",
-                                    parameters = new
-                                    {
-                                        type = "object",
-                                        properties = new
-                                        {
-                                            First = new
-                                            {
-                                                type = "number",
-                                                description = "First addend"
-                                            },
-                                            Second = new
-                                            {
-                                                type = "number",
-                                                description = "Second addend"
-                                            }
-                                        },
-                                        required = new[] { "First", "Second"},
-                                        additionalProperties = false
-                                    }
-                                }
-                            }
-                        })}
-                    }
-                }
+                ValidationSet = GetDataset(7, 3),
+            },
+            candidateSearchConfiguration: new()
+            {
+                MaxCandidates = 3,
+            },
+            agentOptimizationSpace: new()
+            {
+                TargetAttributes = { TargetAttribute.Skills, TargetAttribute.Instructions, TargetAttribute.Model },
+                ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
             }
+        );
+        AgentOptimizationJob job = new()
+        {
+            OptimizationConfiguration = conf,
+            DisplayName = "Sample agent optimization",
+            TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(name: agentVersion.Name)
+            {
+                Version = agentVersion.Version,
+            },
+            OptimizationModelConfiguration = new(modelDeploymentName)
         };
-        AgentOptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+        OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
+        AgentOptimizationJob submittedJob = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
         Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Async
         int reportedWarnings = 0;
-        while (submittedJob.Status != AgentsJobStatus.Failed && submittedJob.Status != AgentsJobStatus.Succeeded)
-        {
-            await Task.Delay(500);
-            submittedJob = await jobsClient.GetAsync(submittedJob.Id, cancellationToken: default);
-            if (submittedJob.Warnings.Count > reportedWarnings)
-            {
-                Console.WriteLine($"    {submittedJob.Id}: {submittedJob.Status}");
-                for (int i = reportedWarnings; i < submittedJob.Warnings.Count; i++)
-                {
-                    Console.WriteLine($"    Warning in job {submittedJob.Id}: {submittedJob.Warnings[i]}");
-                }
-            }
-        }
         if (submittedJob.Status == AgentsJobStatus.Failed)
         {
             throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
         }
+        if (submittedJob.Warnings.Count > reportedWarnings)
+        {
+            Console.WriteLine($"    {submittedJob.Id}: {submittedJob.Status}");
+            for (int i = reportedWarnings; i < submittedJob.Warnings.Count; i++)
+            {
+                Console.WriteLine($"    Warning in job {submittedJob.Id}: {submittedJob.Warnings[i]}");
+            }
+        }
         #endregion
         #region Snippet:Sample_ListCandidates_AgentsOptimizationCandidates
-        foreach (AgentOptimizationCandidate candidate in submittedJob.Result.Candidates)
+        await foreach (AgentOptimizationCandidate candidate in candidatesClient.GetCandidatesAsync(jobId: submittedJob.Id, expand: [AgentOptimizationCandidateExpand.Mutations]))
         {
             Console.WriteLine("======================================================");
-            Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");
-            if (candidate.Mutations.Count == 0)
+            if (candidate.Status == AgentOptimizationCandidateStatus.Failed)
             {
-                Console.WriteLine("<No mutations, baseline>");
+                Console.WriteLine($"The candidate {candidate.CandidateId} has failed.");
             }
             else
             {
-                Console.WriteLine("Mutations:");
-                foreach (KeyValuePair<string, BinaryData> mutation in candidate.Mutations)
+                Console.WriteLine($"Candidate ID: {candidate.CandidateId}, Candidate name: {candidate.Name ?? "<no name>"}, Candidate evaluation ID:  {candidate.Evaluation.EvalId}, Score: {candidate.Evaluation.Score}.");
+                if (candidate.Output is AgentOptimizationAgentCandidateOutput agentOutput)
                 {
-                    Console.WriteLine($"    {mutation.Key}: {mutation.Value}");
+                    DisplayMutations(agentOutput.Mutations);
+                }
+                else if (candidate.Output != null)
+                {
+                    throw new InvalidOperationException($"The candidate {candidate.CandidateId} has unexpected output: {candidate.Output.Type}");
                 }
             }
             Console.WriteLine("======================================================");
@@ -231,121 +224,85 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var anotherModelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME2;
 #endif
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentAdministrationClientOptions opts = new();
+        opts.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: opts);
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
+        AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizationJobCandidatesClient();
 
         #region Snippet:Sample_CreateAgent_AgentsOptimizationCandidates_Sync
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            // Start from bad prompt.
-            Instructions = "You are a prompt agent, who always give wrong answers."
-        };
         ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
             agentName: "myAgent1",
-            options: new(agentDefinition));
+            options: new(GetAgentDefinition(modelDeploymentName)));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Sync
-        AgentOptimizationJob job = new()
-        {
-            Inputs = new(
-                agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
-                {
-                    AgentVersion = agentVersion.Version
-                },
-                trainDataset: GetDataset(0, 7),
-                evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
+        AgentOptimizationConfiguration conf = new(
+            evaluationConfiguration: new(
+                trainingSet: GetDataset(0, 7),
+                evaluators: [new AgentOptimizationEvaluator(name: "builtin.meteor_score")],
+                evaluationModel: new(modelDeploymentName)
             )
             {
-                ValidationDataset = GetDataset(7, 3),
-                Options = new AgentOptimizationOptions()
-                {
-                    OptimizationModel = modelDeploymentName,
-                    EvalModel = modelDeploymentName,
-                    MaxCandidates = 3,
-                    OptimizationConfig =
-                    {
-                        {"system_prompt", BinaryData.FromString(JsonSerializer.Serialize("You are a prompt agent, who always give wrong answers.")) },
-                        {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                        {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) },
-                        {"skills", BinaryData.FromObjectAsJson(new[]
-                            {new {
-                                name = "add two numbers",
-                                description = "Adds two numbers",
-                                body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
-                            }}
-                        )},
-                        {"tools",  BinaryData.FromObjectAsJson(new[]{
-                            new
-                            {
-                                type = "function",
-                                function = new
-                                {
-                                    name = "sum_numbers",
-                                    description = "Sum two numbers",
-                                    parameters = new
-                                    {
-                                        type = "object",
-                                        properties = new
-                                        {
-                                            First = new
-                                            {
-                                                type = "number",
-                                                description = "First addend"
-                                            },
-                                            Second = new
-                                            {
-                                                type = "number",
-                                                description = "Second addend"
-                                            }
-                                        },
-                                        required = new[] { "First", "Second"},
-                                        additionalProperties = false
-                                    }
-                                }
-                            }
-                        })}
-                    }
-                }
+                ValidationSet = GetDataset(7, 3),
+            },
+            candidateSearchConfiguration: new()
+            {
+                MaxCandidates = 3,
+            },
+            agentOptimizationSpace: new()
+            {
+                //TargetAttributes = { TargetAttribute.Skills, TargetAttribute.Instructions, TargetAttribute.Model },
+                TargetAttributes = { TargetAttribute.Instructions,  TargetAttribute.Tools, TargetAttribute.Model },
+                ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
             }
+        );
+        AgentOptimizationJob job = new()
+        {
+            OptimizationConfiguration = conf,
+            DisplayName = "Sample agent optimization",
+            TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(name: agentVersion.Name)
+            {
+                Version = agentVersion.Version,
+            },
+            OptimizationModelConfiguration = new(modelDeploymentName)
         };
-        AgentOptimizationJob submittedJob = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
+        OperationResult jobOperation = jobsClient.Create(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
+        AgentOptimizationJob submittedJob = jobOperation.UpdateStatus().ToProjectAgentsResult<AgentOptimizationJob>();
         Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Sync
         int reportedWarnings = 0;
-        while (submittedJob.Status != AgentsJobStatus.Failed && submittedJob.Status != AgentsJobStatus.Succeeded)
-        {
-            Thread.Sleep(500);
-            submittedJob = jobsClient.Get(submittedJob.Id, cancellationToken: default);
-            if (submittedJob.Warnings.Count > reportedWarnings)
-            {
-                Console.WriteLine($"    {submittedJob.Id}: {submittedJob.Status}");
-                for (int i = reportedWarnings; i < submittedJob.Warnings.Count; i++)
-                {
-                    Console.WriteLine($"    Warning in job {submittedJob.Id}: {submittedJob.Warnings[i]}");
-                }
-            }
-        }
         if (submittedJob.Status == AgentsJobStatus.Failed)
         {
             throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
         }
+        if (submittedJob.Warnings.Count > reportedWarnings)
+        {
+            Console.WriteLine($"    {submittedJob.Id}: {submittedJob.Status}");
+            for (int i = reportedWarnings; i < submittedJob.Warnings.Count; i++)
+            {
+                Console.WriteLine($"    Warning in job {submittedJob.Id}: {submittedJob.Warnings[i]}");
+            }
+        }
         #endregion
-        foreach (AgentOptimizationCandidate candidate in submittedJob.Result.Candidates)
+        foreach (AgentOptimizationCandidate candidate in candidatesClient.GetCandidates(jobId: submittedJob.Id, expand: [AgentOptimizationCandidateExpand.Mutations]))
         {
             Console.WriteLine("======================================================");
-            Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");
-            if (candidate.Mutations.Count == 0)
+            if (candidate.Status == AgentOptimizationCandidateStatus.Failed)
             {
-                Console.WriteLine("<No mutations, baseline>");
+                Console.WriteLine($"The candidate {candidate.CandidateId} has failed.");
             }
             else
             {
-                Console.WriteLine("Mutations:");
-                foreach (KeyValuePair<string, BinaryData> mutation in candidate.Mutations)
+                Console.WriteLine($"Candidate ID: {candidate.CandidateId}, Candidate name: {candidate.Name ?? "<no name>"}, Candidate evaluation ID:  {candidate.Evaluation.EvalId}, Score: {candidate.Evaluation.Score}.");
+                if (candidate.Output is AgentOptimizationAgentCandidateOutput agentOutput)
                 {
-                    Console.WriteLine($"    {mutation.Key}: {mutation.Value}");
+                    DisplayMutations(agentOutput.Mutations);
+                }
+                else if (candidate.Output != null)
+                {
+                    throw new InvalidOperationException($"The candidate {candidate.CandidateId} has unexpected output: {candidate.Output.Type}");
                 }
             }
             Console.WriteLine("======================================================");

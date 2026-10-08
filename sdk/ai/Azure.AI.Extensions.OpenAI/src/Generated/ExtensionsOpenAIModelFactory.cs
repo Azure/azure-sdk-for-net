@@ -340,7 +340,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static BrowserAutomationToolOptions BrowserAutomationToolOptions(BrowserAutomationToolConnectionOptions connection = default)
         {
             return new BrowserAutomationToolOptions(connection, additionalBinaryDataProperties: null);
@@ -349,10 +348,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
         /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolConnectionOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static BrowserAutomationToolConnectionOptions BrowserAutomationToolConnectionOptions(string projectConnectionId = default)
         {
             return new BrowserAutomationToolConnectionOptions(projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <param name="browserAutomation"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="OpenAI.BrowserAutomationTool"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static BrowserAutomationTool BrowserAutomationTool(BrowserAutomationToolOptions browserAutomation = default)
+        {
+            return new BrowserAutomationTool("browser_automation", browserAutomation, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
@@ -891,7 +898,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="arguments"></param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCall"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
+        [Experimental("AAIP002")]
         public static BrowserAutomationToolCall BrowserAutomationToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
             return new BrowserAutomationToolCall(
@@ -914,7 +921,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="output"></param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCallOutput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
+        [Experimental("AAIP002")]
         public static BrowserAutomationToolCallOutput BrowserAutomationToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new BrowserAutomationToolCallOutput(

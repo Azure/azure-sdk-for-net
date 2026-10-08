@@ -138,9 +138,7 @@ public class Sample_DataGenerationJob : SamplesBase
         string endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         string modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AIProjectClientOptions opts = new();
-        opts.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
-        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential(), options: opts);
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         DataGenerationJobOutputOptions outputOptions = new()
         {
             Name = "dataset-generation-eval-sample",

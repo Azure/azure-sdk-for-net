@@ -51,6 +51,7 @@ namespace Azure.AI.Projects.Tests
         public string MCP_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(MCP_PROJECT_CONNECTION_NAME));
         public string OPENAPI_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(OPENAPI_PROJECT_CONNECTION_NAME));
         public string PLAYWRIGHT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_CONNECTION_ID));
+        public string PLAYWRIGHT_MCP_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_MCP_CONNECTION_NAME));
         public string OPENAPI_PROJECT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(OPENAPI_PROJECT_CONNECTION_ID));
         public string SHAREPOINT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(SHAREPOINT_CONNECTION_ID));
         public string FABRIC_CONNECTION_ID => GetRecordedOptionalVariable(nameof(FABRIC_CONNECTION_ID));

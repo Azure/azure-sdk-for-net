@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -12,64 +12,23 @@ using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 #pragma warning disable AAIP001
+#pragma warning disable SCME0006
 
 public class Sample_AgentsOptimizationCRUD : SamplesBase
 {
-    #region Snippet:Sample_OptimizationCriterion_AgentsOptimization
-    private readonly AgentOptimizationDatasetCriterion _criterion = new(
-        name: "Groundedness",
-        instruction: """
-        You are a Groundedness Evaluator.
-
-        Your task is to evaluate how well the given response is grounded in the provided ground truth.  
-        Groundedness means the response’s statements are factually supported by the ground truth.  
-        Evaluate factual alignment only — ignore grammar, fluency, or completeness.
-        
-        ---
-        
-        ### Input:
-        Query:
-        {{query}}
-        
-        Response:
-        {{response}}
-        
-        Ground Truth:
-        {{ground_truth}}
-        
-        ---
-        
-        ### Scoring Scale (1–5):
-        5 → Fully grounded. All claims supported by ground truth.  
-        4 → Mostly grounded. Minor unsupported details.  
-        3 → Partially grounded. About half the claims supported.  
-        2 → Mostly ungrounded. Only a few details supported.  
-        1 → Not grounded. Almost all information unsupported.
-        
-        ---
-
-        ### Output Format (JSON):
-        {
-            "result": <integer from 1 to 5>,
-            "reason": "<brief explanation for the score>"
-        }
-        """
-    );
-    #endregion
     #region Snippet:Sample_Dataset_AgentsOptimization
-    private AgentOptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
+    private static AgentOptimizationTargetCompletionEvaluationSet GetDataset(int start, int itemNumber)
     {
-        List<AgentOptimizationDatasetItem> items = [];
+        List<AgentOptimizationTargetCompletionTestCase> items = [];
         for (int i = start; i < start + itemNumber; i++)
         {
-            items.Add(new AgentOptimizationDatasetItem()
+            items.Add(new AgentOptimizationTargetCompletionTestCase()
             {
                 Query = $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.",
-                GroundTruth = $"The answer is {(42 + i * 2)}",
-                Criteria = { _criterion }
+                GroundTruth = $"The answer is {42 + i * 2}",
             });
         }
-        return new(items);
+        return new(new AgentOptimizationTargetCompletionInlineDataSource(items));
     }
     #endregion
 
@@ -102,61 +61,63 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateOptimizationJob_AgentsOptimization_Async
+        AgentOptimizationConfiguration conf = new(
+            evaluationConfiguration: new(
+                trainingSet: GetDataset(0, 7),
+                evaluators: [new AgentOptimizationEvaluator(name: "builtin.meteor_score")],
+                evaluationModel: new(modelDeploymentName)
+                )
+            {
+                ValidationSet = GetDataset(7, 3),
+            },
+            candidateSearchConfiguration: new()
+            {
+                MaxCandidates = 3,
+            },
+            agentOptimizationSpace: new()
+            {
+                TargetAttributes = { TargetAttribute.Model },
+                ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
+            }
+        );
         AgentOptimizationJob job = new()
         {
-            Inputs = new(
-                agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
-                {
-                    AgentVersion = agentVersion.Version
-                },
-                trainDataset: GetDataset(0, 7),
-                evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
-            )
+            OptimizationConfiguration = conf,
+            DisplayName = "Sample agent optimization",
+            TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(name: agentVersion.Name)
             {
-                ValidationDataset = GetDataset(7, 3),
-                Options = new AgentOptimizationOptions()
-                {
-                    OptimizationModel = modelDeploymentName,
-                    EvalModel = modelDeploymentName,
-                    MaxCandidates = 3,
-                    OptimizationConfig =
-                    {
-                        {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                        {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) }
-                    }
-                }
-            }
+                Version = agentVersion.Version,
+            },
+            OptimizationModelConfiguration = new(modelDeploymentName)
         };
-        AgentOptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+        OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
+        AgentOptimizationJob submittedJob1 = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
         Console.WriteLine($"Submitted optimization job: {submittedJob1.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimization_Async
         int reportedWarnings = 0;
-        while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded)
-        {
-            await Task.Delay(500);
-            submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
-            if (submittedJob1.Warnings.Count > reportedWarnings)
-            {
-                Console.WriteLine($"    {submittedJob1.Id}: {submittedJob1.Status}");
-                for (int i = reportedWarnings; i < submittedJob1.Warnings.Count; i++)
-                {
-                    Console.WriteLine($"    Warning in job {submittedJob1.Id}: {submittedJob1.Warnings[i]}");
-                }
-            }
-        }
         if (submittedJob1.Status == AgentsJobStatus.Failed)
         {
             throw new InvalidOperationException($"The job {submittedJob1.Id} has failed.");
         }
+        if (submittedJob1.Warnings.Count > reportedWarnings)
+        {
+            Console.WriteLine($"    {submittedJob1.Id}: {submittedJob1.Status}");
+            for (int i = reportedWarnings; i < submittedJob1.Warnings.Count; i++)
+            {
+                Console.WriteLine($"    Warning in job {submittedJob1.Id}: {submittedJob1.Warnings[i]}");
+            }
+        }
         #endregion
         #region Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Async
-        AgentOptimizationJob submittedJob2 = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+        jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: false, job: job, operationId: null, cancellationToken: default);
+        AgentOptimizationJob submittedJob2 = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
         Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
         AgentOptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
         while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
-            cancelledJob = await jobsClient.GetAsync(cancelledJob.Id, cancellationToken: default);
+            await Task.Delay(500);
+            cancelledJob = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
         }
         if (cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
@@ -166,7 +127,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Async
         Console.WriteLine("Listing optimization jobs:");
-        await foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAllAsync())
+        await foreach (AgentOptimizationJob oneJob in jobsClient.GetAllAsync())
         {
             Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
         }
@@ -174,8 +135,20 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #region Snippet:Sample_Delete_AgentsOptimization_Async
         await jobsClient.DeleteAsync(jobId: submittedJob1.Id, cancellationToken: default);
         Console.WriteLine($"Deleted job {submittedJob1.Id}.");
-        await jobsClient.DeleteAsync(jobId: submittedJob2.Id, cancellationToken: default);
-        Console.WriteLine($"Deleted job {submittedJob2.Id}.");
+        // The deletion of cancelled job may not happen immediately after the cancellation.
+        DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(5);
+        bool wasDeleted = false;
+        while (DateTime.UtcNow < deadline)
+        {
+            try
+            {
+                await jobsClient.DeleteAsync(jobId: submittedJob2.Id, cancellationToken: default);
+                wasDeleted = true;
+                break;
+            }
+            catch { }
+        }
+        Console.WriteLine($"The job {submittedJob2.Id} was{(wasDeleted ? "": " not")}.");
         await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Console.WriteLine($"Agent deleted (name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
@@ -194,7 +167,9 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var anotherModelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME2;
 #endif
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentAdministrationClientOptions opts = new();
+        opts.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: opts);
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 
         #region Snippet:Sample_CreateAgent_AgentsOptimization_Sync
@@ -208,32 +183,40 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateOptimizationJob_AgentsOptimization_Sync
+        AgentOptimizationConfiguration conf = new(
+            evaluationConfiguration: new(
+                trainingSet: GetDataset(0, 7),
+                evaluators: [ new AgentOptimizationEvaluator(name: "builtin.meteor_score") ],
+                evaluationModel: new(modelDeploymentName)
+                )
+            {
+                ValidationSet = GetDataset(7, 3),
+            },
+            candidateSearchConfiguration: new()
+            {
+                MaxCandidates = 3,
+            },
+            agentOptimizationSpace: new()
+            {
+                TargetAttributes = { TargetAttribute.Model },
+                ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
+            }
+        );
         AgentOptimizationJob job = new()
         {
-            Inputs = new(
-                agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
-                {
-                    AgentVersion = agentVersion.Version
-                },
-                trainDataset: GetDataset(0, 7),
-                evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
-            )
+            OptimizationConfiguration = conf,
+            DisplayName = "Sample agent optimization",
+            TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(name: agentVersion.Name)
             {
-                ValidationDataset = GetDataset(7, 3),
-                Options = new AgentOptimizationOptions()
-                {
-                    OptimizationModel = modelDeploymentName,
-                    EvalModel = modelDeploymentName,
-                    MaxCandidates = 3,
-                    OptimizationConfig =
-                    {
-                        {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                        {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) }
-                    }
-                }
-            }
+                Version = agentVersion.Version,
+            },
+            OptimizationModelConfiguration = new(modelDeploymentName)
         };
-        AgentOptimizationJob submittedJob1 = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
+        //
+
+        //
+        OperationResult jobOperation = jobsClient.Create(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
+        AgentOptimizationJob submittedJob1 = jobOperation.UpdateStatus().ToProjectAgentsResult<AgentOptimizationJob>();
         Console.WriteLine($"Submitted optimization job: {submittedJob1.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimization_Sync
@@ -257,12 +240,14 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         }
         #endregion
         #region Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Sync
-        AgentOptimizationJob submittedJob2 = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
+        jobOperation = jobsClient.Create(waitUntilCompleted: false, job: job, operationId: null, cancellationToken: default);
+        AgentOptimizationJob submittedJob2 = jobOperation.UpdateStatus().ToProjectAgentsResult<AgentOptimizationJob>();
         Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
         AgentOptimizationJob cancelledJob = jobsClient.Cancel(jobId: submittedJob2.Id, cancellationToken: default);
         while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
-            cancelledJob = jobsClient.Get(cancelledJob.Id, cancellationToken: default);
+            Thread.Sleep(500);
+            cancelledJob = jobOperation.UpdateStatus().ToProjectAgentsResult<AgentOptimizationJob>();
         }
         if (cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
@@ -272,7 +257,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Sync
         Console.WriteLine("Listing optimization jobs:");
-        foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAll())
+        foreach (AgentOptimizationJob oneJob in jobsClient.GetAll())
         {
             Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
         }
@@ -280,8 +265,19 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #region Snippet:Sample_Delete_AgentsOptimization_Sync
         jobsClient.Delete(jobId: submittedJob1.Id, cancellationToken: default);
         Console.WriteLine($"Deleted job {submittedJob1.Id}.");
-        jobsClient.Delete(jobId: submittedJob2.Id, cancellationToken: default);
-        Console.WriteLine($"Deleted job {submittedJob2.Id}.");
+        DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(5);
+        bool wasDeleted = false;
+        while (DateTime.UtcNow < deadline)
+        {
+            try
+            {
+                jobsClient.Delete(jobId: submittedJob2.Id, cancellationToken: default);
+                wasDeleted = true;
+                break;
+            }
+            catch { }
+        }
+        Console.WriteLine($"The job {submittedJob2.Id} was{(wasDeleted ? "" : " not")}.");
         agentsClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Console.WriteLine($"Agent deleted (name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion

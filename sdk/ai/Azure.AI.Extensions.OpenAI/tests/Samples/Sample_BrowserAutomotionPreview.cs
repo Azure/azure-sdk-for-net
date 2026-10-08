@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
@@ -18,6 +19,9 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
     #region Snippet:Sample_ParseResponse_BrowserAutomotionPreview
     private static void ParseResponse(StreamingResponseUpdate streamResponse)
     {
+        StringBuilder errorMessage = new();
+        string errorCode = default;
+        bool hasError = false;
         if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
         {
             Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
@@ -32,7 +36,19 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
         }
         else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
         {
-            throw new InvalidOperationException($"The stream has failed with the error: {errorUpdate.Message}");
+            hasError = true;
+            if (!string.IsNullOrEmpty(errorUpdate.Code))
+            {
+                errorCode = errorUpdate.Code;
+            }
+            if (!string.IsNullOrEmpty(errorUpdate.Message))
+            {
+                errorMessage.Append(errorUpdate.Message);
+            }
+        }
+        if (hasError)
+        {
+            throw new InvalidOperationException($"The stream has failed with the error: {errorMessage}, error code: {errorCode}");
         }
     }
     #endregion

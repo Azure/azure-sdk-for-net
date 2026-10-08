@@ -44,7 +44,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Browser automation](#browser-automation)
     - [Create Azure Playwright workspace](#create-azure-playwright-workspace)
     - [Configure Microsoft Foundry](#configure-microsoft-foundry)
-    - [Using Browser automation tool](#using-browser-automation-tool)
+    - [Browser automation tool](#browser-automation-tool)
+    - [Browser automation preview tool](#browser-automation-preview-tool)
   - [SharePoint tool](#sharepoint)
   - [Fabric Data Agent tool](#fabric)
     - [Create a Fabric Capacity](#create-a-fabric-capacity)
@@ -1502,11 +1503,14 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 #### Using Browser automation tool
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
+The `BrowserAutomationTool` is using MCP connection as opposed to `BrowserAutomationPreviewTool`, which uses the serverless connection.
+Please refer to the playwright [quickstart document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure playwright mcp connection.
+The preferred way to access MCP server is  by using EntraID; see this [document](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp) on how to create a project connection.
 
-```C# Snippet:Sample_CreateProjectClient_BrowserAutomotionPreview
+```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
+var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_MCP_CONNECTION_NAME");
 AIProjectClientOptions options = new()
 {
     NetworkTimeout = TimeSpan.FromMinutes(5)
@@ -1516,11 +1520,10 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 To use Azure Playwright workspace we need to create agent with `BrowserAutomationAgentTool`.
 
-```C# Snippet:Sample_CreateAgent_BrowserAutomotionPreview_Async
-AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
+```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
+BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
+        new BrowserAutomationToolConnectionOptions(playwrightConnectionName)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1537,7 +1540,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 
 Streaming response outputs with browser automation provides incremental updates as the automation is processed. This is advised for interactive scenarios, as browser automation can require several minutes to fully complete.
 
-```C# Snippet:Sample_CreateResponse_BrowserAutomotionPreview_Async
+```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 CreateResponseOptions responseOptions = new()
 {
@@ -1559,6 +1562,9 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 }
 ```
 
+#### Browser automation preview tool
+Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
+This tool was released to preview the functionality, please use the stable version of the tool.
 
 ### SharePoint tool (preview)<a id="sharepoint"></a>
 `SharepointPreviewTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointPreviewTool`.

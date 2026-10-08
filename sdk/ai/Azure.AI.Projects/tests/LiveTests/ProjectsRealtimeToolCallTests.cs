@@ -47,7 +47,7 @@ public class ProjectsRealtimeToolCallTests : ProjectsRealtimeLiveTestBase
             definition.Tools.Add(new Azure.AI.Projects.Agents.VoiceAgentFunctionTool("get_current_time")
             {
                 Description = "Returns the current time for a given location.",
-                Parameters = ModelReaderWriter.Read<global::OpenAI.RealtimeFunctionToolParameters>(BinaryData.FromObjectAsJson(new
+                Parameters = ModelReaderWriter.Read<Azure.AI.Projects.Agents.RealtimeFunctionToolParameters>(BinaryData.FromObjectAsJson(new
                 {
                     type = "object",
                     properties = new

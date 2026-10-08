@@ -42,7 +42,7 @@ namespace Azure.AI.Projects
         private readonly TelemetryDetails _telemetryDetails;
         [Experimental("AAIP002")]
         private ProjectsRealtimeClient _cachedProjectsRealtimeClient;
-        private static readonly string s_experimentalHeaders = "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview";
+        private static readonly string s_experimentalHeaders = "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview";
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient()
