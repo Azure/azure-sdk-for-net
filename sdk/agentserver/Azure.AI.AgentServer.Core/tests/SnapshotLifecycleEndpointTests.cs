@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests;
@@ -572,15 +573,28 @@ public class SnapshotLifecycleEndpointTests
     }
 
     [Test]
-    public async Task UseAgentServerCore_CanOnlyRegisterLifecycleRoutesOnce()
+    public async Task UseAgentServerCore_CanOnlyRegisterMiddlewarePipelineOnce()
     {
-        await using var app = await StartAppAsync(
-            configureApplication: webApp => webApp.UseAgentServerCore());
-        using var client = app.GetTestClient();
+        var loggerProvider = new TestLoggerProvider();
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Logging.ClearProviders();
+        builder.Logging.AddProvider(loggerProvider);
+        builder.Services.AddAgentServerCore();
 
-        using var response = await PostJsonAsync(client, "/_agent/before-snapshot", "{}");
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.UseAgentServerCore();
+        app.MapGet("/test", () => Results.Ok());
+        await app.StartAsync();
+
+        using var client = app.GetTestClient();
+        using var response = await client.GetAsync("/test");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(
+            loggerProvider.Messages.Count(message => message.Contains("Inbound GET /test starting")),
+            Is.EqualTo(1));
     }
 
     [Test]
@@ -682,6 +696,48 @@ public class SnapshotLifecycleEndpointTests
             AgentRestoreContext context,
             CancellationToken cancellationToken = default) =>
             AfterRestore?.Invoke(context, cancellationToken) ?? Task.CompletedTask;
+    }
+
+    private sealed class TestLoggerProvider : ILoggerProvider
+    {
+        private readonly List<string> _messages = new();
+
+        public IReadOnlyList<string> Messages
+        {
+            get
+            {
+                lock (_messages)
+                {
+                    return _messages.ToArray();
+                }
+            }
+        }
+
+        public ILogger CreateLogger(string categoryName) => new TestLogger(_messages);
+
+        public void Dispose()
+        {
+        }
+
+        private sealed class TestLogger(List<string> messages) : ILogger
+        {
+            public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
+
+            public bool IsEnabled(LogLevel logLevel) => true;
+
+            public void Log<TState>(
+                LogLevel logLevel,
+                EventId eventId,
+                TState state,
+                Exception? exception,
+                Func<TState, Exception?, string> formatter)
+            {
+                lock (messages)
+                {
+                    messages.Add(formatter(state, exception));
+                }
+            }
+        }
     }
 
     private static class InterlockedExtensions
