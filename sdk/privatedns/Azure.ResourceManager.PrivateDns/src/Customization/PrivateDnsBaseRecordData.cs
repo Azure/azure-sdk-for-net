@@ -78,5 +78,34 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </summary>
         public bool? IsAutoRegistered => Properties is null ? default : Properties.IsAutoRegistered;
+
+        /// <summary> A reference to an Azure private traffic manager profile resource from where the record set value is taken. Cannot be combined with A, AAAA, or CNAME records. </summary>
+        public ResourceIdentifier TrafficManagementProfileId
+        {
+            get
+            {
+                string id = Properties is null ? default : Properties.TrafficManagementProfileId;
+                return string.IsNullOrEmpty(id) ? default : new ResourceIdentifier(id);
+            }
+            set
+            {
+                if (value is null)
+                {
+                    if (Properties is not null)
+                    {
+                        Properties.TrafficManagementProfile = null;
+                    }
+                    return;
+                }
+                if (Properties is null)
+                {
+                    Properties = new PrivateDnsRecordSetProperties();
+                }
+                Properties.TrafficManagementProfileId = value.ToString();
+            }
+        }
+
+        /// <summary> The provisioning state of the record set. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        public PrivateDnsProvisioningState? ProvisioningState => Properties is null ? default : Properties.ProvisioningState;
     }
 }

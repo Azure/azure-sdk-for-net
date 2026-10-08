@@ -97,6 +97,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsTxtRecordInfo((values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Reference to another subresource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.SubResource"/> instance for mocking. </returns>
+        public static SubResource SubResource(string id = default)
+        {
+            return new SubResource(id, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -136,6 +144,30 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     default),
                 eTag,
                 default);
+        }
+
+        /// <param name="targetResources"> A list of references to azure resources for which referencing private DNS records need to be queried. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsResourceReferenceContent"/> instance for mocking. </returns>
+        public static PrivateDnsResourceReferenceContent PrivateDnsResourceReferenceContent(IEnumerable<SubResource> targetResources = default)
+        {
+            return new PrivateDnsResourceReferenceContent(targetResources is null ? default : new PrivateDnsResourceReferenceRequestProperties((targetResources ?? new ChangeTrackingList<SubResource>()).ToList(), default), default);
+        }
+
+        /// <param name="privateDnsResourceReferences"> The result of private dns resource reference request. A list of private dns resource references for each of the azure resource in the request. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsResourceReferenceResult"/> instance for mocking. </returns>
+        public static PrivateDnsResourceReferenceResult PrivateDnsResourceReferenceResult(IEnumerable<PrivateDnsResourceReference> privateDnsResourceReferences = default)
+        {
+            return new PrivateDnsResourceReferenceResult(privateDnsResourceReferences is null ? default : new PrivateDnsResourceReferenceResultProperties((privateDnsResourceReferences ?? new ChangeTrackingList<PrivateDnsResourceReference>()).ToList(), default), default);
+        }
+
+        /// <param name="privateDnsResources"> A list of private DNS record sets that reference the target resource. </param>
+        /// <param name="targetResourceId"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsResourceReference"/> instance for mocking. </returns>
+        public static PrivateDnsResourceReference PrivateDnsResourceReference(IEnumerable<SubResource> privateDnsResources = default, string targetResourceId = default)
+        {
+            privateDnsResources ??= new ChangeTrackingList<SubResource>();
+
+            return new PrivateDnsResourceReference((privateDnsResources ?? new ChangeTrackingList<SubResource>()).ToList(), targetResourceId is null ? default : new SubResource(targetResourceId, default), default);
         }
 
         /// <summary> Describes a Private DNS zone. </summary>

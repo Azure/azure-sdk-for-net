@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.PrivateDns
         {
             TryGetApiVersion(ResourceType, out string privateDnsZoneApiVersion);
             _privateZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
-            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneApiVersion ?? "2024-06-01");
+            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneApiVersion ?? "2026-06-01-preview");
             _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneApiVersion ?? "2024-06-01");
+            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneApiVersion ?? "2026-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

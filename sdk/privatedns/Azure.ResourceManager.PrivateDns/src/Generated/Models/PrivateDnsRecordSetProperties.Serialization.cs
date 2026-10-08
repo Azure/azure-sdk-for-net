@@ -175,6 +175,16 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(TrafficManagementProfile))
+            {
+                writer.WritePropertyName("trafficManagementProfile"u8);
+                writer.WriteObjectValue(TrafficManagementProfile, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -229,6 +239,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             PrivateDnsSoaRecordInfo privateDnsSoaRecord = default;
             IList<PrivateDnsSrvRecordInfo> privateDnsSrvRecords = default;
             IList<PrivateDnsTxtRecordInfo> privateDnsTxtRecords = default;
+            SubResource trafficManagementProfile = default;
+            PrivateDnsProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -378,6 +390,24 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     privateDnsTxtRecords = array;
                     continue;
                 }
+                if (prop.NameEquals("trafficManagementProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    trafficManagementProfile = SubResource.DeserializeSubResource(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new PrivateDnsProvisioningState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -396,6 +426,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 privateDnsSoaRecord,
                 privateDnsSrvRecords ?? new ChangeTrackingList<PrivateDnsSrvRecordInfo>(),
                 privateDnsTxtRecords ?? new ChangeTrackingList<PrivateDnsTxtRecordInfo>(),
+                trafficManagementProfile,
+                provisioningState,
                 additionalBinaryDataProperties);
         }
     }
