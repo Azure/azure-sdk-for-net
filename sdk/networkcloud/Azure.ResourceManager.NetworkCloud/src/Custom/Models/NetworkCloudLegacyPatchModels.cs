@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
     // The ChangeTrackingList base preserves undefined collection state for generated serialization,
     // while the IList implementation provides a live classic view over the PATCH collection.
-    internal sealed class NetworkCloudLegacyModelList<TLegacy, TPatch> : ChangeTrackingList<TLegacy>, IList<TLegacy>
+    internal sealed class NetworkCloudLegacyModelList<TLegacy, TPatch> : ChangeTrackingList<TLegacy>, IList<TLegacy>, IReadOnlyList<TLegacy>
         where TLegacy : class
         where TPatch : class
     {
@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         public new int Count => _inner.Count;
+
+        TLegacy IReadOnlyList<TLegacy>.this[int index] => _toLegacy(_inner[index]);
+
+        int IReadOnlyCollection<TLegacy>.Count => _inner.Count;
 
         public new bool IsReadOnly => _inner.IsReadOnly;
 
@@ -178,6 +182,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _inner.RemoveAt(index);
             MarkDefined();
         }
+
+        IEnumerator<TLegacy> IEnumerable<TLegacy>.GetEnumerator() => GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -345,7 +351,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("RackSlot")]
         public long RackSlot
         {
-            get => CompatibilityPatch?.RackSlot ?? _compatibilityRackSlot;
+            get => CompatibilityPatch is null ? _compatibilityRackSlot : CompatibilityPatch.RackSlot ?? default;
             set
             {
                 _compatibilityRackSlot = value;
@@ -407,7 +413,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("RackSlot")]
         public long RackSlot
         {
-            get => CompatibilityPatch?.RackSlot ?? _compatibilityRackSlot;
+            get => CompatibilityPatch is null ? _compatibilityRackSlot : CompatibilityPatch.RackSlot ?? default;
             set
             {
                 _compatibilityRackSlot = value;
@@ -678,7 +684,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("Grouping")]
         public ValidationThresholdGrouping Grouping
         {
-            get => CompatibilityPatch?.Grouping ?? _compatibilityGrouping;
+            get => CompatibilityPatch is null ? _compatibilityGrouping : CompatibilityPatch.Grouping ?? default;
             set
             {
                 _compatibilityGrouping = value;
@@ -693,7 +699,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("ThresholdType")]
         public ValidationThresholdType ThresholdType
         {
-            get => CompatibilityPatch?.ThresholdType ?? _compatibilityThresholdType;
+            get => CompatibilityPatch is null ? _compatibilityThresholdType : CompatibilityPatch.ThresholdType ?? default;
             set
             {
                 _compatibilityThresholdType = value;
@@ -708,7 +714,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("Value")]
         public long Value
         {
-            get => CompatibilityPatch?.Value ?? _compatibilityValue;
+            get => CompatibilityPatch is null ? _compatibilityValue : CompatibilityPatch.Value ?? default;
             set
             {
                 _compatibilityValue = value;
@@ -801,7 +807,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("StrategyType")]
         public ClusterUpdateStrategyType StrategyType
         {
-            get => CompatibilityPatch?.StrategyType ?? _compatibilityStrategyType;
+            get => CompatibilityPatch is null ? _compatibilityStrategyType : CompatibilityPatch.StrategyType ?? default;
             set
             {
                 _compatibilityStrategyType = value;
@@ -816,7 +822,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("ThresholdType")]
         public ValidationThresholdType ThresholdType
         {
-            get => CompatibilityPatch?.ThresholdType ?? _compatibilityThresholdType;
+            get => CompatibilityPatch is null ? _compatibilityThresholdType : CompatibilityPatch.ThresholdType ?? default;
             set
             {
                 _compatibilityThresholdType = value;
@@ -831,7 +837,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("ThresholdValue")]
         public long ThresholdValue
         {
-            get => CompatibilityPatch?.ThresholdValue ?? _compatibilityThresholdValue;
+            get => CompatibilityPatch is null ? _compatibilityThresholdValue : CompatibilityPatch.ThresholdValue ?? default;
             set
             {
                 _compatibilityThresholdValue = value;

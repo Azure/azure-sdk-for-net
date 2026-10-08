@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return NetworkCloudLegacyPatchMap<AdministrativeCredentials, AdministrativeCredentialsPatch>.TryGetPatch(value, out AdministrativeCredentialsPatch patch)
                 ? patch
-                : Register(value, new AdministrativeCredentialsPatch(value.Password, value.Username, value.CompatibilityAdditionalBinaryDataProperties), static (legacy, patch) => legacy.CompatibilityPatch = patch);
+                : Register(value, new LegacySerializingAdministrativeCredentialsPatch(value), static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
         public static BareMetalMachineConfiguration ToClassic(BareMetalMachineConfigurationPatch value)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return NetworkCloudLegacyPatchMap<BareMetalMachineConfiguration, BareMetalMachineConfigurationPatch>.TryGetPatch(value, out BareMetalMachineConfigurationPatch patch)
                 ? patch
-                : Register(value, new BareMetalMachineConfigurationPatch(value.BmcConnectionString, ToPatch(value.BmcCredentials), value.BmcMacAddress, value.BootMacAddress, value.MachineDetails, value.MachineName, value.RackSlot, value.SerialNumber, value.CompatibilityAdditionalBinaryDataProperties), static (legacy, patch) => legacy.CompatibilityPatch = patch);
+                : Register(value, new LegacySerializingBareMetalMachineConfigurationPatch(value), static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
         public static StorageApplianceConfiguration ToClassic(StorageApplianceConfigurationPatch value)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return NetworkCloudLegacyPatchMap<StorageApplianceConfiguration, StorageApplianceConfigurationPatch>.TryGetPatch(value, out StorageApplianceConfigurationPatch patch)
                 ? patch
-                : Register(value, new StorageApplianceConfigurationPatch(ToPatch(value.AdminCredentials), value.RackSlot, value.SerialNumber, value.StorageApplianceName, value.CompatibilityAdditionalBinaryDataProperties), static (legacy, patch) => legacy.CompatibilityPatch = patch);
+                : Register(value, new LegacySerializingStorageApplianceConfigurationPatch(value), static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
         public static NetworkCloudRackDefinition ToClassic(NetworkCloudRackDefinitionPatch value)
@@ -140,15 +140,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 ? patch
                 : Register(
                     value,
-                    new NetworkCloudRackDefinitionPatch(
-                        value.AvailabilityZone,
-                        value.CompatibilityBareMetalMachineConfigurationDataPatch,
-                        value.NetworkRackId,
-                        value.RackLocation,
-                        value.RackSerialNumber,
-                        value.RackSkuId,
-                        value.CompatibilityStorageApplianceConfigurationDataPatch,
-                        value.CompatibilityAdditionalBinaryDataProperties),
+                    new LegacySerializingNetworkCloudRackDefinitionPatch(value),
                     static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
@@ -179,7 +171,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return NetworkCloudLegacyPatchMap<ServicePrincipalInformation, ServicePrincipalInformationPatch>.TryGetPatch(value, out ServicePrincipalInformationPatch patch)
                 ? patch
-                : Register(value, new ServicePrincipalInformationPatch(value.ApplicationId, value.Password, value.PrincipalId, value.TenantId, value.CompatibilityAdditionalBinaryDataProperties), static (legacy, patch) => legacy.CompatibilityPatch = patch);
+                : Register(value, new LegacySerializingServicePrincipalInformationPatch(value), static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
         public static ValidationThreshold ToClassic(ValidationThresholdPatch value)
@@ -209,7 +201,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return NetworkCloudLegacyPatchMap<ValidationThreshold, ValidationThresholdPatch>.TryGetPatch(value, out ValidationThresholdPatch patch)
                 ? patch
-                : Register(value, new ValidationThresholdPatch(value.Grouping, value.ThresholdType, value.Value, value.CompatibilityAdditionalBinaryDataProperties), static (legacy, patch) => legacy.CompatibilityPatch = patch);
+                : Register(value, new LegacySerializingValidationThresholdPatch(value), static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
         public static ClusterSecretArchive ToClassic(ClusterSecretArchivePatch value)
@@ -239,7 +231,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return NetworkCloudLegacyPatchMap<ClusterSecretArchive, ClusterSecretArchivePatch>.TryGetPatch(value, out ClusterSecretArchivePatch patch)
                 ? patch
-                : Register(value, new ClusterSecretArchivePatch(value.KeyVaultId, value.UseKeyVault, value.CompatibilityAdditionalBinaryDataProperties), static (legacy, patch) => legacy.CompatibilityPatch = patch);
+                : Register(value, new LegacySerializingClusterSecretArchivePatch(value), static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
         public static ClusterUpdateStrategy ToClassic(ClusterUpdateStrategyPatch value)
@@ -269,7 +261,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return NetworkCloudLegacyPatchMap<ClusterUpdateStrategy, ClusterUpdateStrategyPatch>.TryGetPatch(value, out ClusterUpdateStrategyPatch patch)
                 ? patch
-                : Register(value, new ClusterUpdateStrategyPatch(value.MaxUnavailable, value.StrategyType, value.ThresholdType, value.ThresholdValue, value.WaitTimeMinutes, value.CompatibilityAdditionalBinaryDataProperties), static (legacy, patch) => legacy.CompatibilityPatch = patch);
+                : Register(value, new LegacySerializingClusterUpdateStrategyPatch(value), static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
         public static ImageRepositoryCredentials ToClassic(ImageRepositoryCredentialsPatch value)
@@ -299,7 +291,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return NetworkCloudLegacyPatchMap<ImageRepositoryCredentials, ImageRepositoryCredentialsPatch>.TryGetPatch(value, out ImageRepositoryCredentialsPatch patch)
                 ? patch
-                : Register(value, new ImageRepositoryCredentialsPatch(value.Password, value.RegistryUriString, value.Username, value.CompatibilityAdditionalBinaryDataProperties), static (legacy, patch) => legacy.CompatibilityPatch = patch);
+                : Register(value, new LegacySerializingImageRepositoryCredentialsPatch(value), static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
         internal static IList<TPatch> ToPatchList<TLegacy, TPatch>(IList<TLegacy> values, System.Func<TLegacy, TPatch> convert)

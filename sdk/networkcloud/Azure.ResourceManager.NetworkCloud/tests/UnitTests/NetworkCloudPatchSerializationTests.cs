@@ -169,6 +169,97 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         }
 
         [Test]
+        public void LegacyRackSlotsReflectValuesClearedFromPatch()
+        {
+            var machine = new BareMetalMachineConfigurationPatch { RackSlot = 5 };
+            var appliance = new StorageApplianceConfigurationPatch { RackSlot = 6 };
+            var rackPatch = new NetworkCloudRackDefinitionPatch();
+            rackPatch.BareMetalMachineConfigurationData.Add(machine);
+            rackPatch.StorageApplianceConfigurationData.Add(appliance);
+            var patch = new NetworkCloudClusterPatch
+            {
+                AggregatorOrSingleRackDefinitionPatch = rackPatch
+            };
+            NetworkCloudRackDefinition legacyRack = patch.AggregatorOrSingleRackDefinition;
+
+            machine.RackSlot = null;
+            appliance.RackSlot = null;
+
+            Assert.That(legacyRack.BareMetalMachineConfigurationData[0].RackSlot, Is.Zero);
+            Assert.That(legacyRack.StorageApplianceConfigurationData[0].RackSlot, Is.Zero);
+            using JsonDocument document = Serialize(patch);
+            JsonElement serializedRack = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("aggregatorOrSingleRackDefinition");
+            Assert.That(serializedRack.GetProperty("bareMetalMachineConfigurationData")[0].TryGetProperty("rackSlot", out _), Is.False);
+            Assert.That(serializedRack.GetProperty("storageApplianceConfigurationData")[0].TryGetProperty("rackSlot", out _), Is.False);
+        }
+
+        [Test]
+        public void LegacyThresholdReflectsValuesClearedFromPatch()
+        {
+            var thresholdPatch = new ValidationThresholdPatch
+            {
+                Grouping = ValidationThresholdGrouping.PerCluster,
+                ThresholdType = ValidationThresholdType.PercentSuccess,
+                Value = 7
+            };
+            var patch = new NetworkCloudClusterPatch
+            {
+                ComputeDeploymentThresholdPatch = thresholdPatch
+            };
+            ValidationThreshold legacyThreshold = patch.ComputeDeploymentThreshold;
+
+            thresholdPatch.Grouping = null;
+            thresholdPatch.ThresholdType = null;
+            thresholdPatch.Value = null;
+
+            Assert.That(legacyThreshold.Grouping, Is.EqualTo(default(ValidationThresholdGrouping)));
+            Assert.That(legacyThreshold.ThresholdType, Is.EqualTo(default(ValidationThresholdType)));
+            Assert.That(legacyThreshold.Value, Is.Zero);
+            using JsonDocument document = Serialize(patch);
+            Assert.That(
+                document.RootElement
+                    .GetProperty("properties")
+                    .GetProperty("computeDeploymentThreshold")
+                    .EnumerateObject()
+                    .MoveNext(),
+                Is.False);
+        }
+
+        [Test]
+        public void LegacyUpdateStrategyReflectsValuesClearedFromPatch()
+        {
+            var strategyPatch = new ClusterUpdateStrategyPatch
+            {
+                StrategyType = ClusterUpdateStrategyType.Rack,
+                ThresholdType = ValidationThresholdType.CountSuccess,
+                ThresholdValue = 4
+            };
+            var patch = new NetworkCloudClusterPatch
+            {
+                UpdateStrategyPatch = strategyPatch
+            };
+            ClusterUpdateStrategy legacyStrategy = patch.UpdateStrategy;
+
+            strategyPatch.StrategyType = null;
+            strategyPatch.ThresholdType = null;
+            strategyPatch.ThresholdValue = null;
+
+            Assert.That(legacyStrategy.StrategyType, Is.EqualTo(default(ClusterUpdateStrategyType)));
+            Assert.That(legacyStrategy.ThresholdType, Is.EqualTo(default(ValidationThresholdType)));
+            Assert.That(legacyStrategy.ThresholdValue, Is.Zero);
+            using JsonDocument document = Serialize(patch);
+            Assert.That(
+                document.RootElement
+                    .GetProperty("properties")
+                    .GetProperty("updateStrategy")
+                    .EnumerateObject()
+                    .MoveNext(),
+                Is.False);
+        }
+
+        [Test]
         public void InPlaceLegacyServicePrincipalEditIsSerialized()
         {
             var patch = new NetworkCloudClusterPatch
@@ -337,6 +428,66 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
                 .GetProperty("storageApplianceConfigurationData");
             Assert.That(appliances.GetArrayLength(), Is.EqualTo(1));
             Assert.That(appliances[0].GetProperty("serialNumber").GetString(), Is.EqualTo("appliance-serial"));
+        }
+
+        [Test]
+        public void LegacyBareMetalMachineCollectionReadOnlyInterfacesUseLiveItems()
+        {
+            var rack = new NetworkCloudRackDefinition(
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/rack"),
+                "rack-serial",
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.NetworkCloud/rackSkus/rackSku"));
+            IList<BareMetalMachineConfiguration> configurations = rack.BareMetalMachineConfigurationData;
+            var machine = new BareMetalMachineConfiguration(
+                new AdministrativeCredentials("password", "username"),
+                "00:11:22:33:44:55",
+                "00:11:22:33:44:66",
+                1,
+                "machine-serial");
+            configurations.Add(machine);
+            var readOnlyCollection = (IReadOnlyCollection<BareMetalMachineConfiguration>)configurations;
+            var readOnlyList = (IReadOnlyList<BareMetalMachineConfiguration>)configurations;
+
+            Assert.That(readOnlyCollection, Has.Count.EqualTo(1));
+            Assert.That(readOnlyList[0], Is.SameAs(configurations[0]));
+
+            var patch = new NetworkCloudClusterPatch
+            {
+                AggregatorOrSingleRackDefinition = rack
+            };
+
+            Assert.That(readOnlyCollection, Has.Count.EqualTo(1));
+            Assert.That(readOnlyList[0], Is.SameAs(configurations[0]));
+            Assert.That(patch.AggregatorOrSingleRackDefinitionPatch.BareMetalMachineConfigurationData, Has.Count.EqualTo(1));
+        }
+
+        [Test]
+        public void LegacyStorageApplianceCollectionReadOnlyInterfacesUseLiveItems()
+        {
+            var rack = new NetworkCloudRackDefinition(
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/rack"),
+                "rack-serial",
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.NetworkCloud/rackSkus/rackSku"));
+            IList<StorageApplianceConfiguration> configurations = rack.StorageApplianceConfigurationData;
+            var appliance = new StorageApplianceConfiguration(
+                new AdministrativeCredentials("password", "username"),
+                2,
+                "appliance-serial");
+            configurations.Add(appliance);
+            var readOnlyCollection = (IReadOnlyCollection<StorageApplianceConfiguration>)configurations;
+            var readOnlyList = (IReadOnlyList<StorageApplianceConfiguration>)configurations;
+
+            Assert.That(readOnlyCollection, Has.Count.EqualTo(1));
+            Assert.That(readOnlyList[0], Is.SameAs(configurations[0]));
+
+            var patch = new NetworkCloudClusterPatch
+            {
+                AggregatorOrSingleRackDefinition = rack
+            };
+
+            Assert.That(readOnlyCollection, Has.Count.EqualTo(1));
+            Assert.That(readOnlyList[0], Is.SameAs(configurations[0]));
+            Assert.That(patch.AggregatorOrSingleRackDefinitionPatch.StorageApplianceConfigurationData, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -543,10 +694,41 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
                 Is.True);
         }
 
+        [Test]
+        public void ClassicOriginModelPreservesVirtualSerializationOverride()
+        {
+            var patch = new NetworkCloudClusterPatch
+            {
+                ComputeDeploymentThreshold = new CustomValidationThreshold()
+            };
+            patch.ComputeDeploymentThresholdPatch.Value = 8;
+
+            using JsonDocument document = Serialize(patch);
+            JsonElement threshold = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("computeDeploymentThreshold");
+            Assert.That(threshold.GetProperty("value").GetInt64(), Is.EqualTo(8));
+            Assert.That(threshold.GetProperty("customOption").GetString(), Is.EqualTo("custom-value"));
+        }
+
         private static JsonDocument Serialize<T>(T model)
         {
             BinaryData data = ModelReaderWriter.Write(model, WireOptions, AzureResourceManagerNetworkCloudContext.Default);
             return JsonDocument.Parse(data);
+        }
+
+        private sealed class CustomValidationThreshold : ValidationThreshold
+        {
+            public CustomValidationThreshold()
+                : base(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 7)
+            {
+            }
+
+            protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                base.JsonModelWriteCore(writer, options);
+                writer.WriteString("customOption", "custom-value");
+            }
         }
     }
 }
