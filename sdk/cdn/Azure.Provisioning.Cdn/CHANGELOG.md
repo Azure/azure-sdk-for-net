@@ -4,12 +4,12 @@
 
 ### Bugs Fixed
 
-- Restored resource name requirements lost during the TypeSpec migration for
-  `FrontDoorOriginGroup`, `FrontDoorOrigin`, and `FrontDoorRoute`. These
-  resources now use Azure's documented 1-50 character constraints instead of
-  the inherited 1-24 lowercase defaults. The authoritative 50-character limit
-  also replaces beta.2's historical 90-character value, so automatically
-  generated names may change or be truncated sooner when upgrading.
+- Restored the beta.2 resource name requirements lost during the TypeSpec
+  migration for `FrontDoorEndpoint`, `FrontDoorOriginGroup`, `FrontDoorOrigin`,
+  and `FrontDoorRoute`. Generated names again allow uppercase letters, numbers,
+  and hyphens, with maximum lengths of 46 for endpoints and 90 for origin
+  groups, origins, and routes instead of the beta.3 inherited 24-character
+  lowercase defaults.
 
 ## 1.0.0-beta.3 (2026-06-25)
 

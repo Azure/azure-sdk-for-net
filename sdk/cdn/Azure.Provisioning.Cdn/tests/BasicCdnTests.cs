@@ -23,9 +23,10 @@ public class BasicCdnTests
         (ProvisionableResource Resource, int MaxLength)[] resources =
         [
             (new CdnProfile("profile"), 260),
-            (new FrontDoorOriginGroup("originGroup"), 50),
-            (new FrontDoorOrigin("origin"), 50),
-            (new FrontDoorRoute("route"), 50)
+            (new FrontDoorEndpoint("endpoint"), 46),
+            (new FrontDoorOriginGroup("originGroup"), 90),
+            (new FrontDoorOrigin("origin"), 90),
+            (new FrontDoorRoute("route"), 90)
         ];
 
         Assert.Multiple(() =>
