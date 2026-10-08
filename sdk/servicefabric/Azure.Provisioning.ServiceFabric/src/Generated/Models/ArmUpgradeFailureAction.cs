@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The activation Mode of the service package. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ArmUpgradeFailureAction
     {
         /// <summary> Indicates that a rollback of the upgrade will be performed by Service Fabric if the upgrade fails. </summary>

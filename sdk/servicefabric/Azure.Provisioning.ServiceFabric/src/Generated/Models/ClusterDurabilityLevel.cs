@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The durability level of the node type. Learn about [DurabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity). </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterDurabilityLevel
     {
         /// <summary> No privileges. This is the default. </summary>

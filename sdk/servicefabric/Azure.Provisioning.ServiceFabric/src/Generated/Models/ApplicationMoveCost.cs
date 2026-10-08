@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Specifies the move cost for the service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ApplicationMoveCost
     {
         /// <summary> Zero move cost. This value is zero. </summary>

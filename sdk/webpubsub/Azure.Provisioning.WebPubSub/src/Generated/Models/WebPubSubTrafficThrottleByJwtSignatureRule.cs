@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Throttle the client traffic by the JWT signature. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubTrafficThrottleByJwtSignatureRule : WebPubSubClientTrafficControlRule
     {
         private BicepValue<long> _maxInboundMessageBytes;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the MaxInboundMessageBytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxInboundMessageBytes
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the AggregationWindowInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AggregationWindowInSeconds
         {
             get

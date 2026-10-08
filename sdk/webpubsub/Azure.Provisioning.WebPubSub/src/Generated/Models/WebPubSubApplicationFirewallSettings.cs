@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Application firewall settings for the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubApplicationFirewallSettings : ProvisionableConstruct
     {
         private BicepList<WebPubSubClientConnectionCountRule> _clientConnectionCountRules;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ClientConnectionCountRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WebPubSubClientConnectionCountRule> ClientConnectionCountRules
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ClientTrafficControlRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WebPubSubClientTrafficControlRule> ClientTrafficControlRules
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the MaxClientConnectionLifetimeInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxClientConnectionLifetimeInSeconds
         {
             get

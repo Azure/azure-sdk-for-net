@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes capacity information for a custom resource balancing metric. This can be used to limit the total consumption of this metric by the services of this application. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApplicationMetricDescription : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaximumCapacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaximumCapacity
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ReservationCapacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> ReservationCapacity
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the TotalApplicationCapacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> TotalApplicationCapacity
         {
             get

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Subscription Response for Changed Target Directory. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TargetDirectoryResult : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

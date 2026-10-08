@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterNotificationChannel
     {
         /// <summary> For email user receivers. In this case, the parameter receivers should be a list of email addresses that will receive the notifications. </summary>

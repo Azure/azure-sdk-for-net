@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The service correlation scheme. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ServiceCorrelationScheme
     {
         /// <summary> An invalid correlation scheme. Cannot be used. The value is zero. </summary>

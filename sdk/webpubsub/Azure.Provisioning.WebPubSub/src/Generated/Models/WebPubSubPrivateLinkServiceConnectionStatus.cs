@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum WebPubSubPrivateLinkServiceConnectionStatus
     {
         /// <summary> Pending. </summary>

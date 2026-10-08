@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> The workload type of the subscription. It can be either Production or DevTest. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SubscriptionWorkload
     {
         /// <summary> Production. </summary>

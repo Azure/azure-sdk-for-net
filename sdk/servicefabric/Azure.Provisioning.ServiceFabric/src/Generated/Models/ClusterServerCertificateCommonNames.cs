@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes a list of server certificates referenced by common name that are used to secure the cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterServerCertificateCommonNames : ProvisionableConstruct
     {
         private BicepList<ClusterServerCertificateCommonName> _commonNames;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the CommonNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ClusterServerCertificateCommonName> CommonNames
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the X509StoreName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClusterCertificateStoreName> X509StoreName
         {
             get

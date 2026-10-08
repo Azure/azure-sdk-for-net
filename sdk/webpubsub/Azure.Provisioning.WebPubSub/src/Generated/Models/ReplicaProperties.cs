@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> The ReplicaProperties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ReplicaProperties : ProvisionableConstruct
     {
         private BicepValue<WebPubSubProvisioningState> _provisioningState;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubProvisioningState> ProvisioningState
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the IsRegionEndpointEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IsRegionEndpointEnabled
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ResourceStopped. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceStopped
         {
             get

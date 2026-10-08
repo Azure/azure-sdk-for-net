@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> The provisioning state of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SubscriptionProvisioningState
     {
         /// <summary> Accepted. </summary>

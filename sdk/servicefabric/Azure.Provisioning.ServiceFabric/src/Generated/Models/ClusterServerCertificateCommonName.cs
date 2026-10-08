@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the server certificate details using common name. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterServerCertificateCommonName : ProvisionableConstruct
     {
         private BicepValue<string> _certificateCommonName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the CertificateCommonName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CertificateCommonName
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the CertificateIssuerThumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> CertificateIssuerThumbprint
         {
             get

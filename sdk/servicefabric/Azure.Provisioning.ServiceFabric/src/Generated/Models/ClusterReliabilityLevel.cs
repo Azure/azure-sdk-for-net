@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity). </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterReliabilityLevel
     {
         /// <summary> Run the System services with a target replica set count of 1. This should only be used for test clusters. </summary>

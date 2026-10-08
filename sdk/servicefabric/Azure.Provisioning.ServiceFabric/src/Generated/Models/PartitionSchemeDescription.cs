@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.ServiceFabric
     /// Describes how the service is partitioned.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NamedPartitionSchemeDescription"/>, <see cref="SingletonPartitionSchemeDescription"/>, and <see cref="UniformInt64RangePartitionSchemeDescription"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartitionSchemeDescription : ProvisionableConstruct
     {
         private BicepValue<ApplicationPartitionScheme> _partitionScheme;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Specifies how the service is partitioned. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<ApplicationPartitionScheme> PartitionScheme
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The upgrade mode of the cluster when new Service Fabric runtime version is available. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterUpgradeMode
     {
         /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, <b>upgradeWave</b> will determine when the upgrade starts after the new version becomes available. </summary>

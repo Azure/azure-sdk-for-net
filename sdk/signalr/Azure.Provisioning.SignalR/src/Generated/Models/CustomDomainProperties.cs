@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Properties of a custom domain. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class CustomDomainProperties : ProvisionableConstruct
     {
         private BicepValue<SignalRProvisioningState> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRProvisioningState> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the DomainName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DomainName
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the CustomCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         internal ResourceReference CustomCertificate
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CustomCertificateId
         {
             get

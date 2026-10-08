@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The properties of a stateful service resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class StatefulServiceProperties : ServiceResourceProperties
     {
         private BicepValue<bool> _hasPersistedState;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HasPersistedState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> HasPersistedState
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the TargetReplicaSetSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TargetReplicaSetSize
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MinReplicaSetSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MinReplicaSetSize
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ReplicaRestartWaitDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ReplicaRestartWaitDuration
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the QuorumLossWaitDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> QuorumLossWaitDuration
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the StandByReplicaKeepDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StandByReplicaKeepDuration
         {
             get

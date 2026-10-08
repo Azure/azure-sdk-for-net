@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> The billing information of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRResourceSku : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Tier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRSkuTier> Tier
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the Size. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Size
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the Family. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Family
         {
             get
@@ -75,6 +81,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Capacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Capacity
         {
             get

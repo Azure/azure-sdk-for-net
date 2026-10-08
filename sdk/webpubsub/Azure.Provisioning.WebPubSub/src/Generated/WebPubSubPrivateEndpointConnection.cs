@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A private endpoint connection to an azure resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubProvisioningState> ProvisioningState
         {
             get
@@ -108,6 +110,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the GroupIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> GroupIds
         {
             get
@@ -121,6 +124,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public WebPubSubPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -138,6 +142,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> ACL for a private endpoint. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PrivateEndpointAcl : PublicNetworkAcls
     {
         private BicepValue<string> _name;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get

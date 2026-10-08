@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Subscription Information with the alias. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SubscriptionAlias : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.SignalR
     /// Upstream template item settings. It defines the Upstream URL of the incoming requests.
     /// The template defines the pattern of the event, the hub or the category of the incoming request that matches current URL template.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRUpstreamTemplate : ProvisionableConstruct
     {
         private BicepValue<string> _hubPattern;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the HubPattern. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HubPattern
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the EventPattern. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventPattern
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the CategoryPattern. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CategoryPattern
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the UrlTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UrlTemplate
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Auth. </summary>
+        [Experimental("AZPROVISION001")]
         public SignalRUpstreamAuthSettings Auth
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the certificate details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterCertificateDescription : ProvisionableConstruct
     {
         private BicepValue<BinaryData> _thumbprint;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Thumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Thumbprint
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ThumbprintSecondary. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ThumbprintSecondary
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the X509StoreName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClusterCertificateStoreName> X509StoreName
         {
             get

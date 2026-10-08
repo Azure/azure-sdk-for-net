@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> A private endpoint connection to an azure resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRProvisioningState> ProvisioningState
         {
             get
@@ -108,6 +110,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the GroupIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> GroupIds
         {
             get
@@ -121,6 +124,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public SignalRPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -138,6 +142,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

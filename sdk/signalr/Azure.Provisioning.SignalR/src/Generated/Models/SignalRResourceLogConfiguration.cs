@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SignalRResourceLogConfiguration : ProvisionableConstruct
     {
         private BicepList<SignalRResourceLogCategory> _categories;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Categories. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRResourceLogCategory> Categories
         {
             get

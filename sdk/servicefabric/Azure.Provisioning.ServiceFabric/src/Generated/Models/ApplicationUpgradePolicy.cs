@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the policy for a monitored application upgrade. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApplicationUpgradePolicy : ProvisionableConstruct
     {
         private BicepValue<TimeSpan> _upgradeReplicaSetCheckTimeout;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeReplicaSetCheckTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> UpgradeReplicaSetCheckTimeout
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ForceRestart. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ForceRestart
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the RollingUpgradeMonitoringPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public ArmRollingUpgradeMonitoringPolicy RollingUpgradeMonitoringPolicy
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ApplicationHealthPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public ArmApplicationHealthPolicy ApplicationHealthPolicy
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApplicationRollingUpgradeMode> UpgradeMode
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the RecreateApplication. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> RecreateApplication
         {
             get

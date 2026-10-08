@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The kind of service (Stateless or Stateful). </summary>
+    [Experimental("AZPROVISION001")]
     internal enum ApplicationServiceKind
     {
         /// <summary> Indicates the service kind is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>

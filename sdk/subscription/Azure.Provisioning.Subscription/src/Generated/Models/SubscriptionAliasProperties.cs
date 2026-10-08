@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Put subscription creation result properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SubscriptionAliasProperties : ProvisionableConstruct
     {
         private BicepValue<string> _subscriptionId;
@@ -33,6 +35,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the SubscriptionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubscriptionId
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SubscriptionProvisioningState> ProvisioningState
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the AcceptOwnershipUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> AcceptOwnershipUri
         {
             get
@@ -78,6 +84,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the AcceptOwnershipState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AcceptOwnershipState> AcceptOwnershipState
         {
             get
@@ -88,6 +95,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the BillingScope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> BillingScope
         {
             get
@@ -103,6 +111,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the Workload. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SubscriptionWorkload> Workload
         {
             get
@@ -118,6 +127,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the ResellerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResellerId
         {
             get
@@ -133,6 +143,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the SubscriptionOwnerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubscriptionOwnerId
         {
             get
@@ -148,6 +159,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the ManagementGroupId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagementGroupId
         {
             get
@@ -163,6 +175,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -178,6 +191,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get

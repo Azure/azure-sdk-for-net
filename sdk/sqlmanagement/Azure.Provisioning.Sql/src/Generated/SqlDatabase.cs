@@ -938,6 +938,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get

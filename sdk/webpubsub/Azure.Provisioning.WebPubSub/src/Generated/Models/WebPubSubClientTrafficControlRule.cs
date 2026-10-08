@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.WebPubSub
     /// A base class for client traffic control rules
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="WebPubSubTrafficThrottleByJwtCustomClaimRule"/>, <see cref="WebPubSubTrafficThrottleByJwtSignatureRule"/>, and <see cref="WebPubSubTrafficThrottleByUserIdRule"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubClientTrafficControlRule : ProvisionableConstruct
     {
         private BicepValue<ClientTrafficControlRuleDiscriminator> _type;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<ClientTrafficControlRuleDiscriminator> Type
         {
             get

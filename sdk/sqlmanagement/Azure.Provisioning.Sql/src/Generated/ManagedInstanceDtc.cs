@@ -159,6 +159,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the IsFqdnEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsFqdnEnabled
         {
             get

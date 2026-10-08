@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Throttle the client connection by the user ID. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRThrottleByUserIdRule : SignalRClientConnectionCountRule
     {
         private BicepValue<int> _maxCount;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the MaxCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxCount
         {
             get

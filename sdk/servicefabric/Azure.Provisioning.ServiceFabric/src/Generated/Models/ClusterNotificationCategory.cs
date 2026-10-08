@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The category of notification. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterNotificationCategory
     {
         /// <summary> Notification will be regarding wave progress. </summary>

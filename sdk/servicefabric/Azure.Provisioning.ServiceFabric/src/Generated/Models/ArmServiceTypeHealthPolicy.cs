@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Represents the health policy used to evaluate the health of services belonging to a service type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ArmServiceTypeHealthPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _maxPercentUnhealthyServices;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentUnhealthyServices. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentUnhealthyServices
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentUnhealthyPartitionsPerService. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentUnhealthyPartitionsPerService
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentUnhealthyReplicasPerPartition. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentUnhealthyReplicasPerPartition
         {
             get

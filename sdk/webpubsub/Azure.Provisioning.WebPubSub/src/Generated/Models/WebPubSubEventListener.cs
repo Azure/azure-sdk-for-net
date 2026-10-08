@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A setting defines which kinds of events should be sent to which endpoint. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubEventListener : ProvisionableConstruct
     {
         private WebPubSubEventListenerFilter _filter;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Filter. </summary>
+        [Experimental("AZPROVISION001")]
         public WebPubSubEventListenerFilter Filter
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public WebPubSubEventListenerEndpoint Endpoint
         {
             get

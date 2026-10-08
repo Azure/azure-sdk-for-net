@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Throttle the client connection by a custom JWT claim. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubThrottleByJwtCustomClaimRule : WebPubSubClientConnectionCountRule
     {
         private BicepValue<string> _claimName;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ClaimName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClaimName
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the MaxCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxCount
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A class represent a replica resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubReplica : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -114,6 +115,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public BillingInfoSku Sku
         {
             get
@@ -144,6 +146,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubProvisioningState> ProvisioningState
         {
             get
@@ -157,6 +160,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the IsRegionEndpointEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IsRegionEndpointEnabled
         {
             get
@@ -174,6 +178,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ResourceStopped. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceStopped
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The storage account information for storing Service Fabric diagnostic logs. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DiagnosticsStorageAccountConfig : ProvisionableConstruct
     {
         private BicepValue<string> _storageAccountName;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the StorageAccountName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StorageAccountName
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ProtectedAccountKeyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProtectedAccountKeyName
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ProtectedAccountKeyName2. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProtectedAccountKeyName2
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the BlobEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> BlobEndpoint
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the QueueEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> QueueEndpoint
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the TableEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> TableEndpoint
         {
             get

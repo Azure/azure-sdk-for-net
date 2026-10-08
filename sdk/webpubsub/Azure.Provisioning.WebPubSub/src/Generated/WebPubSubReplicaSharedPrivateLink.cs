@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Describes a Shared Private Link Resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubReplicaSharedPrivateLink : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the GroupId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GroupId
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the PrivateLinkResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateLinkResourceId
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubProvisioningState> ProvisioningState
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the RequestMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RequestMessage
         {
             get
@@ -160,6 +165,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Fqdns. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Fqdns
         {
             get
@@ -177,6 +183,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubSharedPrivateLinkStatus> Status
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The application type name resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceFabricApplicationType : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -114,6 +115,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -139,6 +141,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
