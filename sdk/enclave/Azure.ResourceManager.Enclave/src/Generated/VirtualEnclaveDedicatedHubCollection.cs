@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new DedicatedHubGetByCommunityResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new VirtualEnclaveDedicatedHubDataAsyncCollectionResultOfT(
                 _dedicatedHubRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new DedicatedHubGetByCommunityResourceCollectionResultOfT(
+            return new PageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new VirtualEnclaveDedicatedHubDataCollectionResultOfT(
                 _dedicatedHubRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionDataAsyncCollectionResultOfT(
                 _dashboardDefinitionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionsGetAllCollectionResultOfT(
+            return new PageableWrapper<DashboardDefinitionData, DashboardDefinitionResource>(new DashboardDefinitionDataCollectionResultOfT(
                 _dashboardDefinitionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new ContainerServiceFleetDataAsync0CollectionResultOfT(
                 FleetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 maxCount,
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new ContainerServiceFleetData0CollectionResultOfT(
                 FleetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 maxCount,

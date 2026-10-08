@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VerifiedPartnerData, VerifiedPartnerResource>(new VerifiedPartnersGetAllAsyncCollectionResultOfT(_verifiedPartnersRestClient, filter, top, context, "VerifiedPartnerCollection.GetAll"), data => new VerifiedPartnerResource(Client, data));
+            return new AsyncPageableWrapper<VerifiedPartnerData, VerifiedPartnerResource>(new VerifiedPartnerDataAsyncCollectionResultOfT(_verifiedPartnersRestClient, filter, top, context, "VerifiedPartnerCollection.GetAll"), data => new VerifiedPartnerResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VerifiedPartnerData, VerifiedPartnerResource>(new VerifiedPartnersGetAllCollectionResultOfT(_verifiedPartnersRestClient, filter, top, context, "VerifiedPartnerCollection.GetAll"), data => new VerifiedPartnerResource(Client, data));
+            return new PageableWrapper<VerifiedPartnerData, VerifiedPartnerResource>(new VerifiedPartnerDataCollectionResultOfT(_verifiedPartnersRestClient, filter, top, context, "VerifiedPartnerCollection.GetAll"), data => new VerifiedPartnerResource(Client, data));
         }
 
         /// <summary>

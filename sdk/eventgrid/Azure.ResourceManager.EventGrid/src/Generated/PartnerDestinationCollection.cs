@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationDataAsyncCollectionResultOfT(
                 _partnerDestinationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PartnerDestinationData, PartnerDestinationResource>(new PartnerDestinationDataCollectionResultOfT(
                 _partnerDestinationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorsGetByResourceGroupAsyncCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
+            return new AsyncPageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorDataAsyncCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorsGetByResourceGroupCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
+            return new PageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorDataCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
         }
 
         /// <summary>

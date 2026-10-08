@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new PoliciesGetAllAsyncCollectionResultOfT(_policiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
+            return new AsyncPageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyDataAsyncCollectionResultOfT(_policiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new PoliciesGetAllCollectionResultOfT(_policiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
+            return new PageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyDataCollectionResultOfT(_policiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>

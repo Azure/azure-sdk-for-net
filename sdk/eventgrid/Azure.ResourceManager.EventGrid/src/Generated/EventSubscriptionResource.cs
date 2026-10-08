@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new EventSubscriptionsGetDeliveryAttributesAsyncCollectionResultOfT(_eventSubscriptionsRestClient, Id.Parent.ToString(), Id.Name, context, "EventSubscriptionResource.GetDeliveryAttributes");
+            return new DeliveryAttributeMappingAsync0CollectionResultOfT(_eventSubscriptionsRestClient, Id.Parent.ToString(), Id.Name, context, "EventSubscriptionResource.GetDeliveryAttributes");
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new EventSubscriptionsGetDeliveryAttributesCollectionResultOfT(_eventSubscriptionsRestClient, Id.Parent.ToString(), Id.Name, context, "EventSubscriptionResource.GetDeliveryAttributes");
+            return new DeliveryAttributeMapping0CollectionResultOfT(_eventSubscriptionsRestClient, Id.Parent.ToString(), Id.Name, context, "EventSubscriptionResource.GetDeliveryAttributes");
         }
 
         /// <summary>

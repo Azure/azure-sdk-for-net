@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationAssignmentDataAsync4CollectionResultOfT(
                 _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationConnectedVMwarevSphereAssignmentsGetAllForConnectedVMwarevSphereCollectionResultOfT(
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVMwarevSphereAssignmentResource>(new GuestConfigurationAssignmentData4CollectionResultOfT(
                 _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

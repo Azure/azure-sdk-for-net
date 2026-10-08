@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetMemberData, ContainerServiceFleetMemberResource>(new FleetMembersGetByFleetAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceFleetMemberData, ContainerServiceFleetMemberResource>(new ContainerServiceFleetMemberDataAsyncCollectionResultOfT(
                 _fleetMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetMemberData, ContainerServiceFleetMemberResource>(new FleetMembersGetByFleetCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceFleetMemberData, ContainerServiceFleetMemberResource>(new ContainerServiceFleetMemberDataCollectionResultOfT(
                 _fleetMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

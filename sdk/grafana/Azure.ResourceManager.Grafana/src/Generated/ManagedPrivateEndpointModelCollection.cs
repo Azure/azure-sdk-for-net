@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelDataAsyncCollectionResultOfT(
                 _managedPrivateEndpointModelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllCollectionResultOfT(
+            return new PageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelDataCollectionResultOfT(
                 _managedPrivateEndpointModelsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClusterDataAsyncCollectionResultOfT(
                 _cloudHsmClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClusterDataCollectionResultOfT(
                 _cloudHsmClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

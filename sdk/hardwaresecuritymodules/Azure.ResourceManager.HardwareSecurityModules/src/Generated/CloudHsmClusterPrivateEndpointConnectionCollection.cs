@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudHsmClusterPrivateEndpointConnectionData, CloudHsmClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByCloudHsmClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CloudHsmClusterPrivateEndpointConnectionData, CloudHsmClusterPrivateEndpointConnectionResource>(new CloudHsmClusterPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudHsmClusterPrivateEndpointConnectionData, CloudHsmClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByCloudHsmClusterCollectionResultOfT(
+            return new PageableWrapper<CloudHsmClusterPrivateEndpointConnectionData, CloudHsmClusterPrivateEndpointConnectionResource>(new CloudHsmClusterPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

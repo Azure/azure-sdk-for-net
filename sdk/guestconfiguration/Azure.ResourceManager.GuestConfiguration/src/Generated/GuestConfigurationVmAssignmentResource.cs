@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentReportsGetReportsAsyncCollectionResultOfT(
+            return new GuestConfigurationAssignmentReportAsyncCollectionResultOfT(
                 _guestConfigurationAssignmentReportsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentReportsGetReportsCollectionResultOfT(
+            return new GuestConfigurationAssignmentReportCollectionResultOfT(
                 _guestConfigurationAssignmentReportsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

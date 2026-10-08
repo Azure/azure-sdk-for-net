@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmDataAsyncCollectionResultOfT(
                 _dedicatedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmDataCollectionResultOfT(
                 _dedicatedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
