@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0-beta.5 (2026-10-12)
 
 ### Features Added
 
@@ -14,10 +14,6 @@
 
 - Renamed `PolicyResourceId` to `CertificateAuthorityResourceId` on `IotHubCertificateProperties` and `IotHubCertificatePropertiesWithNonce`.
 - `IotHubDeviceRegistry` is now output-only: its public constructor was removed, `IotHubProperties.DeviceRegistry` no longer has a setter, and `IotHubDeviceRegistry.IdentityResourceId` was replaced by `IotHubDeviceRegistry.Identity`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.4 (2026-08-12)
 
