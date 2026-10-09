@@ -211,9 +211,8 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 await sandboxGroup.GetSandboxesClient().DeleteAsync(sandboxId).ConfigureAwait(false);
                 _deletedSandboxIds.Add(sandboxId);
             }
-            catch (RequestFailedException exception) when (exception.Status == 200 || exception.Status == 404)
+            catch (RequestFailedException exception) when (exception.Status == 404)
             {
-                // The service currently returns 200 although the API contract specifies 204.
                 _deletedSandboxIds.Add(sandboxId);
             }
         }

@@ -83,8 +83,11 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             Assert.That(listResponse.Value, Is.Not.Null);
             Assert.That(downloadedContent, Is.EqualTo(fileContent));
 
-            await DeleteVolumePathAsync(client, volume.VolumeName, path);
-            await DeleteVolumePathAsync(client, volume.VolumeName, directory, recursive: true);
+            Response deleteFileResponse = await client.DeleteVolumeFileAsync(volume.VolumeName, path);
+            Response deleteDirectoryResponse = await client.DeleteVolumeFileAsync(volume.VolumeName, directory, recursive: true);
+
+            Assert.That(deleteFileResponse.Status, Is.EqualTo(204));
+            Assert.That(deleteDirectoryResponse.Status, Is.EqualTo(204));
         }
 
         [RecordedTest]
@@ -116,22 +119,6 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             };
 
             await AddVolumeMountAsync(sandboxGroup, sandbox.Id, mount);
-        }
-
-        private static async Task DeleteVolumePathAsync(
-            VolumesClient client,
-            string volumeName,
-            string path,
-            bool? recursive = default)
-        {
-            try
-            {
-                await client.DeleteVolumeFileAsync(volumeName, path, recursive);
-            }
-            catch (RequestFailedException exception) when (exception.Status == 200)
-            {
-                // The service currently returns 200 although the API contract specifies 204.
-            }
         }
     }
 }
