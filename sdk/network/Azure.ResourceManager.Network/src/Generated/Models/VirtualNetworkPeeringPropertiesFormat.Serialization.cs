@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (Optional.IsDefined(PeerCompleteVnets))
+            if (Optional.IsDefined(AreCompleteVnetsPeered))
             {
                 writer.WritePropertyName("peerCompleteVnets"u8);
-                writer.WriteBooleanValue(PeerCompleteVnets.Value);
+                writer.WriteBooleanValue(AreCompleteVnetsPeered.Value);
             }
             if (Optional.IsDefined(EnableOnlyIPv6Peering))
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             bool? doNotVerifyRemoteGateways = default;
             Guid? resourceGuid = default;
-            bool? peerCompleteVnets = default;
+            bool? areCompleteVnetsPeered = default;
             bool? enableOnlyIPv6Peering = default;
             IList<string> localSubnetNames = default;
             IList<string> remoteSubnetNames = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    peerCompleteVnets = prop.Value.GetBoolean();
+                    areCompleteVnetsPeered = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableOnlyIPv6Peering"u8))
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState,
                 doNotVerifyRemoteGateways,
                 resourceGuid,
-                peerCompleteVnets,
+                areCompleteVnetsPeered,
                 enableOnlyIPv6Peering,
                 localSubnetNames ?? new ChangeTrackingList<string>(),
                 remoteSubnetNames ?? new ChangeTrackingList<string>(),

@@ -67,5 +67,19 @@ namespace Azure.ResourceManager.Network
                 return Properties.DetectionRules;
             }
         }
+
+        /// <summary> The list of DDoS mitigation rules associated with the custom policy. </summary>
+        [WirePath("properties.mitigationRules")]
+        public IList<DdosMitigationRule> MitigationRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosCustomPolicyPropertiesFormat();
+                }
+                return Properties.MitigationRules;
+            }
+        }
     }
 }

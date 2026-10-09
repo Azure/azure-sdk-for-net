@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public DdosCustomPolicyPropertiesFormat()
         {
             DetectionRules = new ChangeTrackingList<DdosDetectionRule>();
+            MitigationRules = new ChangeTrackingList<DdosMitigationRule>();
             FrontEndIPConfiguration = new ChangeTrackingList<NetworkSubResource>();
             PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
         }
@@ -30,14 +31,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
         /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
+        /// <param name="mitigationRules"> The list of DDoS mitigation rules associated with the custom policy. </param>
         /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
         /// <param name="publicIPAddresses"> The list of public IP addresses associated with the custom policy. This list is read-only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DdosCustomPolicyPropertiesFormat(Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<NetworkSubResource> frontEndIPConfiguration, IReadOnlyList<WritableSubResource> publicIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DdosCustomPolicyPropertiesFormat(Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<DdosMitigationRule> mitigationRules, IList<NetworkSubResource> frontEndIPConfiguration, IReadOnlyList<WritableSubResource> publicIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             DetectionRules = detectionRules;
+            MitigationRules = mitigationRules;
             FrontEndIPConfiguration = frontEndIPConfiguration;
             PublicIPAddresses = publicIPAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -54,6 +57,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The list of DDoS detection rules associated with the custom policy. </summary>
         [WirePath("detectionRules")]
         public IList<DdosDetectionRule> DetectionRules { get; } = new ChangeTrackingList<DdosDetectionRule>();
+
+        /// <summary> The list of DDoS mitigation rules associated with the custom policy. </summary>
+        [WirePath("mitigationRules")]
+        public IList<DdosMitigationRule> MitigationRules { get; } = new ChangeTrackingList<DdosMitigationRule>();
 
         /// <summary> The list of frontend IP configurations associated with the custom policy. </summary>
         [WirePath("frontEndIpConfiguration")]

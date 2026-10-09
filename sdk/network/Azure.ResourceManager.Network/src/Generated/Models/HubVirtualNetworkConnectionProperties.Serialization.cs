@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? allowRemoteVnetToUseHubVnetGateways = default;
             NetworkSubResource connectionPolicy = default;
             bool? enableInternetSecurity = default;
-            RoutingConfigurationNfv routingConfiguration = default;
+            RoutingConfiguration routingConfiguration = default;
             bool? isOnlyIPv6PeeringEnabled = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(prop.Value, options);
+                    routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enableOnlyIPv6Peering"u8))

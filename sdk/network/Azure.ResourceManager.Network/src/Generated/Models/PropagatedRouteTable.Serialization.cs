@@ -8,71 +8,55 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using ;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The list of RouteTables to advertise the routes to. </summary>
-    public partial class PropagatedRouteTableNfv : IJsonModel<PropagatedRouteTableNfv>
+    public partial class PropagatedRouteTable : global::.PropagatedRouteTableNfv, IJsonModel<PropagatedRouteTable>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PropagatedRouteTableNfv PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PropagatedRouteTable PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTableNfv>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTable>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePropagatedRouteTableNfv(document.RootElement, options);
+                        return DeserializePropagatedRouteTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PropagatedRouteTableNfv)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropagatedRouteTable)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTableNfv>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTable>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PropagatedRouteTableNfv)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropagatedRouteTable)} does not support writing '{options.Format}' format.");
             }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PropagatedRouteTableNfv>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PropagatedRouteTableNfv IPersistableModel<PropagatedRouteTableNfv>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PropagatedRouteTableNfv>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PropagatedRouteTableNfv>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTableNfv>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropagatedRouteTableNfv)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PropagatedRouteTable)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -93,9 +77,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
-                foreach (RoutingConfigurationNfvSubResource item in Ids)
+                foreach (WritableSubResource item in Ids)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,31 +107,27 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PropagatedRouteTableNfv IJsonModel<PropagatedRouteTableNfv>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PropagatedRouteTableNfv JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PropagatedRouteTable JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTableNfv>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PropagatedRouteTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropagatedRouteTableNfv)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PropagatedRouteTable)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePropagatedRouteTableNfv(document.RootElement, options);
+            return DeserializePropagatedRouteTable(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PropagatedRouteTableNfv DeserializePropagatedRouteTableNfv(JsonElement element, ModelReaderWriterOptions options)
+        internal static PropagatedRouteTable DeserializePropagatedRouteTable(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> labels = default;
-            IList<RoutingConfigurationNfvSubResource> ids = default;
+            IList<WritableSubResource> ids = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,10 +158,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<RoutingConfigurationNfvSubResource> array = new List<RoutingConfigurationNfvSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RoutingConfigurationNfvSubResource.DeserializeRoutingConfigurationNfvSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     ids = array;
                     continue;
@@ -186,7 +178,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PropagatedRouteTableNfv(labels ?? new ChangeTrackingList<string>(), ids ?? new ChangeTrackingList<RoutingConfigurationNfvSubResource>(), additionalBinaryDataProperties);
+            return new PropagatedRouteTable(labels ?? new ChangeTrackingList<string>(), ids ?? new ChangeTrackingList<WritableSubResource>(), additionalBinaryDataProperties);
         }
     }
 }

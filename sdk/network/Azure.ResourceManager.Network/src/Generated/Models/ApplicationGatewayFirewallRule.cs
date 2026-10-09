@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> OWASP CRS paranoia level of a managed rule. Applicable only for DRS and OWASP rules. </summary>
         [WirePath("paranoiaLevel")]
-        public ApplicationGatewayWafRuleParanoiaLevel? ParanoiaLevel { get; }
+        public ApplicationGatewayWafRuleParanoiaLevel? ParanoiaLevel { get; set; }
     }
 }

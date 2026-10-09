@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network
     public partial class PeerExpressRouteCircuitConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
+        public PeerExpressRouteCircuitConnectionData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -29,14 +34,9 @@ namespace Azure.ResourceManager.Network
             ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
-        public PeerExpressRouteCircuitConnectionData() : this(default)
-        {
-        }
-
         /// <summary> Properties of the peer express route circuit connection. </summary>
         [WirePath("properties")]
-        internal PeerExpressRouteCircuitConnectionPropertiesFormat Properties { get; }
+        internal PeerExpressRouteCircuitConnectionPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

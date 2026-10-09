@@ -13,24 +13,19 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
-    public partial class RoutingConfigurationNfv
+    public partial class RoutingConfiguration : RoutingConfigurationNfv
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationNfv"/>. </summary>
-        public RoutingConfigurationNfv()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationNfv"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingConfiguration"/>. </summary>
         /// <param name="associatedRouteTable"> The resource id RouteTable associated with this RoutingConfiguration. </param>
         /// <param name="propagatedRouteTables"> The list of RouteTables to advertise the routes to. </param>
         /// <param name="vnetRoutes"> List of routes that control routing from VirtualHub into a virtual network connection. </param>
         /// <param name="inboundRouteMap"> The resource id of the RouteMap associated with this RoutingConfiguration for inbound learned routes. </param>
         /// <param name="outboundRouteMap"> The resource id of theRouteMap associated with this RoutingConfiguration for outbound advertised routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingConfigurationNfv(NetworkSubResource associatedRouteTable, PropagatedRouteTableNfv propagatedRouteTables, VnetRoute vnetRoutes, NetworkSubResource inboundRouteMap, NetworkSubResource outboundRouteMap, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingConfiguration(NetworkSubResource associatedRouteTable, PropagatedRouteTable propagatedRouteTables, VnetRoute vnetRoutes, NetworkSubResource inboundRouteMap, NetworkSubResource outboundRouteMap, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssociatedRouteTable = associatedRouteTable;
             PropagatedRouteTables = propagatedRouteTables;
@@ -43,10 +38,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The resource id RouteTable associated with this RoutingConfiguration. </summary>
         [WirePath("associatedRouteTable")]
         internal NetworkSubResource AssociatedRouteTable { get; set; }
-
-        /// <summary> The list of RouteTables to advertise the routes to. </summary>
-        [WirePath("propagatedRouteTables")]
-        public PropagatedRouteTableNfv PropagatedRouteTables { get; set; }
 
         /// <summary> List of routes that control routing from VirtualHub into a virtual network connection. </summary>
         [WirePath("vnetRoutes")]

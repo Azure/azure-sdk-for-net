@@ -11,13 +11,29 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Type of connection monitor. </summary>
+    /// <summary> The endpoint type. </summary>
     public readonly partial struct ConnectionMonitorEndpointType : IEquatable<ConnectionMonitorEndpointType>
     {
         private readonly string _value;
-        /// <summary> MultiEndpoint. </summary>
+        /// <summary> AzureVM. </summary>
+        private const string AzureVmValue = "AzureVM";
+        /// <summary> AzureVNet. </summary>
+        private const string AzureVNetValue = "AzureVNet";
+        /// <summary> AzureSubnet. </summary>
+        private const string AzureSubnetValue = "AzureSubnet";
+        /// <summary> ExternalAddress. </summary>
+        private const string ExternalAddressValue = "ExternalAddress";
+        /// <summary> MMAWorkspaceMachine. </summary>
+        private const string MMAWorkspaceMachineValue = "MMAWorkspaceMachine";
+        /// <summary> MMAWorkspaceNetwork. </summary>
+        private const string MMAWorkspaceNetworkValue = "MMAWorkspaceNetwork";
+        /// <summary> AzureArcVM. </summary>
+        private const string AzureArcVmValue = "AzureArcVM";
+        /// <summary> AzureVMSS. </summary>
+        private const string AzureVmssValue = "AzureVMSS";
+        /// <summary> AzureArcNetwork. </summary>
+        private const string AzureArcNetworkValue = "AzureArcNetwork";
         private const string MultiEndpointValue = "MultiEndpoint";
-        /// <summary> SingleSourceDestination. </summary>
         private const string SingleSourceDestinationValue = "SingleSourceDestination";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointType"/>. </summary>
@@ -30,10 +46,10 @@ namespace Azure.ResourceManager.Network.Models
             _value = value;
         }
 
-        /// <summary> MultiEndpoint. </summary>
+        /// <summary> Gets the MultiEndpoint. </summary>
         public static ConnectionMonitorEndpointType MultiEndpoint { get; } = new ConnectionMonitorEndpointType(MultiEndpointValue);
 
-        /// <summary> SingleSourceDestination. </summary>
+        /// <summary> Gets the SingleSourceDestination. </summary>
         public static ConnectionMonitorEndpointType SingleSourceDestination { get; } = new ConnectionMonitorEndpointType(SingleSourceDestinationValue);
 
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointType"/> values are the same. </summary>

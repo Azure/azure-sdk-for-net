@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The routing configuration indicating the associated and propagated route tables for this connection. </summary>
         [WirePath("properties.routingConfiguration")]
-        public RoutingConfigurationNfv RoutingConfiguration
+        public RoutingConfiguration RoutingConfiguration
         {
             get
             {

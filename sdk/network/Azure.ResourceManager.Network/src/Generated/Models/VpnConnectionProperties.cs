@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnLinkConnections"> List of all vpn site link connections to the gateway. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnConnectionProperties(NetworkSubResource remoteVpnSite, int? routingWeight, int? dpdTimeoutSeconds, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> iPsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, bool? enableRateLimiting, bool? enableInternetSecurity, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IList<VpnSiteLinkConnectionData> vpnLinkConnections, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnConnectionProperties(NetworkSubResource remoteVpnSite, int? routingWeight, int? dpdTimeoutSeconds, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> iPsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, bool? enableRateLimiting, bool? enableInternetSecurity, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IList<VpnSiteLinkConnectionData> vpnLinkConnections, RoutingConfiguration routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RemoteVpnSite = remoteVpnSite;
             RoutingWeight = routingWeight;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [WirePath("routingConfiguration")]
-        public RoutingConfigurationNfv RoutingConfiguration { get; set; }
+        public RoutingConfiguration RoutingConfiguration { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("remoteVpnSite.id")]

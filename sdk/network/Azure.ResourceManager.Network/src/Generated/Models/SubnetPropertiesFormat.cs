@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="delegations"> An array of references to the delegations on the subnet. </param>
         /// <param name="purpose"> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </param>
         /// <param name="provisioningState"> The provisioning state of the subnet resource. </param>
-        /// <param name="privateEndpointNetworkPolicies"> Enable or Disable apply network policies on private end point in the subnet. </param>
-        /// <param name="privateLinkServiceNetworkPolicies"> Enable or Disable apply network policies on private link service in the subnet. </param>
+        /// <param name="privateEndpointNetworkPolicy"> Enable or Disable apply network policies on private end point in the subnet. </param>
+        /// <param name="privateLinkServiceNetworkPolicy"> Enable or Disable apply network policies on private link service in the subnet. </param>
         /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
         /// <param name="sharingScope"> Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty. </param>
         /// <param name="defaultOutboundAccess"> Set this property to false to disable default outbound connectivity for all VMs in the subnet. </param>
         /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools for allocating IP address prefixes. </param>
         /// <param name="serviceGateway"> Reference to an existing service gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubnetPropertiesFormat(string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, NetworkSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<NetworkSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, NetworkSubResource serviceGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubnetPropertiesFormat(string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, NetworkSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<NetworkSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, NetworkSubResource serviceGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefix = addressPrefix;
             AddressPrefixes = addressPrefixes;
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Network.Models
             Delegations = delegations;
             Purpose = purpose;
             ProvisioningState = provisioningState;
-            PrivateEndpointNetworkPolicies = privateEndpointNetworkPolicies;
-            PrivateLinkServiceNetworkPolicies = privateLinkServiceNetworkPolicies;
+            PrivateEndpointNetworkPolicy = privateEndpointNetworkPolicy;
+            PrivateLinkServiceNetworkPolicy = privateLinkServiceNetworkPolicy;
             ApplicationGatewayIPConfigurations = applicationGatewayIPConfigurations;
             SharingScope = sharingScope;
             DefaultOutboundAccess = defaultOutboundAccess;
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Enable or Disable apply network policies on private end point in the subnet. </summary>
         [WirePath("privateEndpointNetworkPolicies")]
-        public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicies { get; set; }
+        public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicy { get; set; }
 
         /// <summary> Enable or Disable apply network policies on private link service in the subnet. </summary>
         [WirePath("privateLinkServiceNetworkPolicies")]
-        public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicies { get; set; }
+        public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicy { get; set; }
 
         /// <summary> Application gateway IP configurations of virtual network resource. </summary>
         [WirePath("applicationGatewayIPConfigurations")]

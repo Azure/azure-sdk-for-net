@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics VipSwapClientDiagnostics => _vipSwapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VipSwap VipSwapRestClient => _vipSwapRestClient ??= new VipSwap(VipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private VipSwap VipSwapRestClient => _vipSwapRestClient ??= new VipSwap(VipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
 
         /// <summary> Gets an object representing a <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -217,6 +217,15 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             ExpressRouteLagResource.ValidateResourceId(id);
             return new ExpressRouteLagResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ExpressRouteLagAuthorizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExpressRouteLagAuthorizationResource"/> object. </returns>
+        public virtual ExpressRouteLagAuthorizationResource GetExpressRouteLagAuthorizationResource(ResourceIdentifier id)
+        {
+            ExpressRouteLagAuthorizationResource.ValidateResourceId(id);
+            return new ExpressRouteLagAuthorizationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="FirewallPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -912,6 +921,15 @@ namespace Azure.ResourceManager.Network.Mocking
             return new VirtualNetworkApplianceResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="VirtualNetworkApplianceCapabilityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualNetworkApplianceCapabilityResource"/> object. </returns>
+        public virtual VirtualNetworkApplianceCapabilityResource GetVirtualNetworkApplianceCapabilityResource(ResourceIdentifier id)
+        {
+            VirtualNetworkApplianceCapabilityResource.ValidateResourceId(id);
+            return new VirtualNetworkApplianceCapabilityResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ServiceGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceGatewayResource"/> object. </returns>
@@ -1356,7 +1374,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1404,7 +1422,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

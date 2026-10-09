@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
+        public ExpressRouteServiceProviderBandwidthsOffered()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
         /// <param name="offerName"> The OfferName. </param>
         /// <param name="valueInMbps"> The ValueInMbps. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -25,11 +30,6 @@ namespace Azure.ResourceManager.Network.Models
             OfferName = offerName;
             ValueInMbps = valueInMbps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
-        public ExpressRouteServiceProviderBandwidthsOffered() : this(default)
-        {
         }
     }
 }
