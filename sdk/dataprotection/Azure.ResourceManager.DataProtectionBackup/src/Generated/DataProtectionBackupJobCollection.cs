@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new AzureBackupJobResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new DataProtectionBackupJobDataAsyncCollectionResultOfT(
                 _azureBackupJobResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new AzureBackupJobResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<DataProtectionBackupJobData, DataProtectionBackupJobResource>(new DataProtectionBackupJobDataCollectionResultOfT(
                 _azureBackupJobResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

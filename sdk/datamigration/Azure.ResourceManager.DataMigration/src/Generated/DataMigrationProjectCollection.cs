@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMigrationProjectData, DataMigrationProjectResource>(new DataMigrationProjectsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataMigrationProjectData, DataMigrationProjectResource>(new DataMigrationProjectDataAsyncCollectionResultOfT(
                 _dataMigrationProjectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMigrationProjectData, DataMigrationProjectResource>(new DataMigrationProjectsGetAllCollectionResultOfT(
+            return new PageableWrapper<DataMigrationProjectData, DataMigrationProjectResource>(new DataMigrationProjectDataCollectionResultOfT(
                 _dataMigrationProjectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
