@@ -197,7 +197,7 @@ public sealed class ExitForRecoveryProtocolTests : IDisposable
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test-model" });
         yield return stream.EmitCreated();
-        yield return stream.Checkpoint();
+        yield return stream.CreateCheckpointEvent();
 
         reached.TrySetResult();
         await ctx.ExitForRecoveryAsync(ct);

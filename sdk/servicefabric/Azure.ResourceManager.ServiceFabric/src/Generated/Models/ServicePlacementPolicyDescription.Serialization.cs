@@ -12,10 +12,7 @@ using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Describes the policy to be used for placement of a Service Fabric service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
-    /// </summary>
+    /// <summary> Describes the policy to be used for placement of a Service Fabric service. </summary>
     [PersistableModelProxy(typeof(UnknownServicePlacementPolicyDescription))]
     public abstract partial class ServicePlacementPolicyDescription : IJsonModel<ServicePlacementPolicyDescription>
     {

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.SchemaType;
+                return Properties is null ? (ApiSchemaType?)default : Properties.SchemaType;
             }
             set
             {

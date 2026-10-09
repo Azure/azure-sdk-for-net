@@ -42,12 +42,12 @@ namespace Azure.Security.CodeTransparency.Tests
                 string identityEndpoint = TestEnvironment.IdentityClientEndpoint;
                 if (!string.IsNullOrEmpty(identityEndpoint))
                 {
-                    options.IdentityClientEndpoint = identityEndpoint;
+                    options.IdentityClientEndpoint = new Uri(identityEndpoint);
                 }
 
                 // Fetch TLS cert and configure the test proxy to trust it (for Record mode).
                 var certClient = new CodeTransparencyCertificateClient(
-                    new Uri(options.IdentityClientEndpoint));
+                    options.IdentityClientEndpoint);
                 string ledgerName = TestEnvironment.Endpoint.Host.Split('.')[0];
                 var certResponse = certClient.GetServiceIdentity(ledgerName);
                 string pem = certResponse.Value.TlsCertificatePem;

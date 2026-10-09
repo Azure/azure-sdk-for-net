@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -93,6 +94,20 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
                 }
                 Properties.Timeout = value;
+            }
+        }
+
+        /// <summary> Array of references to application gateway trusted root certificates. </summary>
+        [WirePath("properties.trustedRootCertificates")]
+        public IList<WritableSubResource> TrustedRootCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                return Properties.TrustedRootCertificates;
             }
         }
 

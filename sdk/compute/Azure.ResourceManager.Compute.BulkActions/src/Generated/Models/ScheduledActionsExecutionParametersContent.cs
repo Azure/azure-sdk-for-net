@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The execution parameters the scheduled action is supposed to follow. </summary>
-    public partial class ScheduledActionsExecutionParametersContent
+    /// <summary> Settings that control how the scheduled action operation is executed. </summary>
+    internal partial class ScheduledActionsExecutionParametersContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,20 +22,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsExecutionParametersContent"/>. </summary>
-        /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
-        /// <param name="retryPolicy"> Retry policy the user can pass. </param>
+        /// <param name="retryPolicy"> The retry settings for failed resource operations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionsExecutionParametersContent(OptimizationPreference? optimizationPreference, ScheduledActionsRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionsExecutionParametersContent(ScheduledActionsRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OptimizationPreference = optimizationPreference;
             RetryPolicy = retryPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Details that could optimize the user's request. </summary>
-        public OptimizationPreference? OptimizationPreference { get; set; }
-
-        /// <summary> Retry policy the user can pass. </summary>
+        /// <summary> The retry settings for failed resource operations. </summary>
         public ScheduledActionsRetryPolicy RetryPolicy { get; set; }
     }
 }

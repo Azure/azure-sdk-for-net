@@ -15,10 +15,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.CodeTransparency
 {
-    [CodeGenSuppress("CreateEntry", typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateEntryAsync", typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateEntry", typeof(BinaryData), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData), typeof(CancellationToken))]
     [CodeGenSuppress("CreateGetTransparencyConfigCborRequest", typeof(RequestContext))]
     [CodeGenSuppress("GetScittKeys", typeof(RequestContext))]
     [CodeGenSuppress("GetScittKeysAsync", typeof(RequestContext))]
@@ -29,7 +25,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary>
         /// Prefix for receipts with unknown/unrecognized issuers.
         /// </summary>
-        public static readonly string UnknownIssuerPrefix = "__unknown-issuer::";
+        private static string UnknownIssuerPrefix { get; } = "__unknown-issuer::";
 
         /// <summary>
         /// Trusted key storage used to verify receipts. The value can be set through the verification options.
@@ -186,11 +182,86 @@ namespace Azure.Security.CodeTransparency
         /// <param name="serviceName">which service to use to pull the cert from</param>
         /// <param name="certificateClient">identity service client to use for getting the CA cert</param>
         private static HttpPipelineTransportOptions CreateTlsCertAndTrustVerifier(string serviceName, CodeTransparencyCertificateClient certificateClient)
+            => CreateTlsCertAndTrustVerifier(serviceName, certificateClient, static () => DateTime.Now);
+
+        /// <summary>
+        /// Test seam for <see cref="CreateTlsCertAndTrustVerifier(string, CodeTransparencyCertificateClient)"/>
+        /// that allows the per-handshake verification time to be supplied by the caller. Production code uses
+        /// the parameterless overload, which reads <see cref="DateTime.Now"/> on every handshake.
+        /// </summary>
+        /// <param name="serviceName">which service to use to pull the cert from.</param>
+        /// <param name="certificateClient">identity service client to use for getting the CA cert.</param>
+        /// <param name="verificationTimeProvider">
+        /// Supplies the <see cref="X509ChainPolicy.VerificationTime"/> used for each validation. It is evaluated
+        /// inside the callback (per handshake), never captured once when the callback is created, so a certificate
+        /// reissued after the client was constructed is still validated against the current time.
+        /// </param>
+        internal static HttpPipelineTransportOptions CreateTlsCertAndTrustVerifier(string serviceName, CodeTransparencyCertificateClient certificateClient, Func<DateTime> verificationTimeProvider)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(certificateClient, nameof(certificateClient));
+            Argument.AssertNotNull(verificationTimeProvider, nameof(verificationTimeProvider));
 
-            X509Chain certificateChain = new();
+            // The validation callback is shared for the lifetime of the client, but a fresh X509Chain is
+            // built on every invocation (see ValidateServerCertificate). This keeps the chain's
+            // VerificationTime current on each handshake and avoids sharing a non-thread-safe X509Chain
+            // across concurrent handshakes.
+            return new HttpPipelineTransportOptions
+            {
+                ServerCertificateCustomValidationCallback = args => ValidateServerCertificate(certificateClient, serviceName, args.Certificate, verificationTimeProvider)
+            };
+        }
+
+        /// <summary>
+        /// Validates a server certificate presented during the TLS handshake against the ledger identity
+        /// TLS certificate pulled (and cached) from the identity service. The presented chain is accepted
+        /// only if it is rooted in the ledger identity TLS certificate.
+        /// </summary>
+        /// <remarks>
+        /// A fresh <see cref="X509Chain"/> is built on every call, for two reasons:
+        /// <list type="bullet">
+        /// <item><description>
+        /// <see cref="X509ChainPolicy.VerificationTime"/> must reflect the current time at each handshake.
+        /// Capturing it once at client construction freezes the timestamp, so a reissued node certificate
+        /// (whose <c>NotBefore</c> is later than the frozen time) would be rejected as <c>NotTimeValid</c>,
+        /// permanently failing every request until the process restarts.
+        /// </description></item>
+        /// <item><description>
+        /// <see cref="X509Chain"/> is not thread-safe; a single shared instance cannot be mutated and
+        /// have <see cref="X509Chain.Build(X509Certificate2)"/> called concurrently from parallel handshakes.
+        /// </description></item>
+        /// </list>
+        /// </remarks>
+        /// <param name="certificateClient">identity service client used to get (and cache) the CA cert.</param>
+        /// <param name="serviceName">which service to use to pull the cert from.</param>
+        /// <param name="cert">the server certificate presented during the TLS handshake.</param>
+        /// <returns><c>true</c> if the certificate chains to the ledger identity TLS certificate; otherwise <c>false</c>.</returns>
+        internal static bool ValidateServerCertificate(CodeTransparencyCertificateClient certificateClient, string serviceName, X509Certificate2 cert)
+            => ValidateServerCertificate(certificateClient, serviceName, cert, static () => DateTime.Now);
+
+        /// <summary>
+        /// Overload of <see cref="ValidateServerCertificate(CodeTransparencyCertificateClient, string, X509Certificate2)"/>
+        /// that takes the verification time from <paramref name="verificationTimeProvider"/> instead of reading
+        /// <see cref="DateTime.Now"/> directly, so tests can advance a clock between callback creation and invocation.
+        /// </summary>
+        /// <param name="certificateClient">identity service client used to get (and cache) the CA cert.</param>
+        /// <param name="serviceName">which service to use to pull the cert from.</param>
+        /// <param name="cert">the server certificate presented during the TLS handshake.</param>
+        /// <param name="verificationTimeProvider">supplies the per-handshake <see cref="X509ChainPolicy.VerificationTime"/>.</param>
+        /// <returns><c>true</c> if the certificate chains to the ledger identity TLS certificate; otherwise <c>false</c>.</returns>
+        internal static bool ValidateServerCertificate(CodeTransparencyCertificateClient certificateClient, string serviceName, X509Certificate2 cert, Func<DateTime> verificationTimeProvider)
+        {
+            // Pull the TLS cert or get it from the cache
+            ServiceIdentityResult identity = certificateClient.GetServiceIdentity(serviceName);
+
+            // GetCertificate() parses and returns a fresh X509Certificate2 (native resource) on every handshake;
+            // dispose it once validation is done so handles do not accumulate on long-lived clients.
+            using X509Certificate2 identityServiceCert = identity.GetCertificate();
+
+            // Build a fresh chain per validation so VerificationTime is current and the chain is not shared
+            // across concurrent handshakes.
+            using X509Chain certificateChain = new();
+
             // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
             certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
 
@@ -199,37 +270,22 @@ namespace Azure.Security.CodeTransparency
             // This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
             // Note: .NET 5 introduced `CustomTrustStore` but we cannot use that here as we must support older versions of .NET.
             certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-            certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
 
-            // Define a validation function to ensure that certificates presented to the client only pass validation if
-            // they are trusted by the ledger identity TLS certificate.
-            // will yield AuthenticationException if cert is invalid
-            bool CertValidationCheck(X509Certificate2 cert)
-            {
-                // Pull the TLS cert or get it from the cache
-                ServiceIdentityResult identity = certificateClient.GetServiceIdentity(serviceName);
-                X509Certificate2 identityServiceCert = identity.GetCertificate();
+            // Evaluate validity against the current time, per handshake. Do NOT capture this once per client.
+            certificateChain.ChainPolicy.VerificationTime = verificationTimeProvider();
 
-                // Add the ledger identity TLS certificate to the ExtraStore.
-                X509Certificate2Collection existingCerts = certificateChain.ChainPolicy.ExtraStore;
-                if (!existingCerts.Contains(identityServiceCert))
-                {
-                    certificateChain.ChainPolicy.ExtraStore.Clear();
-                    certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
-                }
-                // Validate the presented certificate chain, using the ChainPolicy defined above.
-                // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
-                bool isChainValid = certificateChain.Build(cert);
-                if (!isChainValid)
-                    return false;
+            // Add the ledger identity TLS certificate to the ExtraStore.
+            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
 
-                // Ensure that the presented certificate chain passes validation only if it is rooted in the ledger identity TLS certificate.
-                X509Certificate2 rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
-                bool isChainRootedInTheTlsCert = rootCert.Thumbprint.Equals(identityServiceCert.Thumbprint);
-                return isChainRootedInTheTlsCert;
-            }
+            // Validate the presented certificate chain, using the ChainPolicy defined above.
+            // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
+            bool isChainValid = certificateChain.Build(cert);
+            if (!isChainValid)
+                return false;
 
-            return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
+            // Ensure that the presented certificate chain passes validation only if it is rooted in the ledger identity TLS certificate.
+            X509Certificate2 rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
+            return rootCert.Thumbprint.Equals(identityServiceCert.Thumbprint, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -712,44 +768,6 @@ namespace Azure.Security.CodeTransparency
             CodeTransparencyVerificationKey value = CodeTransparencyKeyParser.ParseCoseKey(response.Content.ToMemory());
             return Response.FromValue(value, response);
         }
-
-        // Pretty method names delegating to the V09 generated methods.
-
-        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual Response CreateEntry(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => CreateEntryV09(content, waitForCommit, context);
-
-        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual async Task<Response> CreateEntryAsync(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => await CreateEntryV09Async(content, waitForCommit, context).ConfigureAwait(false);
-
-        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual NullableResponse<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
-
-        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual async Task<NullableResponse<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
-
-        /// <summary> Get receipt. </summary>
-        public virtual Response GetEntry(string entryId, RequestContext context) => GetEntryV09(entryId, context);
-
-        /// <summary> Get receipt. </summary>
-        public virtual async Task<Response> GetEntryAsync(string entryId, RequestContext context) => await GetEntryV09Async(entryId, context).ConfigureAwait(false);
-
-        /// <summary> Get receipt. </summary>
-        public virtual NullableResponse<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default) => GetEntryV09(entryId, cancellationToken);
-
-        /// <summary> Get receipt. </summary>
-        public virtual async Task<NullableResponse<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryV09Async(entryId, cancellationToken).ConfigureAwait(false);
-
-        /// <summary> Get the transparent statement. </summary>
-        public virtual Response GetEntryStatement(string entryId, RequestContext context) => GetEntryStatementV09(entryId, context);
-
-        /// <summary> Get the transparent statement. </summary>
-        public virtual async Task<Response> GetEntryStatementAsync(string entryId, RequestContext context) => await GetEntryStatementV09Async(entryId, context).ConfigureAwait(false);
-
-        /// <summary> Get the transparent statement. </summary>
-        public virtual Response<BinaryData> GetEntryStatement(string entryId, CancellationToken cancellationToken = default) => GetEntryStatementV09(entryId, cancellationToken);
-
-        /// <summary> Get the transparent statement. </summary>
-        public virtual async Task<Response<BinaryData>> GetEntryStatementAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryStatementV09Async(entryId, cancellationToken).ConfigureAwait(false);
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });

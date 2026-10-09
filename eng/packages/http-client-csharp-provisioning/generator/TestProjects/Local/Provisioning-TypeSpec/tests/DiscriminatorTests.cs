@@ -41,9 +41,9 @@ public class DiscriminatorTests
               location: location
               properties: {
                 backupPolicy: {
+                  intervalInHours: 24
                   kind: 'Periodic'
                   retentionDays: 7
-                  intervalInHours: 24
                 }
               }
             }

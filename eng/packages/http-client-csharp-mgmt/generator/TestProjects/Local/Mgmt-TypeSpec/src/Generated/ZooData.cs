@@ -80,7 +80,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredInt;
+                return Properties is null ? (int?)default : Properties.RequiredInt;
             }
             set
             {
@@ -101,7 +101,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredFixedEnum;
+                return Properties is null ? (ZooFixedMode?)default : Properties.RequiredFixedEnum;
             }
             set
             {
@@ -122,7 +122,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredExtensibleEnum;
+                return Properties is null ? (ZooProvisioningState?)default : Properties.RequiredExtensibleEnum;
             }
             set
             {

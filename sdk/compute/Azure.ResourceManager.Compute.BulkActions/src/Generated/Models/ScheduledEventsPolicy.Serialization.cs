@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduledEventsPolicy(userInitiatedRedeploy, userInitiatedReboot, scheduledEventsAdditionalPublishingTargets, allInstancesDown, additionalBinaryDataProperties);

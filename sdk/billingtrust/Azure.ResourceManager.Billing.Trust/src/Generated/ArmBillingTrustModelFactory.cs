@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <summary>
         /// Base properties of a Rule resource. Polymorphic by `kind` — kind-specific writable fields live on derived models.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EduQualificationRuleProperties"/> and <see cref="Models.BusinessVerificationRuleProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BusinessVerificationRuleProperties"/> and <see cref="Models.EduQualificationRuleProperties"/>.
         /// </summary>
         /// <param name="kind"> The kind of rule. Acts as a discriminator for kind-specific properties. </param>
         /// <param name="evaluationState"> The evaluation state of the rule. Server-managed. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <summary>
         /// Patch body for updating a rule. Polymorphic by `kind` — kind-specific patchable fields live on per-kind subtypes. PATCH cannot change a rule's kind; the discriminator carries the rule's existing kind for routing only.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EduQualificationRulePatchProperties"/> and <see cref="Models.BusinessVerificationRulePatchProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BusinessVerificationRulePatchProperties"/> and <see cref="Models.EduQualificationRulePatchProperties"/>.
         /// </summary>
         /// <param name="kind"> The kind of rule. Acts as a discriminator for per-kind patchable fields. Must match the existing rule's kind; PATCH cannot mutate kind. </param>
         /// <returns> A new <see cref="Models.BillingTrustRulePatch"/> instance for mocking. </returns>

@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     (configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>()).ToList(),
                     nodeCount,
                     resourceMoveDetails,
-                    new EdgeProfile(edgeSubscription, default),
-                    new DataResidency(residencyType, default),
+                    edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default),
+                    residencyType is null ? default : new DataResidency(residencyType, default),
                     kubernetesWorkloadProfile,
                     default),
                 sku,
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DataBoxEdgeDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, subscriptionId is null ? default : new DataBoxEdgeDevicePropertiesPatch(new EdgeProfilePatch(new EdgeProfileSubscriptionPatch(subscriptionId, default), default), default), default);
+            return new DataBoxEdgeDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, subscriptionId is null ? default : new DataBoxEdgeDevicePropertiesPatch(subscriptionId is null ? default : new EdgeProfilePatch(subscriptionId is null ? default : new EdgeProfileSubscriptionPatch(subscriptionId, default), default), default), default);
         }
 
         /// <summary> Used in activation key generation flow. </summary>
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 default,
                 default,
-                localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, new EdgeProfile(edgeSubscription, default), roleStatus, default));
+                localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default), roleStatus, default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.EdgeIotDeviceInfo"/> instance for mocking. </returns>
         public static EdgeIotDeviceInfo EdgeIotDeviceInfo(string deviceId = default, string iotHostHub = default, ResourceIdentifier iotHostHubId = default, AsymmetricEncryptedSecret symmetricKeyConnectionString = default)
         {
-            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, symmetricKeyConnectionString is null ? default : new Authentication(new DataBoxEdgeSymmetricKey(symmetricKeyConnectionString, default), default), default);
+            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, symmetricKeyConnectionString is null ? default : new Authentication(symmetricKeyConnectionString is null ? default : new DataBoxEdgeSymmetricKey(symmetricKeyConnectionString, default), default), default);
         }
 
         /// <summary> The share mount point. </summary>
@@ -1668,8 +1668,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     (configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>()).ToList(),
                     nodeCount,
                     resourceMoveDetails,
-                    new EdgeProfile(edgeSubscription, default),
-                    new DataResidency(residencyType, default),
+                    edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default),
+                    residencyType is null ? default : new DataResidency(residencyType, default),
                     default,
                     default),
                 sku,
@@ -1786,7 +1786,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 default,
                 default,
-                localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, new EdgeProfile(edgeSubscription, default), roleStatus, default));
+                localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, edgeSubscription is null ? default : new EdgeProfile(edgeSubscription, default), roleStatus, default));
         }
 
         /// <summary> Trigger details. </summary>

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -620,6 +621,42 @@ namespace Azure.ResourceManager.Batch
         IAsyncEnumerator<BatchAccountPoolResource> IAsyncEnumerable<BatchAccountPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
+        /// <summary> Creates a new pool inside the specified account. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="poolName"> The pool name. This must be unique within the account. </param>
+        /// <param name="data"> Additional parameters for pool creation. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of "*" can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<BatchAccountPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string poolName, BatchAccountPoolData data, ETag? ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdateAsync(waitUntil, poolName, data, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
+        }
+
+        /// <summary> Creates a new pool inside the specified account. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="poolName"> The pool name. This must be unique within the account. </param>
+        /// <param name="data"> Additional parameters for pool creation. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of "*" can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<BatchAccountPoolResource> CreateOrUpdate(WaitUntil waitUntil, string poolName, BatchAccountPoolData data, ETag? ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdate(waitUntil, poolName, data, ifMatch == null && ifNoneMatch == null ? null : new MatchConditions
+            {
+                IfMatch = ifMatch,
+                IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : null
+            }, cancellationToken);
         }
     }
 }

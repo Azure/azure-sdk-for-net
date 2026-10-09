@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Command job definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/>, and <see cref="MachineLearningUriFolderJobInput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/>, and <see cref="MachineLearningUriFolderJobInput"/>.
     /// </summary>
     public abstract partial class MachineLearningJobInput
     {

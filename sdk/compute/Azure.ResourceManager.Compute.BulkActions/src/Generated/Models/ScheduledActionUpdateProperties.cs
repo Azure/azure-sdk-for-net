@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionUpdateProperties"/>. </summary>
-        /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
-        /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="endsOn"> The time when the scheduled action is supposed to stop scheduling. </param>
-        /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
-        /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
-        /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
+        /// <param name="resourceType"> The type of compute resource targeted by the action. </param>
+        /// <param name="actionType"> The operation performed on the targeted resources. </param>
+        /// <param name="startsOn"> The date and time, including UTC offset, when the schedule becomes active. </param>
+        /// <param name="endsOn"> The date and time, including UTC offset, after which no new occurrences are scheduled. </param>
+        /// <param name="schedule"> Changes to the recurring schedule. </param>
+        /// <param name="notificationSettings"> Notification settings that apply to the scheduled action. </param>
+        /// <param name="disabled"> Indicates whether new occurrences are disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScheduledActionUpdateProperties(ScheduledActionsResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startsOn, DateTimeOffset? endsOn, ScheduledActionsSchedulePatch schedule, IList<NotificationProperties> notificationSettings, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -44,25 +44,25 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The type of resource the scheduled action is targeting. </summary>
+        /// <summary> The type of compute resource targeted by the action. </summary>
         public ScheduledActionsResourceType? ResourceType { get; set; }
 
-        /// <summary> The action the scheduled action should perform in the resources. </summary>
+        /// <summary> The operation performed on the targeted resources. </summary>
         public ScheduledActionType? ActionType { get; set; }
 
-        /// <summary> The time which the scheduled action is supposed to start running. </summary>
+        /// <summary> The date and time, including UTC offset, when the schedule becomes active. </summary>
         public DateTimeOffset? StartsOn { get; set; }
 
-        /// <summary> The time when the scheduled action is supposed to stop scheduling. </summary>
+        /// <summary> The date and time, including UTC offset, after which no new occurrences are scheduled. </summary>
         public DateTimeOffset? EndsOn { get; set; }
 
-        /// <summary> The schedule the scheduled action is supposed to follow. </summary>
+        /// <summary> Changes to the recurring schedule. </summary>
         public ScheduledActionsSchedulePatch Schedule { get; set; }
 
-        /// <summary> The notification settings for the scheduled action. </summary>
+        /// <summary> Notification settings that apply to the scheduled action. </summary>
         public IList<NotificationProperties> NotificationSettings { get; }
 
-        /// <summary> Tell if the scheduled action is disabled or not. </summary>
+        /// <summary> Indicates whether new occurrences are disabled. </summary>
         public bool? Disabled { get; set; }
     }
 }

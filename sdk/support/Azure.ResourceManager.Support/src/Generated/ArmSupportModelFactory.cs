@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Support.Models
                 name,
                 resourceType,
                 systemData,
-                displayName is null ? default : new ServiceProperties(displayName, default, default),
+                displayName is null && resourceTypes is null ? default : new ServiceProperties(displayName, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Support.Models
                 name,
                 resourceType,
                 systemData,
-                displayName is null ? default : new ProblemClassificationProperties(displayName, default, default),
+                displayName is null && secondaryConsentEnabled is null ? default : new ProblemClassificationProperties(displayName, (secondaryConsentEnabled ?? new ChangeTrackingList<SecondaryConsentEnabled>()).ToList(), default),
                 default);
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Support.Models
                     supportPlanId,
                     contactDetails,
                     serviceLevelAgreement,
-                    new SupportEngineer(supportEngineerEmailAddress, default),
+                    supportEngineerEmailAddress is null ? default : new SupportEngineer(supportEngineerEmailAddress, default),
                     supportPlanType,
                     supportPlanDisplayName,
                     title,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Support.Models
                     modifiedOn,
                     fileWorkspaceName,
                     isTemporaryTicket,
-                    new TechnicalTicketDetails(technicalTicketDetailsResourceId, default),
+                    technicalTicketDetailsResourceId is null ? default : new TechnicalTicketDetails(technicalTicketDetailsResourceId, default),
                     quotaTicketDetails,
                     (secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>()).ToList(),
                     directConnectEscalation,
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Support.Models
                     supportPlanId,
                     contactDetails,
                     serviceLevelAgreement,
-                    new SupportEngineer(supportEngineerEmailAddress, default),
+                    supportEngineerEmailAddress is null ? default : new SupportEngineer(supportEngineerEmailAddress, default),
                     supportPlanType,
                     supportPlanDisplayName,
                     title,
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Support.Models
                     modifiedOn,
                     fileWorkspaceName,
                     isTemporaryTicket,
-                    new TechnicalTicketDetails(technicalTicketDetailsResourceId, default),
+                    technicalTicketDetailsResourceId is null ? default : new TechnicalTicketDetails(technicalTicketDetailsResourceId, default),
                     quotaTicketDetails,
                     (secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>()).ToList(),
                     default,

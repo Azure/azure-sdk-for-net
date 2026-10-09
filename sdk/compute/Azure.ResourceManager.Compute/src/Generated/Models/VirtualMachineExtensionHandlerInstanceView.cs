@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionHandlerInstanceView"/>. </summary>
         /// <param name="virtualMachineExtensionHandlerInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="typeHandlerVersion"> Specifies the Major.Minor.Patch.Hotfix version of the script handler. Azure platform will deliver the latest Patch.Hotfix version in the Major.Minor series. </param>
         /// <param name="status"> The extension handler status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VirtualMachineExtensionHandlerInstanceView(string virtualMachineExtensionHandlerInstanceViewType, string typeHandlerVersion, InstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         public string VirtualMachineExtensionHandlerInstanceViewType { get; }
 
-        /// <summary> Specifies the version of the script handler. </summary>
+        /// <summary> Specifies the Major.Minor.Patch.Hotfix version of the script handler. Azure platform will deliver the latest Patch.Hotfix version in the Major.Minor series. </summary>
         public string TypeHandlerVersion { get; }
 
         /// <summary> The extension handler status. </summary>

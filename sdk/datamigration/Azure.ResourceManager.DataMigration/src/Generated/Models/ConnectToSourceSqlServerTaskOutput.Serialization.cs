@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for the task that validates connection to SQL Server and also validates source server requirements
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/>, and <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/>, and <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConnectToSourceSqlServerTaskOutput))]
     public abstract partial class ConnectToSourceSqlServerTaskOutput : IJsonModel<ConnectToSourceSqlServerTaskOutput>
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "TaskLevelOutput":
-                        return ConnectToSourceSqlServerTaskOutputTaskLevel.DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(element, options);
+                    case "AgentJobLevelOutput":
+                        return ConnectToSourceSqlServerTaskOutputAgentJobLevel.DeserializeConnectToSourceSqlServerTaskOutputAgentJobLevel(element, options);
                     case "DatabaseLevelOutput":
                         return ConnectToSourceSqlServerTaskOutputDatabaseLevel.DeserializeConnectToSourceSqlServerTaskOutputDatabaseLevel(element, options);
                     case "LoginLevelOutput":
                         return ConnectToSourceSqlServerTaskOutputLoginLevel.DeserializeConnectToSourceSqlServerTaskOutputLoginLevel(element, options);
-                    case "AgentJobLevelOutput":
-                        return ConnectToSourceSqlServerTaskOutputAgentJobLevel.DeserializeConnectToSourceSqlServerTaskOutputAgentJobLevel(element, options);
+                    case "TaskLevelOutput":
+                        return ConnectToSourceSqlServerTaskOutputTaskLevel.DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(element, options);
                 }
             }
             return UnknownConnectToSourceSqlServerTaskOutput.DeserializeUnknownConnectToSourceSqlServerTaskOutput(element, options);

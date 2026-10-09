@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Describes the fallback operation that was performed. </summary>
+    /// <summary> Information about the fallback operation attempted after the requested operation did not succeed. </summary>
     public partial class ComputeBulkFallbackOperationInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkFallbackOperationInfo"/>. </summary>
-        /// <param name="lastOperationKind"> The last operation type that was performed as a fallback. </param>
-        /// <param name="status"> The status of the fallback operation. </param>
+        /// <param name="lastOperationKind"> The type of the additional operation. </param>
+        /// <param name="status"> The status of the additional operation. </param>
         internal ComputeBulkFallbackOperationInfo(ComputeBulkOperationKind lastOperationKind, string status)
         {
             LastOperationKind = lastOperationKind;
@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkFallbackOperationInfo"/>. </summary>
-        /// <param name="lastOperationKind"> The last operation type that was performed as a fallback. </param>
-        /// <param name="status"> The status of the fallback operation. </param>
-        /// <param name="error"> The error code if the fallback operation failed. </param>
+        /// <param name="lastOperationKind"> The type of the additional operation. </param>
+        /// <param name="status"> The status of the additional operation. </param>
+        /// <param name="error"> The error returned when the additional operation did not succeed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeBulkFallbackOperationInfo(ComputeBulkOperationKind lastOperationKind, string status, ComputeBulkOperationError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The last operation type that was performed as a fallback. </summary>
+        /// <summary> The type of the additional operation. </summary>
         public ComputeBulkOperationKind LastOperationKind { get; }
 
-        /// <summary> The status of the fallback operation. </summary>
+        /// <summary> The status of the additional operation. </summary>
         public string Status { get; }
 
-        /// <summary> The error code if the fallback operation failed. </summary>
+        /// <summary> The error returned when the additional operation did not succeed. </summary>
         public ComputeBulkOperationError Error { get; }
     }
 }

@@ -5,8 +5,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
     using ExceptionDocument = Models.Exception;
 

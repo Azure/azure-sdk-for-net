@@ -11,7 +11,7 @@ using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> The mode of operation for runtime protection. </summary>
+    /// <summary> The strategy for updating the cluster. </summary>
     public readonly partial struct ClusterUpdateStrategyType : IEquatable<ClusterUpdateStrategyType>
     {
         private readonly string _value;

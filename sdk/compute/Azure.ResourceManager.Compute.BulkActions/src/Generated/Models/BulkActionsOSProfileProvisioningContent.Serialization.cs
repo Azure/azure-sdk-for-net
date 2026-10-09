@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Additional parameters for Reimaging Non-Ephemeral Virtual Machine. </summary>
+    /// <summary> Additional parameters for reimaging a virtual machine that does not use an ephemeral operating system disk. </summary>
     public partial class BulkActionsOSProfileProvisioningContent : IJsonModel<BulkActionsOSProfileProvisioningContent>
     {
         /// <param name="data"> The data to parse. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BulkActionsOSProfileProvisioningContent(adminPassword, customData, additionalBinaryDataProperties);

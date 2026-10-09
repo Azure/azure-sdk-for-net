@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for task that migrates SQL Server databases to Azure SQL Database Managed Instance using Log Replay Service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, and <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/>, and <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>.
     /// </summary>
     public abstract partial class MigrateSqlServerSqlMISyncTaskOutput
     {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary>
     /// The agent profile of the machines in the pool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DevOpsStatelessAgentProfile"/> and <see cref="DevOpsStateful"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DevOpsStateful"/> and <see cref="DevOpsStatelessAgentProfile"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDevOpsPoolAgentProfile))]
     public abstract partial class DevOpsPoolAgentProfile : IJsonModel<DevOpsPoolAgentProfile>
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Stateless":
-                        return DevOpsStatelessAgentProfile.DeserializeDevOpsStatelessAgentProfile(element, options);
                     case "Stateful":
                         return DevOpsStateful.DeserializeDevOpsStateful(element, options);
+                    case "Stateless":
+                        return DevOpsStatelessAgentProfile.DeserializeDevOpsStatelessAgentProfile(element, options);
                 }
             }
             return UnknownDevOpsPoolAgentProfile.DeserializeUnknownDevOpsPoolAgentProfile(element, options);

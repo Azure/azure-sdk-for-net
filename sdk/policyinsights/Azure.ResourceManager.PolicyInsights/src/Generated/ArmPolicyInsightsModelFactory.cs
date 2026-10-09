@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     correlationId,
                     resourceCount,
                     parallelDeployments,
-                    new RemediationPropertiesFailureThreshold(failureThresholdPercentage, default),
+                    failureThresholdPercentage is null ? default : new RemediationPropertiesFailureThreshold(failureThresholdPercentage, default),
                     default),
                 default);
         }
@@ -894,13 +894,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     provisioningState,
                     createdOn,
                     lastUpdatedOn,
-                    new RemediationFilters((filterLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(), default, default),
+                    filterLocations is null ? default : new RemediationFilters((filterLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(), default, default),
                     deploymentStatus,
                     statusMessage,
                     correlationId,
                     resourceCount,
                     parallelDeployments,
-                    new RemediationPropertiesFailureThreshold(failureThresholdPercentage, default),
+                    failureThresholdPercentage is null ? default : new RemediationPropertiesFailureThreshold(failureThresholdPercentage, default),
                     default),
                 default);
         }

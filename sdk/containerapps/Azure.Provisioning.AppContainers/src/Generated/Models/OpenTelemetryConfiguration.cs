@@ -13,10 +13,10 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Configuration of Open Telemetry. </summary>
     public partial class OpenTelemetryConfiguration : ProvisionableConstruct
     {
-        private DestinationsConfiguration _destinationsConfiguration;
-        private TracesConfiguration _tracesConfiguration;
+        private ContainerAppOpenTelemetryDestinationsConfiguration _destinationsConfiguration;
+        private ContainerAppOpenTelemetryTracesConfiguration _tracesConfiguration;
         private LogsConfiguration _logsConfiguration;
-        private MetricsConfiguration _metricsConfiguration;
+        private ContainerAppOpenTelemetryMetricsConfiguration _metricsConfiguration;
 
         /// <summary> Creates a new OpenTelemetryConfiguration. </summary>
         public OpenTelemetryConfiguration()
@@ -24,7 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DestinationsConfiguration. </summary>
-        public DestinationsConfiguration DestinationsConfiguration
+        public ContainerAppOpenTelemetryDestinationsConfiguration DestinationsConfiguration
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TracesConfiguration. </summary>
-        public TracesConfiguration TracesConfiguration
+        public ContainerAppOpenTelemetryTracesConfiguration TracesConfiguration
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MetricsConfiguration. </summary>
-        public MetricsConfiguration MetricsConfiguration
+        public ContainerAppOpenTelemetryMetricsConfiguration MetricsConfiguration
         {
             get
             {
@@ -104,10 +104,10 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _destinationsConfiguration = DefineModelProperty<DestinationsConfiguration>(nameof(DestinationsConfiguration), new string[] { "destinationsConfiguration" });
-            _tracesConfiguration = DefineModelProperty<TracesConfiguration>(nameof(TracesConfiguration), new string[] { "tracesConfiguration" });
+            _destinationsConfiguration = DefineModelProperty<ContainerAppOpenTelemetryDestinationsConfiguration>(nameof(DestinationsConfiguration), new string[] { "destinationsConfiguration" });
+            _tracesConfiguration = DefineModelProperty<ContainerAppOpenTelemetryTracesConfiguration>(nameof(TracesConfiguration), new string[] { "tracesConfiguration" });
             _logsConfiguration = DefineModelProperty<LogsConfiguration>(nameof(LogsConfiguration), new string[] { "logsConfiguration" });
-            _metricsConfiguration = DefineModelProperty<MetricsConfiguration>(nameof(MetricsConfiguration), new string[] { "metricsConfiguration" });
+            _metricsConfiguration = DefineModelProperty<ContainerAppOpenTelemetryMetricsConfiguration>(nameof(MetricsConfiguration), new string[] { "metricsConfiguration" });
             DefineAdditionalProperties();
         }
 

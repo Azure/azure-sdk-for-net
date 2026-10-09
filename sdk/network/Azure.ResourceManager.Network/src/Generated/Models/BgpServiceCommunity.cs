@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BgpServiceCommunity"/>. </summary>
+        public BgpServiceCommunity() : this(default)
+        {
+        }
+
         /// <summary> Properties of the BGP service community. </summary>
         [WirePath("properties")]
         internal BgpServiceCommunityPropertiesFormat Properties { get; }

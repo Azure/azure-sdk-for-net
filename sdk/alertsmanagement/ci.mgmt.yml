@@ -1,6 +1,19 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
+    - sdk/alertsmanagement/Azure.ResourceManager.PrometheusRuleGroups
+    - sdk/alertsmanagement/Azure.ResourceManager.AlertRuleRecommendations
+    - sdk/alertsmanagement/Azure.ResourceManager.AlertProcessingRules
+    - sdk/alertsmanagement/Azure.ResourceManager.TenantActivityLogAlerts
+    - sdk/alertsmanagement/Azure.ResourceManager.PreviewAlertRule
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

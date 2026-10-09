@@ -175,7 +175,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    output = BinaryData.FromString(prop.Value.GetRawText());
+                    output = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -185,7 +185,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SharePointGroundingToolCallOutput(

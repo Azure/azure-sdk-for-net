@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
     /// <summary>
     /// The generic properties of a target.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlDBSingleDatabaseTargetProperties"/>, <see cref="SqlDBElasticPoolTargetProperties"/>, and <see cref="SqlMITargetProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlDBElasticPoolTargetProperties"/>, <see cref="SqlDBSingleDatabaseTargetProperties"/>, and <see cref="SqlMITargetProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDatabaseWatcherTargetProperties))]
     public abstract partial class DatabaseWatcherTargetProperties : IJsonModel<DatabaseWatcherTargetProperties>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SqlDb":
-                        return SqlDBSingleDatabaseTargetProperties.DeserializeSqlDBSingleDatabaseTargetProperties(element, options);
                     case "SqlEp":
                         return SqlDBElasticPoolTargetProperties.DeserializeSqlDBElasticPoolTargetProperties(element, options);
+                    case "SqlDb":
+                        return SqlDBSingleDatabaseTargetProperties.DeserializeSqlDBSingleDatabaseTargetProperties(element, options);
                     case "SqlMi":
                         return SqlMITargetProperties.DeserializeSqlMITargetProperties(element, options);
                 }

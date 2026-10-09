@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PrincipalConfig(attributes ?? new ChangeTrackingList<IDictionary<string, string>>(), clientIds ?? new ChangeTrackingList<string>(), usernames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

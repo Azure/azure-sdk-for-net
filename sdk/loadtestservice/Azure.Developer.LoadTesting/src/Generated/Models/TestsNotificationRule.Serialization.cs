@@ -235,13 +235,13 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TestsNotificationRule(
                 notificationRuleId,
                 displayName,
-                actionGroupIds,
+                actionGroupIds ?? new ChangeTrackingList<string>(),
                 scope,
                 createdOn,
                 createdBy,
@@ -249,7 +249,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedBy,
                 additionalBinaryDataProperties,
                 testIds ?? new ChangeTrackingList<string>(),
-                eventFilters);
+                eventFilters ?? new ChangeTrackingDictionary<string, TestsNotificationEventFilter>());
         }
     }
 }

@@ -119,6 +119,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetIdentityIntegrationAuthenticationPolicyResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> object. </returns>
+        public static IdentityIntegrationAuthenticationPolicyResource GetIdentityIntegrationAuthenticationPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetIdentityIntegrationAuthenticationPolicyResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="AzureFirewallResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -2787,6 +2805,61 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets a collection of IdentityIntegrationAuthenticationPolicies in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetIdentityIntegrationAuthenticationPolicies()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of IdentityIntegrationAuthenticationPolicies and their operations over a IdentityIntegrationAuthenticationPolicyResource. </returns>
+        public static IdentityIntegrationAuthenticationPolicyCollection GetIdentityIntegrationAuthenticationPolicies(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetIdentityIntegrationAuthenticationPolicies();
+        }
+
+        /// <summary>
+        /// Retrieve the authentication policy with specified name within a resource group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetIdentityIntegrationAuthenticationPolicyAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="authenticationPolicyName"> The name of the authentication policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<IdentityIntegrationAuthenticationPolicyResource>> GetIdentityIntegrationAuthenticationPolicyAsync(this ResourceGroupResource resourceGroupResource, string authenticationPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetIdentityIntegrationAuthenticationPolicyAsync(authenticationPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieve the authentication policy with specified name within a resource group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetIdentityIntegrationAuthenticationPolicy(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="authenticationPolicyName"> The name of the authentication policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPolicy(this ResourceGroupResource resourceGroupResource, string authenticationPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetIdentityIntegrationAuthenticationPolicy(authenticationPolicyName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of AzureFirewalls in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -2894,69 +2967,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetBastionHost(bastionHostName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of NetworkInterfaces in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetNetworkInterfaces(string, string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cloudServiceName"> The cloudServiceName for the resource. </param>
-        /// <param name="roleInstanceName"> The roleInstanceName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkInterfaces and their operations over a NetworkInterfaceResource. </returns>
-        public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroupResource resourceGroupResource, string cloudServiceName, string roleInstanceName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetNetworkInterfaces(cloudServiceName, roleInstanceName);
-        }
-
-        /// <summary>
-        /// Get the specified network interface in a cloud service.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetNetworkInterfaceAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cloudServiceName"> The cloudServiceName for the resource. </param>
-        /// <param name="roleInstanceName"> The roleInstanceName for the resource. </param>
-        /// <param name="networkInterfaceName"> The name of the network interface. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(this ResourceGroupResource resourceGroupResource, string cloudServiceName, string roleInstanceName, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetNetworkInterfaceAsync(cloudServiceName, roleInstanceName, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified network interface in a cloud service.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetNetworkInterface(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cloudServiceName"> The cloudServiceName for the resource. </param>
-        /// <param name="roleInstanceName"> The roleInstanceName for the resource. </param>
-        /// <param name="networkInterfaceName"> The name of the network interface. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkInterfaceResource> GetNetworkInterface(this ResourceGroupResource resourceGroupResource, string cloudServiceName, string roleInstanceName, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetNetworkInterface(cloudServiceName, roleInstanceName, networkInterfaceName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -5593,82 +5603,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets all network interfaces in a cloud service.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCloudServiceNetworkInterfacesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cloudServiceName"> The name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkInterfaceData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkInterfaceData> GetCloudServiceNetworkInterfacesAsync(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCloudServiceNetworkInterfacesAsync(cloudServiceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all network interfaces in a cloud service.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCloudServiceNetworkInterfaces(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cloudServiceName"> The name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkInterfaceData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkInterfaceData> GetCloudServiceNetworkInterfaces(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCloudServiceNetworkInterfaces(cloudServiceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about all public IP addresses on a cloud service level.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCloudServicePublicIPAddressesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cloudServiceName"> The name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PublicIPAddressData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PublicIPAddressData> GetCloudServicePublicIPAddressesAsync(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCloudServicePublicIPAddressesAsync(cloudServiceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about all public IP addresses on a cloud service level.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetCloudServicePublicIPAddresses(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cloudServiceName"> The name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PublicIPAddressData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PublicIPAddressData> GetCloudServicePublicIPAddresses(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetCloudServicePublicIPAddresses(cloudServiceName, cancellationToken);
-        }
-
-        /// <summary>
         /// Checks whether the subscription is visible to private link service in the specified resource group.
         /// <item>
         /// <term> Mocking. </term>
@@ -6351,6 +6285,42 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationSecurityGroups(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the authentication policies in a subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetIdentityIntegrationAuthenticationPoliciesAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetIdentityIntegrationAuthenticationPoliciesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the authentication policies in a subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetIdentityIntegrationAuthenticationPolicies(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetIdentityIntegrationAuthenticationPolicies(cancellationToken);
         }
 
         /// <summary>

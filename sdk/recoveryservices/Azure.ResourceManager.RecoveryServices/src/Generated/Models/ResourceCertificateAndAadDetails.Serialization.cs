@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    thumbprint = BinaryData.FromString(prop.Value.GetRawText());
+                    thumbprint = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("validFrom"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourceCertificateAndAadDetails(

@@ -145,10 +145,10 @@ namespace Azure.Security.ConfidentialLedger.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LedgerEndpointMetadata(endpoints, additionalBinaryDataProperties);
+            return new LedgerEndpointMetadata(endpoints ?? new ChangeTrackingDictionary<string, MethodToEndpointProperties>(), additionalBinaryDataProperties);
         }
     }
 }

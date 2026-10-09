@@ -13,6 +13,6 @@ namespace Specs.Azure.Core.Traits
 
         public static UserActionParam UserActionParam(string userActionValue = default) => throw null;
 
-        public static UserActionResponse UserActionResponse(string userActionResult = default) => throw null;
+        public static UserActionResult UserActionResult(string userActionResultProperty = default) => throw null;
     }
 }

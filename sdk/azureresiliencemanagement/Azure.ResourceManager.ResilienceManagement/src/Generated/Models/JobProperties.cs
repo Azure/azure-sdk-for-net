@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Definition of a job, including its type, status, timing, and additional details.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryJobProperties"/> and <see cref="DrillRunProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DrillRunProperties"/> and <see cref="RecoveryJobProperties"/>.
     /// </summary>
     public abstract partial class JobProperties
     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         {
             get
             {
-                return ExecutionConfigurations is null ? default : ExecutionConfigurations.UserConsent;
+                return ExecutionConfigurations is null ? (UserConsent?)default : ExecutionConfigurations.UserConsent;
             }
         }
     }

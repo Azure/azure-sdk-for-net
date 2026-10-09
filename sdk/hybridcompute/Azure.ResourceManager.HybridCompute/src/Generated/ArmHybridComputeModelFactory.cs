@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HybridComputeLicensePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, licenseType is null && state is null && target is null && edition is null && @type is null && processors is null ? default : new LicenseUpdateProperties(licenseType, new LicenseUpdatePropertiesLicenseDetails(
+            return new HybridComputeLicensePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, licenseType is null && state is null && target is null && edition is null && @type is null && processors is null ? default : new LicenseUpdateProperties(licenseType, state is null && target is null && edition is null && @type is null && processors is null ? default : new LicenseUpdatePropertiesLicenseDetails(
                 state,
                 target,
                 edition,
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     agentConfiguration,
                     serviceStatuses,
                     hardwareProfile,
-                    new StorageProfile((storageDisks ?? new ChangeTrackingList<HybridComputeDisk>()).ToList(), default),
+                    storageDisks is null ? default : new StorageProfile((storageDisks ?? new ChangeTrackingList<HybridComputeDisk>()).ToList(), default),
                     firmwareProfile,
-                    new HybridComputeCloudMetadata(cloudMetadataProvider, default),
+                    cloudMetadataProvider is null ? default : new HybridComputeCloudMetadata(cloudMetadataProvider, default),
                     agentUpgrade,
                     osProfile,
                     licenseProfile,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     hardwareResourceId,
                     msSqlDiscovered,
                     detectedProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default),
+                    networkInterfaces is null ? default : new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default),
                     default),
                 (resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>()).ToList(),
                 identity,
@@ -478,6 +478,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeOSProfile(computerName, windowsConfiguration, linuxConfiguration, default);
         }
 
+        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
+        /// <param name="patchMode"> Specifies the patch mode. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
+        /// <returns> A new <see cref="Models.HybridComputeWindowsConfiguration"/> instance for mocking. </returns>
+        public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode = default, PatchModeType? patchMode = default, bool? isHotpatchingEnabled = default, HybridComputePatchSettingsStatus status = default)
+        {
+            return new HybridComputeWindowsConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, default), default);
+        }
+
         /// <summary> Status of the hotpatch capability enrollment or disenrollment. </summary>
         /// <param name="hotpatchEnablementStatus"> Indicates the current status of the hotpatch being enabled or disabled. </param>
         /// <param name="error"> The errors that were encountered during the hotpatch capability enrollment or disenrollment. </param>
@@ -485,6 +495,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputePatchSettingsStatus HybridComputePatchSettingsStatus(HotpatchEnablementStatus? hotpatchEnablementStatus = default, ResponseError error = default)
         {
             return new HybridComputePatchSettingsStatus(hotpatchEnablementStatus, error, default);
+        }
+
+        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
+        /// <param name="patchMode"> Specifies the patch mode. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
+        /// <returns> A new <see cref="Models.HybridComputeLinuxConfiguration"/> instance for mocking. </returns>
+        public static HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode = default, PatchModeType? patchMode = default, bool? isHotpatchingEnabled = default, HybridComputePatchSettingsStatus status = default)
+        {
+            return new HybridComputeLinuxConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, default), default);
         }
 
         /// <param name="licenseStatus"> Indicates the license status of the OS. </param>
@@ -549,6 +569,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             esuKeys ??= new ChangeTrackingList<EsuKey>();
 
             return new LicenseProfileStorageModelEsuProperties(assignedLicenseImmutableId, (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(), default);
+        }
+
+        /// <summary> ESU key. </summary>
+        /// <param name="sku"> SKU number. </param>
+        /// <param name="licenseStatus"> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </param>
+        /// <returns> A new <see cref="Models.EsuKey"/> instance for mocking. </returns>
+        public static EsuKey EsuKey(string sku = default, int? licenseStatus = default)
+        {
+            return new EsuKey(sku, licenseStatus, default);
         }
 
         /// <summary> Product Feature. </summary>
@@ -648,7 +677,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, identity, kind, locationData is null && osProfile is null && cloudMetadataProvider is null && agentUpgrade is null && parentClusterResourceId is null && privateLinkScopeResourceId is null && identityKeyStore is null && tpmEkCertificate is null ? default : new MachineUpdateProperties(
                 locationData,
                 osProfile,
-                new HybridComputeCloudMetadata(cloudMetadataProvider, default),
+                cloudMetadataProvider is null ? default : new HybridComputeCloudMetadata(cloudMetadataProvider, default),
                 agentUpgrade,
                 parentClusterResourceId,
                 privateLinkScopeResourceId,
@@ -836,14 +865,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new LicenseProfileArmEsuProperties(
+                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(softwareAssuranceCustomer is null ? default : new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null ? default : new LicenseProfileArmEsuProperties(
                     assignedLicenseImmutableId,
                     (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(),
                     default,
                     serverType,
                     esuEligibility,
                     esuKeyState,
-                    assignedLicense), new LicenseProfileArmProductProfileProperties(
+                    assignedLicense), subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
                     subscriptionStatus,
                     productType,
                     enrollmentOn,
@@ -867,7 +896,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HybridComputeLicenseProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, softwareAssuranceCustomer is null && assignedLicense is null && subscriptionStatus is null && productType is null && productFeatures is null ? default : new LicenseProfileUpdateProperties(new LicenseProfileUpdatePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new EsuProfileUpdateProperties(assignedLicense, default), new ProductProfileUpdateProperties(subscriptionStatus, productType, (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeatureUpdate>()).ToList(), default), default));
+            return new HybridComputeLicenseProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, softwareAssuranceCustomer is null && assignedLicense is null && subscriptionStatus is null && productType is null && productFeatures is null ? default : new LicenseProfileUpdateProperties(softwareAssuranceCustomer is null ? default : new LicenseProfileUpdatePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), assignedLicense is null ? default : new EsuProfileUpdateProperties(assignedLicense, default), subscriptionStatus is null && productType is null && productFeatures is null ? default : new ProductProfileUpdateProperties(subscriptionStatus, productType, (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeatureUpdate>()).ToList(), default), default));
         }
 
         /// <summary> Product Feature. </summary>
@@ -1410,7 +1439,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 name,
                 resourceType,
                 systemData,
-                tenantId is null && gatewayResourceId is null ? default : new SettingsProperties(tenantId, new SettingsGatewayProperties(gatewayResourceId, default), default),
+                tenantId is null && gatewayResourceId is null ? default : new SettingsProperties(tenantId, gatewayResourceId is null ? default : new SettingsGatewayProperties(gatewayResourceId, default), default),
                 default);
         }
 
@@ -1430,6 +1459,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputeExtensionPublisher HybridComputeExtensionPublisher(string id = default, string name = default)
         {
             return new HybridComputeExtensionPublisher(id, name, default);
+        }
+
+        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
+        /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
+        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
+        /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
+        /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
+        /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopeProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess = default, string provisioningState = default, string privateLinkScopeId = default, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections = default)
+        {
+            return new HybridComputePrivateLinkScopeProperties(
+                publicNetworkAccess,
+                provisioningState,
+                privateLinkScopeId,
+                (privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionDataModel>()).ToList(),
+                default,
+                default);
         }
 
         /// <summary> License Profile Instance View in Machine Properties. </summary>
@@ -1510,14 +1557,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new LicenseProfileArmEsuProperties(
+                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(softwareAssuranceCustomer is null ? default : new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null ? default : new LicenseProfileArmEsuProperties(
                     assignedLicenseImmutableId,
                     (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(),
                     default,
                     serverType,
                     esuEligibility,
                     esuKeyState,
-                    assignedLicense), new LicenseProfileArmProductProfileProperties(
+                    assignedLicense), subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
                     subscriptionStatus,
                     productType,
                     enrollmentOn,

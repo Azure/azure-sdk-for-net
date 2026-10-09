@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TemplateDeploymentOptions templateDeploymentOptions = default;
             IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             ResourceMovePolicy resourceMovePolicy = default;
-            RPaaSResourceDeletionPolicy? resourceDeletionPolicy = default;
+            ResourceDeletionPolicy? resourceDeletionPolicy = default;
             IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies = default;
             ResourceTypeManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             PrivateEndpointConfiguration privateEndpointConfiguration = default;
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceDeletionPolicy = new RPaaSResourceDeletionPolicy(prop.Value.GetString());
+                    resourceDeletionPolicy = new ResourceDeletionPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceDeletionPolicies"u8))
@@ -1271,7 +1271,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     metadata = dictionary;
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourceTypeRegistrationProperties(

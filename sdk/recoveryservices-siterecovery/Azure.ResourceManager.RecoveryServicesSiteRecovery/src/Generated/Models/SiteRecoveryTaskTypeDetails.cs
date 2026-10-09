@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Task details based on specific task type.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/>, and <see cref="VmNicUpdatesTaskDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/>, and <see cref="VmNicUpdatesTaskDetails"/>.
     /// </summary>
     public abstract partial class SiteRecoveryTaskTypeDetails
     {
@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             InstanceType = instanceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryTaskTypeDetails"/>. </summary>
+        protected SiteRecoveryTaskTypeDetails() : this(default)
+        {
         }
 
         /// <summary> The type of task details. </summary>

@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 location,
                 default);
         }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     alternateName,
                     publicNetworkAccess,
                     premiumMessagingPartitions,
-                    new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
+                    platformCapabilitiesConfidentialComputeMode is null ? default : new PlatformCapabilities(platformCapabilitiesConfidentialComputeMode is null ? default : new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
                     geoDataReplication,
                     ipAddressType,
                     default),
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 location,
                 default);
         }

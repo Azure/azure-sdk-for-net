@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary>
     /// Autonomous Database base resource model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutonomousDatabaseProperties"/>, <see cref="AutonomousDatabaseCloneProperties"/>, <see cref="AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/>, and <see cref="AutonomousDatabaseFromBackupTimestampProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutonomousDatabaseCloneProperties"/>, <see cref="AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/>, <see cref="AutonomousDatabaseFromBackupTimestampProperties"/>, and <see cref="AutonomousDatabaseProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAutonomousDatabaseBaseProperties))]
     public abstract partial class AutonomousDatabaseBaseProperties : IJsonModel<AutonomousDatabaseBaseProperties>
@@ -560,14 +560,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Regular":
-                        return AutonomousDatabaseProperties.DeserializeAutonomousDatabaseProperties(element, options);
                     case "Clone":
                         return AutonomousDatabaseCloneProperties.DeserializeAutonomousDatabaseCloneProperties(element, options);
                     case "CrossRegionDisasterRecovery":
                         return AutonomousDatabaseCrossRegionDisasterRecoveryProperties.DeserializeAutonomousDatabaseCrossRegionDisasterRecoveryProperties(element, options);
                     case "CloneFromBackupTimestamp":
                         return AutonomousDatabaseFromBackupTimestampProperties.DeserializeAutonomousDatabaseFromBackupTimestampProperties(element, options);
+                    case "Regular":
+                        return AutonomousDatabaseProperties.DeserializeAutonomousDatabaseProperties(element, options);
                 }
             }
             return UnknownAutonomousDatabaseBaseProperties.DeserializeUnknownAutonomousDatabaseBaseProperties(element, options);

@@ -23,12 +23,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [JsonConverter(typeof(DatasetDataElement.DatasetDataElementConverter))]
     public partial class DatasetDataElement
     {
-        /// <summary> Initializes a new instance of <see cref="DatasetDataElement"/>. </summary>
-        public DatasetDataElement()
-        {
-            _additionalBinaryDataProperties = new global::Azure.ResourceManager.DataFactory.ChangeTrackingDictionary<string, BinaryData>();
-        }
-
         /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>
         [CodeGenMember("ColumnName")]
         public DataFactoryElement<string> ColumnName { get; set; }

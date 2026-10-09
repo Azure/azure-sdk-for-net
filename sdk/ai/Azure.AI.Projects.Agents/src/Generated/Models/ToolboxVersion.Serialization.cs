@@ -275,7 +275,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ToolboxVersion(
@@ -285,7 +285,7 @@ namespace Azure.AI.Projects.Agents
                 version,
                 description,
                 createdOn,
-                tools,
+                tools ?? new ChangeTrackingList<ToolboxTool>(),
                 skills ?? new ChangeTrackingList<ToolboxSkill>(),
                 policies,
                 additionalBinaryDataProperties);

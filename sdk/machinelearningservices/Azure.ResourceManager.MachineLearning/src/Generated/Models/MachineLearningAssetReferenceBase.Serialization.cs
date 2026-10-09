@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for asset references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningIdAssetReference"/>, <see cref="MachineLearningDataPathAssetReference"/>, and <see cref="MachineLearningOutputPathAssetReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningIdAssetReference"/>, and <see cref="MachineLearningOutputPathAssetReference"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAssetReferenceBase))]
     public abstract partial class MachineLearningAssetReferenceBase : IJsonModel<MachineLearningAssetReferenceBase>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Id":
-                        return MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(element, options);
                     case "DataPath":
                         return MachineLearningDataPathAssetReference.DeserializeMachineLearningDataPathAssetReference(element, options);
+                    case "Id":
+                        return MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(element, options);
                     case "OutputPath":
                         return MachineLearningOutputPathAssetReference.DeserializeMachineLearningOutputPathAssetReference(element, options);
                 }

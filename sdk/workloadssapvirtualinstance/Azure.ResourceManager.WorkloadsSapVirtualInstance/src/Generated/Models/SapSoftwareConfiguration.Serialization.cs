@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary>
     /// The SAP Software configuration Input.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServiceInitiatedSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/>, and <see cref="ExternalInstallationSoftwareConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/>, and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSapSoftwareConfiguration))]
     public abstract partial class SapSoftwareConfiguration : IJsonModel<SapSoftwareConfiguration>
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ServiceInitiated":
-                        return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element, options);
-                    case "SAPInstallWithoutOSConfig":
-                        return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element, options);
                     case "External":
                         return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element, options);
+                    case "SAPInstallWithoutOSConfig":
+                        return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element, options);
+                    case "ServiceInitiated":
+                        return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element, options);
                 }
             }
             return UnknownSapSoftwareConfiguration.DeserializeUnknownSapSoftwareConfiguration(element, options);

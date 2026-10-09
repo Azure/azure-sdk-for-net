@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Playwright.PlaywrightWorkspaceData"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PlaywrightWorkspaceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PlaywrightWorkspaceProperties properties, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="reporting"> Indicates whether reporting is enabled for the workspace. When set to true, reports will be generated and available for the workspace. </param>
         /// <param name="storageUri"> The URI of the Azure storage account used to store workspace artifacts, test results, and reports. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspaceProperties"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState = default, Uri dataplaneUri = default, PlaywrightEnablementStatus? regionalAffinity = default, PlaywrightEnablementStatus? localAuth = default, string workspaceId = default, PlaywrightEnablementStatus? reporting = default, Uri storageUri = default)
+        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, string workspaceId, PlaywrightEnablementStatus? reporting, Uri storageUri = default)
         {
             return new PlaywrightWorkspaceProperties(
                 provisioningState,

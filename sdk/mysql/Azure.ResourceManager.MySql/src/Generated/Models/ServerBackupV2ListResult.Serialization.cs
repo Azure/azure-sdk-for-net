@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ServerBackupV2ListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerBackupV2Data>(), nextLink, additionalBinaryDataProperties);

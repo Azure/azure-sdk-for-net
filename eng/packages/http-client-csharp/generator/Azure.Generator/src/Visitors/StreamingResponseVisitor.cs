@@ -65,11 +65,44 @@ namespace Azure.Generator.Visitors
             {
                 var arguments = expression.Arguments.ToList();
                 arguments[0] = New.Instance<AzurePipelineResponse>(message);
+                AddOperationCancellationToken(expression, method, arguments);
                 expression.Update(arguments: arguments);
                 return expression;
             }
 
             return base.VisitInvokeMethodExpression(expression, method);
+        }
+
+        private static void AddOperationCancellationToken(
+            InvokeMethodExpression expression,
+            MethodProvider method,
+            List<ValueExpression> arguments)
+        {
+            if (expression.InstanceReference is not TypeReferenceExpression { Type: { } factoryType }
+                || !factoryType.Equals(typeof(AsyncStreamingResult))
+                || expression.TypeArguments is { Count: > 0 }
+                || method.Signature.Parameters.LastOrDefault(p => p.Type.Equals(typeof(RequestContext))) is not { } context)
+            {
+                return;
+            }
+
+            int cancellationTokenIndex = (expression.MethodSignature?.Name ?? expression.MethodName) switch
+            {
+                nameof(AsyncStreamingResult.CreateSse) => 2,
+                nameof(AsyncStreamingResult.CreateJsonLines) => 1,
+                _ => -1
+            };
+            if (arguments.Count > cancellationTokenIndex)
+            {
+                return;
+            }
+
+            // Raw SSE factories have an optional terminal predicate before the operation token.
+            if (arguments.Count < cancellationTokenIndex)
+            {
+                arguments.Add(Null);
+            }
+            arguments.Add(context.NullConditional().Property(nameof(RequestContext.CancellationToken)).NullCoalesce(Default));
         }
 
         private static bool TryGetStreamingResponse(
@@ -95,11 +128,9 @@ namespace Azure.Generator.Visitors
             return false;
         }
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         private static bool IsStreamingResponseType(CSharpType? type)
             => UnwrapTask(type) is { IsFrameworkType: true, IsGenericType: true } streamingType &&
-               streamingType.GetGenericTypeDefinition().Equals(typeof(AsyncStreamingClientResult<>));
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+               streamingType.GetGenericTypeDefinition().Equals(typeof(AsyncStreamingResult<>));
 
         private static bool TryFindAzureResponseMessage(
             ValueExpression expression,

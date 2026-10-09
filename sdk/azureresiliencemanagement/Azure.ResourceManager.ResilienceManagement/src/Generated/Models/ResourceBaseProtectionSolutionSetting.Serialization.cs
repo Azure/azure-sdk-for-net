@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Definition of recovery orchestration resource protection solution setting with recovery orchestration plan.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceNativeProtectionSolutionSetting"/>, <see cref="ResourceCustomProtectionSetting"/>, and <see cref="ResourceSiteRecoveryProtectionSetting"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceCustomProtectionSetting"/>, <see cref="ResourceNativeProtectionSolutionSetting"/>, and <see cref="ResourceSiteRecoveryProtectionSetting"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownResourceBaseProtectionSolutionSetting))]
     public abstract partial class ResourceBaseProtectionSolutionSetting : IJsonModel<ResourceBaseProtectionSolutionSetting>
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureNative":
-                        return ResourceNativeProtectionSolutionSetting.DeserializeResourceNativeProtectionSolutionSetting(element, options);
                     case "CustomRunbook":
                         return ResourceCustomProtectionSetting.DeserializeResourceCustomProtectionSetting(element, options);
+                    case "AzureNative":
+                        return ResourceNativeProtectionSolutionSetting.DeserializeResourceNativeProtectionSolutionSetting(element, options);
                     case "AzureSiteRecovery":
                         return ResourceSiteRecoveryProtectionSetting.DeserializeResourceSiteRecoveryProtectionSetting(element, options);
                 }

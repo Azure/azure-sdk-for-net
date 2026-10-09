@@ -45,11 +45,11 @@ $sourceDomains = @(
 )
 
 Write-Host 'Source workflow'
-foreach ($domain in @('defaults', 'dotnet', 'github', 'api.githubcopilot.com')) {
+foreach ($domain in @('defaults', 'dotnet', 'github', 'registry.npmjs.org', 'api.githubcopilot.com')) {
     Assert ($sourceDomains -ccontains $domain) "source explicitly allows $domain"
 }
-Assert ($sourceDomains.Count -eq 4) `
-    'source allowlist adds only the nested Copilot API host, not a broader engine bundle or telemetry'
+Assert ($sourceDomains.Count -eq 5) `
+    'source allowlist adds only required npm and nested Copilot access, not a broader engine bundle or telemetry'
 Assert ($frontmatter -match '(?m)^  AZSDK_COPILOT_CLI_PATH: /usr/local/bin/copilot\r?$') `
     'nested client uses the installed Copilot CLI'
 Assert ($frontmatter -match '(?m)^  AZSDK_COPILOT_GITHUB_TOKEN: \$\{\{ github.token \}\}\r?$') `
@@ -80,7 +80,7 @@ $network = $compiledNetworkMatch.Groups['network'].Value | ConvertFrom-Json
 Write-Host 'Compiled agent workflow'
 Assert ($network.allowDomains -ccontains 'api.githubcopilot.com') `
     'agent AWF network.allowDomains permits direct nested Copilot requests'
-foreach ($domain in @('api.nuget.org', 'github.com', 'raw.githubusercontent.com')) {
+foreach ($domain in @('api.nuget.org', 'github.com', 'raw.githubusercontent.com', 'registry.npmjs.org')) {
     Assert ($network.allowDomains -ccontains $domain) "agent AWF retains access to $domain"
 }
 Assert ($network.allowDomains -cnotcontains '*' -and $network.allowDomains -cnotcontains '*.githubcopilot.com') `

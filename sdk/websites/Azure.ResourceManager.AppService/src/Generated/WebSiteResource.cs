@@ -2146,7 +2146,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebSitesGetNetworkTraceOperationAsyncCollectionResultOfT(
+            return new WebSiteResourceGetNetworkTraceOperationAsyncCollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2190,7 +2190,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebSitesGetNetworkTraceOperationCollectionResultOfT(
+            return new WebSiteResourceGetNetworkTraceOperationCollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2234,7 +2234,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebSitesGetNetworkTraceOperationV2AsyncCollectionResultOfT(
+            return new WebSiteResourceGetNetworkTraceOperationV2AsyncCollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2278,7 +2278,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebSitesGetNetworkTraceOperationV2CollectionResultOfT(
+            return new WebSiteResourceGetNetworkTraceOperationV2CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2322,7 +2322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebSitesGetNetworkTracesAsyncCollectionResultOfT(
+            return new WebSiteResourceGetNetworkTracesAsyncCollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2366,7 +2366,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebSitesGetNetworkTracesCollectionResultOfT(
+            return new WebSiteResourceGetNetworkTracesCollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2410,7 +2410,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebSitesGetNetworkTracesV2AsyncCollectionResultOfT(
+            return new WebSiteResourceGetNetworkTracesV2AsyncCollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2454,7 +2454,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebSitesGetNetworkTracesV2CollectionResultOfT(
+            return new WebSiteResourceGetNetworkTracesV2CollectionResultOfT(
                 _sitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

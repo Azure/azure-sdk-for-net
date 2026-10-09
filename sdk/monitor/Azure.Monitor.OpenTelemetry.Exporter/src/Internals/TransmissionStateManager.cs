@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal TransmissionState State { get; private set; }
 
         /// <param name="endpoint">
-        /// Named in the back-off event. Multi-tenant runs one of these per ingestion endpoint, and
+        /// Named in the back-off event. Multi-endpoint runs one of these per ingestion endpoint, and
         /// without it several endpoints backing off are indistinguishable in a trace.
         /// </param>
         internal TransmissionStateManager(string? endpoint = null)

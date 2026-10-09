@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary>
         /// The base export parameter
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ExportQueryTerraform"/>, <see cref="Models.ExportResourceTerraform"/>, and <see cref="Models.ExportResourceGroupTerraform"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ExportQueryTerraform"/>, <see cref="Models.ExportResourceGroupTerraform"/>, and <see cref="Models.ExportResourceTerraform"/>.
         /// </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>

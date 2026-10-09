@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
@@ -55,9 +56,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupProtectionContainerApiVersion);
             _protectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionContainerApiVersion ?? "2026-07-01");
+            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionContainerApiVersion ?? "2026-08-01");
             _backupWorkloadItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionContainerApiVersion ?? "2026-07-01");
+            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionContainerApiVersion ?? "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -313,7 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -358,7 +359,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -402,7 +403,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -446,7 +447,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -490,7 +491,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -549,7 +550,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -695,10 +696,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -737,10 +737,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

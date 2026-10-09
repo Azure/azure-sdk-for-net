@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebGlobalGetDeletedWebAppSnapshotsAsyncCollectionResultOfT(_globalRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DeletedSiteResource.GetDeletedWebAppSnapshots");
+            return new DeletedSiteResourceGetDeletedWebAppSnapshotsAsyncCollectionResultOfT(_globalRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DeletedSiteResource.GetDeletedWebAppSnapshots");
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebGlobalGetDeletedWebAppSnapshotsCollectionResultOfT(_globalRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DeletedSiteResource.GetDeletedWebAppSnapshots");
+            return new DeletedSiteResourceGetDeletedWebAppSnapshotsCollectionResultOfT(_globalRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "DeletedSiteResource.GetDeletedWebAppSnapshots");
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// Class representing a Kusto database.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoReadWriteDatabase"/> and <see cref="KustoReadOnlyFollowingDatabase"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoReadOnlyFollowingDatabase"/> and <see cref="KustoReadWriteDatabase"/>.
     /// </summary>
     public partial class KustoDatabaseData : ResourceData, IJsonModel<KustoDatabaseData>
     {
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Kusto
             {
                 switch (discriminator.GetString())
                 {
-                    case "ReadWrite":
-                        return KustoReadWriteDatabase.DeserializeKustoReadWriteDatabase(element, options);
                     case "ReadOnlyFollowing":
                         return KustoReadOnlyFollowingDatabase.DeserializeKustoReadOnlyFollowingDatabase(element, options);
+                    case "ReadWrite":
+                        return KustoReadWriteDatabase.DeserializeKustoReadWriteDatabase(element, options);
                 }
             }
             return UnknownKustoDatabase.DeserializeUnknownKustoDatabase(element, options);

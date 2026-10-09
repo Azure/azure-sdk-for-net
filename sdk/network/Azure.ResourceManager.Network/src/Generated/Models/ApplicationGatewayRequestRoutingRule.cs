@@ -96,6 +96,20 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> Authentication configuration bindings of the request routing rule. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU. </summary>
+        [WirePath("properties.authConfigs")]
+        public IList<ApplicationGatewayAuthConfig> AuthConfigs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                return Properties.AuthConfigs;
+            }
+        }
+
         /// <summary> The provisioning state of the request routing rule resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState
@@ -175,6 +189,24 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
                 }
                 Properties.UrlPathMapId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.advancedRoutingMap.id")]
+        public ResourceIdentifier AdvancedRoutingMapId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdvancedRoutingMapId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.AdvancedRoutingMapId = value;
             }
         }
 

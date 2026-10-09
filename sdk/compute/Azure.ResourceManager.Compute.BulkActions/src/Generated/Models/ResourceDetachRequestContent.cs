@@ -13,14 +13,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request model to detach a list of scheduled action resources. </summary>
+    /// <summary> Resources to remove from a scheduled action. </summary>
     public partial class ResourceDetachRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceDetachRequestContent"/>. </summary>
-        /// <param name="resources"> List of resources to be detached. </param>
+        /// <param name="resources"> The Azure resource IDs of the resources to remove. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
         public ResourceDetachRequestContent(IEnumerable<ResourceIdentifier> resources)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceDetachRequestContent"/>. </summary>
-        /// <param name="resources"> List of resources to be detached. </param>
+        /// <param name="resources"> The Azure resource IDs of the resources to remove. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResourceDetachRequestContent(IList<ResourceIdentifier> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of resources to be detached. </summary>
+        /// <summary> The Azure resource IDs of the resources to remove. </summary>
         public IList<ResourceIdentifier> Resources { get; }
     }
 }

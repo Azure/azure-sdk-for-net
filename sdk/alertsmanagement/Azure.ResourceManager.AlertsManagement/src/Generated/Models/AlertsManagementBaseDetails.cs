@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Base details class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServiceAlertPropertyChangeDetails"/>, <see cref="ServiceAlertActionSuppressedDetails"/>, and <see cref="ServiceAlertActionTriggeredDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServiceAlertActionSuppressedDetails"/>, <see cref="ServiceAlertActionTriggeredDetails"/>, and <see cref="ServiceAlertPropertyChangeDetails"/>.
     /// </summary>
     public abstract partial class AlertsManagementBaseDetails
     {

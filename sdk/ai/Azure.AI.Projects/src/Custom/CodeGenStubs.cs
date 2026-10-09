@@ -16,3 +16,6 @@ namespace Azure.AI.Projects;
 [CodeGenType("ContainerNetworkPolicyParam")] internal partial class InternalContainerNetworkPolicyParam { }
 [CodeGenType("ContainerNetworkPolicyAllowlistParam")] internal partial class InternalContainerNetworkPolicyAllowlistParam { }
 [CodeGenType("ContainerNetworkPolicyDomainSecretParam")] internal partial class InternalContainerNetworkPolicyDomainSecretParam { }
+[CodeGenType("GitHubCopilotToolsetPreview")] internal partial class InternalGitHubCopilotToolsetPreview { }
+[CodeGenType("GitHubCopilotToolsetDefaultConfig")] internal partial class InternalGitHubCopilotToolsetDefaultConfig { }
+[CodeGenType("GitHubCopilotToolsetConfig")] internal partial class InternalGitHubCopilotToolsetConfig { }

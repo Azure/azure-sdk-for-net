@@ -17,6 +17,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<int> _maxReplicas;
         private BicepValue<int> _cooldownPeriod;
         private BicepValue<int> _pollingInterval;
+        private BicepValue<bool> _allowScalingRuleOverride;
         private BicepList<ContainerAppScaleRule> _rules;
 
         /// <summary> Creates a new ContainerAppScale. </summary>
@@ -84,6 +85,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the AllowScalingRuleOverride. </summary>
+        public BicepValue<bool> AllowScalingRuleOverride
+        {
+            get
+            {
+                Initialize();
+                return _allowScalingRuleOverride;
+            }
+            set
+            {
+                Initialize();
+                _allowScalingRuleOverride.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Rules. </summary>
         public BicepList<ContainerAppScaleRule> Rules
         {
@@ -107,6 +123,7 @@ namespace Azure.Provisioning.AppContainers
             _maxReplicas = DefineProperty<int>(nameof(MaxReplicas), new string[] { "maxReplicas" });
             _cooldownPeriod = DefineProperty<int>(nameof(CooldownPeriod), new string[] { "cooldownPeriod" });
             _pollingInterval = DefineProperty<int>(nameof(PollingInterval), new string[] { "pollingInterval" });
+            _allowScalingRuleOverride = DefineProperty<bool>(nameof(AllowScalingRuleOverride), new string[] { "allowScalingRuleOverride" });
             _rules = DefineListProperty<ContainerAppScaleRule>(nameof(Rules), new string[] { "rules" });
             DefineAdditionalProperties();
         }

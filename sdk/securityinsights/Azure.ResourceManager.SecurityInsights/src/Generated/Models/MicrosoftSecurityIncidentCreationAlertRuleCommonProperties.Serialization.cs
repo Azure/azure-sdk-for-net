@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MicrosoftSecurityIncidentCreationAlertRuleCommonProperties(displayNamesFilter ?? new ChangeTrackingList<string>(), displayNamesExcludeFilter ?? new ChangeTrackingList<string>(), productFilter, severitiesFilter ?? new ChangeTrackingList<SecurityInsightsAlertSeverity>(), additionalBinaryDataProperties);

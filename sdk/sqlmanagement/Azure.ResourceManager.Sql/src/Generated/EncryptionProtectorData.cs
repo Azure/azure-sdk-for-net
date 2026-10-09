@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.ServerKeyType;
+                return Properties is null ? (SqlServerKeyType?)default : Properties.ServerKeyType;
             }
             set
             {

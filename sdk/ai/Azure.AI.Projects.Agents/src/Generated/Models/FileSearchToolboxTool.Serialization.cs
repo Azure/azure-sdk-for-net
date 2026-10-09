@@ -177,7 +177,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     toolConfigs = dictionary;
@@ -208,7 +208,7 @@ namespace Azure.AI.Projects.Agents
                         filters = null;
                         continue;
                     }
-                    filters = BinaryData.FromString(prop.Value.GetRawText());
+                    filters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("vector_store_ids"u8))
@@ -234,7 +234,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FileSearchToolboxTool(

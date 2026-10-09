@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup ProtectionIntent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryServiceVaultProtectionIntent"/>, <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, and <see cref="WorkloadSqlAutoProtectionIntent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryServiceVaultProtectionIntent"/>, <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, and <see cref="WorkloadSqlAutoProtectionIntent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownProtectionIntent))]
     public abstract partial class BackupGenericProtectionIntent : IJsonModel<BackupGenericProtectionIntent>
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return RecoveryServiceVaultProtectionIntent.DeserializeRecoveryServiceVaultProtectionIntent(element, options);
                     case "AzureResourceItem":
                         return ResourceProtectionIntent.DeserializeResourceProtectionIntent(element, options);
-                    case "AzureWorkloadContainerAutoProtectionIntent":
-                        return WorkloadContainerAutoProtectionIntent.DeserializeWorkloadContainerAutoProtectionIntent(element, options);
                     case "AzureWorkloadAutoProtectionIntent":
                         return WorkloadAutoProtectionIntent.DeserializeWorkloadAutoProtectionIntent(element, options);
+                    case "AzureWorkloadContainerAutoProtectionIntent":
+                        return WorkloadContainerAutoProtectionIntent.DeserializeWorkloadContainerAutoProtectionIntent(element, options);
                     case "AzureWorkloadSQLAutoProtectionIntent":
                         return WorkloadSqlAutoProtectionIntent.DeserializeWorkloadSqlAutoProtectionIntent(element, options);
                 }

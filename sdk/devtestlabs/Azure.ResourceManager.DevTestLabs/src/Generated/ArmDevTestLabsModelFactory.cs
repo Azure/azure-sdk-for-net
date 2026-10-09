@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevTestLabVmCreationContent(bulkCreationParametersInstanceCount is null && notes is null && ownerObjectId is null && ownerUserPrincipalName is null && createdOn is null && customImageId is null && size is null && userName is null && password is null && sshKey is null && isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && artifacts is null && galleryImageReference is null && planId is null && networkInterface is null && expireOn is null && allowClaim is null && storageType is null && environmentId is null && dataDiskParameters is null && scheduleParameters is null ? default : new LabVirtualMachineCreationParameterProperties(
-                new BulkCreationParameters(bulkCreationParametersInstanceCount, default),
+                bulkCreationParametersInstanceCount is null ? default : new BulkCreationParameters(bulkCreationParametersInstanceCount, default),
                 notes,
                 ownerObjectId,
                 ownerUserPrincipalName,
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
-        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, ResourceIdentifier targetResourceId = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId, string dailyRecurrenceTime, int? hourlyRecurrenceMinute, string name, AzureLocation? location, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -322,8 +322,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 status,
                 taskType,
                 weeklyRecurrence,
-                new DayDetails(dailyRecurrenceTime, default),
-                new HourDetails(hourlyRecurrenceMinute, default),
+                dailyRecurrenceTime is null ? default : new DayDetails(dailyRecurrenceTime, default),
+                hourlyRecurrenceMinute is null ? default : new HourDetails(hourlyRecurrenceMinute, default),
                 timeZoneId,
                 notificationSettings,
                 targetResourceId,
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="dailyRecurrenceTime"> The time of day the schedule will occur. </param>
         /// <param name="hourlyRecurrenceMinute"> Minutes of the hour the schedule will run. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabScheduleData"/> instance for mocking. </returns>
-        public static DevTestLabScheduleData DevTestLabScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, DateTimeOffset? createdOn = default, string targetResourceId = default, string provisioningState = default, Guid? uniqueIdentifier = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default)
+        public static DevTestLabScheduleData DevTestLabScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, DateTimeOffset? createdOn, string targetResourceId, string provisioningState, Guid? uniqueIdentifier, string dailyRecurrenceTime, int? hourlyRecurrenceMinute)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -434,8 +434,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     status,
                     taskType,
                     weeklyRecurrence,
-                    new DayDetails(dailyRecurrenceTime, default),
-                    new HourDetails(hourlyRecurrenceMinute, default),
+                    dailyRecurrenceTime is null ? default : new DayDetails(dailyRecurrenceTime, default),
+                    hourlyRecurrenceMinute is null ? default : new HourDetails(hourlyRecurrenceMinute, default),
                     timeZoneId,
                     notificationSettings,
                     createdOn,
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="estimatedLabCost"> The cost component of the cost item. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabCostData"/> instance for mocking. </returns>
-        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabTargetCost targetCost = default, IEnumerable<DevTestLabCostDetails> labCostDetails = default, IEnumerable<DevTestLabResourceCost> resourceCosts = default, string currencyCode = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? createdOn = default, string provisioningState = default, Guid? uniqueIdentifier = default, double? estimatedLabCost = default)
+        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabTargetCost targetCost, IEnumerable<DevTestLabCostDetails> labCostDetails, IEnumerable<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, double? estimatedLabCost)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 location,
                 targetCost is null && estimatedLabCost is null && labCostDetails is null && resourceCosts is null && currencyCode is null && startOn is null && endOn is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new LabCostProperties(
                     targetCost,
-                    new LabCostSummaryProperties(estimatedLabCost, default),
+                    estimatedLabCost is null ? default : new LabCostSummaryProperties(estimatedLabCost, default),
                     (labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>()).ToList(),
                     (resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>()).ToList(),
                     currencyCode,
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="labVmId"> The identifier of the VM from which a formula is to be created. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabFormulaData"/> instance for mocking. </returns>
-        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string author = default, string osType = default, DateTimeOffset? createdOn = default, DevTestLabVmCreationContent formulaContent = default, string provisioningState = default, Guid? uniqueIdentifier = default, string labVmId = default)
+        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string author, string osType, DateTimeOffset? createdOn, DevTestLabVmCreationContent formulaContent, string provisioningState, Guid? uniqueIdentifier, string labVmId)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     osType,
                     createdOn,
                     formulaContent,
-                    new FormulaPropertiesFromVm(labVmId, default),
+                    labVmId is null ? default : new FormulaPropertiesFromVm(labVmId, default),
                     provisioningState,
                     uniqueIdentifier,
                     default),
@@ -1773,8 +1773,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     status,
                     taskType,
                     weeklyRecurrence,
-                    new DayDetails(dailyRecurrenceTime, default),
-                    new HourDetails(hourlyRecurrenceMinute, default),
+                    dailyRecurrenceTime is null ? default : new DayDetails(dailyRecurrenceTime, default),
+                    hourlyRecurrenceMinute is null ? default : new HourDetails(hourlyRecurrenceMinute, default),
                     timeZoneId,
                     notificationSettings,
                     createdOn,
@@ -1815,7 +1815,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 location,
                 targetCost is null && estimatedLabCost is null && labCostDetails is null && resourceCosts is null && currencyCode is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new LabCostProperties(
                     targetCost,
-                    new LabCostSummaryProperties(estimatedLabCost, default),
+                    estimatedLabCost is null ? default : new LabCostSummaryProperties(estimatedLabCost, default),
                     (labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>()).ToList(),
                     (resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>()).ToList(),
                     currencyCode,
@@ -1860,7 +1860,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     osType,
                     createdOn,
                     formulaContent,
-                    new FormulaPropertiesFromVm(labVmId, default),
+                    labVmId is null ? default : new FormulaPropertiesFromVm(labVmId, default),
                     provisioningState,
                     uniqueIdentifier,
                     default),
@@ -1887,8 +1887,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 status,
                 taskType,
                 weeklyRecurrence,
-                new DayDetails(dailyRecurrenceTime, default),
-                new HourDetails(hourlyRecurrenceMinute, default),
+                dailyRecurrenceTime is null ? default : new DayDetails(dailyRecurrenceTime, default),
+                hourlyRecurrenceMinute is null ? default : new HourDetails(hourlyRecurrenceMinute, default),
                 timeZoneId,
                 notificationSettings,
                 targetResourceId,

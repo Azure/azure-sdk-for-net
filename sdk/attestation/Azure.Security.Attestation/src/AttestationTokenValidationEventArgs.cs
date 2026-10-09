@@ -38,6 +38,6 @@ namespace Azure.Security.Attestation
         /// Set by the event callback to "true" to indicate that the callback has validated the token, false otherwise.
         /// </summary>
         /// <remarks>The default value of IsValid is 'true'.</remarks>
-        public bool IsValid{ get; set; }
+        public bool IsValid { get; set; }
     }
 }

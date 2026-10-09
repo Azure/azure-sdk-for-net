@@ -93,16 +93,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ComponentsByReleases))
-            {
-                writer.WritePropertyName("componentsByReleases"u8);
-                writer.WriteStartArray();
-                foreach (KubernetesVersionComponents item in ComponentsByReleases)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(RecentlyUsedVersions))
             {
                 writer.WritePropertyName("recentlyUsedVersions"u8);
@@ -163,7 +153,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             string kubernetesVersion = default;
             ContainerServiceOSType osType = default;
             IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default;
-            IList<KubernetesVersionComponents> componentsByReleases = default;
             IReadOnlyList<AgentPoolRecentlyUsedVersion> recentlyUsedVersions = default;
             string latestNodeImageVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -193,20 +182,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     upgrades = array;
                     continue;
                 }
-                if (prop.NameEquals("componentsByReleases"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<KubernetesVersionComponents> array = new List<KubernetesVersionComponents>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(KubernetesVersionComponents.DeserializeKubernetesVersionComponents(item, options));
-                    }
-                    componentsByReleases = array;
-                    continue;
-                }
                 if (prop.NameEquals("recentlyUsedVersions"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -228,14 +203,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AgentPoolUpgradeProfileProperties(
                 kubernetesVersion,
                 osType,
                 upgrades ?? new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>(),
-                componentsByReleases ?? new ChangeTrackingList<KubernetesVersionComponents>(),
                 recentlyUsedVersions ?? new ChangeTrackingList<AgentPoolRecentlyUsedVersion>(),
                 latestNodeImageVersion,
                 additionalBinaryDataProperties);

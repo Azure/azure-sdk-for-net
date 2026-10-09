@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -53,6 +54,20 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ContainerNetworkInterfaceConfigurationPropertiesFormat();
                 }
                 return Properties.IPConfigurations;
+            }
+        }
+
+        /// <summary> A list of container network interfaces created from this container network interface configuration. </summary>
+        [WirePath("properties.containerNetworkInterfaces")]
+        public IList<WritableSubResource> ContainerNetworkInterfaces
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerNetworkInterfaceConfigurationPropertiesFormat();
+                }
+                return Properties.ContainerNetworkInterfaces;
             }
         }
 

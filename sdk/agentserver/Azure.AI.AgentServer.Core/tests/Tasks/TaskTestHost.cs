@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
@@ -17,23 +18,35 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 internal sealed class TaskTestHost : IDisposable
 {
     private readonly string _tempDir;
+    private readonly AgentEventStreamOptions _streamOptions;
 
-    private TaskTestHost(string tempDir, LocalTaskStore store, TaskRegistry registry, string agentName, string sessionId, ILogger? logger)
+    private TaskTestHost(
+        string tempDir,
+        LocalTaskStore store,
+        TaskRegistry registry,
+        string agentName,
+        string sessionId,
+        ILogger? logger,
+        AgentEventStreamOptions streamOptions)
     {
         _tempDir = tempDir;
+        _streamOptions = streamOptions;
         Store = store;
         Registry = registry;
+        Streams = new InMemoryEventStreamRegistry(streamOptions);
         var engineAccessor = new TaskEngineAccessor();
         Builder = new DefaultResilientTaskBuilder(registry, engineAccessor);
         AgentName = agentName;
         SessionId = sessionId;
-        Engine = new TaskEngine(store, registry, agentName, sessionId, logger);
+        Engine = new TaskEngine(store, registry, agentName, sessionId, Streams, logger);
         engineAccessor.Bind(Engine);
     }
 
     public LocalTaskStore Store { get; }
 
     public TaskRegistry Registry { get; }
+
+    public AgentEventStreamRegistry Streams { get; }
 
     public DefaultResilientTaskBuilder Builder { get; }
 
@@ -44,18 +57,35 @@ internal sealed class TaskTestHost : IDisposable
     public string SessionId { get; }
 
     public static TaskTestHost Create(string? sharedDir = null, TaskRegistry? sharedRegistry = null,
-        string agentName = "agent-a", string sessionId = "sess-1", ILogger? logger = null)
+        string agentName = "agent-a", string sessionId = "sess-1", ILogger? logger = null,
+        Action<AgentEventStreamOptions>? configureStreams = null)
     {
         string dir = sharedDir ?? Path.Combine(Path.GetTempPath(), "agentserver-us1-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(dir);
         var store = new LocalTaskStore(dir);
         var registry = sharedRegistry ?? new TaskRegistry();
-        return new TaskTestHost(dir, store, registry, agentName, sessionId, logger);
+        var streamOptions = new AgentEventStreamOptions();
+        configureStreams?.Invoke(streamOptions);
+        return new TaskTestHost(
+            dir,
+            store,
+            registry,
+            agentName,
+            sessionId,
+            logger,
+            streamOptions);
     }
 
     /// <summary>Creates a second host (simulating a process restart) over the same store + a fresh registry copy.</summary>
     public TaskTestHost Restart(TaskRegistry registry, ILogger? logger = null)
-        => new(_tempDir, new LocalTaskStore(_tempDir), registry, AgentName, SessionId, logger);
+        => new(
+            _tempDir,
+            new LocalTaskStore(_tempDir),
+            registry,
+            AgentName,
+            SessionId,
+            logger,
+            _streamOptions);
 
     /// <summary>
     /// The task engine, exposed for tests to start/run/look-up tasks by name (the same operations
@@ -127,6 +157,7 @@ internal sealed class TaskTestHost : IDisposable
     public void Dispose()
     {
         Engine.Dispose();
+        (Streams as IDisposable)?.Dispose();
         try
         {
             Directory.Delete(_tempDir, recursive: true);

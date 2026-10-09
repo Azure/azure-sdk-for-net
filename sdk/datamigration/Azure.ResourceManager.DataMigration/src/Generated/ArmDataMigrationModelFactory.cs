@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Database Migration Base Resource properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DatabaseMigrationPropertiesCosmosDBMongo"/>, <see cref="Models.DatabaseMigrationSqlDBProperties"/>, <see cref="Models.DatabaseMigrationProperties"/>, <see cref="Models.DatabaseMigrationSqlMIProperties"/>, and <see cref="Models.DatabaseMigrationSqlVmProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DatabaseMigrationProperties"/>, <see cref="Models.DatabaseMigrationPropertiesCosmosDBMongo"/>, <see cref="Models.DatabaseMigrationSqlDBProperties"/>, <see cref="Models.DatabaseMigrationSqlMIProperties"/>, and <see cref="Models.DatabaseMigrationSqlVmProperties"/>.
         /// </summary>
         /// <param name="kind"></param>
         /// <param name="scope"> Resource Id of the target resource. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isOfflineMigration"> Offline migration. </param>
         /// <param name="tableList"> List of tables to copy. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlDBProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails = default, DataMigrationSqlConnectionInformation targetSqlConnection = default, bool? isOfflineMigration = default, IEnumerable<string> tableList = default)
+        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails, DataMigrationSqlConnectionInformation targetSqlConnection, bool? isOfflineMigration, IEnumerable<string> tableList)
         {
             tableList ??= new ChangeTrackingList<string>();
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
         /// <param name="sqlServerInstanceId"> Optional property - Resource Id for the source Sql server instance. Validations are performed on this property to ensure that it follows the correct format. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationProperties DatabaseMigrationProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default)
+        public static DatabaseMigrationProperties DatabaseMigrationProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId)
         {
             return new DatabaseMigrationProperties(
                 default,
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlMIProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default, DataMigrationStatusDetails migrationStatusDetails = default, DataMigrationBackupConfiguration backupConfiguration = default, DataMigrationOfflineConfiguration offlineConfiguration = default)
+        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration)
         {
             return new DatabaseMigrationSqlMIProperties(
                 default,
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlVmProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default, DataMigrationStatusDetails migrationStatusDetails = default, DataMigrationBackupConfiguration backupConfiguration = default, DataMigrationOfflineConfiguration offlineConfiguration = default)
+        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration)
         {
             return new DatabaseMigrationSqlVmProperties(
                 default,
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="properties"> Custom task properties. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectTaskData"/> instance for mocking. </returns>
-        public static DataMigrationProjectTaskData DataMigrationProjectTaskData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DataMigrationProjectTaskProperties properties = default, ETag? eTag = default)
+        public static DataMigrationProjectTaskData DataMigrationProjectTaskData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DataMigrationProjectTaskProperties properties, ETag? eTag)
         {
             return new DataMigrationProjectTaskData(
                 id,
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Base class for all types of DMS (classic) task properties. If task is not supported by current client, this object is returned.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSchemaSqlServerSqlDBTaskProperties"/>, <see cref="Models.CheckOciDriverTaskProperties"/>, <see cref="Models.UploadOciDriverTaskProperties"/>, <see cref="Models.InstallOciDriverTaskProperties"/>, <see cref="Models.ConnectToMongoDBTaskProperties"/>, <see cref="Models.ConnectToSourceSqlServerTaskProperties"/>, <see cref="Models.ConnectToSourceSqlServerSyncTaskProperties"/>, <see cref="Models.ConnectToSourcePostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToSourceMySqlTaskProperties"/>, <see cref="Models.ConnectToSourceOracleSyncTaskProperties"/>, <see cref="Models.ConnectToTargetSqlDBTaskProperties"/>, <see cref="Models.ConnectToTargetSqlDBSyncTaskProperties"/>, <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.GetUserTablesSqlTaskProperties"/>, <see cref="Models.GetUserTablesSqlSyncTaskProperties"/>, <see cref="Models.GetUserTablesOracleTaskProperties"/>, <see cref="Models.GetUserTablesPostgreSqlTaskProperties"/>, <see cref="Models.GetUserTablesMySqlTaskProperties"/>, <see cref="Models.ConnectToTargetSqlMITaskProperties"/>, <see cref="Models.ConnectToTargetSqlMISyncTaskProperties"/>, <see cref="Models.ConnectToTargetAzureDBForMySqlTaskProperties"/>, <see cref="Models.MigrateMongoDBTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlMITaskProperties"/>, <see cref="Models.MigrateSqlServerSqlMISyncTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlDBTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskProperties"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/>, <see cref="Models.ValidateMongoDBTaskProperties"/>, <see cref="Models.ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.GetTdeCertificatesSqlTaskProperties"/>, and <see cref="Models.MigrateSsisTaskProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CheckOciDriverTaskProperties"/>, <see cref="Models.ConnectToMongoDBTaskProperties"/>, <see cref="Models.ConnectToSourceMySqlTaskProperties"/>, <see cref="Models.ConnectToSourceOracleSyncTaskProperties"/>, <see cref="Models.ConnectToSourcePostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToSourceSqlServerSyncTaskProperties"/>, <see cref="Models.ConnectToSourceSqlServerTaskProperties"/>, <see cref="Models.ConnectToTargetAzureDBForMySqlTaskProperties"/>, <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToTargetSqlDBSyncTaskProperties"/>, <see cref="Models.ConnectToTargetSqlDBTaskProperties"/>, <see cref="Models.ConnectToTargetSqlMISyncTaskProperties"/>, <see cref="Models.ConnectToTargetSqlMITaskProperties"/>, <see cref="Models.GetTdeCertificatesSqlTaskProperties"/>, <see cref="Models.GetUserTablesMySqlTaskProperties"/>, <see cref="Models.GetUserTablesOracleTaskProperties"/>, <see cref="Models.GetUserTablesPostgreSqlTaskProperties"/>, <see cref="Models.GetUserTablesSqlSyncTaskProperties"/>, <see cref="Models.GetUserTablesSqlTaskProperties"/>, <see cref="Models.InstallOciDriverTaskProperties"/>, <see cref="Models.MigrateMongoDBTaskProperties"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>, <see cref="Models.MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.MigrateSchemaSqlServerSqlDBTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlDBTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlMISyncTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlMITaskProperties"/>, <see cref="Models.MigrateSsisTaskProperties"/>, <see cref="Models.UploadOciDriverTaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskProperties"/>, <see cref="Models.ValidateMongoDBTaskProperties"/>, and <see cref="Models.ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>.
         /// </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Base class for all types of DMS (classic) command properties. If command is not supported by current client, this object is returned.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, and <see cref="Models.DataMigrationMongoDBRestartCommand"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataMigrationMongoDBCancelCommand"/>, <see cref="Models.DataMigrationMongoDBFinishCommand"/>, <see cref="Models.DataMigrationMongoDBRestartCommand"/>, <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, and <see cref="Models.MigrateSyncCompleteCommandProperties"/>.
         /// </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Defines the connection properties of a server
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataMigrationMongoDBConnectionInfo"/>, <see cref="Models.DataMigrationSqlConnectionInfo"/>, <see cref="Models.DataMigrationMySqlConnectionInfo"/>, <see cref="Models.DataMigrationOracleConnectionInfo"/>, <see cref="Models.DataMigrationPostgreSqlConnectionInfo"/>, and <see cref="Models.DataMigrationMISqlConnectionInfo"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataMigrationMISqlConnectionInfo"/>, <see cref="Models.DataMigrationMongoDBConnectionInfo"/>, <see cref="Models.DataMigrationMySqlConnectionInfo"/>, <see cref="Models.DataMigrationOracleConnectionInfo"/>, <see cref="Models.DataMigrationPostgreSqlConnectionInfo"/>, and <see cref="Models.DataMigrationSqlConnectionInfo"/>.
         /// </summary>
         /// <param name="type"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for the task that migrates Schema for SQL Server databases to Azure SQL databases
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputError"/>, and <see cref="Models.MigrateSchemaSqlTaskOutputError"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputError"/>, <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>, and <see cref="Models.MigrateSchemaSqlTaskOutputError"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -1627,7 +1627,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for the task that validates connection to SQL Server and also validates source server requirements
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConnectToSourceSqlServerTaskOutputTaskLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputLoginLevel"/>, and <see cref="Models.ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputLoginLevel"/>, and <see cref="Models.ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
@@ -2949,7 +2949,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for task that migrates SQL Server databases to Azure SQL Database Managed Instance.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSqlServerSqlMITaskOutputMigrationLevel"/>, <see cref="Models.MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="Models.MigrateSqlServerSqlMITaskOutputLoginLevel"/>, and <see cref="Models.MigrateSqlServerSqlMITaskOutputError"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="Models.MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlMITaskOutputError"/>, <see cref="Models.MigrateSqlServerSqlMITaskOutputLoginLevel"/>, and <see cref="Models.MigrateSqlServerSqlMITaskOutputMigrationLevel"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -3180,7 +3180,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for task that migrates SQL Server databases to Azure SQL Database Managed Instance using Log Replay Service.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>, <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, and <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputError"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputError"/>, and <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -3400,7 +3400,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for the task that migrates on-prem SQL Server databases to Azure SQL Database
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputTableLevel"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputValidationResult"/>, and <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputTableLevel"/>, and <see cref="Models.MigrateSqlServerSqlDBTaskOutputValidationResult"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -3791,7 +3791,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for the task that migrates on-prem SQL Server databases to Azure SQL Database for online migrations
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputError"/>, and <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputError"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/>, and <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -4000,7 +4000,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for the task that migrates MySQL databases to Azure Database for MySQL for online migrations
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>, and <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/>, and <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -4201,7 +4201,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for the task that migrates MySQL databases to Azure Database for MySQL for offline migrations
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>, and <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>, and <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -4426,7 +4426,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for the task that migrates PostgreSQL databases to Azure Database for PostgreSQL for online migrations
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>, and <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/>, and <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -4638,7 +4638,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary>
         /// Output for the task that migrates Oracle databases to Azure Database for PostgreSQL for online migrations
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, and <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/>, and <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>.
         /// </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
@@ -5242,7 +5242,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="provisioningState"> The project's provisioning state. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectData"/> instance for mocking. </returns>
-        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataMigrationProjectSourcePlatform? sourcePlatform = default, DataMigrationAadApp azureAuthenticationInfo = default, DataMigrationProjectTargetPlatform? targetPlatform = default, DateTimeOffset? createdOn = default, ServerConnectionInfo sourceConnectionInfo = default, ServerConnectionInfo targetConnectionInfo = default, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = default, DataMigrationProjectProvisioningState? provisioningState = default, ETag? eTag = default)
+        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataMigrationProjectSourcePlatform? sourcePlatform, DataMigrationAadApp azureAuthenticationInfo, DataMigrationProjectTargetPlatform? targetPlatform, DateTimeOffset? createdOn, ServerConnectionInfo sourceConnectionInfo, ServerConnectionInfo targetConnectionInfo, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo, DataMigrationProjectProvisioningState? provisioningState, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5353,7 +5353,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
         /// <param name="sku"> Service SKU. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationServiceData"/> instance for mocking. </returns>
-        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataMigrationServiceProvisioningState? provisioningState = default, string publicKey = default, string virtualSubnetId = default, string virtualNicId = default, string autoStopDelay = default, bool? shouldDeleteResourcesOnStop = default, ETag? eTag = default, string kind = default, DataMigrationServiceSku sku = default)
+        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataMigrationServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? shouldDeleteResourcesOnStop, ETag? eTag, string kind, DataMigrationServiceSku sku)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5475,7 +5475,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="properties"> Custom file properties. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectFileData"/> instance for mocking. </returns>
-        public static DataMigrationProjectFileData DataMigrationProjectFileData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DataMigrationProjectFileProperties properties = default, ETag? eTag = default)
+        public static DataMigrationProjectFileData DataMigrationProjectFileData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DataMigrationProjectFileProperties properties, ETag? eTag)
         {
             return new DataMigrationProjectFileData(
                 id,

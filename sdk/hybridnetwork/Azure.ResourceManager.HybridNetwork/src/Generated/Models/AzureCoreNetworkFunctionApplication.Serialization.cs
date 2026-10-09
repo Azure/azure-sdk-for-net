@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Azure virtual network function application definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNetworkFunctionVhdApplication"/> and <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/> and <see cref="AzureCoreNetworkFunctionVhdApplication"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAzureCoreNetworkFunctionApplication))]
     public abstract partial class AzureCoreNetworkFunctionApplication : NetworkFunctionApplication, IJsonModel<AzureCoreNetworkFunctionApplication>
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VhdImageFile":
-                        return AzureCoreNetworkFunctionVhdApplication.DeserializeAzureCoreNetworkFunctionVhdApplication(element, options);
                     case "ArmTemplate":
                         return AzureCoreNetworkFunctionArmTemplateApplication.DeserializeAzureCoreNetworkFunctionArmTemplateApplication(element, options);
+                    case "VhdImageFile":
+                        return AzureCoreNetworkFunctionVhdApplication.DeserializeAzureCoreNetworkFunctionVhdApplication(element, options);
                 }
             }
             return UnknownAzureCoreNetworkFunctionApplication.DeserializeUnknownAzureCoreNetworkFunctionApplication(element, options);

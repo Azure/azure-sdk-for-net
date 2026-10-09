@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
     /// The secret info
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RawValueSecretInfo"/>, <see cref="KeyVaultSecretReferenceSecretInfo"/>, and <see cref="KeyVaultSecretUriSecretInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/>, and <see cref="RawValueSecretInfo"/>.
     /// </summary>
     public abstract partial class SecretBaseInfo
     {

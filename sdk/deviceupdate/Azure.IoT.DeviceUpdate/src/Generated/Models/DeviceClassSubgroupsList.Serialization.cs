@@ -166,10 +166,10 @@ namespace Azure.IoT.DeviceUpdate
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeviceClassSubgroupsList(value, nextLink, additionalBinaryDataProperties);
+            return new DeviceClassSubgroupsList(value ?? new ChangeTrackingList<DeviceClassSubgroup>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

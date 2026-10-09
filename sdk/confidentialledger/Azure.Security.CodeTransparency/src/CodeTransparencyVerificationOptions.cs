@@ -57,10 +57,10 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
-        /// Gets or sets an authorized list of issuer domains. If provided and not empty, at least one receipt must be issued by one of these domains.
+        /// Gets an authorized list of issuer domains. If provided and not empty, at least one receipt must be issued by one of these domains.
         /// Domains are matched case-insensitively.
         /// </summary>
-        public IList<string> AuthorizedDomains { get; set; } = new List<string>();
+        public IList<string> AuthorizedDomains { get; } = new List<string>();
 
         /// <summary>
         /// Gets or sets the behavior for receipts whose issuer domain is not in <see cref="AuthorizedDomains"/>.

@@ -19,7 +19,7 @@ Synchronous sample:
 MCPToolboxTool mcp = new(serverLabel: "api-specs")
 {
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
 ToolboxPolicies raiPolicies = new()
 {
@@ -38,7 +38,7 @@ Asynchronous sample:
 MCPToolboxTool mcp = new(serverLabel: "api-specs")
 {
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
 ToolboxPolicies raiPolicies = new()
 {

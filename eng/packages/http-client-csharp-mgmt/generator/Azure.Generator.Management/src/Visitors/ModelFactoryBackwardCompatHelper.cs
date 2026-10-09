@@ -570,8 +570,12 @@ namespace Azure.Generator.Management.Visitors
             return expression switch
             {
                 VariableExpression variable => string.Equals(variable.Declaration.RequestedName, parameter.Name, StringComparison.Ordinal),
-                PositionalParameterReferenceExpression positional => string.Equals(positional.ParameterName, parameter.Name, StringComparison.Ordinal)
-                    || ReferencesParameter(positional.ParameterValue, parameter),
+                PositionalParameterReferenceExpression positional => ReferencesParameter(positional.ParameterValue, parameter),
+                MemberExpression { Inner: not null } member => ReferencesParameter(member.Inner, parameter),
+                CastExpression cast => ReferencesParameter(cast.Inner, parameter),
+                NullConditionalExpression conditional => ReferencesParameter(conditional.Inner, parameter),
+                TernaryConditionalExpression ternary => ReferencesParameter(ternary.Consequent, parameter)
+                    || ReferencesParameter(ternary.Alternative, parameter),
                 InvokeMethodExpression invoke => (invoke.InstanceReference is not null && ReferencesParameter(invoke.InstanceReference, parameter))
                     || invoke.Arguments.Any(argument => ReferencesParameter(argument, parameter)),
                 NewInstanceExpression newInstance => newInstance.Parameters.Any(argument => ReferencesParameter(argument, parameter)),
@@ -622,10 +626,7 @@ namespace Azure.Generator.Management.Visitors
         /// <param name="constructorParameter">The model-typed constructor parameter to build an argument for.</param>
         /// <param name="visitedTypes">The current recursion stack used to avoid cycles in nested model graphs.</param>
         /// <param name="unavailableDirectParameterNames">Old parameter names that should not be reused by direct nested-name fallback.</param>
-        /// <param name="useNullGuard">
-        /// True when creating a top-level nested model argument, so the old overload keeps returning default when all flattened inputs are null.
-        /// False for recursive nested models, which are already inside a parent instance that decided whether to be created.
-        /// </param>
+        /// <param name="useNullGuard">Whether omission of all parameters mapped to this model should preserve a null model value.</param>
         /// <param name="argument">The reconstructed model argument and old parameters used by it.</param>
         private static bool TryBuildModelCompatibilityArgument(
             MethodProvider method,
@@ -679,8 +680,8 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
-            // For top-level replacement arguments, preserve old all-null behavior by returning default instead of creating
-            // an empty nested model. Recursive replacements are embedded inside an already-created parent and skip this guard.
+            // Preserve omission independently for optional reconstructed models. Creating a parent does not imply
+            // that an optional child was supplied, while required children retain their existing construction behavior.
             var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
             var condition = useNullGuard ? BuildAllNullCondition(matchedParameters) : null;
             var expression = condition is null
@@ -747,7 +748,32 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            return TryBuildModelCompatibilityArgument(method, nestedParameter, visitedTypes, unavailableDirectParameterNames, useNullGuard: false, out argument);
+            // A generated C# name can change while the wire name remains stable (e.g. a factory's
+            // historical `uri` argument and a current `ClusterUri` leaf serialized as `uri`).
+            // Only use the wire name when exactly one compatible constructor destination exists
+            // across the returned model, not merely within this particular nested model.
+            var wireName = nestedParameter.Property?.WireInfo?.SerializedName;
+            if (wireName is not null && !string.Equals(wireName, nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                && TryGetMethodParameter(method, wireName, nestedParameter.Type, nestedParameter.Property, out var wireParameter)
+                && !unavailableDirectParameterNames.Contains(wireParameter.Name)
+                && method.Signature.ReturnType is { } returnType
+                && TryGetModelProvider(returnType, out var returnModel)
+                && CountMatchingDestinations(returnModel, wireName, wireParameter.Type, []) == 1)
+            {
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(wireParameter, nestedParameter.Type),
+                    [wireParameter],
+                    [new ParameterDocumentation(wireParameter, nestedParameter.Description)]);
+                return true;
+            }
+
+            return TryBuildModelCompatibilityArgument(
+                method,
+                nestedParameter,
+                visitedTypes,
+                unavailableDirectParameterNames,
+                useNullGuard: nestedParameter.Property?.WireInfo?.IsRequired == false,
+                out argument);
         }
 
         /// <summary>
@@ -780,6 +806,37 @@ namespace Azure.Generator.Management.Visitors
 
             parameter = matches.Length == 1 ? matches[0] : null;
             return parameter is not null;
+        }
+
+        private static int CountMatchingDestinations(ModelProvider model, string name, CSharpType parameterType, HashSet<string> visitedTypes)
+        {
+            if (!visitedTypes.Add(model.Type.FullyQualifiedName))
+            {
+                return 0;
+            }
+
+            var count = 0;
+            foreach (var parameter in model.FullConstructor.Signature.Parameters)
+            {
+                // Include ordinary C# name matches: a wire-name fallback must not reuse an old
+                // argument already claimed by a different constructor slot.
+                if ((string.Equals(parameter.Name, name, StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(parameter.Property?.WireInfo?.SerializedName, name, StringComparison.OrdinalIgnoreCase))
+                    && AreCompatibleParameterTypes(parameterType, parameter.Type))
+                {
+                    count++;
+                }
+                if (!parameter.Type.IsFrameworkType && TryGetModelProvider(parameter.Type, out var nestedModel))
+                {
+                    count += CountMatchingDestinations(nestedModel, name, parameterType, visitedTypes);
+                }
+                if (count > 1)
+                {
+                    break;
+                }
+            }
+            visitedTypes.Remove(model.Type.FullyQualifiedName);
+            return count;
         }
 
         private static bool TryGetContextualMethodParameter(MethodProvider method, string parentName, ParameterProvider nestedParameter, [NotNullWhen(true)] out ParameterProvider? parameter)

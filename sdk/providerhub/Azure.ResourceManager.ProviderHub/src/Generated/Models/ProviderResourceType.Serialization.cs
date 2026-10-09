@@ -373,31 +373,31 @@ namespace Azure.ResourceManager.ProviderHub.Models
             AdditionalOptionResourceType? additionalOptions = default;
             CrossTenantTokenValidation? crossTenantTokenValidation = default;
             ResourceValidation? resourceValidation = default;
-            IList<string> allowedUnauthorizedActions = default;
-            IList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = default;
-            IList<AuthorizationActionMapping> authorizationActionMappings = default;
-            IList<LinkedAccessCheck> linkedAccessChecks = default;
+            IReadOnlyList<string> allowedUnauthorizedActions = default;
+            IReadOnlyList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = default;
+            IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings = default;
+            IReadOnlyList<LinkedAccessCheck> linkedAccessChecks = default;
             string defaultApiVersion = default;
-            IList<LoggingRule> loggingRules = default;
-            IList<ThrottlingRule> throttlingRules = default;
-            IList<ResourceProviderEndpoint> endpoints = default;
+            IReadOnlyList<LoggingRule> loggingRules = default;
+            IReadOnlyList<ThrottlingRule> throttlingRules = default;
+            IReadOnlyList<ResourceProviderEndpoint> endpoints = default;
             MarketplaceType? marketplaceType = default;
             IdentityManagement identityManagement = default;
             BinaryData metadata = default;
-            IList<string> requiredFeatures = default;
+            IReadOnlyList<string> requiredFeatures = default;
             ProviderFeaturesRule featuresRule = default;
-            IList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
+            IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
             ProviderRequestHeaderOptions requestHeaderOptions = default;
             string skuLink = default;
-            IList<string> disallowedActionVerbs = default;
+            IReadOnlyList<string> disallowedActionVerbs = default;
             TemplateDeploymentPolicy templateDeploymentPolicy = default;
-            IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
-            IList<LinkedOperationRule> linkedOperationRules = default;
-            ResourceDeletionPolicy? resourceDeletionPolicy = default;
+            IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
+            IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
+            Models.ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
             IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies = default;
             ProviderQuotaRule quotaRule = default;
-            IList<ProviderNotification> notifications = default;
-            IList<LinkedNotificationRule> linkedNotificationRules = default;
+            IReadOnlyList<ProviderNotification> notifications = default;
+            IReadOnlyList<LinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    metadata = BinaryData.FromString(prop.Value.GetRawText());
+                    metadata = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("requiredFeatures"u8))
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceDeletionPolicy = new ResourceDeletionPolicy(prop.Value.GetString());
+                    resourceDeletionPolicy = new Models.ManifestResourceDeletionPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceDeletionPolicies"u8))
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ProviderResourceType(

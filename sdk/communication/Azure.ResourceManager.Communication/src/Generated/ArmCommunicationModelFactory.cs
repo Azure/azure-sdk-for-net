@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="isLocalAuthDisabled"> Disable local authentication for the CommunicationService. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
-        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CommunicationServicesProvisioningState? provisioningState = default, string hostName = default, string dataLocation = default, ResourceIdentifier notificationHubId = default, string version = default, Guid? immutableResourceId = default, IEnumerable<string> linkedDomains = default, CommunicationPublicNetworkAccess? publicNetworkAccess = default, bool? isLocalAuthDisabled = default, ManagedServiceIdentity identity = default)
+        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IEnumerable<string> linkedDomains, CommunicationPublicNetworkAccess? publicNetworkAccess, bool? isLocalAuthDisabled, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -424,6 +424,87 @@ namespace Azure.ResourceManager.Communication.Models
                     isLocalAuthDisabled,
                     default),
                 identity,
+                default);
+        }
+
+        /// <summary> A class representing a CommunicationService resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
+        /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
+        /// <param name="notificationHubId"> Resource ID of an Azure Notification Hub linked to this resource. </param>
+        /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
+        /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
+        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IEnumerable<string> linkedDomains)
+        {
+            return new CommunicationServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && hostName is null && dataLocation is null && notificationHubId is null && version is null && immutableResourceId is null && linkedDomains is null ? default : new CommunicationServiceProperties(
+                    provisioningState,
+                    hostName,
+                    dataLocation,
+                    notificationHubId,
+                    version,
+                    immutableResourceId,
+                    (linkedDomains ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
+                    default,
+                    default),
+                identity,
+                default);
+        }
+
+        /// <summary> A class representing a CommunicationService resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
+        /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
+        /// <param name="notificationHubId"> Resource ID of an Azure Notification Hub linked to this resource. </param>
+        /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
+        /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
+        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IEnumerable<string> linkedDomains)
+        {
+            return new CommunicationServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && hostName is null && dataLocation is null && notificationHubId is null && version is null && immutableResourceId is null && linkedDomains is null ? default : new CommunicationServiceProperties(
+                    provisioningState,
+                    hostName,
+                    dataLocation,
+                    notificationHubId,
+                    version,
+                    immutableResourceId,
+                    (linkedDomains ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
+                    default,
+                    default),
+                default,
                 default);
         }
     }

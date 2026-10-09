@@ -47,15 +47,20 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
 
         /// <summary> The properties of the AzureKeyVaultSecretProviderClass. </summary>
         /// <param name="keyvaultName"> The name of the Azure Key Vault to sync secrets from. </param>
+        /// <param name="cloudName">
+        /// The Azure cloud containing the key vault.
+        /// If omitted, the in-cluster Azure Key Vault provider's configured default cloud is used.
+        /// </param>
         /// <param name="clientId"> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </param>
         /// <param name="objects"> Objects defines the desired state of synced K8s secret objects. </param>
         /// <param name="provisioningState"> Provisioning state of the AzureKeyVaultSecretProviderClass instance. </param>
         /// <returns> A new <see cref="Models.KeyVaultSecretProviderClassProperties"/> instance for mocking. </returns>
-        public static KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = default, Guid clientId = default, Guid tenantId = default, string objects = default, SecretsStoreExtensionProvisioningState? provisioningState = default)
+        public static KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = default, AzureCloudName? cloudName = default, Guid clientId = default, Guid tenantId = default, string objects = default, SecretsStoreExtensionProvisioningState? provisioningState = default)
         {
             return new KeyVaultSecretProviderClassProperties(
                 keyvaultName,
+                cloudName,
                 clientId,
                 tenantId,
                 objects,
@@ -76,13 +81,23 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
 
         /// <summary> The updatable properties of the AzureKeyVaultSecretProviderClass. </summary>
         /// <param name="keyvaultName"> The name of the Azure Key Vault to sync secrets from. </param>
+        /// <param name="cloudName">
+        /// The Azure cloud containing the key vault.
+        /// If omitted, the in-cluster Azure Key Vault provider's configured default cloud is used.
+        /// </param>
         /// <param name="clientId"> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </param>
         /// <param name="objects"> Objects defines the desired state of synced K8s secret objects. </param>
         /// <returns> A new <see cref="Models.AzureKeyVaultSecretProviderClassUpdateProperties"/> instance for mocking. </returns>
-        public static AzureKeyVaultSecretProviderClassUpdateProperties AzureKeyVaultSecretProviderClassUpdateProperties(string keyvaultName = default, Guid? clientId = default, Guid? tenantId = default, string objects = default)
+        public static AzureKeyVaultSecretProviderClassUpdateProperties AzureKeyVaultSecretProviderClassUpdateProperties(string keyvaultName = default, AzureCloudName? cloudName = default, Guid? clientId = default, Guid? tenantId = default, string objects = default)
         {
-            return new AzureKeyVaultSecretProviderClassUpdateProperties(keyvaultName, clientId, tenantId, objects, default);
+            return new AzureKeyVaultSecretProviderClassUpdateProperties(
+                keyvaultName,
+                cloudName,
+                clientId,
+                tenantId,
+                objects,
+                default);
         }
 
         /// <summary> The SecretSync resource. </summary>
@@ -114,7 +129,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <summary> The properties of the SecretSync instance. </summary>
         /// <param name="secretProviderClassName"> SecretProviderClassName specifies the name of the SecretProviderClass resource, which contains the information needed to access the cloud provider secret store. </param>
         /// <param name="serviceAccountName"> ServiceAccountName specifies the name of the service account used to access the cloud provider secret store. The audience field in the service account token must be passed as parameter in the controller configuration. The audience is used when requesting a token from the API server for the service account; the supported audiences are defined by each provider. </param>
-        /// <param name="kubernetesSecretType"> Type specifies the type of the Kubernetes secret object, e.g. "Opaque" or"kubernetes.io/tls". The controller must have permission to create secrets of the specified type. </param>
+        /// <param name="kubernetesSecretType"> Type specifies the type of the Kubernetes secret object, e.g. `Opaque` or `kubernetes.io/tls`. The controller must have permission to create secrets of the specified type. </param>
         /// <param name="forceSynchronization"> ForceSynchronization can be used to force the secret synchronization. The secret synchronization is triggered by changing the value in this field. This field is not used to resolve synchronization conflicts. </param>
         /// <param name="objectSecretMapping"> An array of SecretObjectData that maps secret data from the external secret provider to the Kubernetes secret. Each entry specifies the source secret in the external provider and the corresponding key in the Kubernetes secret. </param>
         /// <param name="status"> SecretSyncStatus defines the observed state of the secret synchronization process. </param>

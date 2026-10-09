@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     metricId,
                     status,
                     supportsScaling,
-                    new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
+                    platformCapabilitiesConfidentialComputeMode is null ? default : new PlatformCapabilities(platformCapabilitiesConfidentialComputeMode is null ? default : new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
                     zoneRedundant,
                     default),
                 sku,
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     status,
                     captureDescription,
                     retentionDescription,
-                    new MessageTimestampDescription(messageTimestampType, default),
+                    messageTimestampType is null ? default : new MessageTimestampDescription(messageTimestampType, default),
                     identifier,
                     userMetadata,
                     default),
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 location,
                 default);
         }
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>()).ToList(),
                     disableLocalAuth,
                     alternateName,
-                    new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
+                    platformCapabilitiesConfidentialComputeMode is null ? default : new PlatformCapabilities(platformCapabilitiesConfidentialComputeMode is null ? default : new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
                     geoDataReplication,
                     ipAddressType,
                     default),
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 location,
                 default);
         }

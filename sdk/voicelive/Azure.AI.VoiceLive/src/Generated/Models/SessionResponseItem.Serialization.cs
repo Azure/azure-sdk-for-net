@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="SessionResponseMcpListToolItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, <see cref="SessionResponseMcpApprovalResponseItem"/>, <see cref="ResponseWebSearchCallItem"/>, and <see cref="ResponseFileSearchCallItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseFileSearchCallItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="ResponseWebSearchCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, <see cref="SessionResponseMcpApprovalResponseItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpListToolItem"/>, and <see cref="SessionResponseMessageItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSessionResponseItem))]
     public abstract partial class SessionResponseItem : IJsonModel<SessionResponseItem>
@@ -139,24 +139,24 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "message":
-                        return SessionResponseMessageItem.DeserializeSessionResponseMessageItem(element, options);
+                    case "file_search_call":
+                        return ResponseFileSearchCallItem.DeserializeResponseFileSearchCallItem(element, options);
                     case "function_call":
                         return ResponseFunctionCallItem.DeserializeResponseFunctionCallItem(element, options);
                     case "function_call_output":
                         return ResponseFunctionCallOutputItem.DeserializeResponseFunctionCallOutputItem(element, options);
-                    case "mcp_list_tools":
-                        return SessionResponseMcpListToolItem.DeserializeSessionResponseMcpListToolItem(element, options);
-                    case "mcp_call":
-                        return SessionResponseMcpCallItem.DeserializeSessionResponseMcpCallItem(element, options);
+                    case "web_search_call":
+                        return ResponseWebSearchCallItem.DeserializeResponseWebSearchCallItem(element, options);
                     case "mcp_approval_request":
                         return SessionResponseMcpApprovalRequestItem.DeserializeSessionResponseMcpApprovalRequestItem(element, options);
                     case "mcp_approval_response":
                         return SessionResponseMcpApprovalResponseItem.DeserializeSessionResponseMcpApprovalResponseItem(element, options);
-                    case "web_search_call":
-                        return ResponseWebSearchCallItem.DeserializeResponseWebSearchCallItem(element, options);
-                    case "file_search_call":
-                        return ResponseFileSearchCallItem.DeserializeResponseFileSearchCallItem(element, options);
+                    case "mcp_call":
+                        return SessionResponseMcpCallItem.DeserializeSessionResponseMcpCallItem(element, options);
+                    case "mcp_list_tools":
+                        return SessionResponseMcpListToolItem.DeserializeSessionResponseMcpListToolItem(element, options);
+                    case "message":
+                        return SessionResponseMessageItem.DeserializeSessionResponseMessageItem(element, options);
                 }
             }
             return UnknownSessionResponseItem.DeserializeUnknownSessionResponseItem(element, options);

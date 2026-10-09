@@ -204,13 +204,38 @@ namespace Azure.Security.ConfidentialLedger
             RequestContent content,
             string collectionId = null,
             string tags = null,
-            RequestContext context = null)
+            RequestContext context = null) =>
+            PostLedgerEntryImpl(waitUntil, content, collectionId, tags, waitForCommit: false, context);
+
+        /// <summary> Posts a new entry to the ledger, optionally waiting for the entry to be globally committed before returning. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="waitForCommit"> When <see langword="true"/>, the service holds the response until the transaction is globally committed and the returned <see cref="Operation"/> is already completed (no status polling is performed). When <see langword="false"/>, the call returns after local commit and the transaction is tracked via status polling. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="context"> The request context. </param>
+        public virtual Operation PostLedgerEntry(
+            WaitUntil waitUntil,
+            RequestContent content,
+            bool waitForCommit,
+            string collectionId = null,
+            string tags = null,
+            RequestContext context = null) =>
+            PostLedgerEntryImpl(waitUntil, content, collectionId, tags, waitForCommit, context);
+
+        private Operation PostLedgerEntryImpl(
+            WaitUntil waitUntil,
+            RequestContent content,
+            string collectionId,
+            string tags,
+            bool waitForCommit,
+            RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, waitForCommit ? true : (bool?)null, context);
                 if (_useLedgerGateway)
                 {
                     // The Ledger Gateway can respond with either 200 (synchronous commit, mirrors
@@ -221,6 +246,15 @@ namespace Azure.Security.ConfidentialLedger
                     message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
                 }
                 var response = Pipeline.ProcessMessage(message, context);
+
+                if (waitForCommit && response.Status == 200 && IsGloballyCommitted(response))
+                {
+                    // The service held the response until the transaction was globally committed
+                    // (the body reports "state": "Committed"), so the operation is already complete
+                    // and no status polling is required.
+                    response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+                    return new PostLedgerEntryOperation(transactionId, response);
+                }
 
                 var operation = CreatePostLedgerEntryOperation(response);
                 if (waitUntil == WaitUntil.Completed)
@@ -255,18 +289,43 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="context"> The request context. </param>
-        public virtual async Task<Operation> PostLedgerEntryAsync(
+        public virtual Task<Operation> PostLedgerEntryAsync(
             WaitUntil waitUntil,
             RequestContent content,
             string collectionId = null,
             string tags = null,
-            RequestContext context = null)
+            RequestContext context = null) =>
+            PostLedgerEntryImplAsync(waitUntil, content, collectionId, tags, waitForCommit: false, context);
+
+        /// <summary> Posts a new entry to the ledger, optionally waiting for the entry to be globally committed before returning. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="waitForCommit"> When <see langword="true"/>, the service holds the response until the transaction is globally committed and the returned <see cref="Operation"/> is already completed (no status polling is performed). When <see langword="false"/>, the call returns after local commit and the transaction is tracked via status polling. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="context"> The request context. </param>
+        public virtual Task<Operation> PostLedgerEntryAsync(
+            WaitUntil waitUntil,
+            RequestContent content,
+            bool waitForCommit,
+            string collectionId = null,
+            string tags = null,
+            RequestContext context = null) =>
+            PostLedgerEntryImplAsync(waitUntil, content, collectionId, tags, waitForCommit, context);
+
+        private async Task<Operation> PostLedgerEntryImplAsync(
+            WaitUntil waitUntil,
+            RequestContent content,
+            string collectionId,
+            string tags,
+            bool waitForCommit,
+            RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, waitForCommit ? true : (bool?)null, context);
                 if (_useLedgerGateway)
                 {
                     // Layer "202 is a success" over the message's existing classifier so any
@@ -274,6 +333,15 @@ namespace Azure.Security.ConfidentialLedger
                     message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
                 }
                 var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+
+                if (waitForCommit && response.Status == 200 && IsGloballyCommitted(response))
+                {
+                    // The service held the response until the transaction was globally committed
+                    // (the body reports "state": "Committed"), so the operation is already complete
+                    // and no status polling is required.
+                    response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+                    return new PostLedgerEntryOperation(transactionId, response);
+                }
 
                 var operation = CreatePostLedgerEntryOperation(response);
                 if (waitUntil == WaitUntil.Completed)
@@ -342,6 +410,33 @@ namespace Azure.Security.ConfidentialLedger
             }
 
             return null;
+        }
+
+        // When waitForCommit=true, a plain HTTP 200 is not by itself proof that the entry was
+        // globally committed: an API version (or service build) that does not support waitForCommit
+        // simply ignores the query parameter and returns the normal local-commit 200 with a body
+        // whose "state" is still "Pending". Only treat the operation as already-completed when the
+        // body explicitly reports "state": "Committed"; otherwise fall back to normal status polling.
+        private static bool IsGloballyCommitted(Response response)
+        {
+            try
+            {
+                if (response.Content == null || response.Content.ToMemory().Length == 0)
+                {
+                    return false;
+                }
+
+                using JsonDocument document = JsonDocument.Parse(response.Content);
+                return document.RootElement.ValueKind == JsonValueKind.Object
+                    && document.RootElement.TryGetProperty("state", out JsonElement state)
+                    && state.ValueKind == JsonValueKind.String
+                    && string.Equals(state.GetString(), "Committed", StringComparison.Ordinal);
+            }
+            catch (JsonException)
+            {
+                // Body wasn't JSON or didn't contain a usable "state"; treat as not-yet-committed.
+                return false;
+            }
         }
 
         /// <summary> Gets the ledger entry at the specified transaction id. </summary>

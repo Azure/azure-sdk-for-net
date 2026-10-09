@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             get
             {
-                return Properties is null ? default : Properties.TargetType;
+                return Properties is null ? (StorageTargetType?)default : Properties.TargetType;
             }
             set
             {

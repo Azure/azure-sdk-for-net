@@ -40,7 +40,7 @@ public class SsePipelineResponseHandlerTests
                         HttpStatusCode.NoContent));
         });
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"));
@@ -77,7 +77,7 @@ public class SsePipelineResponseHandlerTests
                         HttpStatusCode.NoContent));
         });
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"),
@@ -102,7 +102,7 @@ public class SsePipelineResponseHandlerTests
                 new HttpResponseMessage(HttpStatusCode.NoContent));
         });
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"));
@@ -140,7 +140,7 @@ public class SsePipelineResponseHandlerTests
             });
         });
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"),
@@ -178,7 +178,7 @@ public class SsePipelineResponseHandlerTests
 
         Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
-            AsyncStreamingClientResult<SseItem<BinaryData>> result =
+            AsyncStreamingResult<SseItem<BinaryData>> result =
                 await CreateResultAsync(
                     pipeline,
                     new Uri("https://example.test/events"));
@@ -459,7 +459,7 @@ public class SsePipelineResponseHandlerTests
             };
         });
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"),
@@ -603,7 +603,7 @@ public class SsePipelineResponseHandlerTests
 
         Task task = Task.Run(async () =>
         {
-            AsyncStreamingClientResult<SseItem<BinaryData>> result =
+            AsyncStreamingResult<SseItem<BinaryData>> result =
                 await CreateResultAsync(
                     pipeline,
                     new Uri("https://example.test/events"),
@@ -623,7 +623,7 @@ public class SsePipelineResponseHandlerTests
     {
         var handler = new ReconnectCancellationHandler();
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"));
@@ -665,7 +665,7 @@ public class SsePipelineResponseHandlerTests
             });
         });
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"));
@@ -700,7 +700,7 @@ public class SsePipelineResponseHandlerTests
                 new HttpResponseMessage(HttpStatusCode.NoContent));
         });
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"));
@@ -727,7 +727,7 @@ public class SsePipelineResponseHandlerTests
                 "retry: 0\nid: first\ndata: one\n\ndata: two\n\n"));
         });
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"));
@@ -1207,8 +1207,8 @@ public class SsePipelineResponseHandlerTests
         PipelineResponse response = await SendResponseAsync(
             pipeline,
             new Uri("https://example.test/events"));
-        await using AsyncStreamingClientResult<SseItem<BinaryData>> result =
-            AsyncStreamingClientResult.CreateSse(
+        await using AsyncStreamingResult<SseItem<BinaryData>> result =
+            AsyncStreamingResult.CreateSse(
                 response,
                 item => item.Data.ToString() == "done");
 
@@ -1432,7 +1432,7 @@ public class SsePipelineResponseHandlerTests
             return Task.FromResult(dropped);
         });
         ClientPipeline pipeline = CreatePipeline(handler);
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"));
@@ -1470,7 +1470,7 @@ public class SsePipelineResponseHandlerTests
             Assert.ThrowsAsync<InvalidOperationException>(
                 async () =>
                 {
-                    AsyncStreamingClientResult<SseItem<BinaryData>>
+                    AsyncStreamingResult<SseItem<BinaryData>>
                         result = await CreateResultAsync(
                             pipeline,
                             new Uri("https://example.test/events"));
@@ -1522,7 +1522,7 @@ public class SsePipelineResponseHandlerTests
         ClientPipeline pipeline = CreatePipeline(
             handler,
             new ImmediateRetryPolicy(maxRetries: 1));
-        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+        AsyncStreamingResult<SseItem<BinaryData>> result =
             await CreateResultAsync(
                 pipeline,
                 new Uri("https://example.test/events"));
@@ -1585,7 +1585,7 @@ public class SsePipelineResponseHandlerTests
     }
 
     private static async Task<
-        AsyncStreamingClientResult<SseItem<BinaryData>>>
+        AsyncStreamingResult<SseItem<BinaryData>>>
         CreateResultAsync(
             ClientPipeline pipeline,
             Uri uri,
@@ -1593,7 +1593,7 @@ public class SsePipelineResponseHandlerTests
             BinaryData? content = null,
             CancellationToken cancellationToken = default,
             string? initialLastEventId = null)
-        => AsyncStreamingClientResult.CreateSse(
+        => AsyncStreamingResult.CreateSse(
             await SendResponseAsync(
                 pipeline,
                 uri,

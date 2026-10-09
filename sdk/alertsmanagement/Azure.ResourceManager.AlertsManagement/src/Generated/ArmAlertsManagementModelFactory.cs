@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="egressConfig"> Config which would be used for displaying the data in portal. </param>
         /// <param name="customProperties"> Custom properties that can hold any user defined key-value pairs. </param>
         /// <returns> A new <see cref="Models.ServiceAlertProperties"/> instance for mocking. </returns>
-        public static ServiceAlertProperties ServiceAlertProperties(ServiceAlertEssentials essentials = default, BinaryData context = default, BinaryData egressConfig = default, IDictionary<string, string> customProperties = default)
+        public static ServiceAlertProperties ServiceAlertProperties(ServiceAlertEssentials essentials, BinaryData context, BinaryData egressConfig, IDictionary<string, string> customProperties)
         {
             customProperties ??= new ChangeTrackingDictionary<string, string>();
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary>
         /// Base details class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ServiceAlertPropertyChangeDetails"/>, <see cref="Models.ServiceAlertActionSuppressedDetails"/>, and <see cref="Models.ServiceAlertActionTriggeredDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ServiceAlertActionSuppressedDetails"/>, <see cref="Models.ServiceAlertActionTriggeredDetails"/>, and <see cref="Models.ServiceAlertPropertyChangeDetails"/>.
         /// </summary>
         /// <param name="type"> Type of modification details. </param>
         /// <returns> A new <see cref="Models.AlertsManagementBaseDetails"/> instance for mocking. </returns>

@@ -797,6 +797,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private readonly int _dummyPrimitive;
         public MongoClusterPromoteOption(string value) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption Forced { get { throw null; } }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption Planned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }

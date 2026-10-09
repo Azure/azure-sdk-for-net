@@ -523,7 +523,20 @@ namespace Azure.ResourceManager.Datadog.Mocking
 
         /// <summary>
         /// Create Datadog marketplace agreement in the subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/defaultOperation IdMarketplaceAgreements_CreateOrUpdateDefault Api Version2025-06-11
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-26-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -535,7 +548,20 @@ namespace Azure.ResourceManager.Datadog.Mocking
 
         /// <summary>
         /// Create Datadog marketplace agreement in the subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/defaultOperation IdMarketplaceAgreements_CreateOrUpdateDefault Api Version2025-06-11
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-26-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -121,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         /// <summary>
         /// Builds the absolute track URI for an ingestion endpoint supplied at export time, for
-        /// multi-tenant routing where the destination is not the one this client was built with.
+        /// multi-endpoint routing where the destination is not the one this client was built with.
         /// </summary>
         internal static Uri CreateTrackUri(string ingestionEndpoint) => new(new Uri(ingestionEndpoint), TrackPath);
 
@@ -150,7 +150,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal async Task<HttpMessage> InternalTrackAsync(ReadOnlyMemory<byte> body, Uri trackUri, CancellationToken cancellationToken = default)
         {
 #if DEBUG
-            TelemetryDebugWriter.WriteTelemetryFromStorage(body);
+            TelemetryDebugWriter.WriteTelemetryFromStorage(body, trackUri);
 #endif
 
             var message = CreateRequest(RequestContent.Create(body), trackUri);
@@ -183,7 +183,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
 #if DEBUG
-            TelemetryDebugWriter.WriteTelemetry(content);
+            TelemetryDebugWriter.WriteTelemetry(content, trackUri);
 #endif
 
             return CreateRequest(RequestContent.Create(content.ToBytes()), trackUri);

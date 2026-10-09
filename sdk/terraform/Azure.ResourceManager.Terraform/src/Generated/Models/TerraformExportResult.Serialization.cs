@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TerraformExportResult(configuration, import, skippedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), errors ?? new ChangeTrackingList<ResponseError>(), additionalBinaryDataProperties);

@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkFeatureProperties(virtualNetworkName, virtualNetworkConnection, hybridConnections ?? new ChangeTrackingList<RelayServiceConnectionEntityData>(), hybridConnectionsV2 ?? new ChangeTrackingList<HybridConnectionData>(), additionalBinaryDataProperties);

@@ -16,5 +16,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         Task OpenAsync(EventProcessorHostPartition context);
         Task ProcessErrorAsync(EventProcessorHostPartition context, Exception error);
         Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages);
+        Task TryCheckpointOnIdleAsync(EventProcessorHostPartition context, CancellationToken cancellationToken);
     }
 }

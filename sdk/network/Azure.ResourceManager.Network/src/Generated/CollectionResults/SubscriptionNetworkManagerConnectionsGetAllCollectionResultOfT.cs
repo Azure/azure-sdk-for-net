@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class SubscriptionNetworkManagerConnectionsGetAllCollectionResultOfT : Pageable<SubscriptionNetworkManagerConnectionData>
+    internal partial class SubscriptionNetworkManagerConnectionsGetAllCollectionResultOfT : Pageable<NetworkManagerConnectionData>
     {
         private readonly SubscriptionNetworkManagerConnections _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SubscriptionNetworkManagerConnectionsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SubscriptionNetworkManagerConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NetworkManagerConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
                 }
                 NetworkManagerConnectionListResult result = NetworkManagerConnectionListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<SubscriptionNetworkManagerConnectionData>.FromValues((IReadOnlyList<SubscriptionNetworkManagerConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetworkManagerConnectionData>.FromValues((IReadOnlyList<NetworkManagerConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

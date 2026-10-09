@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from listing bulk operation errors. </summary>
+    /// <summary> A paged list of recent bulk action errors. </summary>
     internal partial class ListBulkOperationErrorsResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

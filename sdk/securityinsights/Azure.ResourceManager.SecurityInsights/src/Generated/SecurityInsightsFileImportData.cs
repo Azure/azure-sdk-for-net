@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.IngestionMode;
+                return Properties is null ? (IngestionMode?)default : Properties.IngestionMode;
             }
             set
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.ContentType;
+                return Properties is null ? (SecurityInsightsFileImportContentType?)default : Properties.ContentType;
             }
             set
             {

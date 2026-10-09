@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Op;
+                return Properties is null ? (SensitivityLabelUpdateKind?)default : Properties.Op;
             }
             set
             {
