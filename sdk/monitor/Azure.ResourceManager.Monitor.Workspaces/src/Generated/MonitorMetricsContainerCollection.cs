@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             TryGetApiVersion(MonitorMetricsContainerResource.ResourceType, out string monitorMetricsContainerApiVersion);
             _metricsContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", MonitorMetricsContainerResource.ResourceType.Namespace, Diagnostics);
-            _metricsContainersRestClient = new MetricsContainers(_metricsContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorMetricsContainerApiVersion ?? "2025-10-03");
+            _metricsContainersRestClient = new MetricsContainers(_metricsContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorMetricsContainerApiVersion ?? "2026-09-03-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-03. </description>
+        /// <description> 2026-09-03-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
