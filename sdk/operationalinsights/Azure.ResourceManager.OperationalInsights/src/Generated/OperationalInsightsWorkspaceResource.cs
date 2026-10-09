@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspacesGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
+            return new OperationalInsightsNetworkSecurityPerimeterConfigurationAsyncCollectionResultOfT(
                 _workspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspacesGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
+            return new OperationalInsightsNetworkSecurityPerimeterConfigurationCollectionResultOfT(
                 _workspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1479,7 +1479,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagementGroupsGetManagementGroupsAsyncCollectionResultOfT(
+            return new OperationalInsightsManagementGroupAsyncCollectionResultOfT(
                 _managementGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1517,7 +1517,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagementGroupsGetManagementGroupsCollectionResultOfT(
+            return new OperationalInsightsManagementGroupCollectionResultOfT(
                 _managementGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1759,7 +1759,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new SchemaGetSchemasAsyncCollectionResultOfT(
+            return new OperationalInsightsSearchSchemaValueAsyncCollectionResultOfT(
                 _schemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1797,7 +1797,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new SchemaGetSchemasCollectionResultOfT(
+            return new OperationalInsightsSearchSchemaValueCollectionResultOfT(
                 _schemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1835,7 +1835,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(
+            return new OperationalInsightsUsageMetricAsyncCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1873,7 +1873,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(
+            return new OperationalInsightsUsageMetricCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

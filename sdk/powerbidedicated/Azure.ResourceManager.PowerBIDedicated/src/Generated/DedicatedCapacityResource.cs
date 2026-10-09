@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new CapacitiesGetSkusForCapacityAsyncCollectionResultOfT(
+            return new SkuDetailsAsyncCollectionResultOfT(
                 _capacitiesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new CapacitiesGetSkusForCapacityCollectionResultOfT(
+            return new SkuDetailsCollectionResultOfT(
                 _capacitiesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

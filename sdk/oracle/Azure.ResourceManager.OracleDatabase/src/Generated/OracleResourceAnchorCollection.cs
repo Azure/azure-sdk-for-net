@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new ResourceAnchorsGetByResourceGroupAsyncCollectionResultOfT(_resourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleResourceAnchorCollection.GetAll"), data => new OracleResourceAnchorResource(Client, data));
+            return new AsyncPageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new OracleResourceAnchorDataAsync0CollectionResultOfT(_resourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleResourceAnchorCollection.GetAll"), data => new OracleResourceAnchorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new ResourceAnchorsGetByResourceGroupCollectionResultOfT(_resourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleResourceAnchorCollection.GetAll"), data => new OracleResourceAnchorResource(Client, data));
+            return new PageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new OracleResourceAnchorData0CollectionResultOfT(_resourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleResourceAnchorCollection.GetAll"), data => new OracleResourceAnchorResource(Client, data));
         }
 
         /// <summary>
