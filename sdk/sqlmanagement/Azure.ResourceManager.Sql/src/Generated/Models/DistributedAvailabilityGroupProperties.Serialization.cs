@@ -129,6 +129,21 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("linkMode"u8);
                 writer.WriteStringValue(LinkMode.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(MostRecentError))
+            {
+                writer.WritePropertyName("mostRecentError"u8);
+                writer.WriteStringValue(MostRecentError);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MostRecentErrorOn))
+            {
+                writer.WritePropertyName("mostRecentErrorTime"u8);
+                writer.WriteStringValue(MostRecentErrorOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(MostRecentErrorMessage))
+            {
+                writer.WritePropertyName("mostRecentErrorMessage"u8);
+                writer.WriteStringValue(MostRecentErrorMessage);
+            }
             if (Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
@@ -192,6 +207,9 @@ namespace Azure.ResourceManager.Sql.Models
             SqlServerFailoverModeType? failoverMode = default;
             SeedingModeType? seedingMode = default;
             LinkModeType? linkMode = default;
+            string mostRecentError = default;
+            DateTimeOffset? mostRecentErrorOn = default;
+            string mostRecentErrorMessage = default;
             IList<DistributedAvailabilityGroupDatabase> databases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -279,6 +297,25 @@ namespace Azure.ResourceManager.Sql.Models
                     linkMode = new LinkModeType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("mostRecentError"u8))
+                {
+                    mostRecentError = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("mostRecentErrorTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mostRecentErrorOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("mostRecentErrorMessage"u8))
+                {
+                    mostRecentErrorMessage = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("databases"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -310,6 +347,9 @@ namespace Azure.ResourceManager.Sql.Models
                 failoverMode,
                 seedingMode,
                 linkMode,
+                mostRecentError,
+                mostRecentErrorOn,
+                mostRecentErrorMessage,
                 databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>(),
                 additionalBinaryDataProperties);
         }

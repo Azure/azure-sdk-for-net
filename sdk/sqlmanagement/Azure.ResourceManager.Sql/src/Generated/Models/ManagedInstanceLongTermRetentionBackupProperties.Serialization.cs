@@ -114,6 +114,26 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("backupStorageAccessTier"u8);
                 writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(IsBackupImmutable))
+            {
+                writer.WritePropertyName("isBackupImmutable"u8);
+                writer.WriteBooleanValue(IsBackupImmutable.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeBasedImmutability))
+            {
+                writer.WritePropertyName("timeBasedImmutability"u8);
+                writer.WriteStringValue(TimeBasedImmutability.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeBasedImmutabilityMode))
+            {
+                writer.WritePropertyName("timeBasedImmutabilityMode"u8);
+                writer.WriteStringValue(TimeBasedImmutabilityMode.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LegalHoldImmutability))
+            {
+                writer.WritePropertyName("legalHoldImmutability"u8);
+                writer.WriteStringValue(LegalHoldImmutability.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -164,6 +184,10 @@ namespace Azure.ResourceManager.Sql.Models
             DateTimeOffset? backupExpiresOn = default;
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             SqlBackupStorageAccessTier? backupStorageAccessTier = default;
+            bool? isBackupImmutable = default;
+            TimeBasedImmutability? timeBasedImmutability = default;
+            TimeBasedImmutabilityMode? timeBasedImmutabilityMode = default;
+            SetLegalHoldImmutability? legalHoldImmutability = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -231,6 +255,42 @@ namespace Azure.ResourceManager.Sql.Models
                     backupStorageAccessTier = new SqlBackupStorageAccessTier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("isBackupImmutable"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isBackupImmutable = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("timeBasedImmutability"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeBasedImmutability = new TimeBasedImmutability(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("timeBasedImmutabilityMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeBasedImmutabilityMode = new TimeBasedImmutabilityMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("legalHoldImmutability"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    legalHoldImmutability = new SetLegalHoldImmutability(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -245,6 +305,10 @@ namespace Azure.ResourceManager.Sql.Models
                 backupExpiresOn,
                 backupStorageRedundancy,
                 backupStorageAccessTier,
+                isBackupImmutable,
+                timeBasedImmutability,
+                timeBasedImmutabilityMode,
+                legalHoldImmutability,
                 additionalBinaryDataProperties);
         }
     }

@@ -25,11 +25,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="BackupShortTermRetentionPolicyProperties"/>. </summary>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
         /// <param name="diffBackupIntervalInHours"> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </param>
+        /// <param name="lockImmutability"> Whether to lock the immutability of the backups governed by this short term retention policy. </param>
+        /// <param name="immutabilityStatus"> The immutability status of the backups governed by this short term retention policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupShortTermRetentionPolicyProperties(int? retentionDays, DiffBackupIntervalInHours? diffBackupIntervalInHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupShortTermRetentionPolicyProperties(int? retentionDays, DiffBackupIntervalInHours? diffBackupIntervalInHours, bool? lockImmutability, ImmutabilityStatus? immutabilityStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetentionDays = retentionDays;
             DiffBackupIntervalInHours = diffBackupIntervalInHours;
+            LockImmutability = lockImmutability;
+            ImmutabilityStatus = immutabilityStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +44,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </summary>
         [WirePath("diffBackupIntervalInHours")]
         public DiffBackupIntervalInHours? DiffBackupIntervalInHours { get; set; }
+
+        /// <summary> Whether to lock the immutability of the backups governed by this short term retention policy. </summary>
+        [WirePath("lockImmutability")]
+        public bool? LockImmutability { get; set; }
+
+        /// <summary> The immutability status of the backups governed by this short term retention policy. </summary>
+        [WirePath("immutabilityStatus")]
+        public ImmutabilityStatus? ImmutabilityStatus { get; }
     }
 }

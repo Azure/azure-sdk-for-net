@@ -24,15 +24,27 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedBackupShortTermRetentionPolicyProperties"/>. </summary>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
+        /// <param name="lockImmutability"> Whether to lock the immutability of the backups governed by this short term retention policy. </param>
+        /// <param name="immutabilityStatus"> The immutability status of the backups governed by this short term retention policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedBackupShortTermRetentionPolicyProperties(int? retentionDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedBackupShortTermRetentionPolicyProperties(int? retentionDays, bool? lockImmutability, ImmutabilityStatus? immutabilityStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetentionDays = retentionDays;
+            LockImmutability = lockImmutability;
+            ImmutabilityStatus = immutabilityStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </summary>
         [WirePath("retentionDays")]
         public int? RetentionDays { get; set; }
+
+        /// <summary> Whether to lock the immutability of the backups governed by this short term retention policy. </summary>
+        [WirePath("lockImmutability")]
+        public bool? LockImmutability { get; set; }
+
+        /// <summary> The immutability status of the backups governed by this short term retention policy. </summary>
+        [WirePath("immutabilityStatus")]
+        public ImmutabilityStatus? ImmutabilityStatus { get; }
     }
 }

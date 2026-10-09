@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Sql
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serverName;
+        private readonly string _skiptoken;
+        private readonly long? _top;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -29,14 +31,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
+        /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RestorableDroppedDatabasesGetByServerAsyncCollectionResultOfT(RestorableDroppedDatabases client, Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RestorableDroppedDatabasesGetByServerAsyncCollectionResultOfT(RestorableDroppedDatabases client, Guid subscriptionId, string resourceGroupName, string serverName, string skiptoken, long? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _serverName = serverName;
+            _skiptoken = skiptoken;
+            _top = top;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -70,7 +76,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByServerRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _context) : _client.CreateGetByServerRequest(_subscriptionId, _resourceGroupName, _serverName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByServerRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _skiptoken, _top, _context) : _client.CreateGetByServerRequest(_subscriptionId, _resourceGroupName, _serverName, _skiptoken, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

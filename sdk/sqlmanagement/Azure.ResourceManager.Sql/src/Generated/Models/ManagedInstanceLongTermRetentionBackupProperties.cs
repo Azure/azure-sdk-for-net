@@ -31,8 +31,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="backupExpiresOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
+        /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
+        /// <param name="timeBasedImmutability"> The setting for whether or not time-based immutability is enabled for the LTR backup. When time-based immutability is enabled and locked, the backup cannot be deleted until BackupExpirationTime. </param>
+        /// <param name="timeBasedImmutabilityMode"> The time-based immutability mode. Only applicable if time-based immutability is enabled. </param>
+        /// <param name="legalHoldImmutability"> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceLongTermRetentionBackupProperties(string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpiresOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstanceLongTermRetentionBackupProperties(string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpiresOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageAccessTier? backupStorageAccessTier, bool? isBackupImmutable, TimeBasedImmutability? timeBasedImmutability, TimeBasedImmutabilityMode? timeBasedImmutabilityMode, SetLegalHoldImmutability? legalHoldImmutability, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedInstanceName = managedInstanceName;
             ManagedInstanceCreateOn = managedInstanceCreateOn;
@@ -42,6 +46,10 @@ namespace Azure.ResourceManager.Sql.Models
             BackupExpiresOn = backupExpiresOn;
             BackupStorageRedundancy = backupStorageRedundancy;
             BackupStorageAccessTier = backupStorageAccessTier;
+            IsBackupImmutable = isBackupImmutable;
+            TimeBasedImmutability = timeBasedImmutability;
+            TimeBasedImmutabilityMode = timeBasedImmutabilityMode;
+            LegalHoldImmutability = legalHoldImmutability;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -76,5 +84,21 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The BackupStorageAccessTier for the LTR backup. </summary>
         [WirePath("backupStorageAccessTier")]
         public SqlBackupStorageAccessTier? BackupStorageAccessTier { get; }
+
+        /// <summary> The setting whether the LTR backup is immutable. </summary>
+        [WirePath("isBackupImmutable")]
+        public bool? IsBackupImmutable { get; }
+
+        /// <summary> The setting for whether or not time-based immutability is enabled for the LTR backup. When time-based immutability is enabled and locked, the backup cannot be deleted until BackupExpirationTime. </summary>
+        [WirePath("timeBasedImmutability")]
+        public TimeBasedImmutability? TimeBasedImmutability { get; }
+
+        /// <summary> The time-based immutability mode. Only applicable if time-based immutability is enabled. </summary>
+        [WirePath("timeBasedImmutabilityMode")]
+        public TimeBasedImmutabilityMode? TimeBasedImmutabilityMode { get; }
+
+        /// <summary> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </summary>
+        [WirePath("legalHoldImmutability")]
+        public SetLegalHoldImmutability? LegalHoldImmutability { get; }
     }
 }
