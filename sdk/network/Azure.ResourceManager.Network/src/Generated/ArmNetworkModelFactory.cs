@@ -5861,46 +5861,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
-        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
-        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
-        /// <param name="enableConnectionTracking"> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </param>
-        /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
-        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
-        /// <param name="backendAddressPoolId"> Resource ID. </param>
-        /// <param name="probeId"> Resource ID. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="properties"> Properties of load balancer load balancing rule. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.LoadBalancingRuleData"/> instance for mocking. </returns>
-        public static LoadBalancingRuleData LoadBalancingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IEnumerable<WritableSubResource> backendAddressPools, LoadBalancingTransportProtocol? protocol, LoadDistribution? loadDistribution, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, bool? enableConnectionTracking, NetworkProvisioningState? provisioningState, ResourceIdentifier frontendIPConfigurationId, ResourceIdentifier backendAddressPoolId, ResourceIdentifier probeId, ETag? eTag)
+        public static LoadBalancingRuleData LoadBalancingRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, LoadBalancingRuleProperties properties = default, ETag? etag = default)
         {
             return new LoadBalancingRuleData(
                 id,
                 default,
                 name,
                 resourceType,
-                frontendIPConfigurationId is null && backendAddressPoolId is null && backendAddressPools is null && probeId is null && protocol is null && loadDistribution is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && disableOutboundSnat is null && enableConnectionTracking is null && provisioningState is null ? default : new LoadBalancingRuleProperties(
-                    frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
-                    backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
-                    (backendAddressPools ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    probeId is null ? default : new NetworkSubResource(probeId, default),
-                    protocol.GetValueOrDefault(),
-                    loadDistribution,
-                    frontendPort.GetValueOrDefault(),
-                    backendPort,
-                    idleTimeoutInMinutes,
-                    enableFloatingIP,
-                    enableTcpReset,
-                    disableOutboundSnat,
-                    enableConnectionTracking,
-                    provisioningState,
-                    default),
-                eTag);
+                properties,
+                etag);
         }
 
         /// <param name="frontendIPConfigurationId"> Resource ID. </param>
@@ -5917,10 +5889,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
         /// <param name="enableConnectionTracking"> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.LoadBalancingRuleProperties"/> instance for mocking. </returns>
-        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId = default, ResourceIdentifier backendAddressPoolId = default, IEnumerable<WritableSubResource> backendAddressPools = default, ResourceIdentifier probeId = default, LoadBalancingTransportProtocol protocol = default, LoadDistribution? loadDistribution = default, int frontendPort = default, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, bool? disableOutboundSnat = default, bool? enableConnectionTracking = default, NetworkProvisioningState? provisioningState = default)
+        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId = default, ResourceIdentifier backendAddressPoolId = default, IEnumerable<WritableSubResource> backendAddressPools = default, ResourceIdentifier probeId = default, LoadBalancingTransportProtocol protocol = default, LoadDistribution? loadDistribution = default, int frontendPort = default, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, bool? disableOutboundSnat = default, bool? enableConnectionTracking = default, NetworkProvisioningState? provisioningState = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             backendAddressPools ??= new ChangeTrackingList<WritableSubResource>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new LoadBalancingRuleProperties(
                 frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
@@ -5937,7 +5911,7 @@ namespace Azure.ResourceManager.Network.Models
                 disableOutboundSnat,
                 enableConnectionTracking,
                 provisioningState,
-                default);
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -16012,7 +15986,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                frontendIPConfigurationId is null && backendAddressPoolId is null && backendAddressPools is null && probeId is null && protocol is null && loadDistribution is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && disableOutboundSnat is null && enableConnectionTracking is null && provisioningState is null ? default : new LoadBalancingRuleProperties(
+                frontendIPConfigurationId is null && backendAddressPoolId is null && backendAddressPools is null && probeId is null && protocol is null && loadDistribution is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && disableOutboundSnat is null && enableConnectionTracking is null && provisioningState is null && additionalProperties is null ? default : new LoadBalancingRuleProperties(
                     frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
                     backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
                     (backendAddressPools ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -16027,8 +16001,45 @@ namespace Azure.ResourceManager.Network.Models
                     disableOutboundSnat,
                     enableConnectionTracking,
                     provisioningState,
-                    default),
+                    additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>()),
                 eTag);
+        }
+
+        /// <summary> Properties of the load balancer. </summary>
+        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
+        /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
+        /// <param name="probeId"> Resource ID. </param>
+        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
+        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
+        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
+        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
+        /// <param name="enableConnectionTracking"> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </param>
+        /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
+        /// <returns> A new <see cref="Models.LoadBalancingRuleProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId = default, ResourceIdentifier backendAddressPoolId = default, IEnumerable<WritableSubResource> backendAddressPools = default, ResourceIdentifier probeId = default, LoadBalancingTransportProtocol protocol = default, LoadDistribution? loadDistribution = default, int frontendPort = 0, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, bool? disableOutboundSnat = default, bool? enableConnectionTracking = default, NetworkProvisioningState? provisioningState = default)
+        {
+            return new LoadBalancingRuleProperties(
+                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
+                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
+                (backendAddressPools ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                probeId is null ? default : new NetworkSubResource(probeId, default),
+                protocol,
+                loadDistribution,
+                frontendPort,
+                backendPort,
+                idleTimeoutInMinutes,
+                enableFloatingIP,
+                enableTcpReset,
+                disableOutboundSnat,
+                enableConnectionTracking,
+                provisioningState,
+                default);
         }
 
         /// <summary> A load balancer probe. </summary>
@@ -23485,63 +23496,6 @@ namespace Azure.ResourceManager.Network.Models
                 sku);
         }
 
-        /// <summary> A load balancing rule for a load balancer. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="properties"> Properties of load balancer load balancing rule. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.LoadBalancingRuleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadBalancingRuleData LoadBalancingRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, LoadBalancingRuleProperties properties = default, ETag? etag = default)
-        {
-            return new LoadBalancingRuleData(
-                id,
-                default,
-                name,
-                resourceType,
-                properties,
-                etag);
-        }
-
-        /// <summary> Properties of the load balancer. </summary>
-        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
-        /// <param name="backendAddressPoolId"> Resource ID. </param>
-        /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
-        /// <param name="probeId"> Resource ID. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
-        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
-        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
-        /// <param name="enableConnectionTracking"> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </param>
-        /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.LoadBalancingRuleProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId = default, ResourceIdentifier backendAddressPoolId = default, IEnumerable<WritableSubResource> backendAddressPools = default, ResourceIdentifier probeId = default, LoadBalancingTransportProtocol protocol = default, LoadDistribution? loadDistribution = default, int frontendPort = 0, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, bool? disableOutboundSnat = default, bool? enableConnectionTracking = default, NetworkProvisioningState? provisioningState = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            return new LoadBalancingRuleProperties(
-                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
-                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
-                (backendAddressPools ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                probeId is null ? default : new NetworkSubResource(probeId, default),
-                protocol,
-                loadDistribution,
-                frontendPort,
-                backendPort,
-                idleTimeoutInMinutes,
-                enableFloatingIP,
-                enableTcpReset,
-                disableOutboundSnat,
-                enableConnectionTracking,
-                provisioningState,
-                default);
-        }
-
         /// <summary> A load balancer probe. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -27192,7 +27146,7 @@ namespace Azure.ResourceManager.Network.Models
                 disableOutboundSnat,
                 default,
                 provisioningState,
-                default);
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary> Active connectivity configuration. </summary>
