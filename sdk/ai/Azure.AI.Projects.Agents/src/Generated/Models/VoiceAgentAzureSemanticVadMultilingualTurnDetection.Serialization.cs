@@ -91,7 +91,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("idle_timeout_ms"u8);
                 writer.WriteNumberValue(Convert.ToInt32(Math.Round(IdleTimeoutMs.Value.TotalMilliseconds)));
             }
-            if (_endOfUtteranceDetectionIsDefined || Optional.IsDefined(EndOfUtteranceDetection))
+            if (Optional.IsDefined(EndOfUtteranceDetection, _endOfUtteranceDetectionIsDefined))
             {
                 if (EndOfUtteranceDetection != null)
                 {

@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
     public partial class MCPToolboxTool : ToolboxTool
     {
         private BinaryData _allowedTools;
-        internal bool _allowedToolsIsDefined;
+        private bool _allowedToolsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>

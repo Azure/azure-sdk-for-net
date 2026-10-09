@@ -76,7 +76,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format, options);
             }
-            if (_noiseReductionIsDefined || Optional.IsDefined(NoiseReduction))
+            if (Optional.IsDefined(NoiseReduction, _noiseReductionIsDefined))
             {
                 if (NoiseReduction != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("noise_reduction"u8);
                 }
             }
-            if (_turnDetectionIsDefined || Optional.IsDefined(TurnDetection))
+            if (Optional.IsDefined(TurnDetection, _turnDetectionIsDefined))
             {
                 if (TurnDetection != null)
                 {
@@ -100,7 +100,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("turn_detection"u8);
                 }
             }
-            if (_echoCancellationIsDefined || Optional.IsDefined(EchoCancellation))
+            if (Optional.IsDefined(EchoCancellation, _echoCancellationIsDefined))
             {
                 if (EchoCancellation != null)
                 {
@@ -112,7 +112,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("echo_cancellation"u8);
                 }
             }
-            if (_transcriptionIsDefined || Optional.IsDefined(Transcription))
+            if (Optional.IsDefined(Transcription, _transcriptionIsDefined))
             {
                 if (Transcription != null)
                 {
