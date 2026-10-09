@@ -14,7 +14,7 @@ namespace Azure.Provisioning.HealthcareApis
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.HealthcareApis.HealthcareApisWorkspace Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ServiceUri { get { throw null; } }
@@ -73,7 +73,7 @@ namespace Azure.Provisioning.HealthcareApis
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.HealthcareApis.HealthcareApisWorkspace Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.HealthcareApis.FhirServiceResourceVersionPolicyConfiguration ResourceVersionPolicyConfiguration { get { throw null; } set { } }
