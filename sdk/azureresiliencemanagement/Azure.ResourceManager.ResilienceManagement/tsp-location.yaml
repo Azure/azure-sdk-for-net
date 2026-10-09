@@ -1,5 +1,5 @@
 directory: specification/azureresiliencemanagement/resource-manager/Microsoft.AzureResilienceManagement/AzureResilienceManagement
-commit: 3e9806604dabc555e9a977d808ae180822fffc30
+commit: a01043acc57bb3edb2aef2628485aebf8d5f2711
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
