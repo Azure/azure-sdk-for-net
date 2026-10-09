@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetBySubscriptionAsyncCollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
+            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SapDiscoverySiteDataAsync0CollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetBySubscriptionCollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
+            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SapDiscoverySiteData0CollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
         }
     }
 }

@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Network.Models
             ETag = eTag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTag"/>. </summary>
+        public AzureFirewallFqdnTag() : this(default)
+        {
+        }
+
         /// <summary> Properties of the azure firewall FQDN tag. </summary>
         [WirePath("properties")]
         internal AzureFirewallFqdnTagPropertiesFormat Properties { get; }

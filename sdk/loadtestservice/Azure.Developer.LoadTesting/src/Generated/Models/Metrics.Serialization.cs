@@ -169,7 +169,7 @@ namespace Azure.Developer.LoadTesting
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Metrics(value, nextLink, additionalBinaryDataProperties);
+            return new Metrics(value ?? new ChangeTrackingList<TimeSeriesElement>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

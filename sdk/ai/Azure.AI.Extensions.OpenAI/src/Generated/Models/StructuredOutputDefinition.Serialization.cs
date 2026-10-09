@@ -199,7 +199,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StructuredOutputDefinition(name, description, schema, isStrict, additionalBinaryDataProperties);
+            return new StructuredOutputDefinition(name, description, schema ?? new ChangeTrackingDictionary<string, BinaryData>(), isStrict, additionalBinaryDataProperties);
         }
     }
 }

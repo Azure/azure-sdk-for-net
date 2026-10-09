@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryNodePoolData, DiscoveryNodePoolResource>(new NodePoolsGetBySupercomputerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiscoveryNodePoolData, DiscoveryNodePoolResource>(new DiscoveryNodePoolDataAsyncCollectionResultOfT(
                 _nodePoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryNodePoolData, DiscoveryNodePoolResource>(new NodePoolsGetBySupercomputerCollectionResultOfT(
+            return new PageableWrapper<DiscoveryNodePoolData, DiscoveryNodePoolResource>(new DiscoveryNodePoolDataCollectionResultOfT(
                 _nodePoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

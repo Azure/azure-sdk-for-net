@@ -164,6 +164,49 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         }
 
         [Test]
+        public async Task GetSecret_DeserializesWireModel()
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(
+                @"{""value"":""value"",""id"":""https://example.vault.azure.net/secrets/x/abc123"",""contentType"":""text/plain"",""attributes"":{""enabled"":true,""created"":10,""updated"":20},""tags"":{""env"":""test""}}"));
+            using SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            KeyVaultSecret secret = (await client.GetSecretAsync("x")).Value;
+
+            Assert.AreEqual("value", secret.Value);
+            Assert.AreEqual("x", secret.Name);
+            Assert.AreEqual("abc123", secret.Properties.Version);
+            Assert.AreEqual("text/plain", secret.Properties.ContentType);
+            Assert.IsTrue(secret.Properties.Enabled);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(10), secret.Properties.CreatedOn);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(20), secret.Properties.UpdatedOn);
+            Assert.AreEqual("test", secret.Properties.Tags["env"]);
+        }
+
+        [Test]
+        public async Task UpdateSecretProperties_DeserializesWireModel()
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(
+                @"{""id"":""https://example.vault.azure.net/secrets/x/abc123"",""contentType"":""application/json"",""attributes"":{""enabled"":false,""updated"":20},""tags"":{""env"":""test""}}"));
+            using SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            var update = new SecretProperties("x") { Version = "abc123", Enabled = false };
+            SecretProperties properties = (await client.UpdateSecretPropertiesAsync(update)).Value;
+
+            Assert.AreEqual("x", properties.Name);
+            Assert.AreEqual("abc123", properties.Version);
+            Assert.AreEqual("application/json", properties.ContentType);
+            Assert.IsFalse(properties.Enabled);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(20), properties.UpdatedOn);
+            Assert.AreEqual("test", properties.Tags["env"]);
+        }
+
+        [Test]
         public void DeleteArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartDeleteSecretAsync(null));

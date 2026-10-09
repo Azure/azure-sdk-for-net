@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VpnSiteLinkData, VpnSiteLinkResource>(new VpnSiteLinksGetByVpnSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VpnSiteLinkData, VpnSiteLinkResource>(new VpnSiteLinkDataAsyncCollectionResultOfT(
                 _vpnSiteLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VpnSiteLinkData, VpnSiteLinkResource>(new VpnSiteLinksGetByVpnSiteCollectionResultOfT(
+            return new PageableWrapper<VpnSiteLinkData, VpnSiteLinkResource>(new VpnSiteLinkDataCollectionResultOfT(
                 _vpnSiteLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

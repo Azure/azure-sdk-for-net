@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new AuthorizedApplicationsGetAllAsyncCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderAuthorizedApplicationCollection.GetAll"), data => new ProviderAuthorizedApplicationResource(Client, data));
+            return new AsyncPageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new ProviderAuthorizedApplicationDataAsyncCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderAuthorizedApplicationCollection.GetAll"), data => new ProviderAuthorizedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new AuthorizedApplicationsGetAllCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderAuthorizedApplicationCollection.GetAll"), data => new ProviderAuthorizedApplicationResource(Client, data));
+            return new PageableWrapper<ProviderAuthorizedApplicationData, ProviderAuthorizedApplicationResource>(new ProviderAuthorizedApplicationDataCollectionResultOfT(_authorizedApplicationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderAuthorizedApplicationCollection.GetAll"), data => new ProviderAuthorizedApplicationResource(Client, data));
         }
 
         /// <summary>

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningMarketplaceSubscriptionData, MachineLearningMarketplaceSubscriptionResource>(new MarketplaceSubscriptionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningMarketplaceSubscriptionData, MachineLearningMarketplaceSubscriptionResource>(new MachineLearningMarketplaceSubscriptionDataAsyncCollectionResultOfT(
                 _marketplaceSubscriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningMarketplaceSubscriptionData, MachineLearningMarketplaceSubscriptionResource>(new MarketplaceSubscriptionsGetAllCollectionResultOfT(
+            return new PageableWrapper<MachineLearningMarketplaceSubscriptionData, MachineLearningMarketplaceSubscriptionResource>(new MachineLearningMarketplaceSubscriptionDataCollectionResultOfT(
                 _marketplaceSubscriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

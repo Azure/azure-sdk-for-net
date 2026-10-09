@@ -171,7 +171,7 @@ namespace Azure.Communication.Identity
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommunicationIdentityAccessTokenRequest(scopes, expiresInMinutes, additionalBinaryDataProperties);
+            return new CommunicationIdentityAccessTokenRequest(scopes ?? new ChangeTrackingList<CommunicationTokenScope>(), expiresInMinutes, additionalBinaryDataProperties);
         }
     }
 }

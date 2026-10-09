@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LogProfileData, LogProfileResource>(new LogProfilesGetAllAsyncCollectionResultOfT(_logProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "LogProfileCollection.GetAll"), data => new LogProfileResource(Client, data));
+            return new AsyncPageableWrapper<LogProfileData, LogProfileResource>(new LogProfileDataAsyncCollectionResultOfT(_logProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "LogProfileCollection.GetAll"), data => new LogProfileResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LogProfileData, LogProfileResource>(new LogProfilesGetAllCollectionResultOfT(_logProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "LogProfileCollection.GetAll"), data => new LogProfileResource(Client, data));
+            return new PageableWrapper<LogProfileData, LogProfileResource>(new LogProfileDataCollectionResultOfT(_logProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "LogProfileCollection.GetAll"), data => new LogProfileResource(Client, data));
         }
 
         /// <summary>

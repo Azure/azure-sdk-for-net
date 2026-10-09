@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabricksWorkspaceCollection.GetAll"), data => new DatabricksWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new DatabricksWorkspaceDataAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabricksWorkspaceCollection.GetAll"), data => new DatabricksWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabricksWorkspaceCollection.GetAll"), data => new DatabricksWorkspaceResource(Client, data));
+            return new PageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new DatabricksWorkspaceDataCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabricksWorkspaceCollection.GetAll"), data => new DatabricksWorkspaceResource(Client, data));
         }
 
         /// <summary>

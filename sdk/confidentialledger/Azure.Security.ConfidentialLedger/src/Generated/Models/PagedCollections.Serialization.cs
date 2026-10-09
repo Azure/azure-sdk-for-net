@@ -166,7 +166,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedCollections(collections, nextLink, additionalBinaryDataProperties);
+            return new PagedCollections(collections ?? new ChangeTrackingList<LedgerCollectionInfo>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

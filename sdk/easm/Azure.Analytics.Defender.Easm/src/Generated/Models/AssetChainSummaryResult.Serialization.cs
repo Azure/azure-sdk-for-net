@@ -197,7 +197,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AssetChainSummaryResult(affectedAssetsSummary, affectedGroupsSummary, errors ?? new ChangeTrackingList<ErrorResult>(), additionalBinaryDataProperties);
+            return new AssetChainSummaryResult(affectedAssetsSummary ?? new ChangeTrackingList<AssetChainKindSummaryResult>(), affectedGroupsSummary ?? new ChangeTrackingList<DiscoveryGroupSummaryResult>(), errors ?? new ChangeTrackingList<ErrorResult>(), additionalBinaryDataProperties);
         }
     }
 }

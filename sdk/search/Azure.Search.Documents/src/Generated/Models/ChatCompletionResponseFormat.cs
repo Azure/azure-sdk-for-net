@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ChatCompletionSchemaProperties _jsonSchemaProperties;
+        internal bool _jsonSchemaPropertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionResponseFormat"/>. </summary>
         public ChatCompletionResponseFormat()
@@ -28,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal ChatCompletionResponseFormat(ChatCompletionResponseFormatType? @type, ChatCompletionSchemaProperties jsonSchemaProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            JsonSchemaProperties = jsonSchemaProperties;
+            _jsonSchemaProperties = jsonSchemaProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +38,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public ChatCompletionResponseFormatType? Type { get; set; }
 
         /// <summary> An open dictionary for extended properties. Required if 'type' == 'json_schema'. </summary>
-        public ChatCompletionSchemaProperties JsonSchemaProperties { get; set; }
+        public ChatCompletionSchemaProperties JsonSchemaProperties
+        {
+            get
+            {
+                return _jsonSchemaProperties;
+            }
+            set
+            {
+                _jsonSchemaProperties = value;
+                _jsonSchemaPropertiesIsDefined = true;
+            }
+        }
     }
 }

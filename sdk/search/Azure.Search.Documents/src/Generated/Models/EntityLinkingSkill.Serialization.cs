@@ -80,20 +80,34 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(EntityLinkingSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (_defaultLanguageCodeIsDefined || Optional.IsDefined(DefaultLanguageCode))
             {
-                writer.WritePropertyName("defaultLanguageCode"u8);
-                writer.WriteStringValue(DefaultLanguageCode);
+                if (DefaultLanguageCode != null)
+                {
+                    writer.WritePropertyName("defaultLanguageCode"u8);
+                    writer.WriteStringValue(DefaultLanguageCode);
+                }
+                else
+                {
+                    writer.WriteNull("defaultLanguageCode"u8);
+                }
             }
             if (Optional.IsDefined(MinimumPrecision))
             {
                 writer.WritePropertyName("minimumPrecision"u8);
                 writer.WriteNumberValue(MinimumPrecision.Value);
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("modelVersion"u8);
-                writer.WriteStringValue(ModelVersion);
+                if (ModelVersion != null)
+                {
+                    writer.WritePropertyName("modelVersion"u8);
+                    writer.WriteStringValue(ModelVersion);
+                }
+                else
+                {
+                    writer.WriteNull("modelVersion"u8);
+                }
             }
         }
 
@@ -129,8 +143,10 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool defaultLanguageCodeIsDefined = false;
             string defaultLanguageCode = default;
             double? minimumPrecision = default;
+            bool modelVersionIsDefined = false;
             string modelVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,6 +192,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("defaultLanguageCode"u8))
                 {
+                    defaultLanguageCodeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultLanguageCode = null;
@@ -195,6 +212,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("modelVersion"u8))
                 {
+                    modelVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelVersion = null;
@@ -213,12 +231,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 defaultLanguageCode,
                 minimumPrecision,
-                modelVersion);
+                modelVersion)
+            {
+                _defaultLanguageCodeIsDefined = defaultLanguageCodeIsDefined,
+                _modelVersionIsDefined = modelVersionIsDefined
+            };
         }
     }
 }

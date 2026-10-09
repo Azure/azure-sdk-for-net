@@ -96,10 +96,17 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStringValue(AssistantId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(RequiredAction))
+            if (_requiredActionIsDefined || Optional.IsDefined(RequiredAction))
             {
-                writer.WritePropertyName("required_action"u8);
-                writer.WriteObjectValue(RequiredAction, options);
+                if (RequiredAction != null)
+                {
+                    writer.WritePropertyName("required_action"u8);
+                    writer.WriteObjectValue(RequiredAction, options);
+                }
+                else
+                {
+                    writer.WriteNull("required_action"u8);
+                }
             }
             if (Optional.IsDefined(LastError))
             {
@@ -186,15 +193,29 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("usage"u8);
             }
-            if (Optional.IsDefined(Temperature))
+            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
             {
-                writer.WritePropertyName("temperature"u8);
-                writer.WriteNumberValue(Temperature.Value);
+                if (Temperature != null)
+                {
+                    writer.WritePropertyName("temperature"u8);
+                    writer.WriteNumberValue(Temperature.Value);
+                }
+                else
+                {
+                    writer.WriteNull("temperature"u8);
+                }
             }
-            if (Optional.IsDefined(TopP))
+            if (_topPIsDefined || Optional.IsDefined(TopP))
             {
-                writer.WritePropertyName("top_p"u8);
-                writer.WriteNumberValue(TopP.Value);
+                if (TopP != null)
+                {
+                    writer.WritePropertyName("top_p"u8);
+                    writer.WriteNumberValue(TopP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_p"u8);
+                }
             }
             if (Optional.IsDefined(MaxPromptTokens))
             {
@@ -275,10 +296,17 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("metadata"u8);
             }
-            if (Optional.IsDefined(ToolResources))
+            if (_toolResourcesIsDefined || Optional.IsDefined(ToolResources))
             {
-                writer.WritePropertyName("tool_resources"u8);
-                writer.WriteObjectValue(ToolResources, options);
+                if (ToolResources != null)
+                {
+                    writer.WritePropertyName("tool_resources"u8);
+                    writer.WriteObjectValue(ToolResources, options);
+                }
+                else
+                {
+                    writer.WriteNull("tool_resources"u8);
+                }
             }
             writer.WritePropertyName("parallel_tool_calls"u8);
             writer.WriteBooleanValue(ParallelToolCalls);
@@ -329,6 +357,7 @@ namespace Azure.AI.Agents.Persistent
             string threadId = default;
             string assistantId = default;
             RunStatus status = default;
+            bool requiredActionIsDefined = false;
             RequiredAction requiredAction = default;
             RunError lastError = default;
             string model = default;
@@ -342,7 +371,9 @@ namespace Azure.AI.Agents.Persistent
             DateTimeOffset? failedAt = default;
             IncompleteRunDetails incompleteDetails = default;
             RunCompletionUsage usage = default;
+            bool temperatureIsDefined = false;
             float? temperature = default;
+            bool topPIsDefined = false;
             float? topP = default;
             int? maxPromptTokens = default;
             int? maxCompletionTokens = default;
@@ -350,6 +381,7 @@ namespace Azure.AI.Agents.Persistent
             BinaryData toolChoice = default;
             BinaryData responseFormat = default;
             IReadOnlyDictionary<string, string> metadata = default;
+            bool toolResourcesIsDefined = false;
             ToolResources toolResources = default;
             bool parallelToolCalls = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -382,6 +414,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("required_action"u8))
                 {
+                    requiredActionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         requiredAction = null;
@@ -472,6 +505,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("temperature"u8))
                 {
+                    temperatureIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         temperature = null;
@@ -482,6 +516,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
+                    topPIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         topP = null;
@@ -564,6 +599,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("tool_resources"u8))
                 {
+                    toolResourcesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         toolResources = null;
@@ -592,7 +628,7 @@ namespace Azure.AI.Agents.Persistent
                 lastError,
                 model,
                 instructions,
-                tools,
+                tools ?? new ChangeTrackingList<ToolDefinition>(),
                 createdAt,
                 expiresAt,
                 startedAt,
@@ -611,7 +647,13 @@ namespace Azure.AI.Agents.Persistent
                 metadata,
                 toolResources,
                 parallelToolCalls,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _requiredActionIsDefined = requiredActionIsDefined,
+                _temperatureIsDefined = temperatureIsDefined,
+                _topPIsDefined = topPIsDefined,
+                _toolResourcesIsDefined = toolResourcesIsDefined
+            };
         }
     }
 }

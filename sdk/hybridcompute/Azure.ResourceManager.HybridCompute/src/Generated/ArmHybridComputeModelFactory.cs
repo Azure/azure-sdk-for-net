@@ -478,6 +478,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeOSProfile(computerName, windowsConfiguration, linuxConfiguration, default);
         }
 
+        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
+        /// <param name="patchMode"> Specifies the patch mode. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
+        /// <returns> A new <see cref="Models.HybridComputeWindowsConfiguration"/> instance for mocking. </returns>
+        public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode = default, PatchModeType? patchMode = default, bool? isHotpatchingEnabled = default, HybridComputePatchSettingsStatus status = default)
+        {
+            return new HybridComputeWindowsConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, default), default);
+        }
+
         /// <summary> Status of the hotpatch capability enrollment or disenrollment. </summary>
         /// <param name="hotpatchEnablementStatus"> Indicates the current status of the hotpatch being enabled or disabled. </param>
         /// <param name="error"> The errors that were encountered during the hotpatch capability enrollment or disenrollment. </param>
@@ -485,6 +495,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputePatchSettingsStatus HybridComputePatchSettingsStatus(HotpatchEnablementStatus? hotpatchEnablementStatus = default, ResponseError error = default)
         {
             return new HybridComputePatchSettingsStatus(hotpatchEnablementStatus, error, default);
+        }
+
+        /// <param name="assessmentMode"> Specifies the assessment mode. </param>
+        /// <param name="patchMode"> Specifies the patch mode. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
+        /// <returns> A new <see cref="Models.HybridComputeLinuxConfiguration"/> instance for mocking. </returns>
+        public static HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode = default, PatchModeType? patchMode = default, bool? isHotpatchingEnabled = default, HybridComputePatchSettingsStatus status = default)
+        {
+            return new HybridComputeLinuxConfiguration(assessmentMode is null && patchMode is null && isHotpatchingEnabled is null && status is null ? default : new PatchSettings(assessmentMode, patchMode, isHotpatchingEnabled, status, default), default);
         }
 
         /// <param name="licenseStatus"> Indicates the license status of the OS. </param>
@@ -549,6 +569,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             esuKeys ??= new ChangeTrackingList<EsuKey>();
 
             return new LicenseProfileStorageModelEsuProperties(assignedLicenseImmutableId, (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(), default);
+        }
+
+        /// <summary> ESU key. </summary>
+        /// <param name="sku"> SKU number. </param>
+        /// <param name="licenseStatus"> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </param>
+        /// <returns> A new <see cref="Models.EsuKey"/> instance for mocking. </returns>
+        public static EsuKey EsuKey(string sku = default, int? licenseStatus = default)
+        {
+            return new EsuKey(sku, licenseStatus, default);
         }
 
         /// <summary> Product Feature. </summary>
@@ -1430,6 +1459,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputeExtensionPublisher HybridComputeExtensionPublisher(string id = default, string name = default)
         {
             return new HybridComputeExtensionPublisher(id, name, default);
+        }
+
+        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
+        /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
+        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
+        /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
+        /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
+        /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopeProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess = default, string provisioningState = default, string privateLinkScopeId = default, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections = default)
+        {
+            return new HybridComputePrivateLinkScopeProperties(
+                publicNetworkAccess,
+                provisioningState,
+                privateLinkScopeId,
+                (privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionDataModel>()).ToList(),
+                default,
+                default);
         }
 
         /// <summary> License Profile Instance View in Machine Properties. </summary>

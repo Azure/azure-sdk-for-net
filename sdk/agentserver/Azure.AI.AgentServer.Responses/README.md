@@ -30,6 +30,10 @@ ResponsesServer.Run<EchoHandler>();
 
 This starts a Kestrel server with OpenTelemetry, health checks, server version header, inbound request logging, and your handler mapped to the Responses API endpoints. The `Azure.AI.AgentServer.Core` package is included as a transitive dependency.
 
+In a hosted Foundry environment, the one-line and `AgentHostBuilder` APIs bind the Foundry
+credential, project endpoint, and response options from the `ResponsesServer` configuration
+section. Response storage and resilient-task storage use that same bound identity and endpoint.
+
 Alternatively, use `AgentHost.CreateBuilder()` for more control over service registration and middleware:
 
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Manual
@@ -295,6 +299,29 @@ public class MultiUserHandler : ResponseHandler
 ```
 
 ## Troubleshooting
+
+### Local response storage and upgrades
+
+The built-in local response providers partition response envelopes, items, history, and
+conversation indexes by `PlatformContext.UserIdKey`. Requests without a user ID use a
+separate anonymous partition; a named user (including one named `anonymous`) does not
+share that partition. The per-request call ID does not change the storage partition.
+User IDs must come from the trusted hosting boundary; this partitioning is not a
+replacement for authentication.
+
+File-backed response state is stored under
+`{AGENTSERVER_STATE_ROOT}/responses/partitions-v1` (default root: `~/.agentserver`).
+Named-user directory names and record filenames use deterministic hashes, not raw IDs.
+New partitioned state survives restarts.
+
+**Upgrade compatibility:** the provider starts with a new namespace. Previously persisted
+global responses, items, and history are not visible after upgrade, even to anonymous
+requests or crash recovery. The old files remain untouched. There is no automatic copying,
+deletion, ownership inference, or legacy read fallback. To restore old data, operators must
+perform an explicit migration with independently verified ownership; no migration tool is
+included. Back up legacy state before any operator-controlled migration.
+
+This describes the local response store, not isolation of every process-wide service.
 
 ### Common errors
 

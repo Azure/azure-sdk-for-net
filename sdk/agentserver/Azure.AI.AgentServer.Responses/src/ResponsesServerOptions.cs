@@ -21,8 +21,8 @@ public class ResponsesServerOptions
     /// Gets or sets the maximum number of conversation history items that
     /// <see cref="ResponseContext.GetHistoryAsync"/> fetches, or <c>-1</c> to fetch
     /// all available history. Default: <c>-1</c>.
-    /// Can also be configured via the <c>DEFAULT_FETCH_HISTORY_ITEM_COUNT</c>
-    /// environment variable (integer value). Programmatic configuration takes precedence.
+    /// Hosted applications can bind this through
+    /// <see cref="ResponsesServerSettings.DefaultFetchHistoryCount"/>.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown when the value is zero or less than <c>-1</c>.
@@ -41,11 +41,8 @@ public class ResponsesServerOptions
             }
 
             _defaultFetchHistoryCount = value;
-            IsDefaultFetchHistoryCountConfigured = true;
         }
     }
-
-    internal bool IsDefaultFetchHistoryCountConfigured { get; private set; }
 
     /// <summary>
     /// The default value for <see cref="DefaultFetchHistoryCount"/>.

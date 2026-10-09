@@ -86,10 +86,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("targetFieldName"u8);
                 writer.WriteStringValue(TargetFieldName);
             }
-            if (Optional.IsDefined(MappingFunction))
+            if (_mappingFunctionIsDefined || Optional.IsDefined(MappingFunction))
             {
-                writer.WritePropertyName("mappingFunction"u8);
-                writer.WriteObjectValue(MappingFunction, options);
+                if (MappingFunction != null)
+                {
+                    writer.WritePropertyName("mappingFunction"u8);
+                    writer.WriteObjectValue(MappingFunction, options);
+                }
+                else
+                {
+                    writer.WriteNull("mappingFunction"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,6 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string sourceFieldName = default;
             string targetFieldName = default;
+            bool mappingFunctionIsDefined = false;
             FieldMappingFunction mappingFunction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,6 +159,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("mappingFunction"u8))
                 {
+                    mappingFunctionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         mappingFunction = null;
@@ -164,7 +173,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FieldMapping(sourceFieldName, targetFieldName, mappingFunction, additionalBinaryDataProperties);
+            return new FieldMapping(sourceFieldName, targetFieldName, mappingFunction, additionalBinaryDataProperties)
+            {
+                _mappingFunctionIsDefined = mappingFunctionIsDefined
+            };
         }
     }
 }

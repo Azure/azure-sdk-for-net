@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteExtensionInfoData, WebSiteExtensionResource>(new SiteExtensionInfosGetSiteExtensionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteExtensionInfoData, WebSiteExtensionResource>(new SiteExtensionInfoDataAsync0CollectionResultOfT(
                 _siteExtensionInfosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteExtensionInfoData, WebSiteExtensionResource>(new SiteExtensionInfosGetSiteExtensionsCollectionResultOfT(
+            return new PageableWrapper<SiteExtensionInfoData, WebSiteExtensionResource>(new SiteExtensionInfoData0CollectionResultOfT(
                 _siteExtensionInfosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

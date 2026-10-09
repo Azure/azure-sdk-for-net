@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabricksVirtualNetworkPeeringData, DatabricksVirtualNetworkPeeringResource>(new VNetPeeringGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatabricksVirtualNetworkPeeringData, DatabricksVirtualNetworkPeeringResource>(new DatabricksVirtualNetworkPeeringDataAsyncCollectionResultOfT(
                 _vNetPeeringRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabricksVirtualNetworkPeeringData, DatabricksVirtualNetworkPeeringResource>(new VNetPeeringGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<DatabricksVirtualNetworkPeeringData, DatabricksVirtualNetworkPeeringResource>(new DatabricksVirtualNetworkPeeringDataCollectionResultOfT(
                 _vNetPeeringRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

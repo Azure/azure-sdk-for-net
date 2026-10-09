@@ -62,7 +62,7 @@ param(
     # source for the "errors fixed" list. Mechanical capture (redirect), not LLM-authored.
     [string]$PreRepairErrorsFile = $env:AZSDK_REPAIR_PRE_ERRORS_FILE,
 
-    # Captured CLI stderr/capability errors, including failures without a JSON response.
+    # Captured CLI output/capability errors, including response-capture failures.
     [string]$EngineErrorsFile = '',
 
     # Identity fields (default to GitHub Actions env; overridable for tests).

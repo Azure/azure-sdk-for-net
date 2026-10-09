@@ -14,6 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill to translate text from one language to another. </summary>
     public partial class TextTranslationSkill : SearchIndexerSkill
     {
+        private TextTranslationSkillLanguage? _suggestedFrom;
+        internal bool _suggestedFromIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="TextTranslationSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -42,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             DefaultToLanguageCode = defaultToLanguageCode;
             DefaultFromLanguageCode = defaultFromLanguageCode;
-            SuggestedFrom = suggestedFrom;
+            _suggestedFrom = suggestedFrom;
         }
 
         /// <summary> The language code to translate documents into for documents that don't specify the to language explicitly. </summary>
@@ -52,6 +55,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public TextTranslationSkillLanguage? DefaultFromLanguageCode { get; set; }
 
         /// <summary> The language code to translate documents from when neither the fromLanguageCode input nor the defaultFromLanguageCode parameter are provided, and the automatic language detection is unsuccessful. Default is `en`. </summary>
-        public TextTranslationSkillLanguage? SuggestedFrom { get; set; }
+        public TextTranslationSkillLanguage? SuggestedFrom
+        {
+            get
+            {
+                return _suggestedFrom;
+            }
+            set
+            {
+                _suggestedFrom = value;
+                _suggestedFromIsDefined = true;
+            }
+        }
     }
 }

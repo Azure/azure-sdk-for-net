@@ -192,7 +192,7 @@ namespace Azure.AI.Language.Conversations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AnalyzeConversationOperationInput(displayName, conversationInput, actions, cancelAfter, additionalBinaryDataProperties);
+            return new AnalyzeConversationOperationInput(displayName, conversationInput, actions ?? new ChangeTrackingList<AnalyzeConversationOperationAction>(), cancelAfter, additionalBinaryDataProperties);
         }
     }
 }

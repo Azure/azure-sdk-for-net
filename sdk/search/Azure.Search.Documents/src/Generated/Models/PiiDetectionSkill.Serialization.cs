@@ -100,10 +100,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maskingCharacter"u8);
                 writer.WriteStringValue(Mask);
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("modelVersion"u8);
-                writer.WriteStringValue(ModelVersion);
+                if (ModelVersion != null)
+                {
+                    writer.WritePropertyName("modelVersion"u8);
+                    writer.WriteStringValue(ModelVersion);
+                }
+                else
+                {
+                    writer.WriteNull("modelVersion"u8);
+                }
             }
             if (Optional.IsCollectionDefined(PiiCategories))
             {
@@ -120,10 +127,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Domain))
+            if (_domainIsDefined || Optional.IsDefined(Domain))
             {
-                writer.WritePropertyName("domain"u8);
-                writer.WriteStringValue(Domain);
+                if (Domain != null)
+                {
+                    writer.WritePropertyName("domain"u8);
+                    writer.WriteStringValue(Domain);
+                }
+                else
+                {
+                    writer.WriteNull("domain"u8);
+                }
             }
         }
 
@@ -163,8 +177,10 @@ namespace Azure.Search.Documents.Indexes.Models
             double? minPrecision = default;
             PiiDetectionSkillMaskingMode? maskingMode = default;
             string mask = default;
+            bool modelVersionIsDefined = false;
             string modelVersion = default;
             IList<string> piiCategories = default;
+            bool domainIsDefined = false;
             string domain = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -243,6 +259,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("modelVersion"u8))
                 {
+                    modelVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         modelVersion = null;
@@ -274,6 +291,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("domain"u8))
                 {
+                    domainIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         domain = null;
@@ -292,8 +310,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 defaultLanguageCode,
                 minPrecision,
@@ -301,7 +319,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 mask,
                 modelVersion,
                 piiCategories ?? new ChangeTrackingList<string>(),
-                domain);
+                domain)
+            {
+                _modelVersionIsDefined = modelVersionIsDefined,
+                _domainIsDefined = domainIsDefined
+            };
         }
     }
 }

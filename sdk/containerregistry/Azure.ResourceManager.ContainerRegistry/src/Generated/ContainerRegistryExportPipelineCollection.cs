@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryExportPipelineData, ContainerRegistryExportPipelineResource>(new ExportPipelinesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerRegistryExportPipelineData, ContainerRegistryExportPipelineResource>(new ContainerRegistryExportPipelineDataAsyncCollectionResultOfT(
                 _exportPipelinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryExportPipelineData, ContainerRegistryExportPipelineResource>(new ExportPipelinesGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerRegistryExportPipelineData, ContainerRegistryExportPipelineResource>(new ContainerRegistryExportPipelineDataCollectionResultOfT(
                 _exportPipelinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

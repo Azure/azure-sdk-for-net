@@ -171,7 +171,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InternalContainerNetworkPolicyAllowlistParam(@type, additionalBinaryDataProperties, allowedDomains, domainSecrets ?? new ChangeTrackingList<InternalContainerNetworkPolicyDomainSecretParam>());
+            return new InternalContainerNetworkPolicyAllowlistParam(@type, additionalBinaryDataProperties, allowedDomains ?? new ChangeTrackingList<string>(), domainSecrets ?? new ChangeTrackingList<InternalContainerNetworkPolicyDomainSecretParam>());
         }
     }
 }

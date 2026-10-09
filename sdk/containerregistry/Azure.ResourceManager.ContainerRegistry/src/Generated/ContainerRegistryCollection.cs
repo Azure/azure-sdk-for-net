@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetByResourceGroupAsyncCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerRegistryCollection.GetAll"), data => new ContainerRegistryResource(Client, data));
+            return new AsyncPageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new ContainerRegistryDataAsyncCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerRegistryCollection.GetAll"), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetByResourceGroupCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerRegistryCollection.GetAll"), data => new ContainerRegistryResource(Client, data));
+            return new PageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new ContainerRegistryDataCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerRegistryCollection.GetAll"), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>

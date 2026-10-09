@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentsGetBySubscriptionAsyncCollectionResultOfT(ObservabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorAgentsSubscriptionResource.GetObservabilityAgents"), data => new ObservabilityAgentResource(Client, data));
+            return new AsyncPageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentDataAsync0CollectionResultOfT(ObservabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorAgentsSubscriptionResource.GetObservabilityAgents"), data => new ObservabilityAgentResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentsGetBySubscriptionCollectionResultOfT(ObservabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorAgentsSubscriptionResource.GetObservabilityAgents"), data => new ObservabilityAgentResource(Client, data));
+            return new PageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentData0CollectionResultOfT(ObservabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorAgentsSubscriptionResource.GetObservabilityAgents"), data => new ObservabilityAgentResource(Client, data));
         }
     }
 }

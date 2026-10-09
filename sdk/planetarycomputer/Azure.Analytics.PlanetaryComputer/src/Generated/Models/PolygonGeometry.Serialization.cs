@@ -197,7 +197,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PolygonGeometry(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
+            return new PolygonGeometry(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates ?? new ChangeTrackingList<IList<IList<float>>>());
         }
     }
 }

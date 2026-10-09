@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFilesystemsGetByResourceGroupAsyncCollectionResultOfT(_amlFilesystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AmlFileSystemCollection.GetAll"), data => new AmlFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFileSystemDataAsyncCollectionResultOfT(_amlFilesystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AmlFileSystemCollection.GetAll"), data => new AmlFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFilesystemsGetByResourceGroupCollectionResultOfT(_amlFilesystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AmlFileSystemCollection.GetAll"), data => new AmlFileSystemResource(Client, data));
+            return new PageableWrapper<AmlFileSystemData, AmlFileSystemResource>(new AmlFileSystemDataCollectionResultOfT(_amlFilesystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AmlFileSystemCollection.GetAll"), data => new AmlFileSystemResource(Client, data));
         }
 
         /// <summary>

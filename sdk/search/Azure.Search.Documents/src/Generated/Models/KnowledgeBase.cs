@@ -19,6 +19,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SearchResourceEncryptionKey _encryptionKey;
+        internal bool _encryptionKeyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
         /// <param name="name"> The name of the knowledge base. </param>
@@ -58,7 +60,7 @@ namespace Azure.Search.Documents.Indexes.Models
             RetrievalReasoningEffort = retrievalReasoningEffort;
             OutputMode = outputMode;
             ETag = eTag;
-            EncryptionKey = encryptionKey;
+            _encryptionKey = encryptionKey;
             Description = description;
             Tags = tags;
             RetrievalInstructions = retrievalInstructions;
@@ -87,7 +89,18 @@ namespace Azure.Search.Documents.Indexes.Models
         public ETag? ETag { get; set; }
 
         /// <summary> A description of an encryption key that you create in Azure Key Vault. </summary>
-        public SearchResourceEncryptionKey EncryptionKey { get; set; }
+        public SearchResourceEncryptionKey EncryptionKey
+        {
+            get
+            {
+                return _encryptionKey;
+            }
+            set
+            {
+                _encryptionKey = value;
+                _encryptionKeyIsDefined = true;
+            }
+        }
 
         /// <summary> The description of the knowledge base. </summary>
         public string Description { get; set; }

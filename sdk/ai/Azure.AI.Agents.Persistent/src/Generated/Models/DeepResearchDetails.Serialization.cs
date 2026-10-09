@@ -154,7 +154,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeepResearchDetails(model, bingGroundingConnections, additionalBinaryDataProperties);
+            return new DeepResearchDetails(model, bingGroundingConnections ?? new ChangeTrackingList<DeepResearchBingGroundingConnection>(), additionalBinaryDataProperties);
         }
     }
 }

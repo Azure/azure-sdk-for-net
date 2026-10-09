@@ -359,7 +359,7 @@ namespace Azure.Generator.Management.Providers
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate());
                 var effectiveApiVersion = apiVersion.NullCoalesce(Literal(inputClient.CurrentApiVersion));
-                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), effectiveApiVersion)).Terminate());
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, [clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), effectiveApiVersion, .. inputClient.HasOperationApiVersionDefaults ? new[] { InputClientExtensions.BuildApiVersionResolver() } : []])).Terminate());
             }
 
             bodyStatements.Add(Static(Type).As<ArmResource>().ValidateResourceId(idParameter).Terminate());
@@ -432,6 +432,14 @@ namespace Azure.Generator.Management.Providers
 
             return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
         }
+
+        internal IEnumerable<ArrayResponseCollectionResultPlan> ArrayCollectionResultPlans =>
+            _resourceServiceMethods
+                .Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod) &&
+                    (IsSingleton || method.Kind is not (ResourceOperationKind.Create or ResourceOperationKind.Update)))
+                .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod,
+                    ResourceHelpers.GetOperationMethodName(method.Kind, false, false),
+                    ResourceHelpers.GetOperationMethodName(method.Kind, true, false)));
 
         protected override MethodProvider[] BuildMethods()
         {

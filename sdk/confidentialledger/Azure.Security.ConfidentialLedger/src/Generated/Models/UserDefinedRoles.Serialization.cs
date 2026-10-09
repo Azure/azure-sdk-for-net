@@ -166,7 +166,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UserDefinedRoles(roles, additionalBinaryDataProperties);
+            return new UserDefinedRoles(roles ?? new ChangeTrackingList<LedgerRole>(), additionalBinaryDataProperties);
         }
     }
 }

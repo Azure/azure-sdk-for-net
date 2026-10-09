@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryWorkspaceCollection.GetAll"), data => new DiscoveryWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new DiscoveryWorkspaceDataAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryWorkspaceCollection.GetAll"), data => new DiscoveryWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryWorkspaceCollection.GetAll"), data => new DiscoveryWorkspaceResource(Client, data));
+            return new PageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new DiscoveryWorkspaceDataCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryWorkspaceCollection.GetAll"), data => new DiscoveryWorkspaceResource(Client, data));
         }
 
         /// <summary>

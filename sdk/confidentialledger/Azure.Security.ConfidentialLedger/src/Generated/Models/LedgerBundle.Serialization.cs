@@ -174,7 +174,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LedgerBundle(metadata, modules, additionalBinaryDataProperties);
+            return new LedgerBundle(metadata, modules ?? new ChangeTrackingList<ModuleDef>(), additionalBinaryDataProperties);
         }
     }
 }

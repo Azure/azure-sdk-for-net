@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListAsyncCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationDataAsyncCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
+            return new PageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationDataCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
         }
 
         /// <summary>

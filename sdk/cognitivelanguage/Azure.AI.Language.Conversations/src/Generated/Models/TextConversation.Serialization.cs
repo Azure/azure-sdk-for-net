@@ -167,7 +167,7 @@ namespace Azure.AI.Language.Conversations.Models
                 modality,
                 domain,
                 additionalBinaryDataProperties,
-                conversationItems);
+                conversationItems ?? new ChangeTrackingList<TextConversationItem>());
         }
     }
 }

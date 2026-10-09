@@ -19,21 +19,6 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         internal IDictionary<string, BinaryData> AdditionalProperties => this._additionalBinaryDataProperties;
 
-        /// <summary>
-        /// Gets or sets the Voice.
-        /// </summary>
-        public VoiceProvider Voice { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum number of tokens to generate in the response.
-        /// </summary>
-        public MaxResponseOutputTokensOption MaxResponseOutputTokens { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tool choice strategy for response generation.
-        /// </summary>
-        public ToolChoiceOption ToolChoice { get; set; }
-
         [CodeGenMember("TurnDetection")]
         private BinaryData _turnDetection;
 

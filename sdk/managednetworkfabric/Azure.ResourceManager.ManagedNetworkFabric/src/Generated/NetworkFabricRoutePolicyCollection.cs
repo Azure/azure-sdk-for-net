@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new RoutePoliciesGetByResourceGroupAsyncCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyDataAsyncCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new RoutePoliciesGetByResourceGroupCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
+            return new PageableWrapper<NetworkFabricRoutePolicyData, NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyDataCollectionResultOfT(_routePoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricRoutePolicyCollection.GetAll"), data => new NetworkFabricRoutePolicyResource(Client, data));
         }
 
         /// <summary>

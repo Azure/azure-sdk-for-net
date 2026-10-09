@@ -15,9 +15,7 @@ namespace Azure.Monitor.Query.Logs
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BatchQueryRequest))]
-    [ModelReaderWriterBuildable(typeof(BatchQueryResult))]
     [ModelReaderWriterBuildable(typeof(BatchRequest))]
-    [ModelReaderWriterBuildable(typeof(BatchResult))]
     [ModelReaderWriterBuildable(typeof(LogsBatchQueryResult))]
     [ModelReaderWriterBuildable(typeof(LogsQueryResult))]
     [ModelReaderWriterBuildable(typeof(LogsTable))]

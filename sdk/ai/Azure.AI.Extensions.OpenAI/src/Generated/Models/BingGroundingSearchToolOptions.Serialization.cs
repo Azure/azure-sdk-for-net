@@ -143,7 +143,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BingGroundingSearchToolOptions(searchConfigurations, additionalBinaryDataProperties);
+            return new BingGroundingSearchToolOptions(searchConfigurations ?? new ChangeTrackingList<BingGroundingSearchOptions>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
+        public ApplicationGatewayFirewallRuleSet() : this(default)
+        {
+        }
+
         /// <summary> Properties of the application gateway firewall rule set. </summary>
         [WirePath("properties")]
         internal ApplicationGatewayFirewallRuleSetPropertiesFormat Properties { get; }

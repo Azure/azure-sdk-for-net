@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new DataProtectionBackupInstanceDataAsyncCollectionResultOfT(
                 _backupInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesGetAllCollectionResultOfT(
+            return new PageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new DataProtectionBackupInstanceDataCollectionResultOfT(
                 _backupInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

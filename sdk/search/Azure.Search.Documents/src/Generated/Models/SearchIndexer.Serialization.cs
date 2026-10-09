@@ -114,15 +114,29 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("targetIndexName"u8);
             writer.WriteStringValue(TargetIndexName);
-            if (Optional.IsDefined(Schedule))
+            if (_scheduleIsDefined || Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                if (Schedule != null)
+                {
+                    writer.WritePropertyName("schedule"u8);
+                    writer.WriteObjectValue(Schedule, options);
+                }
+                else
+                {
+                    writer.WriteNull("schedule"u8);
+                }
             }
-            if (Optional.IsDefined(Parameters))
+            if (_parametersIsDefined || Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                if (Parameters != null)
+                {
+                    writer.WritePropertyName("parameters"u8);
+                    writer.WriteObjectValue(Parameters, options);
+                }
+                else
+                {
+                    writer.WriteNull("parameters"u8);
+                }
             }
             if (Optional.IsCollectionDefined(FieldMappings))
             {
@@ -144,25 +158,46 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDisabled))
+            if (_isDisabledIsDefined || Optional.IsDefined(IsDisabled))
             {
-                writer.WritePropertyName("disabled"u8);
-                writer.WriteBooleanValue(IsDisabled.Value);
+                if (IsDisabled != null)
+                {
+                    writer.WritePropertyName("disabled"u8);
+                    writer.WriteBooleanValue(IsDisabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("disabled"u8);
+                }
             }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (_encryptionKeyIsDefined || Optional.IsDefined(EncryptionKey))
             {
-                writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey"u8);
+                    writer.WriteObjectValue(EncryptionKey, options);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey"u8);
+                }
             }
-            if (Optional.IsDefined(Cache))
+            if (_cacheIsDefined || Optional.IsDefined(Cache))
             {
-                writer.WritePropertyName("cache"u8);
-                writer.WriteObjectValue(Cache, options);
+                if (Cache != null)
+                {
+                    writer.WritePropertyName("cache"u8);
+                    writer.WriteObjectValue(Cache, options);
+                }
+                else
+                {
+                    writer.WriteNull("cache"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -211,13 +246,18 @@ namespace Azure.Search.Documents.Indexes.Models
             string dataSourceName = default;
             string skillsetName = default;
             string targetIndexName = default;
+            bool scheduleIsDefined = false;
             IndexingSchedule schedule = default;
+            bool parametersIsDefined = false;
             IndexingParameters parameters = default;
             IList<FieldMapping> fieldMappings = default;
             IList<FieldMapping> outputFieldMappings = default;
+            bool isDisabledIsDefined = false;
             bool? isDisabled = default;
             ETag? eTag = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
+            bool cacheIsDefined = false;
             SearchIndexerCache cache = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -249,6 +289,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("schedule"u8))
                 {
+                    scheduleIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         schedule = null;
@@ -259,6 +300,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
+                    parametersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         parameters = null;
@@ -297,6 +339,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("disabled"u8))
                 {
+                    isDisabledIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isDisabled = null;
@@ -316,6 +359,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -326,6 +370,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("cache"u8))
                 {
+                    cacheIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cache = null;
@@ -353,7 +398,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 eTag,
                 encryptionKey,
                 cache,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _scheduleIsDefined = scheduleIsDefined,
+                _parametersIsDefined = parametersIsDefined,
+                _isDisabledIsDefined = isDisabledIsDefined,
+                _encryptionKeyIsDefined = encryptionKeyIsDefined,
+                _cacheIsDefined = cacheIsDefined
+            };
         }
     }
 }

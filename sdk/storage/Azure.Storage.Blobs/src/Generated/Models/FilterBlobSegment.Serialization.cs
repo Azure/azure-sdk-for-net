@@ -189,7 +189,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new FilterBlobSegment(serviceEndpoint, @where, blobItems, nextMarker);
+            return new FilterBlobSegment(serviceEndpoint, @where, blobItems ?? new ChangeTrackingList<FilterBlobItem>(), nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

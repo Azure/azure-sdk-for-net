@@ -22,7 +22,6 @@ namespace Azure.AI.AnomalyDetector
     [ModelReaderWriterBuildable(typeof(DiagnosticsInfo))]
     [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(ModelInfo))]
-    [ModelReaderWriterBuildable(typeof(ModelList))]
     [ModelReaderWriterBuildable(typeof(ModelState))]
     [ModelReaderWriterBuildable(typeof(MultivariateBatchDetectionOptions))]
     [ModelReaderWriterBuildable(typeof(MultivariateBatchDetectionResultSummary))]

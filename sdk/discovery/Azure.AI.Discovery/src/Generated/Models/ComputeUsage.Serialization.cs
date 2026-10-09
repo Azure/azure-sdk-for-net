@@ -155,7 +155,7 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputeUsage(supercomputers, additionalBinaryDataProperties);
+            return new ComputeUsage(supercomputers ?? new ChangeTrackingDictionary<string, SupercomputerUsage>(), additionalBinaryDataProperties);
         }
     }
 }

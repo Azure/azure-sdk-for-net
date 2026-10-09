@@ -407,7 +407,7 @@ namespace Azure.AI.Projects.Agents
                 providerMessage,
                 timing,
                 trace,
-                events,
+                events ?? new ChangeTrackingList<TelephonyCallLifecycleEvent>(),
                 eventsTruncated,
                 additionalBinaryDataProperties);
         }

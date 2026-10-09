@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExtendedServerBlobAuditingPolicyData, ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPoliciesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ExtendedServerBlobAuditingPolicyData, ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPolicyDataAsyncCollectionResultOfT(
                 _extendedServerBlobAuditingPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExtendedServerBlobAuditingPolicyData, ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPoliciesGetByServerCollectionResultOfT(
+            return new PageableWrapper<ExtendedServerBlobAuditingPolicyData, ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPolicyDataCollectionResultOfT(
                 _extendedServerBlobAuditingPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

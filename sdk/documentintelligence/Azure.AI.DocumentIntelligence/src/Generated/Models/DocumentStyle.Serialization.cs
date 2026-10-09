@@ -239,7 +239,7 @@ namespace Azure.AI.DocumentIntelligence
                 fontWeight,
                 color,
                 backgroundColor,
-                spans,
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
                 confidence,
                 additionalBinaryDataProperties);
         }

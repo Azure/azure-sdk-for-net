@@ -10,11 +10,6 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkResource"/>. </summary>
-        public SignalRPrivateLinkResource()
-        {
-        }
-
         /// <summary> Group Id of the private link resource. </summary>
         [WirePath("properties.groupId")]
         public string GroupId
