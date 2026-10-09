@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
             Upgrades = new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
+            ComponentsByReleases = new ChangeTrackingList<KubernetesVersionComponents>();
             RecentlyUsedVersions = new ChangeTrackingList<AgentPoolRecentlyUsedVersion>();
         }
 
@@ -32,14 +33,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
+        /// <param name="componentsByReleases"> List of components grouped by kubernetes major.minor version. </param>
         /// <param name="recentlyUsedVersions"> List of historical good versions for rollback operations. </param>
         /// <param name="latestNodeImageVersion"> The latest AKS supported node image version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolUpgradeProfileProperties(string kubernetesVersion, ContainerServiceOSType osType, IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, IReadOnlyList<AgentPoolRecentlyUsedVersion> recentlyUsedVersions, string latestNodeImageVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolUpgradeProfileProperties(string kubernetesVersion, ContainerServiceOSType osType, IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, IList<KubernetesVersionComponents> componentsByReleases, IReadOnlyList<AgentPoolRecentlyUsedVersion> recentlyUsedVersions, string latestNodeImageVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
             Upgrades = upgrades;
+            ComponentsByReleases = componentsByReleases;
             RecentlyUsedVersions = recentlyUsedVersions;
             LatestNodeImageVersion = latestNodeImageVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -56,6 +59,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> List of orchestrator types and versions available for upgrade. </summary>
         [WirePath("upgrades")]
         public IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> Upgrades { get; } = new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
+
+        /// <summary> List of components grouped by kubernetes major.minor version. </summary>
+        [WirePath("componentsByReleases")]
+        public IList<KubernetesVersionComponents> ComponentsByReleases { get; } = new ChangeTrackingList<KubernetesVersionComponents>();
 
         /// <summary> List of historical good versions for rollback operations. </summary>
         [WirePath("recentlyUsedVersions")]

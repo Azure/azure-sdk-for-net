@@ -65,7 +65,22 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Settings for overrides on upgrade. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public UpgradeOverrideSettings UpgradeOverrideSettings
+        {
+            get => UpgradeSettings is null ? default : UpgradeSettings.OverrideSettings;
+            set
+            {
+                if (UpgradeSettings is null)
+                    UpgradeSettings = new ClusterUpgradeSettings();
+                UpgradeSettings.OverrideSettings = value;
+            }
+        }
+
         /// <summary> The identity of the managed cluster, if configured. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ManagedServiceIdentity Identity
         {
