@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/quota/Azure.ResourceManager.Quota
+    - sdk/quota/Azure.Provisioning.Quota
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -17,3 +18,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Quota
       safeName: AzureResourceManagerQuota
+    - name: Azure.Provisioning.Quota
+      safeName: AzureProvisioningQuota
