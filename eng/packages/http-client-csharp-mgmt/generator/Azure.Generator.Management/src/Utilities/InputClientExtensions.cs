@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -30,33 +29,6 @@ internal static class InputClientExtensions
         return new FuncExpression([resourceType.Declaration], new TernaryConditionalExpression(tryGetVersion, apiVersion, Null));
     }
 
-    /// <summary>
-    /// Gets a resource-type-shaped override key for a scope-level operation group without
-    /// resource metadata. This is an operation-group key, not an inferred ARM resource.
-    /// Only a concrete scope/providers/namespace/group path is supported; resource instance
-    /// and action suffixes must not be treated as additional resource-type segments.
-    /// </summary>
-    internal static string? GetOperationGroupApiVersionKey(InputServiceMethod method)
-    {
-        var nonResourceMethod = ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods
-            .FirstOrDefault(m => ReferenceEquals(m.InputMethod, method));
-        if (nonResourceMethod is null)
-        {
-            return null;
-        }
-        var operationPath = new RequestPathPattern(method.Operation.Path);
-        var scopePath = nonResourceMethod.Scope.ScopeIdPattern;
-        if (!scopePath.IsAncestorOf(operationPath))
-        {
-            return null;
-        }
-        var groupPath = scopePath.TrimAncestorFrom(operationPath);
-        return groupPath.Count == 3 && groupPath[0].IsProvidersSegment
-            && groupPath[1].IsConstant && groupPath[2].IsConstant
-            ? $"{groupPath[1].Value}/{groupPath[2].Value}"
-            : null;
-    }
-
     extension(InputClient inputClient)
     {
         /// <summary>
@@ -75,8 +47,7 @@ internal static class InputClientExtensions
         /// </summary>
         internal bool NeedsApiVersionResolver => inputClient.HasOperationApiVersionDefaults
             || ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas.Any(resource =>
-                resource.CategorizeMethods().MethodsInExtension.Any(method => ReferenceEquals(method.InputClient, inputClient)))
-            || inputClient.Methods.Any(method => GetOperationGroupApiVersionKey(method) is not null);
+                resource.CategorizeMethods().MethodsInExtension.Any(method => ReferenceEquals(method.InputClient, inputClient)));
 
         /// <summary>
         /// Gets the API version for this client from its <see cref="InputClient.ApiVersions"/>.

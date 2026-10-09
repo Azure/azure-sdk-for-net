@@ -75,8 +75,8 @@ public class ApiVersionOverrideWireTests
         else subscription.GetWireVersionTests().ToArray();
         transport.AssertVersion(Expected("opaque-read"));
         if (async) await subscription.CheckWireVersionAsync(); else subscription.CheckWireVersion();
-        // This provider action's operation-group key differs from the resource and scope
-        // keys configured above, so those selections must not change its wire default.
+        // This non-resource provider action keeps its spec-defined wire default;
+        // resource-type and owning-scope overrides must not change it.
         transport.AssertVersion("opaque-non-resource");
         Assert.That(transport.Requests, Has.Count.EqualTo(8));
     }
@@ -87,7 +87,7 @@ public class ApiVersionOverrideWireTests
     [TestCase(true, "owning-scope")]
     [TestCase(false, "targeted")]
     [TestCase(true, "targeted")]
-    public async Task OrdinaryMockableClientsHonorResourceAndOperationGroupOverrides(bool async, string configuration)
+    public async Task OrdinaryMockableClientsHonorResourceOverridesAndPreserveNonResourceDefaults(bool async, string configuration)
     {
         var transport = new VersionTransport();
         var options = new ArmClientOptions { Transport = transport };
@@ -111,8 +111,25 @@ public class ApiVersionOverrideWireTests
         transport.AssertVersion(configuration == "targeted" ? "runtime-resource" : "2024-05-01");
 
         if (async) await subscription.CheckOrdinaryWireVersionAsync(); else subscription.CheckOrdinaryWireVersion();
-        transport.AssertVersion(configuration == "targeted" ? "runtime-operation-group" : "2024-05-01");
+        // A provider-path-shaped key is not an associated ARM resource type.
+        transport.AssertVersion("2024-05-01");
         Assert.That(transport.Requests, Has.Count.EqualTo(2));
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task NonResourceProviderActionPreservesSpecOverrideDespiteSyntheticRuntimeKey(bool async)
+    {
+        var transport = new VersionTransport();
+        var options = new ArmClientOptions { Transport = transport };
+        options.SetApiVersion("MgmtTypeSpec/checkWireVersion", "runtime-provider");
+        var client = new ArmClient(new TestCredential(), SubscriptionId, options);
+        var subscription = client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SubscriptionId}"));
+
+        if (async) await subscription.CheckWireVersionAsync(); else subscription.CheckWireVersion();
+
+        transport.AssertVersion("opaque-non-resource");
+        Assert.That(transport.Requests, Has.Count.EqualTo(1));
     }
 
     [Test]

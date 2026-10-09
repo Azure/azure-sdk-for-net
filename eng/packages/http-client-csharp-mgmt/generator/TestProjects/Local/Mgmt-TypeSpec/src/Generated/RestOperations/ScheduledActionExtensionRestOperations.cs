@@ -17,7 +17,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
-        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of ScheduledActionExtension for mocking. </summary>
         protected ScheduledActionExtension()
@@ -30,14 +29,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
-        internal ScheduledActionExtension(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
+        internal ScheduledActionExtension(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(ScheduledActionExtension).Assembly, applicationId);
         }
 
@@ -54,7 +51,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/MgmtTypeSpec/associatedScheduledActions", false);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/associatedScheduledActions") ?? "2024-05-01", true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -75,7 +75,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/associatedScheduledActions") ?? "2024-05-01");
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

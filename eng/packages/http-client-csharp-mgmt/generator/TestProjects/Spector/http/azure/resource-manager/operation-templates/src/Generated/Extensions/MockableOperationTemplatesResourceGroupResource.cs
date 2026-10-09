@@ -42,13 +42,7 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
 
         private ClientDiagnostics LroClientDiagnostics => _lroClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Lro LroRestClient => _lroRestClient ??= new Lro(
-            LroClientDiagnostics,
-            Pipeline,
-            Diagnostics.ApplicationId,
-            Endpoint,
-            "2023-12-01-preview",
-            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private Lro LroRestClient => _lroRestClient ??= new Lro(LroClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
 
         private ClientDiagnostics LroPagingClientDiagnostics => _lroPagingClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

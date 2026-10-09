@@ -228,18 +228,30 @@ internal class ApiVersionOverrideTests
 
     [TestCase(false)]
     [TestCase(true)]
-    public void MockableUndecoratedRelationshipsClientResolvesOperationGroupOverride(bool resourceGroupScope)
+    public void MockableNonResourceProviderClientDoesNotInventRuntimeOverrideKey(bool resourceGroupScope)
     {
         var (property, request) = RenderUndecoratedScopedMockableClient(resourceGroupScope, hasProviderPath: true);
 
         Assert.Multiple(() =>
         {
-            Assert.That(property, Does.Contain("TryGetApiVersion("));
-            Assert.That(request, Does.Contain("_getApiVersion"));
-            Assert.That(request, Does.Contain("\"Microsoft.Relationships/contains\""));
-            Assert.That(request, Does.Not.Contain("\"Microsoft.Resources/resourceGroups\""));
-            Assert.That(request, Does.Not.Contain("\"Microsoft.Resources/subscriptions\""));
-            Assert.That(request, Does.Contain("?? \"2023-01-01\""));
+            Assert.That(property, Does.Not.Contain("TryGetApiVersion("));
+            Assert.That(request, Does.Not.Contain("_getApiVersion"));
+            Assert.That(request, Does.Contain("AppendQuery(\"api-version\", _apiVersion, true)"));
+        });
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void MockableNonResourceProviderClientPreservesSpecApiVersionOverride(bool resourceGroupScope)
+    {
+        var (property, request) = RenderUndecoratedScopedMockableClient(resourceGroupScope, hasProviderPath: true,
+            wireVersion: "opaque-provider");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(property, Does.Contain("\"2023-01-01\""));
+            Assert.That(request, Does.Contain("AppendQuery(\"api-version\", \"opaque-provider\", true)"));
+            Assert.That(request, Does.Not.Contain("_getApiVersion"));
         });
     }
 
@@ -406,7 +418,7 @@ internal class ApiVersionOverrideTests
             && m.Signature.Name.EndsWith("Request") && !m.Signature.Name.Contains("Read") && m.Signature.Name.Contains(name))
             .BodyStatements!.ToDisplayString();
 
-    private static (string Property, string Request) RenderUndecoratedScopedMockableClient(bool resourceGroupScope, bool hasProviderPath, string? pathSuffix = null)
+    private static (string Property, string Request) RenderUndecoratedScopedMockableClient(bool resourceGroupScope, bool hasProviderPath, string? pathSuffix = null, string wireVersion = "2023-01-01")
     {
         var scopePath = resourceGroupScope
             ? "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
@@ -416,7 +428,7 @@ internal class ApiVersionOverrideTests
             path: scopePath + (pathSuffix ?? (hasProviderPath ? "/providers/Microsoft.Relationships/contains" : "/checkNameAvailability")),
             parameters: [.. parameterNames.Select(name => InputFactory.PathParameter(name, InputPrimitiveType.String, isRequired: true)),
                 InputFactory.QueryParameter("apiVersion", InputPrimitiveType.String, isRequired: true, isApiVersion: true,
-                    defaultValue: new InputConstant("2023-01-01", InputPrimitiveType.String),
+                    defaultValue: new InputConstant(wireVersion, InputPrimitiveType.String),
                     serializedName: "api-version", scope: InputParameterScope.Client)],
             responses: [InputFactory.OperationResponse([200], InputPrimitiveType.String)]);
         var method = InputFactory.BasicServiceMethod("List", operation,

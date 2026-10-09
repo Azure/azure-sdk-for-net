@@ -34,8 +34,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
 
         var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
             .Where(r => r.Methods.Any(m => ReferenceEquals(m.InputMethod, serviceMethod))).ToArray();
-        var operationGroupKey = resources.Length == 0 ? InputClientExtensions.GetOperationGroupApiVersionKey(serviceMethod) : null;
-        if (!client.HasOperationApiVersionDefaults && resources.Length == 0 && operationGroupKey is null)
+        if (!client.HasOperationApiVersionDefaults && resources.Length == 0)
         {
             // Adding a resolver for another operation must not change the shared constructor
             // version used by genuinely non-resource requests in this client.
@@ -59,15 +58,12 @@ internal class RestClientVisitor : ScmLibraryVisitor
             ? literal.Value
             : apiVersionParameter.DefaultValue?.Value;
         ValueExpression defaultVersion = Literal(wireDefault as string ?? client.CurrentApiVersion);
-        // Metadata takes precedence over paths so action suffixes are never part of the key.
-        // A scope-level operation group may have its own key without being an ARM resource.
-        ValueExpression? resourceType = resources.Length > 0
-            ? BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)
-            : operationGroupKey is not null ? Literal(operationGroupKey) : null;
-        var effectiveVersion = resourceType is null
+        // Runtime overrides are resource-type keyed. Non-resource operations retain
+        // their spec-defined defaults and do not acquire a key from their request path.
+        var effectiveVersion = resources.Length == 0
             ? defaultVersion
             : ((ManagementClientProvider)enclosingType.ClientProvider).ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>()
-                .Invoke("Invoke", resourceType).NullCoalesce(defaultVersion);
+                .Invoke("Invoke", BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)).NullCoalesce(defaultVersion);
 
         var statements = new List<MethodBodyStatement>();
         foreach (var statement in createRequestMethodProvider.BodyStatements)

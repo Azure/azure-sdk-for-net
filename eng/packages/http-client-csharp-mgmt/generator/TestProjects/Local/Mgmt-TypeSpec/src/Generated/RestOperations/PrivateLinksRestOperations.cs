@@ -17,7 +17,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
-        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of PrivateLinks for mocking. </summary>
         protected PrivateLinks()
@@ -30,14 +29,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
-        internal PrivateLinks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
+        internal PrivateLinks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(PrivateLinks).Assembly, applicationId);
         }
 
@@ -56,7 +53,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/privateLinkResources", false);
-            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/privateLinkResources") ?? "2024-05-01", true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,7 +77,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/privateLinkResources") ?? "2024-05-01");
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

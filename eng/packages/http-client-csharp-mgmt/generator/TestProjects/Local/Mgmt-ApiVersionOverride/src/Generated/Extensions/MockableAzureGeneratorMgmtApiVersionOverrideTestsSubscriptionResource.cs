@@ -74,13 +74,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
 
         private ClientDiagnostics OrdinaryProviderOperationsClientDiagnostics => _ordinaryProviderOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OrdinaryProviderOperations OrdinaryProviderOperationsRestClient => _ordinaryProviderOperationsRestClient ??= new OrdinaryProviderOperations(
-            OrdinaryProviderOperationsClientDiagnostics,
-            Pipeline,
-            Diagnostics.ApplicationId,
-            Endpoint,
-            "2024-05-01",
-            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+        private OrdinaryProviderOperations OrdinaryProviderOperationsRestClient => _ordinaryProviderOperationsRestClient ??= new OrdinaryProviderOperations(OrdinaryProviderOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         /// <summary>
         /// List EscapedWireVersionTest resources by subscription ID
