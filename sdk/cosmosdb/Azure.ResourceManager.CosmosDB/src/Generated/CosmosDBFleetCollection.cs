@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new FleetGetByResourceGroupAsyncCollectionResultOfT(_fleetRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBFleetCollection.GetAll"), data => new CosmosDBFleetResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new CosmosDBFleetDataAsyncCollectionResultOfT(_fleetRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBFleetCollection.GetAll"), data => new CosmosDBFleetResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new FleetGetByResourceGroupCollectionResultOfT(_fleetRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBFleetCollection.GetAll"), data => new CosmosDBFleetResource(Client, data));
+            return new PageableWrapper<CosmosDBFleetData, CosmosDBFleetResource>(new CosmosDBFleetDataCollectionResultOfT(_fleetRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBFleetCollection.GetAll"), data => new CosmosDBFleetResource(Client, data));
         }
 
         /// <summary>

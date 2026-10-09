@@ -129,9 +129,34 @@
       },
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "AcrDelete",
+          "value": "c2f4ef07-c644-48eb-af81-4b1b4947fb11"
+        },
+        {
+          "name": "AcrImageSigner",
+          "value": "6cef56e8-d556-48e5-a04f-b8e64114680f"
+        },
+        {
+          "name": "AcrPull",
+          "value": "7f951dda-4ed3-4680-a7ca-43fe172d538d"
+        },
+        {
+          "name": "AcrPush",
+          "value": "8311e382-0749-4cb8-b61a-304f252e45ec"
+        },
+        {
+          "name": "AcrQuarantineReader",
+          "value": "cdda3590-29a3-44f6-95f2-9f980659eb04"
+        },
+        {
+          "name": "AcrQuarantineWriter",
+          "value": "c8d4ff99-41c3-41a8-9f60-21dfdad59608"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.ContainerRegistry.CacheRule",
@@ -203,7 +228,7 @@
       },
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -297,7 +322,7 @@
       },
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -371,7 +396,7 @@
       },
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -434,7 +459,7 @@
         "maxLength": 50
       },
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -497,7 +522,7 @@
         "maxLength": 50
       },
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -570,7 +595,7 @@
         "maxLength": 200
       },
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -633,7 +658,7 @@
         "maxLength": 200
       },
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -696,7 +721,7 @@
         "maxLength": 50
       },
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -756,7 +781,7 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -796,7 +821,7 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -870,7 +895,7 @@
       },
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -944,7 +969,7 @@
       },
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1018,7 +1043,7 @@
       },
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1122,7 +1147,7 @@
       },
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01-preview"
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     }

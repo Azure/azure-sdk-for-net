@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBSqlRoleAssignmentData, CosmosDBSqlRoleAssignmentResource>(new SqlResourcesGetSqlRoleAssignmentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CosmosDBSqlRoleAssignmentData, CosmosDBSqlRoleAssignmentResource>(new CosmosDBSqlRoleAssignmentDataAsyncCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBSqlRoleAssignmentData, CosmosDBSqlRoleAssignmentResource>(new SqlResourcesGetSqlRoleAssignmentsCollectionResultOfT(
+            return new PageableWrapper<CosmosDBSqlRoleAssignmentData, CosmosDBSqlRoleAssignmentResource>(new CosmosDBSqlRoleAssignmentDataCollectionResultOfT(
                 _sqlResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
