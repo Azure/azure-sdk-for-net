@@ -45,7 +45,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -94,7 +95,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -213,7 +215,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -252,7 +255,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -291,7 +295,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -390,7 +395,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -430,7 +436,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -509,7 +516,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -558,7 +566,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -677,7 +686,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -736,7 +746,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -925,7 +936,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -985,7 +997,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1035,7 +1048,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1095,7 +1109,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1285,7 +1300,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1335,7 +1351,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1395,7 +1412,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1455,7 +1473,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1515,7 +1534,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1555,7 +1575,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1585,7 +1606,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1625,7 +1647,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1665,7 +1688,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1705,7 +1729,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1775,7 +1800,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1825,7 +1851,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1875,7 +1902,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1935,7 +1963,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -1985,7 +2014,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2045,7 +2075,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2135,7 +2166,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2205,7 +2237,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2255,7 +2288,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2315,7 +2349,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2355,7 +2390,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2415,7 +2451,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2465,7 +2502,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2525,7 +2563,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2565,7 +2604,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2605,7 +2645,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2645,7 +2686,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2705,7 +2747,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2755,7 +2798,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2805,7 +2849,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2865,7 +2910,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2906,7 +2952,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -2966,7 +3013,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3026,7 +3074,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3255,9 +3304,31 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "SqlDBContributor",
+          "value": "9b7fa17d-e63e-47b0-bb0a-15c516ac86ec"
+        },
+        {
+          "name": "SqlManagedInstanceContributor",
+          "value": "4939a1f6-9ae0-4e48-a1e0-f2cbe897382d"
+        },
+        {
+          "name": "SqlSecurityManager",
+          "value": "056cd41c-7e88-42e1-933e-88ba6a50c9c3"
+        },
+        {
+          "name": "SqlServerContributor",
+          "value": "6d8ee4ec-f05a-4a1d-8b00-a9b17e38b437"
+        },
+        {
+          "name": "AzureConnectedSqlServerOnboarding",
+          "value": "e8113dce-c529-4d33-91fa-e9b972617508"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.Sql.ServerAzureADAdministrator",
@@ -3315,7 +3386,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3365,7 +3437,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3415,7 +3488,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3465,7 +3539,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3506,7 +3581,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3566,7 +3642,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3616,7 +3693,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3886,7 +3964,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3936,7 +4015,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -3986,7 +4066,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4036,7 +4117,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4086,7 +4168,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4127,7 +4210,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4177,7 +4261,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4237,7 +4322,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4297,7 +4383,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4337,7 +4424,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4387,7 +4475,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4427,7 +4516,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4477,7 +4567,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4537,7 +4628,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4568,7 +4660,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4609,7 +4702,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4699,7 +4793,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4749,7 +4844,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4789,7 +4885,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4829,7 +4926,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4869,7 +4967,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4939,7 +5038,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -4989,7 +5089,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5039,7 +5140,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5089,7 +5191,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5149,7 +5252,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5189,7 +5293,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5229,7 +5334,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5349,7 +5455,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5439,7 +5546,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5509,7 +5617,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5569,7 +5678,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5619,7 +5729,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5679,7 +5790,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5739,7 +5851,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5799,7 +5912,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5849,7 +5963,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -5919,7 +6034,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6029,7 +6145,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6089,7 +6206,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6139,7 +6257,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6239,7 +6358,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6319,7 +6439,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6379,7 +6500,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6449,7 +6571,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6519,7 +6642,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6559,7 +6683,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6599,7 +6724,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6659,7 +6785,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6699,7 +6826,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6739,7 +6867,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6799,7 +6928,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6859,7 +6989,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6909,7 +7040,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -6969,7 +7101,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7029,7 +7162,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7069,7 +7203,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7109,7 +7244,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7149,7 +7285,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7199,7 +7336,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7269,7 +7407,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7319,7 +7458,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7379,7 +7519,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7419,7 +7560,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7459,7 +7601,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7539,7 +7682,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7599,7 +7743,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7659,7 +7804,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -7748,7 +7894,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-01-01",
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2025-08-01-preview"
       ],
       "rbacRoles": []
     }

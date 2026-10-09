@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IPv6FirewallRuleData, IPv6FirewallRuleResource>(new IPv6FirewallRulesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IPv6FirewallRuleData, IPv6FirewallRuleResource>(new IPv6FirewallRuleDataAsyncCollectionResultOfT(
                 _ipv6FirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IPv6FirewallRuleData, IPv6FirewallRuleResource>(new IPv6FirewallRulesGetByServerCollectionResultOfT(
+            return new PageableWrapper<IPv6FirewallRuleData, IPv6FirewallRuleResource>(new IPv6FirewallRuleDataCollectionResultOfT(
                 _ipv6FirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

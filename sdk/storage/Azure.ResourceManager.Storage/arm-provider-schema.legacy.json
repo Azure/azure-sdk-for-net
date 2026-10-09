@@ -28,7 +28,160 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Storage.ContextCache",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+      "resourceType": "Microsoft.Storage/contextCaches",
+      "methods": [
+        {
+          "methodId": "Microsoft.Storage.ContextCaches.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.ContextCaches.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.ContextCaches.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.ContextCaches.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.ContextCaches.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.ContextCaches.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Storage/contextCaches",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "ContextCache",
+      "nameConstraints": {
+        "pattern": "^[a-z0-9][a-z0-9-]{1,22}[a-z0-9]$"
+      },
+      "apiVersions": [
+        "2026-06-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Storage.ContextCacheContainer",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers/{contextCacheContainerName}",
+      "resourceType": "Microsoft.Storage/contextCaches/contextCacheContainers",
+      "methods": [
+        {
+          "methodId": "Microsoft.Storage.ContextCacheContainers.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers/{contextCacheContainerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers/{contextCacheContainerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.ContextCacheContainers.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers/{contextCacheContainerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers/{contextCacheContainerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.ContextCacheContainers.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers/{contextCacheContainerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers/{contextCacheContainerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.ContextCacheContainers.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers/{contextCacheContainerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers/{contextCacheContainerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.ContextCacheContainers.listByContextCache",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}/contextCacheContainers",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/contextCaches/{contextCacheName}",
+      "resourceName": "ContextCacheContainer",
+      "nameConstraints": {
+        "pattern": "^[a-z0-9](?!.*--)[a-z0-9-]{1,61}[a-z0-9]$"
+      },
+      "apiVersions": [
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -231,9 +384,92 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "StorageAccountBackupContributor",
+          "value": "e5e2a7ff-d759-4cd2-bb51-3152d37e2eb1"
+        },
+        {
+          "name": "StorageAccountContributor",
+          "value": "17d1049b-9a84-46fb-8f53-869881c3d3ab"
+        },
+        {
+          "name": "StorageAccountKeyOperatorServiceRole",
+          "value": "81a9662b-bebf-436f-a333-f67b29880f12"
+        },
+        {
+          "name": "StorageBlobDataContributor",
+          "value": "ba92f5b4-2d11-453d-a403-e96b0029c9fe"
+        },
+        {
+          "name": "StorageBlobDataOwner",
+          "value": "b7e6dc6d-f1e8-4753-8033-0f276bb0955b"
+        },
+        {
+          "name": "StorageBlobDataReader",
+          "value": "2a2b9908-6ea1-4ae2-8e65-a410df84e7d1"
+        },
+        {
+          "name": "StorageBlobDelegator",
+          "value": "db58b8e5-c6ad-4a2a-8342-4190687cbf4a"
+        },
+        {
+          "name": "StorageFileDataPrivilegedContributor",
+          "value": "69566ab7-960f-475b-8e7c-b3118f30c6bd"
+        },
+        {
+          "name": "StorageFileDataPrivilegedReader",
+          "value": "b8eda974-7b85-4f76-af95-65846b26df6d"
+        },
+        {
+          "name": "StorageFileDataSmbShareContributor",
+          "value": "0c867c2a-1d8c-454a-a3db-ab2ea1bdc8bb"
+        },
+        {
+          "name": "StorageFileDataSmbShareElevatedContributor",
+          "value": "a7264617-510b-434b-a828-9731dc254ea7"
+        },
+        {
+          "name": "StorageFileDataSmbShareReader",
+          "value": "aba4ae5f-2193-4029-9191-0cb91df5e314"
+        },
+        {
+          "name": "StorageQueueDataContributor",
+          "value": "974c5e8b-45b9-4653-ba55-5f855dd0fb88"
+        },
+        {
+          "name": "StorageQueueDataMessageProcessor",
+          "value": "8a0f0c08-91a1-4084-bc3d-661d67233fed"
+        },
+        {
+          "name": "StorageQueueDataMessageSender",
+          "value": "c6a89b2d-59bc-44d0-9896-0f6e12d7b80a"
+        },
+        {
+          "name": "StorageQueueDataReader",
+          "value": "19e7f393-937e-4f77-808e-94535e297925"
+        },
+        {
+          "name": "StorageTableDataContributor",
+          "value": "0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3"
+        },
+        {
+          "name": "StorageTableDataReader",
+          "value": "76199698-9eea-4c19-bc75-cec21354c6b6"
+        },
+        {
+          "name": "ClassicStorageAccountContributor",
+          "value": "86e8f5dc-a6e9-4c67-9d15-de283e8eac25"
+        },
+        {
+          "name": "ClassicStorageAccountKeyOperatorServiceRole",
+          "value": "985d6b00-f706-48f5-a6fe-d0ca12fb668d"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.Storage.StorageAccountMigration",
@@ -261,7 +497,69 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Storage.AdvancedPlatformMetricsRule",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}",
+      "resourceType": "Microsoft.Storage/storageAccounts/advancedPlatformMetrics",
+      "methods": [
+        {
+          "methodId": "Microsoft.Storage.AdvancedPlatformMetrics.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.AdvancedPlatformMetrics.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.AdvancedPlatformMetrics.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Storage.AdvancedPlatformMetrics.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}",
+      "resourceName": "AdvancedPlatformMetricsRule",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -312,7 +610,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -425,7 +725,9 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -496,7 +798,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -579,7 +883,9 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -652,7 +958,9 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -715,7 +1023,9 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -766,7 +1076,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -859,7 +1171,9 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -900,7 +1214,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -961,7 +1277,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1044,7 +1362,9 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1095,7 +1415,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1147,7 +1469,9 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1209,7 +1533,9 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1269,7 +1595,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1320,7 +1648,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1394,7 +1724,9 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1488,7 +1820,9 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1539,7 +1873,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -1613,7 +1949,9 @@
       },
       "apiVersions": [
         "2025-06-01",
-        "2025-08-01"
+        "2025-08-01",
+        "2026-04-01",
+        "2026-06-01"
       ],
       "rbacRoles": []
     }

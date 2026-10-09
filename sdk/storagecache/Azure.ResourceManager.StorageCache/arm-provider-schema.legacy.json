@@ -98,7 +98,8 @@
         "maxLength": 80
       },
       "apiVersions": [
-        "2026-01-01"
+        "2026-01-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -171,7 +172,8 @@
         "maxLength": 80
       },
       "apiVersions": [
-        "2026-01-01"
+        "2026-01-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -244,7 +246,8 @@
         "maxLength": 80
       },
       "apiVersions": [
-        "2026-01-01"
+        "2026-01-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -317,7 +320,8 @@
         "maxLength": 80
       },
       "apiVersions": [
-        "2026-01-01"
+        "2026-01-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -390,7 +394,71 @@
         "maxLength": 80
       },
       "apiVersions": [
-        "2026-01-01"
+        "2026-01-01",
+        "2026-08-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.StorageCache.RebalanceJob",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/rebalanceJobs/{rebalanceJobName}",
+      "resourceType": "Microsoft.StorageCache/amlFilesystems/rebalanceJobs",
+      "methods": [
+        {
+          "methodId": "Microsoft.StorageCache.RebalanceJobs.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/rebalanceJobs/{rebalanceJobName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/rebalanceJobs/{rebalanceJobName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.StorageCache.RebalanceJobs.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/rebalanceJobs/{rebalanceJobName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/rebalanceJobs/{rebalanceJobName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.StorageCache.RebalanceJobs.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/rebalanceJobs/{rebalanceJobName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/rebalanceJobs/{rebalanceJobName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.StorageCache.RebalanceJobs.listByAmlFilesystem",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/rebalanceJobs",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}",
+      "resourceName": "StorageCacheRebalanceJob",
+      "nameConstraints": {
+        "pattern": "^[0-9a-zA-Z][-0-9a-zA-Z_]{0,78}[0-9a-zA-Z]$",
+        "minLength": 2,
+        "maxLength": 80
+      },
+      "apiVersions": [
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -570,7 +638,8 @@
         "pattern": "^[-0-9a-zA-Z_]{1,80}$"
       },
       "apiVersions": [
-        "2026-01-01"
+        "2026-01-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -691,7 +760,8 @@
         "pattern": "^[-0-9a-zA-Z_]{1,80}$"
       },
       "apiVersions": [
-        "2026-01-01"
+        "2026-01-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     }
