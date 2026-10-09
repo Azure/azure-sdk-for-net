@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType
 {
     public partial class AlternateTypeClientOptions : ClientOptions
     {
+        public AlternateTypeClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal AlternateTypeClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }
