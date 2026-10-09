@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsByRuleAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationDataAsync1CollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsByRuleCollectionResultOfT(
+            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationData1CollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

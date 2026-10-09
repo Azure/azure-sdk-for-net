@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkDeviceData, NetworkDeviceResource>(new NetworkDevicesGetByResourceGroupAsyncCollectionResultOfT(_networkDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkDeviceCollection.GetAll"), data => new NetworkDeviceResource(Client, data));
+            return new AsyncPageableWrapper<NetworkDeviceData, NetworkDeviceResource>(new NetworkDeviceDataAsyncCollectionResultOfT(_networkDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkDeviceCollection.GetAll"), data => new NetworkDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkDeviceData, NetworkDeviceResource>(new NetworkDevicesGetByResourceGroupCollectionResultOfT(_networkDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkDeviceCollection.GetAll"), data => new NetworkDeviceResource(Client, data));
+            return new PageableWrapper<NetworkDeviceData, NetworkDeviceResource>(new NetworkDeviceDataCollectionResultOfT(_networkDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkDeviceCollection.GetAll"), data => new NetworkDeviceResource(Client, data));
         }
 
         /// <summary>

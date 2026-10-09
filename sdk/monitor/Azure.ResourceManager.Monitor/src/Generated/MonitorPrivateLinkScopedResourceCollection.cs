@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorPrivateLinkScopedResourceData, MonitorPrivateLinkScopedResource>(new PrivateLinkScopedResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MonitorPrivateLinkScopedResourceData, MonitorPrivateLinkScopedResource>(new MonitorPrivateLinkScopedResourceDataAsyncCollectionResultOfT(
                 _privateLinkScopedResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorPrivateLinkScopedResourceData, MonitorPrivateLinkScopedResource>(new PrivateLinkScopedResourcesGetByPrivateLinkScopeCollectionResultOfT(
+            return new PageableWrapper<MonitorPrivateLinkScopedResourceData, MonitorPrivateLinkScopedResource>(new MonitorPrivateLinkScopedResourceDataCollectionResultOfT(
                 _privateLinkScopedResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
