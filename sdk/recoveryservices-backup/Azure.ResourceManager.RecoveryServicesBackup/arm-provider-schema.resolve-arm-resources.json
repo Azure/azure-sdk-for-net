@@ -48,7 +48,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -154,7 +160,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -195,7 +207,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -246,7 +264,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -317,7 +341,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -391,6 +421,16 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
+        },
+        {
+          "methodId": "Microsoft.RecoveryServices.ConfigureSourceScan.execute",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/configureSourceScan",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
         }
       ],
       "scope": {
@@ -405,7 +445,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -457,22 +503,22 @@
           }
         },
         {
-          "methodId": "Microsoft.RecoveryServices.RecoveryPoints.update",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.RecoveryServices.RecoveryPoints.list",
           "kind": "List",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints",
           "scope": {
             "kind": "ResourceGroup",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.RecoveryServices.ItemLevelRecoveryConnections.listInstantItemRecoveryOperationResult",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}/listInstantItemRecoveryOperationResult",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
         },
@@ -529,7 +575,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -580,7 +632,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -657,7 +715,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -744,7 +808,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -806,7 +876,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },
@@ -889,7 +965,13 @@
         "2025-02-01",
         "2025-08-01",
         "2026-01-01",
-        "2026-01-31-preview"
+        "2026-01-31-preview",
+        "2026-02-01",
+        "2026-03-31-preview",
+        "2026-05-01",
+        "2026-05-31-preview",
+        "2026-07-01",
+        "2026-08-01"
       ],
       "rbacRoles": []
     },

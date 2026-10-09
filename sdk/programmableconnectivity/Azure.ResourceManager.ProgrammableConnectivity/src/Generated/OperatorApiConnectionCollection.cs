@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionsGetByResourceGroupAsyncCollectionResultOfT(_operatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperatorApiConnectionCollection.GetAll"), data => new OperatorApiConnectionResource(Client, data));
+            return new AsyncPageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionDataAsyncCollectionResultOfT(_operatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperatorApiConnectionCollection.GetAll"), data => new OperatorApiConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionsGetByResourceGroupCollectionResultOfT(_operatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperatorApiConnectionCollection.GetAll"), data => new OperatorApiConnectionResource(Client, data));
+            return new PageableWrapper<OperatorApiConnectionData, OperatorApiConnectionResource>(new OperatorApiConnectionDataCollectionResultOfT(_operatorApiConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OperatorApiConnectionCollection.GetAll"), data => new OperatorApiConnectionResource(Client, data));
         }
 
         /// <summary>
