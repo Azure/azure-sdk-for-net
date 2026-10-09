@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputeLimitFeatureData, ComputeLimitFeatureResource>(new FeaturesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitFeatureCollection.GetAll"), data => new ComputeLimitFeatureResource(Client, data));
+            return new AsyncPageableWrapper<ComputeLimitFeatureData, ComputeLimitFeatureResource>(new ComputeLimitFeatureDataAsyncCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitFeatureCollection.GetAll"), data => new ComputeLimitFeatureResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputeLimitFeatureData, ComputeLimitFeatureResource>(new FeaturesGetBySubscriptionLocationResourceCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitFeatureCollection.GetAll"), data => new ComputeLimitFeatureResource(Client, data));
+            return new PageableWrapper<ComputeLimitFeatureData, ComputeLimitFeatureResource>(new ComputeLimitFeatureDataCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitFeatureCollection.GetAll"), data => new ComputeLimitFeatureResource(Client, data));
         }
 
         /// <summary>

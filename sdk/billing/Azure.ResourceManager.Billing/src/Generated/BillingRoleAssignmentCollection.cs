@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRoleAssignmentData, BillingRoleAssignmentResource>(new BillingRoleAssignmentsGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingRoleAssignmentData, BillingRoleAssignmentResource>(new BillingRoleAssignmentDataAsync2CollectionResultOfT(
                 _billingRoleAssignmentsRestClient,
                 Id.Name,
                 filter,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRoleAssignmentData, BillingRoleAssignmentResource>(new BillingRoleAssignmentsGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingRoleAssignmentData, BillingRoleAssignmentResource>(new BillingRoleAssignmentData2CollectionResultOfT(
                 _billingRoleAssignmentsRestClient,
                 Id.Name,
                 filter,

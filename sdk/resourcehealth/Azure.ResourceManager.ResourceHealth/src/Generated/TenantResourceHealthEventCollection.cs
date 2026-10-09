@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new EventsGetByTenantIdAsyncCollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
+            return new AsyncPageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new ResourceHealthEventDataAsync0CollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new EventsGetByTenantIdCollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
+            return new PageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new ResourceHealthEventData0CollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
         }
 
         /// <summary>

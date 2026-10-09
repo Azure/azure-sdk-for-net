@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorTriageData, AdvisorTriageResource>(new TriageResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvisorTriageData, AdvisorTriageResource>(new AdvisorTriageDataAsyncCollectionResultOfT(
                 _triageResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorTriageData, AdvisorTriageResource>(new TriageResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<AdvisorTriageData, AdvisorTriageResource>(new AdvisorTriageDataCollectionResultOfT(
                 _triageResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,

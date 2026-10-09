@@ -78,15 +78,29 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("external_web_access"u8);
                 writer.WriteBooleanValue(ExternalWebAccess.Value);
             }
-            if (Optional.IsDefined(Filters))
+            if (_filtersIsDefined || Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                if (Filters != null)
+                {
+                    writer.WritePropertyName("filters"u8);
+                    writer.WriteObjectValue(Filters, options);
+                }
+                else
+                {
+                    writer.WriteNull("filters"u8);
+                }
             }
-            if (Optional.IsDefined(UserLocation))
+            if (_userLocationIsDefined || Optional.IsDefined(UserLocation))
             {
-                writer.WritePropertyName("user_location"u8);
-                writer.WriteObjectValue(UserLocation, options);
+                if (UserLocation != null)
+                {
+                    writer.WritePropertyName("user_location"u8);
+                    writer.WriteObjectValue(UserLocation, options);
+                }
+                else
+                {
+                    writer.WriteNull("user_location"u8);
+                }
             }
             if (Optional.IsDefined(SearchContextSize))
             {
@@ -131,7 +145,9 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? externalWebAccess = default;
+            bool filtersIsDefined = false;
             WebSearchToolFilters filters = default;
+            bool userLocationIsDefined = false;
             WebSearchToolApproximateLocation userLocation = default;
             WebSearchToolContextSize? searchContextSize = default;
             WebSearchConfiguration customSearchConfiguration = default;
@@ -184,6 +200,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("filters"u8))
                 {
+                    filtersIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         filters = null;
@@ -194,6 +211,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("user_location"u8))
                 {
+                    userLocationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         userLocation = null;
@@ -235,7 +253,11 @@ namespace Azure.AI.Projects.Agents
                 filters,
                 userLocation,
                 searchContextSize,
-                customSearchConfiguration);
+                customSearchConfiguration)
+            {
+                _filtersIsDefined = filtersIsDefined,
+                _userLocationIsDefined = userLocationIsDefined
+            };
         }
     }
 }

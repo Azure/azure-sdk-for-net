@@ -86,10 +86,17 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(Param))
+            if (_paramIsDefined || Optional.IsDefined(Param))
             {
-                writer.WritePropertyName("param"u8);
-                writer.WriteStringValue(Param);
+                if (Param != null)
+                {
+                    writer.WritePropertyName("param"u8);
+                    writer.WriteStringValue(Param);
+                }
+                else
+                {
+                    writer.WriteNull("param"u8);
+                }
             }
             if (Optional.IsDefined(Type))
             {
@@ -201,6 +208,7 @@ namespace Azure.AI.Projects.Agents
             }
             string code = default;
             string message = default;
+            bool paramIsDefined = false;
             string @param = default;
             string @type = default;
             MisalignmentErrorDetailsResource misalignment = default;
@@ -227,6 +235,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("param"u8))
                 {
+                    paramIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         @param = null;
@@ -319,7 +328,10 @@ namespace Azure.AI.Projects.Agents
                 details ?? new ChangeTrackingList<FoundryOpenAIError>(),
                 additionalInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 debugInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _paramIsDefined = paramIsDefined
+            };
         }
     }
 }

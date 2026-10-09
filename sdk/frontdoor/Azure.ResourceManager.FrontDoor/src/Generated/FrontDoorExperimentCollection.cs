@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorExperimentData, FrontDoorExperimentResource>(new ExperimentsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorExperimentData, FrontDoorExperimentResource>(new FrontDoorExperimentDataAsyncCollectionResultOfT(
                 _experimentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorExperimentData, FrontDoorExperimentResource>(new ExperimentsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<FrontDoorExperimentData, FrontDoorExperimentResource>(new FrontDoorExperimentDataCollectionResultOfT(
                 _experimentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

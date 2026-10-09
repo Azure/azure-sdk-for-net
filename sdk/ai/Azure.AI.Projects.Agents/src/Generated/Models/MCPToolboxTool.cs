@@ -14,6 +14,9 @@ namespace Azure.AI.Projects.Agents
     /// <summary> An MCP tool stored in a toolbox. </summary>
     public partial class MCPToolboxTool : ToolboxTool
     {
+        private BinaryData _allowedTools;
+        internal bool _allowedToolsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
@@ -77,7 +80,7 @@ namespace Azure.AI.Projects.Agents
             Authorization = authorization;
             ServerDescription = serverDescription;
             Headers = headers;
-            AllowedTools = allowedTools;
+            _allowedTools = allowedTools;
             AllowedCallers = allowedCallers;
             RequireApprovalInternal = requireApprovalInternal;
             DeferLoading = deferLoading;
@@ -158,7 +161,18 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData AllowedTools { get; set; }
+        public BinaryData AllowedTools
+        {
+            get
+            {
+                return _allowedTools;
+            }
+            set
+            {
+                _allowedTools = value;
+                _allowedToolsIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the AllowedCallers. </summary>
         public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }

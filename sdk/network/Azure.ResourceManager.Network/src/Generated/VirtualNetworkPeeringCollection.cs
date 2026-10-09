@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkPeeringData, VirtualNetworkPeeringResource>(new VirtualNetworkPeeringsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualNetworkPeeringData, VirtualNetworkPeeringResource>(new VirtualNetworkPeeringDataAsyncCollectionResultOfT(
                 _virtualNetworkPeeringsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkPeeringData, VirtualNetworkPeeringResource>(new VirtualNetworkPeeringsGetAllCollectionResultOfT(
+            return new PageableWrapper<VirtualNetworkPeeringData, VirtualNetworkPeeringResource>(new VirtualNetworkPeeringDataCollectionResultOfT(
                 _virtualNetworkPeeringsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

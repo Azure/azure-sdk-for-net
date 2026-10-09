@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MigrationRecoveryPointData, MigrationRecoveryPointResource>(new MigrationRecoveryPointsGetByReplicationMigrationItemsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MigrationRecoveryPointData, MigrationRecoveryPointResource>(new MigrationRecoveryPointDataAsyncCollectionResultOfT(
                 _migrationRecoveryPointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MigrationRecoveryPointData, MigrationRecoveryPointResource>(new MigrationRecoveryPointsGetByReplicationMigrationItemsCollectionResultOfT(
+            return new PageableWrapper<MigrationRecoveryPointData, MigrationRecoveryPointResource>(new MigrationRecoveryPointDataCollectionResultOfT(
                 _migrationRecoveryPointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

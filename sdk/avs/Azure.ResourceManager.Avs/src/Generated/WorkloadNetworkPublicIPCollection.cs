@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworksGetPublicIPsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPDataAsyncCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworksGetPublicIPsCollectionResultOfT(
+            return new PageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPDataCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

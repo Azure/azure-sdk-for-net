@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupportTicketData, TenantSupportTicketResource>(new TenantSupportTicketGetAllAsyncCollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context, "TenantSupportTicketCollection.GetAll"), data => new TenantSupportTicketResource(Client, data));
+            return new AsyncPageableWrapper<SupportTicketData, TenantSupportTicketResource>(new SupportTicketDataAsync0CollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context, "TenantSupportTicketCollection.GetAll"), data => new TenantSupportTicketResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Support
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupportTicketData, TenantSupportTicketResource>(new TenantSupportTicketGetAllCollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context, "TenantSupportTicketCollection.GetAll"), data => new TenantSupportTicketResource(Client, data));
+            return new PageableWrapper<SupportTicketData, TenantSupportTicketResource>(new SupportTicketData0CollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context, "TenantSupportTicketCollection.GetAll"), data => new TenantSupportTicketResource(Client, data));
         }
 
         /// <summary>

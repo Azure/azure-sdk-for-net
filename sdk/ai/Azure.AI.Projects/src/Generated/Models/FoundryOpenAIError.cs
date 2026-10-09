@@ -12,6 +12,8 @@ namespace Azure.AI.Projects
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _param;
+        internal bool _paramIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FoundryOpenAIError"/>. </summary>
         /// <param name="code"></param>
@@ -39,7 +41,7 @@ namespace Azure.AI.Projects
         {
             Code = code;
             Message = message;
-            Param = @param;
+            _param = @param;
             Type = @type;
             Misalignment = misalignment;
             Details = details;
@@ -55,7 +57,13 @@ namespace Azure.AI.Projects
         public string Message { get; }
 
         /// <summary> Gets the Param. </summary>
-        public string Param { get; }
+        public string Param
+        {
+            get
+            {
+                return _param;
+            }
+        }
 
         /// <summary> Gets the Type. </summary>
         public string Type { get; }

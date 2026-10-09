@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiContentFilterData, RaiContentFilterResource>(new RaiContentFiltersGetAllAsyncCollectionResultOfT(_raiContentFiltersRestClient, Id.SubscriptionId, _location, context, "RaiContentFilterCollection.GetAll"), data => new RaiContentFilterResource(Client, data));
+            return new AsyncPageableWrapper<RaiContentFilterData, RaiContentFilterResource>(new RaiContentFilterDataAsyncCollectionResultOfT(_raiContentFiltersRestClient, Id.SubscriptionId, _location, context, "RaiContentFilterCollection.GetAll"), data => new RaiContentFilterResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiContentFilterData, RaiContentFilterResource>(new RaiContentFiltersGetAllCollectionResultOfT(_raiContentFiltersRestClient, Id.SubscriptionId, _location, context, "RaiContentFilterCollection.GetAll"), data => new RaiContentFilterResource(Client, data));
+            return new PageableWrapper<RaiContentFilterData, RaiContentFilterResource>(new RaiContentFilterDataCollectionResultOfT(_raiContentFiltersRestClient, Id.SubscriptionId, _location, context, "RaiContentFilterCollection.GetAll"), data => new RaiContentFilterResource(Client, data));
         }
 
         /// <summary>

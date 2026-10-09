@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new HciVmVirtualNetworkSubnetDataAsyncCollectionResultOfT(
                 _virtualNetworkSubnetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkCollectionResultOfT(
+            return new PageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new HciVmVirtualNetworkSubnetDataCollectionResultOfT(
                 _virtualNetworkSubnetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

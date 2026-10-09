@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PacketCaptureData, PacketCaptureResource>(new PacketCapturesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PacketCaptureData, PacketCaptureResource>(new PacketCaptureDataAsyncCollectionResultOfT(
                 _packetCapturesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PacketCaptureData, PacketCaptureResource>(new PacketCapturesGetAllCollectionResultOfT(
+            return new PageableWrapper<PacketCaptureData, PacketCaptureResource>(new PacketCaptureDataCollectionResultOfT(
                 _packetCapturesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

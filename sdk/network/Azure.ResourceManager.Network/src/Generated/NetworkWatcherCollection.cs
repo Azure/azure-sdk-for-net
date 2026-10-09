@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatchersListAsyncCollectionResultOfT(_networkWatchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkWatcherCollection.GetAll"), data => new NetworkWatcherResource(Client, data));
+            return new AsyncPageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatcherDataAsyncCollectionResultOfT(_networkWatchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkWatcherCollection.GetAll"), data => new NetworkWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatchersListCollectionResultOfT(_networkWatchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkWatcherCollection.GetAll"), data => new NetworkWatcherResource(Client, data));
+            return new PageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatcherDataCollectionResultOfT(_networkWatchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkWatcherCollection.GetAll"), data => new NetworkWatcherResource(Client, data));
         }
 
         /// <summary>

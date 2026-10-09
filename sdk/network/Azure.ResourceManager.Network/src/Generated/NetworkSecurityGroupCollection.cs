@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupsListAsyncCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkSecurityGroupCollection.GetAll"), data => new NetworkSecurityGroupResource(Client, data));
+            return new AsyncPageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupDataAsyncCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkSecurityGroupCollection.GetAll"), data => new NetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupsListCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkSecurityGroupCollection.GetAll"), data => new NetworkSecurityGroupResource(Client, data));
+            return new PageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupDataCollectionResultOfT(_networkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkSecurityGroupCollection.GetAll"), data => new NetworkSecurityGroupResource(Client, data));
         }
 
         /// <summary>

@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -640,7 +641,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsAsyncCollectionResultOfT(
+            return new CognitiveServicesAccountModelAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -678,7 +679,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsCollectionResultOfT(
+            return new CognitiveServicesAccountModelCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -716,7 +717,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetSkusAsyncCollectionResultOfT(
+            return new CognitiveServicesAccountSkuAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -754,7 +755,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetSkusCollectionResultOfT(
+            return new CognitiveServicesAccountSkuCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -793,7 +794,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetUsagesAsyncCollectionResultOfT(
+            return new ServiceAccountUsageAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -833,7 +834,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetUsagesCollectionResultOfT(
+            return new ServiceAccountUsageCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -872,7 +873,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new CognitiveServicesPrivateLinkResourceAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -910,7 +911,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetPrivateLinkResourcesCollectionResultOfT(
+            return new CognitiveServicesPrivateLinkResourceCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1133,10 +1134,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1176,10 +1176,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

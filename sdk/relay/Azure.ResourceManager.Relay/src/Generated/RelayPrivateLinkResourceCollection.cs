@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayPrivateLinkResourceData, RelayPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RelayPrivateLinkResourceData, RelayPrivateLinkResource>(new RelayPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayPrivateLinkResourceData, RelayPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<RelayPrivateLinkResourceData, RelayPrivateLinkResource>(new RelayPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

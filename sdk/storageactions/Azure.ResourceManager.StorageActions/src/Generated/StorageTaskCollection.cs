@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupAsyncCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
+            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTaskDataAsyncCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
+            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTaskDataCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
         }
 
         /// <summary>

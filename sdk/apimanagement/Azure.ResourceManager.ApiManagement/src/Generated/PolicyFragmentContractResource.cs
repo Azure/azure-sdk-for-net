@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PolicyFragmentGetReferencesAsyncCollectionResultOfT(
+            return new ResourceCollectionValueItemAsync0CollectionResultOfT(
                 _policyFragmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PolicyFragmentGetReferencesCollectionResultOfT(
+            return new ResourceCollectionValueItem0CollectionResultOfT(
                 _policyFragmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
