@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new RelayAuthorizationRuleDataAsync1CollectionResultOfT(
                 _namespacesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new NamespacesGetAuthorizationRulesCollectionResultOfT(
+            return new PageableWrapper<RelayAuthorizationRuleData, RelayNamespaceAuthorizationRuleResource>(new RelayAuthorizationRuleData1CollectionResultOfT(
                 _namespacesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
