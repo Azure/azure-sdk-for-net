@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -19,17 +20,26 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </summary>
 internal sealed class ResponseExecution : IDisposable
 {
+    public ResponseExecution(string responseId,
+        bool isBackground = false, bool isStreaming = false, bool store = true)
+        : this(responseId, ResponseStorePartition.FromContext(PlatformContext.Empty), isBackground, isStreaming, store)
+    {
+    }
+
     /// <summary>
     /// Initializes a new instance of <see cref="ResponseExecution"/>.
     /// </summary>
     /// <param name="responseId">The unique response identifier.</param>
+    /// <param name="partition">The user partition that owns the execution.</param>
     /// <param name="isBackground">Whether the response was created with <c>background=true</c>.</param>
     /// <param name="isStreaming">Whether the response was created with <c>stream=true</c>.</param>
     /// <param name="store">Whether the response should be stored for later retrieval.</param>
-    public ResponseExecution(string responseId,
+    public ResponseExecution(string responseId, ResponseStorePartition partition,
         bool isBackground = false, bool isStreaming = false, bool store = true)
     {
         ResponseId = responseId;
+        Partition = partition;
+        UserIdKey = partition.UserIdKey;
         IsBackground = isBackground;
         IsStreaming = isStreaming;
         Store = store;
@@ -38,6 +48,12 @@ internal sealed class ResponseExecution : IDisposable
 
     /// <summary>Gets the unique response identifier.</summary>
     public string ResponseId { get; }
+
+    /// <summary>Gets the user partition that owns this execution.</summary>
+    public ResponseStorePartition Partition { get; }
+
+    /// <summary>Gets the internal user-scoped identifier for lifecycle state.</summary>
+    public string LifecycleId => Partition.GetLifecycleId(ResponseId);
 
     /// <summary>Gets whether the response was created with <c>background=true</c>.</summary>
     public bool IsBackground { get; }
@@ -50,17 +66,24 @@ internal sealed class ResponseExecution : IDisposable
 
     /// <summary>
     /// Gets or sets whether this streaming execution's SSE events are relayed to the client through
-    /// the per-response event-stream registry wire stream rather than the direct <c>result.Events</c>
-    /// yield path. Set by the endpoint for every resilient (task-wrapped) streaming
+    /// the task-bound stream rather than the direct <c>result.Events</c> yield path. Set by the
+    /// endpoint for every resilient (task-wrapped) streaming
     /// turn — background AND foreground — because the handler runs inside a decoupled Core task whose
-    /// event enumerator is drained by the task body, so the client connection subscribes to the wire
-    /// stream instead. When set, the orchestrator populates the registry publisher (so a foreground
-    /// stream is not left on a <c>NullPublisher</c>) and routes the created/terminal events through the
-    /// wire stream only after their Phase-1/Phase-2 persistence outcome is known, so the relayed
+    /// event enumerator is drained by the task body, so the client connection subscribes through
+    /// <see cref="TaskRun{TOutput}.Stream"/> instead. When set, the orchestrator publishes through
+    /// <see cref="TaskStreamWriter"/> and routes the created/terminal events only after their
+    /// Phase-1/Phase-2 persistence outcome is known, so the relayed
     /// sequence matches the corrected <c>result.Events</c> sequence (no <c>response.created</c> on a
     /// Phase-1 failure; <c>response.failed</c> — not <c>response.completed</c> — on a Phase-2 failure).
     /// </summary>
-    public bool RelayViaRegistry { get; set; }
+    public bool RelayViaTaskStream { get; set; }
+
+    /// <summary>
+    /// Gets or sets the task-bound writer used by resilient executions. The orchestrator publishes
+    /// semantic response events through this capability; Core closes the transport after the task's
+    /// terminal state transition.
+    /// </summary>
+    public TaskStreamWriter? TaskStreamWriter { get; set; }
 
     /// <summary>
     /// Gets or sets the resolved session ID that was determined when this response was created.
@@ -76,7 +99,7 @@ internal sealed class ResponseExecution : IDisposable
     /// provide the same key; mismatches are treated as "not found" (404) to prevent
     /// information leakage across user partitions.
     /// </summary>
-    public string? UserIdKey { get; set; }
+    public string? UserIdKey { get; }
 
     /// <summary>
     /// Gets or sets the mutable response object (accumulator for the current pipeline).
@@ -221,10 +244,10 @@ internal sealed class ResponseExecution : IDisposable
     /// Gets or sets the exception that ended this streaming turn BEFORE <c>response.created</c> was
     /// emitted (a Phase-1 persistence failure or a handler that threw before yielding created). It is
     /// thrown on the task-body yield path, which the resilient relay never observes, so it is recorded
-    /// here for the relay (<c>SubscribeBackgroundStreamAsync</c>) to surface as a standalone <c>error</c>
+    /// here for the relay (<c>SubscribeTaskStreamAsync</c>) to surface as a standalone <c>error</c>
     /// SSE event with full fidelity — matching the inline streaming path (spec B8) instead of the
     /// generic <c>server_error</c> a bare relay cancellation/empty close would produce. Only meaningful
-    /// for a task-wrapped streaming turn (<see cref="RelayViaRegistry"/>); ignored otherwise.
+    /// for a task-wrapped streaming turn (<see cref="RelayViaTaskStream"/>); ignored otherwise.
     /// </summary>
     public Exception? PreCreatedRelayFailure { get; set; }
 
@@ -245,13 +268,18 @@ internal sealed class ResponseExecution : IDisposable
     private bool _steeringRequested;
     private bool _clientDisconnected;
     private bool _persistenceFailed;
+    private ResponseContext? _context;
 
     /// <summary>
     /// Gets or sets the response context associated with this execution.
     /// Used by <see cref="ResponseExecutionTracker.StopAsync"/> to propagate
     /// <see cref="ResponseContext.IsShutdownRequested"/> to the handler.
     /// </summary>
-    public ResponseContext? Context { get; set; }
+    public ResponseContext? Context
+    {
+        get => Volatile.Read(ref _context);
+        set => Volatile.Write(ref _context, value);
+    }
 
     /// <summary>
     /// Signal that completes when the handler yields <c>response.created</c> (with the
@@ -272,18 +300,17 @@ internal sealed class ResponseExecution : IDisposable
 
     /// <summary>
     /// Enforces the user ID key for in-flight responses.
-    /// If this execution was created with a user ID key, the caller must
-    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// The caller must provide the same key, including the absence of a key for
+    /// anonymous executions; mismatches are treated as "not found" to prevent
     /// cross-user information leakage.
     /// </summary>
     /// <param name="context">The caller's platform context.</param>
     /// <exception cref="ResourceNotFoundException">
-    /// Thrown when the execution has a user ID key and the caller's key does not match.
+    /// Thrown when the caller's user ID key does not match the execution.
     /// </exception>
     public void EnforceUserIsolation(PlatformContext context)
     {
-        if (UserIdKey is not null
-            && !string.Equals(UserIdKey, context.UserIdKey, StringComparison.Ordinal))
+        if (!string.Equals(UserIdKey, context.UserIdKey, StringComparison.Ordinal))
         {
             throw new ResourceNotFoundException($"Response '{ResponseId}' not found.");
         }

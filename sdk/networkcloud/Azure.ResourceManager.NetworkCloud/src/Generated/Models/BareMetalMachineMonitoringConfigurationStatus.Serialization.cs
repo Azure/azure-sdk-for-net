@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            BareMetalMachineMetricsConfigurationStatusLogLevel? logLevel = default;
-            BareMetalMachineMetricsConfigurationStatusMetricsLevel? metricsLevel = default;
+            BareMetalMachineMonitoringConfigurationStatusLogLevel? logLevel = default;
+            BareMetalMachineMonitoringConfigurationStatusMetricsLevel? metricsLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    logLevel = new BareMetalMachineMetricsConfigurationStatusLogLevel(prop.Value.GetString());
+                    logLevel = new BareMetalMachineMonitoringConfigurationStatusLogLevel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("metricsLevel"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    metricsLevel = new BareMetalMachineMetricsConfigurationStatusMetricsLevel(prop.Value.GetString());
+                    metricsLevel = new BareMetalMachineMonitoringConfigurationStatusMetricsLevel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

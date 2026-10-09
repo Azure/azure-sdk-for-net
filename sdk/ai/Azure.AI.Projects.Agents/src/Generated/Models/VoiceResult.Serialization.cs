@@ -206,7 +206,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = ModelReaderWriter.Read<RealtimeResponseStatus?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    status = ModelReaderWriter.Read<RealtimeResponseStatus?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -215,7 +215,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    statusDetails = ModelReaderWriter.Read<RealtimeResponseStatusDetails>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    statusDetails = ModelReaderWriter.Read<RealtimeResponseStatusDetails>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -224,7 +224,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    usage = ModelReaderWriter.Read<RealtimeResponseUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    usage = ModelReaderWriter.Read<RealtimeResponseUsage>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("output_modalities"u8))
@@ -236,7 +236,7 @@ namespace Azure.AI.Projects.Agents
                     List<RealtimeOutputModality> array = new List<RealtimeOutputModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<RealtimeOutputModality>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                        array.Add(ModelReaderWriter.Read<RealtimeOutputModality>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                     }
                     outputModalities = array;
                     continue;
@@ -270,7 +270,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<RealtimeItem>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            array.Add(ModelReaderWriter.Read<RealtimeItem>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     output = array;

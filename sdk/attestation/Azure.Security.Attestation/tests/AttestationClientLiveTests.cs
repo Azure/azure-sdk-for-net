@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.Attestation.Tests
 {
-    public class AttestationClientLiveTests: RecordedTestBase<AttestationClientTestEnvironment>
+    public class AttestationClientLiveTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
         public AttestationClientLiveTests(bool isAsync) : base(isAsync)
         {

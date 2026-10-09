@@ -175,7 +175,7 @@ namespace Azure.AI.Projects.Agents
                         memoryLimit = null;
                         continue;
                     }
-                    memoryLimit = ModelReaderWriter.Read<ContainerMemoryLimit?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    memoryLimit = ModelReaderWriter.Read<ContainerMemoryLimit?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("skills"u8))

@@ -194,7 +194,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<ChatTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            array.Add(ModelReaderWriter.Read<ChatTool>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     tools = array;

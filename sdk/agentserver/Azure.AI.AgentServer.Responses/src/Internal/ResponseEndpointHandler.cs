@@ -3,6 +3,7 @@
 
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Core;
@@ -239,10 +240,10 @@ internal sealed class ResponseEndpointHandler
         //
         // EVERY store=true request is task-tracked — including background AND foreground streaming.
         // The streaming task path does NOT await response.created: the SSE result subscribes to the
-        // per-response wire stream and relays immediately (parity with Python `_live_stream`), so a
+        // task-bound stream and relays immediately (parity with Python `_live_stream`), so a
         // pre-creation (Phase 1) persistence failure is surfaced by the relay as a standalone spec-B8
         // SSE `error` event (recorded on execution.PreCreatedRelayFailure and re-thrown by
-        // SubscribeBackgroundStreamAsync) rather than an HTTP 500, and the Phase-2 terminal is published
+        // SubscribeTaskStreamAsync) rather than an HTTP 500, and the Phase-2 terminal is published
         // to the wire stream by CreateStreamingAsync AFTER its persistence rewrite so a terminal persist
         // failure surfaces response.failed (not response.completed). This closes the former Row-2
         // background-streaming / Row-3 foreground crash-recovery gap: both are now task-tracked, so the
@@ -259,7 +260,7 @@ internal sealed class ResponseEndpointHandler
         // the non-streaming path; store=false is otherwise inline.
         //
         // Streaming task-routing does NOT await response.created: the SSE result subscribes to the
-        // per-response wire stream and relays immediately (parity with Python `_live_stream`), so a
+        // task-bound stream and relays immediately (parity with Python `_live_stream`), so a
         // Phase-1 persistence failure inside the task body surfaces as a standalone SSE `error` event
         // (spec-B8) delivered by the relay, and a slow first turn never blocks the HTTP response. A
         // task-START infra failure still propagates BEFORE the SSE headers as HTTP 500 +
@@ -269,13 +270,12 @@ internal sealed class ResponseEndpointHandler
         bool useResilientTask = store
             || (pickMultiTurn && (isBackground || !isStreaming));
 
-        var execution = _tracker.Create(responseId, isBackground, isStreaming, store);
+        var execution = _tracker.Create(responseId, platformContext, isBackground, isStreaming, store);
 
         // Record the creation-time session ID and user ID key on the execution
         // so subsequent GET/Cancel/Delete can emit x-agent-session-id even before
         // the handler yields response.created (when execution.Response is still null).
         execution.AgentSessionId = request.AgentSessionId;
-        execution.UserIdKey = platformContext.UserIdKey;
 
         var context = new ResponseContextImpl(
             responseId,
@@ -311,7 +311,7 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Get cancellation token from provider (supports external cancel)
-        var providerCt = await _cancellationProvider.GetResponseCancellationTokenAsync(responseId);
+        var providerCt = await _cancellationProvider.GetResponseCancellationTokenAsync(execution.LifecycleId);
 
         if (isStreaming)
         {
@@ -324,12 +324,11 @@ internal sealed class ResponseEndpointHandler
                 if (useResilientTask)
                 {
                     // The handler runs inside a decoupled Core task; the client connection relays the
-                    // per-response wire stream (registry) rather than the task body's event enumerator.
-                    // Flag it so the orchestrator populates the registry publisher for BOTH background
-                    // and foreground streaming (foreground would otherwise get a NullPublisher and the
-                    // relay would block forever on an empty wire stream) and routes created/terminal
-                    // events through the wire stream only after their persistence outcome is known.
-                    execution.RelayViaRegistry = true;
+                    // task-bound stream rather than the task body's event enumerator. Flag it so the
+                    // orchestrator publishes through TaskContext.Stream for BOTH background and foreground
+                    // streaming and routes created/terminal events only after their persistence outcome
+                    // is known.
+                    execution.RelayViaTaskStream = true;
 
                     var run = await StartResilientTurnAsync(
                         httpContext, request, responseId, chainId, pickMultiTurn,
@@ -339,20 +338,20 @@ internal sealed class ResponseEndpointHandler
                     // queued envelope when the caller asked to stream: stream=true must always yield an
                     // SSE stream regardless of whether the turn runs immediately or is queued (the JSON
                     // queued envelope is reserved for the NON-streaming queued paths below). We keep the
-                    // endpoint-created execution (RelayViaRegistry=true was set just above) rather than
+                    // endpoint-created execution (RelayViaTaskStream=true was set just above) rather than
                     // evicting it, so when the queued input drains later inside Core the re-entry REUSES
                     // this execution (tracker.TryGet) and its handler publishes response.created /
-                    // in_progress / … onto the per-response wire stream — for foreground turns too, which
+                    // in_progress / … onto the task-bound stream — for foreground turns too, which
                     // would otherwise get a NullPublisher if the drain created a fresh execution. The SSE
-                    // result below subscribes to that wire stream immediately (GetOrCreateAsync) and stays
-                    // open, relaying nothing until the turn starts, then emitting events as they arrive.
+                    // result below subscribes to the task-bound stream immediately and stays open, relaying
+                    // nothing until the turn starts, then emitting events as they arrive.
                     // run.Completion resolves when the queued turn's steered re-entry completes.
                     execution.ExecutionTask = run.Completion;
 
-                    // Relay the per-response wire stream immediately — do NOT await
+                    // Relay the task-bound stream immediately — do NOT await
                     // ResponseCreatedSignal. The handler runs inside the task body and writes events
                     // (including response.created, or a standalone B8 `error` on a pre-created failure)
-                    // to the registry wire stream; the SSE result subscribes and relays them as they
+                    // to TaskContext.Stream; the SSE result subscribes through TaskRun.Stream and relays them as they
                     // arrive (parity with Python `_live_stream`). Awaiting response.created here would
                     // deadlock a foreground stream whose handler backpressures on the wire stream until
                     // a subscriber attaches.
@@ -382,12 +381,12 @@ internal sealed class ResponseEndpointHandler
 
                     linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
                         providerCt, execution.CancellationTokenSource.Token);
-                    var backgroundSseResult = new SseResult(
-                        SubscribeBackgroundStreamAsync(responseId, execution, linkedCts.Token),
+                    var taskStreamSseResult = new SseResult(
+                        SubscribeTaskStreamAsync(run.Stream, execution, linkedCts.Token),
                         execution, linkedCts, SharedJsonOptions.Instance, _logger,
                         FoundryEnvironment.SseKeepAliveInterval);
                     linkedCts = null;
-                    return backgroundSseResult;
+                    return taskStreamSseResult;
                 }
                 else if (isBackground)
                 {
@@ -440,7 +439,7 @@ internal sealed class ResponseEndpointHandler
                 // immediately; it drains later inside Core as a steered re-entry.
                 if (run.IsQueued)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     return JsonForClient(BuildQueuedEnvelope(request, context, responseId));
                 }
 
@@ -489,7 +488,7 @@ internal sealed class ResponseEndpointHandler
                 // it drains later inside Core as a steered re-entry.
                 if (run.IsQueued)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     return JsonForClient(BuildQueuedEnvelope(request, context, responseId));
                 }
 
@@ -537,7 +536,7 @@ internal sealed class ResponseEndpointHandler
                 // and Python run_sync §6.2.
                 if (execution.PersistenceFailed)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     if (execution.PersistenceException is ResponsesApiException or BadRequestException)
                     {
                         throw execution.PersistenceException;
@@ -554,7 +553,7 @@ internal sealed class ResponseEndpointHandler
                 // directly to avoid a spurious ResourceNotFoundException from the orchestrator read.
                 if (execution.ClientDisconnected)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.AgentSessionId;
                     return JsonForClient(execution.Response?.Snapshot() ?? BuildQueuedEnvelope(request, context, responseId));
                 }
@@ -639,14 +638,14 @@ internal sealed class ResponseEndpointHandler
         return payload;
     }
 
-    private async IAsyncEnumerable<SseItem<string>> SubscribeBackgroundStreamAsync(
-        string responseId,
+    private async IAsyncEnumerable<SseItem<string>> SubscribeTaskStreamAsync(
+        TaskStream stream,
         ResponseExecution execution,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var stream = await _eventStreamRegistry.GetOrCreateAsync(responseId, cancellationToken)
-            .ConfigureAwait(false);
-        var enumerator = stream.Subscribe().WithCancellation(cancellationToken).ConfigureAwait(false).GetAsyncEnumerator();
+        using var relayCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        var enumerator = stream.Subscribe().GetAsyncEnumerator(relayCts.Token);
+        Task? executionTask = execution.ExecutionTask;
         var createdSeen = false;
         try
         {
@@ -654,7 +653,66 @@ internal sealed class ResponseEndpointHandler
             {
                 try
                 {
-                    if (!await enumerator.MoveNextAsync())
+                    ValueTask<bool> moveNext = enumerator.MoveNextAsync();
+                    bool hasNext;
+                    if (moveNext.IsCompletedSuccessfully)
+                    {
+                        // Prefer already-buffered events even if task completion faulted concurrently.
+                        // Once the buffer is drained, the next pending read observes the fault below.
+                        hasNext = moveNext.Result;
+                    }
+                    else
+                    {
+                        Task<bool> moveNextTask = moveNext.AsTask();
+                        if (executionTask is not null && !executionTask.IsCompletedSuccessfully)
+                        {
+                            Task completed = await Task.WhenAny(moveNextTask, executionTask);
+                            if (ReferenceEquals(completed, executionTask) && executionTask.IsFaulted)
+                            {
+                                Exception failure;
+                                try
+                                {
+                                    await executionTask;
+                                    throw new InvalidOperationException(
+                                        "A faulted task unexpectedly completed successfully.");
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Preserve the original Phase-1 storage/handler error rather
+                                    // than replacing it with Core's task-fault wrapper.
+                                    failure = !createdSeen && execution.PreCreatedRelayFailure is not null
+                                        ? execution.PreCreatedRelayFailure
+                                        : ex;
+                                }
+
+                                // Core intentionally leaves the task stream open when its durable
+                                // completed/suspended transition fails so a later process can recover
+                                // it. Observe the task fault here to end only this HTTP subscription;
+                                // SseResult converts the exception to the existing SSE error event.
+                                //
+                                // Cancel and await the pending relay read before disposing its
+                                // enumerator. This cancellation is subscription-local: the Core stream
+                                // remains open and writable for recovery.
+                                relayCts.Cancel();
+                                try
+                                {
+                                    await moveNextTask;
+                                }
+                                catch (OperationCanceledException) when (relayCts.IsCancellationRequested)
+                                {
+                                    // Expected: cancellation releases the pending subscription read.
+                                }
+
+                                ExceptionDispatchInfo.Capture(failure).Throw();
+                            }
+                        }
+
+                        // Successful task completion must not truncate buffered events. Core closes
+                        // the transport after the durable terminal transition, so continue until EOF.
+                        hasNext = await moveNextTask;
+                    }
+
+                    if (!hasNext)
                     {
                         break;
                     }
@@ -729,6 +787,8 @@ internal sealed class ResponseEndpointHandler
     {
         var payload = BuildRecoveryPayload(
             responseId, request, platformContext, clientHeaders, queryParameters);
+        var partition = ResponseStorePartition.FromContext(platformContext);
+        var lifecycleId = partition.GetLifecycleId(responseId);
 
         var taskName = pickMultiTurn
             ? ResponsesResilientTaskHandler.MultiTurnTaskName
@@ -737,19 +797,20 @@ internal sealed class ResponseEndpointHandler
         var definition = httpContext.RequestServices
             .GetRequiredKeyedService<TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(taskName);
 
-        // Multi-turn: the chain id is the task id and the response id is the per-turn input id; a
+        // Multi-turn: the user-scoped chain id is the task id and the user-scoped response id is the
+        // per-turn input id; a
         // previous_response_id becomes the ifLastInputId fork precondition (Core rejects a turn that
-        // does not extend the most recent turn). One-shot: task id == input id == response id.
+        // does not extend the most recent turn). One-shot: task id == input id == lifecycle id.
         var runOptions = pickMultiTurn
             ? new RunOptions
             {
-                TaskId = chainId!,
-                InputId = responseId,
+                TaskId = partition.GetLifecycleId(chainId!),
+                InputId = lifecycleId,
                 IfLastInputId = string.IsNullOrEmpty(request.PreviousResponseId)
                     ? null
-                    : request.PreviousResponseId,
+                    : partition.GetLifecycleId(request.PreviousResponseId),
             }
-            : new RunOptions { TaskId = responseId, InputId = responseId };
+            : new RunOptions { TaskId = lifecycleId, InputId = lifecycleId };
 
         try
         {
@@ -872,7 +933,7 @@ internal sealed class ResponseEndpointHandler
                 "Getting response {ResponseId} with SSE replay: HasUserId={HasUserId} HasCallId={HasCallId}",
                 responseId, platformContext.UserIdKey is not null, platformContext.CallId is not null);
             // Apply B2 guards: SSE replay requires background + streaming + store.
-            if (_tracker.TryGet(responseId, out var execution) && execution is not null)
+            if (_tracker.TryGet(responseId, platformContext, out var execution) && execution is not null)
             {
                 // User-key enforcement for in-flight responses
                 execution.EnforceUserIsolation(platformContext);
@@ -951,7 +1012,11 @@ internal sealed class ResponseEndpointHandler
             }
 
             return new SseReplayResult(
-                _eventStreamRegistry, responseId, SharedJsonOptions.Instance, _logger,
+                _eventStreamRegistry,
+                ResponseStorePartition.FromContext(platformContext).GetLifecycleId(responseId),
+                responseId,
+                SharedJsonOptions.Instance,
+                _logger,
                 FoundryEnvironment.SseKeepAliveInterval, startingAfter);
         }
 
@@ -997,7 +1062,7 @@ internal sealed class ResponseEndpointHandler
         // Guard: if response is in-flight, reject deletion.
         // With eager eviction, all tracked executions are in-flight — completed
         // responses are evicted by FinalizeExecutionAsync and served from the provider.
-        if (_tracker.TryGet(responseId, out var execution) && execution is not null)
+        if (_tracker.TryGet(responseId, platformContext, out var execution) && execution is not null)
         {
             // User-key enforcement for in-flight responses
             execution.EnforceUserIsolation(platformContext);
@@ -1018,7 +1083,7 @@ internal sealed class ResponseEndpointHandler
             // could exist in storage. Best-effort delete — ignore NotFound.
             if (execution.PersistenceFailed)
             {
-                _tracker.TryEvict(responseId);
+                _tracker.TryEvict(execution);
 
                 try
                 {
@@ -1031,7 +1096,7 @@ internal sealed class ResponseEndpointHandler
 
                 try
                 {
-                    await _eventStreamRegistry.DeleteAsync(responseId);
+                    await _eventStreamRegistry.DeleteAsync(execution.LifecycleId);
                 }
                 catch (Exception ex)
                 {
@@ -1069,7 +1134,7 @@ internal sealed class ResponseEndpointHandler
             }
             catch (TimeoutException)
             {
-                _tracker.TryEvict(responseId);
+                _tracker.TryEvict(execution);
             }
         }
 
@@ -1084,7 +1149,8 @@ internal sealed class ResponseEndpointHandler
         // Clean up event stream — deleted responses should not be replayable.
         try
         {
-            await _eventStreamRegistry.DeleteAsync(responseId);
+            await _eventStreamRegistry.DeleteAsync(
+                ResponseStorePartition.FromContext(platformContext).GetLifecycleId(responseId));
         }
         catch (Exception ex)
         {

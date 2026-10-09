@@ -142,7 +142,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    eagerness = ModelReaderWriter.Read<RealtimeSemanticVadEagernessLevel?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    eagerness = ModelReaderWriter.Read<RealtimeSemanticVadEagernessLevel?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("create_response"u8))

@@ -275,16 +275,6 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentCardSkill>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentCardSkill>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum AgentDefinitionOptInKeys
-    {
-        WorkflowAgentsV1Preview = 0,
-        ExternalAgentsV1Preview = 1,
-        DraftAgentsV1Preview = 2,
-        VoiceAgentsV1Preview = 3,
-        DigitalWorkerV1Preview = 4,
-        GithubCopilotV1Preview = 5,
-        SkillsV1Preview = 6,
-    }
     public abstract partial class AgentEndpointAuthorizationScheme : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>
     {
         internal AgentEndpointAuthorizationScheme() { }
