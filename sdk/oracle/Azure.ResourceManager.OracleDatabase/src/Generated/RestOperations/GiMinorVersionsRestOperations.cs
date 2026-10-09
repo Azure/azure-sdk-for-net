@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByParentRequest(Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, RequestContext context)
+        internal HttpMessage CreateGetByParentRequest(Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, string shape, bool? isGiVersionForProvisioning, string sortOrder, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -67,6 +67,18 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 uri.AppendQuery("zone", zone, true);
             }
+            if (shape != null)
+            {
+                uri.AppendQuery("shape", shape, true);
+            }
+            if (isGiVersionForProvisioning != null)
+            {
+                uri.AppendQuery("isGiVersionForProvisioning", TypeFormatters.ConvertToString(isGiVersionForProvisioning), true);
+            }
+            if (sortOrder != null)
+            {
+                uri.AppendQuery("sortOrder", sortOrder, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -76,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return message;
         }
 
-        internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, RequestContext context)
+        internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, string shape, bool? isGiVersionForProvisioning, string sortOrder, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

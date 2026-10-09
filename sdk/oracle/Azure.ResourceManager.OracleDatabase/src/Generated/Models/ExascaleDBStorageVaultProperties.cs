@@ -32,8 +32,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
         /// <param name="exadataInfrastructureId"> Cloud Exadata infrastructure ID. </param>
         /// <param name="attachedShapeAttributes"> The shapeAttribute of the Exadata VM cluster(s) associated with the Exadata Database Storage Vault. </param>
+        /// <param name="isAutoscaleEnabled"> Indicates if autoscale feature is enabled for the Storage Vault. The default value is: false. </param>
+        /// <param name="autoscaleLimitInGbs"> Maximum limit storage size in gigabytes, that is applicable for the Database Storage Vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDBStorageInputDetails highCapacityStorageInput, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, ResourceIdentifier exadataInfrastructureId, IReadOnlyList<ExascaleStorageShapeAttribute> attachedShapeAttributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExascaleDBStorageVaultProperties(int? additionalFlashCacheInPercent, string description, string displayName, ExascaleDBStorageInputDetails highCapacityStorageInput, ExascaleDBStorageDetails highCapacityDatabaseStorage, string timeZone, OracleDatabaseProvisioningState? provisioningState, ExascaleDBStorageVaultLifecycleState? lifecycleState, string lifecycleDetails, int? vmClusterCount, string ocid, Uri ociUri, ResourceIdentifier exadataInfrastructureId, IReadOnlyList<ExascaleStorageShapeAttribute> attachedShapeAttributes, bool? isAutoscaleEnabled, int? autoscaleLimitInGbs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdditionalFlashCacheInPercent = additionalFlashCacheInPercent;
             Description = description;
@@ -49,6 +51,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OciUri = ociUri;
             ExadataInfrastructureId = exadataInfrastructureId;
             AttachedShapeAttributes = attachedShapeAttributes;
+            IsAutoscaleEnabled = isAutoscaleEnabled;
+            AutoscaleLimitInGbs = autoscaleLimitInGbs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -93,6 +97,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> The shapeAttribute of the Exadata VM cluster(s) associated with the Exadata Database Storage Vault. </summary>
         public IReadOnlyList<ExascaleStorageShapeAttribute> AttachedShapeAttributes { get; }
+
+        /// <summary> Indicates if autoscale feature is enabled for the Storage Vault. The default value is: false. </summary>
+        public bool? IsAutoscaleEnabled { get; set; }
+
+        /// <summary> Maximum limit storage size in gigabytes, that is applicable for the Database Storage Vault. </summary>
+        public int? AutoscaleLimitInGbs { get; set; }
 
         /// <summary> Total Capacity. </summary>
         public int HighCapacityStorageInputTotalSizeInGbs
