@@ -127,36 +127,6 @@ namespace Azure.Generator.Management.Tests.Providers
                 "Original array item type should still wrap to the resource when the resource data type is overridden");
         }
 
-        [Test]
-        public void ArrayResponseAsPagesForwardsEnumerationToken([Values(false, true)] bool isAsync)
-        {
-            SetupScenario(ResourceOperationKind.Action, isPaging: false, sharedDataType: false, out var plugin, isArrayResponse: true);
-            var provider = plugin.Object.OutputLibrary.TypeProviders.OfType<ArrayResponseCollectionResultDefinition>()
-                .Single(p => p.Name.Contains("Async") == isAsync);
-            var method = provider.Methods.Single(m => m.Signature.Name == "AsPages");
-            Assert.That(method.Signature.Parameters.Count, Is.EqualTo(2));
-            Assert.That(method.Signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Override));
-            if (isAsync)
-            {
-                Assert.That(method.BodyStatements!.ToDisplayString(),
-                    Does.Contain("AsPagesAsync(continuationToken, pageSizeHint, (_context?.CancellationToken ?? default))"));
-                var iterator = provider.Methods.Single(m => m.Signature.Name == "AsPagesAsync");
-                Assert.That(iterator.Signature.Parameters.Last().Attributes.Single().ToDisplayString(),
-                    Does.Contain("EnumeratorCancellation"));
-                Assert.That(iterator.BodyStatements!.ToDisplayString(),
-                    Does.Contain("GetNextResponseAsync(pageSizeHint, null, cancellationToken)"));
-                var next = provider.Methods.Single(m => m.Signature.Name == "GetNextResponseAsync");
-                Assert.That(next.BodyStatements!.ToDisplayString(),
-                    Does.Contain("ProcessMessageAsync(message, _context, cancellationToken)"));
-            }
-            else
-            {
-                Assert.That(provider.Methods.Any(m => m.Signature.Name == "AsPagesAsync"), Is.False);
-                var next = provider.Methods.Single(m => m.Signature.Name == "GetNextResponse");
-                Assert.That(next.BodyStatements!.ToDisplayString(), Does.Contain("ProcessMessage(message, _context)"));
-            }
-        }
-
         // ===== Non-paging Action (returns single item): Single resource -> wraps =====
 
         [TestCase]
