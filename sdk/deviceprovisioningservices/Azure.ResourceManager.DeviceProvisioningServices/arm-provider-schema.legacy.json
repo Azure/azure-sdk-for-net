@@ -104,7 +104,9 @@
       "resourceName": "DeviceProvisioningService",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-08-31"
       ],
       "rbacRoles": []
     },
@@ -183,7 +185,9 @@
       "resourceName": "DeviceProvisioningServicesCertificate",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-08-31"
       ],
       "rbacRoles": []
     },
@@ -242,7 +246,9 @@
       "resourceName": "DeviceProvisioningServicesPrivateEndpointConnection",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-08-31"
       ],
       "rbacRoles": []
     },
@@ -281,7 +287,9 @@
       "resourceName": "DeviceProvisioningServicesPrivateLinkResource",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-08-31"
       ],
       "rbacRoles": []
     }

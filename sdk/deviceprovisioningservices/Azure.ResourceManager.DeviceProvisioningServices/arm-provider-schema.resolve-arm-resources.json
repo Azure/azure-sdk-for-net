@@ -104,7 +104,9 @@
       "resourceName": "ProvisioningServiceDescription",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-08-31"
       ],
       "rbacRoles": []
     },
@@ -183,7 +185,9 @@
       "resourceName": "CertificateResponse",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-08-31"
       ],
       "rbacRoles": []
     },
@@ -258,7 +262,9 @@
       "resourceName": "ProvisioningServicesPrivateEndpointConnections",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-08-31"
       ],
       "rbacRoles": []
     },
@@ -297,7 +303,9 @@
       "resourceName": "ProvisioningServicesPrivateLinkResources",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-02-01-preview"
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-08-31"
       ],
       "rbacRoles": []
     }

@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesByWorkspaceGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new DesktopVirtualizationPrivateLinkResourceDataAsync0CollectionResultOfT(
                 _privateLinkResourcesByWorkspaceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesByWorkspaceGetPrivateLinkResourcesCollectionResultOfT(
+            return new DesktopVirtualizationPrivateLinkResourceData0CollectionResultOfT(
                 _privateLinkResourcesByWorkspaceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
