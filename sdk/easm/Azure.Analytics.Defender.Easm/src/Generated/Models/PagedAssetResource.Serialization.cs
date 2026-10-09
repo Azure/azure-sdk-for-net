@@ -195,7 +195,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedAssetResource(value, nextLink, totalElements, mark, additionalBinaryDataProperties);
+            return new PagedAssetResource(value ?? new ChangeTrackingList<AssetResource>(), nextLink, totalElements, mark, additionalBinaryDataProperties);
         }
     }
 }

@@ -202,7 +202,7 @@ namespace Azure.AI.Language.Text
             }
             return new LinkedEntity(
                 name,
-                matches,
+                matches ?? new ChangeTrackingList<EntityLinkingMatch>(),
                 language,
                 id,
                 url,

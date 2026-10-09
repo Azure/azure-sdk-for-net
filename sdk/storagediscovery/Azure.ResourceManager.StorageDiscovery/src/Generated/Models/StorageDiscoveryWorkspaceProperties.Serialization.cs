@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteObjectValue(Capabilities, options);
+            }
             writer.WritePropertyName("workspaceRoots"u8);
             writer.WriteStartArray();
             foreach (ResourceIdentifier item in WorkspaceRoots)
@@ -158,6 +163,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             }
             StorageDiscoverySku? sku = default;
             string description = default;
+            StorageDiscoveryCapabilities capabilities = default;
             IList<ResourceIdentifier> workspaceRoots = default;
             IList<StorageDiscoveryScope> scopes = default;
             StorageDiscoveryProvisioningState? provisioningState = default;
@@ -176,6 +182,15 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 if (prop.NameEquals("description"u8))
                 {
                     description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("capabilities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capabilities = StorageDiscoveryCapabilities.DeserializeStorageDiscoveryCapabilities(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("workspaceRoots"u8))
@@ -222,6 +237,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             return new StorageDiscoveryWorkspaceProperties(
                 sku,
                 description,
+                capabilities,
                 workspaceRoots,
                 scopes,
                 provisioningState,

@@ -160,7 +160,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RunStepSharepointToolCall(@type, id, additionalBinaryDataProperties, sharePoint);
+            return new RunStepSharepointToolCall(@type, id, additionalBinaryDataProperties, sharePoint ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

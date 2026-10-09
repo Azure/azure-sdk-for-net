@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisCacheAccessPolicyData, RedisCacheAccessPolicyResource>(new RedisCacheAccessPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RedisCacheAccessPolicyData, RedisCacheAccessPolicyResource>(new RedisCacheAccessPolicyDataAsyncCollectionResultOfT(
                 _redisCacheAccessPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisCacheAccessPolicyData, RedisCacheAccessPolicyResource>(new RedisCacheAccessPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<RedisCacheAccessPolicyData, RedisCacheAccessPolicyResource>(new RedisCacheAccessPolicyDataCollectionResultOfT(
                 _redisCacheAccessPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskSchedulerPrivateLinkResourceData, DurableTaskSchedulerPrivateLinkResource>(new SchedulersGetPrivateLinksAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DurableTaskSchedulerPrivateLinkResourceData, DurableTaskSchedulerPrivateLinkResource>(new DurableTaskSchedulerPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _schedulersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskSchedulerPrivateLinkResourceData, DurableTaskSchedulerPrivateLinkResource>(new SchedulersGetPrivateLinksCollectionResultOfT(
+            return new PageableWrapper<DurableTaskSchedulerPrivateLinkResourceData, DurableTaskSchedulerPrivateLinkResource>(new DurableTaskSchedulerPrivateLinkResourceDataCollectionResultOfT(
                 _schedulersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

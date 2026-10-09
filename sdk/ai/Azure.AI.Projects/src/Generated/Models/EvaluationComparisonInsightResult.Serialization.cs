@@ -144,7 +144,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EvaluationComparisonInsightResult(@type, additionalBinaryDataProperties, comparisons, @method);
+            return new EvaluationComparisonInsightResult(@type, additionalBinaryDataProperties, comparisons ?? new ChangeTrackingList<EvalRunResultComparison>(), @method);
         }
     }
 }

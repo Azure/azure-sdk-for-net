@@ -20,7 +20,7 @@ namespace Azure.Security.ConfidentialLedger
         [Experimental("SCME0002")]
         internal ConfidentialLedgerClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2026-02-23";
+            Version = "2026-07-31-preview";
             if (section is null || !section.Exists())
             {
                 return;

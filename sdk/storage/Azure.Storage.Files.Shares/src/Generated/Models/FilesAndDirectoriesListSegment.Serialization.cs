@@ -241,8 +241,8 @@ namespace Azure.Storage.Files.Shares.Models
                 }
             }
             return new FilesAndDirectoriesListSegment(
-                directoryItems,
-                fileItems,
+                directoryItems ?? new ChangeTrackingList<DirectoryItem>(),
+                fileItems ?? new ChangeTrackingList<FileItem>(),
                 symLinkItems ?? new ChangeTrackingList<SymLinkItem>(),
                 blockDeviceItems ?? new ChangeTrackingList<BlockDeviceItem>(),
                 charDeviceItems ?? new ChangeTrackingList<CharDeviceItem>(),

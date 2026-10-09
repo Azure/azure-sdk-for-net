@@ -157,7 +157,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StemmerOverrideTokenFilter(odataType, name, additionalBinaryDataProperties, rules);
+            return new StemmerOverrideTokenFilter(odataType, name, additionalBinaryDataProperties, rules ?? new ChangeTrackingList<string>());
         }
     }
 }

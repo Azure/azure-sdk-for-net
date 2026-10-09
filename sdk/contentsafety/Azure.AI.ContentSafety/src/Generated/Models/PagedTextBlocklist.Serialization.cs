@@ -169,7 +169,7 @@ namespace Azure.AI.ContentSafety
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedTextBlocklist(value, nextLink, additionalBinaryDataProperties);
+            return new PagedTextBlocklist(value ?? new ChangeTrackingList<TextBlocklist>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

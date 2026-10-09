@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubResourceGetBySubscriptionAsyncCollectionResultOfT(IotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubDescriptions"), data => new IotHubDescriptionResource(Client, data));
+            return new AsyncPageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubDescriptionDataAsync0CollectionResultOfT(IotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubDescriptions"), data => new IotHubDescriptionResource(Client, data));
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceProviderCommonGetIotHubUserSubscriptionQuotaAsyncCollectionResultOfT(ResourceProviderCommonRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota");
+            return new IotHubUserSubscriptionQuotaAsyncCollectionResultOfT(ResourceProviderCommonRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota");
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceProviderCommonGetIotHubUserSubscriptionQuotaCollectionResultOfT(ResourceProviderCommonRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota");
+            return new IotHubUserSubscriptionQuotaCollectionResultOfT(ResourceProviderCommonRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota");
         }
     }
 }

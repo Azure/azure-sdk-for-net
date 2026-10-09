@@ -14,17 +14,7 @@ namespace Azure.Storage.Files.DataLake
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AclFailedEntry))]
-    [ModelReaderWriterBuildable(typeof(BlobHierarchyListSegment))]
-    [ModelReaderWriterBuildable(typeof(BlobItemInternal))]
-    [ModelReaderWriterBuildable(typeof(BlobPrefix))]
-    [ModelReaderWriterBuildable(typeof(BlobPropertiesInternal))]
     [ModelReaderWriterBuildable(typeof(FileSystemItem))]
-    [ModelReaderWriterBuildable(typeof(FileSystemList))]
-    [ModelReaderWriterBuildable(typeof(ListBlobsHierarchySegmentResponse))]
-    [ModelReaderWriterBuildable(typeof(Path))]
-    [ModelReaderWriterBuildable(typeof(PathList))]
-    [ModelReaderWriterBuildable(typeof(SetAccessControlRecursiveResponse))]
     public partial class AzureStorageFilesDataLakeContext : ModelReaderWriterContext
     {
     }

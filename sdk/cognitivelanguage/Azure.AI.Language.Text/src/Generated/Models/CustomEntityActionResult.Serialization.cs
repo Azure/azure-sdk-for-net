@@ -204,9 +204,9 @@ namespace Azure.AI.Language.Text
             }
             return new CustomEntityActionResult(
                 id,
-                warnings,
+                warnings ?? new ChangeTrackingList<DocumentWarning>(),
                 statistics,
-                entities,
+                entities ?? new ChangeTrackingList<NamedEntity>(),
                 detectedLanguage,
                 additionalBinaryDataProperties);
         }

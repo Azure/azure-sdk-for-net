@@ -249,7 +249,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             return new UpdateFileBase(
                 fileName,
                 sizeInBytes,
-                hashes,
+                hashes ?? new ChangeTrackingDictionary<string, string>(),
                 mimeType,
                 scanResult,
                 scanDetails,

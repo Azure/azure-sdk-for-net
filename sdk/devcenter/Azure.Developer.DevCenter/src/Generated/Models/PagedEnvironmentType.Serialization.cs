@@ -170,7 +170,7 @@ namespace Azure.Developer.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedEnvironmentType(value, nextLink, additionalBinaryDataProperties);
+            return new PagedEnvironmentType(value ?? new ChangeTrackingList<DevCenterEnvironmentType>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

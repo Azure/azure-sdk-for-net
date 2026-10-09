@@ -154,7 +154,7 @@ namespace BasicTypeSpec
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListWithContinuationTokenHeaderResponseResult(things, additionalBinaryDataProperties);
+            return new ListWithContinuationTokenHeaderResponseResult(things ?? new ChangeTrackingList<ThingModel>(), additionalBinaryDataProperties);
         }
     }
 }

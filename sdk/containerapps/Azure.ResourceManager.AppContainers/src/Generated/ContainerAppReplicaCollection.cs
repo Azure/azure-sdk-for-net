@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppReplicaData, ContainerAppReplicaResource>(new ContainerAppsRevisionReplicasGetReplicasAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerAppReplicaData, ContainerAppReplicaResource>(new ContainerAppReplicaDataAsyncCollectionResultOfT(
                 _containerAppsRevisionReplicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppReplicaData, ContainerAppReplicaResource>(new ContainerAppsRevisionReplicasGetReplicasCollectionResultOfT(
+            return new PageableWrapper<ContainerAppReplicaData, ContainerAppReplicaResource>(new ContainerAppReplicaDataCollectionResultOfT(
                 _containerAppsRevisionReplicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

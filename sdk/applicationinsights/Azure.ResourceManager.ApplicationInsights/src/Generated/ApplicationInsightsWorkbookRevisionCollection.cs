@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookRevisionResource>(new WorkbooksRevisionsListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookRevisionResource>(new ApplicationInsightsWorkbookDataAsync0CollectionResultOfT(
                 _workbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookRevisionResource>(new WorkbooksRevisionsListCollectionResultOfT(
+            return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookRevisionResource>(new ApplicationInsightsWorkbookData0CollectionResultOfT(
                 _workbooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -182,7 +182,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OpenApiFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties);
+            return new OpenApiFunctionDefinitionFunction(name, description, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

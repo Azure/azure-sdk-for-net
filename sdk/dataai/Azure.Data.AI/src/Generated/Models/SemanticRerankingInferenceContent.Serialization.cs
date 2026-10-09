@@ -291,7 +291,7 @@ namespace Azure.Data.AI
             }
             return new SemanticRerankingInferenceContent(
                 query,
-                documents,
+                documents ?? new ChangeTrackingList<string>(),
                 returnDocuments,
                 topK,
                 batchSize,

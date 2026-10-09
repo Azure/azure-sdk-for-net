@@ -197,8 +197,8 @@ namespace Azure.AI.Language.Conversations.Models
                 }
             }
             return new CustomSummaryResult(
-                conversations,
-                errors,
+                conversations ?? new ChangeTrackingList<ConversationsSummaryResult>(),
+                errors ?? new ChangeTrackingList<DocumentError>(),
                 statistics,
                 projectName,
                 deploymentName,

@@ -248,9 +248,9 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentTable(
                 rowCount,
                 columnCount,
-                cells,
+                cells ?? new ChangeTrackingList<DocumentTableCell>(),
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
-                spans,
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
                 caption,
                 footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
                 additionalBinaryDataProperties);

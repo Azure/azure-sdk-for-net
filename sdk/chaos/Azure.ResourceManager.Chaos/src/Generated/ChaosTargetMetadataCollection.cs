@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new ChaosTargetMetadataDataAsyncCollectionResultOfT(
                 _targetTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllCollectionResultOfT(
+            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new ChaosTargetMetadataDataCollectionResultOfT(
                 _targetTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,

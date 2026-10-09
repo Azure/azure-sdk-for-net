@@ -204,9 +204,9 @@ namespace Azure.AI.Language.Text
             }
             return new ExtractedSummaryActionResult(
                 id,
-                warnings,
+                warnings ?? new ChangeTrackingList<DocumentWarning>(),
                 statistics,
-                sentences,
+                sentences ?? new ChangeTrackingList<ExtractedSummarySentence>(),
                 detectedLanguage,
                 additionalBinaryDataProperties);
         }

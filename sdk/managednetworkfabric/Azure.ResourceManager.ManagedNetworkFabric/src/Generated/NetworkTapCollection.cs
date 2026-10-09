@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapsGetByResourceGroupAsyncCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
+            return new AsyncPageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapDataAsyncCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapsGetByResourceGroupCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
+            return new PageableWrapper<NetworkTapData, NetworkTapResource>(new NetworkTapDataCollectionResultOfT(_networkTapsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapCollection.GetAll"), data => new NetworkTapResource(Client, data));
         }
 
         /// <summary>

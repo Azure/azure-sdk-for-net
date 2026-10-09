@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureWebCategoryData, AzureWebCategoryResource>(new WebCategoriesGetBySubscriptionAsyncCollectionResultOfT(_webCategoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "AzureWebCategoryCollection.GetAll"), data => new AzureWebCategoryResource(Client, data));
+            return new AsyncPageableWrapper<AzureWebCategoryData, AzureWebCategoryResource>(new AzureWebCategoryDataAsyncCollectionResultOfT(_webCategoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "AzureWebCategoryCollection.GetAll"), data => new AzureWebCategoryResource(Client, data));
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureWebCategoryData, AzureWebCategoryResource>(new WebCategoriesGetBySubscriptionCollectionResultOfT(_webCategoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "AzureWebCategoryCollection.GetAll"), data => new AzureWebCategoryResource(Client, data));
+            return new PageableWrapper<AzureWebCategoryData, AzureWebCategoryResource>(new AzureWebCategoryDataCollectionResultOfT(_webCategoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "AzureWebCategoryCollection.GetAll"), data => new AzureWebCategoryResource(Client, data));
         }
 
         /// <summary>

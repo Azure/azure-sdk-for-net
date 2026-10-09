@@ -197,7 +197,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchAlias(name, indexes, etag, additionalBinaryDataProperties);
+            return new SearchAlias(name, indexes ?? new ChangeTrackingList<string>(), etag, additionalBinaryDataProperties);
         }
     }
 }

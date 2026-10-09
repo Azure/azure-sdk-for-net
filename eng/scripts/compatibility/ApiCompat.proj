@@ -1,0 +1,52 @@
+<Project DefaultTargets="CompareSdkAssemblies">
+  <PropertyGroup>
+    <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
+    <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
+    <ImportDirectoryPackagesProps>false</ImportDirectoryPackagesProps>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <BaseIntermediateOutputPath>$(SdkChangesWorkDirectory)\obj\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
+    <BaseOutputPath>$(SdkChangesWorkDirectory)\bin\</BaseOutputPath>
+  </PropertyGroup>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <Import Project="$(SdkChangesInputFile)" Condition="'$(SdkChangesInputFile)' != ''" />
+
+  <Target Name="RejectSdkCompilation" BeforeTargets="Build;Rebuild;Compile;CoreCompile;RunAnalyzers;RunCodeAnalysis">
+    <Error Text="SDK change extraction must not compile or run analyzers." />
+  </Target>
+
+  <Target Name="CompareSdkAssemblies">
+    <Error Condition="!Exists('$(SdkChangesLeftAssembly)')" Text="The baseline assembly does not exist: $(SdkChangesLeftAssembly)" />
+    <Error Condition="!Exists('$(SdkChangesRightAssembly)')" Text="The current assembly does not exist: $(SdkChangesRightAssembly)" />
+    <Error Condition="!Exists('$(RoslynAssembliesPath)\Microsoft.CodeAnalysis.dll')" Text="The evaluated RoslynAssembliesPath is not available: $(RoslynAssembliesPath)" />
+    <ItemGroup>
+      <_SdkChangesLeftReferences Include="@(SdkChangesLeftReference, ',')" />
+      <_SdkChangesRightReferences Include="@(SdkChangesRightReference, ',')" />
+      <_SdkChangesAssemblyTransformation Include="^.%2A$">
+        <ReplacementString>$(SdkChangesAssemblyIdentity)</ReplacementString>
+      </_SdkChangesAssemblyTransformation>
+    </ItemGroup>
+    <!-- Keep native error events, but finish the target so a truncated/failed process is distinguishable. -->
+    <Microsoft.DotNet.ApiCompat.Task.ValidateAssembliesTask
+      RoslynAssembliesPath="$(RoslynAssembliesPath)"
+      LeftAssemblies="$(SdkChangesLeftAssembly)"
+      RightAssemblies="$(SdkChangesRightAssembly)"
+      LeftAssembliesReferences="@(_SdkChangesLeftReferences)"
+      RightAssembliesReferences="@(_SdkChangesRightReferences)"
+      LeftAssembliesTransformationPattern="@(_SdkChangesAssemblyTransformation)"
+      RightAssembliesTransformationPattern="@(_SdkChangesAssemblyTransformation)"
+      CreateWorkItemPerAssembly="true"
+      GenerateSuppressionFile="false"
+      PermitUnnecessarySuppressions="$(ApiCompatPermitUnnecessarySuppressions)"
+      SuppressionFiles="@(SdkChangesSuppressionFile)"
+      NoWarn="$(NoWarn)"
+      RespectInternals="$(ApiCompatRespectInternals)"
+      EnableRuleAttributesMustMatch="$(ApiCompatEnableRuleAttributesMustMatch)"
+      ExcludeAttributesFiles="@(SdkChangesExcludeAttributesFile)"
+      EnableRuleCannotChangeParameterName="$(ApiCompatEnableRuleCannotChangeParameterName)"
+      EnableStrictMode="$(ApiCompatStrictMode)"
+      ContinueOnError="ErrorAndContinue" />
+    <Message Text="SDK_CHANGES_API_COMPAT_COMPLETED" Importance="High" />
+  </Target>
+</Project>

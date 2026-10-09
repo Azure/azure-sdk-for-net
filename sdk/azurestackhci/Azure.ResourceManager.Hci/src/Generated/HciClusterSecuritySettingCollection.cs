@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new SecuritySettingsGetByClustersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new HciClusterSecuritySettingDataAsyncCollectionResultOfT(
                 _securitySettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new SecuritySettingsGetByClustersCollectionResultOfT(
+            return new PageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new HciClusterSecuritySettingDataCollectionResultOfT(
                 _securitySettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

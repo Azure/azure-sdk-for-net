@@ -205,9 +205,9 @@ namespace Azure.AI.AnomalyDetector
         /// will need another API to get detection results.
         /// </param>
         /// <returns> A new <see cref="AnomalyDetector.MultivariateBatchDetectionResultSummary"/> instance for mocking. </returns>
-        public static MultivariateBatchDetectionResultSummary MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status = default, IEnumerable<ErrorResponse> errors = default, IEnumerable<VariableState> variableStates = default, MultivariateBatchDetectionOptions setupInfo = default)
+        public static MultivariateBatchDetectionResultSummary MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status = default, IEnumerable<ErrorResult> errors = default, IEnumerable<VariableState> variableStates = default, MultivariateBatchDetectionOptions setupInfo = default)
         {
-            errors ??= new ChangeTrackingList<ErrorResponse>();
+            errors ??= new ChangeTrackingList<ErrorResult>();
             variableStates ??= new ChangeTrackingList<VariableState>();
 
             return new MultivariateBatchDetectionResultSummary(status, errors.ToList(), variableStates.ToList(), setupInfo, additionalBinaryDataProperties: null);
@@ -216,10 +216,10 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Error information that the API returned. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Message that explains the error that the service reported. </param>
-        /// <returns> A new <see cref="AnomalyDetector.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(string code = default, string message = default)
+        /// <returns> A new <see cref="AnomalyDetector.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(string code = default, string message = default)
         {
-            return new ErrorResponse(code, message, additionalBinaryDataProperties: null);
+            return new ErrorResult(code, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Variable status. </summary>
@@ -272,9 +272,9 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
         /// <param name="errors"> Error message for the current time stamp. </param>
         /// <returns> A new <see cref="AnomalyDetector.AnomalyState"/> instance for mocking. </returns>
-        public static AnomalyState AnomalyState(DateTimeOffset timestamp = default, AnomalyValue value = default, IEnumerable<ErrorResponse> errors = default)
+        public static AnomalyState AnomalyState(DateTimeOffset timestamp = default, AnomalyValue value = default, IEnumerable<ErrorResult> errors = default)
         {
-            errors ??= new ChangeTrackingList<ErrorResponse>();
+            errors ??= new ChangeTrackingList<ErrorResult>();
 
             return new AnomalyState(timestamp, value, errors.ToList(), additionalBinaryDataProperties: null);
         }
@@ -352,9 +352,9 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
         /// <returns> A new <see cref="AnomalyDetector.ModelInfo"/> instance for mocking. </returns>
-        public static ModelInfo ModelInfo(Uri dataSource = default, DataSchema? dataSchema = default, DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, string displayName = default, int? slidingWindow = default, AlignPolicy alignPolicy = default, ModelStatus? status = default, IEnumerable<ErrorResponse> errors = default, DiagnosticsInfo diagnosticsInfo = default)
+        public static ModelInfo ModelInfo(Uri dataSource = default, DataSchema? dataSchema = default, DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, string displayName = default, int? slidingWindow = default, AlignPolicy alignPolicy = default, ModelStatus? status = default, IEnumerable<ErrorResult> errors = default, DiagnosticsInfo diagnosticsInfo = default)
         {
-            errors ??= new ChangeTrackingList<ErrorResponse>();
+            errors ??= new ChangeTrackingList<ErrorResult>();
 
             return new ModelInfo(
                 dataSource,

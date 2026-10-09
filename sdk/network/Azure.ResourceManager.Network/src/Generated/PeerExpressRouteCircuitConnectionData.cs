@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Network
             ETag = eTag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
+        public PeerExpressRouteCircuitConnectionData() : this(default)
+        {
+        }
+
         /// <summary> Properties of the peer express route circuit connection. </summary>
         [WirePath("properties")]
         internal PeerExpressRouteCircuitConnectionPropertiesFormat Properties { get; }

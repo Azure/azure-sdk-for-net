@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProvidersGetByResourceGroupAsyncCollectionResultOfT(_securityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityPartnerProviderCollection.GetAll"), data => new SecurityPartnerProviderResource(Client, data));
+            return new AsyncPageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProviderDataAsyncCollectionResultOfT(_securityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityPartnerProviderCollection.GetAll"), data => new SecurityPartnerProviderResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProvidersGetByResourceGroupCollectionResultOfT(_securityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityPartnerProviderCollection.GetAll"), data => new SecurityPartnerProviderResource(Client, data));
+            return new PageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProviderDataCollectionResultOfT(_securityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityPartnerProviderCollection.GetAll"), data => new SecurityPartnerProviderResource(Client, data));
         }
 
         /// <summary>

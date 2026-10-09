@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -51,20 +50,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
-        public ResourceIdentifier ManagedByResourceId
+        /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
+        public IList<ElasticSanManagedByInfo> ManagedBy
         {
             get
-            {
-                return Properties is null ? default : Properties.ManagedByResourceId;
-            }
-            set
             {
                 if (Properties is null)
                 {
                     Properties = new VolumeUpdateProperties();
                 }
-                Properties.ManagedByResourceId = value;
+                return Properties.ManagedBy;
             }
         }
     }

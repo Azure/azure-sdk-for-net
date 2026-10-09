@@ -38,6 +38,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressProperties"/>. </summary>
+        /// <param name="contactDetails"> Contact details for the address. </param>
+        public EdgeOrderItemAddressProperties(EdgeOrderAddressContactDetails contactDetails) : this()
+        {
+            ContactDetails = contactDetails;
+        }
+
         /// <summary> Type of address based on its usage context. </summary>
         public EdgeOrderAddressClassification? AddressClassification { get; set; }
 

@@ -189,7 +189,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MCPToolResource(serverLabel, headers, requireApprovalInternal, additionalBinaryDataProperties);
+            return new MCPToolResource(serverLabel, headers ?? new ChangeTrackingDictionary<string, string>(), requireApprovalInternal, additionalBinaryDataProperties);
         }
     }
 }

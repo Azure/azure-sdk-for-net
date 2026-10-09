@@ -170,7 +170,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedConversationMessageItem(value, nextLink, clientRequestId, additionalBinaryDataProperties);
+            return new PagedConversationMessageItem(value ?? new ChangeTrackingList<ConversationMessageItem>(), nextLink, clientRequestId, additionalBinaryDataProperties);
         }
     }
 }

@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlanDataAsyncCollectionResultOfT(
                 _scalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlanDataCollectionResultOfT(
                 _scalingPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Avs.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyProperties"/>. </summary>
+        protected PlacementPolicyProperties() : this(default)
+        {
+        }
+
         /// <summary> Placement Policy type. </summary>
         internal PlacementPolicyType Type { get; set; }
 

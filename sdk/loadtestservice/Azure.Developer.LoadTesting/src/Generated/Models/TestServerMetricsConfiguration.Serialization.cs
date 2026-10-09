@@ -220,7 +220,7 @@ namespace Azure.Developer.LoadTesting
             }
             return new TestServerMetricsConfiguration(
                 testId,
-                metrics,
+                metrics ?? new ChangeTrackingDictionary<string, ResourceMetric>(),
                 createdOn,
                 createdBy,
                 lastModifiedOn,

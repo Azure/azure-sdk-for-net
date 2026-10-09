@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllAsyncCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
+            return new AsyncPageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountDataAsync0CollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
+            return new PageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountData0CollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT(
+            return new BatchSupportedSkuAsyncCollectionResultOfT(
                 LocationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetBatchSupportedVirtualMachineSkusCollectionResultOfT(
+            return new BatchSupportedSkuCollectionResultOfT(
                 LocationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,

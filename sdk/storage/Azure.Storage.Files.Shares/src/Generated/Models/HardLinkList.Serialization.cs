@@ -147,7 +147,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new HardLinkList(hardLinks);
+            return new HardLinkList(hardLinks ?? new ChangeTrackingList<HardLink>());
         }
 
         /// <param name="writer"> The XML writer. </param>

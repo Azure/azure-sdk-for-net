@@ -167,7 +167,7 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContentUnderstandingDefaults(modelDeployments, additionalBinaryDataProperties);
+            return new ContentUnderstandingDefaults(modelDeployments ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -169,7 +169,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedChatRoomMember(value, nextLink, additionalBinaryDataProperties);
+            return new PagedChatRoomMember(value ?? new ChangeTrackingList<WebPubSubChatRoomMember>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

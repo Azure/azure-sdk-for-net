@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrencesGetAttachedResourcesAsyncCollectionResultOfT(
+            return new OccurrenceDetailsAsyncCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrencesGetAttachedResourcesCollectionResultOfT(
+            return new OccurrenceDetailsCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IacProfileData, IacProfileResource>(new IacProfilesGetAllAsyncCollectionResultOfT(IacProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetIacProfiles"), data => new IacProfileResource(Client, data));
+            return new AsyncPageableWrapper<IacProfileData, IacProfileResource>(new IacProfileDataAsync0CollectionResultOfT(IacProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetIacProfiles"), data => new IacProfileResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IacProfileData, IacProfileResource>(new IacProfilesGetAllCollectionResultOfT(IacProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetIacProfiles"), data => new IacProfileResource(Client, data));
+            return new PageableWrapper<IacProfileData, IacProfileResource>(new IacProfileData0CollectionResultOfT(IacProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetIacProfiles"), data => new IacProfileResource(Client, data));
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetAllAsyncCollectionResultOfT(WorkflowRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetDevHubWorkflows"), data => new DevHubWorkflowResource(Client, data));
+            return new AsyncPageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new DevHubWorkflowDataAsync0CollectionResultOfT(WorkflowRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetDevHubWorkflows"), data => new DevHubWorkflowResource(Client, data));
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new WorkflowGetAllCollectionResultOfT(WorkflowRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetDevHubWorkflows"), data => new DevHubWorkflowResource(Client, data));
+            return new PageableWrapper<DevHubWorkflowData, DevHubWorkflowResource>(new DevHubWorkflowData0CollectionResultOfT(WorkflowRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDevHubSubscriptionResource.GetDevHubWorkflows"), data => new DevHubWorkflowResource(Client, data));
         }
 
         /// <summary>

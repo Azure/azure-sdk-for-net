@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerVirtualNetworkRuleData, SqlServerVirtualNetworkRuleResource>(new VirtualNetworkRulesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerVirtualNetworkRuleData, SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleDataAsyncCollectionResultOfT(
                 _virtualNetworkRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerVirtualNetworkRuleData, SqlServerVirtualNetworkRuleResource>(new VirtualNetworkRulesGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlServerVirtualNetworkRuleData, SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleDataCollectionResultOfT(
                 _virtualNetworkRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

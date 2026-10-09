@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new ManagedVirtualNetworksGetByFactoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new DataFactoryManagedVirtualNetworkDataAsyncCollectionResultOfT(
                 _managedVirtualNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new ManagedVirtualNetworksGetByFactoryCollectionResultOfT(
+            return new PageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new DataFactoryManagedVirtualNetworkDataCollectionResultOfT(
                 _managedVirtualNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

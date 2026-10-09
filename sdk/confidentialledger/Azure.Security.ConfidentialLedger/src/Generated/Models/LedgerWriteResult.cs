@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
@@ -22,20 +23,29 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of <see cref="LedgerWriteResult"/>. </summary>
         /// <param name="transactionId"> The transaction id at which this write will become durable. </param>
         /// <param name="collectionId"> The collection identifier of the ledger entry. </param>
-        internal LedgerWriteResult(string transactionId, string collectionId)
+        /// <param name="state"> State of the write transaction. </param>
+        internal LedgerWriteResult(string transactionId, string collectionId, TransactionState state)
         {
             TransactionId = transactionId;
             CollectionId = collectionId;
+            State = state;
+            ApplicationClaims = new ChangeTrackingList<ApplicationClaim>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LedgerWriteResult"/>. </summary>
         /// <param name="transactionId"> The transaction id at which this write will become durable. </param>
         /// <param name="collectionId"> The collection identifier of the ledger entry. </param>
+        /// <param name="receipt"> The receipt certifying the committed transaction. </param>
+        /// <param name="state"> State of the write transaction. </param>
+        /// <param name="applicationClaims"> The list of application claims. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LedgerWriteResult(string transactionId, string collectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LedgerWriteResult(string transactionId, string collectionId, ReceiptContents receipt, TransactionState state, IList<ApplicationClaim> applicationClaims, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TransactionId = transactionId;
             CollectionId = collectionId;
+            Receipt = receipt;
+            State = state;
+            ApplicationClaims = applicationClaims;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,5 +54,14 @@ namespace Azure.Security.ConfidentialLedger.Models
 
         /// <summary> The collection identifier of the ledger entry. </summary>
         public string CollectionId { get; }
+
+        /// <summary> The receipt certifying the committed transaction. </summary>
+        public ReceiptContents Receipt { get; }
+
+        /// <summary> State of the write transaction. </summary>
+        public TransactionState State { get; }
+
+        /// <summary> The list of application claims. </summary>
+        public IList<ApplicationClaim> ApplicationClaims { get; }
     }
 }

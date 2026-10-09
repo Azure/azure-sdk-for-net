@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new ComputeVirtualMachineExtensionImagesListTypesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new VirtualMachineExtensionImageCollectionGetAllAsyncCollectionResultOfT(
                 _virtualMachineExtensionImagesRestClient,
                 Id.SubscriptionId,
                 _location,
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new ComputeVirtualMachineExtensionImagesListTypesCollectionResultOfT(
+            return new PageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT(
                 _virtualMachineExtensionImagesRestClient,
                 Id.SubscriptionId,
                 _location,
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new ComputeVirtualMachineExtensionImagesListVersionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new VirtualMachineExtensionImageCollectionGetAllAsync0CollectionResultOfT(
                 _virtualMachineExtensionImagesRestClient,
                 Id.SubscriptionId,
                 _location,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new ComputeVirtualMachineExtensionImagesListVersionsCollectionResultOfT(
+            return new PageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new VirtualMachineExtensionImageCollectionGetAll0CollectionResultOfT(
                 _virtualMachineExtensionImagesRestClient,
                 Id.SubscriptionId,
                 _location,

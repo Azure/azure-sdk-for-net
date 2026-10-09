@@ -206,7 +206,7 @@ namespace Azure.AI.Language.Text
                 metadataKind,
                 additionalBinaryDataProperties,
                 formatedAddress,
-                addressLines,
+                addressLines ?? new ChangeTrackingList<string>(),
                 city,
                 state,
                 postalCode,

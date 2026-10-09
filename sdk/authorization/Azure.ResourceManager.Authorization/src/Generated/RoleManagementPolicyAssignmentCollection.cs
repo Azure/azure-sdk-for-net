@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RoleManagementPolicyAssignmentData, RoleManagementPolicyAssignmentResource>(new RoleManagementPolicyAssignmentsGetForScopeAsyncCollectionResultOfT(_roleManagementPolicyAssignmentsRestClient, Id.ToString(), context, "RoleManagementPolicyAssignmentCollection.GetAll"), data => new RoleManagementPolicyAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<RoleManagementPolicyAssignmentData, RoleManagementPolicyAssignmentResource>(new RoleManagementPolicyAssignmentDataAsyncCollectionResultOfT(_roleManagementPolicyAssignmentsRestClient, Id.ToString(), context, "RoleManagementPolicyAssignmentCollection.GetAll"), data => new RoleManagementPolicyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RoleManagementPolicyAssignmentData, RoleManagementPolicyAssignmentResource>(new RoleManagementPolicyAssignmentsGetForScopeCollectionResultOfT(_roleManagementPolicyAssignmentsRestClient, Id.ToString(), context, "RoleManagementPolicyAssignmentCollection.GetAll"), data => new RoleManagementPolicyAssignmentResource(Client, data));
+            return new PageableWrapper<RoleManagementPolicyAssignmentData, RoleManagementPolicyAssignmentResource>(new RoleManagementPolicyAssignmentDataCollectionResultOfT(_roleManagementPolicyAssignmentsRestClient, Id.ToString(), context, "RoleManagementPolicyAssignmentCollection.GetAll"), data => new RoleManagementPolicyAssignmentResource(Client, data));
         }
 
         /// <summary>

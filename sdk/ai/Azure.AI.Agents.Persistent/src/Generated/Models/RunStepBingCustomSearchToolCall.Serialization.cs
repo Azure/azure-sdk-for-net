@@ -160,7 +160,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RunStepBingCustomSearchToolCall(@type, id, additionalBinaryDataProperties, bingCustomSearch);
+            return new RunStepBingCustomSearchToolCall(@type, id, additionalBinaryDataProperties, bingCustomSearch ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }
