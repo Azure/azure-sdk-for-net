@@ -6,19 +6,35 @@ extends:
       ServiceDirectory: monitor
       Project: Azure.Monitor.OpenTelemetry.AspNetCore
       TimeoutInMinutes: 120
-      InstallTargetFrameworkOnly: true
-      TestDisplayName: 'Test: standard [$(DependencyMode), $(BuildConfiguration)]'
-      AdditionalTestDisplayName: 'Test: routing [source deps, Release, Live]'
-      AdditionalTestScript: sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/tests/Run-MultiEndpointRouting.ps1
-      MatrixConfigs:
-        - Name: monitor_live
-          Path: sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/live-test-matrix.json
-          Selection: sparse
-          GenerateVMJobs: true
-      PostSteps:
+      TestSetupSteps:
+        - pwsh: |
+            Write-Host '##vso[task.setvariable variable=RunMultiEndpointRouting]true'
+            Write-Host '##vso[task.setvariable variable=ArmTemplateParameters]@{ enableMultiEndpointRouting = $true }'
+          displayName: Enable multi-endpoint routing resources
+          condition: and(succeeded(), in(variables['TestTargetFramework'], 'net8.0', 'net9.0', 'net10.0'), ne(variables['CollectCoverage'], 'true'), ne(variables['SupportsRecording'], 'true'))
+      AfterTestSteps:
+        - task: AzurePowerShell@5
+          displayName: 'Test: routing [source deps, Release, Live]'
+          condition: and(succeededOrFailed(), eq(variables['RunMultiEndpointRouting'], 'true'), eq(variables['TestSetupCompleted'], 'true'))
+          inputs:
+            azureSubscription: azure-sdk-tests-public
+            azurePowerShellVersion: LatestVersion
+            pwsh: true
+            ScriptType: InlineScript
+            Inline: |
+              . ./eng/common/TestResources/SubConfig-Helpers.ps1
+              $serviceDirectoryPrefix = BuildServiceDirectoryPrefix 'monitor'
+              $account = (Get-AzContext).Account
+              $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id
+              $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}CLIENT_ID", $account.Id)
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}TENANT_ID", $account.Tenants)
+              & './sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/tests/Run-MultiEndpointRouting.ps1' -TestTargetFramework '$(TestTargetFramework)'
+          env:
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
         - task: PublishTestResults@2
           displayName: Publish multi-endpoint routing results
-          condition: and(succeededOrFailed(), eq(variables['RunAdditionalTests'], 'true'), eq(variables['TestSetupCompleted'], 'true'))
+          condition: and(succeededOrFailed(), eq(variables['RunMultiEndpointRouting'], 'true'), eq(variables['TestSetupCompleted'], 'true'))
           inputs:
             testResultsFiles: '$(MultiEndpointResultsDirectory)/**/*.trx'
             testResultsFormat: VSTest

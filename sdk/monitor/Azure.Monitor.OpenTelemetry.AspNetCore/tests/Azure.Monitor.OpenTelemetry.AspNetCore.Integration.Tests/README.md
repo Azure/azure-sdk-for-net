@@ -66,11 +66,11 @@ Before running these integration tests against Azure for the first time, you mus
 
 ### Multi-endpoint routing live tests
 
-The package live-test pipeline uses one matrix-generation job and eleven test jobs:
-`TestsLinux8/9/10`, `TestsWin462/8/9/10`, `TestsMac8/9/10`, and `CoverageWin10`.
-The package-local [matrix](../../live-test-matrix.json) preserves the baseline
-source/NuGet dependency and Debug/Release combinations. Task names show those
-settings; the pinned build SDK and only the target's additional runtime SDK are installed.
+The package live-test pipeline reuses the repository's default live-test matrix,
+job names, and SDK installation steps. There is no package-specific matrix or
+additional routing job. The current shared matrix has one matrix-generation job
+and eleven test jobs covering Windows, Linux, and macOS, plus coverage/recording.
+The existing source/NuGet dependency and Debug/Release combinations are unchanged.
 
 Each of the nine modern-.NET standard jobs provisions the additional regional
 resource once, runs the standard suite, then runs routing in a fresh test process
@@ -79,7 +79,9 @@ using source dependencies, Release configuration, and Live mode. The routing
 scenario in its TRX results; skipped, missing, failed, or duplicate results fail
 the job. Routing still runs after a standard-test failure if setup succeeded,
 but not after failed setup or cancellation. Both runs finish before resource
-cleanup, and their results are published separately. The combined jobs have a
+cleanup, and their results are published separately through the generic
+`AfterTestSteps` hook. Routing authentication uses the same `azure-sdk-tests-public`
+service connection as this package's default Public-cloud live jobs. The jobs have a
 120-minute timeout. The .NET Framework and coverage/recording jobs do not run routing.
 
 Class-level `SyncOnly` prevents discovery of an unused async fixture variant.
