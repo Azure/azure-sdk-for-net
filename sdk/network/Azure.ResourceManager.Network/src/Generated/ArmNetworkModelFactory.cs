@@ -5952,36 +5952,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
-        /// <param name="frontendPortRangeStart"> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </param>
-        /// <param name="frontendPortRangeEnd"> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
-        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="properties"> Properties of load balancer inbound nat pool. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.LoadBalancerInboundNatPool"/> instance for mocking. </returns>
-        public static LoadBalancerInboundNatPool LoadBalancerInboundNatPool(ResourceIdentifier id, string name, ResourceType? resourceType, LoadBalancingTransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState, ResourceIdentifier frontendIPConfigurationId, ETag? eTag)
+        public static LoadBalancerInboundNatPool LoadBalancerInboundNatPool(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, LoadBalancerInboundNatPoolProperties properties = default, ETag? etag = default)
         {
             return new LoadBalancerInboundNatPool(
                 id,
                 default,
                 name,
                 resourceType,
-                frontendIPConfigurationId is null && protocol is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && provisioningState is null ? default : new LoadBalancerInboundNatPoolProperties(
-                    frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
-                    protocol.GetValueOrDefault(),
-                    frontendPortRangeStart.GetValueOrDefault(),
-                    frontendPortRangeEnd.GetValueOrDefault(),
-                    backendPort.GetValueOrDefault(),
-                    idleTimeoutInMinutes,
-                    enableFloatingIP,
-                    enableTcpReset,
-                    provisioningState,
-                    default),
-                eTag);
+                properties,
+                etag);
         }
 
         /// <param name="frontendIPConfigurationId"> Resource ID. </param>
@@ -5993,9 +5975,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.LoadBalancerInboundNatPoolProperties"/> instance for mocking. </returns>
-        public static LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(ResourceIdentifier frontendIPConfigurationId = default, LoadBalancingTransportProtocol protocol = default, int frontendPortRangeStart = default, int frontendPortRangeEnd = default, int backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, NetworkProvisioningState? provisioningState = default)
+        public static LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(ResourceIdentifier frontendIPConfigurationId = default, LoadBalancingTransportProtocol protocol = default, int frontendPortRangeStart = default, int frontendPortRangeEnd = default, int backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, NetworkProvisioningState? provisioningState = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
             return new LoadBalancerInboundNatPoolProperties(
                 frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
                 protocol,
@@ -6006,7 +5991,7 @@ namespace Azure.ResourceManager.Network.Models
                 enableFloatingIP,
                 enableTcpReset,
                 provisioningState,
-                default);
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -16103,7 +16088,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                frontendIPConfigurationId is null && protocol is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && provisioningState is null ? default : new LoadBalancerInboundNatPoolProperties(
+                frontendIPConfigurationId is null && protocol is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && provisioningState is null && additionalProperties is null ? default : new LoadBalancerInboundNatPoolProperties(
                     frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
                     protocol.GetValueOrDefault(),
                     frontendPortRangeStart.GetValueOrDefault(),
@@ -16113,7 +16098,7 @@ namespace Azure.ResourceManager.Network.Models
                     enableFloatingIP,
                     enableTcpReset,
                     provisioningState,
-                    default),
+                    additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>()),
                 eTag);
         }
 
@@ -23531,53 +23516,6 @@ namespace Azure.ResourceManager.Network.Models
                     provisioningState,
                     default),
                 etag);
-        }
-
-        /// <summary> Inbound NAT pool of the load balancer. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="properties"> Properties of load balancer inbound nat pool. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerInboundNatPool"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadBalancerInboundNatPool LoadBalancerInboundNatPool(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, LoadBalancerInboundNatPoolProperties properties = default, ETag? etag = default)
-        {
-            return new LoadBalancerInboundNatPool(
-                id,
-                default,
-                name,
-                resourceType,
-                properties,
-                etag);
-        }
-
-        /// <summary> Properties of Inbound NAT pool. </summary>
-        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
-        /// <param name="frontendPortRangeStart"> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </param>
-        /// <param name="frontendPortRangeEnd"> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.LoadBalancerInboundNatPoolProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(ResourceIdentifier frontendIPConfigurationId = default, LoadBalancingTransportProtocol protocol = default, int frontendPortRangeStart = 0, int frontendPortRangeEnd = 0, int backendPort = 0, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, NetworkProvisioningState? provisioningState = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            return new LoadBalancerInboundNatPoolProperties(
-                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
-                protocol,
-                frontendPortRangeStart,
-                frontendPortRangeEnd,
-                backendPort,
-                idleTimeoutInMinutes,
-                enableFloatingIP,
-                enableTcpReset,
-                provisioningState,
-                default);
         }
 
         /// <summary> Outbound rule of the load balancer. </summary>
