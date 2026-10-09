@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
@@ -128,6 +129,23 @@ namespace Azure.Generator.Management
                 return primitiveReplacedType;
             }
             return base.CreateCSharpTypeCore(inputType);
+        }
+
+        /// <inheritdoc/>
+        protected override PropertyProvider? CreatePropertyCore(InputProperty property, TypeProvider enclosingType)
+        {
+            var provider = base.CreatePropertyCore(property, enclosingType);
+            if (provider is not null
+                && property.Name == "id"
+                && enclosingType is SystemObjectModelProvider systemModel
+                && typeof(ResourceData).IsAssignableFrom(systemModel.SystemType.FrameworkType))
+            {
+                // Older ARM common types declare id as string, but the inherited SDK
+                // data constructor requires ResourceIdentifier. Keep its property and
+                // derived constructor/serialization types aligned with the SDK type.
+                provider.Update(type: new CSharpType(typeof(ResourceIdentifier), provider.Type.IsNullable));
+            }
+            return provider;
         }
 
         /// <inheritdoc/>
