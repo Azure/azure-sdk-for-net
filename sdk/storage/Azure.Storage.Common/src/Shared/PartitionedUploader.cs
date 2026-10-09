@@ -175,9 +175,9 @@ namespace Azure.Storage
 
         /// <summary>
         /// The size we use to determine whether to upload as a one-off request or
-        /// a partitioned/committed upload
+        /// a partitioned/committed upload. If null, we'll use the default block size.
         /// </summary>
-        private readonly long _singleUploadThreshold;
+        private readonly long? _singleUploadThreshold;
 
         /// <summary>
         /// The size of each staged block.  If null, we'll change between 4MB
@@ -260,10 +260,6 @@ namespace Azure.Storage
             {
                 _singleUploadThreshold = Math.Min(transferOptions.InitialTransferSize.Value, Constants.Blob.Block.MaxUploadBytes);
             }
-            else
-            {
-                _singleUploadThreshold = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
-            }
 
             // Set _blockSize
             if (transferOptions.MaximumTransferSize.HasValue
@@ -305,7 +301,7 @@ namespace Azure.Storage
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
             long length = content.ToMemory().Length;
 
-            if (length < _singleUploadThreshold)
+            if (length < GetSingleUploadThreshold(length))
             {
                 UploadTransferValidationOptions validationOptions;
                 if (UseMasterCrc && _masterCrcSupplier != default)
@@ -376,7 +372,7 @@ namespace Azure.Storage
             long? length = expectedContentLength ?? content.GetLengthOrDefault();
 
             // If we know the length and it's small enough
-            if (length < _singleUploadThreshold)
+            if (length < GetSingleUploadThreshold(length))
             {
                 using var bucket = new DisposableBucket();
                 UploadTransferValidationOptions oneshotValidationOptions = ValidationOptions;
@@ -446,6 +442,10 @@ namespace Azure.Storage
             => blockSize ?? (totalLength < Constants.LargeUploadThreshold ?
                     Constants.DefaultBufferSize :
                     Constants.LargeBufferSize);
+
+        private long GetSingleUploadThreshold(long? totalLength)
+            // We pass-in null for blockSize because we want to use the default block size.
+            => _singleUploadThreshold ?? GetActualBlockSize(blockSize: null, totalLength);
 
         /// <summary>
         /// Buffers the given stream and optionally checksums the stream contents as they are buffered.

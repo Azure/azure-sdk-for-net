@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
@@ -4843,7 +4844,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     path,
                     new DataLakeFileReadToOptions
                     {
-                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
+                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default },
+                        LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
                     }));
 
                 async Task Verify(Response response)
@@ -4894,7 +4896,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     resultStream,
                     new DataLakeFileReadToOptions
                     {
-                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default }
+                        Conditions = new DataLakeRequestConditions() { IfModifiedSince = default },
+                        LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
                     });
                 Verify(resultStream);
             }
@@ -4905,6 +4908,516 @@ namespace Azure.Storage.Files.DataLake.Tests
                 TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
             }
         }
+
+        #region GetLayoutTests
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
+                Assert.AreEqual(size, layoutInfo.FileContentLength);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.CreatedOn);
+                Assert.IsTrue(layoutInfo.IsServerEncrypted);
+                Assert.AreEqual(DataLakeLeaseStatus.Unlocked, layoutInfo.LeaseStatus);
+                Assert.AreEqual(DataLakeLeaseState.Available, layoutInfo.LeaseState);
+                Assert.NotNull(layoutInfo.Ranges);
+                Assert.NotNull(layoutInfo.Endpoints);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_EmptyFile()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            await file.FlushAsync(0);
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                // Assert
+                Assert.Null(layoutInfo.Ranges);
+                Assert.Null(layoutInfo.Endpoints);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_ReturnsRangesAndEndpoints()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                // Assert
+                Assert.IsNotNull(layoutInfo.Ranges);
+                Assert.IsNotNull(layoutInfo.Endpoints);
+
+                // Verify ranges have valid start/end byte offsets
+                Assert.IsNotEmpty(layoutInfo.Ranges.Range);
+                foreach (DataLakeFileLayoutRange rangeItem in layoutInfo.Ranges.Range)
+                {
+                    Assert.GreaterOrEqual(rangeItem.Start, 0);
+                    Assert.Greater(rangeItem.End, rangeItem.Start);
+                }
+
+                // Verify ranges are contiguous and cover byte 0 through size-1
+                Assert.AreEqual(0, layoutInfo.Ranges.Range[0].Start);
+                for (int i = 1; i < layoutInfo.Ranges.Range.Count; i++)
+                {
+                    Assert.AreEqual(layoutInfo.Ranges.Range[i - 1].End + 1, layoutInfo.Ranges.Range[i].Start);
+                }
+                Assert.AreEqual(size - 1, layoutInfo.Ranges.Range[layoutInfo.Ranges.Range.Count - 1].End);
+
+                // Verify endpoints are present and each range's EndpointIndex resolves
+                Assert.IsNotEmpty(layoutInfo.Endpoints.Endpoint);
+                Dictionary<int, string> endpointMap = new Dictionary<int, string>();
+                foreach (DataLakeFileLayoutEndpoint ep in layoutInfo.Endpoints.Endpoint)
+                {
+                    Assert.IsNotNull(ep.Value);
+                    Assert.IsNotEmpty(ep.Value);
+                    endpointMap[ep.Index] = ep.Value;
+                }
+                foreach (DataLakeFileLayoutRange rangeItem in layoutInfo.Ranges.Range)
+                {
+                    Assert.IsTrue(endpointMap.ContainsKey(rangeItem.EndpointIndex),
+                        $"Range [{rangeItem.Start}-{rangeItem.End}] references EndpointIndex {rangeItem.EndpointIndex} not found in endpoints");
+                }
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_MaxPageSize()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Act
+            int maxPageSize = 1;
+            await foreach (Page<DataLakeFileLayoutInfo> page in file.GetLayoutAsync().AsPages(pageSizeHint: maxPageSize))
+            {
+                foreach (DataLakeFileLayoutInfo layoutInfo in page.Values)
+                {
+                    // Assert
+                    Assert.AreEqual(maxPageSize, layoutInfo.Ranges.Range.Count);
+                    Assert.AreEqual(maxPageSize, layoutInfo.Endpoints.Endpoint.Count);
+                }
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_ContinuationToken()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            // Act
+            Page<DataLakeFileLayoutInfo> page1 = file.GetLayoutAsync().AsPages(pageSizeHint: 1).FirstAsync().GetAwaiter().GetResult();
+            DataLakeFileLayoutInfo layoutInfo1 = page1.Values.First();
+            Assert.AreEqual(1, layoutInfo1.Ranges.Range.Count);
+
+            string continuationToken = page1.ContinuationToken;
+            Assert.IsNotNull(continuationToken);
+            ETag prevETag = layoutInfo1.ETag;
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfMatch = prevETag };
+            Page<DataLakeFileLayoutInfo> page2 = file.GetLayoutAsync(new DataLakeFileGetLayoutOptions { Conditions = conditions }).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
+            DataLakeFileLayoutInfo layoutInfo2 = page2.Values.First();
+            Assert.IsNotNull(layoutInfo2);
+
+            // Verify the continuation token actually advanced the cursor:
+            // page 2's first range must start strictly after page 1's first range.
+            Assert.Greater(
+                layoutInfo2.Ranges.Range[0].Start,
+                layoutInfo1.Ranges.Range[0].Start);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Ranged_ValidatesRange()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            long size = 20 * Constants.MB;
+            byte[] data = GetRandomBuffer(size);
+            int chunkSize = 4 * Constants.MB;
+            for (int offset = 0; offset < data.Length; offset += chunkSize)
+            {
+                int count = Math.Min(chunkSize, data.Length - offset);
+                using var chunk = new MemoryStream(data, offset, count);
+                await file.AppendAsync(chunk, offset);
+            }
+            await file.FlushAsync(size);
+
+            long rangeOffset = 3 * Constants.MB;
+            long rangeCount = size - rangeOffset;
+            HttpRange range = new HttpRange(rangeOffset, rangeCount);
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(new DataLakeFileGetLayoutOptions { Range = range }))
+            {
+                // Assert
+                Assert.IsNotNull(layoutInfo.Ranges);
+                Assert.IsNotEmpty(layoutInfo.Ranges.Range);
+
+                // Verify range coverage is scoped to the requested range
+                Assert.AreEqual(layoutInfo.Ranges.Range[0].Start, rangeOffset);
+                long rangeEnd = rangeOffset + rangeCount - 1;
+                Assert.AreEqual(layoutInfo.Ranges.Range[layoutInfo.Ranges.Range.Count - 1].End, rangeEnd);
+
+                // Verify endpoints are returned and resolvable
+                Assert.IsNotNull(layoutInfo.Endpoints);
+                Assert.IsNotEmpty(layoutInfo.Endpoints.Endpoint);
+                foreach (DataLakeFileLayoutEndpoint ep in layoutInfo.Endpoints.Endpoint)
+                {
+                    Assert.IsNotNull(ep.Value);
+                    Assert.IsNotEmpty(ep.Value);
+                }
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Error()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetLayoutAsync().ToListAsync(),
+                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Conditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                // Arrange
+                DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+                long size = 5 * Constants.KB;
+                byte[] data = GetRandomBuffer(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.UploadAsync(stream);
+                }
+
+                parameters.Match = await SetupPathMatchCondition(file, parameters.Match);
+                parameters.LeaseId = await SetupPathLeaseCondition(file, parameters.LeaseId, garbageLeaseId);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(
+                    new DataLakeFileGetLayoutOptions { Conditions = conditions }))
+                {
+                    // Assert
+                    Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
+                }
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_ConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                // Arrange
+                DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+                long size = 5 * Constants.KB;
+                byte[] data = GetRandomBuffer(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.UploadAsync(stream);
+                }
+
+                parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
+
+                // Act
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(
+                            new DataLakeFileGetLayoutOptions { Conditions = conditions }))
+                        {
+                            // intentionally empty
+                        }
+                    });
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Lease()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+            await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync(
+                new DataLakeFileGetLayoutOptions { Conditions = conditions }))
+            {
+                // Assert
+                Assert.AreEqual(DataLakeLeaseStatus.Locked, layoutInfo.LeaseStatus);
+                Assert.AreEqual(DataLakeLeaseState.Leased, layoutInfo.LeaseState);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_LeaseFailed()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetLayoutAsync(new DataLakeFileGetLayoutOptions { Conditions = conditions }).ToListAsync(),
+                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_Metadata()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            IDictionary<string, string> metadata = BuildMetadata();
+            DataLakeFileUploadOptions uploadOptions = new DataLakeFileUploadOptions
+            {
+                Metadata = metadata
+            };
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream, uploadOptions);
+            }
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.CreatedOn);
+                Assert.AreEqual(size, layoutInfo.FileContentLength);
+                Assert.IsTrue(layoutInfo.IsServerEncrypted);
+                Assert.AreEqual(DataLakeLeaseStatus.Unlocked, layoutInfo.LeaseStatus);
+                Assert.AreEqual(DataLakeLeaseState.Available, layoutInfo.LeaseState);
+                Assert.IsNotNull(layoutInfo.Metadata);
+                AssertMetadataEquality(metadata, layoutInfo.Metadata, isDirectory: false);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        public async Task GetLayoutAsync_CPK()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeFileClient file = InstrumentClient(
+                test.FileSystem.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            // Act
+            bool anyPages = false;
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                anyPages = true;
+
+                // Assert
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, layoutInfo.EncryptionKeySha256);
+            }
+
+            Assert.IsTrue(anyPages, "Expected GetLayoutAsync to return at least one page when using a customer-provided key");
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_OAuth()
+        {
+            // The layout endpoints are returned by the service, so exercise the
+            // bearer-token path explicitly rather than relying on the SharedKey
+            // coverage above.
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            // Act
+            bool anyPages = false;
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                anyPages = true;
+
+                // Assert
+                Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
+                Assert.AreEqual(size, layoutInfo.FileContentLength);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModified);
+                Assert.NotNull(layoutInfo.Ranges);
+                Assert.NotNull(layoutInfo.Endpoints);
+            }
+
+            Assert.IsTrue(anyPages, "Expected GetLayoutAsync to return at least one page under OAuth");
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_FileSAS()
+        {
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            DataLakeFileClient sasFile = InstrumentClient(
+                GetServiceClient_DataLakeServiceSas_FileSystem(fileSystemName)
+                    .GetFileSystemClient(fileSystemName)
+                    .GetFileClient(fileName));
+
+            // Act
+            await foreach (DataLakeFileLayoutInfo layoutInfo in sasFile.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
+            }
+        }
+        #endregion GetLayoutTests
 
         [RecordedTest]
         [Ignore("Live tests will run out of memory")]
