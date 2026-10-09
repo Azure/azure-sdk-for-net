@@ -27,7 +27,8 @@ extends:
     TestType: live
     vallyRoot: evals
     evalGlobs:
-      - 'workflows/live/*.eval.yaml'
+      # Temporary PR validation: run only the new inference scenario.
+      - 'workflows/live/release-planner-inference.eval.yaml'
     # Run each shard under AzureCLI@2 so the real MCP's DevOps calls are authenticated.
     UseAzSdkAuthentication: true
     failOnFailedTests: true
