@@ -1,5 +1,5 @@
 directory: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/OperationalInsights
-commit: 8974e4a28af728a7858f2877e4ccc2cdf66f68bf
+commit: f84874f0fae6c9dc9fb8f46e8e15a53b81036633
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
