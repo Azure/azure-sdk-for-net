@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     receivedBytes = prop.Value.GetSingle();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new IntegrationRuntimeNodeMonitoringData(
                 nodeName,

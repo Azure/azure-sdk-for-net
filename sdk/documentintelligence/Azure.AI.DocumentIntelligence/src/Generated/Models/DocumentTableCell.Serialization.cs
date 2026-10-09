@@ -285,7 +285,7 @@ namespace Azure.AI.DocumentIntelligence
                 columnSpan,
                 content,
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
-                spans,
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
                 elements ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }

@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Parameters.Query.csproj" />
+  <Project Path="tests/Parameters.Query.Tests.csproj" />
 </Solution>

@@ -212,6 +212,7 @@ namespace Azure.Identity
                 ManagedIdentityId = managedIdentityId,
                 InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
                 IsForceRefreshEnabled = source.IsForceRefreshEnabled,
+                EnableMtlsProofOfPossession = source.EnableMtlsProofOfPossession,
             };
 
             return new ManagedIdentityCredential(new ManagedIdentityClient(miOptions));
@@ -315,11 +316,11 @@ namespace Azure.Identity
                 Pipeline = CredentialPipeline.GetInstance(managedIdentityOptions, IsManagedIdentityCredential: true),
                 Options = managedIdentityOptions,
                 IsForceRefreshEnabled = managedIdentityOptions.IsForceRefreshEnabled,
-                DisableMtlsProofOfPossession = managedIdentityOptions.DisableMtlsProofOfPossession,
+                EnableMtlsProofOfPossession = managedIdentityOptions.EnableMtlsProofOfPossession,
             }));
 
             var assertionOptions = source.Clone<ClientAssertionCredentialOptions>();
-            assertionOptions.DisableMtlsProofOfPossession = managedIdentityOptions.DisableMtlsProofOfPossession;
+            assertionOptions.EnableMtlsProofOfPossession = managedIdentityOptions.EnableMtlsProofOfPossession;
 
             if (source.AdditionallyAllowedTenants?.Count > 0)
             {

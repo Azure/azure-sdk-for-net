@@ -215,8 +215,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
             }
             return new EntitiesEvaluationSummary(
-                confusionMatrix,
-                entities,
+                confusionMatrix ?? new ChangeTrackingDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow>(),
+                entities ?? new ChangeTrackingDictionary<string, AnalyzeConversationAuthoringEntityEvaluationSummary>(),
                 microF1,
                 microPrecision,
                 microRecall,

@@ -161,6 +161,75 @@ public class FileResponsesProviderTests : IDisposable
     }
 
     [Test]
+    public async Task GetHistoryItemIdsAsync_UnlimitedReturnsAllItems()
+    {
+        var provider = NewProvider();
+        var historyIds = Enumerable.Range(0, 120).Select(i => $"history_{i}").ToArray();
+        var input = new OutputItemMessage(
+            "input_1", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>());
+        var response = new Models.ResponseObject("resp_history", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+            Conversation = new ConversationReference("conv_history"),
+        };
+        response.Output.Add(new OutputItemMessage(
+            "output_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
+        await provider.CreateResponseAsync(
+            new CreateResponseRequest(response, new[] { input }, historyIds),
+            PlatformContext.Empty);
+
+        var unlimited = (await provider.GetHistoryItemIdsAsync(
+            response.Id, response.Conversation.Id, -1, PlatformContext.Empty)).ToList();
+        var limited = (await provider.GetHistoryItemIdsAsync(
+            response.Id, response.Conversation.Id, 10, PlatformContext.Empty)).ToList();
+        var conversationOnly = (await provider.GetHistoryItemIdsAsync(
+            null, response.Conversation.Id, -1, PlatformContext.Empty)).ToList();
+
+        Assert.That(unlimited, Has.Count.EqualTo(122));
+        Assert.That(unlimited.Take(120), Is.EqualTo(historyIds));
+        Assert.That(limited, Is.EqualTo(unlimited.TakeLast(10)));
+        Assert.That(conversationOnly, Is.EqualTo(unlimited));
+    }
+
+    [Test]
+    public async Task GetHistoryItemIdsAsync_PreviousResponseIdExcludesLaterConversationResponses()
+    {
+        var provider = NewProvider();
+        var first = new Models.ResponseObject("resp_first", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+            Conversation = new ConversationReference("conv_cutoff"),
+        };
+        first.Output.Add(new OutputItemMessage(
+            "output_first", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
+        await provider.CreateResponseAsync(
+            new CreateResponseRequest(
+                first,
+                new[] { new OutputItemMessage("input_first", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>()) },
+                Array.Empty<string>()),
+            PlatformContext.Empty);
+
+        var second = new Models.ResponseObject("resp_second", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+            Conversation = new ConversationReference("conv_cutoff"),
+        };
+        second.Output.Add(new OutputItemMessage(
+            "output_second", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
+        await provider.CreateResponseAsync(
+            new CreateResponseRequest(
+                second,
+                new[] { new OutputItemMessage("input_second", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>()) },
+                new[] { "input_first", "output_first" }),
+            PlatformContext.Empty);
+
+        var ids = (await provider.GetHistoryItemIdsAsync(
+            first.Id, "conv_cutoff", -1, PlatformContext.Empty)).ToList();
+
+        Assert.That(ids, Is.EqualTo(new[] { "input_first", "output_first" }));
+    }
+
+    [Test]
     public async Task Corrupt_Envelope_File_Is_Skipped_On_Rehydrate()
     {
         var writer = NewProvider();
@@ -168,7 +237,7 @@ public class FileResponsesProviderTests : IDisposable
         await writer.CreateResponseAsync(new CreateResponseRequest(good, null, null), PlatformContext.Empty);
 
         // Drop a corrupt file alongside the good one.
-        var envelopesDir = Path.Combine(_dir, "envelopes");
+        var envelopesDir = Path.Combine(_dir, "partitions-v1", "anonymous", "envelopes");
         File.WriteAllText(Path.Combine(envelopesDir, "resp_bad.json"), "{ this is not valid json", Encoding.UTF8);
 
         // A fresh instance must rehydrate the good record and skip the corrupt one without throwing.
@@ -192,5 +261,60 @@ public class FileResponsesProviderTests : IDisposable
         var ids = provider.ListResponseIds();
         Assert.That(ids, Does.Contain("resp_a"));
         Assert.That(ids, Does.Not.Contain("resp_b"));
+    }
+
+    [Test]
+    public async Task Legacy_Global_Files_Are_Never_Read_Or_Modified()
+    {
+        var envelopes = Path.Combine(_dir, "envelopes");
+        var items = Path.Combine(_dir, "items");
+        Directory.CreateDirectory(envelopes);
+        Directory.CreateDirectory(items);
+        File.WriteAllText(Path.Combine(envelopes, "resp_legacy.json"), """
+            {
+              "id": "resp_legacy",
+              "deleted": false,
+              "user_id_key": "user-owner",
+              "conversation_id": "conv_legacy",
+              "envelope": { "id": "resp_legacy", "model": "legacy", "object": "response", "status": "completed", "output": [] },
+              "input_item_ids": ["msg_legacy"], "output_item_ids": [], "history_item_ids": []
+            }
+            """);
+        File.WriteAllText(Path.Combine(envelopes, "resp_deleted.json"), """
+            {
+              "id": "resp_deleted", "deleted": true, "conversation_id": "conv_legacy",
+              "input_item_ids": ["msg_legacy"], "output_item_ids": [], "history_item_ids": []
+            }
+            """);
+        File.WriteAllText(Path.Combine(items, "msg_legacy.json"), """
+            { "id": "msg_legacy", "type": "message", "status": "completed", "role": "user", "content": [] }
+            """);
+        File.WriteAllText(Path.Combine(items, "interrupted.tmp"), "leave unchanged");
+        var original = Directory.GetFiles(_dir, "*", SearchOption.AllDirectories)
+            .ToDictionary(path => path, File.ReadAllBytes);
+
+        foreach (var provider in new[] { NewProvider(), NewProvider() })
+        {
+            foreach (var context in new[] { PlatformContext.Empty, new PlatformContext("user-owner", null), new PlatformContext("other", null) })
+            {
+                Assert.ThrowsAsync<ResourceNotFoundException>(() => provider.GetResponseAsync("resp_legacy", context));
+                Assert.ThrowsAsync<ResourceNotFoundException>(() => provider.GetInputItemsAsync("resp_legacy", context));
+                Assert.ThrowsAsync<ResourceNotFoundException>(() => provider.GetResponseAsync("resp_deleted", context));
+                Assert.That(await provider.GetItemsAsync(new[] { "msg_legacy" }, context), Is.All.Null);
+                Assert.That(await provider.GetHistoryItemIdsAsync("resp_legacy", null, 100, context), Is.Empty);
+                Assert.That(await provider.GetHistoryItemIdsAsync("resp_deleted", null, 100, context), Is.Empty);
+                Assert.That(await provider.GetHistoryItemIdsAsync(null, "conv_legacy", 100, context), Is.Empty);
+            }
+        }
+
+        var writer = NewProvider();
+        await writer.CreateResponseAsync(new CreateResponseRequest(new Models.ResponseObject("resp_legacy", "new"), null, null),
+            PlatformContext.Empty);
+        await writer.DeleteResponseAsync("resp_legacy", PlatformContext.Empty);
+        foreach (var pair in original)
+        {
+            Assert.That(File.ReadAllBytes(pair.Key), Is.EqualTo(pair.Value), pair.Key);
+        }
+        Assert.That(Directory.GetFiles(envelopes).Length + Directory.GetFiles(items).Length, Is.EqualTo(original.Count));
     }
 }

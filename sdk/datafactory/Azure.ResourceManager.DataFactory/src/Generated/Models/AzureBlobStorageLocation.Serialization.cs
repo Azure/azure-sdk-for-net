@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadContainer(prop, ref container);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new AzureBlobStorageLocation(datasetLocationType, folderPath, fileName, additionalProperties, container);
         }

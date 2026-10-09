@@ -5,24 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
-    /// <summary> The response to an attestation policy management API. </summary>
     internal partial class PolicyCertificatesModifyResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PolicyCertificatesModifyResponse"/>. </summary>
         internal PolicyCertificatesModifyResponse()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyCertificatesModifyResponse"/>. </summary>
-        /// <param name="token"> An RFC7519 JSON Web Token structure whose body is a PolicyCertificatesModificationResult object. </param>
-        internal PolicyCertificatesModifyResponse(string token)
+        /// <param name="token">
+        /// An RFC7519 JSON Web Token structure whose body is a
+        /// PolicyCertificatesModificationResult object.
+        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyCertificatesModifyResponse(string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> An RFC7519 JSON Web Token structure whose body is a PolicyCertificatesModificationResult object. </summary>
+        /// <summary>
+        /// An RFC7519 JSON Web Token structure whose body is a
+        /// PolicyCertificatesModificationResult object.
+        /// </summary>
         public string Token { get; }
     }
 }

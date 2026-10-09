@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>(), usedReservedCountBySubscription ?? new ChangeTrackingDictionary<string, int>(), additionalBinaryDataProperties);

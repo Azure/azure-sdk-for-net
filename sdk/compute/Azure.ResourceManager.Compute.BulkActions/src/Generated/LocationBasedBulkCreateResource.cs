@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.BulkActions.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             TryGetApiVersion(ResourceType, out string locationBasedBulkCreateApiVersion);
             _bulkCreateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ResourceType.Namespace, Diagnostics);
-            _bulkCreateRestClient = new BulkCreate(_bulkCreateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedBulkCreateApiVersion ?? "2026-09-06-preview");
+            _bulkCreateRestClient = new BulkCreate(_bulkCreateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedBulkCreateApiVersion ?? "2026-10-06-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -352,7 +353,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -401,7 +402,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -440,7 +441,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -479,7 +480,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -538,7 +539,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-06-preview. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -684,10 +685,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -726,10 +726,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

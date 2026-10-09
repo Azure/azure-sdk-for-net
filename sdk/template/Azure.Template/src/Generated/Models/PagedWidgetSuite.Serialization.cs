@@ -169,7 +169,7 @@ namespace Azure.Template
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedWidgetSuite(value, nextLink, additionalBinaryDataProperties);
+            return new PagedWidgetSuite(value ?? new ChangeTrackingList<WidgetSuite>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

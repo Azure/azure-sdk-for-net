@@ -181,7 +181,7 @@ namespace Azure.AI.Language.Conversations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConversationalAIIntent(name, @type, conversationItemRanges, entities, additionalBinaryDataProperties);
+            return new ConversationalAIIntent(name, @type, conversationItemRanges ?? new ChangeTrackingList<ConversationItemRange>(), entities ?? new ChangeTrackingList<ConversationalAIEntity>(), additionalBinaryDataProperties);
         }
     }
 }

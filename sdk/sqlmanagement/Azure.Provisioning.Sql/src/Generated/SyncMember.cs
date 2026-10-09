@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -20,12 +21,13 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SyncMemberProperties _properties;
+        private DataSyncParticipantIdentity _identity;
         private ResourceReference<SyncGroup> _parent;
 
         /// <summary> Creates a new SyncMember. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SyncMember(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/servers/databases/syncGroups/syncMembers", resourceVersion ?? "2025-01-01")
+        public SyncMember(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/servers/databases/syncGroups/syncMembers", resourceVersion ?? "2025-08-01-preview")
         {
         }
 
@@ -76,6 +78,21 @@ namespace Azure.Provisioning.Sql
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Identity. </summary>
+        public DataSyncParticipantIdentity Identity
+        {
+            get
+            {
+                Initialize();
+                return _identity;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _identity, value);
             }
         }
 
@@ -298,6 +315,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SyncMemberProperties>(nameof(Properties), new string[] { "properties" });
+            _identity = DefineModelProperty<DataSyncParticipantIdentity>(nameof(Identity), new string[] { "identity" });
             _parent = DefineResource<SyncGroup>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
@@ -318,6 +336,12 @@ namespace Azure.Provisioning.Sql
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2025-08-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_08_01_PREVIEW = "2025-08-01-preview";
+            /// <summary> API version "2025-02-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_02_01_PREVIEW = "2025-02-01-preview";
             /// <summary> API version "2025-01-01". </summary>
             public static readonly string V2025_01_01 = "2025-01-01";
         }

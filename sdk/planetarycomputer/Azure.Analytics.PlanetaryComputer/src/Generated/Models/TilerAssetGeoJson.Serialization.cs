@@ -184,7 +184,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TilerAssetGeoJson(id, collection, boundingBox, assets, additionalBinaryDataProperties);
+            return new TilerAssetGeoJson(id, collection, boundingBox ?? new ChangeTrackingList<float>(), assets ?? new ChangeTrackingDictionary<string, StacAsset>(), additionalBinaryDataProperties);
         }
     }
 }
