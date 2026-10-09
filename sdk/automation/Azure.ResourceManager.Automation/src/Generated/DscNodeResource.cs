@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeReportsGetNodeReportsByNodeAsyncCollectionResultOfT(
+            return new DscNodeReportAsyncCollectionResultOfT(
                 _nodeReportsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new NodeReportsGetNodeReportsByNodeCollectionResultOfT(
+            return new DscNodeReportCollectionResultOfT(
                 _nodeReportsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

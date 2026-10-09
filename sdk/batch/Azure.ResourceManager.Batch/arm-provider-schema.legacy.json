@@ -1,7 +1,7 @@
 {
   "resources": [
     {
-      "resourceModelId": "Microsoft.Batch.BatchAccountData",
+      "resourceModelId": "Microsoft.Batch.BatchAccount",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}",
       "resourceType": "Microsoft.Batch/batchAccounts",
       "methods": [
@@ -113,7 +113,9 @@
       },
       "resourceName": "BatchAccount",
       "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9]+$"
+        "pattern": "^[a-zA-Z0-9]+$",
+        "minLength": 3,
+        "maxLength": 24
       },
       "apiVersions": [
         "2024-07-01",

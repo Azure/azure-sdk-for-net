@@ -76,7 +76,8 @@
         "pattern": "^[a-zA-Z0-9-]{3,24}$"
       },
       "apiVersions": [
-        "2025-08-01-preview"
+        "2025-08-01-preview",
+        "2026-08-01-preview"
       ],
       "rbacRoles": []
     },
@@ -157,7 +158,8 @@
         "pattern": "^[a-zA-Z0-9-]{3,24}$"
       },
       "apiVersions": [
-        "2025-08-01-preview"
+        "2025-08-01-preview",
+        "2026-08-01-preview"
       ],
       "rbacRoles": []
     }

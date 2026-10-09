@@ -56,6 +56,16 @@
           }
         },
         {
+          "methodId": "Microsoft.Billing.BillingAccounts.savingsPlansListByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlans",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
           "methodId": "Microsoft.Billing.AvailableBalances.getByBillingAccount",
           "kind": "Action",
           "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/availableBalance/default",
