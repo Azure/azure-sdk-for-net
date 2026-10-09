@@ -167,7 +167,7 @@
       },
       "resourceName": "AppConfigurationStore",
       "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9_-]*$",
+        "pattern": "^[a-zA-Z0-9-]+$",
         "minLength": 5,
         "maxLength": 50
       },
@@ -176,7 +176,16 @@
         "2025-06-01-preview",
         "2025-08-01-preview"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "AppConfigurationDataOwner",
+          "value": "5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b"
+        },
+        {
+          "name": "AppConfigurationDataReader",
+          "value": "516239f1-63e1-4d78-a4de-a74fb236a071"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.AppConfiguration.KeyValue",
@@ -385,7 +394,9 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}",
       "resourceName": "AppConfigurationReplica",
       "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9]*$"
+        "pattern": "^[a-zA-Z0-9]+$",
+        "minLength": 1,
+        "maxLength": 50
       },
       "apiVersions": [
         "2025-02-01-preview",
