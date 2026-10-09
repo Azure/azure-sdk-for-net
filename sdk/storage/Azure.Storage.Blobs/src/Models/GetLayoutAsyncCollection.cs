@@ -36,6 +36,12 @@ namespace Azure.Storage.Blobs.Models
         {
             NullableResponse<BlobLayout> response;
 
+            // A new enumeration starts without a continuation token; reset the ETag lock
+            if (string.IsNullOrEmpty(continuationToken))
+            {
+                _etag = null;
+            }
+
             // ETag locking on subsequent GetLayout requests
             BlobRequestConditions conditions = _etag.HasValue
                 ? (_conditions ?? new BlobRequestConditions()).WithIfMatch(_etag.Value)

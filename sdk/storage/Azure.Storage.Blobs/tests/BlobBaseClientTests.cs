@@ -4614,6 +4614,53 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(blobLayoutInfo2);
         }
 
+        [RecordedTest]
+        public async Task GetLayoutAsync_ReenumerateAfterBlobModified()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            AsyncPageable<BlobLayoutInfo> pageable = blob.GetLayoutAsync();
+
+            // Act - first enumeration
+            ETag firstETag = default;
+            await foreach (Page<BlobLayoutInfo> page in pageable.AsPages(pageSizeHint: 1))
+            {
+                firstETag = page.Values.First().ETag;
+            }
+
+            // Modify the blob so its ETag changes
+            await blob.SetMetadataAsync(new Dictionary<string, string> { { "foo", "bar" } });
+            ETag newETag = (await blob.GetPropertiesAsync()).Value.ETag;
+            Assert.AreNotEqual(firstETag, newETag);
+
+            // Act - second enumeration of the same pageable should not be locked to the previous ETag
+            int pageCount = 0;
+            await foreach (Page<BlobLayoutInfo> page in pageable.AsPages(pageSizeHint: 1))
+            {
+                // Assert
+                Assert.AreEqual(newETag, page.Values.First().ETag);
+                pageCount++;
+            }
+            Assert.Greater(pageCount, 1);
+        }
+
         [Ignore("The service currently has a bug, please re-enable after fix")]
         [RecordedTest]
         public async Task GetLayoutAsync_Ranged_ValidatesRange()

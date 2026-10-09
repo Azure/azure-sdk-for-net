@@ -6192,7 +6192,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region GetLayout
         /// <summary>
-        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// The <see cref="GetLayout"/> operation returns all user-defined metadata,
         /// standard HTTP properties, and system properties for the file.
         /// In addition, it may optionally return the layout of the file.
         /// </summary>
