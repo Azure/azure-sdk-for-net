@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         {
             TryGetApiVersion(ResourceType, out string napsterOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NapsterOmniagentApi", ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, napsterOrganizationApiVersion ?? "2025-12-24-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, napsterOrganizationApiVersion ?? "2026-08-11");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
