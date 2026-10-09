@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("DeserializeVirtualNetworkEncryption", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class VirtualNetworkEncryption
     {
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
+        // Preserve the released 1.17 property name by forwarding to the same generated wire property.
         /// <inheritdoc cref="IsEnabled"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use IsEnabled instead.")]
@@ -26,7 +26,9 @@ namespace Azure.ResourceManager.Network.Models
             set => IsEnabled = value;
         }
 
-        // The preserved constructor parameter name differs from the renamed property.
+        // Temporary generator back-compat workaround: https://github.com/microsoft/typespec/issues/12148
+        // The generated reader omits the parsed local and passes a default constructor argument.
+        // Forward the parsed value until the upstream fix is available.
         internal static VirtualNetworkEncryption DeserializeVirtualNetworkEncryption(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
