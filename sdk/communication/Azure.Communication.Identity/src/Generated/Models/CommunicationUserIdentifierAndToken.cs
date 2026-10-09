@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Communication.Identity.Models;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Identity
 {
     /// <summary> A communication identity with access token. </summary>
     public partial class CommunicationUserIdentifierAndToken
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
     }
 }

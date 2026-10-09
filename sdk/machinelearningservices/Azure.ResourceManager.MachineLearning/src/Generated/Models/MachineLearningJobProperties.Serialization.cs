@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for a job.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/>, and <see cref="MachineLearningSweepJob"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="MachineLearningSweepJob"/>, and <see cref="SparkJob"/>.
     /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase, IJsonModel<MachineLearningJobProperties>
     {
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element, options);
                     case "Pipeline":
                         return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element, options);
-                    case "Spark":
-                        return SparkJob.DeserializeSparkJob(element, options);
                     case "Sweep":
                         return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element, options);
+                    case "Spark":
+                        return SparkJob.DeserializeSparkJob(element, options);
                 }
             }
             return UnknownMachineLearningJobProperties.DeserializeUnknownMachineLearningJobProperties(element, options);

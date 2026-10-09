@@ -1,0 +1,6 @@
+directory: specification/app/resource-manager/Microsoft.App/SreAgent
+commit: d3983dcfbae5c5a74da2dec4fbfbea9106b2a9b6
+repo: Azure/azure-rest-api-specs
+additionalDirectories:
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

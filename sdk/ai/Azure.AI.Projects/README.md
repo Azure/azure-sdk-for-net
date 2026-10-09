@@ -1702,7 +1702,7 @@ In the example below we create two versions of MCP tool and save it to Azure.
 MCPToolboxTool tool = new(serverLabel: "api-specs")
 {
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
 ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,

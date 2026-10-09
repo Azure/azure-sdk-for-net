@@ -184,7 +184,7 @@ namespace Azure.AI.Projects
             }
             return new DataGenerationJobInputs(
                 name,
-                sources,
+                sources ?? new ChangeTrackingList<DataGenerationJobSource>(),
                 options0,
                 scenario,
                 outputOptions,

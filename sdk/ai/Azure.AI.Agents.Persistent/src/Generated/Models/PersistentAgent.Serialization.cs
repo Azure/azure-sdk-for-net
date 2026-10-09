@@ -380,7 +380,7 @@ namespace Azure.AI.Agents.Persistent
                 description,
                 model,
                 instructions,
-                tools,
+                tools ?? new ChangeTrackingList<ToolDefinition>(),
                 toolResources,
                 temperature,
                 topP,

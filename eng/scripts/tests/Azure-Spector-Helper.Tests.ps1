@@ -99,11 +99,13 @@ Describe "Azure data-plane Spector discovery" -Tag "UnitTest" {
         )
     }
 
-    It "still excludes existing unsupported data-plane scenarios" {
-        New-SpectorSpec $standardSpecsDirectory @("response", "status-code-range") | Out-Null
+    It "discovers supported data-plane scenarios while excluding unsupported scenarios" {
+        $statusCodeRange = New-SpectorSpec $standardSpecsDirectory @("response", "status-code-range")
         New-SpectorSpec $azureSpecsDirectory @("azure", "client-generator-core", "alternate-type") | Out-Null
 
-        @(Get-Sorted-Specs) | Should -BeNullOrEmpty
+        @(Get-Sorted-Specs) | Should -Be @(
+            (Join-Path $statusCodeRange "main.tsp")
+        )
     }
 
     It "does not discover directories containing only client.tsp" {

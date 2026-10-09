@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     /// <summary>
     /// Network base admin rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EffectiveSecurityAdminRule"/> and <see cref="EffectiveDefaultSecurityAdminRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EffectiveDefaultSecurityAdminRule"/> and <see cref="EffectiveSecurityAdminRule"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEffectiveBaseSecurityAdminRule))]
     public abstract partial class EffectiveBaseSecurityAdminRule : IJsonModel<EffectiveBaseSecurityAdminRule>
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom":
-                        return EffectiveSecurityAdminRule.DeserializeEffectiveSecurityAdminRule(element, options);
                     case "Default":
                         return EffectiveDefaultSecurityAdminRule.DeserializeEffectiveDefaultSecurityAdminRule(element, options);
+                    case "Custom":
+                        return EffectiveSecurityAdminRule.DeserializeEffectiveSecurityAdminRule(element, options);
                 }
             }
             return UnknownEffectiveBaseSecurityAdminRule.DeserializeUnknownEffectiveBaseSecurityAdminRule(element, options);

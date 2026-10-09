@@ -1454,7 +1454,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <param name="alwaysReady"> 'Always Ready' configuration for the function app. </param>
-        /// <param name="functionAppMaximumInstanceCount"> The maximum number of instances for the function app. </param>
+        /// <param name="functionAppMaximumInstanceCount"> The maximum number of on demand instances per function group. </param>
         /// <param name="functionAppInstanceMemoryMB"> Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally. </param>
         /// <param name="triggersConcurrentHttpPerInstanceConcurrency"> The maximum number of concurrent HTTP trigger invocations per instance. </param>
         /// <returns> A new <see cref="Models.FunctionAppScaleAndConcurrency"/> instance for mocking. </returns>
@@ -5980,7 +5980,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                connectionStringNames is null && appSettingNames is null && azureStorageConfigNames is null ? default : new SlotConfigNames((connectionStringNames ?? new ChangeTrackingList<string>()).ToList(), (appSettingNames ?? new ChangeTrackingList<string>()).ToList(), (azureStorageConfigNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                connectionStringNames is null && appSettingNames is null && azureStorageConfigNames is null ? default : new SlotConfigNamesProperties((connectionStringNames ?? new ChangeTrackingList<string>()).ToList(), (appSettingNames ?? new ChangeTrackingList<string>()).ToList(), (azureStorageConfigNames ?? new ChangeTrackingList<string>()).ToList(), default),
                 kind,
                 default);
         }
@@ -11082,7 +11082,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                connectionStringNames is null && appSettingNames is null && azureStorageConfigNames is null ? default : new SlotConfigNames((connectionStringNames ?? new ChangeTrackingList<string>()).ToList(), (appSettingNames ?? new ChangeTrackingList<string>()).ToList(), (azureStorageConfigNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                connectionStringNames is null && appSettingNames is null && azureStorageConfigNames is null ? default : new SlotConfigNamesProperties((connectionStringNames ?? new ChangeTrackingList<string>()).ToList(), (appSettingNames ?? new ChangeTrackingList<string>()).ToList(), (azureStorageConfigNames ?? new ChangeTrackingList<string>()).ToList(), default),
                 kind,
                 default);
         }

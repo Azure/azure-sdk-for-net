@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Network.Models
             ETag = eTag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
+        public ApplicationGatewayPrivateLinkResource() : this(default)
+        {
+        }
+
         /// <summary> Properties of the application gateway private link resource. </summary>
         [WirePath("properties")]
         internal ApplicationGatewayPrivateLinkResourceProperties Properties { get; }

@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary>
         /// The type of the destination.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DatasetMqttDestination"/>, <see cref="Models.DatasetBrokerStateStoreDestination"/>, and <see cref="Models.DatasetStorageDestination"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DatasetBrokerStateStoreDestination"/>, <see cref="Models.DatasetMqttDestination"/>, and <see cref="Models.DatasetStorageDestination"/>.
         /// </summary>
         /// <param name="target"> Target destination. </param>
         /// <returns> A new <see cref="Models.DatasetDestination"/> instance for mocking. </returns>

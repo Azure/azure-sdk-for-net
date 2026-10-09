@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of ConversationAnalysisClient from a <see cref="ConversationAnalysisClientSettings"/>. </summary>
         /// <param name="settings"> The settings for ConversationAnalysisClient. </param>
         [Experimental("SCME0002")]
-        public ConversationAnalysisClient(ConversationAnalysisClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public ConversationAnalysisClient(ConversationAnalysisClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.Options)
         {
         }
 

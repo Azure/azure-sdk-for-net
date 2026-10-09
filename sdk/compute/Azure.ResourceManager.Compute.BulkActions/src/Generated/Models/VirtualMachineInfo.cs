@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInfo"/>. </summary>
-        /// <param name="vmSize"> The name of the VM size, eg Standard_D2ads_v5. </param>
-        /// <param name="zone"> The zone identifier. </param>
+        /// <param name="vmSize"> The virtual machine SKU, for example `Standard_D2ads_v5`. </param>
+        /// <param name="zone"> The availability zone identifier. </param>
         /// <param name="name"> The resolved Azure virtual machine name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VirtualMachineInfo(string vmSize, string zone, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the VM size, eg Standard_D2ads_v5. </summary>
+        /// <summary> The virtual machine SKU, for example `Standard_D2ads_v5`. </summary>
         public string VmSize { get; }
 
-        /// <summary> The zone identifier. </summary>
+        /// <summary> The availability zone identifier. </summary>
         public string Zone { get; }
 
         /// <summary> The resolved Azure virtual machine name. </summary>

@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListOffersAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1561,7 +1561,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListOffersCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1606,7 +1606,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusAsyncCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1885,7 +1885,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListPublishersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
         }
 
         /// <summary>
@@ -1914,7 +1914,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListPublishersCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
         }
 
         /// <summary>
@@ -1948,7 +1948,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListOffersAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1988,7 +1988,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListOffersCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2030,7 +2030,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListSkusAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageSkusAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2073,7 +2073,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListSkusCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageSkusCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2081,6 +2081,110 @@ namespace Azure.ResourceManager.Compute.Mocking
                 offer,
                 context,
                 "MockableComputeSubscriptionResource.GetVirtualMachineImageSkus");
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineImagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="skus"> A valid image SKU. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="top"></param>
+        /// <param name="orderby"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(AzureLocation location, string publisherName, string offer, string skus, string expand = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesAsyncCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                publisherName,
+                offer,
+                skus,
+                expand,
+                top,
+                @orderby,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImages");
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineImagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="skus"> A valid image SKU. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="top"></param>
+        /// <param name="orderby"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(AzureLocation location, string publisherName, string offer, string skus, string expand = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                publisherName,
+                offer,
+                skus,
+                expand,
+                top,
+                @orderby,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImages");
         }
 
         /// <summary>
@@ -2122,7 +2226,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListWithPropertiesAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesWithPropertiesAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2175,7 +2279,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListWithPropertiesCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesWithPropertiesCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,

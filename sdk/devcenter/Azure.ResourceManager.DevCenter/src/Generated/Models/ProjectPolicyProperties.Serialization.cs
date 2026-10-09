@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ProjectPolicyProperties(resourcePolicies ?? new ChangeTrackingList<DevCenterResourcePolicy>(), scopes ?? new ChangeTrackingList<string>(), configurationPolicies, additionalBinaryDataProperties, provisioningState);

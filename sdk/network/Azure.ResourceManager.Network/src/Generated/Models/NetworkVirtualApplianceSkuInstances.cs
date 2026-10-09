@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuInstances"/>. </summary>
+        public NetworkVirtualApplianceSkuInstances() : this(default)
+        {
+        }
+
         /// <summary> Scale Unit. </summary>
         [WirePath("scaleUnit")]
         public string ScaleUnit { get; }

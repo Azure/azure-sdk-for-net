@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadTimestampFormat(prop, ref timestampFormat);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new AzureDatabricksDeltaLakeImportCommand(importSettingsType, additionalProperties, dateFormat, timestampFormat);
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Connector write settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SftpWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="FileServerWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, and <see cref="LakeHouseWriteSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, <see cref="FileServerWriteSettings"/>, <see cref="LakeHouseWriteSettings"/>, and <see cref="SftpWriteSettings"/>.
     /// </summary>
     public abstract partial class StoreWriteSettings
     {
@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopyBehavior = copyBehavior;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StoreWriteSettings"/>. </summary>
+        protected StoreWriteSettings() : this(default)
+        {
         }
 
         /// <summary> The write setting type. </summary>

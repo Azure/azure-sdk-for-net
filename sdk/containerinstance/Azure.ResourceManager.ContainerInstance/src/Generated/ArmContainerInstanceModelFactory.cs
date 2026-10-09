@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="osType"></param>
+        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
         /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
         /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
         /// <param name="diagnosticsLogAnalytics"> Container group log analytics information. </param>
@@ -1116,14 +1116,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 location,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
-                provisioningState is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && volumes is null && instanceView is null && diagnosticsLogAnalytics is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && confidentialComputeCcePolicy is null && priority is null ? default : new ContainerGroupPropertiesProperties(
+                new ContainerGroupPropertiesProperties(
                     provisioningState,
                     default,
                     (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
                     (imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>()).ToList(),
                     restartPolicy,
                     ipAddress,
-                    default,
+                    osType,
                     (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
                     instanceView,
                     diagnosticsLogAnalytics is null ? default : new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),

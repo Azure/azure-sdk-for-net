@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// Dataflow Destination Header Action properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowDestinationRemoveHeaderAction"/>, and <see cref="Models.DataflowDestinationAddOrReplaceHeaderAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowDestinationAddOrReplaceHeaderAction"/>, and <see cref="Models.DataflowDestinationRemoveHeaderAction"/>.
         /// </summary>
         /// <param name="actionType"> The type of header operation to perform. </param>
         /// <returns> A new <see cref="Models.DataflowDestinationHeaderAction"/> instance for mocking. </returns>
@@ -1343,7 +1343,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// Dataflow OpenTelemetry authentication properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowOpenTelemetryServiceAccountAuthentication"/>, <see cref="Models.DataflowOpenTelemetryX509CertificateAuthentication"/>, and <see cref="Models.DataflowOpenTelemetryAnonymousAuthentication"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowOpenTelemetryAnonymousAuthentication"/>, <see cref="Models.DataflowOpenTelemetryServiceAccountAuthentication"/>, and <see cref="Models.DataflowOpenTelemetryX509CertificateAuthentication"/>.
         /// </summary>
         /// <param name="method"> The authentication method. </param>
         /// <returns> A new <see cref="Models.DataflowOpenTelemetryAuthentication"/> instance for mocking. </returns>
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// DataflowGraph node properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphSourceNode"/>, <see cref="Models.DataflowGraphGraphNode"/>, and <see cref="Models.DataflowGraphDestinationNode"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphDestinationNode"/>, <see cref="Models.DataflowGraphGraphNode"/>, and <see cref="Models.DataflowGraphSourceNode"/>.
         /// </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="nodeType"> Type of the node. </param>
@@ -1513,7 +1513,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// DataflowGraph Destination Header Action.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowGraphDestinationRemoveHeaderAction"/>, and <see cref="Models.DataflowGraphDestinationAddOrReplaceHeaderAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowGraphDestinationAddOrReplaceHeaderAction"/>, and <see cref="Models.DataflowGraphDestinationRemoveHeaderAction"/>.
         /// </summary>
         /// <param name="actionType"> The type of header operation to perform. </param>
         /// <returns> A new <see cref="Models.DataflowGraphDestinationHeaderAction"/> instance for mocking. </returns>
@@ -1617,7 +1617,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// Model for RegistryEndpointAuthentication
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointSystemAssignedIdentityAuthentication"/>, <see cref="Models.RegistryEndpointUserAssignedIdentityAuthentication"/>, <see cref="Models.RegistryEndpointAnonymousAuthentication"/>, and <see cref="Models.RegistryEndpointArtifactPullSecretAuthentication"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointAnonymousAuthentication"/>, <see cref="Models.RegistryEndpointArtifactPullSecretAuthentication"/>, <see cref="Models.RegistryEndpointSystemAssignedIdentityAuthentication"/>, and <see cref="Models.RegistryEndpointUserAssignedIdentityAuthentication"/>.
         /// </summary>
         /// <param name="method"> The authentication method. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointAuthentication"/> instance for mocking. </returns>
@@ -1676,7 +1676,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// RegistryEndpoint Trust properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointTrustedSigningKeySecret"/> and <see cref="Models.RegistryEndpointTrustedSigningKeyConfigMap"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointTrustedSigningKeyConfigMap"/> and <see cref="Models.RegistryEndpointTrustedSigningKeySecret"/>.
         /// </summary>
         /// <param name="type"> The trust type for the registry endpoint. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointTrustedSigningKey"/> instance for mocking. </returns>
@@ -1912,7 +1912,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// AkriConnectorsRegistrySettings properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsRegistryEndpointRef"/> and <see cref="Models.AkriConnectorsContainerRegistry"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsContainerRegistry"/> and <see cref="Models.AkriConnectorsRegistryEndpointRef"/>.
         /// </summary>
         /// <param name="registrySettingsType"></param>
         /// <returns> A new <see cref="Models.AkriConnectorsRegistrySettings"/> instance for mocking. </returns>
@@ -1958,7 +1958,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// AkriConnectorsTagDigestSettings properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsTag"/> and <see cref="Models.AkriConnectorsDigest"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsDigest"/> and <see cref="Models.AkriConnectorsTag"/>.
         /// </summary>
         /// <param name="tagDigestType"> The tag or digest type. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsTagDigestSettings"/> instance for mocking. </returns>
@@ -2142,6 +2142,137 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static AkriServiceProperties AkriServiceProperties(IotOperationsProvisioningState? provisioningState = default, IotOperationsResourceHealthStatus statusHealthState = default)
         {
             return new AkriServiceProperties(provisioningState, statusHealthState is null ? default : new AkriServiceStatus(statusHealthState, default), default);
+        }
+
+        /// <summary> Broker Resource properties. </summary>
+        /// <param name="advanced"> Advanced settings of Broker. </param>
+        /// <param name="cardinality"> The cardinality details of the broker. </param>
+        /// <param name="diagnostics"> Spec defines the desired identities of Broker diagnostics settings. </param>
+        /// <param name="diskBackedMessageBuffer"> Settings of Disk Backed Message Buffer. </param>
+        /// <param name="generateResourceLimitsCpu"> The toggle to enable/disable cpu resource limits. </param>
+        /// <param name="memoryProfile"> Memory profile of Broker. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsBrokerProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsBrokerProperties IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, IotOperationsOperationalMode? generateResourceLimitsCpu, BrokerMemoryProfile? memoryProfile, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsBrokerProperties(
+                advanced,
+                cardinality,
+                diagnostics,
+                diskBackedMessageBuffer,
+                generateResourceLimitsCpu is null ? default : new GenerateResourceLimits(generateResourceLimitsCpu, default),
+                default,
+                memoryProfile,
+                default,
+                provisioningState,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> BrokerAuthentication Resource properties. </summary>
+        /// <param name="authenticationMethods"> Defines a set of Broker authentication methods to be used on `BrokerListeners`. For each array element one authenticator type supported. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsBrokerAuthenticationProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsBrokerAuthenticationProperties IotOperationsBrokerAuthenticationProperties(IEnumerable<BrokerAuthenticatorMethods> authenticationMethods, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsBrokerAuthenticationProperties((authenticationMethods ?? new ChangeTrackingList<BrokerAuthenticatorMethods>()).ToList(), provisioningState, default, default);
+        }
+
+        /// <summary> BrokerAuthorization Resource properties. </summary>
+        /// <param name="authorizationPolicies"> The list of authorization policies supported by the Authorization Resource. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsBrokerAuthorizationProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsBrokerAuthorizationProperties IotOperationsBrokerAuthorizationProperties(BrokerAuthorizationConfig authorizationPolicies, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsBrokerAuthorizationProperties(authorizationPolicies, provisioningState, default, default);
+        }
+
+        /// <summary> DataflowEndpoint Resource properties. NOTE - Only one type of endpoint is supported for one Resource. </summary>
+        /// <param name="endpointType"> Endpoint Type. </param>
+        /// <param name="dataExplorerSettings"> Azure Data Explorer endpoint. </param>
+        /// <param name="dataLakeStorageSettings"> Azure Data Lake endpoint. </param>
+        /// <param name="fabricOneLakeSettings"> Microsoft Fabric endpoint. </param>
+        /// <param name="kafkaSettings"> Kafka endpoint. </param>
+        /// <param name="localStoragePersistentVolumeClaimRef"> Persistent volume claim name. </param>
+        /// <param name="mqttSettings"> Broker endpoint. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsDataflowEndpointProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsDataflowEndpointProperties IotOperationsDataflowEndpointProperties(DataflowEndpointType endpointType, DataflowEndpointDataExplorer dataExplorerSettings, DataflowEndpointDataLakeStorage dataLakeStorageSettings, DataflowEndpointFabricOneLake fabricOneLakeSettings, DataflowEndpointKafka kafkaSettings, string localStoragePersistentVolumeClaimRef, DataflowEndpointMqtt mqttSettings, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsDataflowEndpointProperties(
+                endpointType,
+                default,
+                dataExplorerSettings,
+                dataLakeStorageSettings,
+                fabricOneLakeSettings,
+                kafkaSettings,
+                localStoragePersistentVolumeClaimRef is null ? default : new DataflowEndpointLocalStorage(localStoragePersistentVolumeClaimRef, default),
+                mqttSettings,
+                default,
+                provisioningState,
+                default,
+                default);
+        }
+
+        /// <summary> DataflowProfile Resource properties. </summary>
+        /// <param name="diagnostics"> Spec defines the desired identities of NBC diagnostics settings. </param>
+        /// <param name="instanceCount"> To manually scale the dataflow profile, specify the maximum number of instances you want to run. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsDataflowProfileProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics = default, int? instanceCount = default, IotOperationsProvisioningState? provisioningState = default)
+        {
+            return new IotOperationsDataflowProfileProperties(
+                diagnostics,
+                instanceCount,
+                provisioningState,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> Dataflow Resource properties. </summary>
+        /// <param name="mode"> Mode for Dataflow. Optional; defaults to Enabled. </param>
+        /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsDataflowProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsDataflowProperties IotOperationsDataflowProperties(IotOperationsOperationalMode? mode, IEnumerable<DataflowOperationProperties> operations, IotOperationsProvisioningState? provisioningState)
+        {
+            return new IotOperationsDataflowProperties(
+                mode,
+                default,
+                (operations ?? new ChangeTrackingList<DataflowOperationProperties>()).ToList(),
+                provisioningState,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> The properties of the Instance resource. </summary>
+        /// <param name="description"> Detailed description of the Instance. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="version"> The Azure IoT Operations version. </param>
+        /// <param name="schemaRegistryRefResourceId"> The resource ID of the Schema Registry. </param>
+        /// <returns> A new <see cref="Models.IotOperationsInstanceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsInstanceProperties IotOperationsInstanceProperties(string description, IotOperationsProvisioningState? provisioningState, string version, ResourceIdentifier schemaRegistryRefResourceId)
+        {
+            return new IotOperationsInstanceProperties(
+                description,
+                provisioningState,
+                version,
+                schemaRegistryRefResourceId is null ? default : new SchemaRegistryRef(schemaRegistryRefResourceId, default),
+                default,
+                default,
+                default,
+                default,
+                default);
         }
 
         /// <summary> Broker Resource properties. </summary>

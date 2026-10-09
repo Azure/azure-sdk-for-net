@@ -805,7 +805,7 @@ public class AgentsTests : AgentsTestBase
         BinaryData json = BinaryData.FromObjectAsJson(
             new
             {
-                scope="Samle_scope",
+                scope = "Samle_scope",
                 items = new[] {
                     new {
                         type="message",
@@ -823,7 +823,7 @@ public class AgentsTests : AgentsTestBase
                 },
                 options = new
                 {
-                    max_memories=10
+                    max_memories = 10
                 }
             }
         );

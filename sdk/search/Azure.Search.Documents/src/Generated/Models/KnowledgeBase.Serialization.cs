@@ -364,7 +364,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new KnowledgeBase(
                 name,
-                knowledgeSources,
+                knowledgeSources ?? new ChangeTrackingList<KnowledgeSourceReference>(),
                 models ?? new ChangeTrackingList<KnowledgeBaseModel>(),
                 retrievalReasoningEffort,
                 outputMode,

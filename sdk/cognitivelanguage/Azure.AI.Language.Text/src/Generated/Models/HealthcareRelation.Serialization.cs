@@ -169,7 +169,7 @@ namespace Azure.AI.Language.Text
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HealthcareRelation(relationType, entities, confidenceScore, additionalBinaryDataProperties);
+            return new HealthcareRelation(relationType, entities ?? new ChangeTrackingList<HealthcareRelationEntity>(), confidenceScore, additionalBinaryDataProperties);
         }
     }
 }

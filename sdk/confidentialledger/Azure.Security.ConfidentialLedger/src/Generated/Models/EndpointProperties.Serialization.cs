@@ -325,7 +325,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                 }
             }
             return new EndpointProperties(
-                authnPolicies,
+                authnPolicies ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(),
                 forwardingRequired,
                 interpreterReuse,
                 jsFunction,

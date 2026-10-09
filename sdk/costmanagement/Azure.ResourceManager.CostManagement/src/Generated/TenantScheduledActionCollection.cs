@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -573,6 +574,32 @@ namespace Azure.ResourceManager.CostManagement
         IAsyncEnumerator<TenantScheduledActionResource> IAsyncEnumerable<TenantScheduledActionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
+        /// <summary> Create or update a private scheduled action. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="name"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual ArmOperation<TenantScheduledActionResource> CreateOrUpdate(WaitUntil waitUntil, string name, ScheduledActionData data, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdate(waitUntil, name, data, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
+        }
+
+        /// <summary> Create or update a private scheduled action. </summary>
+        /// <param name="waitUntil"></param>
+        /// <param name="name"></param>
+        /// <param name="data"></param>
+        /// <param name="ifMatch"></param>
+        /// <param name="cancellationToken"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<ArmOperation<TenantScheduledActionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, ScheduledActionData data, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return CreateOrUpdateAsync(waitUntil, name, data, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
         }
     }
 }

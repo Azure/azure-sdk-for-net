@@ -153,7 +153,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new BlobHierarchyListSegment(blobPrefixes ?? new ChangeTrackingList<BlobPrefix>(), blobItems);
+            return new BlobHierarchyListSegment(blobPrefixes ?? new ChangeTrackingList<BlobPrefix>(), blobItems ?? new ChangeTrackingList<BlobItemInternal>());
         }
 
         /// <param name="writer"> The XML writer. </param>

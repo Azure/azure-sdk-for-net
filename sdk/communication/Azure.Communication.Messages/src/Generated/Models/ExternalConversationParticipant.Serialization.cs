@@ -150,7 +150,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExternalConversationParticipant(id, displayName, kind, additionalBinaryDataProperties, contacts);
+            return new ExternalConversationParticipant(id, displayName, kind, additionalBinaryDataProperties, contacts ?? new ChangeTrackingList<ConversationContact>());
         }
     }
 }

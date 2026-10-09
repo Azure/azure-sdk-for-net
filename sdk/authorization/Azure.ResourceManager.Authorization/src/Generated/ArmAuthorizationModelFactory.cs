@@ -1665,7 +1665,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary>
         /// Target of the decision.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionUserIdentity"/> and <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/> and <see cref="Models.AccessReviewDecisionUserIdentity"/>.
         /// </summary>
         /// <param name="type"> The type of decision target : User/ServicePrincipal. </param>
         /// <param name="id"> The id of principal whose access was reviewed. </param>
@@ -1853,11 +1853,11 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="denyAssignmentName"> The display name of the deny assignment. </param>
         /// <param name="description"> The description of the deny assignment. </param>
-        /// <param name="permissions"></param>
+        /// <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
         /// <param name="scope"> The deny assignment scope. </param>
         /// <param name="isAppliedToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
-        /// <param name="principals"></param>
-        /// <param name="excludePrincipals"></param>
+        /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
+        /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
         /// <returns> A new <see cref="Authorization.DenyAssignmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1868,14 +1868,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 name,
                 resourceType,
                 systemData,
-                denyAssignmentName is null && description is null && scope is null && isAppliedToChildScopes is null && isSystemProtected is null ? default : new DenyAssignmentProperties(
+                denyAssignmentName is null && description is null && permissions is null && scope is null && isAppliedToChildScopes is null && principals is null && excludePrincipals is null && isSystemProtected is null ? default : new DenyAssignmentProperties(
                     denyAssignmentName,
                     description,
-                    default,
+                    (permissions ?? new ChangeTrackingList<DenyAssignmentPermission>()).ToList(),
                     scope,
                     isAppliedToChildScopes,
-                    default,
-                    default,
+                    (principals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
+                    (excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
                     isSystemProtected,
                     default,
                     default,

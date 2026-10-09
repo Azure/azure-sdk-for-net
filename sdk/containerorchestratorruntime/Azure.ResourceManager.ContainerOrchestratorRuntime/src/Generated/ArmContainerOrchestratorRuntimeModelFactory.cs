@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         /// <summary>
         /// The properties of storage class of the StorageClass
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.NativeStorageClassTypeProperties"/>, <see cref="Models.RwxStorageClassTypeProperties"/>, <see cref="Models.BlobStorageClassTypeProperties"/>, <see cref="Models.NfsStorageClassTypeProperties"/>, and <see cref="Models.SmbStorageClassTypeProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobStorageClassTypeProperties"/>, <see cref="Models.NativeStorageClassTypeProperties"/>, <see cref="Models.NfsStorageClassTypeProperties"/>, <see cref="Models.RwxStorageClassTypeProperties"/>, and <see cref="Models.SmbStorageClassTypeProperties"/>.
         /// </summary>
         /// <param name="type"> Type of the storage class. </param>
         /// <returns> A new <see cref="Models.StorageClassTypeProperties"/> instance for mocking. </returns>

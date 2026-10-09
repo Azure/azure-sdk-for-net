@@ -263,7 +263,7 @@ namespace Azure.AI.Projects
                 }
             }
             return new AIProjectIndexFieldMapping(
-                contentFields,
+                contentFields ?? new ChangeTrackingList<string>(),
                 filepathField,
                 titleField,
                 urlField,

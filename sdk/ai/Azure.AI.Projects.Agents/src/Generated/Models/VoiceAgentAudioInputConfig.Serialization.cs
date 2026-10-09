@@ -152,7 +152,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    format = ModelReaderWriter.Read<RealtimeAudioFormat>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    format = ModelReaderWriter.Read<RealtimeAudioFormat>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("noise_reduction"u8))

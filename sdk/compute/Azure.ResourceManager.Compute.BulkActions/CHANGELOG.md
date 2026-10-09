@@ -1,14 +1,23 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.4 (2026-09-27)
 
 ### Features Added
 
+- Added `BulkListOperationErrors` and `BulkListOperationErrorsAsync` on `ResourceGroupResource`. The operation returns a pageable list of `ComputeBulkOperationResult` describing bulk operations that failed, and accepts an optional `lookbackInMinutes` parameter to bound how far back errors are reported.
+- Added `BulkActionExecutionParameterDetail.AdditionalCreateParameters` for supplying additional create parameters to a bulk operation.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed `BulkCreateProperties.VmSizesProfile` and the `BulkCreateVmSizeProfile` model, and removed `BulkCreateCustomProperties.VmSizesProfile` and the `BulkCreateCustomVmSizeProfile` model. Specify the VM size through `ComputeProfile.VirtualMachineProfile.HardwareProfile.VmSize` instead.
+- Removed the `BulkCreateCustomOverrideBase` model. Use `BulkCreateCustomOverridesProfile.Overrides` with `BulkCreateCustomOverride` instead.
+- Removed the `ZoneAllocationPolicy`, `ZonePreference`, `BulkCreateCustomZoneAllocationPolicy`, `DistributionStrategy`, and `BulkCreateCustomDistributionStrategy` models, along with the `ZoneAllocationPolicy` properties on `BulkCreateProperties` and `BulkCreateCustomProperties`. Zone placement is no longer configurable from the client in this API version.
+- Removed the `AllocationStrategy` and `BulkCreateCustomAllocationStrategy` models, along with the `AllocationStrategy` properties on `PriorityProfile` and `BulkCreateCustomPriorityProfile`.
+- Updated the corresponding `ArmComputeBulkActionsModelFactory` methods to drop the parameters for the removed properties.
 
 ### Other Changes
+
+- Updated the client to target API version `2026-10-06-preview`.
 
 ## 1.2.0-beta.3 (2026-09-15)
 

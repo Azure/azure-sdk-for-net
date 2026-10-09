@@ -35,7 +35,7 @@ public class Sample_FabricIQ : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_FabricIQ_Async
         FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
         {
-            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -84,7 +84,7 @@ public class Sample_FabricIQ : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_FabricIQ_Sync
         FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
         {
-            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

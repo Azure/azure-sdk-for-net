@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary>
         /// The target service properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureResourceInfo"/>, <see cref="Models.ConfluentBootstrapServerInfo"/>, <see cref="Models.FabricPlatformTargetService"/>, <see cref="Models.SelfHostedServerTargetService"/>, and <see cref="Models.ConfluentSchemaRegistryInfo"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureResourceInfo"/>, <see cref="Models.ConfluentBootstrapServerInfo"/>, <see cref="Models.ConfluentSchemaRegistryInfo"/>, <see cref="Models.FabricPlatformTargetService"/>, and <see cref="Models.SelfHostedServerTargetService"/>.
         /// </summary>
         /// <param name="type"> The target service type. </param>
         /// <returns> A new <see cref="Models.TargetServiceBaseInfo"/> instance for mocking. </returns>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary>
         /// The azure resource properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureKeyVaultProperties"/> and <see cref="Models.AzureAppConfigProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureAppConfigProperties"/> and <see cref="Models.AzureKeyVaultProperties"/>.
         /// </summary>
         /// <param name="type"> The azure resource type. </param>
         /// <returns> A new <see cref="Models.AzureResourceBaseProperties"/> instance for mocking. </returns>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary>
         /// The authentication info
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessKeyInfoBase"/>, <see cref="Models.SecretAuthInfo"/>, <see cref="Models.UserAssignedIdentityAuthInfo"/>, <see cref="Models.SystemAssignedIdentityAuthInfo"/>, <see cref="Models.ServicePrincipalSecretAuthInfo"/>, <see cref="Models.ServicePrincipalCertificateAuthInfo"/>, <see cref="Models.UserAccountAuthInfo"/>, and <see cref="Models.EasyAuthMicrosoftEntraIdAuthInfo"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessKeyInfoBase"/>, <see cref="Models.EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="Models.SecretAuthInfo"/>, <see cref="Models.ServicePrincipalCertificateAuthInfo"/>, <see cref="Models.ServicePrincipalSecretAuthInfo"/>, <see cref="Models.SystemAssignedIdentityAuthInfo"/>, <see cref="Models.UserAccountAuthInfo"/>, and <see cref="Models.UserAssignedIdentityAuthInfo"/>.
         /// </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary>
         /// The secret info
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RawValueSecretInfo"/>, <see cref="Models.KeyVaultSecretReferenceSecretInfo"/>, and <see cref="Models.KeyVaultSecretUriSecretInfo"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.KeyVaultSecretReferenceSecretInfo"/>, <see cref="Models.KeyVaultSecretUriSecretInfo"/>, and <see cref="Models.RawValueSecretInfo"/>.
         /// </summary>
         /// <param name="secretType"> The secret type. </param>
         /// <returns> A new <see cref="Models.SecretBaseInfo"/> instance for mocking. </returns>

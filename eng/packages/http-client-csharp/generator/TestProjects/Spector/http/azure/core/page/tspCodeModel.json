@@ -1547,6 +1547,7 @@
               "value"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "nextLink"
               ],
@@ -1836,6 +1837,7 @@
               "value"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "nextLink"
               ],
@@ -1988,6 +1990,7 @@
               "items"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "nextLink"
               ],
@@ -2200,6 +2203,7 @@
               "values"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "nextLink"
               ],
@@ -2321,6 +2325,7 @@
               "value"
             ],
             "nextLink": {
+              "verb": "GET",
               "responseSegments": [
                 "nextLink"
               ],
@@ -2524,6 +2529,7 @@
                   "value"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "nextLink"
                   ],
@@ -2676,6 +2682,7 @@
                   "value"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "nextLink"
                   ],

@@ -61,8 +61,7 @@ internal class ReplayEventStream : AgentEventStream, IDestroyableStream
 
                 // Persist before mutating in-memory state so a disk failure does not leave
                 // an event that subscribers can see but that never reached durable storage. On
-                // emit-and-close, persist the event and terminal marker as one durable unit so a
-                // crash cannot leave the event without its terminal sentinel.
+                // emit-and-close, persist both the event and terminal marker before publication.
                 if (close)
                 {
                     PersistEmitAndClose(item, now);
@@ -82,6 +81,7 @@ internal class ReplayEventStream : AgentEventStream, IDestroyableStream
                     _state = StreamState.Closed;
                     _closeTime = now;
                     _hub.CompleteAll();
+                    selfDestroyed = EvictExpired(now);
                 }
             }
         }
@@ -98,14 +98,28 @@ internal class ReplayEventStream : AgentEventStream, IDestroyableStream
 
     public override ValueTask CloseAsync(CancellationToken cancellationToken = default)
     {
-        lock (_gate)
+        bool selfDestroyed = false;
+        try
         {
-            if (_state == StreamState.Active)
+            lock (_gate)
             {
-                _state = StreamState.Closed;
-                _closeTime = Now();
-                PersistClose();
-                _hub.CompleteAll();
+                double now = Now();
+                if (_state == StreamState.Active)
+                {
+                    PersistClose();
+                    _state = StreamState.Closed;
+                    _closeTime = now;
+                    _hub.CompleteAll();
+                }
+
+                selfDestroyed = EvictExpired(now);
+            }
+        }
+        finally
+        {
+            if (selfDestroyed)
+            {
+                _onDestroy();
             }
         }
 

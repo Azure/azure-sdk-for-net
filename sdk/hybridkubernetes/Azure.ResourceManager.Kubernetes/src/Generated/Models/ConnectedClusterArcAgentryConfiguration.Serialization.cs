@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ConnectedClusterArcAgentryConfiguration(feature, settings ?? new ChangeTrackingDictionary<string, string>(), protectedSettings ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);

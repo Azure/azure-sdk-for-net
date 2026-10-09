@@ -18,6 +18,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Linq.AsyncEnumerable" />
     <PackageReference Include="Polly" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />

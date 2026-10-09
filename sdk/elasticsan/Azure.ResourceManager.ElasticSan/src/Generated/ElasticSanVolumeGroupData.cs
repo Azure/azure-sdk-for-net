@@ -135,6 +135,74 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
+        /// <summary> A boolean indicating whether or not Encryption in Transit is enabled, supported only for ISCSI protocol. </summary>
+        public bool? IsEncryptionInTransitEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEncryptionInTransitEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.IsEncryptionInTransitEnabled = value;
+            }
+        }
+
+        /// <summary> Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </summary>
+        public int? ReservedIops
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedIops;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.ReservedIops = value;
+            }
+        }
+
+        /// <summary> Reserved MBps allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </summary>
+        public int? ReservedMBps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedMBps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.ReservedMBps = value;
+            }
+        }
+
+        /// <summary> Quality of Service tier for the volume group, applicable for ElasticSanVersion V2 only. </summary>
+        public ElasticSanQualityOfService? QualityOfService
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QualityOfService;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.QualityOfService = value;
+            }
+        }
+
         /// <summary> The list of virtual network rules. </summary>
         public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules
         {

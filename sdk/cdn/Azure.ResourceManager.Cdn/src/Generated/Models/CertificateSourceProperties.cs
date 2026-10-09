@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CertificateSourceProperties"/>. </summary>
+        protected CertificateSourceProperties() : this(default)
+        {
+        }
+
         /// <summary> Gets or sets the TypeName. </summary>
         [WirePath("typeName")]
         internal CertificateSourceParametersType TypeName { get; set; }

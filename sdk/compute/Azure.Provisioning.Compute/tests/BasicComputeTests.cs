@@ -151,7 +151,7 @@ public class BasicComputeTests
                 };
                 infra.Add(vnet);
 
-                NetworkInterface nic = new(nameof(nic));
+                NetworkInterface nic = new(nameof(nic), NetworkInterface.ResourceVersions.V2025_05_01);
                 infra.Add(nic);
 
                 VirtualMachine vm = new(nameof(vm), VirtualMachine.ResourceVersions.V2025_04_01)

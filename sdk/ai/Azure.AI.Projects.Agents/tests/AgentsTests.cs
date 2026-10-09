@@ -145,7 +145,7 @@ public class AgentsTests : AgentsTestBase
             Name = "mcp-tool",
             Description = "Test mcp tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
@@ -213,7 +213,7 @@ public class AgentsTests : AgentsTestBase
             Name = "mcp-tool",
             Description = "Test mcp tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
@@ -395,7 +395,7 @@ public class AgentsTests : AgentsTestBase
             Name = "mcp-tool",
             Description = "Test MCP tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         while (records.Count + created <= PAGE_SIZE)
         {
@@ -446,7 +446,7 @@ public class AgentsTests : AgentsTestBase
             Name = "mcp-tool",
             Description = "Test MCP tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         while (records.Count + created <= PAGE_SIZE)
         {
@@ -701,7 +701,7 @@ public class AgentsTests : AgentsTestBase
         string file1 = "file1.json", file2 = "file2.json";
         int fileLength = File.ReadAllBytes(fileLocalPath).Length;
         //Create
-        SessionFileWriteResponse writeResponse = await filesClient.UploadAsync(
+        SessionFileWriteResult writeResponse = await filesClient.UploadAsync(
             sessionStoragePath: $"storage/{file1}",
             localPath: fileLocalPath
         );
@@ -761,7 +761,7 @@ public class AgentsTests : AgentsTestBase
         // Make sure that chronological order is the reverse of session ID alphanumeric order.
         for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
-            SessionFileWriteResponse writeResponse = await filesClient.UploadAsync(
+            SessionFileWriteResult writeResponse = await filesClient.UploadAsync(
                 sessionStoragePath: $"storage/file{i}.json",
                 localPath: fileLocalPath
             );

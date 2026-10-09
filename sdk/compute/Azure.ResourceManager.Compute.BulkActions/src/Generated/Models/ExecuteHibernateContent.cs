@@ -11,14 +11,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The ExecuteHibernateRequest request for executeHibernate operations. </summary>
+    /// <summary> The virtual machines and execution settings for a bulk hibernate action. </summary>
     public partial class ExecuteHibernateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExecuteHibernateContent"/>. </summary>
-        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="executionParameters"> The execution settings for the bulk action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> is null. </exception>
         public ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters)
         {
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteHibernateContent"/>. </summary>
-        /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
+        /// <param name="executionParameters"> The execution settings for the bulk action. </param>
+        /// <param name="resources"> The target virtual machines. </param>
         /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, ResourcesWithContext resourcesWithContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The execution parameters for the request. </summary>
+        /// <summary> The execution settings for the bulk action. </summary>
         public BulkActionExecutionParameterDetail ExecutionParameters { get; }
 
-        /// <summary> The resources for the request. </summary>
+        /// <summary> The target virtual machines. </summary>
         public UserRequestResources Resources { get; set; }
 
         /// <summary> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </summary>

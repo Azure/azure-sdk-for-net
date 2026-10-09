@@ -349,7 +349,7 @@ namespace Azure.Search.Documents.Models
                 answers ?? new ChangeTrackingList<QueryAnswerResult>(),
                 debugInfo,
                 nextPageParameters,
-                results,
+                results ?? new ChangeTrackingList<SearchResult>(),
                 nextLink,
                 semanticPartialResponseReason,
                 semanticPartialResponseType,

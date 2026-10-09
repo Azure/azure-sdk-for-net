@@ -276,7 +276,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TargetData, TargetResource>(new TargetsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TargetData, TargetResource>(new TargetDataAsyncCollectionResultOfT(
                 _targetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -314,7 +314,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TargetData, TargetResource>(new TargetsGetAllCollectionResultOfT(
+            return new PageableWrapper<TargetData, TargetResource>(new TargetDataCollectionResultOfT(
                 _targetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

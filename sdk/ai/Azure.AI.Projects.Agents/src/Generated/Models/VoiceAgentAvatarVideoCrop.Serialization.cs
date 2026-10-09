@@ -185,7 +185,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentAvatarVideoCrop(bottomRight, topLeft, additionalBinaryDataProperties);
+            return new VoiceAgentAvatarVideoCrop(bottomRight ?? new ChangeTrackingList<object>(), topLeft ?? new ChangeTrackingList<object>(), additionalBinaryDataProperties);
         }
     }
 }

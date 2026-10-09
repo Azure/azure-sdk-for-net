@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebAppServiceEnvironmentResourcesListDiagnosticsAsyncCollectionResultOfT(
+            return new AppServiceEnvironmentResourceGetDiagnosticsAsyncCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1345,7 +1345,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebAppServiceEnvironmentResourcesListDiagnosticsCollectionResultOfT(
+            return new AppServiceEnvironmentResourceGetDiagnosticsCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1383,7 +1383,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebAppServiceEnvironmentResourcesListOperationsAsyncCollectionResultOfT(
+            return new AppServiceEnvironmentResourceGetOperationsAsyncCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebAppServiceEnvironmentResourcesListOperationsCollectionResultOfT(
+            return new AppServiceEnvironmentResourceGetOperationsCollectionResultOfT(
                 _appServiceEnvironmentResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

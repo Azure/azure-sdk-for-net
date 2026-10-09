@@ -31,11 +31,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.Password = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public TwilioLinkedService(DataFactoryElement<string> userName, DataFactorySecret password) : base("Twilio")
-        {
-            TypeProperties = new TwilioLinkedServiceTypeProperties(userName, password);
-        }
     }
 }

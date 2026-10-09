@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary>
         /// Autonomous Database base resource model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AutonomousDatabaseProperties"/>, <see cref="Models.AutonomousDatabaseCloneProperties"/>, <see cref="Models.AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/>, and <see cref="Models.AutonomousDatabaseFromBackupTimestampProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AutonomousDatabaseCloneProperties"/>, <see cref="Models.AutonomousDatabaseCrossRegionDisasterRecoveryProperties"/>, <see cref="Models.AutonomousDatabaseFromBackupTimestampProperties"/>, and <see cref="Models.AutonomousDatabaseProperties"/>.
         /// </summary>
         /// <param name="adminPassword"> Admin password. </param>
         /// <param name="dataBaseType"> Database type to be created. </param>

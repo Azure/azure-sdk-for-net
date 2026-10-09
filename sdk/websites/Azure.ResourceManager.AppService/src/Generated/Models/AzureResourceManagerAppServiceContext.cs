@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(SiteVirtualNetworkConnectionGatewayResource))]
     [ModelReaderWriterBuildable(typeof(SiteVirtualNetworkConnectionResource))]
     [ModelReaderWriterBuildable(typeof(SiteWorkflowResource))]
-    [ModelReaderWriterBuildable(typeof(SlotConfigNames))]
+    [ModelReaderWriterBuildable(typeof(SlotConfigNamesProperties))]
     [ModelReaderWriterBuildable(typeof(SlotConfigNamesResource))]
     [ModelReaderWriterBuildable(typeof(SlotConfigNamesResourceData))]
     [ModelReaderWriterBuildable(typeof(SlotDifference))]

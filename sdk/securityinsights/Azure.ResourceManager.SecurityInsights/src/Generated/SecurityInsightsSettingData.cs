@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// The Setting.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="SecurityInsightsEyesOn"/>, <see cref="EntityAnalytics"/>, and <see cref="UebaSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntityAnalytics"/>, <see cref="SecurityInsightsEyesOn"/>, <see cref="SecurityInsightsSettingAnomaliesKind"/>, and <see cref="UebaSettings"/>.
     /// </summary>
     public abstract partial class SecurityInsightsSettingData : ResourceData
     {

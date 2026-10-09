@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary>
         /// The SAP Configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DiscoveryConfiguration"/>, <see cref="Models.DeploymentConfiguration"/>, and <see cref="Models.DeploymentWithOSConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeploymentConfiguration"/>, <see cref="Models.DeploymentWithOSConfiguration"/>, and <see cref="Models.DiscoveryConfiguration"/>.
         /// </summary>
         /// <param name="configurationType"> The configuration type. Eg: Deployment/Discovery. </param>
         /// <returns> A new <see cref="Models.SapConfiguration"/> instance for mocking. </returns>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary>
         /// Defines the OS configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SapWindowsConfiguration"/> and <see cref="Models.SapLinuxConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SapLinuxConfiguration"/> and <see cref="Models.SapWindowsConfiguration"/>.
         /// </summary>
         /// <param name="osType"> The OS Type. </param>
         /// <returns> A new <see cref="Models.SapOSConfiguration"/> instance for mocking. </returns>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary>
         /// File Share configuration details, populated with information on storage configuration mounted on the VIS. The createAndMount option is selected in case of missing input.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SkipFileShareConfiguration"/>, <see cref="Models.CreateAndMountFileShareConfiguration"/>, and <see cref="Models.MountFileShareConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CreateAndMountFileShareConfiguration"/>, <see cref="Models.MountFileShareConfiguration"/>, and <see cref="Models.SkipFileShareConfiguration"/>.
         /// </summary>
         /// <param name="configurationType"> The type of file share config, eg: Mount/CreateAndMount/Skip. </param>
         /// <returns> A new <see cref="Models.FileShareConfiguration"/> instance for mocking. </returns>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
         /// <summary>
         /// The SAP Software configuration Input.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ServiceInitiatedSoftwareConfiguration"/>, <see cref="Models.SapInstallWithoutOSConfigSoftwareConfiguration"/>, and <see cref="Models.ExternalInstallationSoftwareConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ExternalInstallationSoftwareConfiguration"/>, <see cref="Models.SapInstallWithoutOSConfigSoftwareConfiguration"/>, and <see cref="Models.ServiceInitiatedSoftwareConfiguration"/>.
         /// </summary>
         /// <param name="softwareInstallationType"> The SAP software installation type. </param>
         /// <returns> A new <see cref="Models.SapSoftwareConfiguration"/> instance for mocking. </returns>

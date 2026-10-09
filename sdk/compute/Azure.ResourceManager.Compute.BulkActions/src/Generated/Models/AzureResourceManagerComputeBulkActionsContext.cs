@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AcknowledgeBulkOperationErrorsRequestContent))]
+    [ModelReaderWriterBuildable(typeof(AcknowledgeBulkOperationErrorsResponseResult))]
     [ModelReaderWriterBuildable(typeof(AdditionalCapabilities))]
     [ModelReaderWriterBuildable(typeof(AdditionalUnattendContent))]
     [ModelReaderWriterBuildable(typeof(AllInstancesDown))]
@@ -35,18 +37,14 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomListResult))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomOperationStatusListResult))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomOverride))]
-    [ModelReaderWriterBuildable(typeof(BulkCreateCustomOverrideBase))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomOverridesProfile))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomPriorityProfile))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomProperties))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomResolvedItem))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomVirtualMachineInfo))]
-    [ModelReaderWriterBuildable(typeof(BulkCreateCustomVmSizeProfile))]
-    [ModelReaderWriterBuildable(typeof(BulkCreateCustomZoneAllocationPolicy))]
     [ModelReaderWriterBuildable(typeof(BulkCreateListResult))]
     [ModelReaderWriterBuildable(typeof(BulkCreateOperationStatusListResult))]
     [ModelReaderWriterBuildable(typeof(BulkCreateProperties))]
-    [ModelReaderWriterBuildable(typeof(BulkCreateVmSizeProfile))]
     [ModelReaderWriterBuildable(typeof(BulkOperationRetryPolicy))]
     [ModelReaderWriterBuildable(typeof(CancelBulkOperationsContent))]
     [ModelReaderWriterBuildable(typeof(CancelBulkOperationsResult))]
@@ -87,6 +85,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(LinuxConfiguration))]
     [ModelReaderWriterBuildable(typeof(LinuxPatchSettings))]
     [ModelReaderWriterBuildable(typeof(LinuxVMGuestPatchAutomaticByPlatformSettings))]
+    [ModelReaderWriterBuildable(typeof(ListBulkOperationErrorsResponse))]
     [ModelReaderWriterBuildable(typeof(LocationBasedBulkCreateCustomData))]
     [ModelReaderWriterBuildable(typeof(LocationBasedBulkCreateCustomResource))]
     [ModelReaderWriterBuildable(typeof(LocationBasedBulkCreateData))]
@@ -181,8 +180,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(WindowsVMGuestPatchAutomaticByPlatformSettings))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
     [ModelReaderWriterBuildable(typeof(WinRMListener))]
-    [ModelReaderWriterBuildable(typeof(ZoneAllocationPolicy))]
-    [ModelReaderWriterBuildable(typeof(ZonePreference))]
     public partial class AzureResourceManagerComputeBulkActionsContext : ModelReaderWriterContext
     {
     }

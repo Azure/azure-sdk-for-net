@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Parameters.BodyRoot.csproj" />
+  <Project Path="tests/Parameters.BodyRoot.Tests.csproj" />
 </Solution>

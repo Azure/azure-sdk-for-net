@@ -154,7 +154,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StacItemBounds(bounds, additionalBinaryDataProperties);
+            return new StacItemBounds(bounds ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -4917,7 +4917,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// Fabric specific details.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="Models.HyperVSiteDetails"/>, <see cref="Models.InMageRcmFabricSpecificDetails"/>, <see cref="Models.VmmFabricDetails"/>, <see cref="Models.VMwareDetails"/>, and <see cref="Models.VMwareV2FabricSpecificDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVSiteDetails"/>, <see cref="Models.InMageRcmFabricSpecificDetails"/>, <see cref="Models.SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="Models.VMwareDetails"/>, <see cref="Models.VMwareV2FabricSpecificDetails"/>, and <see cref="Models.VmmFabricDetails"/>.
         /// </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <returns> A new <see cref="Models.FabricSpecificDetails"/> instance for mocking. </returns>
@@ -5706,7 +5706,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// Fabric provider specific settings.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SiteRecoveryFabricProviderCreationContent"/>, <see cref="Models.InMageRcmFabricCreationContent"/>, and <see cref="Models.VMwareV2FabricCreationContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.InMageRcmFabricCreationContent"/>, <see cref="Models.SiteRecoveryFabricProviderCreationContent"/>, and <see cref="Models.VMwareV2FabricCreationContent"/>.
         /// </summary>
         /// <param name="instanceType"> Gets the class type. </param>
         /// <returns> A new <see cref="Models.FabricSpecificCreationContent"/> instance for mocking. </returns>
@@ -7173,7 +7173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// Replication provider specific settings.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVVmDetails"/>, <see cref="Models.ReplicationGroupDetails"/>, <see cref="Models.VmmVmDetails"/>, and <see cref="Models.VMwareVmDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVVmDetails"/>, <see cref="Models.ReplicationGroupDetails"/>, <see cref="Models.VMwareVmDetails"/>, and <see cref="Models.VmmVmDetails"/>.
         /// </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryReplicationProviderSettings"/> instance for mocking. </returns>
@@ -7872,7 +7872,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// Task details based on specific task type.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AutomationRunbookTaskDetails"/>, <see cref="Models.ConsistencyCheckTaskDetails"/>, <see cref="Models.FabricReplicationGroupTaskDetails"/>, <see cref="Models.SiteRecoveryJobTaskDetails"/>, <see cref="Models.ManualActionTaskDetails"/>, <see cref="Models.ScriptActionTaskDetails"/>, <see cref="Models.SiteRecoveryVmTaskDetails"/>, and <see cref="Models.VmNicUpdatesTaskDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AutomationRunbookTaskDetails"/>, <see cref="Models.ConsistencyCheckTaskDetails"/>, <see cref="Models.FabricReplicationGroupTaskDetails"/>, <see cref="Models.ManualActionTaskDetails"/>, <see cref="Models.ScriptActionTaskDetails"/>, <see cref="Models.SiteRecoveryJobTaskDetails"/>, <see cref="Models.SiteRecoveryVmTaskDetails"/>, and <see cref="Models.VmNicUpdatesTaskDetails"/>.
         /// </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryTaskTypeDetails"/> instance for mocking. </returns>

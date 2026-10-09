@@ -215,7 +215,7 @@ namespace Azure.IoT.DeviceUpdate
             }
             return new LogCollection(
                 logCollectionId,
-                deviceList,
+                deviceList ?? new ChangeTrackingList<DeviceUpdateAgentId>(),
                 description,
                 createdDateTime,
                 lastActionDateTime,

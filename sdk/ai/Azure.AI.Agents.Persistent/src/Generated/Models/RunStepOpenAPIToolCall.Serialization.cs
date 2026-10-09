@@ -160,7 +160,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RunStepOpenAPIToolCall(@type, id, additionalBinaryDataProperties, openAPI);
+            return new RunStepOpenAPIToolCall(@type, id, additionalBinaryDataProperties, openAPI ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

@@ -162,7 +162,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     toolConfigs = dictionary;
@@ -175,7 +175,7 @@ namespace Azure.AI.Projects.Agents
                         filters = null;
                         continue;
                     }
-                    filters = ModelReaderWriter.Read<WebSearchToolFilters>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    filters = ModelReaderWriter.Read<WebSearchToolFilters>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("user_location"u8))
@@ -185,7 +185,7 @@ namespace Azure.AI.Projects.Agents
                         userLocation = null;
                         continue;
                     }
-                    userLocation = ModelReaderWriter.Read<WebSearchToolApproximateLocation>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    userLocation = ModelReaderWriter.Read<WebSearchToolApproximateLocation>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("search_context_size"u8))
@@ -203,7 +203,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    customSearchConfiguration = ModelReaderWriter.Read<WebSearchConfiguration>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    customSearchConfiguration = ModelReaderWriter.Read<WebSearchConfiguration>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

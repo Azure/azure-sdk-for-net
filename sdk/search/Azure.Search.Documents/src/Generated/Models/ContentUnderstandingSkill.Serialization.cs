@@ -207,8 +207,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 context,
-                inputs,
-                outputs,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                outputs ?? new ChangeTrackingList<OutputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
                 extractionOptions ?? new ChangeTrackingList<ContentUnderstandingSkillExtractionOptions>(),
                 chunkingProperties);

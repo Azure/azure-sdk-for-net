@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary>
     /// Gets or sets the provider specific properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HanaDBProviderInstanceProperties"/>, <see cref="SapNetWeaverProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="DB2ProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, and <see cref="OracleProviderInstanceProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DB2ProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="OracleProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, and <see cref="SapNetWeaverProviderInstanceProperties"/>.
     /// </summary>
     public abstract partial class SapProviderInstanceSpecificProperties
     {

@@ -255,7 +255,7 @@ namespace Azure.Monitor.Query.Logs.Models
                 }
             }
             return new LogsBatchQueryResult(
-                allTables,
+                allTables ?? new ChangeTrackingList<LogsTable>(),
                 error,
                 statistics,
                 visualization,

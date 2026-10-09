@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> These describe errors that occur at the resource level. </summary>
+    /// <summary> An error that occurred while processing one virtual machine. </summary>
     public partial class ComputeBulkOperationError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationError"/>. </summary>
-        /// <param name="errorCode"> Code for the error eg 404, 500. </param>
-        /// <param name="errorDetails"> Detailed message about the error. </param>
+        /// <param name="errorCode"> A code that identifies the error. </param>
+        /// <param name="errorDetails"> A message that describes the error. </param>
         internal ComputeBulkOperationError(string errorCode, string errorDetails)
         {
             ErrorCode = errorCode;
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationError"/>. </summary>
-        /// <param name="errorCode"> Code for the error eg 404, 500. </param>
-        /// <param name="errorDetails"> Detailed message about the error. </param>
+        /// <param name="errorCode"> A code that identifies the error. </param>
+        /// <param name="errorDetails"> A message that describes the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeBulkOperationError(string errorCode, string errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Code for the error eg 404, 500. </summary>
+        /// <summary> A code that identifies the error. </summary>
         public string ErrorCode { get; }
 
-        /// <summary> Detailed message about the error. </summary>
+        /// <summary> A message that describes the error. </summary>
         public string ErrorDetails { get; }
     }
 }

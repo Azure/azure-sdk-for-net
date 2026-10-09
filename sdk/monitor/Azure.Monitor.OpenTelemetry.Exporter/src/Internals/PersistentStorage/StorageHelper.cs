@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
         internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey)
             => GetStorageDirectory(platform, configuredStorageDirectory, instrumentationKey, omitInstrumentationKey: false);
 
-        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey, bool omitInstrumentationKey)
+        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey, bool omitInstrumentationKey, string? subDirectoryOverride = null)
         {
             // get root directory
             var rootDirectory = configuredStorageDirectory
@@ -23,15 +23,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 
             // get unique sub directory
             var userName = platform.GetEnvironmentUserName();
-            var processName = platform.GetCurrentProcessName();
-            var applicationDirectory = platform.GetApplicationBaseDirectory();
+
+            // The override stands in for the application identity only. User name and
+            // instrumentation key stay in the seed so that sharing is opt-in per application,
+            // never across users or resources.
+            var applicationIdentity = string.IsNullOrWhiteSpace(subDirectoryOverride)
+                ? $"{platform.GetCurrentProcessName()};{platform.GetApplicationBaseDirectory()}"
+                : subDirectoryOverride;
 
             // The caller decides, never the value: a configured connection string can legitimately
             // trim to an empty key, and inferring from that would move an existing directory and
             // strand the backlog inside it.
             string seed = omitInstrumentationKey
-                ? $"{userName};{processName};{applicationDirectory}"
-                : $"{instrumentationKey};{userName};{processName};{applicationDirectory}";
+                ? $"{userName};{applicationIdentity}"
+                : $"{instrumentationKey};{userName};{applicationIdentity}";
 
             string subDirectory = HashHelper.GetSHA256Hash(seed);
 

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <summary>
         /// Describes a virtual machine image source for building, customizing and distributing
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplatePlatformImageSource"/>, <see cref="Models.ImageTemplateManagedImageSource"/>, and <see cref="Models.ImageTemplateSharedImageVersionSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplateManagedImageSource"/>, <see cref="Models.ImageTemplatePlatformImageSource"/>, and <see cref="Models.ImageTemplateSharedImageVersionSource"/>.
         /// </summary>
         /// <param name="type"> Specifies the type of source image you want to start with. </param>
         /// <returns> A new <see cref="Models.ImageTemplateSource"/> instance for mocking. </returns>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <summary>
         /// Describes a unit of image customization
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplateShellCustomizer"/>, <see cref="Models.ImageTemplateRestartCustomizer"/>, <see cref="Models.ImageTemplateWindowsUpdateCustomizer"/>, <see cref="Models.ImageTemplatePowerShellCustomizer"/>, and <see cref="Models.ImageTemplateFileCustomizer"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplateFileCustomizer"/>, <see cref="Models.ImageTemplatePowerShellCustomizer"/>, <see cref="Models.ImageTemplateRestartCustomizer"/>, <see cref="Models.ImageTemplateShellCustomizer"/>, and <see cref="Models.ImageTemplateWindowsUpdateCustomizer"/>.
         /// </summary>
         /// <param name="type"> The type of customization tool you want to use on the Image. For example, "Shell" can be shell customizer. </param>
         /// <param name="name"> Friendly Name to provide context on what this customization step does. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <summary>
         /// Describes a unit of in-VM validation of image
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplateShellValidator"/>, <see cref="Models.ImageTemplatePowerShellValidator"/>, and <see cref="Models.ImageTemplateFileValidator"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ImageTemplateFileValidator"/>, <see cref="Models.ImageTemplatePowerShellValidator"/>, and <see cref="Models.ImageTemplateShellValidator"/>.
         /// </summary>
         /// <param name="type"> The type of validation you want to use on the Image. For example, "Shell" can be shell validation. </param>
         /// <param name="name"> Friendly Name to provide context on what this validation step does. </param>

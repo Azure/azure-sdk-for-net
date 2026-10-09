@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Maps.Models
         private readonly string _value;
         /// <summary> Gen2. </summary>
         private const string Gen2Value = "Gen2";
+        private const string Gen1Value = "Gen1";
 
         /// <summary> Initializes a new instance of <see cref="MapsAccountKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +31,9 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <summary> Gen2. </summary>
         public static MapsAccountKind Gen2 { get; } = new MapsAccountKind(Gen2Value);
+
+        /// <summary> Gets the Gen1. </summary>
+        public static MapsAccountKind Gen1 { get; } = new MapsAccountKind(Gen1Value);
 
         /// <summary> Determines if two <see cref="MapsAccountKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

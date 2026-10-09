@@ -230,6 +230,10 @@ public class AgentsTestBase : ProjectsClientTestBase
     protected const string HOSTED_AGENT = "cs-e2e-tests-hosted";
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
+    protected const string CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-conversation";
+    protected const string LIFECYCLE_AGENT_NAME = "cs-e2e-tests-voice-lifecycle";
+    protected const string AUDIO_CONVERSATION_AGENT_NAME = "cs-e2e-tests-voice-audio";
+    protected const string TOOLCALL_AGENT_NAME = "cs-e2e-tests-voice-toolcall";
     private readonly List<string> _conversationIDs = [];
     private ProjectConversationsClient _conversations = null;
     protected readonly string MEMORY_STORE_NAME = "test-memory-store";
@@ -363,7 +367,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         McpTool tool = ResponseTool.CreateMcpTool(
             serverLabel: "api-specs",
             serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
         ));
         tool.ProjectConnectionId = TestEnvironment.MCP_PROJECT_CONNECTION_NAME;
         return tool;
@@ -416,7 +420,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
         {
-            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         return fabricIQTool;
     }
@@ -493,7 +497,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         MCPToolboxTool mcp = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         CodeInterpreterToolboxTool codeInterpreter = new()
         {
@@ -617,7 +621,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.MCP => ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
                 serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
             )),
             ToolType.MCPConnection => GetProjectConnectedMCPTool(),
             ToolType.OpenAPI => GetOpenAPITool(projectClient, false),
@@ -641,7 +645,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.MCPToolboxWithPreview => await GetToolBoxAsync(projectClient, true),
             ToolType.WebIQ => new global::Azure.AI.Extensions.OpenAI.WebIQPreviewTool(projectConnectionId: TestEnvironment.WEBIQ_CONNECTION_ID)
             {
-                RequireApproval = new WebIQPreviewToolRequireApprovalChoice(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new WebIQPreviewToolRequireApprovalChoice(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             ToolType.WorkIQTool => new global::Azure.AI.Extensions.OpenAI.WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
@@ -722,6 +726,22 @@ public class AgentsTestBase : ProjectsClientTestBase
             projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
         foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME2))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: CONVERSATION_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: LIFECYCLE_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AUDIO_CONVERSATION_AGENT_NAME))
+        {
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+        }
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: TOOLCALL_AGENT_NAME))
         {
             projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

@@ -314,7 +314,7 @@ namespace Azure.IoT.DeviceUpdate
                 isDeployable,
                 updateType,
                 installedCriteria,
-                compatibility,
+                compatibility ?? new ChangeTrackingList<Compatibility>(),
                 instructions,
                 referencedBy ?? new ChangeTrackingList<UpdateId>(),
                 scanResult,
