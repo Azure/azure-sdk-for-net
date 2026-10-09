@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new EndpointsGetResourceUsagesAsyncCollectionResultOfT(
+            return new CdnUsageAsync0CollectionResultOfT(
                 _endpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new EndpointsGetResourceUsagesCollectionResultOfT(
+            return new CdnUsage0CollectionResultOfT(
                 _endpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
