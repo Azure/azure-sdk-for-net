@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedNamespacesGetByManagedClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedClusterNamespaceDataAsyncCollectionResultOfT(
                 _managedNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedNamespacesGetByManagedClusterCollectionResultOfT(
+            return new PageableWrapper<ManagedClusterNamespaceData, ManagedClusterNamespaceResource>(new ManagedClusterNamespaceDataCollectionResultOfT(
                 _managedNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

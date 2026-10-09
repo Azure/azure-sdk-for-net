@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new BastionHostsDisconnectActiveSessionsAsyncCollectionResultOfT(
+            return new BastionSessionStateAsyncCollectionResultOfT(
                 _bastionHostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new BastionHostsDisconnectActiveSessionsCollectionResultOfT(
+            return new BastionSessionStateCollectionResultOfT(
                 _bastionHostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new BastionHostsGetBastionShareableLinkAsyncCollectionResultOfT(
+            return new BastionShareableLinkAsyncCollectionResultOfT(
                 _bastionHostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new BastionHostsGetBastionShareableLinkCollectionResultOfT(
+            return new BastionShareableLinkCollectionResultOfT(
                 _bastionHostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

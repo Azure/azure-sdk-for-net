@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new ThreatIntelligenceIndicatorsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new SecurityInsightsThreatIntelligenceIndicatorBaseDataAsync0CollectionResultOfT(
                 _threatIntelligenceIndicatorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new ThreatIntelligenceIndicatorsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new SecurityInsightsThreatIntelligenceIndicatorBaseData0CollectionResultOfT(
                 _threatIntelligenceIndicatorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

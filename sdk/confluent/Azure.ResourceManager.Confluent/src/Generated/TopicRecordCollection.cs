@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TopicRecordData, TopicRecordResource>(new TopicRecordsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TopicRecordData, TopicRecordResource>(new TopicRecordDataAsyncCollectionResultOfT(
                 _topicRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TopicRecordData, TopicRecordResource>(new TopicRecordsGetAllCollectionResultOfT(
+            return new PageableWrapper<TopicRecordData, TopicRecordResource>(new TopicRecordDataCollectionResultOfT(
                 _topicRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

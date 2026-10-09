@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetAvailableStacksProvidersAsyncCollectionResultOfT(ProviderOperationGroupRestClient, osTypeSelected?.ToString(), context, "MockableAppServiceTenantResource.GetAvailableStacksProviders");
+            return new ApplicationStackResourceAsyncCollectionResultOfT(ProviderOperationGroupRestClient, osTypeSelected?.ToString(), context, "MockableAppServiceTenantResource.GetAvailableStacksProviders");
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetAvailableStacksProvidersCollectionResultOfT(ProviderOperationGroupRestClient, osTypeSelected?.ToString(), context, "MockableAppServiceTenantResource.GetAvailableStacksProviders");
+            return new ApplicationStackResourceCollectionResultOfT(ProviderOperationGroupRestClient, osTypeSelected?.ToString(), context, "MockableAppServiceTenantResource.GetAvailableStacksProviders");
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetFunctionAppStacksProvidersAsyncCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders");
+            return new FunctionAppStackAsyncCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders");
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetFunctionAppStacksProvidersCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders");
+            return new FunctionAppStackCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders");
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetWebAppStacksProvidersAsyncCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksProviders");
+            return new WebAppStackAsync0CollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksProviders");
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetWebAppStacksProvidersCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksProviders");
+            return new WebAppStack0CollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksProviders");
         }
     }
 }

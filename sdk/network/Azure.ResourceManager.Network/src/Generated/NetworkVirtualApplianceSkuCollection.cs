@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkVirtualApplianceSkuData, NetworkVirtualApplianceSkuResource>(new VirtualApplianceSkusGetAllAsyncCollectionResultOfT(_virtualApplianceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkVirtualApplianceSkuCollection.GetAll"), data => new NetworkVirtualApplianceSkuResource(Client, data));
+            return new AsyncPageableWrapper<NetworkVirtualApplianceSkuData, NetworkVirtualApplianceSkuResource>(new NetworkVirtualApplianceSkuDataAsyncCollectionResultOfT(_virtualApplianceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkVirtualApplianceSkuCollection.GetAll"), data => new NetworkVirtualApplianceSkuResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkVirtualApplianceSkuData, NetworkVirtualApplianceSkuResource>(new VirtualApplianceSkusGetAllCollectionResultOfT(_virtualApplianceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkVirtualApplianceSkuCollection.GetAll"), data => new NetworkVirtualApplianceSkuResource(Client, data));
+            return new PageableWrapper<NetworkVirtualApplianceSkuData, NetworkVirtualApplianceSkuResource>(new NetworkVirtualApplianceSkuDataCollectionResultOfT(_virtualApplianceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkVirtualApplianceSkuCollection.GetAll"), data => new NetworkVirtualApplianceSkuResource(Client, data));
         }
 
         /// <summary>

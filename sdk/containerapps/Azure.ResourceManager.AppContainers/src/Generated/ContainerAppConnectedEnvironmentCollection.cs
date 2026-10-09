@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppConnectedEnvironmentData, ContainerAppConnectedEnvironmentResource>(new ConnectedEnvironmentsGetByResourceGroupAsyncCollectionResultOfT(_connectedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppConnectedEnvironmentCollection.GetAll"), data => new ContainerAppConnectedEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppConnectedEnvironmentData, ContainerAppConnectedEnvironmentResource>(new ContainerAppConnectedEnvironmentDataAsyncCollectionResultOfT(_connectedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppConnectedEnvironmentCollection.GetAll"), data => new ContainerAppConnectedEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppConnectedEnvironmentData, ContainerAppConnectedEnvironmentResource>(new ConnectedEnvironmentsGetByResourceGroupCollectionResultOfT(_connectedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppConnectedEnvironmentCollection.GetAll"), data => new ContainerAppConnectedEnvironmentResource(Client, data));
+            return new PageableWrapper<ContainerAppConnectedEnvironmentData, ContainerAppConnectedEnvironmentResource>(new ContainerAppConnectedEnvironmentDataCollectionResultOfT(_connectedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppConnectedEnvironmentCollection.GetAll"), data => new ContainerAppConnectedEnvironmentResource(Client, data));
         }
 
         /// <summary>

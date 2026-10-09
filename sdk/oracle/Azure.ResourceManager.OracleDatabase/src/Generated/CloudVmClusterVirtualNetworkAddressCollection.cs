@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new VirtualNetworkAddressesGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new CloudVmClusterVirtualNetworkAddressDataAsyncCollectionResultOfT(
                 _virtualNetworkAddressesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new VirtualNetworkAddressesGetByParentCollectionResultOfT(
+            return new PageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new CloudVmClusterVirtualNetworkAddressDataCollectionResultOfT(
                 _virtualNetworkAddressesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

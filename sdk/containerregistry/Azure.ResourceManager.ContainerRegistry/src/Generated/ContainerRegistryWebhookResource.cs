@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new WebhooksGetEventsAsyncCollectionResultOfT(
+            return new ContainerRegistryWebhookEventAsyncCollectionResultOfT(
                 _webhooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new WebhooksGetEventsCollectionResultOfT(
+            return new ContainerRegistryWebhookEventCollectionResultOfT(
                 _webhooksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

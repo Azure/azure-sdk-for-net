@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServicesGetByResourceGroupAsyncCollectionResultOfT(_siteNetworkServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteNetworkServiceCollection.GetAll"), data => new SiteNetworkServiceResource(Client, data));
+            return new AsyncPageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServiceDataAsyncCollectionResultOfT(_siteNetworkServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteNetworkServiceCollection.GetAll"), data => new SiteNetworkServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServicesGetByResourceGroupCollectionResultOfT(_siteNetworkServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteNetworkServiceCollection.GetAll"), data => new SiteNetworkServiceResource(Client, data));
+            return new PageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServiceDataCollectionResultOfT(_siteNetworkServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteNetworkServiceCollection.GetAll"), data => new SiteNetworkServiceResource(Client, data));
         }
 
         /// <summary>

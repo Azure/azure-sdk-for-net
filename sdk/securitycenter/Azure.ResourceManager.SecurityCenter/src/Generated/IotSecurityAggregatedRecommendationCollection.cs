@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotSecurityAggregatedRecommendationData, IotSecurityAggregatedRecommendationResource>(new IotSecuritySolutionsAnalyticsRecommendationGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IotSecurityAggregatedRecommendationData, IotSecurityAggregatedRecommendationResource>(new IotSecurityAggregatedRecommendationDataAsyncCollectionResultOfT(
                 _iotSecuritySolutionsAnalyticsRecommendationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotSecurityAggregatedRecommendationData, IotSecurityAggregatedRecommendationResource>(new IotSecuritySolutionsAnalyticsRecommendationGetAllCollectionResultOfT(
+            return new PageableWrapper<IotSecurityAggregatedRecommendationData, IotSecurityAggregatedRecommendationResource>(new IotSecurityAggregatedRecommendationDataCollectionResultOfT(
                 _iotSecuritySolutionsAnalyticsRecommendationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new ContainerServiceOutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _managedClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new ContainerServiceOutboundEnvironmentEndpointCollectionResultOfT(
                 _managedClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1324,7 +1324,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new ContainerServicePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _managedClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1362,7 +1362,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetPrivateLinkResourcesCollectionResultOfT(
+            return new ContainerServicePrivateLinkResourceDataCollectionResultOfT(
                 _managedClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutoImportJobData, AutoImportJobResource>(new AutoImportJobsGetByAmlFilesystemAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutoImportJobData, AutoImportJobResource>(new AutoImportJobDataAsyncCollectionResultOfT(
                 _autoImportJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutoImportJobData, AutoImportJobResource>(new AutoImportJobsGetByAmlFilesystemCollectionResultOfT(
+            return new PageableWrapper<AutoImportJobData, AutoImportJobResource>(new AutoImportJobDataCollectionResultOfT(
                 _autoImportJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

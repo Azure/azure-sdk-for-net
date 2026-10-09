@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new BillingBenefitsSavingsPlanDataAsync0CollectionResultOfT(
                 SavingsPlanOperationGroupRestClient,
                 filter,
                 @orderby,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new SavingsPlanOperationGroupGetBillingBenefitsSavingsPlansCollectionResultOfT(
+            return new PageableWrapper<BillingBenefitsSavingsPlanData, BillingBenefitsSavingsPlanResource>(new BillingBenefitsSavingsPlanData0CollectionResultOfT(
                 SavingsPlanOperationGroupRestClient,
                 filter,
                 @orderby,

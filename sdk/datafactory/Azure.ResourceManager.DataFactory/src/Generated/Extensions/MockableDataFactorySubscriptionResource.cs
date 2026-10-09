@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryData, DataFactoryResource>(new FactoriesGetAllAsyncCollectionResultOfT(FactoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataFactorySubscriptionResource.GetDataFactories"), data => new DataFactoryResource(Client, data));
+            return new AsyncPageableWrapper<DataFactoryData, DataFactoryResource>(new DataFactoryDataAsync0CollectionResultOfT(FactoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataFactorySubscriptionResource.GetDataFactories"), data => new DataFactoryResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryData, DataFactoryResource>(new FactoriesGetAllCollectionResultOfT(FactoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataFactorySubscriptionResource.GetDataFactories"), data => new DataFactoryResource(Client, data));
+            return new PageableWrapper<DataFactoryData, DataFactoryResource>(new DataFactoryData0CollectionResultOfT(FactoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataFactorySubscriptionResource.GetDataFactories"), data => new DataFactoryResource(Client, data));
         }
 
         /// <summary>

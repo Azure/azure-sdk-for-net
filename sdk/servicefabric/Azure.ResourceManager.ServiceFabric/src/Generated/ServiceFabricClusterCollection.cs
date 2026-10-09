@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricClusterCollection.GetAll"), data => new ServiceFabricClusterResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ServiceFabricClusterDataAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricClusterCollection.GetAll"), data => new ServiceFabricClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricClusterCollection.GetAll"), data => new ServiceFabricClusterResource(Client, data));
+            return new PageableWrapper<ServiceFabricClusterData, ServiceFabricClusterResource>(new ServiceFabricClusterDataCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricClusterCollection.GetAll"), data => new ServiceFabricClusterResource(Client, data));
         }
 
         /// <summary>

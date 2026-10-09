@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DscNodeConfigurationData, DscNodeConfigurationResource>(new DscNodeConfigurationGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DscNodeConfigurationData, DscNodeConfigurationResource>(new DscNodeConfigurationDataAsyncCollectionResultOfT(
                 _dscNodeConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DscNodeConfigurationData, DscNodeConfigurationResource>(new DscNodeConfigurationGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<DscNodeConfigurationData, DscNodeConfigurationResource>(new DscNodeConfigurationDataCollectionResultOfT(
                 _dscNodeConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

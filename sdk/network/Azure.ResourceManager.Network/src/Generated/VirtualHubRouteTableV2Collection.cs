@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualHubRouteTableV2Data, VirtualHubRouteTableV2Resource>(new VirtualHubRouteTableV2sGetVirtualHubRouteTableV2sAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualHubRouteTableV2Data, VirtualHubRouteTableV2Resource>(new VirtualHubRouteTableV2DataAsyncCollectionResultOfT(
                 _virtualHubRouteTableV2sRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualHubRouteTableV2Data, VirtualHubRouteTableV2Resource>(new VirtualHubRouteTableV2sGetVirtualHubRouteTableV2sCollectionResultOfT(
+            return new PageableWrapper<VirtualHubRouteTableV2Data, VirtualHubRouteTableV2Resource>(new VirtualHubRouteTableV2DataCollectionResultOfT(
                 _virtualHubRouteTableV2sRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SreAgentData, SreAgentResource>(new AgentsGetByResourceGroupAsyncCollectionResultOfT(_agentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SreAgentCollection.GetAll"), data => new SreAgentResource(Client, data));
+            return new AsyncPageableWrapper<SreAgentData, SreAgentResource>(new SreAgentDataAsyncCollectionResultOfT(_agentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SreAgentCollection.GetAll"), data => new SreAgentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SreAgentData, SreAgentResource>(new AgentsGetByResourceGroupCollectionResultOfT(_agentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SreAgentCollection.GetAll"), data => new SreAgentResource(Client, data));
+            return new PageableWrapper<SreAgentData, SreAgentResource>(new SreAgentDataCollectionResultOfT(_agentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SreAgentCollection.GetAll"), data => new SreAgentResource(Client, data));
         }
 
         /// <summary>

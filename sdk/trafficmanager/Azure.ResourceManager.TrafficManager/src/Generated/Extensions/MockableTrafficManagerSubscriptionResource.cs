@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionAsyncCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
+            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new TrafficManagerProfileDataAsyncCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
+            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new TrafficManagerProfileDataCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>

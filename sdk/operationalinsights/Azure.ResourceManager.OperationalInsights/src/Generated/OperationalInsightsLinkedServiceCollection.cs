@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(OperationalInsightsLinkedServiceResource.ResourceType, out string operationalInsightsLinkedServiceApiVersion);
             _linkedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsLinkedServiceResource.ResourceType.Namespace, Diagnostics);
-            _linkedServicesRestClient = new LinkedServices(_linkedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsLinkedServiceApiVersion ?? "2025-07-01");
+            _linkedServicesRestClient = new LinkedServices(_linkedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsLinkedServiceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperationalInsightsLinkedServiceData, OperationalInsightsLinkedServiceResource>(new LinkedServicesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OperationalInsightsLinkedServiceData, OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceDataAsyncCollectionResultOfT(
                 _linkedServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperationalInsightsLinkedServiceData, OperationalInsightsLinkedServiceResource>(new LinkedServicesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<OperationalInsightsLinkedServiceData, OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceDataCollectionResultOfT(
                 _linkedServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

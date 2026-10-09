@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfilesGetMeshUpgradeProfilesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfileDataAsyncCollectionResultOfT(
                 _meshUpgradeProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfilesGetMeshUpgradeProfilesCollectionResultOfT(
+            return new PageableWrapper<MeshUpgradeProfileData, MeshUpgradeProfileResource>(new MeshUpgradeProfileDataCollectionResultOfT(
                 _meshUpgradeProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

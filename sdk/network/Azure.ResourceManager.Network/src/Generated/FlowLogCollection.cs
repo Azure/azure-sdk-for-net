@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FlowLogData, FlowLogResource>(new FlowLogsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FlowLogData, FlowLogResource>(new FlowLogDataAsyncCollectionResultOfT(
                 _flowLogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FlowLogData, FlowLogResource>(new FlowLogsGetAllCollectionResultOfT(
+            return new PageableWrapper<FlowLogData, FlowLogResource>(new FlowLogDataCollectionResultOfT(
                 _flowLogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

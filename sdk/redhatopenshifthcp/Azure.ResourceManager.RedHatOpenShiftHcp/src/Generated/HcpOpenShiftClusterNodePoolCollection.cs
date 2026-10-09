@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HcpOpenShiftClusterNodePoolData, HcpOpenShiftClusterNodePoolResource>(new HcpOpenShiftClusterNodePoolsGetByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HcpOpenShiftClusterNodePoolData, HcpOpenShiftClusterNodePoolResource>(new HcpOpenShiftClusterNodePoolDataAsyncCollectionResultOfT(
                 _hcpOpenShiftClusterNodePoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HcpOpenShiftClusterNodePoolData, HcpOpenShiftClusterNodePoolResource>(new HcpOpenShiftClusterNodePoolsGetByParentCollectionResultOfT(
+            return new PageableWrapper<HcpOpenShiftClusterNodePoolData, HcpOpenShiftClusterNodePoolResource>(new HcpOpenShiftClusterNodePoolDataCollectionResultOfT(
                 _hcpOpenShiftClusterNodePoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
