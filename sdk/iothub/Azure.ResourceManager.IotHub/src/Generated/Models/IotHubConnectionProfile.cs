@@ -12,7 +12,7 @@ using Azure.ResourceManager.IotHub;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The connection profile that the IoT hub uses for device connections. </summary>
-    public readonly partial struct ConnectionProfile : IEquatable<ConnectionProfile>
+    public readonly partial struct IotHubConnectionProfile : IEquatable<IotHubConnectionProfile>
     {
         private readonly string _value;
         /// <summary> Classic connection profile. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> MQTT v5 connection profile. </summary>
         private const string MqttV5Value = "MqttV5";
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubConnectionProfile"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectionProfile(string value)
+        public IotHubConnectionProfile(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Classic connection profile. </summary>
-        public static ConnectionProfile Classic { get; } = new ConnectionProfile(ClassicValue);
+        public static IotHubConnectionProfile Classic { get; } = new IotHubConnectionProfile(ClassicValue);
 
         /// <summary> MQTT v5 connection profile. </summary>
-        public static ConnectionProfile MqttV5 { get; } = new ConnectionProfile(MqttV5Value);
+        public static IotHubConnectionProfile MqttV5 { get; } = new IotHubConnectionProfile(MqttV5Value);
 
-        /// <summary> Determines if two <see cref="ConnectionProfile"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="IotHubConnectionProfile"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ConnectionProfile left, ConnectionProfile right) => left.Equals(right);
+        public static bool operator ==(IotHubConnectionProfile left, IotHubConnectionProfile right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConnectionProfile"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="IotHubConnectionProfile"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ConnectionProfile left, ConnectionProfile right) => !left.Equals(right);
+        public static bool operator !=(IotHubConnectionProfile left, IotHubConnectionProfile right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConnectionProfile"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IotHubConnectionProfile"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionProfile(string value) => new ConnectionProfile(value);
+        public static implicit operator IotHubConnectionProfile(string value) => new IotHubConnectionProfile(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectionProfile"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IotHubConnectionProfile"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionProfile?(string value) => value == null ? null : new ConnectionProfile(value);
+        public static implicit operator IotHubConnectionProfile?(string value) => value == null ? null : new IotHubConnectionProfile(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConnectionProfile other && Equals(other);
+        public override bool Equals(object obj) => obj is IotHubConnectionProfile other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ConnectionProfile other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IotHubConnectionProfile other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

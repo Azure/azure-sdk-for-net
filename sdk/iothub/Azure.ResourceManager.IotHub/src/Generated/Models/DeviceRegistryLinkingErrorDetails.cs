@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Error details. </summary>
-    public partial class ErrorDetails
+    public partial class DeviceRegistryLinkingErrorDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDetails"/>. </summary>
-        internal ErrorDetails()
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryLinkingErrorDetails"/>. </summary>
+        internal DeviceRegistryLinkingErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryLinkingErrorDetails"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="httpStatusCode"> The HTTP status code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorDetails(string code, string httpStatusCode, string message, string details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceRegistryLinkingErrorDetails(string code, string httpStatusCode, string message, string details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             HttpStatusCode = httpStatusCode;

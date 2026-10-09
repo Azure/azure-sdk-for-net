@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="state"> Indicates whether the IoT Hub is linked with an Azure Device Registry. </param>
         /// <param name="error"> The last error encountered when linking the IoT Hub with an Azure Device Registry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryLinkingProperties(DeviceRegistryLinkingState? state, ErrorDetails error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceRegistryLinkingProperties(DeviceRegistryLinkingState? state, DeviceRegistryLinkingErrorDetails error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Error = error;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.IotHub.Models
         public DeviceRegistryLinkingState? State { get; }
 
         /// <summary> The last error encountered when linking the IoT Hub with an Azure Device Registry. </summary>
-        public ErrorDetails Error { get; }
+        public DeviceRegistryLinkingErrorDetails Error { get; }
     }
 }

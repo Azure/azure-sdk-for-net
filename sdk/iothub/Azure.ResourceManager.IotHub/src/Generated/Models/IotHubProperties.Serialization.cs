@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.IotHub.Models
             bool? enableDataResidency = default;
             IotHubRootCertificateProperties rootCertificate = default;
             IotHubIPVersion? ipVersion = default;
-            ConnectionProfile? connectionProfile = default;
+            IotHubConnectionProfile? connectionProfile = default;
             MqttV5Settings mqttV5Settings = default;
             IotHubDeviceRegistry deviceRegistry = default;
             IotHubDetails iotHubDetails = default;
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    connectionProfile = new ConnectionProfile(prop.Value.GetString());
+                    connectionProfile = new IotHubConnectionProfile(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mqttV5Settings"u8))

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.IotHub.Models
             string containerName = default;
             string partitionKeyName = default;
             string partitionKeyTemplate = default;
-            MessagePayloadFormat? messagePayloadFormat = default;
+            IotHubMessagePayloadFormat? messagePayloadFormat = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    messagePayloadFormat = new MessagePayloadFormat(prop.Value.GetString());
+                    messagePayloadFormat = new IotHubMessagePayloadFormat(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

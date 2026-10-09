@@ -14,51 +14,51 @@ using Azure.ResourceManager.IotHub;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Error details. </summary>
-    public partial class ErrorDetails : IJsonModel<ErrorDetails>
+    public partial class DeviceRegistryLinkingErrorDetails : IJsonModel<DeviceRegistryLinkingErrorDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ErrorDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeviceRegistryLinkingErrorDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryLinkingErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeErrorDetails(document.RootElement, options);
+                        return DeserializeDeviceRegistryLinkingErrorDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryLinkingErrorDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryLinkingErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryLinkingErrorDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ErrorDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeviceRegistryLinkingErrorDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ErrorDetails IPersistableModel<ErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeviceRegistryLinkingErrorDetails IPersistableModel<DeviceRegistryLinkingErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeviceRegistryLinkingErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeviceRegistryLinkingErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryLinkingErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryLinkingErrorDetails)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Code))
             {
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ErrorDetails IJsonModel<ErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeviceRegistryLinkingErrorDetails IJsonModel<DeviceRegistryLinkingErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ErrorDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeviceRegistryLinkingErrorDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryLinkingErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryLinkingErrorDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeErrorDetails(document.RootElement, options);
+            return DeserializeDeviceRegistryLinkingErrorDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ErrorDetails DeserializeErrorDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeviceRegistryLinkingErrorDetails DeserializeDeviceRegistryLinkingErrorDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ErrorDetails(code, httpStatusCode, message, details, additionalBinaryDataProperties);
+            return new DeviceRegistryLinkingErrorDetails(code, httpStatusCode, message, details, additionalBinaryDataProperties);
         }
     }
 }

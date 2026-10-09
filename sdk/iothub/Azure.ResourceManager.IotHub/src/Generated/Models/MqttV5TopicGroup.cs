@@ -12,22 +12,22 @@ using Azure.ResourceManager.IotHub;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> A named set of topic templates for an Event Grid-backed MQTT v5 IoT hub. </summary>
-    public partial class TopicGroup
+    public partial class MqttV5TopicGroup
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TopicGroup"/>. </summary>
-        public TopicGroup()
+        /// <summary> Initializes a new instance of <see cref="MqttV5TopicGroup"/>. </summary>
+        public MqttV5TopicGroup()
         {
             TopicTemplates = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TopicGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MqttV5TopicGroup"/>. </summary>
         /// <param name="topicGroupId"> The customer-supplied identifier used to reconcile the topic group during updates. </param>
         /// <param name="topicTemplates"> The topic templates in this group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopicGroup(string topicGroupId, IList<string> topicTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MqttV5TopicGroup(string topicGroupId, IList<string> topicTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TopicGroupId = topicGroupId;
             TopicTemplates = topicTemplates;

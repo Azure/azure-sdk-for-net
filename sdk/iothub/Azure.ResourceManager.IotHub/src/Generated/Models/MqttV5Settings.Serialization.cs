@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("topicGroups"u8);
                 writer.WriteStartArray();
-                foreach (TopicGroup item in TopicGroups)
+                foreach (MqttV5TopicGroup item in TopicGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            IList<TopicGroup> topicGroups = default;
+            IList<MqttV5TopicGroup> topicGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    List<TopicGroup> array = new List<TopicGroup>();
+                    List<MqttV5TopicGroup> array = new List<MqttV5TopicGroup>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TopicGroup.DeserializeTopicGroup(item, options));
+                        array.Add(MqttV5TopicGroup.DeserializeMqttV5TopicGroup(item, options));
                     }
                     topicGroups = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MqttV5Settings(topicGroups ?? new ChangeTrackingList<TopicGroup>(), additionalBinaryDataProperties);
+            return new MqttV5Settings(topicGroups ?? new ChangeTrackingList<MqttV5TopicGroup>(), additionalBinaryDataProperties);
         }
     }
 }

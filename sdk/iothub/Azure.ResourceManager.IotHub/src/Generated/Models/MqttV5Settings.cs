@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of <see cref="MqttV5Settings"/>. </summary>
         public MqttV5Settings()
         {
-            TopicGroups = new ChangeTrackingList<TopicGroup>();
+            TopicGroups = new ChangeTrackingList<MqttV5TopicGroup>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MqttV5Settings"/>. </summary>
         /// <param name="topicGroups"> The customer-defined groups of topic templates that devices publish to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MqttV5Settings(IList<TopicGroup> topicGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MqttV5Settings(IList<MqttV5TopicGroup> topicGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TopicGroups = topicGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The customer-defined groups of topic templates that devices publish to. </summary>
-        public IList<TopicGroup> TopicGroups { get; } = new ChangeTrackingList<TopicGroup>();
+        public IList<MqttV5TopicGroup> TopicGroups { get; } = new ChangeTrackingList<MqttV5TopicGroup>();
     }
 }

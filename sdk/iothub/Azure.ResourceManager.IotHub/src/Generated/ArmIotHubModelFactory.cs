@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="httpStatusCode"> The HTTP status code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>
-        /// <returns> A new <see cref="Models.ErrorDetails"/> instance for mocking. </returns>
-        public static ErrorDetails ErrorDetails(string code = default, string httpStatusCode = default, string message = default, string details = default)
+        /// <returns> A new <see cref="Models.DeviceRegistryLinkingErrorDetails"/> instance for mocking. </returns>
+        public static DeviceRegistryLinkingErrorDetails DeviceRegistryLinkingErrorDetails(string code = default, string httpStatusCode = default, string message = default, string details = default)
         {
-            return new ErrorDetails(code, httpStatusCode, message, details, default);
+            return new DeviceRegistryLinkingErrorDetails(code, httpStatusCode, message, details, default);
         }
 
         /// <summary> The private endpoint connection of an IotHub. </summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
         /// <param name="iotHubDetailsGatewayVersion"> The IoT hub Gateway version. </param>
         /// <returns> A new <see cref="Models.IotHubProperties"/> instance for mocking. </returns>
-        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IEnumerable<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IEnumerable<string> deviceStreamsStreamingEndpoints, IotHubCapability? features, IotHubEncryptionProperties encryption, IEnumerable<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubRootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, ConnectionProfile? connectionProfile = default, IEnumerable<TopicGroup> mqttV5TopicGroups = default, IotHubDeviceRegistry deviceRegistry = default, IotHubGatewayVersion? iotHubDetailsGatewayVersion = default)
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IEnumerable<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IEnumerable<string> deviceStreamsStreamingEndpoints, IotHubCapability? features, IotHubEncryptionProperties encryption, IEnumerable<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubRootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, IotHubConnectionProfile? connectionProfile = default, IEnumerable<MqttV5TopicGroup> mqttV5TopicGroups = default, IotHubDeviceRegistry deviceRegistry = default, IotHubGatewayVersion? iotHubDetailsGatewayVersion = default)
         {
             authorizationPolicies ??= new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
             allowedFqdns ??= new ChangeTrackingList<string>();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 rootCertificate,
                 ipVersion,
                 connectionProfile,
-                mqttV5TopicGroups is null ? default : new MqttV5Settings((mqttV5TopicGroups ?? new ChangeTrackingList<TopicGroup>()).ToList(), default),
+                mqttV5TopicGroups is null ? default : new MqttV5Settings((mqttV5TopicGroups ?? new ChangeTrackingList<MqttV5TopicGroup>()).ToList(), default),
                 deviceRegistry,
                 iotHubDetailsGatewayVersion is null ? default : new IotHubDetails(iotHubDetailsGatewayVersion, default),
                 default);
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="resourceGroup"> The name of the resource group of the service bus queue endpoint. </param>
         /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <returns> A new <see cref="Models.RoutingServiceBusQueueEndpointProperties"/> instance for mocking. </returns>
-        public static RoutingServiceBusQueueEndpointProperties RoutingServiceBusQueueEndpointProperties(Guid? id = default, string connectionString = default, string endpoint = default, string entityPath = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default, MessagePayloadFormat? messagePayloadFormat = default)
+        public static RoutingServiceBusQueueEndpointProperties RoutingServiceBusQueueEndpointProperties(Guid? id = default, string connectionString = default, string endpoint = default, string entityPath = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default, IotHubMessagePayloadFormat? messagePayloadFormat = default)
         {
             return new RoutingServiceBusQueueEndpointProperties(
                 id,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="resourceGroup"> The name of the resource group of the service bus topic endpoint. </param>
         /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <returns> A new <see cref="Models.RoutingServiceBusTopicEndpointProperties"/> instance for mocking. </returns>
-        public static RoutingServiceBusTopicEndpointProperties RoutingServiceBusTopicEndpointProperties(Guid? id = default, string connectionString = default, string endpoint = default, string entityPath = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default, MessagePayloadFormat? messagePayloadFormat = default)
+        public static RoutingServiceBusTopicEndpointProperties RoutingServiceBusTopicEndpointProperties(Guid? id = default, string connectionString = default, string endpoint = default, string entityPath = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default, IotHubMessagePayloadFormat? messagePayloadFormat = default)
         {
             return new RoutingServiceBusTopicEndpointProperties(
                 id,
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="resourceGroup"> The name of the resource group of the event hub endpoint. </param>
         /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <returns> A new <see cref="Models.RoutingEventHubProperties"/> instance for mocking. </returns>
-        public static RoutingEventHubProperties RoutingEventHubProperties(Guid? id = default, string connectionString = default, string endpoint = default, string entityPath = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default, MessagePayloadFormat? messagePayloadFormat = default)
+        public static RoutingEventHubProperties RoutingEventHubProperties(Guid? id = default, string connectionString = default, string endpoint = default, string entityPath = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default, IotHubMessagePayloadFormat? messagePayloadFormat = default)
         {
             return new RoutingEventHubProperties(
                 id,
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="encoding"> Encoding that is used to serialize messages to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'. Default value is 'avro'. </param>
         /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <returns> A new <see cref="Models.RoutingStorageContainerProperties"/> instance for mocking. </returns>
-        public static RoutingStorageContainerProperties RoutingStorageContainerProperties(Guid? id = default, string connectionString = default, string endpoint = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default, string containerName = default, string fileNameFormat = default, int? batchFrequencyInSeconds = default, int? maxChunkSizeInBytes = default, RoutingStorageContainerPropertiesEncoding? encoding = default, MessagePayloadFormat? messagePayloadFormat = default)
+        public static RoutingStorageContainerProperties RoutingStorageContainerProperties(Guid? id = default, string connectionString = default, string endpoint = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default, string containerName = default, string fileNameFormat = default, int? batchFrequencyInSeconds = default, int? maxChunkSizeInBytes = default, RoutingStorageContainerPropertiesEncoding? encoding = default, IotHubMessagePayloadFormat? messagePayloadFormat = default)
         {
             return new RoutingStorageContainerProperties(
                 id,
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="partitionKeyTemplate"> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </param>
         /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <returns> A new <see cref="Models.RoutingCosmosDBSqlApiProperties"/> instance for mocking. </returns>
-        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name, string id, string subscriptionId, string resourceGroup, Uri endpointUri, IotHubAuthenticationType? authenticationType, ResourceIdentifier userAssignedIdentity, string primaryKey, string secondaryKey, string databaseName, string containerName, string partitionKeyName, string partitionKeyTemplate, MessagePayloadFormat? messagePayloadFormat)
+        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name, string id, string subscriptionId, string resourceGroup, Uri endpointUri, IotHubAuthenticationType? authenticationType, ResourceIdentifier userAssignedIdentity, string primaryKey, string secondaryKey, string databaseName, string containerName, string partitionKeyName, string partitionKeyTemplate, IotHubMessagePayloadFormat? messagePayloadFormat)
         {
             return new RoutingCosmosDBSqlApiProperties(
                 name,
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="sourceId"> The unique GUID of the custom source for the event stream. </param>
         /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <returns> A new <see cref="Models.RoutingEventStreamProperties"/> instance for mocking. </returns>
-        public static RoutingEventStreamProperties RoutingEventStreamProperties(string name = default, string id = default, string endpointUri = default, string entityPath = default, EventStreamAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string workspaceId = default, string eventStreamId = default, string sourceId = default, MessagePayloadFormat? messagePayloadFormat = default)
+        public static RoutingEventStreamProperties RoutingEventStreamProperties(string name = default, string id = default, string endpointUri = default, string entityPath = default, EventStreamAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string workspaceId = default, string eventStreamId = default, string sourceId = default, IotHubMessagePayloadFormat? messagePayloadFormat = default)
         {
             return new RoutingEventStreamProperties(
                 name,
@@ -604,12 +604,12 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> A named set of topic templates for an Event Grid-backed MQTT v5 IoT hub. </summary>
         /// <param name="topicGroupId"> The customer-supplied identifier used to reconcile the topic group during updates. </param>
         /// <param name="topicTemplates"> The topic templates in this group. </param>
-        /// <returns> A new <see cref="Models.TopicGroup"/> instance for mocking. </returns>
-        public static TopicGroup TopicGroup(string topicGroupId = default, IEnumerable<string> topicTemplates = default)
+        /// <returns> A new <see cref="Models.MqttV5TopicGroup"/> instance for mocking. </returns>
+        public static MqttV5TopicGroup MqttV5TopicGroup(string topicGroupId = default, IEnumerable<string> topicTemplates = default)
         {
             topicTemplates ??= new ChangeTrackingList<string>();
 
-            return new TopicGroup(topicGroupId, (topicTemplates ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new MqttV5TopicGroup(topicGroupId, (topicTemplates ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="state"> Indicates whether the IoT Hub is linked with an Azure Device Registry. </param>
         /// <param name="error"> The last error encountered when linking the IoT Hub with an Azure Device Registry. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryLinkingProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryLinkingProperties DeviceRegistryLinkingProperties(DeviceRegistryLinkingState? state = default, ErrorDetails error = default)
+        public static DeviceRegistryLinkingProperties DeviceRegistryLinkingProperties(DeviceRegistryLinkingState? state = default, DeviceRegistryLinkingErrorDetails error = default)
         {
             return new DeviceRegistryLinkingProperties(state, error, default);
         }

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             DeviceRegistryLinkingState? state = default;
-            ErrorDetails error = default;
+            DeviceRegistryLinkingErrorDetails error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    error = ErrorDetails.DeserializeErrorDetails(prop.Value, options);
+                    error = DeviceRegistryLinkingErrorDetails.DeserializeDeviceRegistryLinkingErrorDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

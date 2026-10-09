@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.IotHub.Models
             string workspaceId = default;
             string eventStreamId = default;
             string sourceId = default;
-            MessagePayloadFormat? messagePayloadFormat = default;
+            IotHubMessagePayloadFormat? messagePayloadFormat = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    messagePayloadFormat = new MessagePayloadFormat(prop.Value.GetString());
+                    messagePayloadFormat = new IotHubMessagePayloadFormat(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
