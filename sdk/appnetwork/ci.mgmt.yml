@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/appnetwork/Azure.ResourceManager.AppNetwork
+    - sdk/appnetwork/Azure.Provisioning.AppNetwork
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

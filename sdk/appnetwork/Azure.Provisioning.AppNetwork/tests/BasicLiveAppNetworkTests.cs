@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Azure.Provisioning.AppNetwork.Tests;
 
 public class BasicLiveAppNetworkTests(bool async)
-    : ProvisioningTestBase(async)
+    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
 {
     [Test]
     [LiveOnly]
