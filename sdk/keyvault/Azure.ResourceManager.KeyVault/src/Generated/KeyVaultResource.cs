@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new KeyVaultPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _vaultsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetPrivateLinkResourcesCollectionResultOfT(
+            return new KeyVaultPrivateLinkResourceDataCollectionResultOfT(
                 _vaultsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
