@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentResourcesGetByResourceGroupAsyncCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentDataAsyncCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentResourcesGetByResourceGroupCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
+            return new PageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentDataCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>

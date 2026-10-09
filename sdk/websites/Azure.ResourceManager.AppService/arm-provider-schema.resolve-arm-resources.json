@@ -1368,7 +1368,12 @@
         "2026-03-01-preview",
         "2026-03-15"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "WebPlanContributor",
+          "value": "2cc479cb-7b4d-49a8-b449-8c00fd0f0a4b"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.Web.HybridConnection",
@@ -3110,7 +3115,12 @@
         "2026-03-01-preview",
         "2026-03-15"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "WebsiteContributor",
+          "value": "de139f84-1756-47ae-9be6-808fbbe84772"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.Web.BackupItem",
@@ -6284,7 +6294,12 @@
         "2026-03-01-preview",
         "2026-03-15"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "WebsiteContributor",
+          "value": "de139f84-1756-47ae-9be6-808fbbe84772"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.Web.BackupItem",

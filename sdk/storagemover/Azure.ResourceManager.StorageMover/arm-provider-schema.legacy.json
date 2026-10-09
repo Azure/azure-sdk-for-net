@@ -79,7 +79,8 @@
         "2024-07-01",
         "2025-07-01",
         "2025-08-01",
-        "2025-12-01"
+        "2025-12-01",
+        "2026-05-01"
       ],
       "rbacRoles": []
     },
@@ -146,12 +147,15 @@
       },
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}",
       "resourceName": "StorageMoverAgent",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9._-]{1,54}$"
+      },
       "apiVersions": [
         "2024-07-01",
         "2025-07-01",
         "2025-08-01",
-        "2025-12-01"
+        "2025-12-01",
+        "2026-05-01"
       ],
       "rbacRoles": []
     },
@@ -213,7 +217,8 @@
       },
       "apiVersions": [
         "2025-08-01",
-        "2025-12-01"
+        "2025-12-01",
+        "2026-05-01"
       ],
       "rbacRoles": []
     },
@@ -280,12 +285,15 @@
       },
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}",
       "resourceName": "StorageMoverEndpoint",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+      },
       "apiVersions": [
         "2024-07-01",
         "2025-07-01",
         "2025-08-01",
-        "2025-12-01"
+        "2025-12-01",
+        "2026-05-01"
       ],
       "rbacRoles": []
     },
@@ -352,12 +360,15 @@
       },
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}",
       "resourceName": "StorageMoverProject",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+      },
       "apiVersions": [
         "2024-07-01",
         "2025-07-01",
         "2025-08-01",
-        "2025-12-01"
+        "2025-12-01",
+        "2026-05-01"
       ],
       "rbacRoles": []
     },
@@ -417,6 +428,16 @@
           }
         },
         {
+          "methodId": "Microsoft.StorageMover.JobDefinitions.reconcileJob",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/reconcileJob",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
           "methodId": "Microsoft.StorageMover.JobDefinitions.startJob",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}/startJob",
@@ -444,12 +465,15 @@
       },
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}",
       "resourceName": "JobDefinition",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+      },
       "apiVersions": [
         "2024-07-01",
         "2025-07-01",
         "2025-08-01",
-        "2025-12-01"
+        "2025-12-01",
+        "2026-05-01"
       ],
       "rbacRoles": []
     },
@@ -486,12 +510,15 @@
       },
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}",
       "resourceName": "JobRun",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+      },
       "apiVersions": [
         "2024-07-01",
         "2025-07-01",
         "2025-08-01",
-        "2025-12-01"
+        "2025-12-01",
+        "2026-05-01"
       ],
       "rbacRoles": []
     }

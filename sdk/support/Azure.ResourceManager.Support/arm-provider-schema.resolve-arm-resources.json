@@ -37,7 +37,8 @@
       },
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -97,7 +98,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -146,7 +148,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -186,7 +189,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -255,7 +259,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -295,7 +300,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -345,7 +351,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -386,7 +393,8 @@
       },
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -446,7 +454,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -515,7 +524,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -555,7 +565,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -605,7 +616,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2024-04-01",
-        "2025-06-01-preview"
+        "2026-06-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     }

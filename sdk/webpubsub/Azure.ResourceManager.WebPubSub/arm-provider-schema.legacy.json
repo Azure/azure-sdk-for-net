@@ -131,7 +131,20 @@
         "2025-01-01-preview",
         "2025-08-01-preview"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "WebPubSubServiceReader",
+          "value": "bfb1c7d2-fb1a-466b-b2ba-aee63b92deaf"
+        },
+        {
+          "name": "WebPubSubServiceOwner",
+          "value": "12cf5a90-567b-43ae-8102-96cf46c7d9b4"
+        },
+        {
+          "name": "WebPubSubContributor",
+          "value": "8cf5e20a-e4b2-4e9d-b3a1-5ceb692c2761"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.SignalRService.CustomCertificate",

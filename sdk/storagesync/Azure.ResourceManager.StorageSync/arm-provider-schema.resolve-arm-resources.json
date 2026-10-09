@@ -84,7 +84,8 @@
       "resourceName": "StorageSyncService",
       "nameConstraints": {},
       "apiVersions": [
-        "2022-09-01"
+        "2022-09-01",
+        "2025-12-01"
       ],
       "rbacRoles": []
     },
@@ -143,7 +144,8 @@
       "resourceName": "StorageSyncServicePrivateEndpointConnection",
       "nameConstraints": {},
       "apiVersions": [
-        "2022-09-01"
+        "2022-09-01",
+        "2025-12-01"
       ],
       "rbacRoles": []
     },
@@ -222,7 +224,8 @@
       "resourceName": "RegisteredServer",
       "nameConstraints": {},
       "apiVersions": [
-        "2022-09-01"
+        "2022-09-01",
+        "2025-12-01"
       ],
       "rbacRoles": []
     },
@@ -281,7 +284,8 @@
       "resourceName": "SyncGroup",
       "nameConstraints": {},
       "apiVersions": [
-        "2022-09-01"
+        "2022-09-01",
+        "2025-12-01"
       ],
       "rbacRoles": []
     },
@@ -303,6 +307,16 @@
         {
           "methodId": "Microsoft.StorageSync.CloudEndpoints.get",
           "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}/cloudEndpoints/{cloudEndpointName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}/cloudEndpoints/{cloudEndpointName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.StorageSync.CloudEndpoints.update",
+          "kind": "Update",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}/cloudEndpoints/{cloudEndpointName}",
           "scope": {
             "kind": "ResourceGroup",
@@ -410,7 +424,8 @@
       "resourceName": "CloudEndpoint",
       "nameConstraints": {},
       "apiVersions": [
-        "2022-09-01"
+        "2022-09-01",
+        "2025-12-01"
       ],
       "rbacRoles": []
     },
@@ -489,7 +504,8 @@
       "resourceName": "ServerEndpoint",
       "nameConstraints": {},
       "apiVersions": [
-        "2022-09-01"
+        "2022-09-01",
+        "2025-12-01"
       ],
       "rbacRoles": []
     },
@@ -538,7 +554,8 @@
       "resourceName": "Workflow",
       "nameConstraints": {},
       "apiVersions": [
-        "2022-09-01"
+        "2022-09-01",
+        "2025-12-01"
       ],
       "rbacRoles": []
     }
