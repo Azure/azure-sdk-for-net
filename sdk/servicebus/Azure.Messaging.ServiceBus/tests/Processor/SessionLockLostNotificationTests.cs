@@ -51,8 +51,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(false, ServiceBusReceiveMode.PeekLock, 3)]
         [TestCase(false, ServiceBusReceiveMode.ReceiveAndDelete, 3)]
         [TestCase(true, ServiceBusReceiveMode.PeekLock, 1, true)]
+        [TestCase(true, ServiceBusReceiveMode.PeekLock, 1, false, true)]
+        [TestCase(true, ServiceBusReceiveMode.PeekLock, 1, true, true)]
+        [TestCase(true, ServiceBusReceiveMode.PeekLock, 1, false, false, true)]
         public async Task LinkLossSignalsActiveHandlersBeforeRetiringReceiver(
-            bool fixedSession, ServiceBusReceiveMode receiveMode, int concurrentCalls, bool throwingCallback = false)
+            bool fixedSession, ServiceBusReceiveMode receiveMode, int concurrentCalls, bool throwingCallback = false,
+            bool throwingNotification = false, bool asynchronousNotification = false)
         {
             var loss = NewCompletion<Exception>();
             var exception = new ServiceBusException("Lost session link", ServiceBusFailureReason.SessionLockLost);
@@ -66,9 +70,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var entered = NewCompletion<bool>();
             var release = NewCompletion<bool>();
             var notified = NewCompletion<bool>();
+            var cancelled = NewCompletion<bool>();
+            var notificationCompleted = NewCompletion<bool>();
             var recovered = NewCompletion<bool>();
             var eventCount = 0;
             var enteredCount = 0;
+            var cancelledCount = 0;
             try
             {
                 processor.ProcessMessageAsync += OnMessage;
@@ -80,24 +87,43 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 loss.SetResult(exception);
                 await Await(notified.Task);
+                await Await(cancelled.Task);
                 Assert.That(active, Has.All.Matches<ProcessSessionMessageEventArgs>(args => args.CancellationToken.IsCancellationRequested));
                 Assert.That(receiverCount, Is.EqualTo(1), "A lost receiver must remain assigned until its active handlers return.");
                 first.Verify(receiver => receiver.CloseAsync(It.IsAny<CancellationToken>()), Times.Never);
                 Assert.That(eventCount, Is.EqualTo(concurrentCalls));
+                if (asynchronousNotification)
+                {
+                    Assert.That(notificationCompleted.Task.IsCompleted, Is.False);
+                }
 
                 release.TrySetResult(true);
                 await Await(recovered.Task);
                 first.Verify(receiver => receiver.CloseAsync(It.IsAny<CancellationToken>()), Times.Once);
                 Assert.That(receiverCount, Is.EqualTo(2));
-                Assert.That(errors.Count, Is.EqualTo(throwingCallback ? 1 : 0));
-                if (throwingCallback)
+                Assert.That(errors.Count, Is.EqualTo(throwingCallback || throwingNotification ? 1 : 0));
+                if (throwingCallback || throwingNotification)
                 {
                     Assert.That(errors, Has.All.Matches<ProcessErrorEventArgs>(args => args.Exception is AggregateException));
+                    foreach (var error in errors)
+                    {
+                        var callbacks = ((AggregateException)error.Exception).Flatten().InnerExceptions;
+                        Assert.That(callbacks.Count, Is.EqualTo((throwingCallback ? 1 : 0) + (throwingNotification ? 1 : 0)));
+                        if (throwingCallback)
+                        {
+                            Assert.That(callbacks, Has.Some.Matches<Exception>(callback => callback.Message == "Cancellation callback failed"));
+                        }
+                        if (throwingNotification)
+                        {
+                            Assert.That(callbacks, Has.Some.Matches<Exception>(callback => callback.Message == "Notification callback failed"));
+                        }
+                    }
                 }
             }
             finally
             {
                 release.TrySetResult(true);
+                notificationCompleted.TrySetResult(true);
                 await processor.StopProcessingAsync();
                 processor.ProcessMessageAsync -= OnMessage;
                 processor.ProcessErrorAsync -= OnError;
@@ -111,9 +137,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     return;
                 }
                 args.SessionLockLostAsync += OnLost;
-                using var callback = throwingCallback
-                    ? args.CancellationToken.Register(() => throw new InvalidOperationException("Cancellation callback failed"))
-                    : default;
+                using var callback = args.CancellationToken.Register(OnCancelled);
                 try
                 {
                     active.Enqueue(args);
@@ -136,7 +160,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     notified.TrySetResult(true);
                 }
-                return Task.CompletedTask;
+                if (throwingNotification)
+                {
+                    throw new InvalidOperationException("Notification callback failed");
+                }
+                return asynchronousNotification ? notificationCompleted.Task : Task.CompletedTask;
+            }
+
+            void OnCancelled()
+            {
+                if (Interlocked.Increment(ref cancelledCount) == concurrentCalls)
+                {
+                    cancelled.TrySetResult(true);
+                }
+                if (throwingCallback)
+                {
+                    throw new InvalidOperationException("Cancellation callback failed");
+                }
             }
 
             Task OnError(ProcessErrorEventArgs args)
@@ -144,6 +184,74 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 errors.Enqueue(args);
                 return Task.CompletedTask;
             }
+        }
+
+        [TestCase(true, ServiceBusReceiveMode.PeekLock)]
+        [TestCase(false, ServiceBusReceiveMode.PeekLock)]
+        [TestCase(true, ServiceBusReceiveMode.ReceiveAndDelete)]
+        [TestCase(false, ServiceBusReceiveMode.ReceiveAndDelete)]
+        public async Task LockLossNotifiesBeforeCancellationDrivenHandlerReturns(bool fixedSession, ServiceBusReceiveMode receiveMode)
+        {
+            var loss = NewCompletion<Exception>();
+            var first = CreateReceiver(loss.Task, 1, "seed");
+            var second = CreateReceiver(NewCompletion<Exception>().Task, 1, "sentinel");
+            int receiverCount = 0;
+            var connection = CreateConnection(() => Interlocked.Increment(ref receiverCount) == 1 ? first.Object : second.Object);
+            await using var processor = new ServiceBusSessionProcessor(connection, "queue", CreateOptions(fixedSession, receiveMode, 1));
+            var entered = NewCompletion<bool>();
+            var returnHandler = new TaskCompletionSource<bool>();
+            var returned = NewCompletion<bool>();
+            var recovered = NewCompletion<bool>();
+            int events = 0;
+            int eventsAtReturn = 0;
+            bool cancelledBeforeReturn = false;
+            try
+            {
+                processor.ProcessMessageAsync += OnMessage;
+                processor.ProcessErrorAsync += OnError;
+                await processor.StartProcessingAsync();
+                await Await(entered.Task);
+                loss.SetResult(new ServiceBusException("Lost session link", ServiceBusFailureReason.SessionLockLost));
+                await Await(returned.Task);
+                Assert.That(eventsAtReturn, Is.EqualTo(1));
+                Assert.That(cancelledBeforeReturn, Is.True);
+                await Await(recovered.Task);
+                first.Verify(receiver => receiver.CloseAsync(It.IsAny<CancellationToken>()), Times.Once);
+            }
+            finally
+            {
+                returnHandler.TrySetResult(true);
+                await processor.StopProcessingAsync();
+                processor.ProcessMessageAsync -= OnMessage;
+                processor.ProcessErrorAsync -= OnError;
+            }
+
+            async Task OnMessage(ProcessSessionMessageEventArgs args)
+            {
+                if (args.Message.MessageId == "sentinel")
+                {
+                    recovered.TrySetResult(true);
+                    return;
+                }
+                args.SessionLockLostAsync += OnLost;
+                using var cancellation = args.CancellationToken.Register(OnCancelled);
+                try
+                {
+                    entered.TrySetResult(true);
+                    await returnHandler.Task.ConfigureAwait(false);
+                }
+                finally
+                {
+                    eventsAtReturn = Volatile.Read(ref events);
+                    cancelledBeforeReturn = args.CancellationToken.IsCancellationRequested;
+                    args.SessionLockLostAsync -= OnLost;
+                    returned.TrySetResult(true);
+                }
+            }
+
+            void OnCancelled() => returnHandler.TrySetResult(true);
+            Task OnLost(SessionLockLostEventArgs args) { Interlocked.Increment(ref events); return Task.CompletedTask; }
+            Task OnError(ProcessErrorEventArgs args) { Assert.Fail(args.Exception.ToString()); return Task.CompletedTask; }
         }
 
         [Test]
@@ -201,6 +309,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var entered = NewCompletion<ProcessSessionMessageEventArgs>();
             var release = NewCompletion<bool>();
             var notified = NewCompletion<bool>();
+            var cancelled = NewCompletion<bool>();
             var initializationCount = 0;
             var eventCount = 0;
             try
@@ -216,6 +325,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Assert.That(eventCount, Is.Zero);
                 newLoss.SetResult(new ServiceBusException("Replacement lost", ServiceBusFailureReason.SessionLockLost));
                 await Await(notified.Task);
+                await Await(cancelled.Task);
                 Assert.That(args.CancellationToken.IsCancellationRequested, Is.True);
                 Assert.That(eventCount, Is.EqualTo(1));
             }
@@ -245,11 +355,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     return;
                 }
                 args.SessionLockLostAsync += OnLost;
+                using var cancellation = args.CancellationToken.Register(OnCancelled);
                 try { entered.TrySetResult(args); await release.Task; }
                 finally { args.SessionLockLostAsync -= OnLost; }
             }
 
             Task OnLost(SessionLockLostEventArgs args) { Interlocked.Increment(ref eventCount); notified.TrySetResult(true); return Task.CompletedTask; }
+            void OnCancelled() => cancelled.TrySetResult(true);
             Task OnError(ProcessErrorEventArgs args) { Assert.That(initializationFails, Is.True); return Task.CompletedTask; }
         }
 
@@ -325,6 +437,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var entered = NewCompletion<ProcessSessionMessageEventArgs>();
             var notified = NewCompletion<SessionLockLostEventArgs>();
             var release = NewCompletion<bool>();
+            var cancelled = NewCompletion<bool>();
             try
             {
                 processor.ProcessMessageAsync += OnMessage;
@@ -333,6 +446,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var args = await Await(entered.Task);
                 detection.TrySetResult(true);
                 var loss = await Await(notified.Task);
+                await Await(cancelled.Task);
                 Assert.That(loss.Exception, Is.SameAs(exception));
                 Assert.That(args.CancellationToken.IsCancellationRequested, Is.True);
                 receiver.Verify(receiver => receiver.CloseAsync(It.IsAny<CancellationToken>()), Times.Never);
@@ -349,10 +463,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             async Task OnMessage(ProcessSessionMessageEventArgs args)
             {
                 args.SessionLockLostAsync += OnLost;
+                using var cancellation = args.CancellationToken.Register(OnCancelled);
                 try { entered.TrySetResult(args); await release.Task; }
                 finally { args.SessionLockLostAsync -= OnLost; }
             }
             Task OnLost(SessionLockLostEventArgs args) { notified.TrySetResult(args); return Task.CompletedTask; }
+            void OnCancelled() => cancelled.TrySetResult(true);
             Task OnError(ProcessErrorEventArgs args) { Assert.That(args.Exception, Is.SameAs(exception)); return Task.CompletedTask; }
         }
 

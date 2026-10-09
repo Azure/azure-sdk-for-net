@@ -192,19 +192,27 @@ namespace Azure.Messaging.ServiceBus
             CancellationTokenSource sessionLockCancellationSource)
         {
             CancellationToken sessionCancellationToken = sessionCancellationSource.Token;
+            SessionLockLostException = exception;
+            Exception callbackException = null;
             try
             {
-                SessionLockLostException = exception;
-                try
-                {
-                    sessionCancellationSource.Cancel();
-                }
-                finally
-                {
-                    sessionLockCancellationSource.Cancel();
-                }
+                sessionLockCancellationSource.Cancel();
             }
-            catch (Exception callbackException)
+            catch (Exception notificationException)
+            {
+                callbackException = notificationException;
+            }
+            try
+            {
+                sessionCancellationSource.Cancel();
+            }
+            catch (Exception cancellationException)
+            {
+                callbackException = callbackException == null
+                    ? cancellationException
+                    : new AggregateException(callbackException, cancellationException);
+            }
+            if (callbackException != null)
             {
                 await RaiseExceptionReceived(new ProcessErrorEventArgs(
                     callbackException,

@@ -49,6 +49,11 @@ namespace Azure.Messaging.ServiceBus
         ///     </item>
         /// </list>
         /// </summary>
+        /// <remarks>
+        /// Event handlers must return promptly and must not synchronously wait for <see cref="CancellationToken"/> to be cancelled.
+        /// When session lock loss triggers processing cancellation, the client signals this event first.
+        /// The client does not wait for the tasks returned by event handlers to complete before requesting cancellation.
+        /// </remarks>
         public event Func<SessionLockLostEventArgs, Task> SessionLockLostAsync;
 
         /// <summary>
