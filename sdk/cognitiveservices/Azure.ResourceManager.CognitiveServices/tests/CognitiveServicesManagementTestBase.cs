@@ -27,10 +27,11 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         }
 
         [SetUp]
-        public async Task CreateCommonClient()
+        public void CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            DefaultSubscription = Client.GetSubscriptionResource(
+                SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId));
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
