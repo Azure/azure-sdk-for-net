@@ -64,6 +64,7 @@ namespace Azure.Generator.Management
         private HashSet<string>? _customReferencedCollectionResults;
         private readonly Dictionary<string, List<(IReadOnlySet<string>? Namespaces, string? OriginalName)>> _preservedCollectionResultNames = new(StringComparer.Ordinal);
         private HashSet<(string Namespace, string Name)>? _originalCollectionResultNames;
+        private Dictionary<(TypeProvider EnclosingType, InputServiceMethod Method, bool IsAsync), string>? _originalArrayCollectionResultNames;
 
         internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
 
@@ -72,8 +73,14 @@ namespace Azure.Generator.Management
         internal string GetUniqueCollectionResultName(string baseName) =>
             AllocateCollectionResultName(baseName, null, null, "CollectionResultOfT");
 
-        internal string GetArrayCollectionResultName(string baseName, string @namespace) =>
-            AllocateCollectionResultName(baseName, @namespace, _ => $"{baseName}CollectionResultOfT", "CollectionResultOfT");
+        internal string GetArrayCollectionResultName(string baseName, string @namespace, TypeProvider enclosingType, InputServiceMethod method, bool isAsync)
+        {
+            _ = OriginalCollectionResultNames;
+            var originalName = _originalArrayCollectionResultNames!.TryGetValue((enclosingType, method, isAsync), out var name)
+                ? name
+                : $"{baseName}CollectionResultOfT";
+            return AllocateCollectionResultName(baseName, @namespace, _ => originalName, "CollectionResultOfT");
+        }
 
         private string AllocateCollectionResultName(string baseName, string? @namespace, Func<string, string>? originalName, string suffix)
         {
@@ -191,14 +198,30 @@ namespace Azure.Generator.Management
                     .Concat(ResourceCollectionProviders.SelectMany(provider => provider.ArrayCollectionResultPlans))
                     .Concat(MockableResourceProviders.SelectMany(provider => provider.ArrayCollectionResultPlans))
                     .ToArray();
+                // Replay the old array-only allocator without touching the active helper names.
+                // Numbered identities belong to the particular method that originally allocated them.
+                var allocatedArrayNames = new HashSet<string>(StringComparer.Ordinal);
+                var arrayNames = new Dictionary<(TypeProvider EnclosingType, InputServiceMethod Method, bool IsAsync), string>();
                 foreach (var plan in plans)
                 {
-                    foreach (var name in plan.GetOriginalNames())
+                    var originalNames = plan.GetOriginalNames().ToArray();
+                    // Resource and action methods build async first; collection GetAll builds sync first.
+                    foreach (var isAsync in plan.SyncFirst ? new[] { false, true } : new[] { true, false })
                     {
+                        var baseName = originalNames[isAsync ? 1 : 0][..^"CollectionResultOfT".Length];
+                        var candidate = baseName;
+                        var number = 0;
+                        while (!allocatedArrayNames.Add(candidate))
+                        {
+                            candidate = $"{baseName}{number++}";
+                        }
+                        var name = $"{candidate}CollectionResultOfT";
                         names.Add((ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace, name));
+                        arrayNames.Add((plan.EnclosingType, plan.Method, isAsync), name);
                     }
                 }
                 // Publish only the completed inventory; recursive reads must not see a partial set.
+                _originalArrayCollectionResultNames = arrayNames;
                 return _originalCollectionResultNames = names;
             }
         }

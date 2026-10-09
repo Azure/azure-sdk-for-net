@@ -461,7 +461,7 @@ namespace Azure.Generator.Management.Providers
 
         internal IEnumerable<ArrayResponseCollectionResultPlan> ArrayCollectionResultPlans =>
             _getAlls.Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
-                .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod, "GetAll", "GetAllAsync"))
+                .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod, "GetAll", "GetAllAsync", SyncFirst: true))
                 .Concat(_actions.Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod))
                     .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod)));
 

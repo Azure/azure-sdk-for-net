@@ -68,7 +68,8 @@ namespace Azure.Generator.Management.Providers
             _backCompatProvider = backCompatProvider;
             _methodName = methodName;
             _name = ManagementClientGenerator.Instance.OutputLibrary.GetArrayCollectionResultName(
-                $"{enclosingTypeName}{methodName}", ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+                $"{enclosingTypeName}{methodName}", ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace,
+                backCompatProvider, serviceMethod, isAsync);
 
             _clientField = new FieldProvider(
                 FieldModifiers.Private | FieldModifiers.ReadOnly,
