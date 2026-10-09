@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTaskAssignmentsGetStorageTaskAssignmentInstancesReportsAsyncCollectionResultOfT(
+            return new StorageTaskReportInstanceAsync0CollectionResultOfT(
                 _storageTaskAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTaskAssignmentsGetStorageTaskAssignmentInstancesReportsCollectionResultOfT(
+            return new StorageTaskReportInstance0CollectionResultOfT(
                 _storageTaskAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
