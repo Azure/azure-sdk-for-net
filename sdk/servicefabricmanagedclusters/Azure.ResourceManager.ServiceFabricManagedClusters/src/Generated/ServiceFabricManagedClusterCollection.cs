@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetByResourceGroupAsyncCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ServiceFabricManagedClusterDataAsyncCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetByResourceGroupCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ServiceFabricManagedClusterDataCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>
