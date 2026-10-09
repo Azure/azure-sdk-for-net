@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ExportImportedMachinesJobData item in Value)
+                foreach (ExportImportedMachinesJobContent item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             {
                 return null;
             }
-            IReadOnlyList<ExportImportedMachinesJobData> value = default;
+            IReadOnlyList<ExportImportedMachinesJobContent> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    List<ExportImportedMachinesJobData> array = new List<ExportImportedMachinesJobData>();
+                    List<ExportImportedMachinesJobContent> array = new List<ExportImportedMachinesJobContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExportImportedMachinesJobData.DeserializeExportImportedMachinesJobData(item, options));
+                        array.Add(ExportImportedMachinesJobContent.DeserializeExportImportedMachinesJobContent(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PagedExportImportedMachinesJob(value ?? new ChangeTrackingList<ExportImportedMachinesJobData>(), nextLink, additionalBinaryDataProperties);
+            return new PagedExportImportedMachinesJob(value ?? new ChangeTrackingList<ExportImportedMachinesJobContent>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

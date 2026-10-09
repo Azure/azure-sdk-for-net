@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MigrationDiscovery
 {
     /// <summary></summary>
-    public partial class ImportMachinesJobResource : IJsonModel<ImportMachinesJobData>
+    public partial class ImportMachinesJobResource : IJsonModel<ImportMachinesJobContent>
     {
-        private static IJsonModel<ImportMachinesJobData> s_dataDeserializationInstance;
+        private static IJsonModel<ImportMachinesJobContent> s_dataDeserializationInstance;
 
-        private static IJsonModel<ImportMachinesJobData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ImportMachinesJobData();
+        private static IJsonModel<ImportMachinesJobContent> DataDeserializationInstance => s_dataDeserializationInstance ??= new ImportMachinesJobContent();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImportMachinesJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ImportMachinesJobData>)Data).Write(writer, options);
+        void IJsonModel<ImportMachinesJobContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ImportMachinesJobContent>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImportMachinesJobData IJsonModel<ImportMachinesJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ImportMachinesJobContent IJsonModel<ImportMachinesJobContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImportMachinesJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImportMachinesJobData>(Data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
+        BinaryData IPersistableModel<ImportMachinesJobContent>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImportMachinesJobContent>(Data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImportMachinesJobData IPersistableModel<ImportMachinesJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImportMachinesJobData>(data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
+        ImportMachinesJobContent IPersistableModel<ImportMachinesJobContent>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImportMachinesJobContent>(data, options, AzureResourceManagerMigrationDiscoveryContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImportMachinesJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ImportMachinesJobContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

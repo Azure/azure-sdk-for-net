@@ -15,59 +15,59 @@ using Azure.ResourceManager.MigrationDiscovery.Models;
 
 namespace Azure.ResourceManager.MigrationDiscovery
 {
-    /// <summary> Export machines job REST resource. </summary>
-    public partial class ExportImportedMachinesJobData : MigrationDiscoveryJobBaseInfo, IJsonModel<ExportImportedMachinesJobData>
+    /// <summary> Import machines Job REST Resource. </summary>
+    public partial class ImportMachinesJobContent : MigrationDiscoveryJobBaseInfo, IJsonModel<ImportMachinesJobContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MigrationDiscoveryJobBaseInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportImportedMachinesJobData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImportMachinesJobContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExportImportedMachinesJobData(document.RootElement, options);
+                        return DeserializeImportMachinesJobContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportImportedMachinesJobData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportMachinesJobContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportImportedMachinesJobData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImportMachinesJobContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExportImportedMachinesJobData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportMachinesJobContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportImportedMachinesJobData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ImportMachinesJobContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportImportedMachinesJobData IPersistableModel<ExportImportedMachinesJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExportImportedMachinesJobData)PersistableModelCreateCore(data, options);
+        ImportMachinesJobContent IPersistableModel<ImportMachinesJobContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ImportMachinesJobContent)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportImportedMachinesJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImportMachinesJobContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExportImportedMachinesJobData"/> from. </param>
-        internal static ExportImportedMachinesJobData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ImportMachinesJobContent"/> from. </param>
+        internal static ImportMachinesJobContent FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExportImportedMachinesJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeImportMachinesJobContent(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExportImportedMachinesJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImportMachinesJobContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportImportedMachinesJobData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImportMachinesJobContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportImportedMachinesJobData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportMachinesJobContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.MigrationDiscovery
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExportImportedMachinesJobData IJsonModel<ExportImportedMachinesJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExportImportedMachinesJobData)JsonModelCreateCore(ref reader, options);
+        ImportMachinesJobContent IJsonModel<ImportMachinesJobContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ImportMachinesJobContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MigrationDiscoveryJobBaseInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportImportedMachinesJobData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImportMachinesJobContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportImportedMachinesJobData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportMachinesJobContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportImportedMachinesJobData(document.RootElement, options);
+            return DeserializeImportMachinesJobContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExportImportedMachinesJobData DeserializeExportImportedMachinesJobData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ImportMachinesJobContent DeserializeImportMachinesJobContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             string name = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ExportImportedMachinesJobEntityProperties properties = default;
+            ImportMachinesJobProperties properties = default;
             string status = default;
             string startTime = default;
             string endTime = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                     {
                         continue;
                     }
-                    properties = ExportImportedMachinesJobEntityProperties.DeserializeExportImportedMachinesJobEntityProperties(prop.Value, options);
+                    properties = ImportMachinesJobProperties.DeserializeImportMachinesJobProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExportImportedMachinesJobData(
+            return new ImportMachinesJobContent(
                 id,
                 name,
                 @type,

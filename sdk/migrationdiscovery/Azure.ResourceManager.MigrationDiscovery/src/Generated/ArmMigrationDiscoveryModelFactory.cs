@@ -2078,10 +2078,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="startTime"> Gets or sets the Job start time. </param>
         /// <param name="endTime"> Gets or sets the Job end time. </param>
         /// <param name="displayName"> Gets or sets the Display name. </param>
-        /// <returns> A new <see cref="MigrationDiscovery.ExportImportedMachinesJobData"/> instance for mocking. </returns>
-        public static ExportImportedMachinesJobData ExportImportedMachinesJobData(ResourceIdentifier id = default, string name = default, string @type = default, ExportImportedMachinesJobEntityProperties properties = default, string status = default, string startTime = default, string endTime = default, string displayName = default)
+        /// <returns> A new <see cref="MigrationDiscovery.ExportImportedMachinesJobContent"/> instance for mocking. </returns>
+        public static ExportImportedMachinesJobContent ExportImportedMachinesJobContent(ResourceIdentifier id = default, string name = default, string @type = default, ExportImportedMachinesJobEntityProperties properties = default, string status = default, string startTime = default, string endTime = default, string displayName = default)
         {
-            return new ExportImportedMachinesJobData(
+            return new ExportImportedMachinesJobContent(
                 id,
                 name,
                 @type,
@@ -2121,10 +2121,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="startTime"> Gets or sets the Job start time. </param>
         /// <param name="endTime"> Gets or sets the Job end time. </param>
         /// <param name="displayName"> Gets or sets the Display name. </param>
-        /// <returns> A new <see cref="MigrationDiscovery.ImportMachinesJobData"/> instance for mocking. </returns>
-        public static ImportMachinesJobData ImportMachinesJobData(ResourceIdentifier id = default, string name = default, string @type = default, ImportMachinesJobProperties properties = default, string status = default, string startTime = default, string endTime = default, string displayName = default)
+        /// <returns> A new <see cref="MigrationDiscovery.ImportMachinesJobContent"/> instance for mocking. </returns>
+        public static ImportMachinesJobContent ImportMachinesJobContent(ResourceIdentifier id = default, string name = default, string @type = default, ImportMachinesJobProperties properties = default, string status = default, string startTime = default, string endTime = default, string displayName = default)
         {
-            return new ImportMachinesJobData(
+            return new ImportMachinesJobContent(
                 id,
                 name,
                 @type,

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _importJobsControllerRestClient.CreateGetImportjobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ImportMachinesJobData> response = Response.FromValue(ImportMachinesJobData.FromResponse(result), result);
+                Response<ImportMachinesJobContent> response = Response.FromValue(ImportMachinesJobContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _importJobsControllerRestClient.CreateGetImportjobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ImportMachinesJobData> response = Response.FromValue(ImportMachinesJobData.FromResponse(result), result);
+                Response<ImportMachinesJobContent> response = Response.FromValue(ImportMachinesJobContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImportMachinesJobData, ImportMachinesJobResource>(new ImportJobsControllerGetImportjobsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImportMachinesJobContent, ImportMachinesJobResource>(new ImportJobsControllerGetImportjobsAsyncCollectionResultOfT(
                 _importJobsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImportMachinesJobData, ImportMachinesJobResource>(new ImportJobsControllerGetImportjobsCollectionResultOfT(
+            return new PageableWrapper<ImportMachinesJobContent, ImportMachinesJobResource>(new ImportJobsControllerGetImportjobsCollectionResultOfT(
                 _importJobsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 HttpMessage message = _importJobsControllerRestClient.CreateGetImportjobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ImportMachinesJobData> response = default;
+                Response<ImportMachinesJobContent> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ImportMachinesJobData.FromResponse(result), result);
+                        response = Response.FromValue(ImportMachinesJobContent.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ImportMachinesJobData)null, result);
+                        response = Response.FromValue((ImportMachinesJobContent)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 HttpMessage message = _importJobsControllerRestClient.CreateGetImportjobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ImportMachinesJobData> response = default;
+                Response<ImportMachinesJobContent> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ImportMachinesJobData.FromResponse(result), result);
+                        response = Response.FromValue(ImportMachinesJobContent.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ImportMachinesJobData)null, result);
+                        response = Response.FromValue((ImportMachinesJobContent)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -370,14 +370,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 HttpMessage message = _importJobsControllerRestClient.CreateGetImportjobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ImportMachinesJobData> response = default;
+                Response<ImportMachinesJobContent> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ImportMachinesJobData.FromResponse(result), result);
+                        response = Response.FromValue(ImportMachinesJobContent.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ImportMachinesJobData)null, result);
+                        response = Response.FromValue((ImportMachinesJobContent)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 HttpMessage message = _importJobsControllerRestClient.CreateGetImportjobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ImportMachinesJobData> response = default;
+                Response<ImportMachinesJobContent> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ImportMachinesJobData.FromResponse(result), result);
+                        response = Response.FromValue(ImportMachinesJobContent.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ImportMachinesJobData)null, result);
+                        response = Response.FromValue((ImportMachinesJobContent)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

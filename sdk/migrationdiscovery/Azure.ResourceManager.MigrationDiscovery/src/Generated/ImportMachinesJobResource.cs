@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
     {
         private readonly ClientDiagnostics _importJobsControllerClientDiagnostics;
         private readonly ImportJobsController _importJobsControllerRestClient;
-        private readonly ImportMachinesJobData _data;
+        private readonly ImportMachinesJobContent _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.OffAzure/importSites/importJobs";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <summary> Initializes a new instance of <see cref="ImportMachinesJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ImportMachinesJobResource(ArmClient client, ImportMachinesJobData data) : this(client, data.Id)
+        internal ImportMachinesJobResource(ArmClient client, ImportMachinesJobContent data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ImportMachinesJobData Data
+        public virtual ImportMachinesJobContent Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _importJobsControllerRestClient.CreateGetImportjobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ImportMachinesJobData> response = Response.FromValue(ImportMachinesJobData.FromResponse(result), result);
+                Response<ImportMachinesJobContent> response = Response.FromValue(ImportMachinesJobContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 };
                 HttpMessage message = _importJobsControllerRestClient.CreateGetImportjobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ImportMachinesJobData> response = Response.FromValue(ImportMachinesJobData.FromResponse(result), result);
+                Response<ImportMachinesJobContent> response = Response.FromValue(ImportMachinesJobContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

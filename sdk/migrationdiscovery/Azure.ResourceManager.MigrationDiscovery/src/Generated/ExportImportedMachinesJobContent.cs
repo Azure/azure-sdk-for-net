@@ -12,25 +12,25 @@ using Azure.ResourceManager.MigrationDiscovery.Models;
 
 namespace Azure.ResourceManager.MigrationDiscovery
 {
-    /// <summary> Import machines Job REST Resource. </summary>
-    public partial class ImportMachinesJobData : MigrationDiscoveryJobBaseInfo
+    /// <summary> Export machines job REST resource. </summary>
+    public partial class ExportImportedMachinesJobContent : MigrationDiscoveryJobBaseInfo
     {
-        /// <summary> Initializes a new instance of <see cref="ImportMachinesJobData"/>. </summary>
-        internal ImportMachinesJobData()
+        /// <summary> Initializes a new instance of <see cref="ExportImportedMachinesJobContent"/>. </summary>
+        internal ExportImportedMachinesJobContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportMachinesJobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportImportedMachinesJobContent"/>. </summary>
         /// <param name="id"> Gets or sets the relative ARM name to get job. </param>
         /// <param name="name"> Gets or sets the Job ID. </param>
         /// <param name="type"> Type name for export job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Gets or sets the import job properties. </param>
+        /// <param name="properties"> Gets or sets the export machines job properties. </param>
         /// <param name="status"> Gets or sets the Job status. </param>
         /// <param name="startTime"> Gets or sets the Job start time. </param>
         /// <param name="endTime"> Gets or sets the Job end time. </param>
         /// <param name="displayName"> Gets or sets the Display name. </param>
-        internal ImportMachinesJobData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImportMachinesJobProperties properties, string status, string startTime, string endTime, string displayName) : base(id, name, @type, additionalBinaryDataProperties)
+        internal ExportImportedMachinesJobContent(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportImportedMachinesJobEntityProperties properties, string status, string startTime, string endTime, string displayName) : base(id, name, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
             Status = status;
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
             DisplayName = displayName;
         }
 
-        /// <summary> Gets or sets the import job properties. </summary>
-        public ImportMachinesJobProperties Properties { get; }
+        /// <summary> Gets or sets the export machines job properties. </summary>
+        public ExportImportedMachinesJobEntityProperties Properties { get; }
 
         /// <summary> Gets or sets the Job status. </summary>
         public string Status { get; }
