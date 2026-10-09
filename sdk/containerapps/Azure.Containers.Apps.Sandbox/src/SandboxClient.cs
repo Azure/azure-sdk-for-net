@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Containers.Apps.Sandbox
 {
     /// <summary> A sandbox scoped to a sandbox group. </summary>
-    public partial class SandboxResource
+    public partial class SandboxClient
     {
         private readonly SandboxesClient _client;
 
@@ -24,12 +24,12 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> The model returned by the service, or null when this client was created from an identifier alone. </summary>
         public virtual SandboxProperties? Data { get; }
 
-        /// <summary> Initializes a new instance of SandboxResource for mocking. </summary>
-        protected SandboxResource()
+        /// <summary> Initializes a new instance of SandboxClient for mocking. </summary>
+        protected SandboxClient()
         {
         }
 
-        internal SandboxResource(SandboxesClient client, string id, SandboxProperties? data = null)
+        internal SandboxClient(SandboxesClient client, string id, SandboxProperties? data = null)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -39,20 +39,20 @@ namespace Azure.Containers.Apps.Sandbox
             Data = data;
         }
 
-        /// <summary> Gets the current sandbox properties in a new resource client. This instance's <see cref="Data"/> remains unchanged. </summary>
+        /// <summary> Gets the current sandbox properties in a new client. This instance's <see cref="Data"/> remains unchanged. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Response<SandboxResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SandboxClient> Get(CancellationToken cancellationToken = default)
         {
             Response<SandboxProperties> response = _client.GetProperties(Id, cancellationToken);
-            return Response.FromValue(new SandboxResource(_client, Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new SandboxClient(_client, Id, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Gets the current sandbox properties in a new resource client asynchronously. This instance's <see cref="Data"/> remains unchanged. </summary>
+        /// <summary> Gets the current sandbox properties in a new client asynchronously. This instance's <see cref="Data"/> remains unchanged. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual async Task<Response<SandboxResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxClient>> GetAsync(CancellationToken cancellationToken = default)
         {
             Response<SandboxProperties> response = await _client.GetPropertiesAsync(Id, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new SandboxResource(_client, Id, response.Value), response.GetRawResponse());
+            return Response.FromValue(new SandboxClient(_client, Id, response.Value), response.GetRawResponse());
         }
 
         /// <summary> Gets a sandbox by identifier. Uses this sandbox's identifier. </summary>
@@ -293,6 +293,7 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Task<Response<WriteFileResult>> UploadSandboxFileAsync(string path, Stream content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default) =>
             _client.UploadSandboxFileAsync(Id, path, content, createDirs, mode, containerName, cancellationToken);
 
+#pragma warning disable AZC0004, AZC0015 // Streaming connections are asynchronous and return a connected stream or session.
         /// <summary> Opens an interactive exec WebSocket connection for this sandbox. Dispose the returned stream. </summary>
         /// <param name="containerName"> The container where the session runs. </param>
         /// <param name="user"> The optional user for the session. </param>
@@ -327,6 +328,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="cancellationToken"> The cancellation token for connecting. </param>
         public virtual Task<SandboxStream> ConnectToSandboxProcessesStreamAsync(string containerName = default, CancellationToken cancellationToken = default) =>
             _client.ConnectToSandboxProcessesStreamAsync(Id, containerName, cancellationToken);
+#pragma warning restore AZC0004, AZC0015
 
         /// <summary> Gets egress decisions for a sandbox. Uses this sandbox's identifier. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>

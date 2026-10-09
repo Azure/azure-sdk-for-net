@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Containers.Apps.Sandbox.Tests
 {
-    public class SandboxResourceFacadeTests
+    public class SandboxClientFacadeTests
     {
         private const string SandboxJson =
             """{"id":"sandbox-id","sourcesRef":{"diskImage":{"name":"ubuntu","isPublic":true}},"resources":{"cpu":"1","memory":"2Gi"},"state":"Running"}""";
@@ -37,22 +37,33 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         }
 
         [Test]
-        public void ResourceFactoriesValidateNamesAndDoNotFetchData()
+        public void ClientFactoriesValidateNamesAndDoNotFetchData()
         {
-            SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(new MockTransport());
-            Func<string, object>[] factories =
+            MockTransport transport = new MockTransport();
+            SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
+            (Func<string, object> Create, Type ClientType)[] factories =
             {
-                group.GetSandbox, group.GetConnection, group.GetContentPackage,
-                group.GetCredential, group.GetDiskImage, group.GetPublicDiskImage,
-                group.GetEgressPolicy, group.GetSecret, group.GetSnapshot, group.GetVolume
+                (group.GetSandbox, typeof(SandboxClient)),
+                (group.GetConnection, typeof(ConnectionClient)),
+                (group.GetContentPackage, typeof(ContentPackageClient)),
+                (group.GetCredential, typeof(CredentialClient)),
+                (group.GetDiskImage, typeof(DiskImageClient)),
+                (group.GetPublicDiskImage, typeof(PublicDiskImageClient)),
+                (group.GetEgressPolicy, typeof(EgressPolicyClient)),
+                (group.GetSecret, typeof(SandboxSecretClient)),
+                (group.GetSnapshot, typeof(SnapshotClient)),
+                (group.GetVolume, typeof(VolumeClient))
             };
 
-            foreach (Func<string, object> factory in factories)
+            foreach ((Func<string, object> factory, Type clientType) in factories)
             {
                 Assert.Throws<ArgumentNullException>(() => factory(null));
                 Assert.Throws<ArgumentException>(() => factory(""));
+                Assert.That(factory("test-id"), Is.TypeOf(clientType));
+                Assert.That(clientType.IsPublic, Is.True);
             }
 
+            Assert.That(transport.Requests, Is.Empty);
             Assert.That(group.GetSandbox("sandbox-id").Data, Is.Null);
             Assert.That(group.GetConnection("connection-id").Id, Is.EqualTo("connection-id"));
             Assert.That(group.GetContentPackage("package-id").Id, Is.EqualTo("package-id"));
@@ -121,9 +132,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockResponse raw = SandboxClientTestHelpers.CreateJsonResponse(200, SandboxJson);
             MockTransport transport = new MockTransport(raw);
-            SandboxResource original = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandbox("sandbox-id");
+            SandboxClient original = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandbox("sandbox-id");
 
-            Response<SandboxResource> result = original.Get();
+            Response<SandboxClient> result = original.Get();
 
             Assert.That(original.Data, Is.Null);
             Assert.That(result.Value, Is.Not.SameAs(original));
@@ -139,10 +150,10 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockResponse raw = SandboxClientTestHelpers.CreateJsonResponse(200, """{"name":"credential-name"}""");
             MockTransport transport = new MockTransport(raw);
-            CredentialResource original = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetCredential("credential-name");
+            CredentialClient original = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetCredential("credential-name");
             using CancellationTokenSource source = new CancellationTokenSource();
 
-            Response<CredentialResource> result = await original.GetAsync(source.Token);
+            Response<CredentialClient> result = await original.GetAsync(source.Token);
 
             Assert.That(original.Data, Is.Null);
             Assert.That(result.Value.Name, Is.EqualTo("credential-name"));
@@ -156,7 +167,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(404, """{"error":{"code":"NotFound","message":"Missing"}}"""));
-            SandboxResource resource = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandbox("missing");
+            SandboxClient resource = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandbox("missing");
 
             RequestFailedException exception = Assert.Throws<RequestFailedException>(() => resource.Get());
 
@@ -169,7 +180,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(404, """{"error":{"code":"NotFound","message":"Missing"}}"""));
-            SandboxResource resource = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandbox("missing");
+            SandboxClient resource = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandbox("missing");
 
             Response response = resource.GetProperties(new RequestContext { ErrorOptions = ErrorOptions.NoThrow });
 
@@ -181,7 +192,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         public void ResourceOperationUsesScopedIdentifier()
         {
             MockTransport transport = new MockTransport(new MockResponse(204));
-            SandboxResource resource = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandbox("sandbox-id");
+            SandboxClient resource = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandbox("sandbox-id");
 
             Response response = resource.Delete();
 
@@ -197,7 +208,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             MockTransport transport = new MockTransport(raw);
             SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
 
-            Response<SandboxResource> result = await group.CreateSandboxAsync(SandboxClientTestBase.CreateSandboxContent("facade-test"));
+            Response<SandboxClient> result = await group.CreateSandboxAsync(SandboxClientTestBase.CreateSandboxContent("facade-test"));
 
             Assert.That(result.Value.Id, Is.EqualTo("sandbox-id"));
             Assert.That(result.Value.Data.Id, Is.EqualTo("sandbox-id"));
@@ -210,7 +221,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(SandboxClientTestHelpers.CreateJsonResponse(201,
                 """{"itemName":"file.txt","path":"folder/file.txt","isDirectory":false}"""));
-            VolumeResource resource = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetVolume("my-volume");
+            VolumeClient resource = SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetVolume("my-volume");
             using MemoryStream content = new MemoryStream(Encoding.UTF8.GetBytes("payload"));
 
             Response<VolumePathItem> result = resource.UploadVolumeFile("folder/file.txt", content, overwrite: true);
@@ -232,7 +243,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             MockTransport transport = new MockTransport(first, second);
             SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
 
-            List<Page<SandboxResource>> pages = group.GetSandboxes(skipToken: "page-1", labels: "env=test").AsPages().ToList();
+            List<Page<SandboxClient>> pages = group.GetSandboxes(skipToken: "page-1", labels: "env=test").AsPages().ToList();
 
             Assert.That(pages, Has.Count.EqualTo(2));
             Assert.That(pages[0].Values[0].Id, Is.EqualTo("sandbox-id"));
@@ -256,9 +267,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 """{"value":[{"id":"sandbox-2","sourcesRef":{"diskImage":{"name":"ubuntu","isPublic":true}},"resources":{"cpu":"1","memory":"2Gi"}}]}""");
             MockTransport transport = new MockTransport(first, second);
             SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
-            List<Page<SandboxResource>> pages = new List<Page<SandboxResource>>();
+            List<Page<SandboxClient>> pages = new List<Page<SandboxClient>>();
 
-            await foreach (Page<SandboxResource> page in group.GetSandboxesAsync(skipToken: "page-1").AsPages())
+            await foreach (Page<SandboxClient> page in group.GetSandboxesAsync(skipToken: "page-1").AsPages())
             {
                 pages.Add(page);
             }

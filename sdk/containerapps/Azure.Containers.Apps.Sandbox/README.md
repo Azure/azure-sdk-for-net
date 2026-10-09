@@ -50,11 +50,11 @@ Its read-only `SubscriptionId`, `ResourceGroupName`, and `Name` properties expos
 
 `SandboxGroupClient` exposes create and list operations for sandboxes and related resources. Its `GetSandbox(id)`, `GetVolume(volumeName)`, `GetConnection(id)`, and other resource factory methods provide clients for individual resources. Operations on a known resource, including sandbox files, commands, lifecycle, and streams, are available on the corresponding resource client. The generated operation subclients are internal implementation details.
 
-### Resource clients
+### Scoped clients
 
-For operations on a known resource, `SandboxGroupClient` also offers resource clients such as `GetSandbox(id)`, `GetVolume(volumeName)`, and `GetSecret(secretId)`. Each resource client holds its identifier and delegates requests to the corresponding subclient. The group's create and list methods return resource clients with their `Data` populated from the service response; a resource obtained by identifier alone has `Data == null`. Where the service supports retrieval, `Get()` or `GetAsync()` returns a **new** resource with the retrieved data, leaving the original resource's `Data` unchanged. Mutating operations do not refresh `Data`.
-`SandboxResource.Id` is the sandbox's opaque string identifier, not an ARM resource identifier.
-`SandboxResource` also offers async exec and process WebSocket streams and an HTTP log stream scoped to its `Id`.
+For operations on a known resource, `SandboxGroupClient` offers scoped clients such as `SandboxClient`, `VolumeClient`, and `SandboxSecretClient`, obtained through `GetSandbox(id)`, `GetVolume(volumeName)`, and `GetSecret(secretId)`. Each client holds its identifier and delegates requests to the corresponding subclient. The group's create and list methods return clients with their `Data` populated from the service response; a client obtained by identifier alone has `Data == null`. Where the service supports retrieval, `Get()` or `GetAsync()` returns a **new** client with the retrieved data, leaving the original client's `Data` unchanged. Mutating operations do not refresh `Data`.
+`SandboxClient.Id` is the sandbox's opaque string identifier, not an ARM resource identifier.
+`SandboxClient` also offers async exec and process WebSocket streams and an HTTP log stream scoped to its `Id`.
 
 ### Models
 
@@ -86,7 +86,7 @@ CreateSandboxContent content = new CreateSandboxContent
     Resources = new SandboxResources("1000m", "2048Mi")
 };
 
-SandboxResource sandbox = (await sandboxGroup.CreateSandboxAsync(content)).Value;
+SandboxClient sandbox = (await sandboxGroup.CreateSandboxAsync(content)).Value;
 try
 {
     ExecuteSandboxCommandContent command = new ExecuteSandboxCommandContent("/bin/echo");
@@ -109,7 +109,7 @@ For synchronous usage and more details, see the [samples](https://github.com/Azu
 ### List sandboxes
 
 ```C#
-await foreach (SandboxResource sandbox in sandboxGroupClient.GetSandboxesAsync())
+await foreach (SandboxClient sandbox in sandboxGroupClient.GetSandboxesAsync())
 {
     Console.WriteLine($"{sandbox.Id}: {sandbox.Data.State}");
 }
@@ -118,11 +118,11 @@ await foreach (SandboxResource sandbox in sandboxGroupClient.GetSandboxesAsync()
 ### Work with a sandbox resource
 
 ```C#
-SandboxResource sandbox = sandboxGroupClient.GetSandbox("sandbox-id");
-Response<SandboxResource> current = await sandbox.GetAsync();
+SandboxClient sandbox = sandboxGroupClient.GetSandbox("sandbox-id");
+Response<SandboxClient> current = await sandbox.GetAsync();
 Console.WriteLine($"{current.Value.Id}: {current.Value.Data.State}");
 
-await foreach (SandboxResource item in sandboxGroupClient.GetSandboxesAsync())
+await foreach (SandboxClient item in sandboxGroupClient.GetSandboxesAsync())
 {
     Console.WriteLine($"{item.Id}: {item.Data.State}");
 }
@@ -131,7 +131,7 @@ await foreach (SandboxResource item in sandboxGroupClient.GetSandboxesAsync())
 ### List sandbox-group volumes
 
 ```C#
-await foreach (VolumeResource volume in sandboxGroupClient.GetVolumesAsync())
+await foreach (VolumeClient volume in sandboxGroupClient.GetVolumesAsync())
 {
     Console.WriteLine($"{volume.VolumeName}: {volume.Data.ProvisioningState}");
 }
@@ -142,7 +142,7 @@ await foreach (VolumeResource volume in sandboxGroupClient.GetVolumesAsync())
 Exec and process streams use WebSocket connections. The process stream sends one text frame per refresh in the service's `top` output format:
 
 ```C#
-SandboxResource sandbox = sandboxGroupClient.GetSandbox("<sandbox-id>");
+SandboxClient sandbox = sandboxGroupClient.GetSandbox("<sandbox-id>");
 await using SandboxProcessStream stream = await sandbox.OpenSandboxProcessStreamAsync();
 string snapshot;
 while ((snapshot = await stream.ReadSnapshotAsync()) != null)
@@ -165,7 +165,7 @@ SandboxExecStartRequest request = new SandboxExecStartRequest("/bin/sh")
 };
 request.Arguments.Add("-c");
 request.Arguments.Add("echo hello");
-SandboxResource sandbox = sandboxGroupClient.GetSandbox("<sandbox-id>");
+SandboxClient sandbox = sandboxGroupClient.GetSandbox("<sandbox-id>");
 await using SandboxExecSession session = await sandbox.StartSandboxExecSessionAsync(request);
 SandboxExecEvent started = await session.ReceiveAsync();
 if (started.Type != SandboxExecEventType.SessionId)
@@ -188,7 +188,7 @@ The low-level `ConnectToSandboxExecStreamAsync` and `ConnectToSandboxProcessesSt
 Log streaming is **HTTP chunked transfer**, not WebSocket. Dispose the returned `Stream` when finished; it is not buffered. The default format is plain text; `SandboxLogFormat.Json` returns newline-delimited JSON with `timestamp`, `stream`, and `message` fields.
 
 ```C#
-SandboxResource sandbox = sandboxGroupClient.GetSandbox("<sandbox-id>");
+SandboxClient sandbox = sandboxGroupClient.GetSandbox("<sandbox-id>");
 Response<Stream> response = await sandbox.OpenSandboxLogStreamAsync(
     logFormat: SandboxLogFormat.Json, follow: false);
 using StreamReader reader = new StreamReader(response.Value);

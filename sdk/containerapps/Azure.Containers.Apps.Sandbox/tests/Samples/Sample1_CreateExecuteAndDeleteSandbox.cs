@@ -36,7 +36,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests.Samples
                 Resources = new SandboxResources("1000m", "2048Mi")
             };
 
-            SandboxResource sandbox = sandboxGroup.CreateSandbox(content).Value;
+            SandboxClient sandbox = sandboxGroup.CreateSandbox(content).Value;
             try
             {
                 ExecuteSandboxCommandContent command = new ExecuteSandboxCommandContent("/bin/echo");
@@ -84,7 +84,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests.Samples
                 Resources = new SandboxResources("1000m", "2048Mi")
             };
 
-            SandboxResource sandbox = (await sandboxGroup.CreateSandboxAsync(content)).Value;
+            SandboxClient sandbox = (await sandboxGroup.CreateSandboxAsync(content)).Value;
             try
             {
                 ExecuteSandboxCommandContent command = new ExecuteSandboxCommandContent("/bin/echo");

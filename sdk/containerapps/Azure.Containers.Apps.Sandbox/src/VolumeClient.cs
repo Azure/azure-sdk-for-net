@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Containers.Apps.Sandbox
 {
     /// <summary> A volume scoped to a sandbox group. </summary>
-    public partial class VolumeResource
+    public partial class VolumeClient
     {
         private readonly VolumesClient _client;
 
@@ -24,12 +24,12 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> The model returned by the service, or null when this client was created from an identifier alone. </summary>
         public virtual SandboxGroupVolume? Data { get; }
 
-        /// <summary> Initializes a new instance of VolumeResource for mocking. </summary>
-        protected VolumeResource()
+        /// <summary> Initializes a new instance of VolumeClient for mocking. </summary>
+        protected VolumeClient()
         {
         }
 
-        internal VolumeResource(VolumesClient client, string volumeName, SandboxGroupVolume? data = null)
+        internal VolumeClient(VolumesClient client, string volumeName, SandboxGroupVolume? data = null)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
@@ -39,51 +39,51 @@ namespace Azure.Containers.Apps.Sandbox
             Data = data;
         }
 
-        /// <summary> Gets the current volume in a new resource client. This instance's <see cref="Data"/> remains unchanged. </summary>
+        /// <summary> Gets the current volume in a new client. This instance's <see cref="Data"/> remains unchanged. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Response<VolumeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<VolumeClient> Get(CancellationToken cancellationToken = default)
         {
             Response<SandboxGroupVolume> response = _client.GetVolume(VolumeName, cancellationToken);
-            return Response.FromValue(new VolumeResource(_client, VolumeName, response.Value), response.GetRawResponse());
+            return Response.FromValue(new VolumeClient(_client, VolumeName, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Gets the current volume in a new resource client asynchronously. This instance's <see cref="Data"/> remains unchanged. </summary>
+        /// <summary> Gets the current volume in a new client asynchronously. This instance's <see cref="Data"/> remains unchanged. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual async Task<Response<VolumeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeClient>> GetAsync(CancellationToken cancellationToken = default)
         {
             Response<SandboxGroupVolume> response = await _client.GetVolumeAsync(VolumeName, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new VolumeResource(_client, VolumeName, response.Value), response.GetRawResponse());
+            return Response.FromValue(new VolumeClient(_client, VolumeName, response.Value), response.GetRawResponse());
         }
 
-        /// <summary> Deletes a volume by name. Uses this resource's name. </summary>
+        /// <summary> Deletes a volume by name. Uses this client's name. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Response DeleteVolume(RequestContext context)
         {
             return _client.DeleteVolume(VolumeName, context);
         }
 
-        /// <summary> Deletes a volume by name. Uses this resource's name. </summary>
+        /// <summary> Deletes a volume by name. Uses this client's name. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Task<Response> DeleteVolumeAsync(RequestContext context)
         {
             return _client.DeleteVolumeAsync(VolumeName, context);
         }
 
-        /// <summary> Deletes a volume by name. Uses this resource's name. </summary>
+        /// <summary> Deletes a volume by name. Uses this client's name. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Response DeleteVolume(CancellationToken cancellationToken = default)
         {
             return _client.DeleteVolume(VolumeName, cancellationToken);
         }
 
-        /// <summary> Deletes a volume by name. Uses this resource's name. </summary>
+        /// <summary> Deletes a volume by name. Uses this client's name. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Task<Response> DeleteVolumeAsync(CancellationToken cancellationToken = default)
         {
             return _client.DeleteVolumeAsync(VolumeName, cancellationToken);
         }
 
-        /// <summary> Delete a file or directory from a volume. Uses this resource's name. </summary>
+        /// <summary> Delete a file or directory from a volume. Uses this client's name. </summary>
         /// <param name="path"> The file or directory path to delete. </param>
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -92,7 +92,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.DeleteVolumeFile(VolumeName, path, recursive, context);
         }
 
-        /// <summary> Delete a file or directory from a volume. Uses this resource's name. </summary>
+        /// <summary> Delete a file or directory from a volume. Uses this client's name. </summary>
         /// <param name="path"> The file or directory path to delete. </param>
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -101,7 +101,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.DeleteVolumeFileAsync(VolumeName, path, recursive, context);
         }
 
-        /// <summary> Delete a file or directory from a volume. Uses this resource's name. </summary>
+        /// <summary> Delete a file or directory from a volume. Uses this client's name. </summary>
         /// <param name="path"> The file or directory path to delete. </param>
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -110,7 +110,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.DeleteVolumeFile(VolumeName, path, recursive, cancellationToken);
         }
 
-        /// <summary> Delete a file or directory from a volume. Uses this resource's name. </summary>
+        /// <summary> Delete a file or directory from a volume. Uses this client's name. </summary>
         /// <param name="path"> The file or directory path to delete. </param>
         /// <param name="recursive"> Whether to delete a directory and all of its contents. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -119,35 +119,35 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.DeleteVolumeFileAsync(VolumeName, path, recursive, cancellationToken);
         }
 
-        /// <summary> Gets a specific volume by name. Uses this resource's name. </summary>
+        /// <summary> Gets a specific volume by name. Uses this client's name. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Response GetVolume(RequestContext context)
         {
             return _client.GetVolume(VolumeName, context);
         }
 
-        /// <summary> Gets a specific volume by name. Uses this resource's name. </summary>
+        /// <summary> Gets a specific volume by name. Uses this client's name. </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Task<Response> GetVolumeAsync(RequestContext context)
         {
             return _client.GetVolumeAsync(VolumeName, context);
         }
 
-        /// <summary> Gets a specific volume by name. Uses this resource's name. </summary>
+        /// <summary> Gets a specific volume by name. Uses this client's name. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Response<SandboxGroupVolume> GetVolume(CancellationToken cancellationToken = default)
         {
             return _client.GetVolume(VolumeName, cancellationToken);
         }
 
-        /// <summary> Gets a specific volume by name. Uses this resource's name. </summary>
+        /// <summary> Gets a specific volume by name. Uses this client's name. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Task<Response<SandboxGroupVolume>> GetVolumeAsync(CancellationToken cancellationToken = default)
         {
             return _client.GetVolumeAsync(VolumeName, cancellationToken);
         }
 
-        /// <summary> List directory contents within a volume. Uses this resource's name. </summary>
+        /// <summary> List directory contents within a volume. Uses this client's name. </summary>
         /// <param name="path"> The directory path to list. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Response GetVolumeFilesMetadata(string path, RequestContext context)
@@ -155,7 +155,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.GetVolumeFilesMetadata(VolumeName, path, context);
         }
 
-        /// <summary> List directory contents within a volume. Uses this resource's name. </summary>
+        /// <summary> List directory contents within a volume. Uses this client's name. </summary>
         /// <param name="path"> The directory path to list. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Task<Response> GetVolumeFilesMetadataAsync(string path, RequestContext context)
@@ -163,7 +163,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.GetVolumeFilesMetadataAsync(VolumeName, path, context);
         }
 
-        /// <summary> List directory contents within a volume. Uses this resource's name. </summary>
+        /// <summary> List directory contents within a volume. Uses this client's name. </summary>
         /// <param name="path"> The directory path to list. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Response<VolumeListDirectoryResult> GetVolumeFilesMetadata(string path = default, CancellationToken cancellationToken = default)
@@ -171,7 +171,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.GetVolumeFilesMetadata(VolumeName, path, cancellationToken);
         }
 
-        /// <summary> List directory contents within a volume. Uses this resource's name. </summary>
+        /// <summary> List directory contents within a volume. Uses this client's name. </summary>
         /// <param name="path"> The directory path to list. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Task<Response<VolumeListDirectoryResult>> GetVolumeFilesMetadataAsync(string path = default, CancellationToken cancellationToken = default)
@@ -191,7 +191,7 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Task<Response<Stream>> DownloadVolumeFileAsync(string path, CancellationToken cancellationToken = default) =>
             _client.DownloadVolumeFileAsync(VolumeName, path, cancellationToken);
 
-        /// <summary> Create a directory within a volume. Uses this resource's name. </summary>
+        /// <summary> Create a directory within a volume. Uses this client's name. </summary>
         /// <param name="path"> The directory path to create. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Response CreateVolumeDirectory(string path, RequestContext context)
@@ -199,7 +199,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.CreateVolumeDirectory(VolumeName, path, context);
         }
 
-        /// <summary> Create a directory within a volume. Uses this resource's name. </summary>
+        /// <summary> Create a directory within a volume. Uses this client's name. </summary>
         /// <param name="path"> The directory path to create. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Task<Response> CreateVolumeDirectoryAsync(string path, RequestContext context)
@@ -207,7 +207,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.CreateVolumeDirectoryAsync(VolumeName, path, context);
         }
 
-        /// <summary> Create a directory within a volume. Uses this resource's name. </summary>
+        /// <summary> Create a directory within a volume. Uses this client's name. </summary>
         /// <param name="path"> The directory path to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Response<VolumePathItem> CreateVolumeDirectory(string path, CancellationToken cancellationToken = default)
@@ -215,7 +215,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.CreateVolumeDirectory(VolumeName, path, cancellationToken);
         }
 
-        /// <summary> Create a directory within a volume. Uses this resource's name. </summary>
+        /// <summary> Create a directory within a volume. Uses this client's name. </summary>
         /// <param name="path"> The directory path to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Task<Response<VolumePathItem>> CreateVolumeDirectoryAsync(string path, CancellationToken cancellationToken = default)
@@ -223,7 +223,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.CreateVolumeDirectoryAsync(VolumeName, path, cancellationToken);
         }
 
-        /// <summary> Forks a data disk volume. Uses this resource's name. </summary>
+        /// <summary> Forks a data disk volume. Uses this client's name. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Response ForkVolume(RequestContent content, RequestContext context = null)
@@ -231,7 +231,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.ForkVolume(VolumeName, content, context);
         }
 
-        /// <summary> Forks a data disk volume. Uses this resource's name. </summary>
+        /// <summary> Forks a data disk volume. Uses this client's name. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Task<Response> ForkVolumeAsync(RequestContent content, RequestContext context = null)
@@ -239,7 +239,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.ForkVolumeAsync(VolumeName, content, context);
         }
 
-        /// <summary> Forks a data disk volume. Uses this resource's name. </summary>
+        /// <summary> Forks a data disk volume. Uses this client's name. </summary>
         /// <param name="body"> The destination name and labels for the forked volume. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Response<SandboxGroupVolume> ForkVolume(ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
@@ -247,7 +247,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.ForkVolume(VolumeName, body, cancellationToken);
         }
 
-        /// <summary> Forks a data disk volume. Uses this resource's name. </summary>
+        /// <summary> Forks a data disk volume. Uses this client's name. </summary>
         /// <param name="body"> The destination name and labels for the forked volume. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Task<Response<SandboxGroupVolume>> ForkVolumeAsync(ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
@@ -255,7 +255,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.ForkVolumeAsync(VolumeName, body, cancellationToken);
         }
 
-        /// <summary> Creates a new volume. Uses this resource's name. </summary>
+        /// <summary> Creates a new volume. Uses this client's name. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Response CreateVolume(RequestContent content, RequestContext context = null)
@@ -263,7 +263,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.CreateVolume(VolumeName, content, context);
         }
 
-        /// <summary> Creates a new volume. Uses this resource's name. </summary>
+        /// <summary> Creates a new volume. Uses this client's name. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public virtual Task<Response> CreateVolumeAsync(RequestContent content, RequestContext context = null)
@@ -271,7 +271,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.CreateVolumeAsync(VolumeName, content, context);
         }
 
-        /// <summary> Creates a new volume. Uses this resource's name. </summary>
+        /// <summary> Creates a new volume. Uses this client's name. </summary>
         /// <param name="body"> The volume configuration to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Response<SandboxGroupVolume> CreateVolume(SandboxGroupVolume body, CancellationToken cancellationToken = default)
@@ -279,7 +279,7 @@ namespace Azure.Containers.Apps.Sandbox
             return _client.CreateVolume(VolumeName, body, cancellationToken);
         }
 
-        /// <summary> Creates a new volume. Uses this resource's name. </summary>
+        /// <summary> Creates a new volume. Uses this client's name. </summary>
         /// <param name="body"> The volume configuration to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Task<Response<SandboxGroupVolume>> CreateVolumeAsync(SandboxGroupVolume body, CancellationToken cancellationToken = default)
