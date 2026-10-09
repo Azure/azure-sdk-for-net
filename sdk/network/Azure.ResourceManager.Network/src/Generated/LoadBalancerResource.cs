@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadBalancerNetworkInterfacesGetAllAsyncCollectionResultOfT(
+            return new NetworkInterfaceDataAsync1CollectionResultOfT(
                 _loadBalancerNetworkInterfacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadBalancerNetworkInterfacesGetAllCollectionResultOfT(
+            return new NetworkInterfaceData1CollectionResultOfT(
                 _loadBalancerNetworkInterfacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

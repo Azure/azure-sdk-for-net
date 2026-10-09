@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWansGetByResourceGroupAsyncCollectionResultOfT(_virtualWansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualWanCollection.GetAll"), data => new VirtualWanResource(Client, data));
+            return new AsyncPageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWanDataAsyncCollectionResultOfT(_virtualWansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualWanCollection.GetAll"), data => new VirtualWanResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWansGetByResourceGroupCollectionResultOfT(_virtualWansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualWanCollection.GetAll"), data => new VirtualWanResource(Client, data));
+            return new PageableWrapper<VirtualWanData, VirtualWanResource>(new VirtualWanDataCollectionResultOfT(_virtualWansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualWanCollection.GetAll"), data => new VirtualWanResource(Client, data));
         }
 
         /// <summary>

@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new VolumesGetReplicationsAsyncCollectionResultOfT(
+            return new NetAppVolumeReplicationAsyncCollectionResultOfT(
                 _volumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new VolumesGetReplicationsCollectionResultOfT(
+            return new NetAppVolumeReplicationCollectionResultOfT(
                 _volumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

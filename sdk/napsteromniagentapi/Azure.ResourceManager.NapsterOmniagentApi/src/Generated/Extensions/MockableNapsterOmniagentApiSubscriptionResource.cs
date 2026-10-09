@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new NapsterOrganizationDataAsync0CollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
+            return new PageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new NapsterOrganizationData0CollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>

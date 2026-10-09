@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new VirtualMachineScaleSetNetworkInterfaceIPConfigurationsGetVirtualMachineScaleSetIpConfigurationsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationDataAsync0CollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new VirtualMachineScaleSetNetworkInterfaceIPConfigurationsGetVirtualMachineScaleSetIpConfigurationsCollectionResultOfT(
+            return new PageableWrapper<NetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationData0CollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

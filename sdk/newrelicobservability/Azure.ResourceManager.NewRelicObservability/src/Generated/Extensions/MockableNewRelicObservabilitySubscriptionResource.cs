@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetBySubscriptionAsyncCollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
+            return new AsyncPageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new NewRelicMonitorResourceDataAsync0CollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new MonitorsGetBySubscriptionCollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
+            return new PageableWrapper<NewRelicMonitorResourceData, NewRelicMonitorResource>(new NewRelicMonitorResourceData0CollectionResultOfT(MonitorsRestClient, Id.SubscriptionId, context, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicMonitorResources"), data => new NewRelicMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetNewRelicAccountsAsyncCollectionResultOfT(
+            return new NewRelicAccountResourceDataAsyncCollectionResultOfT(
                 AccountsRestClient,
                 Id.SubscriptionId,
                 userEmail,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetNewRelicAccountsCollectionResultOfT(
+            return new NewRelicAccountResourceDataCollectionResultOfT(
                 AccountsRestClient,
                 Id.SubscriptionId,
                 userEmail,
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OrganizationsGetNewRelicOrganizationsAsyncCollectionResultOfT(
+            return new NewRelicOrganizationResourceDataAsyncCollectionResultOfT(
                 OrganizationsRestClient,
                 Id.SubscriptionId,
                 userEmail,
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OrganizationsGetNewRelicOrganizationsCollectionResultOfT(
+            return new NewRelicOrganizationResourceDataCollectionResultOfT(
                 OrganizationsRestClient,
                 Id.SubscriptionId,
                 userEmail,
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PlansGetNewRelicPlansAsyncCollectionResultOfT(
+            return new NewRelicPlanDataAsyncCollectionResultOfT(
                 PlansRestClient,
                 Id.SubscriptionId,
                 accountId,
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PlansGetNewRelicPlansCollectionResultOfT(
+            return new NewRelicPlanDataCollectionResultOfT(
                 PlansRestClient,
                 Id.SubscriptionId,
                 accountId,
