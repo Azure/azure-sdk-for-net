@@ -1,0 +1,333 @@
+{
+  "name": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "VoidResponseAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "VoidResponseAccept1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "5",
+      "kind": "model",
+      "name": "Widget",
+      "apiVersions": [],
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.Widget",
+      "usage": "Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Widget"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "6",
+          "kind": "property",
+          "name": "name",
+          "apiVersions": [],
+          "serializedName": "name",
+          "type": {
+            "$id": "7",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.Widget.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "8",
+      "kind": "client",
+      "name": "ResponseReplacementClient",
+      "isExactName": false,
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement",
+      "doc": "Test scenarios for client response replacement.",
+      "methods": [
+        {
+          "$id": "9",
+          "kind": "basic",
+          "name": "voidResponse",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "10",
+            "name": "voidResponse",
+            "isExactName": false,
+            "resourceName": "ResponseReplacement",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "11",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "1"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.voidResponse.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "12",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.voidResponse.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "5"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/response-replacement/void",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.voidResponse",
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement"
+          },
+          "parameters": [
+            {
+              "$ref": "12"
+            }
+          ],
+          "response": {},
+          "isOverride": true,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.voidResponse"
+        },
+        {
+          "$id": "13",
+          "kind": "basic",
+          "name": "bytesResponse",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "14",
+            "name": "bytesResponse",
+            "isExactName": false,
+            "resourceName": "ResponseReplacement",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "15",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "3"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.bytesResponse.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "16",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "3"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.bytesResponse.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "5"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/response-replacement/bytes",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.bytesResponse",
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement"
+          },
+          "parameters": [
+            {
+              "$ref": "16"
+            }
+          ],
+          "response": {
+            "type": {
+              "$id": "17",
+              "kind": "bytes",
+              "name": "bytes",
+              "encode": "base64",
+              "crossLanguageDefinitionId": "TypeSpec.bytes",
+              "decorators": []
+            }
+          },
+          "isOverride": true,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.bytesResponse"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "18",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "19",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "20",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement.endpoint",
+          "isExactName": false
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseReplacement",
+      "apiVersions": [],
+      "isMultiServiceClient": false
+    }
+  ]
+}
