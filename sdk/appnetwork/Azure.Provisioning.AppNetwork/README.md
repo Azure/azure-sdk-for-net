@@ -37,6 +37,50 @@ AppLink appLink = new(nameof(appLink), AppLink.ResourceVersions.V2026_08_01_PREV
 infra.Add(appLink);
 ```
 
+### Add an AKS cluster to an existing App Network
+
+Create an `AppLinkMember` referencing an existing App Network and AKS cluster, with connectivity and upgrade profiles. The metrics endpoint is a read-only property that can be exposed as a deployment output.
+
+```C# Snippet:AppLinkMemberBasic
+Infrastructure infra = new();
+
+AppLink appLink = AppLink.FromExisting(nameof(appLink), AppLink.ResourceVersions.V2026_08_01_PREVIEW);
+appLink.Name = "app-link";
+infra.Add(appLink);
+
+AppLinkMember member = new(nameof(member), AppLinkMember.ResourceVersions.V2026_08_01_PREVIEW)
+{
+    Parent = appLink,
+    Name = "aks-member",
+    Location = new AzureLocation("eastus"),
+    Properties = new AppLinkMemberProperties
+    {
+        ClusterType = AppLinkClusterType.Aks,
+        MetadataResourceId = new ResourceIdentifier(
+            "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.ContainerService/managedClusters/my-aks-cluster"),
+        ConnectivityProfile = new AppLinkConnectivityProfile
+        {
+            Network = "app-network",
+            EastWestGatewayVisibility = AppLinkEastWestGatewayVisibility.Internal,
+            PrivateConnectSubnetResourceId = new ResourceIdentifier(
+                "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.Network/virtualNetworks/my-vnet/subnets/my-subnet")
+        },
+        UpgradeProfile = new AppLinkUpgradeProfile
+        {
+            Mode = AppLinkUpgradeMode.FullyManaged,
+            FullyManagedUpgradeReleaseChannel = AppLinkUpgradeReleaseChannel.Stable
+        }
+    }
+};
+infra.Add(member);
+
+ProvisioningOutput metricsEndpoint = new(nameof(metricsEndpoint), typeof(string))
+{
+    Value = member.Properties.ObservabilityMetricsEndpoint
+};
+infra.Add(metricsEndpoint);
+```
+
 ## Troubleshooting
 
 - File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
