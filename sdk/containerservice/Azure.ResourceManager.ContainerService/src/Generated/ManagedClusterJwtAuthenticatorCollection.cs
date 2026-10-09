@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new JWTAuthenticatorsGetByManagedClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new ManagedClusterJwtAuthenticatorDataAsyncCollectionResultOfT(
                 _jwtAuthenticatorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new JWTAuthenticatorsGetByManagedClusterCollectionResultOfT(
+            return new PageableWrapper<ManagedClusterJwtAuthenticatorData, ManagedClusterJwtAuthenticatorResource>(new ManagedClusterJwtAuthenticatorDataCollectionResultOfT(
                 _jwtAuthenticatorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

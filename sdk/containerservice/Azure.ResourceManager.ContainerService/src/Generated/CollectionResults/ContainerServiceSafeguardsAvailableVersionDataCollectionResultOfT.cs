@@ -14,37 +14,34 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class MeshMembershipsGetByManagedClusterCollectionResultOfT : Pageable<ManagedClusterMeshMembershipData>
+    internal partial class ContainerServiceSafeguardsAvailableVersionDataCollectionResultOfT : Pageable<ContainerServiceSafeguardsAvailableVersionData>
     {
-        private readonly MeshMemberships _client;
+        private readonly SafeguardsAvailableVersions _client;
         private readonly Guid _subscriptionId;
-        private readonly string _resourceGroupName;
-        private readonly string _resourceName;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MeshMembershipsGetByManagedClusterCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The MeshMemberships client used to send requests. </param>
+        /// <summary> Initializes a new instance of ContainerServiceSafeguardsAvailableVersionDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The SafeguardsAvailableVersions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MeshMembershipsGetByManagedClusterCollectionResultOfT(MeshMemberships client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ContainerServiceSafeguardsAvailableVersionDataCollectionResultOfT(SafeguardsAvailableVersions client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
-            _resourceName = resourceName;
+            _location = location;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MeshMembershipsGetByManagedClusterCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ContainerServiceSafeguardsAvailableVersionDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MeshMembershipsGetByManagedClusterCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedClusterMeshMembershipData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ContainerServiceSafeguardsAvailableVersionDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ContainerServiceSafeguardsAvailableVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,9 +51,9 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     yield break;
                 }
-                MeshMembershipsListResult result = MeshMembershipsListResult.FromResponse(response);
+                SafeguardsAvailableVersionsList result = SafeguardsAvailableVersionsList.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ManagedClusterMeshMembershipData>.FromValues((IReadOnlyList<ManagedClusterMeshMembershipData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerServiceSafeguardsAvailableVersionData>.FromValues((IReadOnlyList<ContainerServiceSafeguardsAvailableVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -69,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByManagedClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetByManagedClusterRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSafeguardsVersionsRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetSafeguardsVersionsRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

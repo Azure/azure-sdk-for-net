@@ -15,37 +15,37 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class VmSkusOperationGroupGetVmSkusAsyncCollectionResultOfT : AsyncPageable<ContainerServiceVmSku>
+    internal partial class ManagedClusterLoadBalancerDataAsyncCollectionResultOfT : AsyncPageable<ManagedClusterLoadBalancerData>
     {
-        private readonly VmSkusOperationGroup _client;
+        private readonly LoadBalancers _client;
         private readonly Guid _subscriptionId;
-        private readonly AzureLocation _location;
-        private readonly bool? _includeExtendedLocations;
+        private readonly string _resourceGroupName;
+        private readonly string _resourceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of VmSkusOperationGroupGetVmSkusAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The VmSkusOperationGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The LoadBalancers client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public VmSkusOperationGroupGetVmSkusAsyncCollectionResultOfT(VmSkusOperationGroup client, Guid subscriptionId, AzureLocation location, bool? includeExtendedLocations, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ManagedClusterLoadBalancerDataAsyncCollectionResultOfT(LoadBalancers client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _location = location;
-            _includeExtendedLocations = includeExtendedLocations;
+            _resourceGroupName = resourceGroupName;
+            _resourceName = resourceName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of VmSkusOperationGroupGetVmSkusAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ManagedClusterLoadBalancerDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of VmSkusOperationGroupGetVmSkusAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ContainerServiceVmSku>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ManagedClusterLoadBalancerDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ManagedClusterLoadBalancerData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     yield break;
                 }
-                VmSkusListResult result = VmSkusListResult.FromResponse(response);
+                LoadBalancerListResult result = LoadBalancerListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ContainerServiceVmSku>.FromValues((IReadOnlyList<ContainerServiceVmSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ManagedClusterLoadBalancerData>.FromValues((IReadOnlyList<ManagedClusterLoadBalancerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetVmSkusRequest(nextLink, _subscriptionId, _location, _includeExtendedLocations, _context) : _client.CreateGetVmSkusRequest(_subscriptionId, _location, _includeExtendedLocations, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByManagedClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetByManagedClusterRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

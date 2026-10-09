@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceSafeguardsAvailableVersionData, ContainerServiceSafeguardsAvailableVersionResource>(new SafeguardsAvailableVersionsGetSafeguardsVersionsAsyncCollectionResultOfT(_safeguardsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceSafeguardsAvailableVersionCollection.GetAll"), data => new ContainerServiceSafeguardsAvailableVersionResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceSafeguardsAvailableVersionData, ContainerServiceSafeguardsAvailableVersionResource>(new ContainerServiceSafeguardsAvailableVersionDataAsyncCollectionResultOfT(_safeguardsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceSafeguardsAvailableVersionCollection.GetAll"), data => new ContainerServiceSafeguardsAvailableVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceSafeguardsAvailableVersionData, ContainerServiceSafeguardsAvailableVersionResource>(new SafeguardsAvailableVersionsGetSafeguardsVersionsCollectionResultOfT(_safeguardsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceSafeguardsAvailableVersionCollection.GetAll"), data => new ContainerServiceSafeguardsAvailableVersionResource(Client, data));
+            return new PageableWrapper<ContainerServiceSafeguardsAvailableVersionData, ContainerServiceSafeguardsAvailableVersionResource>(new ContainerServiceSafeguardsAvailableVersionDataCollectionResultOfT(_safeguardsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceSafeguardsAvailableVersionCollection.GetAll"), data => new ContainerServiceSafeguardsAvailableVersionResource(Client, data));
         }
 
         /// <summary>

@@ -14,23 +14,23 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class JWTAuthenticatorsGetByManagedClusterCollectionResultOfT : Pageable<ManagedClusterJwtAuthenticatorData>
+    internal partial class ContainerServiceAlertConfigurationDataCollectionResultOfT : Pageable<ContainerServiceAlertConfigurationData>
     {
-        private readonly JWTAuthenticators _client;
+        private readonly AlertConfigurations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of JWTAuthenticatorsGetByManagedClusterCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The JWTAuthenticators client used to send requests. </param>
+        /// <summary> Initializes a new instance of ContainerServiceAlertConfigurationDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The AlertConfigurations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public JWTAuthenticatorsGetByManagedClusterCollectionResultOfT(JWTAuthenticators client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ContainerServiceAlertConfigurationDataCollectionResultOfT(AlertConfigurations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.ContainerService
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of JWTAuthenticatorsGetByManagedClusterCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ContainerServiceAlertConfigurationDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of JWTAuthenticatorsGetByManagedClusterCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedClusterJwtAuthenticatorData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ContainerServiceAlertConfigurationDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ContainerServiceAlertConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     yield break;
                 }
-                JWTAuthenticatorListResult result = JWTAuthenticatorListResult.FromResponse(response);
+                AlertConfigurationListResult result = AlertConfigurationListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ManagedClusterJwtAuthenticatorData>.FromValues((IReadOnlyList<ManagedClusterJwtAuthenticatorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerServiceAlertConfigurationData>.FromValues((IReadOnlyList<ContainerServiceAlertConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

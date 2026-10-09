@@ -14,31 +14,34 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class ManagedClusterSnapshotsGetAllCollectionResultOfT : Pageable<ManagedClusterSnapshotData>
+    internal partial class NodeImageVersionCollectionResultOfT : Pageable<NodeImageVersion>
     {
-        private readonly ManagedClusterSnapshots _client;
+        private readonly ContainerServiceOperationGroup _client;
         private readonly Guid _subscriptionId;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ManagedClusterSnapshotsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ManagedClusterSnapshots client used to send requests. </param>
+        /// <summary> Initializes a new instance of NodeImageVersionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ContainerServiceOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ManagedClusterSnapshotsGetAllCollectionResultOfT(ManagedClusterSnapshots client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public NodeImageVersionCollectionResultOfT(ContainerServiceOperationGroup client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _location = location;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ManagedClusterSnapshotsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of NodeImageVersionCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ManagedClusterSnapshotsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedClusterSnapshotData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of NodeImageVersionCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<NodeImageVersion>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -48,9 +51,9 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     yield break;
                 }
-                ManagedClusterSnapshotListResult result = ManagedClusterSnapshotListResult.FromResponse(response);
+                NodeImageVersionsListResult result = NodeImageVersionsListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ManagedClusterSnapshotData>.FromValues((IReadOnlyList<ManagedClusterSnapshotData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NodeImageVersion>.FromValues((IReadOnlyList<NodeImageVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNodeImageVersionsRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetNodeImageVersionsRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

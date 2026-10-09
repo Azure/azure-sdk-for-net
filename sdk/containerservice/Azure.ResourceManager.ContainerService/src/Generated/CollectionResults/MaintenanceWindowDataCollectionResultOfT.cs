@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,49 +14,46 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT : AsyncPageable<ContainerServiceAlertConfigurationData>
+    internal partial class MaintenanceWindowDataCollectionResultOfT : Pageable<MaintenanceWindowData>
     {
-        private readonly AlertConfigurations _client;
+        private readonly MaintenanceWindows _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _resourceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AlertConfigurations client used to send requests. </param>
+        /// <summary> Initializes a new instance of MaintenanceWindowDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The MaintenanceWindows client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT(AlertConfigurations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MaintenanceWindowDataCollectionResultOfT(MaintenanceWindows client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _resourceName = resourceName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MaintenanceWindowDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ContainerServiceAlertConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MaintenanceWindowDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<MaintenanceWindowData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                AlertConfigurationListResult result = AlertConfigurationListResult.FromResponse(response);
+                MaintenanceWindowResourceListResult result = MaintenanceWindowResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ContainerServiceAlertConfigurationData>.FromValues((IReadOnlyList<ContainerServiceAlertConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MaintenanceWindowData>.FromValues((IReadOnlyList<MaintenanceWindowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -68,14 +64,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByManagedClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetByManagedClusterRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

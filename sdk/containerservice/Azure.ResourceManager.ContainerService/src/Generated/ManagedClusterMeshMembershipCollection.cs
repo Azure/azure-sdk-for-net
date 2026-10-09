@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterMeshMembershipData, ManagedClusterMeshMembershipResource>(new MeshMembershipsGetByManagedClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedClusterMeshMembershipData, ManagedClusterMeshMembershipResource>(new ManagedClusterMeshMembershipDataAsyncCollectionResultOfT(
                 _meshMembershipsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterMeshMembershipData, ManagedClusterMeshMembershipResource>(new MeshMembershipsGetByManagedClusterCollectionResultOfT(
+            return new PageableWrapper<ManagedClusterMeshMembershipData, ManagedClusterMeshMembershipResource>(new ManagedClusterMeshMembershipDataCollectionResultOfT(
                 _meshMembershipsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

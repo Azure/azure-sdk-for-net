@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new ManagedClusterLoadBalancerDataAsyncCollectionResultOfT(
                 _loadBalancersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new LoadBalancersGetByManagedClusterCollectionResultOfT(
+            return new PageableWrapper<ManagedClusterLoadBalancerData, ManagedClusterLoadBalancerResource>(new ManagedClusterLoadBalancerDataCollectionResultOfT(
                 _loadBalancersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

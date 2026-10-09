@@ -15,23 +15,23 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class LoadBalancersGetByManagedClusterAsyncCollectionResultOfT : AsyncPageable<ManagedClusterLoadBalancerData>
+    internal partial class ManagedClusterJwtAuthenticatorDataAsyncCollectionResultOfT : AsyncPageable<ManagedClusterJwtAuthenticatorData>
     {
-        private readonly LoadBalancers _client;
+        private readonly JWTAuthenticators _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of LoadBalancersGetByManagedClusterAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The LoadBalancers client used to send requests. </param>
+        /// <summary> Initializes a new instance of ManagedClusterJwtAuthenticatorDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The JWTAuthenticators client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadBalancersGetByManagedClusterAsyncCollectionResultOfT(LoadBalancers client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ManagedClusterJwtAuthenticatorDataAsyncCollectionResultOfT(JWTAuthenticators client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.ContainerService
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of LoadBalancersGetByManagedClusterAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ManagedClusterJwtAuthenticatorDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of LoadBalancersGetByManagedClusterAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ManagedClusterLoadBalancerData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ManagedClusterJwtAuthenticatorDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ManagedClusterJwtAuthenticatorData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     yield break;
                 }
-                LoadBalancerListResult result = LoadBalancerListResult.FromResponse(response);
+                JWTAuthenticatorListResult result = JWTAuthenticatorListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ManagedClusterLoadBalancerData>.FromValues((IReadOnlyList<ManagedClusterLoadBalancerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ManagedClusterJwtAuthenticatorData>.FromValues((IReadOnlyList<ManagedClusterJwtAuthenticatorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

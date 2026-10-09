@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new ContainerServiceGuardrailsAvailableVersionDataAsyncCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
+            return new PageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new ContainerServiceGuardrailsAvailableVersionDataCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
         }
 
         /// <summary>

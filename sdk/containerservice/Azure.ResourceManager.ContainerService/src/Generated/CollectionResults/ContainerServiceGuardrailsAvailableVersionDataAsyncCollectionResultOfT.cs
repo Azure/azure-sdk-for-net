@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT : AsyncPageable<ContainerServiceGuardrailsAvailableVersionData>
+    internal partial class ContainerServiceGuardrailsAvailableVersionDataAsyncCollectionResultOfT : AsyncPageable<ContainerServiceGuardrailsAvailableVersionData>
     {
         private readonly GuardrailsAvailableVersions _client;
         private readonly Guid _subscriptionId;
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerService
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ContainerServiceGuardrailsAvailableVersionDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GuardrailsAvailableVersions client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT(GuardrailsAvailableVersions client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ContainerServiceGuardrailsAvailableVersionDataAsyncCollectionResultOfT(GuardrailsAvailableVersions client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ContainerService
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ContainerServiceGuardrailsAvailableVersionDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ContainerServiceGuardrailsAvailableVersionDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ContainerServiceGuardrailsAvailableVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

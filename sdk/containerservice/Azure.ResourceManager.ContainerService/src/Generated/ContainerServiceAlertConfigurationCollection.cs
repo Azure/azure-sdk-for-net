@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceAlertConfigurationData, ContainerServiceAlertConfigurationResource>(new AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceAlertConfigurationData, ContainerServiceAlertConfigurationResource>(new ContainerServiceAlertConfigurationDataAsyncCollectionResultOfT(
                 _alertConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceAlertConfigurationData, ContainerServiceAlertConfigurationResource>(new AlertConfigurationsGetByManagedClusterCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceAlertConfigurationData, ContainerServiceAlertConfigurationResource>(new ContainerServiceAlertConfigurationDataCollectionResultOfT(
                 _alertConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

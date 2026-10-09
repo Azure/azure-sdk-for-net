@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowsGetAllAsyncCollectionResultOfT(_maintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceWindowCollection.GetAll"), data => new MaintenanceWindowResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowDataAsyncCollectionResultOfT(_maintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceWindowCollection.GetAll"), data => new MaintenanceWindowResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowsGetAllCollectionResultOfT(_maintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceWindowCollection.GetAll"), data => new MaintenanceWindowResource(Client, data));
+            return new PageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowDataCollectionResultOfT(_maintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceWindowCollection.GetAll"), data => new MaintenanceWindowResource(Client, data));
         }
 
         /// <summary>
