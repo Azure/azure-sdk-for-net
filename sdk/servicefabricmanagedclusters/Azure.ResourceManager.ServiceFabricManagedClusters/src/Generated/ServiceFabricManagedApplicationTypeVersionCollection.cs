@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricManagedApplicationTypeVersionData, ServiceFabricManagedApplicationTypeVersionResource>(new ApplicationTypeVersionsGetByApplicationTypesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceFabricManagedApplicationTypeVersionData, ServiceFabricManagedApplicationTypeVersionResource>(new ServiceFabricManagedApplicationTypeVersionDataAsyncCollectionResultOfT(
                 _applicationTypeVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricManagedApplicationTypeVersionData, ServiceFabricManagedApplicationTypeVersionResource>(new ApplicationTypeVersionsGetByApplicationTypesCollectionResultOfT(
+            return new PageableWrapper<ServiceFabricManagedApplicationTypeVersionData, ServiceFabricManagedApplicationTypeVersionResource>(new ServiceFabricManagedApplicationTypeVersionDataCollectionResultOfT(
                 _applicationTypeVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

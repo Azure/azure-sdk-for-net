@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinksGetAllAsyncCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataAsyncCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinksGetAllCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
+            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PrivateLinkResourceCollection.GetAll"), data => new PrivateLinkResource(Client, data));
         }
 
         /// <summary>

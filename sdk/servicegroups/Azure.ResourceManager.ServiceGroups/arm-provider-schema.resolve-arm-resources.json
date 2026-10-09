@@ -44,16 +44,6 @@
             "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
             "scopeResourceType": "Microsoft.Resources/tenants"
           }
-        },
-        {
-          "methodId": "Microsoft.Management.ServiceGroups.listAncestors",
-          "kind": "List",
-          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/listAncestors",
-          "scope": {
-            "kind": "Tenant",
-            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
-            "scopeResourceType": "Microsoft.Resources/tenants"
-          }
         }
       ],
       "scope": {
@@ -66,10 +56,20 @@
         "pattern": "^[a-zA-Z0-9\\-_().]{1,90}$"
       },
       "apiVersions": [
-        "2024-02-01-preview"
+        "2026-08-01"
       ],
       "rbacRoles": []
     }
   ],
-  "nonResourceMethods": []
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.Management/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
 }

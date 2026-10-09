@@ -2257,7 +2257,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new ThreatIntelligenceIndicatorQueryThreatIntelligenceIndicatorsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new SecurityInsightsThreatIntelligenceIndicatorBaseDataAsyncCollectionResultOfT(
                 ThreatIntelligenceIndicatorRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
@@ -2298,7 +2298,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new ThreatIntelligenceIndicatorQueryThreatIntelligenceIndicatorsCollectionResultOfT(
+            return new PageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorResource>(new SecurityInsightsThreatIntelligenceIndicatorBaseDataCollectionResultOfT(
                 ThreatIntelligenceIndicatorRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
@@ -2439,7 +2439,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlGetRepositoriesAsyncCollectionResultOfT(
+            return new SourceControlRepoAsyncCollectionResultOfT(
                 SourceControlRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
@@ -2480,7 +2480,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlGetRepositoriesCollectionResultOfT(
+            return new SourceControlRepoCollectionResultOfT(
                 SourceControlRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
@@ -2717,7 +2717,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ThreatIntelligenceQueryAsyncCollectionResultOfT(
+            return new ThreatIntelligenceObjectAsyncCollectionResultOfT(
                 ThreatIntelligenceRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
@@ -2759,7 +2759,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ThreatIntelligenceQueryCollectionResultOfT(
+            return new ThreatIntelligenceObjectCollectionResultOfT(
                 ThreatIntelligenceRestClient,
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,

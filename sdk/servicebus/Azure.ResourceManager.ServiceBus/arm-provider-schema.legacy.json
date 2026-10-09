@@ -103,14 +103,29 @@
       },
       "resourceName": "ServiceBusNamespace",
       "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]+$",
         "minLength": 6,
         "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "AzureServiceBusDataOwner",
+          "value": "090c5cfd-751d-490a-894a-3ce6f1109419"
+        },
+        {
+          "name": "AzureServiceBusDataReceiver",
+          "value": "4f6d3b9b-027b-4f4c-9142-0e5a2a2247e0"
+        },
+        {
+          "name": "AzureServiceBusDataSender",
+          "value": "69a216fc-b8fb-44d8-bc22-1f3c2cd27a39"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.ServiceBus.SBAuthorizationRule",
@@ -186,12 +201,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}",
       "resourceName": "ServiceBusNamespaceAuthorizationRule",
       "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9._-]+$",
         "minLength": 1,
         "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -269,12 +286,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}",
       "resourceName": "ServiceBusDisasterRecovery",
       "nameConstraints": {
-        "minLength": 1,
+        "pattern": "^[a-zA-Z0-9-]+$",
+        "minLength": 6,
         "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -322,12 +341,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}",
       "resourceName": "ServiceBusDisasterRecoveryAuthorizationRule",
       "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9._-]+$",
         "minLength": 1,
         "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -407,7 +428,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -458,7 +480,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -508,7 +531,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -568,7 +592,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -626,11 +651,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}",
       "resourceName": "ServiceBusQueue",
       "nameConstraints": {
-        "minLength": 1
+        "pattern": "^[a-zA-Z0-9._-]+$",
+        "minLength": 1,
+        "maxLength": 260
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -708,12 +736,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}",
       "resourceName": "ServiceBusQueueAuthorizationRule",
       "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9._-]+$",
         "minLength": 1,
         "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -771,11 +801,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}",
       "resourceName": "ServiceBusTopic",
       "nameConstraints": {
-        "minLength": 1
+        "pattern": "^[a-zA-Z0-9._-]+$",
+        "minLength": 1,
+        "maxLength": 260
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -853,12 +886,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}",
       "resourceName": "ServiceBusTopicAuthorizationRule",
       "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9._-]+$",
         "minLength": 1,
         "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -916,12 +951,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}",
       "resourceName": "ServiceBusSubscription",
       "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9._-]+$",
         "minLength": 1,
         "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -984,7 +1021,8 @@
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     }

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateLinkGroupData, PrivateLinkGroupResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PrivateLinkGroupData, PrivateLinkGroupResource>(new PrivateLinkGroupDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateLinkGroupData, PrivateLinkGroupResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<PrivateLinkGroupData, PrivateLinkGroupResource>(new PrivateLinkGroupDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -147,9 +147,23 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2026-03-01-preview"
+        "2026-03-01-preview",
+        "2026-09-01-preview"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "SearchIndexDataContributor",
+          "value": "8ebe5a00-799e-43f5-93ac-243d3dce84a7"
+        },
+        {
+          "name": "SearchIndexDataReader",
+          "value": "1407120a-92aa-4202-b7e9-c0e197c71c8f"
+        },
+        {
+          "name": "SearchServiceContributor",
+          "value": "7ca78c08-252a-4471-8644-bb5ff32d4ba0"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.Search.NetworkSecurityPerimeterConfiguration",
@@ -197,7 +211,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2026-03-01-preview"
+        "2026-03-01-preview",
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -257,7 +272,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2026-03-01-preview"
+        "2026-03-01-preview",
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     },
@@ -317,7 +333,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2026-03-01-preview"
+        "2026-03-01-preview",
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     }
@@ -342,8 +359,8 @@
       }
     },
     {
-      "methodId": "Microsoft.Search.Offerings.list",
-      "operationPath": "/providers/Microsoft.Search/offerings",
+      "methodId": "Microsoft.Search.Offerings.fetch",
+      "operationPath": "/providers/Microsoft.Search/fetchOfferings",
       "scope": {
         "kind": "Tenant",
         "scopeIdPattern": "",
