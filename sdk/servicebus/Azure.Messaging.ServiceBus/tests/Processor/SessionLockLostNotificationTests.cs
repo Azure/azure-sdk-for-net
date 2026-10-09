@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Core;
 using Moq;
 using NUnit.Framework;
@@ -14,22 +15,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
     [NonParallelizable]
     public class SessionLockLostNotificationTests
     {
-        private bool _previousSwitch;
+        private TestAppContextSwitch _compatibilitySwitch;
+        private bool? _previousSwitch;
         private string _previousEnvironmentValue;
 
         [SetUp]
         public void ResetCompatibilitySettings()
         {
-            AppContext.TryGetSwitch(SessionReceiverManager.DisableEagerSessionLockLostSwitch, out _previousSwitch);
+            _previousSwitch = AppContext.TryGetSwitch(SessionReceiverManager.DisableEagerSessionLockLostSwitch, out bool previousSwitch)
+                ? previousSwitch
+                : null;
             _previousEnvironmentValue = Environment.GetEnvironmentVariable(SessionReceiverManager.DisableEagerSessionLockLostEnvironmentVariable);
-            AppContext.SetSwitch(SessionReceiverManager.DisableEagerSessionLockLostSwitch, false);
+            _compatibilitySwitch = new TestAppContextSwitch(SessionReceiverManager.DisableEagerSessionLockLostSwitch, "false");
             Environment.SetEnvironmentVariable(SessionReceiverManager.DisableEagerSessionLockLostEnvironmentVariable, null);
         }
 
         [TearDown]
         public void RestoreCompatibilitySettings()
         {
-            AppContext.SetSwitch(SessionReceiverManager.DisableEagerSessionLockLostSwitch, _previousSwitch);
+            _compatibilitySwitch.Dispose();
+            if (_previousSwitch.HasValue)
+            {
+                // The shared helper restores any existing switch as true; preserve explicit false too.
+                AppContext.SetSwitch(SessionReceiverManager.DisableEagerSessionLockLostSwitch, _previousSwitch.Value);
+            }
             Environment.SetEnvironmentVariable(SessionReceiverManager.DisableEagerSessionLockLostEnvironmentVariable, _previousEnvironmentValue);
         }
 
