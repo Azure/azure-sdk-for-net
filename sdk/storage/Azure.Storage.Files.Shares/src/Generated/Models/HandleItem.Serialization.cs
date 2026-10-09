@@ -138,7 +138,7 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteStringValue(LastReconnectOn.Value, "R");
                 writer.WriteEndElement();
             }
-            if (Optional.IsCollectionDefined(AccessRightList))
+            if (AccessRightList != null && Optional.IsCollectionDefined(AccessRightList))
             {
                 writer.WriteStartElement("AccessRightList");
                 foreach (AccessRight item in AccessRightList)
