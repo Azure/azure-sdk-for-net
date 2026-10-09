@@ -227,7 +227,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetBySubscriptionAsyncCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos"), data => new FooResource(Client, data));
+            return new AsyncPageableWrapper<FooData, FooResource>(new FooDataAsync0CollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos"), data => new FooResource(Client, data));
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FooData, FooResource>(new FoosGetBySubscriptionCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos"), data => new FooResource(Client, data));
+            return new PageableWrapper<FooData, FooResource>(new FooData0CollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos"), data => new FooResource(Client, data));
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BazData, BazResource>(new BazDataAsync0CollectionResultOfT(
                 BazsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -321,7 +321,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<BazData, BazResource>(new BazData0CollectionResultOfT(
                 BazsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -355,7 +355,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetZoosCustomAsyncCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoosCustom"), data => new ZooResource(Client, data));
+            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZooDataAsync0CollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoosCustom"), data => new ZooResource(Client, data));
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetZoosCustomCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoosCustom"), data => new ZooResource(Client, data));
+            return new PageableWrapper<ZooData, ZooResource>(new ZooData0CollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoosCustom"), data => new ZooResource(Client, data));
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ClusterData, ClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetClusters"), data => new ClusterResource(Client, data));
+            return new AsyncPageableWrapper<ClusterData, ClusterResource>(new ClusterDataAsync0CollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetClusters"), data => new ClusterResource(Client, data));
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ClusterData, ClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetClusters"), data => new ClusterResource(Client, data));
+            return new PageableWrapper<ClusterData, ClusterResource>(new ClusterData0CollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetClusters"), data => new ClusterResource(Client, data));
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SharedConfigData, SharedConfigResource>(new PublicSharedConfigsGetAllAsyncCollectionResultOfT(PublicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetSharedConfigs"), data => new SharedConfigResource(Client, data));
+            return new AsyncPageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigDataAsyncCollectionResultOfT(PublicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetSharedConfigs"), data => new SharedConfigResource(Client, data));
         }
 
         /// <summary>
@@ -495,7 +495,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SharedConfigData, SharedConfigResource>(new PublicSharedConfigsGetAllCollectionResultOfT(PublicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetSharedConfigs"), data => new SharedConfigResource(Client, data));
+            return new PageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigDataCollectionResultOfT(PublicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetSharedConfigs"), data => new SharedConfigResource(Client, data));
         }
 
         /// <summary>

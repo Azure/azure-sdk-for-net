@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppNetwork.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppNetwork
 {
@@ -55,9 +56,9 @@ namespace Azure.ResourceManager.AppNetwork
         {
             TryGetApiVersion(ResourceType, out string appLinkMemberApiVersion);
             _appLinkMembersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", ResourceType.Namespace, Diagnostics);
-            _appLinkMembersRestClient = new AppLinkMembers(_appLinkMembersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkMemberApiVersion ?? "2025-08-01-preview");
+            _appLinkMembersRestClient = new AppLinkMembers(_appLinkMembersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkMemberApiVersion ?? "2026-08-01-preview");
             _upgradeHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", ResourceType.Namespace, Diagnostics);
-            _upgradeHistoriesRestClient = new UpgradeHistories(_upgradeHistoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkMemberApiVersion ?? "2025-08-01-preview");
+            _upgradeHistoriesRestClient = new UpgradeHistories(_upgradeHistoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkMemberApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Get an AppLinkMember.
+        /// Get a member of an Azure Kubernetes Application Network resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Get an AppLinkMember.
+        /// Get a member of an Azure Kubernetes Application Network resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Update an AppLinkMember.
+        /// Update a member of an Azure Kubernetes Application Network resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Update an AppLinkMember.
+        /// Update a member of an Azure Kubernetes Application Network resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -313,7 +314,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Delete an AppLinkMember.
+        /// Remove a member from an Azure Kubernetes Application Network resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -325,7 +326,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -362,7 +363,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Delete an AppLinkMember.
+        /// Remove a member from an Azure Kubernetes Application Network resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -374,7 +375,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -411,7 +412,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// List UpgradeHistory resources by AppLinkMember.
+        /// List the upgrade history of an Azure Kubernetes Application Network member.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -423,7 +424,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -450,7 +451,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// List UpgradeHistory resources by AppLinkMember.
+        /// List the upgrade history of an Azure Kubernetes Application Network member.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -462,7 +463,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -598,10 +599,9 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -641,10 +641,9 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

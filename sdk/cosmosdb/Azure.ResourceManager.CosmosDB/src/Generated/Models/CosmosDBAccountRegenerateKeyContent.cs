@@ -26,15 +26,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountRegenerateKeyContent"/>. </summary>
         /// <param name="keyKind"> The access key to regenerate. </param>
+        /// <param name="isAccountKeysLastUsageCheckSkipped"> Optional flag indicating whether to skip account keys last usage check. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind keyKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind keyKind, bool? isAccountKeysLastUsageCheckSkipped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyKind = keyKind;
+            IsAccountKeysLastUsageCheckSkipped = isAccountKeysLastUsageCheckSkipped;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The access key to regenerate. </summary>
         [WirePath("keyKind")]
         public CosmosDBAccountKeyKind KeyKind { get; }
+
+        /// <summary> Optional flag indicating whether to skip account keys last usage check. </summary>
+        [WirePath("skipAccountKeysLastUsageCheck")]
+        public bool? IsAccountKeysLastUsageCheckSkipped { get; set; }
     }
 }
