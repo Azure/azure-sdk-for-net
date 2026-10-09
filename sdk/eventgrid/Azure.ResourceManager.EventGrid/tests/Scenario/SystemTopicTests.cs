@@ -265,6 +265,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
+        [Ignore("Re-record tags after the SetTags request change; see #63311.")]
         public async Task SystemTopicLifecycleCreateGetUpdateDeleteTags()
         {
             await SetCollection();
