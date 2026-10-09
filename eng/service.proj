@@ -13,7 +13,22 @@
     <IncludeIntegrationTests Condition="'$(IncludeIntegrationTests)' == ''">true</IncludeIntegrationTests>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
+    <RepositoryProjectGraphReaderPath Condition="'$(RepositoryProjectGraphReaderPath)' == ''">$(RepoRoot)artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json</RepositoryProjectGraphReaderPath>
+    <RepositoryProjectGraphReaderRecordsPath Condition="'$(RepositoryProjectGraphReaderRecordsPath)' == ''">$(RepositoryProjectGraphReaderPath).records</RepositoryProjectGraphReaderRecordsPath>
+    <RepositoryProjectGraphPackageRecordsPath Condition="'$(RepositoryProjectGraphPackageRecordsPath)' == ''">$(RepositoryProjectGraphReaderPath).packages.records</RepositoryProjectGraphPackageRecordsPath>
+    <RepositoryProjectGraphReaderDegreeOfParallelism Condition="'$(RepositoryProjectGraphReaderDegreeOfParallelism)' == ''">$([System.Environment]::ProcessorCount)</RepositoryProjectGraphReaderDegreeOfParallelism>
+    <RepositoryProjectGraphNuGetRestoreDirectory Condition="'$(RepositoryProjectGraphNuGetRestoreDirectory)' == ''">$(RepoRoot)artifacts/obj/RepositoryProjectGraph/nuget-restore</RepositoryProjectGraphNuGetRestoreDirectory>
+    <RepositoryProjectGraphNuGetDegreeOfParallelism Condition="'$(RepositoryProjectGraphNuGetDegreeOfParallelism)' == ''">4</RepositoryProjectGraphNuGetDegreeOfParallelism>
+    <RepositoryProjectGraphTaskProject>$(RepoRoot)eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj</RepositoryProjectGraphTaskProject>
+    <RepositoryProjectGraphTaskAssembly>$(RepoRoot)artifacts/bin/RepositoryProjectGraph/$(Configuration)/net10.0/RepositoryProjectGraph.dll</RepositoryProjectGraphTaskAssembly>
   </PropertyGroup>
+
+  <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.RepositoryProjectGraphTask"
+             AssemblyFile="$(RepositoryProjectGraphTaskAssembly)" />
+  <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.ResolveExternalPackageClosureWithNuGetTask"
+             AssemblyFile="$(RepositoryProjectGraphTaskAssembly)" />
+  <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.RunIsolatedRepositoryProjectGraphTask"
+             AssemblyFile="$(RepositoryProjectGraphTaskAssembly)" />
 
   <ItemGroup>
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
@@ -44,14 +59,22 @@
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\hdinsight\Microsoft.Azure.HDInsight.Job\**\*.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(ProjectListOverrideFile)' == '' ">
+  <!-- Discover each project family once so normal traversal, override filtering, and repository
+       graph generation use the same project selection rules. -->
+  <ItemGroup>
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" />
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" />
     <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
     <SourceGenerationProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\gen\**\*.csproj" />
+    <IntegrationTestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\integration\**\*.csproj" />
+    <SharedProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\shared\**\*.csproj" />
+    <CommonProjects Include="..\common\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(PerfProjects);@(StressProjects)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ProjectListOverrideFile)' == '' ">
     <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
     <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
     <ProjectReference Include="@(PerfProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludePerf)' == 'true'" />
@@ -61,19 +84,10 @@
     <ProjectReference Include="@(SourceGenerationProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSourceGeneration)' == 'true'" />
   </ItemGroup>
 
-  <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
+  <Import Project="..\sdk\$(ServiceDirectory)\*.projects" Condition="'$(SkipServiceProjectImports)' != 'true'" />
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
   <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(EnableOverrideExclusions)' != ''">
-    <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
-    <SourceGenerationProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\gen\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
-    <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
-    <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
-    <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
-    <IntegrationTestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\integration\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
-    <SampleApplications Include="..\samples\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
-    <SharedProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\shared\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
-    <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(PerfProjects);@(StressProjects)" />
     <ProjectReference Remove="@(TestProjects)" Condition="'$(IncludeTests)' == 'false'" />
     <ProjectReference Remove="@(SamplesProjects)" Condition="'$(IncludeSamples)' == 'false'" />
     <ProjectReference Remove="@(PerfProjects)" Condition="'$(IncludePerf)' == 'false'" />
@@ -178,6 +192,52 @@
       <_WriteToLines Include="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" />
     </ItemGroup>
     <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
+  </Target>
+
+  <Target Name="_BuildRepositoryProjectGraphTask">
+    <MSBuild Projects="$(RepositoryProjectGraphTaskProject)"
+             Targets="Build"
+             BuildInParallel="false"
+             RemoveProperties="TargetFramework;TargetFrameworks;RuntimeIdentifier;RuntimeIdentifiers" />
+  </Target>
+
+  <Target Name="_GenerateRepositoryProjectGraphRecordsWithProjectGraph">
+    <ItemGroup>
+      <!-- Stress projects live beneath stress/src, so SrcProjects deliberately excludes them even
+           though they are part of the repository graph's source-project universe. -->
+      <_RepositoryProjectGraphReaderProject Include="@(SrcProjects);@(SourceGenerationProjects);@(SharedProjects);@(CommonProjects);@(TestProjects);@(IntegrationTestProjects);@(StressProjects)" />
+      <_RepositoryProjectGraphRoot Include="@(ProjectReference)" Condition="'$(SkipServiceProjectImports)' != 'true'" />
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(_RepositoryProjectGraphReaderProject)">
+      <Output TaskParameter="Filtered" ItemName="_DistinctRepositoryProjectGraphReaderProject" />
+    </RemoveDuplicates>
+    <RepositoryProjectGraphTask Projects="@(_DistinctRepositoryProjectGraphReaderProject)"
+                                RootProjects="@(_RepositoryProjectGraphRoot)"
+                                RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
+                                RepositoryRoot="$(RepoRoot)"
+                                IncludeInputCheckoutRoots="$(IncludeRepositoryProjectGraphInputCheckoutRoots)"
+                                DegreeOfParallelism="$(RepositoryProjectGraphReaderDegreeOfParallelism)" />
+    <ResolveExternalPackageClosureWithNuGetTask RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
+                                                OutputPath="$(RepositoryProjectGraphPackageRecordsPath)"
+                                                NuGetConfigPath="$(RepoRoot)NuGet.Config"
+                                                RestoreOutputPath="$(RepositoryProjectGraphNuGetRestoreDirectory)"
+                                                DegreeOfParallelism="$(RepositoryProjectGraphNuGetDegreeOfParallelism)" />
+  </Target>
+
+  <Target Name="GenerateRepositoryProjectGraphWithProjectGraph"
+          DependsOnTargets="_BuildRepositoryProjectGraphTask">
+    <!-- Release evaluated ProjectInstances and NuGet lock files before the artifact builder starts. -->
+    <RunIsolatedRepositoryProjectGraphTask Project="$(MSBuildProjectFullPath)"
+                                           Target="_GenerateRepositoryProjectGraphRecordsWithProjectGraph" />
+    <Exec Command="pwsh -NoProfile -NonInteractive -File &quot;$(RepoRoot)eng/scripts/RepositoryProjectGraph.ps1&quot; -Operation Build -GraphPath &quot;$(RepositoryProjectGraphReaderPath)&quot; -RecordsPath &quot;$(RepositoryProjectGraphReaderRecordsPath)&quot; -PackageRecordsPath &quot;$(RepositoryProjectGraphPackageRecordsPath)&quot; -RepoRoot &quot;$(RepoRoot)&quot;" />
+  </Target>
+
+  <Target Name="QueryRepositoryProjectGraphReverseWithProjectGraph" DependsOnTargets="GenerateRepositoryProjectGraphWithProjectGraph">
+    <Exec Command="pwsh -NoProfile -NonInteractive -File &quot;$(RepoRoot)eng/scripts/RepositoryProjectGraph.ps1&quot; -Operation Reverse -GraphPath &quot;$(RepositoryProjectGraphReaderPath)&quot; -Dependencies &quot;$(TestDependsOnDependency)&quot; -PackageRootsOnly &quot;$(TestDependsIncludePackageRootDirectoryOnly)&quot; -OutputPath &quot;$(OutputProjectFilePath)&quot;" />
+  </Target>
+
+  <Target Name="QueryRepositoryProjectGraphForwardWithProjectGraph" DependsOnTargets="GenerateRepositoryProjectGraphWithProjectGraph">
+    <Exec Command="pwsh -NoProfile -NonInteractive -File &quot;$(RepoRoot)eng/scripts/RepositoryProjectGraph.ps1&quot; -Operation Forward -GraphPath &quot;$(RepositoryProjectGraphReaderPath)&quot; -RootProjects &quot;$(RepositoryProjectGraphRootProjects)&quot; -RootProjectsPath &quot;$(RepositoryProjectGraphRootProjectsPath)&quot; -OutputPath &quot;$(OutputProjectFilePath)&quot;" />
   </Target>
 
   <Target Name="ProjectDependsOn">
