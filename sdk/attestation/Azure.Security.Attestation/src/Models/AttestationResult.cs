@@ -87,6 +87,7 @@ namespace Azure.Security.Attestation
         /// These include the TDX (<c>tdx_*</c>) and SEV-SNP (<c>x-ms-sevsnpvm-*</c>) claims and any claims issued by attestation policy.
         /// Values are raw JSON, so read a string claim with <c>ToObjectFromJson&lt;string&gt;()</c> rather than <c>ToString()</c>.
         /// </summary>
+        // Filled by the generated deserializer only when read with the "J" format; see AttestationResultConverter.
         public IReadOnlyDictionary<string, BinaryData> AdditionalClaims
             => _additionalClaims ??= new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties ?? new Dictionary<string, BinaryData>());
 
