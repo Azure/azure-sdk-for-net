@@ -15,6 +15,8 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _output;
+        internal bool _outputIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaFunction"/>. </summary>
         internal RunStepDeltaFunction()
@@ -30,7 +32,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Name = name;
             Arguments = arguments;
-            Output = output;
+            _output = output;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +43,12 @@ namespace Azure.AI.Agents.Persistent
         public string Arguments { get; }
 
         /// <summary> The output of the function, null if outputs have not yet been submitted. </summary>
-        public string Output { get; }
+        public string Output
+        {
+            get
+            {
+                return _output;
+            }
+        }
     }
 }
