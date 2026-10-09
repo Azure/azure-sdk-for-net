@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.OperationTemplates
         {
             TryGetApiVersion(CostReportResource.ResourceType, out string costReportApiVersion);
             _lroClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationTemplates", CostReportResource.ResourceType.Namespace, Diagnostics);
-            _lroRestClient = new Lro(_lroClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costReportApiVersion ?? "2023-12-01-preview");
+            _lroRestClient = new Lro(
+                _lroClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                costReportApiVersion ?? "2023-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
         }
 
         /// <summary>

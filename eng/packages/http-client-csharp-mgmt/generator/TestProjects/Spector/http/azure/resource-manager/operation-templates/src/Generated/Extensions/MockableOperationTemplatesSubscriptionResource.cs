@@ -43,15 +43,33 @@ namespace Azure.ResourceManager.OperationTemplates.Mocking
 
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(
+            CheckNameAvailabilityClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics LroClientDiagnostics => _lroClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Lro LroRestClient => _lroRestClient ??= new Lro(LroClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+        private Lro LroRestClient => _lroRestClient ??= new Lro(
+            LroClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics OptionalBodyClientDiagnostics => _optionalBodyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationTemplates.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OptionalBody OptionalBodyRestClient => _optionalBodyRestClient ??= new OptionalBody(OptionalBodyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+        private OptionalBody OptionalBodyRestClient => _optionalBodyRestClient ??= new OptionalBody(
+            OptionalBodyClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Implements global CheckNameAvailability operations

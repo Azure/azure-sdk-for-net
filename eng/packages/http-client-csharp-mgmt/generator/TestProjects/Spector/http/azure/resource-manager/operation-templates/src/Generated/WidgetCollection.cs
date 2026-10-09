@@ -39,7 +39,13 @@ namespace Azure.ResourceManager.OperationTemplates
         {
             TryGetApiVersion(WidgetResource.ResourceType, out string widgetApiVersion);
             _optionalBodyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationTemplates", WidgetResource.ResourceType.Namespace, Diagnostics);
-            _optionalBodyRestClient = new OptionalBody(_optionalBodyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, widgetApiVersion ?? "2023-12-01-preview");
+            _optionalBodyRestClient = new OptionalBody(
+                _optionalBodyClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                widgetApiVersion ?? "2023-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -14,19 +14,19 @@ using Azure.Generator.MgmtApiVersionOverride.Tests.Models;
 
 namespace Azure.Generator.MgmtApiVersionOverride.Tests
 {
-    internal partial class OrdinaryWireVersionOperationsGetBySubscriptionCollectionResultOfT : Pageable<OrdinaryWireVersionTestData>
+    internal partial class OrdinaryWireVersionTestDataCollectionResultOfT : Pageable<OrdinaryWireVersionTestData>
     {
         private readonly OrdinaryWireVersionOperations _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of OrdinaryWireVersionOperationsGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of OrdinaryWireVersionTestDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The OrdinaryWireVersionOperations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OrdinaryWireVersionOperationsGetBySubscriptionCollectionResultOfT(OrdinaryWireVersionOperations client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public OrdinaryWireVersionTestDataCollectionResultOfT(OrdinaryWireVersionOperations client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -34,10 +34,10 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of OrdinaryWireVersionOperationsGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of OrdinaryWireVersionTestDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of OrdinaryWireVersionOperationsGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of OrdinaryWireVersionTestDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<OrdinaryWireVersionTestData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

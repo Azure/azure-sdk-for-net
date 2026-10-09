@@ -219,7 +219,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OrdinaryWireVersionTestData, OrdinaryWireVersionTestResource>(new OrdinaryWireVersionOperationsGetBySubscriptionAsyncCollectionResultOfT(OrdinaryWireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetOrdinaryWireVersionTests"), data => new OrdinaryWireVersionTestResource(Client, data));
+            return new AsyncPageableWrapper<OrdinaryWireVersionTestData, OrdinaryWireVersionTestResource>(new OrdinaryWireVersionTestDataAsyncCollectionResultOfT(OrdinaryWireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetOrdinaryWireVersionTests"), data => new OrdinaryWireVersionTestResource(Client, data));
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OrdinaryWireVersionTestData, OrdinaryWireVersionTestResource>(new OrdinaryWireVersionOperationsGetBySubscriptionCollectionResultOfT(OrdinaryWireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetOrdinaryWireVersionTests"), data => new OrdinaryWireVersionTestResource(Client, data));
+            return new PageableWrapper<OrdinaryWireVersionTestData, OrdinaryWireVersionTestResource>(new OrdinaryWireVersionTestDataCollectionResultOfT(OrdinaryWireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetOrdinaryWireVersionTests"), data => new OrdinaryWireVersionTestResource(Client, data));
         }
 
         /// <summary>

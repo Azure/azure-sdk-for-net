@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.OperationTemplates
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Lro for mocking. </summary>
         protected Lro()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Lro(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Lro(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Lro).Assembly, applicationId);
         }
 
@@ -124,10 +127,7 @@ namespace Azure.ResourceManager.OperationTemplates
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Azure.ResourceManager.OperationTemplates/exportArray", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("Azure.ResourceManager.OperationTemplates/exportArray") ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -147,10 +147,7 @@ namespace Azure.ResourceManager.OperationTemplates
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Azure.ResourceManager.OperationTemplates/costReports/", false);
             uri.AppendPath(operationId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("Azure.ResourceManager.OperationTemplates/costReports") ?? "2023-12-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

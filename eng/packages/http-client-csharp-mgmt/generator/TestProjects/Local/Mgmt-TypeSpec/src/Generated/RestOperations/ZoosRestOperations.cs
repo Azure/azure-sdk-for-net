@@ -17,6 +17,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of Zoos for mocking. </summary>
         protected Zoos()
@@ -29,12 +30,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Zoos(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal Zoos(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(Zoos).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -79,10 +79,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +99,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -124,10 +118,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +139,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +160,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +177,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/zoos", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,10 +198,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -240,10 +219,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
             uri.AppendPath("/zooAddressList", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01", true);
             if (maxpagesize != null)
             {
                 uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
@@ -268,10 +244,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
             uri.AppendPath("/deleteZooItems", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/zoos") ?? "2024-05-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
