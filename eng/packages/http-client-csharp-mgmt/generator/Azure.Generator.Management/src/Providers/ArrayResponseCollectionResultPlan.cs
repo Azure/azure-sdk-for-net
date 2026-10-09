@@ -13,8 +13,7 @@ internal readonly record struct ArrayResponseCollectionResultPlan(
     InputClient InputClient,
     InputServiceMethod Method,
     string? SyncName = null,
-    string? AsyncName = null,
-    bool SyncFirst = false)
+    string? AsyncName = null)
 {
     internal static bool IsArrayResponse(InputServiceMethod method) =>
         method is not InputPagingServiceMethod && !method.IsLongRunningOperation() && method.GetResponseBodyType()?.IsList == true;

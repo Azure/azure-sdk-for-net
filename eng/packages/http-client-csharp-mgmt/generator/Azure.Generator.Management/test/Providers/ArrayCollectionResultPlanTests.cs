@@ -77,6 +77,38 @@ internal class ArrayCollectionResultPlanTests
         }
     }
 
+    [TestCase(false)]
+    [TestCase(true)]
+    public void GetAllVariantOrderDoesNotChangeCollisionIdentities(bool occupiedSlots)
+    {
+        Dictionary<(int Method, bool IsAsync), string> Allocate(bool syncFirst)
+        {
+            var library = ManagementMockHelpers.LoadMockPlugin().Object.OutputLibrary;
+            if (occupiedSlots)
+            {
+                foreach (var name in new[] { "OwnerGetAll", "OwnerGetAll0", "OwnerGetAllAsync", "OwnerGetAllAsync0" })
+                {
+                    library.GetUniqueCollectionResultName(name);
+                }
+            }
+            var names = new Dictionary<(int Method, bool IsAsync), string>();
+            for (var method = 0; method < 3; method++)
+            {
+                foreach (var isAsync in syncFirst ? new[] { false, true } : new[] { true, false })
+                {
+                    names.Add((method, isAsync), library.GetUniqueCollectionResultName($"OwnerGetAll{(isAsync ? "Async" : "")}"));
+                }
+            }
+            return names;
+        }
+
+        var syncFirst = Allocate(true);
+        var asyncFirst = Allocate(false);
+        Assert.That(asyncFirst, Is.EqualTo(syncFirst), "GetAll and GetAllAsync allocate from disjoint numeric-suffix families");
+        Assert.That(asyncFirst[(0, false)], Is.EqualTo(occupiedSlots ? "OwnerGetAll1" : "OwnerGetAll"));
+        Assert.That(asyncFirst[(0, true)], Is.EqualTo(occupiedSlots ? "OwnerGetAllAsync1" : "OwnerGetAllAsync"));
+    }
+
     [Test]
     public void LongRunningArrayResponseIsNotAnArrayPlan()
     {

@@ -205,8 +205,9 @@ namespace Azure.Generator.Management
                 foreach (var plan in plans)
                 {
                     var originalNames = plan.GetOriginalNames().ToArray();
-                    // Resource and action methods build async first; collection GetAll builds sync first.
-                    foreach (var isAsync in plan.SyncFirst ? new[] { false, true } : new[] { true, false })
+                    // GetAll's sync/async name families cannot collide, so its sync-first construction
+                    // can use the same async-first replay as resource and action methods.
+                    foreach (var isAsync in new[] { true, false })
                     {
                         var baseName = originalNames[isAsync ? 1 : 0][..^"CollectionResultOfT".Length];
                         var candidate = baseName;
