@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudAgentPoolData, NetworkCloudAgentPoolResource>(new AgentPoolsGetByKubernetesClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudAgentPoolData, NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolDataAsyncCollectionResultOfT(
                 _agentPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudAgentPoolData, NetworkCloudAgentPoolResource>(new AgentPoolsGetByKubernetesClusterCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudAgentPoolData, NetworkCloudAgentPoolResource>(new NetworkCloudAgentPoolDataCollectionResultOfT(
                 _agentPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

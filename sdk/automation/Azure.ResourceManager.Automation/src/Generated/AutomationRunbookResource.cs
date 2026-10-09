@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new TestJobStreamsGetTestJobStreamsAsyncCollectionResultOfT(
+            return new AutomationJobStreamAsync0CollectionResultOfT(
                 _testJobStreamsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new TestJobStreamsGetTestJobStreamsCollectionResultOfT(
+            return new AutomationJobStream0CollectionResultOfT(
                 _testJobStreamsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

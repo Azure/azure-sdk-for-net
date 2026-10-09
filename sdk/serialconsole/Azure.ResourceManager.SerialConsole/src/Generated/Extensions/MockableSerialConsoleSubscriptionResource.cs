@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SerialPortData, SerialPortResource>(new SerialPortsGetSerialPortsAsyncCollectionResultOfT(SerialPortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSerialConsoleSubscriptionResource.GetSerialPorts"), data => new SerialPortResource(Client, data));
+            return new AsyncPageableWrapper<SerialPortData, SerialPortResource>(new SerialPortDataAsync0CollectionResultOfT(SerialPortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSerialConsoleSubscriptionResource.GetSerialPorts"), data => new SerialPortResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SerialPortData, SerialPortResource>(new SerialPortsGetSerialPortsCollectionResultOfT(SerialPortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSerialConsoleSubscriptionResource.GetSerialPorts"), data => new SerialPortResource(Client, data));
+            return new PageableWrapper<SerialPortData, SerialPortResource>(new SerialPortData0CollectionResultOfT(SerialPortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSerialConsoleSubscriptionResource.GetSerialPorts"), data => new SerialPortResource(Client, data));
         }
 
         /// <summary>

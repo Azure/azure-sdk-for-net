@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiManagementGatewaySkusGetAvailableSkusApiManagementGatewaySkusAsyncCollectionResultOfT(
+            return new GatewayResourceSkuResultAsyncCollectionResultOfT(
                 _apiManagementGatewaySkusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiManagementGatewaySkusGetAvailableSkusApiManagementGatewaySkusCollectionResultOfT(
+            return new GatewayResourceSkuResultCollectionResultOfT(
                 _apiManagementGatewaySkusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DrillRunTargetData, DrillRunTargetResource>(new DrillRunResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DrillRunTargetData, DrillRunTargetResource>(new DrillRunTargetDataAsyncCollectionResultOfT(
                 _drillRunResourcesRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DrillRunTargetData, DrillRunTargetResource>(new DrillRunResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<DrillRunTargetData, DrillRunTargetResource>(new DrillRunTargetDataCollectionResultOfT(
                 _drillRunResourcesRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlansGetByResourceGroupAsyncCollectionResultOfT(_usagePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UsagePlanCollection.GetAll"), data => new UsagePlanResource(Client, data));
+            return new AsyncPageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlanDataAsyncCollectionResultOfT(_usagePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UsagePlanCollection.GetAll"), data => new UsagePlanResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlansGetByResourceGroupCollectionResultOfT(_usagePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UsagePlanCollection.GetAll"), data => new UsagePlanResource(Client, data));
+            return new PageableWrapper<UsagePlanData, UsagePlanResource>(new UsagePlanDataCollectionResultOfT(_usagePlansRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UsagePlanCollection.GetAll"), data => new UsagePlanResource(Client, data));
         }
 
         /// <summary>

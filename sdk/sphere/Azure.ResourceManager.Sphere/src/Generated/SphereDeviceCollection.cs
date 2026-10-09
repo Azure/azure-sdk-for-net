@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereDeviceData, SphereDeviceResource>(new DevicesGetByDeviceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SphereDeviceData, SphereDeviceResource>(new SphereDeviceDataAsyncCollectionResultOfT(
                 _devicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereDeviceData, SphereDeviceResource>(new DevicesGetByDeviceGroupCollectionResultOfT(
+            return new PageableWrapper<SphereDeviceData, SphereDeviceResource>(new SphereDeviceDataCollectionResultOfT(
                 _devicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

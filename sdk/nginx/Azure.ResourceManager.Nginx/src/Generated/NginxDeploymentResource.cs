@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new NginxDeploymentsGetWafPoliciesAsyncCollectionResultOfT(
+            return new NginxDeploymentWafPolicyMetadataAsyncCollectionResultOfT(
                 _nginxDeploymentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new NginxDeploymentsGetWafPoliciesCollectionResultOfT(
+            return new NginxDeploymentWafPolicyMetadataCollectionResultOfT(
                 _nginxDeploymentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

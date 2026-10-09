@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointsGetByResourceGroupAsyncCollectionResultOfT(_dataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataCollectionEndpointCollection.GetAll"), data => new DataCollectionEndpointResource(Client, data));
+            return new AsyncPageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointDataAsyncCollectionResultOfT(_dataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataCollectionEndpointCollection.GetAll"), data => new DataCollectionEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointsGetByResourceGroupCollectionResultOfT(_dataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataCollectionEndpointCollection.GetAll"), data => new DataCollectionEndpointResource(Client, data));
+            return new PageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointDataCollectionResultOfT(_dataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DataCollectionEndpointCollection.GetAll"), data => new DataCollectionEndpointResource(Client, data));
         }
 
         /// <summary>

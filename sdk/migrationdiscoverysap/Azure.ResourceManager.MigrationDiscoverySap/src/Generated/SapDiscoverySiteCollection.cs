@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetByResourceGroupAsyncCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
+            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SapDiscoverySiteDataAsyncCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetByResourceGroupCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
+            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SapDiscoverySiteDataCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
         }
 
         /// <summary>

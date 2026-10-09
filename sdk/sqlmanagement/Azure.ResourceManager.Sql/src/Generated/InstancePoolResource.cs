@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstancesGetManagedInstancesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstanceDataAsync1CollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstancesGetManagedInstancesCollectionResultOfT(
+            return new PageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstanceData1CollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesAsyncCollectionResultOfT(
+            return new InstancePoolUsageAsyncCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetUsagesCollectionResultOfT(
+            return new InstancePoolUsageCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

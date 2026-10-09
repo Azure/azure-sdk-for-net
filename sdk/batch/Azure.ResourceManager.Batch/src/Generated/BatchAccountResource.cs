@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new BatchAccountGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new BatchAccountOutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _batchAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new BatchAccountGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new BatchAccountOutboundEnvironmentEndpointCollectionResultOfT(
                 _batchAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

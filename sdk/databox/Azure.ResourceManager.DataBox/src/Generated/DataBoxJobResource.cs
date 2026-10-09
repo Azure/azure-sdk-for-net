@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new JobResourcesGetCredentialsAsyncCollectionResultOfT(
+            return new UnencryptedCredentialsAsyncCollectionResultOfT(
                 _jobResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new JobResourcesGetCredentialsCollectionResultOfT(
+            return new UnencryptedCredentialsCollectionResultOfT(
                 _jobResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

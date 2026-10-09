@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new SqlMigrationServicesGetMigrationsAsyncCollectionResultOfT(
+            return new DatabaseMigrationAsyncCollectionResultOfT(
                 _sqlMigrationServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new SqlMigrationServicesGetMigrationsCollectionResultOfT(
+            return new DatabaseMigrationCollectionResultOfT(
                 _sqlMigrationServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

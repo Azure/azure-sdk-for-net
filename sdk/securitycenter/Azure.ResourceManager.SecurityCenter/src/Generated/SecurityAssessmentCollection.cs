@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAssessmentData, SecurityAssessmentResource>(new AssessmentsGetAllAsyncCollectionResultOfT(_assessmentsRestClient, Id.ToString(), context, "SecurityAssessmentCollection.GetAll"), data => new SecurityAssessmentResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAssessmentData, SecurityAssessmentResource>(new SecurityAssessmentDataAsyncCollectionResultOfT(_assessmentsRestClient, Id.ToString(), context, "SecurityAssessmentCollection.GetAll"), data => new SecurityAssessmentResource(Client, data));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAssessmentData, SecurityAssessmentResource>(new AssessmentsGetAllCollectionResultOfT(_assessmentsRestClient, Id.ToString(), context, "SecurityAssessmentCollection.GetAll"), data => new SecurityAssessmentResource(Client, data));
+            return new PageableWrapper<SecurityAssessmentData, SecurityAssessmentResource>(new SecurityAssessmentDataCollectionResultOfT(_assessmentsRestClient, Id.ToString(), context, "SecurityAssessmentCollection.GetAll"), data => new SecurityAssessmentResource(Client, data));
         }
 
         /// <summary>

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitsListAsyncCollectionResultOfT(_expressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCircuitCollection.GetAll"), data => new ExpressRouteCircuitResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitDataAsyncCollectionResultOfT(_expressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCircuitCollection.GetAll"), data => new ExpressRouteCircuitResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitsListCollectionResultOfT(_expressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCircuitCollection.GetAll"), data => new ExpressRouteCircuitResource(Client, data));
+            return new PageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitDataCollectionResultOfT(_expressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRouteCircuitCollection.GetAll"), data => new ExpressRouteCircuitResource(Client, data));
         }
 
         /// <summary>

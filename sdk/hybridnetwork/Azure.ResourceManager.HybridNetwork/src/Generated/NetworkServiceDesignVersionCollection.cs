@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkServiceDesignVersionData, NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionsGetByNetworkServiceDesignGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkServiceDesignVersionData, NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionDataAsyncCollectionResultOfT(
                 _networkServiceDesignVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkServiceDesignVersionData, NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionsGetByNetworkServiceDesignGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkServiceDesignVersionData, NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionDataCollectionResultOfT(
                 _networkServiceDesignVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

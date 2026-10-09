@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortsGetByResourceGroupAsyncCollectionResultOfT(_expressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRoutePortCollection.GetAll"), data => new ExpressRoutePortResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortDataAsyncCollectionResultOfT(_expressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRoutePortCollection.GetAll"), data => new ExpressRoutePortResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortsGetByResourceGroupCollectionResultOfT(_expressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRoutePortCollection.GetAll"), data => new ExpressRoutePortResource(Client, data));
+            return new PageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortDataCollectionResultOfT(_expressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExpressRoutePortCollection.GetAll"), data => new ExpressRoutePortResource(Client, data));
         }
 
         /// <summary>

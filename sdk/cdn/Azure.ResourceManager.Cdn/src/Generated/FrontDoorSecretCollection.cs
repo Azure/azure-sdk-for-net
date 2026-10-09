@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new SecretsGetByProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new FrontDoorSecretDataAsyncCollectionResultOfT(
                 _secretsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new SecretsGetByProfileCollectionResultOfT(
+            return new PageableWrapper<FrontDoorSecretData, FrontDoorSecretResource>(new FrontDoorSecretDataCollectionResultOfT(
                 _secretsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

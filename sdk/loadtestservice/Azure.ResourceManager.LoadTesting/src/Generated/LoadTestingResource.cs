@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new LoadTestingOutboundEnvironmentEndpointAsyncCollectionResultOfT(
                 _loadTestsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new LoadTestingOutboundEnvironmentEndpointCollectionResultOfT(
                 _loadTestsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

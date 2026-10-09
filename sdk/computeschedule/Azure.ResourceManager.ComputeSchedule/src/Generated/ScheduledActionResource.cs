@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetAttachedResourcesAsyncCollectionResultOfT(
+            return new ScheduledActionResourceDetailsAsyncCollectionResultOfT(
                 _scheduledActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionsGetAttachedResourcesCollectionResultOfT(
+            return new ScheduledActionResourceDetailsCollectionResultOfT(
                 _scheduledActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

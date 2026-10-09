@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceProvisioningServicesPrivateLinkResourceData, DeviceProvisioningServicesPrivateLinkResource>(new GroupIdInformationsGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DeviceProvisioningServicesPrivateLinkResourceData, DeviceProvisioningServicesPrivateLinkResource>(new DeviceProvisioningServicesPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _groupIdInformationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceProvisioningServicesPrivateLinkResourceData, DeviceProvisioningServicesPrivateLinkResource>(new GroupIdInformationsGetPrivateLinkResourcesCollectionResultOfT(
+            return new PageableWrapper<DeviceProvisioningServicesPrivateLinkResourceData, DeviceProvisioningServicesPrivateLinkResource>(new DeviceProvisioningServicesPrivateLinkResourceDataCollectionResultOfT(
                 _groupIdInformationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabData, DevTestLabResource>(new LabsGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabData, DevTestLabResource>(new DevTestLabDataAsync0CollectionResultOfT(
                 LabsRestClient,
                 Id.SubscriptionId,
                 expand,
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabData, DevTestLabResource>(new LabsGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<DevTestLabData, DevTestLabResource>(new DevTestLabData0CollectionResultOfT(
                 LabsRestClient,
                 Id.SubscriptionId,
                 expand,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabGlobalSchedulesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabScheduleDataAsync1CollectionResultOfT(
                 DevTestLabGlobalSchedulesRestClient,
                 Id.SubscriptionId,
                 expand,
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabGlobalSchedulesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<DevTestLabScheduleData, DevTestLabGlobalScheduleResource>(new DevTestLabScheduleData1CollectionResultOfT(
                 DevTestLabGlobalSchedulesRestClient,
                 Id.SubscriptionId,
                 expand,

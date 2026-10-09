@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetReplicationUsagesAsyncCollectionResultOfT(
+            return new ReplicationUsageAsyncCollectionResultOfT(
                 _vaultsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetReplicationUsagesCollectionResultOfT(
+            return new ReplicationUsageCollectionResultOfT(
                 _vaultsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetUsagesByVaultsAsyncCollectionResultOfT(
+            return new VaultUsageAsyncCollectionResultOfT(
                 _vaultsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetUsagesByVaultsCollectionResultOfT(
+            return new VaultUsageCollectionResultOfT(
                 _vaultsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

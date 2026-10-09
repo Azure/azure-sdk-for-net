@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new ServicesGetSkusAsyncCollectionResultOfT(
+            return new DataMigrationAvailableServiceSkuAsyncCollectionResultOfT(
                 _servicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new ServicesGetSkusCollectionResultOfT(
+            return new DataMigrationAvailableServiceSkuCollectionResultOfT(
                 _servicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

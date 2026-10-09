@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetEndpointHealthAsyncCollectionResultOfT(
+            return new IotHubEndpointHealthInfoAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetEndpointHealthCollectionResultOfT(
+            return new IotHubEndpointHealthInfoCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetQuotaMetricsAsyncCollectionResultOfT(
+            return new IotHubQuotaMetricInfoAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetQuotaMetricsCollectionResultOfT(
+            return new IotHubQuotaMetricInfoCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetValidSkusAsyncCollectionResultOfT(
+            return new IotHubSkuDescriptionAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetValidSkusCollectionResultOfT(
+            return new IotHubSkuDescriptionCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1081,7 +1081,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetJobsAsyncCollectionResultOfT(
+            return new IotHubJobInfoAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetJobsCollectionResultOfT(
+            return new IotHubJobInfoCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetKeysAsyncCollectionResultOfT(
+            return new SharedAccessSignatureAuthorizationRuleAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new IotHubResourceGetKeysCollectionResultOfT(
+            return new SharedAccessSignatureAuthorizationRuleCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

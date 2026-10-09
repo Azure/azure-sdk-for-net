@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ModelSourceData, ModelSourceResource>(new ModelSourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ModelSourceData, ModelSourceResource>(new ModelSourceDataAsyncCollectionResultOfT(
                 _modelSourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ModelSourceData, ModelSourceResource>(new ModelSourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<ModelSourceData, ModelSourceResource>(new ModelSourceDataCollectionResultOfT(
                 _modelSourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

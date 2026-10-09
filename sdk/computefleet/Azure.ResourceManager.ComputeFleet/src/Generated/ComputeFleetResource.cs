@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new FleetsGetVirtualMachinesAsyncCollectionResultOfT(
+            return new ComputeFleetVirtualMachineAsyncCollectionResultOfT(
                 _fleetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new FleetsGetVirtualMachinesCollectionResultOfT(
+            return new ComputeFleetVirtualMachineCollectionResultOfT(
                 _fleetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new FleetsGetVirtualMachineScaleSetsAsyncCollectionResultOfT(
+            return new ComputeFleetVmssAsyncCollectionResultOfT(
                 _fleetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new FleetsGetVirtualMachineScaleSetsCollectionResultOfT(
+            return new ComputeFleetVmssCollectionResultOfT(
                 _fleetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectionPolicyData, ConnectionPolicyResource>(new ConnectionPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConnectionPolicyData, ConnectionPolicyResource>(new ConnectionPolicyDataAsyncCollectionResultOfT(
                 _connectionPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectionPolicyData, ConnectionPolicyResource>(new ConnectionPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<ConnectionPolicyData, ConnectionPolicyResource>(new ConnectionPolicyDataCollectionResultOfT(
                 _connectionPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

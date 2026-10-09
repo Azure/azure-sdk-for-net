@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningWorkspaceData, MachineLearningWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningWorkspaceData, MachineLearningWorkspaceResource>(new MachineLearningWorkspaceDataAsync0CollectionResultOfT(
                 WorkspacesRestClient,
                 Id.SubscriptionId,
                 kind,
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningWorkspaceData, MachineLearningWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<MachineLearningWorkspaceData, MachineLearningWorkspaceResource>(new MachineLearningWorkspaceData0CollectionResultOfT(
                 WorkspacesRestClient,
                 Id.SubscriptionId,
                 kind,
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new RegistriesGetBySubscriptionAsyncCollectionResultOfT(RegistriesRestClient, Id.SubscriptionId, context, "MockableMachineLearningSubscriptionResource.GetMachineLearningRegistries"), data => new MachineLearningRegistryResource(Client, data));
+            return new AsyncPageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new MachineLearningRegistryDataAsync0CollectionResultOfT(RegistriesRestClient, Id.SubscriptionId, context, "MockableMachineLearningSubscriptionResource.GetMachineLearningRegistries"), data => new MachineLearningRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new RegistriesGetBySubscriptionCollectionResultOfT(RegistriesRestClient, Id.SubscriptionId, context, "MockableMachineLearningSubscriptionResource.GetMachineLearningRegistries"), data => new MachineLearningRegistryResource(Client, data));
+            return new PageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new MachineLearningRegistryData0CollectionResultOfT(RegistriesRestClient, Id.SubscriptionId, context, "MockableMachineLearningSubscriptionResource.GetMachineLearningRegistries"), data => new MachineLearningRegistryResource(Client, data));
         }
 
         /// <summary>
