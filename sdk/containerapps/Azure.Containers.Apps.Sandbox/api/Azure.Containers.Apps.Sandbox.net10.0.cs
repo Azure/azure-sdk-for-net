@@ -311,8 +311,8 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Azure.Pageable<Azure.Containers.Apps.Sandbox.SnapshotClient> GetSnapshots(string skipToken = null, string labels = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Containers.Apps.Sandbox.SnapshotClient> GetSnapshotsAsync(string skipToken = null, string labels = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Containers.Apps.Sandbox.VolumeClient GetVolume(string volumeName) { throw null; }
-        public virtual Azure.Response<int> GetVolumeCount(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<int>> GetVolumeCountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.Apps.Sandbox.Models.VolumeCountResult> GetVolumeCounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.Models.VolumeCountResult>> GetVolumeCountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Containers.Apps.Sandbox.VolumeClient> GetVolumes(string skipToken = null, string labels = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Containers.Apps.Sandbox.VolumeClient> GetVolumesAsync(string skipToken = null, string labels = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.CredentialClient> SetCredential(string credentialName, Azure.Containers.Apps.Sandbox.Models.CreateSandboxGroupCredentialContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -640,8 +640,10 @@ namespace Azure.Containers.Apps.Sandbox.Models
         public static Azure.Containers.Apps.Sandbox.Models.UserProvidedBlobPodVolume UserProvidedBlobPodVolume(string name = null, string fileCacheSizeLimit = null, bool? readOnly = default(bool?)) { throw null; }
         public static Azure.Containers.Apps.Sandbox.Models.UserProvidedBlobVolume UserProvidedBlobVolume(string volumeName = null, System.Collections.Generic.IDictionary<string, string> labels = null, Azure.Containers.Apps.Sandbox.Models.VolumeProvisioningState provisioningState = default(Azure.Containers.Apps.Sandbox.Models.VolumeProvisioningState), string storageContainerResourceId = null, Azure.Containers.Apps.Sandbox.Models.BlobVolumeAuthentication auth = null) { throw null; }
         public static Azure.Containers.Apps.Sandbox.Models.ValidationWarning ValidationWarning(string code = null, string message = null) { throw null; }
+        public static Azure.Containers.Apps.Sandbox.Models.VolumeCountResult VolumeCountResult(System.Collections.Generic.IEnumerable<Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount> counts = null) { throw null; }
         public static Azure.Containers.Apps.Sandbox.Models.VolumeListDirectoryResult VolumeListDirectoryResult(string path = null, System.Collections.Generic.IEnumerable<Azure.Containers.Apps.Sandbox.Models.VolumePathItem> items = null) { throw null; }
         public static Azure.Containers.Apps.Sandbox.Models.VolumePathItem VolumePathItem(string itemName = null, string path = null, bool isDirectory = false, long? sizeBytes = default(long?), System.DateTimeOffset? lastModifiedUtc = default(System.DateTimeOffset?), string contentType = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount VolumeTypeCount(Azure.Containers.Apps.Sandbox.Models.VolumeType type = default(Azure.Containers.Apps.Sandbox.Models.VolumeType), int count = 0) { throw null; }
         public static Azure.Containers.Apps.Sandbox.Models.WriteFileResult WriteFileResult(bool success = false, string error = null, long? bytesWritten = default(long?)) { throw null; }
     }
     public partial class AuthorizeConnectionContent : System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.AuthorizeConnectionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.AuthorizeConnectionContent>
@@ -4052,6 +4054,21 @@ namespace Azure.Containers.Apps.Sandbox.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.ValidationWarning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.ValidationWarning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class VolumeCountResult : System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.VolumeCountResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.VolumeCountResult>
+    {
+        internal VolumeCountResult() { }
+        public System.Collections.Generic.IList<Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount> Counts { get { throw null; } }
+        protected virtual Azure.Containers.Apps.Sandbox.Models.VolumeCountResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Containers.Apps.Sandbox.Models.VolumeCountResult (Azure.Response response) { throw null; }
+        protected virtual Azure.Containers.Apps.Sandbox.Models.VolumeCountResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Containers.Apps.Sandbox.Models.VolumeCountResult System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.VolumeCountResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.VolumeCountResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Containers.Apps.Sandbox.Models.VolumeCountResult System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.VolumeCountResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.VolumeCountResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.VolumeCountResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class VolumeListDirectoryResult : System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.VolumeListDirectoryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.VolumeListDirectoryResult>
     {
         internal VolumeListDirectoryResult() { }
@@ -4105,6 +4122,39 @@ namespace Azure.Containers.Apps.Sandbox.Models
         public static implicit operator Azure.Containers.Apps.Sandbox.Models.VolumeProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.Containers.Apps.Sandbox.Models.VolumeProvisioningState left, Azure.Containers.Apps.Sandbox.Models.VolumeProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VolumeType : System.IEquatable<Azure.Containers.Apps.Sandbox.Models.VolumeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VolumeType(string value) { throw null; }
+        public static Azure.Containers.Apps.Sandbox.Models.VolumeType AzureBlob { get { throw null; } }
+        public static Azure.Containers.Apps.Sandbox.Models.VolumeType AzureBlobByo { get { throw null; } }
+        public static Azure.Containers.Apps.Sandbox.Models.VolumeType DataDisk { get { throw null; } }
+        public bool Equals(Azure.Containers.Apps.Sandbox.Models.VolumeType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Containers.Apps.Sandbox.Models.VolumeType left, Azure.Containers.Apps.Sandbox.Models.VolumeType right) { throw null; }
+        public static implicit operator Azure.Containers.Apps.Sandbox.Models.VolumeType (string value) { throw null; }
+        public static implicit operator Azure.Containers.Apps.Sandbox.Models.VolumeType? (string value) { throw null; }
+        public static bool operator !=(Azure.Containers.Apps.Sandbox.Models.VolumeType left, Azure.Containers.Apps.Sandbox.Models.VolumeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class VolumeTypeCount : System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount>
+    {
+        internal VolumeTypeCount() { }
+        public int Count { get { throw null; } }
+        public Azure.Containers.Apps.Sandbox.Models.VolumeType Type { get { throw null; } }
+        protected virtual Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.VolumeTypeCount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WriteFileResult : System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.WriteFileResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.WriteFileResult>
     {

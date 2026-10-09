@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Volume counts grouped by type. </summary>
-    internal partial class VolumeCountResult
+    public partial class VolumeCountResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

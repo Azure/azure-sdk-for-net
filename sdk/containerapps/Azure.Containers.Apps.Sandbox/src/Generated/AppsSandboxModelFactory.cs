@@ -2382,6 +2382,25 @@ namespace Azure.Containers.Apps.Sandbox.Models
             return new DataDiskVolumeUsage(compressedBlobSizeBytes, usedSizeBytes, lastUploadedAtUtc, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Volume counts grouped by type. </summary>
+        /// <param name="counts"> Volume counts grouped by type. </param>
+        /// <returns> A new <see cref="Models.VolumeCountResult"/> instance for mocking. </returns>
+        public static VolumeCountResult VolumeCountResult(IEnumerable<VolumeTypeCount> counts = default)
+        {
+            counts ??= new ChangeTrackingList<VolumeTypeCount>();
+
+            return new VolumeCountResult(counts.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The number of volumes of one type. </summary>
+        /// <param name="type"> The volume type. </param>
+        /// <param name="count"> The number of volumes. </param>
+        /// <returns> A new <see cref="Models.VolumeTypeCount"/> instance for mocking. </returns>
+        public static VolumeTypeCount VolumeTypeCount(VolumeType @type = default, int count = default)
+        {
+            return new VolumeTypeCount(@type, count, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Files and directories returned from a volume path. </summary>
         /// <param name="path"> The directory path that was listed. </param>
         /// <param name="items"> Files and directories contained in the path. </param>

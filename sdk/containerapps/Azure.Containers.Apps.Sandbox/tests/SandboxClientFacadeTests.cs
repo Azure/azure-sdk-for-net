@@ -97,34 +97,61 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             Assert.That(transport.Requests[0].Uri.Path, Does.EndWith(path));
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task GroupVolumeCountSumsTypesAndPreservesResponse(bool isAsync)
+        [TestCase(false, 2, 3)]
+        [TestCase(true, 2, 3)]
+        [TestCase(false, int.MaxValue, 1)]
+        [TestCase(true, int.MaxValue, 1)]
+        public async Task GroupVolumeCountsPreserveTypesCountsAndResponse(bool isAsync, int blobCount, int diskCount)
         {
             MockResponse raw = SandboxClientTestHelpers.CreateJsonResponse(200,
-                """{"counts":[{"type":"AzureBlob","count":2},{"type":"DataDisk","count":3}]}""");
+                $$"""{"counts":[{"type":"AzureBlob","count":{{blobCount}}},{"type":"DataDisk","count":{{diskCount}}}]}""");
             MockTransport transport = new MockTransport(raw);
             SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
 
-            Response<int> result = isAsync
-                ? await group.GetVolumeCountAsync()
-                : group.GetVolumeCount();
+            Response<VolumeCountResult> result = isAsync
+                ? await group.GetVolumeCountsAsync()
+                : group.GetVolumeCounts();
 
-            Assert.That(result.Value, Is.EqualTo(5));
+            Assert.That(result.Value.Counts, Has.Count.EqualTo(2));
+            Assert.That(result.Value.Counts[0].Type, Is.EqualTo(VolumeType.AzureBlob));
+            Assert.That(result.Value.Counts[0].Count, Is.EqualTo(blobCount));
+            Assert.That(result.Value.Counts[1].Type, Is.EqualTo(VolumeType.DataDisk));
+            Assert.That(result.Value.Counts[1].Count, Is.EqualTo(diskCount));
             Assert.That(result.GetRawResponse(), Is.SameAs(raw));
             Assert.That(transport.Requests, Has.Count.EqualTo(1));
             Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(transport.Requests[0].Uri.Path, Does.EndWith("/volumes/count"));
         }
 
-        [Test]
-        public void GroupVolumeCountRejectsOverflow()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task GroupVolumeCountsPreserveEmptyCounts(bool isAsync)
         {
-            MockTransport transport = new MockTransport(SandboxClientTestHelpers.CreateJsonResponse(200,
-                """{"counts":[{"type":"AzureBlob","count":2147483647},{"type":"DataDisk","count":1}]}"""));
+            MockResponse raw = SandboxClientTestHelpers.CreateJsonResponse(200, """{"counts":[]}""");
+            MockTransport transport = new MockTransport(raw);
             SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
 
-            Assert.Throws<OverflowException>(() => group.GetVolumeCount());
+            Response<VolumeCountResult> result = isAsync
+                ? await group.GetVolumeCountsAsync()
+                : group.GetVolumeCounts();
+
+            Assert.That(result.Value.Counts, Is.Empty);
+            Assert.That(result.GetRawResponse(), Is.SameAs(raw));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void GroupVolumeCountsPropagateServiceFailure(bool isAsync)
+        {
+            MockTransport transport = new MockTransport(
+                SandboxClientTestHelpers.CreateJsonResponse(404, """{"error":{"code":"NotFound","message":"Missing"}}"""));
+            SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
+
+            RequestFailedException exception = isAsync
+                ? Assert.ThrowsAsync<RequestFailedException>(async () => await group.GetVolumeCountsAsync())
+                : Assert.Throws<RequestFailedException>(() => group.GetVolumeCounts());
+
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [Test]

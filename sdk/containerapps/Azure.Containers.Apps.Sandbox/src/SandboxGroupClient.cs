@@ -372,28 +372,18 @@ namespace Azure.Containers.Apps.Sandbox
                 model => new VolumeClient(GetVolumesClient(), model.VolumeName, model));
         }
 
-        /// <summary> Gets the total number of volumes across all volume types in this group. </summary>
+        /// <summary> Gets the count of volumes in this group, grouped by volume type. </summary>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual Response<int> GetVolumeCount(CancellationToken cancellationToken = default)
+        public virtual Response<VolumeCountResult> GetVolumeCounts(CancellationToken cancellationToken = default)
         {
-            return ToVolumeCountResponse(GetVolumesClient().GetVolumeCounts(cancellationToken));
+            return GetVolumesClient().GetVolumeCounts(cancellationToken);
         }
 
-        /// <summary> Gets the total number of volumes across all volume types in this group asynchronously. </summary>
+        /// <summary> Gets the count of volumes in this group, grouped by volume type, asynchronously. </summary>
         /// <param name="cancellationToken"> The cancellation token for the request. </param>
-        public virtual async Task<Response<int>> GetVolumeCountAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeCountResult>> GetVolumeCountsAsync(CancellationToken cancellationToken = default)
         {
-            return ToVolumeCountResponse(await GetVolumesClient().GetVolumeCountsAsync(cancellationToken).ConfigureAwait(false));
-        }
-
-        private static Response<int> ToVolumeCountResponse(Response<VolumeCountResult> response)
-        {
-            int total = 0;
-            foreach (VolumeTypeCount count in response.Value?.Counts ?? throw new InvalidOperationException("The volume count response has no counts."))
-            {
-                total = checked(total + count.Count);
-            }
-            return Response.FromValue(total, response.GetRawResponse());
+            return await GetVolumesClient().GetVolumeCountsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Creates a sandbox and returns its client. </summary>

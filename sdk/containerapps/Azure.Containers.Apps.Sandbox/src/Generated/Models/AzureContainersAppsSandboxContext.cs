@@ -176,8 +176,10 @@ namespace Azure.Containers.Apps.Sandbox
     [ModelReaderWriterBuildable(typeof(UserProvidedBlobPodVolume))]
     [ModelReaderWriterBuildable(typeof(UserProvidedBlobVolume))]
     [ModelReaderWriterBuildable(typeof(ValidationWarning))]
+    [ModelReaderWriterBuildable(typeof(VolumeCountResult))]
     [ModelReaderWriterBuildable(typeof(VolumeListDirectoryResult))]
     [ModelReaderWriterBuildable(typeof(VolumePathItem))]
+    [ModelReaderWriterBuildable(typeof(VolumeTypeCount))]
     [ModelReaderWriterBuildable(typeof(WriteFileResult))]
     public partial class AzureContainersAppsSandboxContext : ModelReaderWriterContext
     {
