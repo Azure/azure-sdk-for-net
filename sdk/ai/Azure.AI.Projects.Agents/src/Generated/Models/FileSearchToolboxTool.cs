@@ -12,6 +12,9 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A file search tool stored in a toolbox. </summary>
     public partial class FileSearchToolboxTool : ToolboxTool
     {
+        private BinaryData _filters;
+        internal bool _filtersIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="FileSearchToolboxTool"/>. </summary>
         public FileSearchToolboxTool() : base(ToolboxToolType.FileSearch)
         {
@@ -36,7 +39,7 @@ namespace Azure.AI.Projects.Agents
         {
             MaxNumResults = maxNumResults;
             RankingOptions = rankingOptions;
-            Filters = filters;
+            _filters = filters;
             VectorStoreIds = vectorStoreIds;
         }
 
@@ -85,7 +88,18 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Filters { get; set; }
+        public BinaryData Filters
+        {
+            get
+            {
+                return _filters;
+            }
+            set
+            {
+                _filters = value;
+                _filtersIsDefined = true;
+            }
+        }
 
         /// <summary> The IDs of the vector stores to search. </summary>
         public IList<string> VectorStoreIds { get; }
