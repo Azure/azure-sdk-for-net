@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/billing/Azure.ResourceManager.Billing
+    - sdk/billing/Azure.Provisioning.Billing
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
