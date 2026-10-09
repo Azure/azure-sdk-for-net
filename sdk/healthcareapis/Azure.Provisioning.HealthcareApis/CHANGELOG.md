@@ -5,9 +5,3 @@
 ### Features Added
 
 - Initial preview of `Azure.Provisioning.HealthcareApis`.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
