@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.CommonProperties.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmCommonPropertiesModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
         /// <param name="managedIdentityTrackedResourceProvisioningState"> The status of the last operation. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="identity"></param>
         /// <returns> A new <see cref="CommonProperties.ManagedIdentityTrackedResourceData"/> instance for mocking. </returns>
-        public static ManagedIdentityTrackedResourceData ManagedIdentityTrackedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string managedIdentityTrackedResourceProvisioningState = default, ManagedServiceIdentity identity = default)
+        public static ManagedIdentityTrackedResourceData ManagedIdentityTrackedResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string managedIdentityTrackedResourceProvisioningState = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.CommonProperties.Models
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="properties"></param>
         /// <returns> A new <see cref="CommonProperties.ConfidentialResourceData"/> instance for mocking. </returns>
-        public static ConfidentialResourceData ConfidentialResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfidentialResourceProperties properties = default)
+        public static ConfidentialResourceData ConfidentialResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfidentialResourceProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.CommonProperties.Models
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="properties"></param>
         /// <returns> A new <see cref="CommonProperties.ArmResourceIdentifierResourceData"/> instance for mocking. </returns>
-        public static ArmResourceIdentifierResourceData ArmResourceIdentifierResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ArmResourceIdentifierResourceProperties properties = default)
+        public static ArmResourceIdentifierResourceData ArmResourceIdentifierResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ArmResourceIdentifierResourceProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

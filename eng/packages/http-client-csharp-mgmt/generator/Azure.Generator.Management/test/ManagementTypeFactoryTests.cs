@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Tests.Common;
@@ -71,42 +70,6 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
             var result = plugin.Object.TypeFactory.CreateEnum(enumType, null);
             Assert.That(result, Is.Null);
-        }
-
-        [TestCase("Resource")]
-        [TestCase("ProxyResource")]
-        [TestCase("TrackedResource")]
-        public void InheritedResourceIdUsesResourceIdentifier(string resourceModelName)
-        {
-            var resourceModel = InputFactory.Model(
-                resourceModelName,
-                properties: [InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true)],
-                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-            typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
-                .GetSetMethod(true)!.Invoke(resourceModel, [$"Azure.ResourceManager.CommonTypes.{resourceModelName}"]);
-            var childModel = InputFactory.Model("Widget", baseModel: resourceModel,
-                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [resourceModel, childModel]);
-
-            var provider = plugin.Object.TypeFactory.CreateModel(childModel)!;
-            var idParameter = provider.Constructors.SelectMany(c => c.Signature.Parameters)
-                .Single(p => p.Name == "id");
-
-            Assert.That(idParameter.Type.FrameworkType, Is.EqualTo(typeof(ResourceIdentifier)),
-                "The generated constructor must pass a ResourceIdentifier to the inherited ARM data constructor.");
-        }
-
-        [Test]
-        public void OrdinaryModelIdRemainsString()
-        {
-            var model = InputFactory.Model("Widget",
-                properties: [InputFactory.Property("id", InputPrimitiveType.String)]);
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-
-            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
-
-            Assert.That(provider.Properties.Single(p => p.Name == "Id").Type.FrameworkType,
-                Is.EqualTo(typeof(string)));
         }
 
         [Test]

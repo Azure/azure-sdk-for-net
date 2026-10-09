@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CommonProperties
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -166,11 +166,7 @@ namespace Azure.ResourceManager.CommonProperties
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
