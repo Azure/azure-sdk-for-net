@@ -24,6 +24,7 @@ namespace Azure.Security.Attestation
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AttestationRestClient _restClient;
         private readonly SigningCertificatesRestClient _metadataClient;
+        private readonly MetadataConfigurationRestClient _openIdMetadataClient;
         private readonly AttestationClientOptions _options;
         private IReadOnlyList<AttestationSigner> _signers;
         // NOTE The SemaphoreSlim type does NOT need Disposable based on the current usage because AvailableWaitHandle is not referenced.
@@ -73,6 +74,7 @@ namespace Azure.Security.Attestation
             _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
 
             _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
+            _openIdMetadataClient = new MetadataConfigurationRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
         }
         /// <summary>
         /// Parameterless constructor for mocking.
@@ -465,6 +467,48 @@ namespace Azure.Security.Attestation
             {
                 var keys = _metadataClient.Get(cancellationToken);
                 return Task.FromResult(Response.FromValue(AttestationSigner.FromJsonWebKeySet(keys), keys.GetRawResponse()));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the attestation provider's <see href="https://openid.net/specs/openid-connect-discovery-1_0.html">OpenID Connect discovery document</see>,
+        /// which relying parties can use to discover the provider's token issuer and signing keys.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
+        /// <returns>The provider's OpenID Connect metadata.</returns>
+        public virtual Response<AttestationOpenIdMetadata> GetOpenIdMetadata(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(GetOpenIdMetadata)}");
+            scope.Start();
+            try
+            {
+                return _openIdMetadataClient.Get(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the attestation provider's <see href="https://openid.net/specs/openid-connect-discovery-1_0.html">OpenID Connect discovery document</see>,
+        /// which relying parties can use to discover the provider's token issuer and signing keys.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
+        /// <returns>The provider's OpenID Connect metadata.</returns>
+        public virtual async Task<Response<AttestationOpenIdMetadata>> GetOpenIdMetadataAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(GetOpenIdMetadata)}");
+            scope.Start();
+            try
+            {
+                return await _openIdMetadataClient.GetAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

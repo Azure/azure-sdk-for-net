@@ -254,6 +254,39 @@ namespace Azure.Security.Attestation.Tests
             Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, "SgxEnclave", request, async));
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public async System.Threading.Tasks.Task GetOpenIdMetadata(bool async)
+        {
+            var captured = new List<CapturedRequest>();
+            var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), Options(captured,
+                $@"{{""response_types_supported"":[""token"",""none""],""id_token_signing_alg_values_supported"":[""RS256""],
+                    ""revocation_endpoint"":""{Endpoint}/revoke"",""issuer"":""{Endpoint}"",""jwks_uri"":""{Endpoint}/certs"",
+                    ""claims_supported"":[""cnf"",""nonce"",""x-ms-ver""]}}"));
+
+            AttestationOpenIdMetadata metadata = async ? (await client.GetOpenIdMetadataAsync()).Value : client.GetOpenIdMetadata().Value;
+
+            CapturedRequest request = captured.Single();
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"{Endpoint}/.well-known/openid-configuration?{ApiVersion}", request.Uri);
+            Assert.AreEqual(new Uri(Endpoint), metadata.Issuer);
+            Assert.AreEqual(new Uri($"{Endpoint}/certs"), metadata.JsonWebKeySetUri);
+            CollectionAssert.AreEqual(new[] { "token", "none" }, metadata.ResponseTypesSupported);
+            CollectionAssert.AreEqual(new[] { "RS256" }, metadata.TokenSigningAlgorithmsSupported);
+            CollectionAssert.AreEqual(new[] { "cnf", "nonce", "x-ms-ver" }, metadata.SupportedClaims);
+        }
+
+        [Test]
+        public void OpenIdMetadataFactory()
+        {
+            AttestationOpenIdMetadata metadata = AttestationModelFactory.AttestationOpenIdMetadata(issuer: new Uri(Endpoint), supportedClaims: new[] { "nonce" });
+
+            Assert.AreEqual(new Uri(Endpoint), metadata.Issuer);
+            Assert.IsNull(metadata.JsonWebKeySetUri);
+            CollectionAssert.IsEmpty(metadata.ResponseTypesSupported);
+            CollectionAssert.AreEqual(new[] { "nonce" }, metadata.SupportedClaims);
+        }
+
         [Test]
         public void AttestTpm()
         {

@@ -18,6 +18,8 @@ namespace Azure.Security.Attestation
     // These models have public constructors and setters, so factory methods add nothing for mocking.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TpmAttestationRequest", typeof(BinaryData))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("StoredAttestationPolicy", typeof(string))]
+    // Replaced below by an overload without the internal revocation endpoint.
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationOpenIdMetadata", typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(string), typeof(Uri), typeof(Uri), typeof(IEnumerable<string>))]
     public static partial class AttestationModelFactory
     {
         /// <summary>
@@ -197,5 +199,24 @@ namespace Azure.Security.Attestation
             }
             return jwk;
         }
+
+        /// <summary>
+        /// Creates an instance of <see cref="Attestation.AttestationOpenIdMetadata"/> for mocking.
+        /// </summary>
+        /// <param name="issuer">The issuer of the tokens the attestation provider returns.</param>
+        /// <param name="jsonWebKeySetUri">The URI of the keys that sign the tokens the attestation provider returns.</param>
+        /// <param name="responseTypesSupported">The response types the attestation provider supports.</param>
+        /// <param name="tokenSigningAlgorithmsSupported">The algorithms the attestation provider signs tokens with.</param>
+        /// <param name="supportedClaims">The names of the claims the attestation provider can issue.</param>
+        /// <returns>A new <see cref="Attestation.AttestationOpenIdMetadata"/> instance for mocking.</returns>
+        public static AttestationOpenIdMetadata AttestationOpenIdMetadata(Uri issuer = default, Uri jsonWebKeySetUri = default, IEnumerable<string> responseTypesSupported = default, IEnumerable<string> tokenSigningAlgorithmsSupported = default, IEnumerable<string> supportedClaims = default)
+            => new AttestationOpenIdMetadata(
+                new List<string>(responseTypesSupported ?? Array.Empty<string>()),
+                new List<string>(tokenSigningAlgorithmsSupported ?? Array.Empty<string>()),
+                revocationEndpoint: null,
+                issuer,
+                jsonWebKeySetUri,
+                new List<string>(supportedClaims ?? Array.Empty<string>()),
+                additionalBinaryDataProperties: null);
     }
 }
