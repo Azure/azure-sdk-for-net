@@ -241,6 +241,19 @@ namespace Azure.Provisioning.HealthcareApis
             }
         }
 
+        /// <summary> Gets the PrivateEndpointConnections. </summary>
+        public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
         public BicepValue<HealthcareApisPublicNetworkAccess> PublicNetworkAccess
         {
