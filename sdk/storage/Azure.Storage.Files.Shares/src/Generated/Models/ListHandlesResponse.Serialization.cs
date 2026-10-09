@@ -118,7 +118,7 @@ namespace Azure.Storage.Files.Shares.Models
                 throw new FormatException($"The model {nameof(ListHandlesResponse)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(HandleList))
+            if (HandleList != null && Optional.IsCollectionDefined(HandleList))
             {
                 writer.WriteStartElement("Entries");
                 foreach (HandleItem item in HandleList)

@@ -14,6 +14,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Using the Text Analytics API, extracts entities of different types from text. </summary>
     public partial class EntityRecognitionSkill : SearchIndexerSkill
     {
+        private EntityRecognitionSkillLanguage? _defaultLanguageCode;
+        internal bool _defaultLanguageCodeIsDefined;
+        private string _modelVersion;
+        internal bool _modelVersionIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -41,21 +46,43 @@ namespace Azure.Search.Documents.Indexes.Models
         internal EntityRecognitionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<EntityCategory> categories, EntityRecognitionSkillLanguage? defaultLanguageCode, double? minimumPrecision, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             Categories = categories;
-            DefaultLanguageCode = defaultLanguageCode;
+            _defaultLanguageCode = defaultLanguageCode;
             MinimumPrecision = minimumPrecision;
-            ModelVersion = modelVersion;
+            _modelVersion = modelVersion;
         }
 
         /// <summary> A list of entity categories that should be extracted. </summary>
         public IList<EntityCategory> Categories { get; }
 
         /// <summary> A value indicating which language code to use. Default is `en`. </summary>
-        public EntityRecognitionSkillLanguage? DefaultLanguageCode { get; set; }
+        public EntityRecognitionSkillLanguage? DefaultLanguageCode
+        {
+            get
+            {
+                return _defaultLanguageCode;
+            }
+            set
+            {
+                _defaultLanguageCode = value;
+                _defaultLanguageCodeIsDefined = true;
+            }
+        }
 
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
         public double? MinimumPrecision { get; set; }
 
         /// <summary> The version of the model to use when calling the Text Analytics API. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
-        public string ModelVersion { get; set; }
+        public string ModelVersion
+        {
+            get
+            {
+                return _modelVersion;
+            }
+            set
+            {
+                _modelVersion = value;
+                _modelVersionIsDefined = true;
+            }
+        }
     }
 }

@@ -83,10 +83,17 @@ namespace Azure.AI.Agents.Persistent
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(LastMessages))
+            if (_lastMessagesIsDefined || Optional.IsDefined(LastMessages))
             {
-                writer.WritePropertyName("last_messages"u8);
-                writer.WriteNumberValue(LastMessages.Value);
+                if (LastMessages != null)
+                {
+                    writer.WritePropertyName("last_messages"u8);
+                    writer.WriteNumberValue(LastMessages.Value);
+                }
+                else
+                {
+                    writer.WriteNull("last_messages"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,6 +138,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             TruncationStrategy @type = default;
+            bool lastMessagesIsDefined = false;
             int? lastMessages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,6 +150,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("last_messages"u8))
                 {
+                    lastMessagesIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastMessages = null;
@@ -155,7 +164,10 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Truncation(@type, lastMessages, additionalBinaryDataProperties);
+            return new Truncation(@type, lastMessages, additionalBinaryDataProperties)
+            {
+                _lastMessagesIsDefined = lastMessagesIsDefined
+            };
         }
     }
 }
