@@ -157,6 +157,26 @@ public sealed class TaskDefinitionTests
         Assert.That(turn2.InputId, Is.Not.EqualTo(turn1.InputId));
     }
 
+    [Test]
+    public async Task TryStartExistingAsyncDoesNotCreateMissingMultiTurnTask()
+    {
+        using var host = TaskTestHost.Create();
+        TaskDefinition<string, string> def = host.Builder.AddMultiTurnTask<string, string>(
+            "chat", (ctx, ct) => Task.FromResult(ctx.Input));
+
+        TaskRun<string>? run = await def.TryStartExistingAsync(
+            "input",
+            new RunOptions
+            {
+                TaskId = "missing-chain",
+                InputId = "input-1",
+                IfLastInputId = "previous-input",
+            });
+
+        Assert.That(run, Is.Null);
+        Assert.That(await host.Store.GetAsync("missing-chain"), Is.Null);
+    }
+
     private sealed class StubTaskDefinition : TaskDefinition<string, string>
     {
         public string? DeletedTaskId { get; private set; }
@@ -174,6 +194,12 @@ public sealed class TaskDefinitionTests
             RunOptions? options = null,
             CancellationToken cancellationToken = default)
             => Task.FromResult<TaskRun<string>>(new StubTaskRun(input));
+
+        public override Task<TaskRun<string>?> TryStartExistingAsync(
+            string input,
+            RunOptions options,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult<TaskRun<string>?>(null);
 
         public override Task<TaskRun<string>?> GetActiveRunAsync(
             string taskId,

@@ -68,6 +68,29 @@ public class TaskDefinition<TInput, TOutput>
         => Engine.StartAsync<TInput, TOutput>(Name, input, options, cancellationToken);
 
     /// <summary>
+    /// Starts an existing multi-turn task without creating a record when the task ID is absent.
+    /// </summary>
+    /// <remarks>
+    /// This compatibility primitive is intended for protocol libraries migrating physical task
+    /// identifiers. It returns <see langword="null"/> if the existing record disappears before
+    /// the start boundary.
+    /// </remarks>
+    /// <param name="input">The typed input.</param>
+    /// <param name="options">Invocation options containing an explicit task ID.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <returns>The existing task run, or <see langword="null"/> when the record is absent.</returns>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public virtual Task<TaskRun<TOutput>?> TryStartExistingAsync(
+        TInput input,
+        RunOptions options,
+        CancellationToken cancellationToken = default)
+        => Engine.TryStartExistingAsync<TInput, TOutput>(
+            Name,
+            input,
+            options,
+            cancellationToken);
+
+    /// <summary>
     /// Returns the in-flight run for a one-shot task keyed by <paramref name="taskId"/>, or
     /// <see langword="null"/> when not in-flight in this process and not reclaimable inline.
     /// </summary>

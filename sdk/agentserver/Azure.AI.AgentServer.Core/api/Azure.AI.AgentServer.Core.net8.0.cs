@@ -496,6 +496,7 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRunStatus?> GetStatusAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<TOutput> RunAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>> StartAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> TryStartExistingAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public sealed partial class TaskFailureDetail
     {

@@ -120,6 +120,69 @@ public sealed class SessionInstanceIdTaskIdProtocolTests
         }
     }
 
+    [Test]
+    public async Task HostedSessionInstanceIdFallsBackWhenLegacyTaskIsDeletedAfterProbe()
+    {
+        string root = CreateRoot();
+        string tasksDirectory = Path.Combine(root, "tasks");
+        string? previousHosted = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+        string? previousGuid = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
+        try
+        {
+            SetHostedSessionGuid(null);
+            string firstResponseId;
+            string legacyTaskId;
+            var firstStore = new SpyTaskStore(new LocalTaskStore(tasksDirectory));
+            using (var firstFactory = CreateFactory(root, firstStore))
+            using (HttpClient firstClient = firstFactory.CreateClient())
+            {
+                using HttpResponseMessage firstResponse = await PostConversationAsync(firstClient);
+                Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+                firstResponseId = await ReadResponseIdAsync(firstResponse);
+                legacyTaskId = firstStore.LastCreateRequest!.Id!;
+                await WaitForStatusAsync(firstStore, legacyTaskId, TaskWireKeys.StatusSuspended);
+                await firstFactory.StopAsync();
+            }
+
+            const string sessionInstanceValue = "33333333333333333333333333333333";
+            SetHostedSessionGuid(sessionInstanceValue);
+            var secondStore = new DeleteAfterLegacyProbeStore(
+                new LocalTaskStore(tasksDirectory),
+                legacyTaskId);
+            using var secondFactory = CreateFactory(root, secondStore);
+            using HttpClient secondClient = secondFactory.CreateClient();
+            secondStore.Arm();
+
+            using HttpResponseMessage secondResponse = await PostConversationAsync(
+                secondClient,
+                previousResponseId: firstResponseId);
+            Assert.That(secondResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            string secondResponseId = await ReadResponseIdAsync(secondResponse);
+
+            string scopedTaskId = TaskIdDerivation.Derive(
+                ConversationId,
+                firstResponseId,
+                secondResponseId,
+                AgentName,
+                PublicSessionId,
+                TaskIdDerivation.DeriveSessionScope(
+                    PublicSessionId,
+                    Guid.ParseExact(sessionInstanceValue, "N")),
+                steerable: false);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(secondStore.CreatedTaskIds, Does.Contain(scopedTaskId));
+                Assert.That(secondStore.CreatedTaskIds, Does.Not.Contain(legacyTaskId));
+            });
+        }
+        finally
+        {
+            RestoreEnvironment(previousHosted, previousGuid);
+            DeleteRoot(root);
+        }
+    }
+
     private static TestWebApplicationFactory CreateFactory(string root, ITaskStore store)
         => new(
             configureOptions: options => options.ResilientBackground = true,
@@ -208,5 +271,64 @@ public sealed class SessionInstanceIdTaskIdProtocolTests
         catch (IOException)
         {
         }
+    }
+
+    private sealed class DeleteAfterLegacyProbeStore(
+        ITaskStore inner,
+        string legacyTaskId) : ITaskStore
+    {
+        private int _armed;
+        private int _deleted;
+
+        public List<string> CreatedTaskIds { get; } = new();
+
+        public void Arm() => Volatile.Write(ref _armed, 1);
+
+        public async Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            CreatedTaskIds.Add(request.Id!);
+            return await inner.CreateAsync(request, cancellationToken);
+        }
+
+        public async Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+        {
+            TaskRecord? record = await inner.GetAsync(taskId, cancellationToken);
+            if (Volatile.Read(ref _armed) != 0
+                && record is not null
+                && string.Equals(taskId, legacyTaskId, StringComparison.Ordinal)
+                && Interlocked.Exchange(ref _deleted, 1) == 0)
+            {
+                await inner.DeleteAsync(
+                    taskId,
+                    force: true,
+                    cancellationToken: CancellationToken.None);
+            }
+
+            return record;
+        }
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+            => inner.ListAsync(query, cancellationToken);
     }
 }

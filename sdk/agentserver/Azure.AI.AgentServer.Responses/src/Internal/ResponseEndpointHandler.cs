@@ -853,6 +853,30 @@ internal sealed class ResponseEndpointHandler
                 }
                 : new RunOptions { TaskId = responseId, InputId = responseId };
 
+            if (pickMultiTurn
+                && !string.Equals(taskId, chainId, StringComparison.Ordinal)
+                && string.Equals(selectedTaskId, chainId, StringComparison.Ordinal))
+            {
+                TaskRun<ResponseTaskOutput>? legacyRun =
+                    await definition.TryStartExistingAsync(
+                        new ResponseTaskInput(payload),
+                        runOptions,
+                        CancellationToken.None).ConfigureAwait(false);
+                if (legacyRun is not null)
+                {
+                    return legacyRun;
+                }
+
+                runOptions = new RunOptions
+                {
+                    TaskId = taskId,
+                    InputId = responseId,
+                    IfLastInputId = string.IsNullOrEmpty(request.PreviousResponseId)
+                        ? null
+                        : request.PreviousResponseId,
+                };
+            }
+
             return await definition.StartAsync(
                 new ResponseTaskInput(payload),
                 runOptions,

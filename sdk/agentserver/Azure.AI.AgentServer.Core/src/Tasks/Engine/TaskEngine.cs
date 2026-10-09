@@ -109,9 +109,37 @@ internal sealed partial class TaskEngine : IDisposable
         try
         {
             return await StartCoreAsync<TInput, TOutput>(
+                    name,
+                    input,
+                    options,
+                    requireExisting: false,
+                    linkedCts.Token).ConfigureAwait(false)
+                ?? throw new InvalidOperationException(
+                    "A normal resilient-task start unexpectedly returned no task run.");
+        }
+        finally
+        {
+            ExitStartOperation();
+        }
+    }
+
+    public async Task<TaskRun<TOutput>?> TryStartExistingAsync<TInput, TOutput>(
+        string name,
+        TInput input,
+        RunOptions options,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        EnterStartOperation();
+        using CancellationTokenSource linkedCts =
+            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _startShutdownCts.Token);
+        try
+        {
+            return await StartCoreAsync<TInput, TOutput>(
                 name,
                 input,
                 options,
+                requireExisting: true,
                 linkedCts.Token).ConfigureAwait(false);
         }
         finally
@@ -120,10 +148,11 @@ internal sealed partial class TaskEngine : IDisposable
         }
     }
 
-    private async Task<TaskRun<TOutput>> StartCoreAsync<TInput, TOutput>(
+    private async Task<TaskRun<TOutput>?> StartCoreAsync<TInput, TOutput>(
         string name,
         TInput input,
         RunOptions? options,
+        bool requireExisting,
         CancellationToken cancellationToken)
     {
         TaskRegistration registration = _registry.Get(name);
@@ -193,9 +222,29 @@ internal sealed partial class TaskEngine : IDisposable
                 }
 
                 return multiTurn
-                    ? await StartMultiTurnAsync<TInput, TOutput>(registration, name, taskId, inputId, persistInputId, input, options, cancellationToken)
+                    ? await StartMultiTurnAsync<TInput, TOutput>(
+                        registration,
+                        name,
+                        taskId,
+                        inputId,
+                        persistInputId,
+                        input,
+                        options,
+                        requireExisting,
+                        cancellationToken)
                         .ConfigureAwait(false)
-                    : await StartOneShotAsync<TInput, TOutput>(registration, name, taskId, inputId, persistInputId, input, cancellationToken)
+                    : requireExisting
+                        ? throw new ArgumentException(
+                            "Existing-only start is supported only for multi-turn tasks.",
+                            nameof(name))
+                        : await StartOneShotAsync<TInput, TOutput>(
+                            registration,
+                            name,
+                            taskId,
+                            inputId,
+                            persistInputId,
+                            input,
+                            cancellationToken)
                         .ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -599,9 +648,9 @@ internal sealed partial class TaskEngine : IDisposable
         return runState.ToHandle();
     }
 
-    private async Task<TaskRun<TOutput>> StartMultiTurnAsync<TInput, TOutput>(
+    private async Task<TaskRun<TOutput>?> StartMultiTurnAsync<TInput, TOutput>(
         TaskRegistration registration, string name, string taskId, string inputId, bool persistInputId, TInput input,
-        RunOptions? options, CancellationToken cancellationToken)
+        RunOptions? options, bool requireExisting, CancellationToken cancellationToken)
     {
         // Serialize + size-check input BEFORE network (FR-011).
         JsonNode? inputNode = SerializeInput(input, registration);
@@ -619,6 +668,11 @@ internal sealed partial class TaskEngine : IDisposable
         bool recoveredSteeredTurn = false;
         if (current is null)
         {
+            if (requireExisting)
+            {
+                return null;
+            }
+
             // First turn of the chain: create the record. A multi-turn turn always carries a
             // per-turn input_id (caller-supplied or auto-generated), so the chain head is always
             // stamped at create (persistInputId is always true for multi-turn).
@@ -822,6 +876,12 @@ internal sealed partial class TaskEngine : IDisposable
                 new System.Collections.Generic.KeyValuePair<string, IActiveRun>(taskId, activeRun));
             _serializer.Remove(taskId);
             runState.SetException(ex);
+            if (requireExisting
+                && ex is TaskStoreException { StatusCode: 404 })
+            {
+                return null;
+            }
+
             throw;
         }
 
@@ -2912,8 +2972,7 @@ internal sealed partial class TaskEngine : IDisposable
         // (1) Atomically close start admission before signalling shutdown. Starts that entered
         // admission first receive the shutdown token and must leave admission before active-run
         // snapshots are taken; no later start can race in behind the snapshot.
-        Task startsDrained = CloseStartAdmission();
-        SignalShutdownToken();
+        Task startsDrained = BeginShutdown();
         try
         {
             await startsDrained.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -2970,6 +3029,13 @@ internal sealed partial class TaskEngine : IDisposable
 
         // (4) Wake the stragglers so they unwind and defer their turn (record stays in_progress).
         CancelActiveHandlers();
+    }
+
+    internal Task BeginShutdown()
+    {
+        Task startsDrained = CloseStartAdmission();
+        SignalShutdownToken();
+        return startsDrained;
     }
 
     /// <inheritdoc/>

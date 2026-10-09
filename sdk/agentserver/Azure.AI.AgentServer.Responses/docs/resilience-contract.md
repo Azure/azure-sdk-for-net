@@ -474,8 +474,10 @@ tombstoned by the service, which can cause an HTTP 412 precondition failure on
 task creation. `ResponseContext.ConversationChainId` remains unchanged. If the GUID is absent,
 the physical task ID retains the legacy chain ID. During rollout, an existing
 pending, in-progress, or suspended legacy task is reused; completed or missing
-legacy tasks do not block creation under the GUID-scoped ID. One-shot physical
-task IDs remain the response ID.
+legacy tasks do not block creation under the GUID-scoped ID. Legacy reuse uses
+an existing-only Core start boundary: if deletion wins after the compatibility
+probe, the framework retries with the session-instance-scoped ID and never
+recreates the legacy ID. One-shot physical task IDs remain the response ID.
 
 ### R7 — Metadata (`metadata`)
 

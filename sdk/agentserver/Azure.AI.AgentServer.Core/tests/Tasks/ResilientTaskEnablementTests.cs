@@ -6,6 +6,7 @@ using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -542,6 +543,120 @@ public sealed class ResilientTaskEnablementTests
     }
 
     [Test]
+    public async Task Shutdown_ClosesAdmissionBeforeWaitingForPeriodicRecoveryScan()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-stop-scan-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        const string ParentTaskId = "recovered-stop-parent";
+        TaskTestHost? seed = null;
+        try
+        {
+            seed = TaskTestHost.Create(
+                root,
+                agentName: TaskEngineConstants.DefaultAgentName,
+                sessionId: TaskEngineConstants.DefaultSessionId);
+            TaskDefinition<string, string> parent =
+                seed.Builder.AddTask<string, string>(
+                    "recovered-stop-parent",
+                    async (ctx, ct) =>
+                    {
+                        await ctx.ExitForRecoveryAsync(ct);
+                        return ctx.Input;
+                    });
+            seed.SignalShutdown();
+            await parent.StartAsync(
+                "parent",
+                new RunOptions { TaskId = ParentTaskId });
+            await seed.WaitUntilInactiveAsync(ParentTaskId, TimeSpan.FromSeconds(5));
+
+            var invokeChild =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var childOutcome =
+                new TaskCompletionSource<Exception?>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var childInvoked =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var store = new PeriodicListGateStore(new LocalTaskStore(root));
+
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(store);
+            TaskDefinition<string, string> child =
+                builder.Services.AddResilientTask<string, string>(
+                    "recovered-stop-child",
+                    (ctx, ct) =>
+                    {
+                        childInvoked.TrySetResult();
+                        return Task.FromResult(ctx.Input);
+                    });
+            builder.Services.AddResilientTask<string, string>(
+                "recovered-stop-parent",
+                async (ctx, ct) =>
+                {
+                    if (ctx.EntryMode == EntryMode.Recovered)
+                    {
+                        await invokeChild.Task;
+                        try
+                        {
+                            await child.RunAsync("after-stop", cancellationToken: ct);
+                            childOutcome.TrySetResult(null);
+                        }
+                        catch (Exception ex)
+                        {
+                            childOutcome.TrySetResult(ex);
+                        }
+                    }
+
+                    return ctx.Input;
+                });
+            builder.Services.RemoveAll<TaskDurabilityService>();
+            builder.Services.AddSingleton(sp =>
+                new TaskDurabilityService(
+                    sp.GetRequiredService<RecoveryScanner>(),
+                    sp.GetRequiredService<TaskEngine>(),
+                    scanInterval: TimeSpan.FromMilliseconds(10),
+                    shutdownGrace: TimeSpan.Zero,
+                    logger: null,
+                    enablement: sp.GetRequiredService<ResilientTaskEnablementState>()));
+
+            using IHost host = builder.Build();
+            await host.StartAsync();
+            await store.PeriodicListEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+            Task stop = host.StopAsync();
+            ResilientTaskEnablementState enablement =
+                host.Services.GetRequiredService<ResilientTaskEnablementState>();
+            var timeout = System.Diagnostics.Stopwatch.StartNew();
+            while (enablement.IsReady && timeout.Elapsed < TimeSpan.FromSeconds(5))
+            {
+                await Task.Delay(10);
+            }
+
+            Assert.That(enablement.IsReady, Is.False);
+            invokeChild.TrySetResult();
+            Exception? outcome =
+                await childOutcome.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(outcome, Is.InstanceOf<InvalidOperationException>());
+                Assert.That(childInvoked.Task.IsCompleted, Is.False);
+            });
+
+            store.ReleasePeriodicList.TrySetResult();
+            await stop.WaitAsync(TimeSpan.FromSeconds(10));
+        }
+        finally
+        {
+            seed?.Dispose();
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+    }
+
+    [Test]
     public async Task Shutdown_CancelsAdmittedStartBeforeItCanBecomeActive()
     {
         string root = Path.Combine(
@@ -969,6 +1084,55 @@ public sealed class ResilientTaskEnablementTests
             }
 
             return result;
+        }
+    }
+
+    private sealed class PeriodicListGateStore(ITaskStore inner) : ITaskStore
+    {
+        private int _listCalls;
+
+        public TaskCompletionSource PeriodicListEntered { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource ReleasePeriodicList { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public Task<TaskRecord> CreateAsync(
+            TaskCreateRequest request,
+            CancellationToken cancellationToken = default)
+            => inner.CreateAsync(request, cancellationToken);
+
+        public Task<TaskRecord?> GetAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+            => inner.GetAsync(taskId, cancellationToken);
+
+        public Task<TaskRecord> PatchAsync(
+            string taskId,
+            TaskPatchRequest patch,
+            string? ifMatch,
+            CancellationToken cancellationToken = default)
+            => inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+
+        public Task DeleteAsync(
+            string taskId,
+            string? ifMatch = null,
+            bool force = false,
+            bool cascade = false,
+            CancellationToken cancellationToken = default)
+            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+
+        public async Task<TaskListResult> ListAsync(
+            TaskListQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            if (Interlocked.Increment(ref _listCalls) > 1)
+            {
+                PeriodicListEntered.TrySetResult();
+                await ReleasePeriodicList.Task;
+            }
+
+            return await inner.ListAsync(query, CancellationToken.None);
         }
     }
 

@@ -37,6 +37,9 @@
 
 ### Bugs Fixed
 
+- Legacy-chain migration now atomically requires the selected legacy task to still exist. If
+  deletion wins after the compatibility probe, Responses starts the session-instance-scoped task
+  instead of recreating the tombstoned legacy ID.
 - Changed the default history fetch limit from 100 to `-1` (unlimited), avoiding
   automatic truncation of conversation history. Positive limits remain supported.
 - Hosted `ResponsesServer.Run` and `AgentHostBuilder.AddResponses` now bind through the

@@ -109,6 +109,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
     public async Task StopAsync(CancellationToken cancellationToken = default)
     {
         _enablement.MarkStopped();
+        _ = _engine.BeginShutdown();
         if (_loop is not null)
         {
             _stopCts.Cancel();
