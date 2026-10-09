@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryProjectData, DiscoveryProjectResource>(new ProjectsGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiscoveryProjectData, DiscoveryProjectResource>(new DiscoveryProjectDataAsyncCollectionResultOfT(
                 _projectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryProjectData, DiscoveryProjectResource>(new ProjectsGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<DiscoveryProjectData, DiscoveryProjectResource>(new DiscoveryProjectDataCollectionResultOfT(
                 _projectsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

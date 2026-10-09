@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolversGetDnsResolversByVirtualNetworkAsyncCollectionResultOfT(
+            return new WritableSubResourceAsyncCollectionResultOfT(
                 DnsResolversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolversGetDnsResolversByVirtualNetworkCollectionResultOfT(
+            return new WritableSubResourceCollectionResultOfT(
                 DnsResolversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsForwardingRulesetsGetDnsForwardingRulesetsByVirtualNetworkAsyncCollectionResultOfT(
+            return new VirtualNetworkDnsForwardingRulesetAsyncCollectionResultOfT(
                 DnsForwardingRulesetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsForwardingRulesetsGetDnsForwardingRulesetsByVirtualNetworkCollectionResultOfT(
+            return new VirtualNetworkDnsForwardingRulesetCollectionResultOfT(
                 DnsForwardingRulesetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkAsyncCollectionResultOfT(
+            return new WritableSubResourceAsync0CollectionResultOfT(
                 DnsResolverPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkCollectionResultOfT(
+            return new WritableSubResource0CollectionResultOfT(
                 DnsResolverPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

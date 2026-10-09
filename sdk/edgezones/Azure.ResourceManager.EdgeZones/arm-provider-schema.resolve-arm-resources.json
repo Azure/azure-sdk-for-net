@@ -56,7 +56,8 @@
         "pattern": "^[a-zA-Z0-9-]{3,24}$"
       },
       "apiVersions": [
-        "2024-04-01-preview"
+        "2024-04-01-preview",
+        "2026-10-01"
       ],
       "rbacRoles": []
     }

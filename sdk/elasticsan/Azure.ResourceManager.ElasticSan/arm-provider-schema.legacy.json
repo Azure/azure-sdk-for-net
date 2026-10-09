@@ -88,8 +88,8 @@
         "maxLength": 24
       },
       "apiVersions": [
-        "2024-07-01-preview",
-        "2025-09-01"
+        "2025-09-01",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -148,8 +148,8 @@
       "resourceName": "ElasticSanPrivateEndpointConnection",
       "nameConstraints": {},
       "apiVersions": [
-        "2024-07-01-preview",
-        "2025-09-01"
+        "2025-09-01",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -242,8 +242,8 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2024-07-01-preview",
-        "2025-09-01"
+        "2025-09-01",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -306,8 +306,8 @@
         "maxLength": 80
       },
       "apiVersions": [
-        "2024-07-01-preview",
-        "2025-09-01"
+        "2025-09-01",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -365,6 +365,16 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
+        },
+        {
+          "methodId": "Microsoft.ElasticSan.restoreVolume",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}/restore",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
         }
       ],
       "scope": {
@@ -380,8 +390,8 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2024-07-01-preview",
-        "2025-09-01"
+        "2025-09-01",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     }
