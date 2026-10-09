@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private VectorSearchAlgorithmMetric? _metric;
+        internal bool _metricIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="HnswParameters"/>. </summary>
         public HnswParameters()
@@ -32,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
             M = m;
             EfConstruction = efConstruction;
             EfSearch = efSearch;
-            Metric = metric;
+            _metric = metric;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +48,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? EfSearch { get; set; }
 
         /// <summary> The similarity metric to use for vector comparisons. </summary>
-        public VectorSearchAlgorithmMetric? Metric { get; set; }
+        public VectorSearchAlgorithmMetric? Metric
+        {
+            get
+            {
+                return _metric;
+            }
+            set
+            {
+                _metric = value;
+                _metricIsDefined = true;
+            }
+        }
     }
 }
