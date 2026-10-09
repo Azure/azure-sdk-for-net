@@ -419,7 +419,7 @@
         "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
         "scopeResourceType": "Microsoft.Resources/resourceGroups"
       },
-      "resourceName": "ResourceGroupsMaintenanceConfigurations",
+      "resourceName": "MaintenanceConfiguration",
       "nameConstraints": {},
       "apiVersions": [
         "2023-10-01-preview",

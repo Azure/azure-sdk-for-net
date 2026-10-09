@@ -101,7 +101,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -167,7 +170,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -241,7 +247,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -307,7 +316,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -371,7 +383,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -435,7 +450,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -509,7 +527,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -575,7 +596,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -639,7 +663,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -705,7 +732,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -779,7 +809,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -829,16 +862,6 @@
           }
         },
         {
-          "methodId": "Microsoft.MachineLearningServices.Workspaces.getInWorkspace",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/deployments",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.MachineLearningServices.Workspaces.listByResourceGroup",
           "kind": "List",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces",
@@ -862,16 +885,6 @@
           "methodId": "Microsoft.MachineLearningServices.Workspaces.diagnose",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/diagnose",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.Workspaces.getAllModels",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/listConnectionModels",
           "scope": {
             "kind": "ResourceGroup",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}",
@@ -994,7 +1007,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1078,7 +1094,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1152,7 +1171,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1206,7 +1228,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1272,7 +1297,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1356,7 +1384,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1422,7 +1453,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1496,7 +1530,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1556,16 +1593,6 @@
           }
         },
         {
-          "methodId": "Microsoft.MachineLearningServices.ComputeResources.getAllowedResizeSizes",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/getAllowedVmSizesForResize",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.MachineLearningServices.ComputeResources.listKeys",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/listKeys",
@@ -1579,16 +1606,6 @@
           "methodId": "Microsoft.MachineLearningServices.ComputeResources.listNodes",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/listNodes",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.ComputeResources.resize",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/resize",
           "scope": {
             "kind": "ResourceGroup",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}",
@@ -1624,36 +1641,6 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.ComputeResources.updateCustomServices",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/customServices",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.ComputeResources.updateDataMounts",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/updateDataMounts",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.ComputeResources.updateIdleShutdownSetting",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/updateIdleShutdownSetting",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
         }
       ],
       "scope": {
@@ -1672,7 +1659,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1732,29 +1722,9 @@
           }
         },
         {
-          "methodId": "Microsoft.MachineLearningServices.WorkspaceConnectionPropertiesV2BasicResources.getModels",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/models",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
           "methodId": "Microsoft.MachineLearningServices.WorkspaceConnectionPropertiesV2BasicResources.listSecrets",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/listsecrets",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.WorkspaceConnectionPropertiesV2BasicResources.testConnection",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/testconnection",
           "scope": {
             "kind": "ResourceGroup",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}",
@@ -1778,291 +1748,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.EndpointDeploymentResourcePropertiesBasicResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/deployments/{deploymentName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/connections/deployments",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointDeploymentResourcePropertiesBasicResources.createOrUpdateDeployment",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/deployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/deployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointDeploymentResourcePropertiesBasicResources.getDeployment",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/deployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/deployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointDeploymentResourcePropertiesBasicResources.deleteDeployment",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/deployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/deployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointDeploymentResourcePropertiesBasicResources.listDeployments",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/deployments",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}",
-      "resourceName": "MachineLearningWorkspaceConnectionDeployment",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{2,32}$"
-      },
-      "apiVersions": [
-        "2024-10-01-preview",
-        "2025-10-01-preview",
-        "2025-12-01",
-        "2026-01-15-preview",
-        "2026-03-01",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.RaiBlocklistPropertiesBasicResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/connections/raiBlocklists",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistPropertiesBasicResources.create",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistPropertiesBasicResources.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistPropertiesBasicResources.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistPropertiesBasicResources.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistPropertiesBasicResources.addBulk",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/addRaiBlocklistItems",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistPropertiesBasicResources.deleteBulk",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/deleteRaiBlocklistItems",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}",
-      "resourceName": "RaiBlocklistPropertiesBasicResource",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"
-      },
-      "apiVersions": [
-        "2024-10-01-preview",
-        "2025-10-01-preview",
-        "2025-12-01",
-        "2026-01-15-preview",
-        "2026-03-01",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.RaiBlocklistItemPropertiesBasicResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems/{raiBlocklistItemName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/connections/raiBlocklists/raiBlocklistItems",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistItemPropertiesBasicResources.create",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems/{raiBlocklistItemName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems/{raiBlocklistItemName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistItemPropertiesBasicResources.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems/{raiBlocklistItemName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems/{raiBlocklistItemName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistItemPropertiesBasicResources.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems/{raiBlocklistItemName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems/{raiBlocklistItemName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiBlocklistItemPropertiesBasicResources.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}/raiBlocklistItems",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiBlocklists/{raiBlocklistName}",
-      "resourceName": "RaiBlocklistItemPropertiesBasicResource",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"
-      },
-      "apiVersions": [
-        "2024-10-01-preview",
-        "2025-10-01-preview",
-        "2025-12-01",
-        "2026-01-15-preview",
-        "2026-03-01",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.RaiPolicyPropertiesBasicResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiPolicies/{raiPolicyName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/connections/raiPolicies",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiPolicyPropertiesBasicResources.create",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiPolicies/{raiPolicyName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiPolicies/{raiPolicyName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiPolicyPropertiesBasicResources.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiPolicies/{raiPolicyName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiPolicies/{raiPolicyName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiPolicyPropertiesBasicResources.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiPolicies/{raiPolicyName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiPolicies/{raiPolicyName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiPolicyPropertiesBasicResources.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/raiPolicies",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}",
-      "resourceName": "ConnectionsRaiPolicies",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"
-      },
-      "apiVersions": [
-        "2024-10-01-preview",
-        "2025-10-01-preview",
-        "2025-12-01",
-        "2026-01-15-preview",
-        "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2126,7 +1815,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2200,7 +1892,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2274,217 +1969,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.EndpointResourcePropertiesBasicResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/endpoints",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointResourcePropertiesBasicResources.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointResourcePropertiesBasicResources.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointResourcePropertiesBasicResources.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointResourcePropertiesBasicResources.getModels",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/models",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointResourcePropertiesBasicResources.listKeys",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/listKeys",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointResourcePropertiesBasicResources.regenerateKeys",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/regenerateKey",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}",
-      "resourceName": "EndpointResourcePropertiesBasicResource",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{2,32}$"
-      },
-      "apiVersions": [
-        "2024-10-01-preview",
-        "2025-10-01-preview",
-        "2025-12-01",
-        "2026-01-15-preview",
-        "2026-03-01",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.EndpointDeploymentResourcePropertiesBasicResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/deployments/{deploymentName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/endpoints/deployments",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointDeployment.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/deployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/deployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointDeployment.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/deployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/deployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointDeployment.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/deployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/deployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.EndpointDeployment.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/deployments",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-      "resourceName": "EndpointDeployment",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{2,32}$"
-      },
-      "apiVersions": [
-        "2026-01-15-preview",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.RaiPolicyPropertiesBasicResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/raiPolicies/{raiPolicyName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/endpoints/raiPolicies",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiPolicy.create",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/raiPolicies/{raiPolicyName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/raiPolicies/{raiPolicyName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiPolicy.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/raiPolicies/{raiPolicyName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/raiPolicies/{raiPolicyName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiPolicy.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/raiPolicies/{raiPolicyName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/raiPolicies/{raiPolicyName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.RaiPolicy.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}/raiPolicies",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/endpoints/{endpointName}",
-      "resourceName": "EndpointsRaiPolicies",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"
-      },
-      "apiVersions": [
-        "2026-01-15-preview",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2550,7 +2038,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2624,7 +2115,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2670,7 +2164,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2734,7 +2231,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2808,7 +2308,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2872,7 +2375,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2936,273 +2442,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.InferencePool",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/inferencePools",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferencePools.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferencePools.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferencePools.update",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferencePools.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferencePools.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}",
-      "resourceName": "InferencePool",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9\\-_]{0,254}$"
-      },
-      "apiVersions": [
-        "2026-01-15-preview",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.InferenceEndpoint",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints/{endpointName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/inferencePools/endpoints",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceEndpoints.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints/{endpointName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceEndpoints.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints/{endpointName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceEndpoints.update",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints/{endpointName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceEndpoints.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints/{endpointName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints/{endpointName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceEndpoints.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/endpoints",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-      "resourceName": "InferencePoolsEndpoints",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9\\-_]{0,254}$"
-      },
-      "apiVersions": [
-        "2026-01-15-preview",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.InferenceGroup",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/inferencePools/groups",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.update",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.getDeltaModelsStatusAsync",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}/deltaModels/getStatus",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.getStatus",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}/getStatus",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.listDeltaModelsAsync",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}/deltaModels/list",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.listSkus",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}/skus",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.InferenceGroups.modifyDeltaModelsAsync",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}/deltaModels/modify",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{poolName}/groups/{groupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/inferencePools/{inferencePoolName}",
-      "resourceName": "InferencePoolsGroups",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9\\-_]{0,254}$"
-      },
-      "apiVersions": [
-        "2026-01-15-preview",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -3276,83 +2519,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.MachineLearningServices.ManagedNetworkSettingsPropertiesBasicResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}",
-      "resourceType": "Microsoft.MachineLearningServices/workspaces/managedNetworks",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.ManagedNetworkSettingsPropertiesBasicResources.put",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.ManagedNetworkSettingsPropertiesBasicResources.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.ManagedNetworkSettingsPropertiesBasicResources.patch",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.ManagedNetworkSettingsPropertiesBasicResources.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.ManagedNetworkSettingsPropertiesBasicResources.post",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/batchOutboundRules",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}",
-      "resourceName": "ManagedNetworkSettingsPropertiesBasicResource",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{2,32}$"
-      },
-      "apiVersions": [
-        "2024-10-01-preview",
-        "2025-10-01-preview",
-        "2025-12-01",
-        "2026-01-15-preview",
-        "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -3360,48 +2530,7 @@
       "resourceModelId": "Microsoft.MachineLearningServices.OutboundRuleBasicResource",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}",
       "resourceType": "Microsoft.MachineLearningServices/workspaces/managedNetworks/outboundRules",
-      "methods": [
-        {
-          "methodId": "Microsoft.MachineLearningServices.OutboundRuleBasicResourceOperationGroup.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.OutboundRuleBasicResourceOperationGroup.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.OutboundRuleBasicResourceOperationGroup.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules/{ruleName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.MachineLearningServices.OutboundRuleBasicResourceOperationGroup.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}/outboundRules",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/managedNetworks/{managedNetworkName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
+      "methods": [],
       "scope": {
         "kind": "ResourceGroup",
         "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
@@ -3412,14 +2541,7 @@
       "nameConstraints": {
         "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]{2,32}$"
       },
-      "apiVersions": [
-        "2024-10-01-preview",
-        "2025-10-01-preview",
-        "2025-12-01",
-        "2026-01-15-preview",
-        "2026-03-01",
-        "2026-03-15-preview"
-      ],
+      "apiVersions": [],
       "rbacRoles": []
     },
     {
@@ -3482,7 +2604,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -3548,7 +2673,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -3622,7 +2750,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -3726,7 +2857,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -3820,7 +2954,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -3886,7 +3023,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -3950,7 +3090,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -4014,7 +3157,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -4108,7 +3254,10 @@
         "2025-12-01",
         "2026-01-15-preview",
         "2026-03-01",
-        "2026-03-15-preview"
+        "2026-03-15-preview",
+        "2026-05-01",
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     }
@@ -4153,33 +3302,6 @@
     {
       "methodId": "Microsoft.MachineLearningServices.QuotasOperationGroup.list",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.MachineLearningServices.PTUQuotaOperationGroup.listAvailable",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/availableQuota",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.MachineLearningServices.PTUQuotaOperationGroup.getAvailable",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/availableQuota/default",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.MachineLearningServices.PTUQuotaOperationGroup.list",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotaAndUsage",
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",
