@@ -13,9 +13,9 @@ namespace Azure.AI.Projects.Agents
     public partial class VoiceAgentServerVadTurnDetection : VoiceAgentTurnDetectionConfig
     {
         private long? _idleTimeoutMs;
-        internal bool _idleTimeoutMsIsDefined;
+        private bool _idleTimeoutMsIsDefined;
         private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;
-        internal bool _endOfUtteranceDetectionIsDefined;
+        private bool _endOfUtteranceDetectionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentServerVadTurnDetection"/>. </summary>
         public VoiceAgentServerVadTurnDetection() : base(VoiceAgentTurnDetectionType.ServerVad)

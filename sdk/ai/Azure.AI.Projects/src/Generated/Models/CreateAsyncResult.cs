@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private Uri _operationResult;
-        internal bool _operationResultIsDefined;
+        private bool _operationResultIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CreateAsyncResult"/>. </summary>
         internal CreateAsyncResult()

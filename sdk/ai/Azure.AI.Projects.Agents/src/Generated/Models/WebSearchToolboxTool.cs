@@ -16,10 +16,10 @@ namespace Azure.AI.Projects.Agents
     {
         [Experimental("AAIP002")]
         private WebSearchToolFilters _filters;
-        internal bool _filtersIsDefined;
+        private bool _filtersIsDefined;
         [Experimental("AAIP002")]
         private WebSearchToolApproximateLocation _userLocation;
-        internal bool _userLocationIsDefined;
+        private bool _userLocationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WebSearchToolboxTool"/>. </summary>
         public WebSearchToolboxTool() : base(ToolboxToolType.WebSearch)
