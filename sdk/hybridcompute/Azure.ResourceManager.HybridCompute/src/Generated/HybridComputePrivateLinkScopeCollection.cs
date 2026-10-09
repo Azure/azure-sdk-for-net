@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new HybridComputePrivateLinkScopeDataAsyncCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new HybridComputePrivateLinkScopeDataCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>

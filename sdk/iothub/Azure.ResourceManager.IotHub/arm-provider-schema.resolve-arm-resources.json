@@ -194,7 +194,8 @@
       "resourceName": "IotHubDescription",
       "nameConstraints": {},
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-03-01-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -275,7 +276,8 @@
         "pattern": "^[A-Za-z0-9-._]{1,64}$"
       },
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-03-01-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -334,7 +336,8 @@
       "resourceName": "EventHubConsumerGroupInfo",
       "nameConstraints": {},
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-03-01-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -363,7 +366,8 @@
       "resourceName": "IotHubDescription",
       "nameConstraints": {},
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-03-01-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -421,7 +425,8 @@
       "resourceName": "IotHubsPrivateEndpointConnections",
       "nameConstraints": {},
       "apiVersions": [
-        "2026-03-01-preview"
+        "2026-03-01-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     }

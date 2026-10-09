@@ -66,6 +66,46 @@
           }
         },
         {
+          "methodId": "Microsoft.HorizonDb.HorizonDbClusters.restart",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/restart",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HorizonDb.HorizonDbClusters.start",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/start",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HorizonDb.HorizonDbClusters.stop",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/stop",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HorizonDb.HorizonDbPrivateEndpointConnections.delete",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
           "methodId": "Microsoft.HorizonDb.HorizonDbPrivateEndpointConnections.get",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}",
@@ -79,6 +119,16 @@
           "methodId": "Microsoft.HorizonDb.HorizonDbPrivateEndpointConnections.list",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/privateEndpointConnections",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HorizonDb.HorizonDbPrivateEndpointConnections.updateStatus",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}",
           "scope": {
             "kind": "ResourceGroup",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}",
@@ -98,7 +148,69 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2026-01-20-preview"
+        "2026-01-20-preview",
+        "2026-05-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HorizonDb.HorizonDbAdministrator",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/administrators/{objectId}",
+      "resourceType": "Microsoft.HorizonDb/clusters/administrators",
+      "methods": [
+        {
+          "methodId": "Microsoft.HorizonDb.HorizonDbAdministrators.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/administrators/{objectId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/administrators/{objectId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HorizonDb.HorizonDbAdministrators.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/administrators/{objectId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/administrators/{objectId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HorizonDb.HorizonDbAdministrators.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/administrators/{objectId}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/administrators/{objectId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HorizonDb.HorizonDbAdministrators.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/administrators",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}",
+      "resourceName": "HorizonDbAdministrator",
+      "nameConstraints": {
+        "pattern": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$"
+      },
+      "apiVersions": [
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -141,7 +253,8 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2026-01-20-preview"
+        "2026-01-20-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -204,7 +317,8 @@
         "maxLength": 128
       },
       "apiVersions": [
-        "2026-01-20-preview"
+        "2026-01-20-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -277,7 +391,8 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2026-01-20-preview"
+        "2026-01-20-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -320,7 +435,8 @@
         "maxLength": 128
       },
       "apiVersions": [
-        "2026-01-20-preview"
+        "2026-01-20-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     },
@@ -422,7 +538,8 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2026-01-20-preview"
+        "2026-01-20-preview",
+        "2026-05-01-preview"
       ],
       "rbacRoles": []
     }
@@ -435,24 +552,6 @@
         "kind": "Tenant",
         "scopeIdPattern": "",
         "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
-      "methodId": "Microsoft.HorizonDb.HorizonDbPrivateEndpointConnections.update",
-      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/privateEndpointConnections/{privateEndpointConnectionName}",
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      }
-    },
-    {
-      "methodId": "Microsoft.HorizonDb.HorizonDbPrivateEndpointConnections.delete",
-      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/privateEndpointConnections/{privateEndpointConnectionName}",
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
       }
     }
   ]

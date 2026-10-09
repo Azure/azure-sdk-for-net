@@ -1,0 +1,437 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.HybridContainerService.ProvisionedCluster",
+      "resourceIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default",
+      "resourceType": "Microsoft.HybridContainerService/provisionedClusterInstances",
+      "methods": [
+        {
+          "methodId": "Microsoft.HybridContainerService.ProvisionedClusters.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.ProvisionedClusters.get",
+          "kind": "Read",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.ProvisionedClusters.delete",
+          "kind": "Delete",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.ProvisionedClusters.list",
+          "kind": "List",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.ProvisionedClusters.listAdminKubeconfig",
+          "kind": "Action",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listAdminKubeconfig",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.ProvisionedClusters.listUserKubeconfig",
+          "kind": "Action",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listUserKubeconfig",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{connectedClusterResourceUri}"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "ProvisionedCluster",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HybridContainerService.AgentPool",
+      "resourceIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}",
+      "resourceType": "Microsoft.HybridContainerService/provisionedClusterInstances/agentPools",
+      "methods": [
+        {
+          "methodId": "Microsoft.HybridContainerService.AgentPools.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.AgentPools.get",
+          "kind": "Read",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.AgentPools.delete",
+          "kind": "Delete",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.AgentPools.listByProvisionedCluster",
+          "kind": "List",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{connectedClusterResourceUri}"
+      },
+      "parentResourceId": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default",
+      "resourceName": "HybridContainerServiceAgentPool",
+      "nameConstraints": {
+        "pattern": "^[a-z][a-z0-9]{2,11}$",
+        "minLength": 3,
+        "maxLength": 12
+      },
+      "apiVersions": [
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HybridContainerService.HybridIdentityMetadata",
+      "resourceIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default",
+      "resourceType": "Microsoft.HybridContainerService/provisionedClusterInstances/hybridIdentityMetadata",
+      "methods": [
+        {
+          "methodId": "Microsoft.HybridContainerService.HybridIdentityMetadataOperationGroup.create",
+          "kind": "Create",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.HybridIdentityMetadataOperationGroup.get",
+          "kind": "Read",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.HybridIdentityMetadataOperationGroup.delete",
+          "kind": "Delete",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.HybridIdentityMetadataOperationGroup.listByCluster",
+          "kind": "List",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{connectedClusterResourceUri}"
+      },
+      "parentResourceId": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default",
+      "singletonResourceName": "default",
+      "resourceName": "HybridIdentityMetadata",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HybridContainerService.ProvisionedClusterUpgradeProfile",
+      "resourceIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/upgradeProfiles/default",
+      "resourceType": "Microsoft.HybridContainerService/provisionedClusterInstances/upgradeProfiles",
+      "methods": [
+        {
+          "methodId": "Microsoft.HybridContainerService.ProvisionedClusterUpgradeProfiles.getUpgradeProfile",
+          "kind": "Read",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/upgradeProfiles/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/upgradeProfiles/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.ProvisionedClusterUpgradeProfiles.listUpgradeProfile",
+          "kind": "List",
+          "operationPath": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/upgradeProfiles",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{connectedClusterResourceUri}"
+      },
+      "parentResourceId": "/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default",
+      "singletonResourceName": "default",
+      "resourceName": "ProvisionedClusterUpgradeProfile",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HybridContainerService.KubernetesVersionProfile",
+      "resourceIdPattern": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/kubernetesVersions/default",
+      "resourceType": "Microsoft.HybridContainerService/kubernetesVersions",
+      "methods": [
+        {
+          "methodId": "Microsoft.HybridContainerService.KubernetesVersionProfiles.createKubernetesVersions",
+          "kind": "Create",
+          "operationPath": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/kubernetesVersions/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/kubernetesVersions/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.KubernetesVersionProfiles.getKubernetesVersions",
+          "kind": "Read",
+          "operationPath": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/kubernetesVersions/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/kubernetesVersions/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.KubernetesVersionProfiles.deleteKubernetesVersions",
+          "kind": "Delete",
+          "operationPath": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/kubernetesVersions/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/kubernetesVersions/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.KubernetesVersionProfiles.list",
+          "kind": "List",
+          "operationPath": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/kubernetesVersions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{customLocationResourceUri}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{customLocationResourceUri}"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "KubernetesVersionProfile",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HybridContainerService.VmSkuProfile",
+      "resourceIdPattern": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/skus/default",
+      "resourceType": "Microsoft.HybridContainerService/skus",
+      "methods": [
+        {
+          "methodId": "Microsoft.HybridContainerService.VmSkuProfiles.createVMSkus",
+          "kind": "Create",
+          "operationPath": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/skus/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/skus/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.VmSkuProfiles.getVMSkus",
+          "kind": "Read",
+          "operationPath": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/skus/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/skus/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.VmSkuProfiles.deleteVMSkus",
+          "kind": "Delete",
+          "operationPath": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/skus/default",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/skus/default"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.VmSkuProfiles.list",
+          "kind": "List",
+          "operationPath": "/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/skus",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{customLocationResourceUri}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{customLocationResourceUri}"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "HybridContainerServiceVmSku",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.HybridContainerService.VirtualNetwork",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}",
+      "resourceType": "Microsoft.HybridContainerService/virtualNetworks",
+      "methods": [
+        {
+          "methodId": "Microsoft.HybridContainerService.VirtualNetworks.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.VirtualNetworks.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.VirtualNetworks.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.VirtualNetworks.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.VirtualNetworks.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.HybridContainerService.VirtualNetworks.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "HybridContainerServiceVirtualNetwork",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$",
+        "minLength": 3,
+        "maxLength": 64
+      },
+      "apiVersions": [
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.HybridContainerService/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}
