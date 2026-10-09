@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DotNetComponentData, DotNetComponentResource>(new DotNetComponentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DotNetComponentData, DotNetComponentResource>(new DotNetComponentDataAsyncCollectionResultOfT(
                 _dotNetComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DotNetComponentData, DotNetComponentResource>(new DotNetComponentsGetAllCollectionResultOfT(
+            return new PageableWrapper<DotNetComponentData, DotNetComponentResource>(new DotNetComponentDataCollectionResultOfT(
                 _dotNetComponentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetAssociatedScheduledActionsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedScheduledActions");
+            return new ScheduledActionResourcesAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedScheduledActions");
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetAssociatedScheduledActionsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedScheduledActions");
+            return new ScheduledActionResourcesCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedScheduledActions");
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrenceExtensionGetAssociatedOccurrencesAsyncCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedOccurrences");
+            return new OccurrenceExtensionDataAsyncCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedOccurrences");
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OccurrenceExtensionGetAssociatedOccurrencesCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedOccurrences");
+            return new OccurrenceExtensionDataCollectionResultOfT(OccurrenceExtensionRestClient, scope.ToString(), context, "MockableComputeScheduleArmClient.GetAssociatedOccurrences");
         }
     }
 }
