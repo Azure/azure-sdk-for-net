@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new AttestationPrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(
+            return new AttestationPrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

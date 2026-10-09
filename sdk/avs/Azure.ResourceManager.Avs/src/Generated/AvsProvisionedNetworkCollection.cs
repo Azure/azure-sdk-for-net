@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new AvsProvisionedNetworkDataAsyncCollectionResultOfT(
                 _provisionedNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new ProvisionedNetworksGetAllCollectionResultOfT(
+            return new PageableWrapper<AvsProvisionedNetworkData, AvsProvisionedNetworkResource>(new AvsProvisionedNetworkDataCollectionResultOfT(
                 _provisionedNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

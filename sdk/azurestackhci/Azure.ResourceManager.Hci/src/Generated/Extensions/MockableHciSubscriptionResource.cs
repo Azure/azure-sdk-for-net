@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
+            return new AsyncPageableWrapper<HciClusterData, HciClusterResource>(new HciClusterDataAsync0CollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Hci.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
+            return new PageableWrapper<HciClusterData, HciClusterResource>(new HciClusterData0CollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
         }
     }
 }
