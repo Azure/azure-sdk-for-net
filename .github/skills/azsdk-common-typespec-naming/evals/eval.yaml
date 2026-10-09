@@ -92,6 +92,94 @@ stimuli:
     graders:
       - *generationLoaded
 
+  - name: anti-trigger-generic-sdk-client-rename
+    tags:
+      case: generic-customization
+    environment: &genericCustomization
+      skills:
+        - ..
+        - ../../azsdk-common-generate-sdk-locally
+      files:
+        - src: fixtures/generic-customization-mcp.mjs
+          dest: generic-customization-mcp.mjs
+      mcpServers:
+        azure-sdk-mcp:
+          type: stdio
+          command: node
+          args: ["generic-customization-mcp.mjs"]
+    prompt: |
+      Rename ContosoClient to ContosoManagementClient in the generated .NET SDK.
+      The confirmed local package path is /work/azure-sdk-for-net/sdk/contoso/Azure.Contoso
+      and its TypeSpec project is /work/azure-rest-api-specs/specification/contoso/Contoso.
+      Apply the customization now using the available SDK customization tooling.
+      Do not inspect the filesystem or edit generated code directly.
+    constraints: &genericCustomizationBounds
+      max_turns: 8
+      max_tokens: 10000
+    graders:
+      - &genericCustomizationRouting
+        type: skill-invocation
+        config:
+          required: [azsdk-common-generate-sdk-locally]
+          disallowed: [azsdk-common-typespec-naming]
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
+              args:
+                packagePath: '^(?:[A-Za-z]:)?[\\/]work[\\/]azure-sdk-for-net[\\/]sdk[\\/]contoso[\\/]Azure\.Contoso$'
+                customizationRequest: "(?is)(?=.*ContosoClient)(?=.*ContosoManagementClient).+"
+          disallowed:
+            - name: "^(edit|create|apply_patch)$"
+
+  - name: anti-trigger-generic-hide-sdk-operation
+    tags:
+      case: generic-customization
+    environment: *genericCustomization
+    prompt: |
+      Hide the get_create_project_status polling operation from the Python SDK
+      public API. The confirmed local package path is
+      /work/azure-sdk-for-python/sdk/contoso/azure-mgmt-contoso and its TypeSpec
+      project is /work/azure-rest-api-specs/specification/contoso/Contoso.
+      Apply the customization now using the available SDK customization tooling.
+      Do not inspect the filesystem or edit generated code directly.
+    constraints: *genericCustomizationBounds
+    graders:
+      - *genericCustomizationRouting
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
+              args:
+                packagePath: '^(?:[A-Za-z]:)?[\\/]work[\\/]azure-sdk-for-python[\\/]sdk[\\/]contoso[\\/]azure-mgmt-contoso$'
+                customizationRequest: "(?is)(?=.*hide)(?=.*get_create_project_status).+"
+          disallowed:
+            - name: "^(edit|create|apply_patch)$"
+
+  - name: anti-trigger-generic-create-sdk-subclient
+    tags:
+      case: generic-customization
+    environment: *genericCustomization
+    prompt: |
+      Create a Sessions subclient under ContosoClient in the Java SDK and move
+      the session operations onto it. The confirmed local package path is
+      /work/azure-sdk-for-java/sdk/contoso/azure-contoso and its TypeSpec project
+      is /work/azure-rest-api-specs/specification/contoso/Contoso.
+      Apply the customization now using the available SDK customization tooling.
+      Do not inspect the filesystem or edit generated code directly.
+    constraints: *genericCustomizationBounds
+    graders:
+      - *genericCustomizationRouting
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
+              args:
+                packagePath: '^(?:[A-Za-z]:)?[\\/]work[\\/]azure-sdk-for-java[\\/]sdk[\\/]contoso[\\/]azure-contoso$'
+                customizationRequest: "(?is)(?=.*Sessions)(?=.*subclient)(?=.*ContosoClient).+"
+          disallowed:
+            - name: "^(edit|create|apply_patch)$"
+
   - name: csharp-arm-member-names
     tags:
       case: smoke
