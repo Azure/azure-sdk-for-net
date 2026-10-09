@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (2026-09-24)
+## 1.0.0-beta.4 (2026-10-09)
 
 ### Bugs Fixed
 
@@ -9,7 +9,8 @@
   and `FrontDoorRoute`. Generated names again allow uppercase letters, numbers,
   and hyphens, with maximum lengths of 46 for endpoints and 90 for origin
   groups, origins, and routes instead of the beta.3 inherited 24-character
-  lowercase defaults.
+  lowercase defaults. Generated resource names may therefore differ when
+  upgrading from beta.3.
 
 ## 1.0.0-beta.3 (2026-06-25)
 
