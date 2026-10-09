@@ -93,10 +93,15 @@
       },
       "resourceName": "RedisEnterpriseCluster",
       "nameConstraints": {
-        "pattern": "^(?=.{1,60}$)[A-Za-z0-9]+(-[A-Za-z0-9]+)*$"
+        "pattern": "^[a-zA-Z0-9-]+$",
+        "minLength": 1,
+        "maxLength": 60
       },
       "apiVersions": [
-        "2025-08-01-preview"
+        "2025-08-01-preview",
+        "2026-02-01-preview",
+        "2026-05-01-preview",
+        "2026-06-01-preview"
       ],
       "rbacRoles": []
     },
@@ -244,10 +249,15 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}",
       "resourceName": "RedisEnterpriseDatabase",
       "nameConstraints": {
-        "pattern": "^(?=.{1,60}$)[A-Za-z0-9]+(-[A-Za-z0-9]+)*$"
+        "pattern": "^[a-zA-Z0-9-]+$",
+        "minLength": 1,
+        "maxLength": 60
       },
       "apiVersions": [
-        "2025-08-01-preview"
+        "2025-08-01-preview",
+        "2026-02-01-preview",
+        "2026-05-01-preview",
+        "2026-06-01-preview"
       ],
       "rbacRoles": []
     },
@@ -305,10 +315,15 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}",
       "resourceName": "AccessPolicyAssignment",
       "nameConstraints": {
-        "pattern": "^[A-Za-z0-9]{1,60}$"
+        "pattern": "^[a-zA-Z0-9]+$",
+        "minLength": 1,
+        "maxLength": 60
       },
       "apiVersions": [
-        "2025-08-01-preview"
+        "2025-08-01-preview",
+        "2026-02-01-preview",
+        "2026-05-01-preview",
+        "2026-06-01-preview"
       ],
       "rbacRoles": []
     },
@@ -378,7 +393,10 @@
       "resourceName": "RedisEnterpriseMigration",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-08-01-preview"
+        "2025-08-01-preview",
+        "2026-02-01-preview",
+        "2026-05-01-preview",
+        "2026-06-01-preview"
       ],
       "rbacRoles": []
     },
@@ -437,7 +455,10 @@
       "resourceName": "RedisEnterprisePrivateEndpointConnection",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-08-01-preview"
+        "2025-08-01-preview",
+        "2026-02-01-preview",
+        "2026-05-01-preview",
+        "2026-06-01-preview"
       ],
       "rbacRoles": []
     }
