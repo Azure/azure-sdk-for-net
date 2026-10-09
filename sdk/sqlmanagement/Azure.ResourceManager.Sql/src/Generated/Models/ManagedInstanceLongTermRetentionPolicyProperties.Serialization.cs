@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("backupStorageAccessTier"u8);
                 writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
             }
+            if (Optional.IsDefined(TimeBasedImmutability))
+            {
+                writer.WritePropertyName("timeBasedImmutability"u8);
+                writer.WriteStringValue(TimeBasedImmutability.Value.ToString());
+            }
+            if (Optional.IsDefined(TimeBasedImmutabilityMode))
+            {
+                writer.WritePropertyName("timeBasedImmutabilityMode"u8);
+                writer.WriteStringValue(TimeBasedImmutabilityMode.Value.ToString());
+            }
             if (Optional.IsDefined(WeeklyRetention))
             {
                 writer.WritePropertyName("weeklyRetention"u8);
@@ -142,6 +152,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             SqlBackupStorageAccessTier? backupStorageAccessTier = default;
+            TimeBasedImmutability? timeBasedImmutability = default;
+            TimeBasedImmutabilityMode? timeBasedImmutabilityMode = default;
             string weeklyRetention = default;
             string monthlyRetention = default;
             string yearlyRetention = default;
@@ -156,6 +168,24 @@ namespace Azure.ResourceManager.Sql.Models
                         continue;
                     }
                     backupStorageAccessTier = new SqlBackupStorageAccessTier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("timeBasedImmutability"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeBasedImmutability = new TimeBasedImmutability(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("timeBasedImmutabilityMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeBasedImmutabilityMode = new TimeBasedImmutabilityMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("weeklyRetention"u8))
@@ -189,6 +219,8 @@ namespace Azure.ResourceManager.Sql.Models
             }
             return new ManagedInstanceLongTermRetentionPolicyProperties(
                 backupStorageAccessTier,
+                timeBasedImmutability,
+                timeBasedImmutabilityMode,
                 weeklyRetention,
                 monthlyRetention,
                 yearlyRetention,

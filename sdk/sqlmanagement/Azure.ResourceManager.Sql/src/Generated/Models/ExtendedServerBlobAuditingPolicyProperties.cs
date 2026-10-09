@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
         public ExtendedServerBlobAuditingPolicyProperties(BlobAuditingPolicyState state)
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
+            RequiredFields = new ChangeTrackingList<string>();
             State = state;
         }
 
@@ -104,6 +105,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </param>
         /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
+        /// <param name="requiredFields">
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
@@ -115,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedServerBlobAuditingPolicyProperties(bool? isDevopsAuditEnabled, string predicateExpression, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, BlobAuditingPolicyState state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtendedServerBlobAuditingPolicyProperties(bool? isDevopsAuditEnabled, string predicateExpression, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, IList<string> requiredFields, BlobAuditingPolicyState state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDevopsAuditEnabled = isDevopsAuditEnabled;
             PredicateExpression = predicateExpression;
@@ -125,6 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             QueueDelayMs = queueDelayMs;
             IsManagedIdentityInUse = isManagedIdentityInUse;
+            RequiredFields = requiredFields;
             State = state;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
@@ -233,6 +241,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Specifies whether Managed Identity is used to access blob storage. </summary>
         [WirePath("isManagedIdentityInUse")]
         public bool? IsManagedIdentityInUse { get; set; }
+
+        /// <summary>
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </summary>
+        [WirePath("requiredFields")]
+        public IList<string> RequiredFields { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
         [WirePath("state")]

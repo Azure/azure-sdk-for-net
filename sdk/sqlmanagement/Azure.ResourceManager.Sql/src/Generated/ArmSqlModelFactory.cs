@@ -26,15 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
         /// <param name="diffBackupIntervalInHours"> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </param>
+        /// <param name="lockImmutability"> Whether to lock the immutability of the backups governed by this short term retention policy. </param>
+        /// <param name="immutabilityStatus"> The immutability status of the backups governed by this short term retention policy. </param>
         /// <returns> A new <see cref="Sql.BackupShortTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static BackupShortTermRetentionPolicyData BackupShortTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionDays = default, DiffBackupIntervalInHours? diffBackupIntervalInHours = default)
+        public static BackupShortTermRetentionPolicyData BackupShortTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionDays, DiffBackupIntervalInHours? diffBackupIntervalInHours, bool? lockImmutability, ImmutabilityStatus? immutabilityStatus = default)
         {
             return new BackupShortTermRetentionPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                retentionDays is null && diffBackupIntervalInHours is null ? default : new BackupShortTermRetentionPolicyProperties(retentionDays, diffBackupIntervalInHours, default),
+                retentionDays is null && diffBackupIntervalInHours is null && lockImmutability is null && immutabilityStatus is null ? default : new BackupShortTermRetentionPolicyProperties(retentionDays, diffBackupIntervalInHours, lockImmutability, immutabilityStatus, default),
                 default);
         }
 
@@ -1003,6 +1005,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </param>
         /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
+        /// <param name="requiredFields">
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
@@ -1014,14 +1022,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.SqlServerBlobAuditingPolicyData"/> instance for mocking. </returns>
-        public static SqlServerBlobAuditingPolicyData SqlServerBlobAuditingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isDevopsAuditEnabled = default, int? retentionDays = default, IEnumerable<string> auditActionsAndGroups = default, bool? isStorageSecondaryKeyInUse = default, bool? isAzureMonitorTargetEnabled = default, int? queueDelayMs = default, bool? isManagedIdentityInUse = default, BlobAuditingPolicyState? state = default, string storageEndpoint = default, string storageAccountAccessKey = default, Guid? storageAccountSubscriptionId = default)
+        public static SqlServerBlobAuditingPolicyData SqlServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isDevopsAuditEnabled, int? retentionDays, IEnumerable<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, IEnumerable<string> requiredFields, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId)
         {
             return new SqlServerBlobAuditingPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                isDevopsAuditEnabled is null && retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new ServerBlobAuditingPolicyProperties(
+                isDevopsAuditEnabled is null && retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && requiredFields is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new ServerBlobAuditingPolicyProperties(
                     isDevopsAuditEnabled,
                     retentionDays,
                     (auditActionsAndGroups ?? new ChangeTrackingList<string>()).ToList(),
@@ -1029,6 +1037,7 @@ namespace Azure.ResourceManager.Sql.Models
                     isAzureMonitorTargetEnabled,
                     queueDelayMs,
                     isManagedIdentityInUse,
+                    (requiredFields ?? new ChangeTrackingList<string>()).ToList(),
                     state.GetValueOrDefault(),
                     storageEndpoint,
                     storageAccountAccessKey,
@@ -1109,6 +1118,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </param>
         /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
+        /// <param name="requiredFields">
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
@@ -1121,20 +1136,21 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="kind"> Resource kind. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseBlobAuditingPolicyData"/> instance for mocking. </returns>
-        public static SqlDatabaseBlobAuditingPolicyData SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionDays, IEnumerable<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, string kind)
+        public static SqlDatabaseBlobAuditingPolicyData SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionDays, IEnumerable<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, IEnumerable<string> requiredFields, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, string kind)
         {
             return new SqlDatabaseBlobAuditingPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new DatabaseBlobAuditingPolicyProperties(
+                retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && requiredFields is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new DatabaseBlobAuditingPolicyProperties(
                     retentionDays,
                     (auditActionsAndGroups ?? new ChangeTrackingList<string>()).ToList(),
                     isStorageSecondaryKeyInUse,
                     isAzureMonitorTargetEnabled,
                     queueDelayMs,
                     isManagedIdentityInUse,
+                    (requiredFields ?? new ChangeTrackingList<string>()).ToList(),
                     state.GetValueOrDefault(),
                     storageEndpoint,
                     storageAccountAccessKey,
@@ -1217,6 +1233,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </param>
         /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
+        /// <param name="requiredFields">
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
@@ -1228,14 +1250,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.ExtendedDatabaseBlobAuditingPolicyData"/> instance for mocking. </returns>
-        public static ExtendedDatabaseBlobAuditingPolicyData ExtendedDatabaseBlobAuditingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string predicateExpression = default, int? retentionDays = default, IEnumerable<string> auditActionsAndGroups = default, bool? isStorageSecondaryKeyInUse = default, bool? isAzureMonitorTargetEnabled = default, int? queueDelayMs = default, bool? isManagedIdentityInUse = default, BlobAuditingPolicyState? state = default, string storageEndpoint = default, string storageAccountAccessKey = default, Guid? storageAccountSubscriptionId = default)
+        public static ExtendedDatabaseBlobAuditingPolicyData ExtendedDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string predicateExpression, int? retentionDays, IEnumerable<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, IEnumerable<string> requiredFields, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId)
         {
             return new ExtendedDatabaseBlobAuditingPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                predicateExpression is null && retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new ExtendedDatabaseBlobAuditingPolicyProperties(
+                predicateExpression is null && retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && requiredFields is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new ExtendedDatabaseBlobAuditingPolicyProperties(
                     predicateExpression,
                     retentionDays,
                     (auditActionsAndGroups ?? new ChangeTrackingList<string>()).ToList(),
@@ -1243,6 +1265,7 @@ namespace Azure.ResourceManager.Sql.Models
                     isAzureMonitorTargetEnabled,
                     queueDelayMs,
                     isManagedIdentityInUse,
+                    (requiredFields ?? new ChangeTrackingList<string>()).ToList(),
                     state.GetValueOrDefault(),
                     storageEndpoint,
                     storageAccountAccessKey,
@@ -1333,6 +1356,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </param>
         /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
+        /// <param name="requiredFields">
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
@@ -1344,14 +1373,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.ExtendedServerBlobAuditingPolicyData"/> instance for mocking. </returns>
-        public static ExtendedServerBlobAuditingPolicyData ExtendedServerBlobAuditingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isDevopsAuditEnabled = default, string predicateExpression = default, int? retentionDays = default, IEnumerable<string> auditActionsAndGroups = default, bool? isStorageSecondaryKeyInUse = default, bool? isAzureMonitorTargetEnabled = default, int? queueDelayMs = default, bool? isManagedIdentityInUse = default, BlobAuditingPolicyState? state = default, string storageEndpoint = default, string storageAccountAccessKey = default, Guid? storageAccountSubscriptionId = default)
+        public static ExtendedServerBlobAuditingPolicyData ExtendedServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isDevopsAuditEnabled, string predicateExpression, int? retentionDays, IEnumerable<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, IEnumerable<string> requiredFields, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId)
         {
             return new ExtendedServerBlobAuditingPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                isDevopsAuditEnabled is null && predicateExpression is null && retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new ExtendedServerBlobAuditingPolicyProperties(
+                isDevopsAuditEnabled is null && predicateExpression is null && retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && requiredFields is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new ExtendedServerBlobAuditingPolicyProperties(
                     isDevopsAuditEnabled,
                     predicateExpression,
                     retentionDays,
@@ -1360,6 +1389,7 @@ namespace Azure.ResourceManager.Sql.Models
                     isAzureMonitorTargetEnabled,
                     queueDelayMs,
                     isManagedIdentityInUse,
+                    (requiredFields ?? new ChangeTrackingList<string>()).ToList(),
                     state.GetValueOrDefault(),
                     storageEndpoint,
                     storageAccountAccessKey,
@@ -2012,16 +2042,19 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="failoverMode"> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </param>
         /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
         /// <param name="linkMode"> Specifies whether the link operates in single-database or multi-database mode. </param>
+        /// <param name="mostRecentError"> Most recent error code for the distributed availability group. </param>
+        /// <param name="mostRecentErrorOn"> Time of the most recent error for the distributed availability group. </param>
+        /// <param name="mostRecentErrorMessage"> Most recent error message for the distributed availability group. </param>
         /// <param name="databases"> Databases in the distributed availability group. </param>
         /// <returns> A new <see cref="Sql.SqlDistributedAvailabilityGroupData"/> instance for mocking. </returns>
-        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, SqlReplicationModeType? replicationMode, SqlServerSideLinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, SqlServerSideLinkRole? instanceLinkRole, string instanceAvailabilityGroupName, SqlServerFailoverModeType? failoverMode, SeedingModeType? seedingMode, LinkModeType? linkMode, IEnumerable<DistributedAvailabilityGroupDatabase> databases)
+        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, SqlReplicationModeType? replicationMode, SqlServerSideLinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, SqlServerSideLinkRole? instanceLinkRole, string instanceAvailabilityGroupName, SqlServerFailoverModeType? failoverMode, SeedingModeType? seedingMode, LinkModeType? linkMode, string mostRecentError, DateTimeOffset? mostRecentErrorOn = default, string mostRecentErrorMessage = default, IEnumerable<DistributedAvailabilityGroupDatabase> databases = default)
         {
             return new SqlDistributedAvailabilityGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && linkMode is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
+                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && linkMode is null && mostRecentError is null && mostRecentErrorOn is null && mostRecentErrorMessage is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
                     distributedAvailabilityGroupName,
                     distributedAvailabilityGroupId,
                     replicationMode,
@@ -2033,6 +2066,9 @@ namespace Azure.ResourceManager.Sql.Models
                     failoverMode,
                     seedingMode,
                     linkMode,
+                    mostRecentError,
+                    mostRecentErrorOn,
+                    mostRecentErrorMessage,
                     (databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>()).ToList(),
                     default),
                 default);
@@ -3590,15 +3626,19 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
+        /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
+        /// <param name="timeBasedImmutability"> The setting for whether or not time-based immutability is enabled for the LTR backup. When time-based immutability is enabled and locked, the backup cannot be deleted until BackupExpirationTime. </param>
+        /// <param name="timeBasedImmutabilityMode"> The time-based immutability mode. Only applicable if time-based immutability is enabled. </param>
+        /// <param name="legalHoldImmutability"> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceLongTermRetentionBackupData"/> instance for mocking. </returns>
-        public static ManagedInstanceLongTermRetentionBackupData ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string managedInstanceName = default, DateTimeOffset? managedInstanceCreateOn = default, string databaseName = default, DateTimeOffset? databaseDeletedOn = default, DateTimeOffset? backupOn = default, DateTimeOffset? backupExpireOn = default, SqlBackupStorageRedundancy? backupStorageRedundancy = default, SqlBackupStorageAccessTier? backupStorageAccessTier = default)
+        public static ManagedInstanceLongTermRetentionBackupData ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageAccessTier? backupStorageAccessTier, bool? isBackupImmutable, TimeBasedImmutability? timeBasedImmutability = default, TimeBasedImmutabilityMode? timeBasedImmutabilityMode = default, SetLegalHoldImmutability? legalHoldImmutability = default)
         {
             return new ManagedInstanceLongTermRetentionBackupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                managedInstanceName is null && managedInstanceCreateOn is null && databaseName is null && databaseDeletedOn is null && backupOn is null && backupExpireOn is null && backupStorageRedundancy is null && backupStorageAccessTier is null ? default : new ManagedInstanceLongTermRetentionBackupProperties(
+                managedInstanceName is null && managedInstanceCreateOn is null && databaseName is null && databaseDeletedOn is null && backupOn is null && backupExpireOn is null && backupStorageRedundancy is null && backupStorageAccessTier is null && isBackupImmutable is null && timeBasedImmutability is null && timeBasedImmutabilityMode is null && legalHoldImmutability is null ? default : new ManagedInstanceLongTermRetentionBackupProperties(
                     managedInstanceName,
                     managedInstanceCreateOn,
                     databaseName,
@@ -3607,6 +3647,10 @@ namespace Azure.ResourceManager.Sql.Models
                     backupExpireOn,
                     backupStorageRedundancy,
                     backupStorageAccessTier,
+                    isBackupImmutable,
+                    timeBasedImmutability,
+                    timeBasedImmutabilityMode,
+                    legalHoldImmutability,
                     default),
                 default);
         }
@@ -3645,15 +3689,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
+        /// <param name="lockImmutability"> Whether to lock the immutability of the backups governed by this short term retention policy. </param>
+        /// <param name="immutabilityStatus"> The immutability status of the backups governed by this short term retention policy. </param>
         /// <returns> A new <see cref="Sql.ManagedBackupShortTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static ManagedBackupShortTermRetentionPolicyData ManagedBackupShortTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionDays = default)
+        public static ManagedBackupShortTermRetentionPolicyData ManagedBackupShortTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionDays, bool? lockImmutability, ImmutabilityStatus? immutabilityStatus = default)
         {
             return new ManagedBackupShortTermRetentionPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                retentionDays is null ? default : new ManagedBackupShortTermRetentionPolicyProperties(retentionDays, default),
+                retentionDays is null && lockImmutability is null && immutabilityStatus is null ? default : new ManagedBackupShortTermRetentionPolicyProperties(retentionDays, lockImmutability, immutabilityStatus, default),
                 default);
         }
 
@@ -3854,20 +3900,24 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backups. </param>
+        /// <param name="timeBasedImmutability"> The setting for whether to enable time-based immutability for future backups. When set, future backups will have TimeBasedImmutability enabled. </param>
+        /// <param name="timeBasedImmutabilityMode"> The setting for time-based immutability mode for future backup (Value can be either Locked or UnLocked. Only effective if TimeBasedImmutability is enabled). Caution: Immutability of LTR backup cannot be removed if TimeBasedImmutabilityMode is Locked. </param>
         /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceLongTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static ManagedInstanceLongTermRetentionPolicyData ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlBackupStorageAccessTier? backupStorageAccessTier = default, string weeklyRetention = default, string monthlyRetention = default, string yearlyRetention = default, int? weekOfYear = default)
+        public static ManagedInstanceLongTermRetentionPolicyData ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlBackupStorageAccessTier? backupStorageAccessTier, TimeBasedImmutability? timeBasedImmutability, TimeBasedImmutabilityMode? timeBasedImmutabilityMode, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear = default)
         {
             return new ManagedInstanceLongTermRetentionPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                backupStorageAccessTier is null && weeklyRetention is null && monthlyRetention is null && yearlyRetention is null && weekOfYear is null ? default : new ManagedInstanceLongTermRetentionPolicyProperties(
+                backupStorageAccessTier is null && timeBasedImmutability is null && timeBasedImmutabilityMode is null && weeklyRetention is null && monthlyRetention is null && yearlyRetention is null && weekOfYear is null ? default : new ManagedInstanceLongTermRetentionPolicyProperties(
                     backupStorageAccessTier,
+                    timeBasedImmutability,
+                    timeBasedImmutabilityMode,
                     weeklyRetention,
                     monthlyRetention,
                     yearlyRetention,
@@ -6756,6 +6806,144 @@ namespace Azure.ResourceManager.Sql.Models
                 default);
         }
 
+        /// <summary> A short term retention policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
+        /// <param name="diffBackupIntervalInHours"> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </param>
+        /// <returns> A new <see cref="Sql.BackupShortTermRetentionPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupShortTermRetentionPolicyData BackupShortTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionDays = default, DiffBackupIntervalInHours? diffBackupIntervalInHours = default)
+        {
+            return new BackupShortTermRetentionPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                retentionDays is null && diffBackupIntervalInHours is null ? default : new BackupShortTermRetentionPolicyProperties(retentionDays, diffBackupIntervalInHours, default, default, default),
+                default);
+        }
+
+        /// <summary> A server blob auditing policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="isDevopsAuditEnabled">
+        /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
+        /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
+        /// Diagnostic Settings URI format:
+        /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
+        /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        /// </param>
+        /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
+        /// <param name="auditActionsAndGroups">
+        /// Specifies the Actions-Groups and Actions to audit.
+        /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
+        /// BATCH_COMPLETED_GROUP,
+        /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
+        /// FAILED_DATABASE_AUTHENTICATION_GROUP.
+        /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
+        /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
+        /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
+        /// BACKUP_RESTORE_GROUP
+        /// DATABASE_LOGOUT_GROUP
+        /// DATABASE_OBJECT_CHANGE_GROUP
+        /// DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_OBJECT_PERMISSION_CHANGE_GROUP
+        /// DATABASE_OPERATION_GROUP
+        /// DATABASE_PERMISSION_CHANGE_GROUP
+        /// DATABASE_PRINCIPAL_CHANGE_GROUP
+        /// DATABASE_PRINCIPAL_IMPERSONATION_GROUP
+        /// DATABASE_ROLE_MEMBER_CHANGE_GROUP
+        /// FAILED_DATABASE_AUTHENTICATION_GROUP
+        /// SCHEMA_OBJECT_ACCESS_GROUP
+        /// SCHEMA_OBJECT_CHANGE_GROUP
+        /// SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP
+        /// SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP
+        /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP
+        /// USER_CHANGE_PASSWORD_GROUP
+        /// BATCH_STARTED_GROUP
+        /// BATCH_COMPLETED_GROUP
+        /// DBCC_GROUP
+        /// DATABASE_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_CHANGE_GROUP
+        /// LEDGER_OPERATION_GROUP
+        /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
+        /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
+        /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
+        /// SELECT
+        /// UPDATE
+        /// INSERT
+        /// DELETE
+        /// EXECUTE
+        /// RECEIVE
+        /// REFERENCES
+        /// The general form for defining an action to be audited is:
+        /// {action} ON {object} BY {principal}
+        /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
+        /// For example:
+        /// SELECT on dbo.myTable by public
+        /// SELECT on DATABASE::myDatabase by public
+        /// SELECT on SCHEMA::mySchema by public
+        /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
+        /// </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
+        /// <param name="isAzureMonitorTargetEnabled">
+        /// Specifies whether audit events are sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
+        /// Diagnostic Settings URI format:
+        /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
+        /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        /// </param>
+        /// <param name="queueDelayMs">
+        /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
+        /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
+        /// </param>
+        /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
+        /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
+        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
+        /// <param name="storageAccountAccessKey">
+        /// Specifies the identifier key of the auditing storage account.
+        /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
+        /// Prerequisites for using managed identity authentication:
+        /// <list type="number"><item><description>Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).</description></item><item><description>Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.</description></item></list>
+        /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
+        /// </param>
+        /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
+        /// <returns> A new <see cref="Sql.SqlServerBlobAuditingPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SqlServerBlobAuditingPolicyData SqlServerBlobAuditingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isDevopsAuditEnabled = default, int? retentionDays = default, IEnumerable<string> auditActionsAndGroups = default, bool? isStorageSecondaryKeyInUse = default, bool? isAzureMonitorTargetEnabled = default, int? queueDelayMs = default, bool? isManagedIdentityInUse = default, BlobAuditingPolicyState? state = default, string storageEndpoint = default, string storageAccountAccessKey = default, Guid? storageAccountSubscriptionId = default)
+        {
+            return new SqlServerBlobAuditingPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isDevopsAuditEnabled is null && retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new ServerBlobAuditingPolicyProperties(
+                    isDevopsAuditEnabled,
+                    retentionDays,
+                    (auditActionsAndGroups ?? new ChangeTrackingList<string>()).ToList(),
+                    isStorageSecondaryKeyInUse,
+                    isAzureMonitorTargetEnabled,
+                    queueDelayMs,
+                    isManagedIdentityInUse,
+                    default,
+                    state.GetValueOrDefault(),
+                    storageEndpoint,
+                    storageAccountAccessKey,
+                    storageAccountSubscriptionId,
+                    default),
+                default);
+        }
+
         /// <summary> A database blob auditing policy. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -6856,12 +7044,243 @@ namespace Azure.ResourceManager.Sql.Models
                     isAzureMonitorTargetEnabled,
                     queueDelayMs,
                     isManagedIdentityInUse,
+                    default,
                     state.GetValueOrDefault(),
                     storageEndpoint,
                     storageAccountAccessKey,
                     storageAccountSubscriptionId,
                     default),
                 kind,
+                default);
+        }
+
+        /// <summary> An extended database blob auditing policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="predicateExpression"> Specifies condition of where clause when creating an audit. </param>
+        /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
+        /// <param name="auditActionsAndGroups">
+        /// Specifies the Actions-Groups and Actions to audit.
+        /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
+        /// BATCH_COMPLETED_GROUP,
+        /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
+        /// FAILED_DATABASE_AUTHENTICATION_GROUP.
+        /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
+        /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
+        /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
+        /// BACKUP_RESTORE_GROUP
+        /// DATABASE_LOGOUT_GROUP
+        /// DATABASE_OBJECT_CHANGE_GROUP
+        /// DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_OBJECT_PERMISSION_CHANGE_GROUP
+        /// DATABASE_OPERATION_GROUP
+        /// DATABASE_PERMISSION_CHANGE_GROUP
+        /// DATABASE_PRINCIPAL_CHANGE_GROUP
+        /// DATABASE_PRINCIPAL_IMPERSONATION_GROUP
+        /// DATABASE_ROLE_MEMBER_CHANGE_GROUP
+        /// FAILED_DATABASE_AUTHENTICATION_GROUP
+        /// SCHEMA_OBJECT_ACCESS_GROUP
+        /// SCHEMA_OBJECT_CHANGE_GROUP
+        /// SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP
+        /// SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP
+        /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP
+        /// USER_CHANGE_PASSWORD_GROUP
+        /// BATCH_STARTED_GROUP
+        /// BATCH_COMPLETED_GROUP
+        /// DBCC_GROUP
+        /// DATABASE_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_CHANGE_GROUP
+        /// LEDGER_OPERATION_GROUP
+        /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
+        /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
+        /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
+        /// SELECT
+        /// UPDATE
+        /// INSERT
+        /// DELETE
+        /// EXECUTE
+        /// RECEIVE
+        /// REFERENCES
+        /// The general form for defining an action to be audited is:
+        /// {action} ON {object} BY {principal}
+        /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
+        /// For example:
+        /// SELECT on dbo.myTable by public
+        /// SELECT on DATABASE::myDatabase by public
+        /// SELECT on SCHEMA::mySchema by public
+        /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
+        /// </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
+        /// <param name="isAzureMonitorTargetEnabled">
+        /// Specifies whether audit events are sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
+        /// Diagnostic Settings URI format:
+        /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
+        /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        /// </param>
+        /// <param name="queueDelayMs">
+        /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
+        /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
+        /// </param>
+        /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
+        /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
+        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
+        /// <param name="storageAccountAccessKey">
+        /// Specifies the identifier key of the auditing storage account.
+        /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
+        /// Prerequisites for using managed identity authentication:
+        /// <list type="number"><item><description>Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).</description></item><item><description>Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.</description></item></list>
+        /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
+        /// </param>
+        /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
+        /// <returns> A new <see cref="Sql.ExtendedDatabaseBlobAuditingPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExtendedDatabaseBlobAuditingPolicyData ExtendedDatabaseBlobAuditingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string predicateExpression = default, int? retentionDays = default, IEnumerable<string> auditActionsAndGroups = default, bool? isStorageSecondaryKeyInUse = default, bool? isAzureMonitorTargetEnabled = default, int? queueDelayMs = default, bool? isManagedIdentityInUse = default, BlobAuditingPolicyState? state = default, string storageEndpoint = default, string storageAccountAccessKey = default, Guid? storageAccountSubscriptionId = default)
+        {
+            return new ExtendedDatabaseBlobAuditingPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                predicateExpression is null && retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new ExtendedDatabaseBlobAuditingPolicyProperties(
+                    predicateExpression,
+                    retentionDays,
+                    (auditActionsAndGroups ?? new ChangeTrackingList<string>()).ToList(),
+                    isStorageSecondaryKeyInUse,
+                    isAzureMonitorTargetEnabled,
+                    queueDelayMs,
+                    isManagedIdentityInUse,
+                    default,
+                    state.GetValueOrDefault(),
+                    storageEndpoint,
+                    storageAccountAccessKey,
+                    storageAccountSubscriptionId,
+                    default),
+                default);
+        }
+
+        /// <summary> An extended server blob auditing policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="isDevopsAuditEnabled">
+        /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
+        /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
+        /// Diagnostic Settings URI format:
+        /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
+        /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        /// </param>
+        /// <param name="predicateExpression"> Specifies condition of where clause when creating an audit. </param>
+        /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
+        /// <param name="auditActionsAndGroups">
+        /// Specifies the Actions-Groups and Actions to audit.
+        /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
+        /// BATCH_COMPLETED_GROUP,
+        /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
+        /// FAILED_DATABASE_AUTHENTICATION_GROUP.
+        /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
+        /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
+        /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
+        /// BACKUP_RESTORE_GROUP
+        /// DATABASE_LOGOUT_GROUP
+        /// DATABASE_OBJECT_CHANGE_GROUP
+        /// DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_OBJECT_PERMISSION_CHANGE_GROUP
+        /// DATABASE_OPERATION_GROUP
+        /// DATABASE_PERMISSION_CHANGE_GROUP
+        /// DATABASE_PRINCIPAL_CHANGE_GROUP
+        /// DATABASE_PRINCIPAL_IMPERSONATION_GROUP
+        /// DATABASE_ROLE_MEMBER_CHANGE_GROUP
+        /// FAILED_DATABASE_AUTHENTICATION_GROUP
+        /// SCHEMA_OBJECT_ACCESS_GROUP
+        /// SCHEMA_OBJECT_CHANGE_GROUP
+        /// SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP
+        /// SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP
+        /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP
+        /// USER_CHANGE_PASSWORD_GROUP
+        /// BATCH_STARTED_GROUP
+        /// BATCH_COMPLETED_GROUP
+        /// DBCC_GROUP
+        /// DATABASE_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_CHANGE_GROUP
+        /// LEDGER_OPERATION_GROUP
+        /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
+        /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
+        /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
+        /// SELECT
+        /// UPDATE
+        /// INSERT
+        /// DELETE
+        /// EXECUTE
+        /// RECEIVE
+        /// REFERENCES
+        /// The general form for defining an action to be audited is:
+        /// {action} ON {object} BY {principal}
+        /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
+        /// For example:
+        /// SELECT on dbo.myTable by public
+        /// SELECT on DATABASE::myDatabase by public
+        /// SELECT on SCHEMA::mySchema by public
+        /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
+        /// </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
+        /// <param name="isAzureMonitorTargetEnabled">
+        /// Specifies whether audit events are sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
+        /// Diagnostic Settings URI format:
+        /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
+        /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        /// </param>
+        /// <param name="queueDelayMs">
+        /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
+        /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
+        /// </param>
+        /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
+        /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
+        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
+        /// <param name="storageAccountAccessKey">
+        /// Specifies the identifier key of the auditing storage account.
+        /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
+        /// Prerequisites for using managed identity authentication:
+        /// <list type="number"><item><description>Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).</description></item><item><description>Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.</description></item></list>
+        /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
+        /// </param>
+        /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
+        /// <returns> A new <see cref="Sql.ExtendedServerBlobAuditingPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExtendedServerBlobAuditingPolicyData ExtendedServerBlobAuditingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isDevopsAuditEnabled = default, string predicateExpression = default, int? retentionDays = default, IEnumerable<string> auditActionsAndGroups = default, bool? isStorageSecondaryKeyInUse = default, bool? isAzureMonitorTargetEnabled = default, int? queueDelayMs = default, bool? isManagedIdentityInUse = default, BlobAuditingPolicyState? state = default, string storageEndpoint = default, string storageAccountAccessKey = default, Guid? storageAccountSubscriptionId = default)
+        {
+            return new ExtendedServerBlobAuditingPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isDevopsAuditEnabled is null && predicateExpression is null && retentionDays is null && auditActionsAndGroups is null && isStorageSecondaryKeyInUse is null && isAzureMonitorTargetEnabled is null && queueDelayMs is null && isManagedIdentityInUse is null && state is null && storageEndpoint is null && storageAccountAccessKey is null && storageAccountSubscriptionId is null ? default : new ExtendedServerBlobAuditingPolicyProperties(
+                    isDevopsAuditEnabled,
+                    predicateExpression,
+                    retentionDays,
+                    (auditActionsAndGroups ?? new ChangeTrackingList<string>()).ToList(),
+                    isStorageSecondaryKeyInUse,
+                    isAzureMonitorTargetEnabled,
+                    queueDelayMs,
+                    isManagedIdentityInUse,
+                    default,
+                    state.GetValueOrDefault(),
+                    storageEndpoint,
+                    storageAccountAccessKey,
+                    storageAccountSubscriptionId,
+                    default),
                 default);
         }
 
@@ -7418,6 +7837,9 @@ namespace Azure.ResourceManager.Sql.Models
                     failoverMode,
                     seedingMode,
                     default,
+                    default,
+                    default,
+                    default,
                     (databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>()).ToList(),
                     default),
                 default);
@@ -7715,6 +8137,64 @@ namespace Azure.ResourceManager.Sql.Models
                 default);
         }
 
+        /// <summary> A long term retention backup for a managed database. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="managedInstanceName"> The managed instance that the backup database belongs to. </param>
+        /// <param name="managedInstanceCreateOn"> The create time of the instance. </param>
+        /// <param name="databaseName"> The name of the database the backup belong to. </param>
+        /// <param name="databaseDeletedOn"> The delete time of the database. </param>
+        /// <param name="backupOn"> The time the backup was taken. </param>
+        /// <param name="backupExpireOn"></param>
+        /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
+        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
+        /// <returns> A new <see cref="Sql.ManagedInstanceLongTermRetentionBackupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedInstanceLongTermRetentionBackupData ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string managedInstanceName = default, DateTimeOffset? managedInstanceCreateOn = default, string databaseName = default, DateTimeOffset? databaseDeletedOn = default, DateTimeOffset? backupOn = default, DateTimeOffset? backupExpireOn = default, SqlBackupStorageRedundancy? backupStorageRedundancy = default, SqlBackupStorageAccessTier? backupStorageAccessTier = default)
+        {
+            return new ManagedInstanceLongTermRetentionBackupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                managedInstanceName is null && managedInstanceCreateOn is null && databaseName is null && databaseDeletedOn is null && backupOn is null && backupStorageRedundancy is null && backupStorageAccessTier is null ? default : new ManagedInstanceLongTermRetentionBackupProperties(
+                    managedInstanceName,
+                    managedInstanceCreateOn,
+                    databaseName,
+                    databaseDeletedOn,
+                    backupOn,
+                    default,
+                    backupStorageRedundancy,
+                    backupStorageAccessTier,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> A short term retention policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
+        /// <returns> A new <see cref="Sql.ManagedBackupShortTermRetentionPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedBackupShortTermRetentionPolicyData ManagedBackupShortTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionDays = default)
+        {
+            return new ManagedBackupShortTermRetentionPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                retentionDays is null ? default : new ManagedBackupShortTermRetentionPolicyProperties(retentionDays, default, default, default),
+                default);
+        }
+
         /// <summary> An managed database update. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="collation"> Collation of the managed database. </param>
@@ -7980,6 +8460,37 @@ namespace Azure.ResourceManager.Sql.Models
                     isAutoRotationEnabled,
                     default),
                 kind,
+                default);
+        }
+
+        /// <summary> A long term retention policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backups. </param>
+        /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
+        /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
+        /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
+        /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
+        /// <returns> A new <see cref="Sql.ManagedInstanceLongTermRetentionPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedInstanceLongTermRetentionPolicyData ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlBackupStorageAccessTier? backupStorageAccessTier = default, string weeklyRetention = default, string monthlyRetention = default, string yearlyRetention = default, int? weekOfYear = default)
+        {
+            return new ManagedInstanceLongTermRetentionPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                backupStorageAccessTier is null && weeklyRetention is null && monthlyRetention is null && yearlyRetention is null && weekOfYear is null ? default : new ManagedInstanceLongTermRetentionPolicyProperties(
+                    backupStorageAccessTier,
+                    default,
+                    default,
+                    weeklyRetention,
+                    monthlyRetention,
+                    yearlyRetention,
+                    weekOfYear,
+                    default),
                 default);
         }
 

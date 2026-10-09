@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByServerRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context)
+        internal HttpMessage CreateGetByServerRequest(Guid subscriptionId, string resourceGroupName, string serverName, string skiptoken, long? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -92,6 +92,14 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -101,7 +109,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, RequestContext context)
+        internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string skiptoken, long? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

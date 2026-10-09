@@ -59,6 +59,42 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary> The setting for whether to enable time-based immutability for future backups. When set, future backups will have TimeBasedImmutability enabled. </summary>
+        [WirePath("properties.timeBasedImmutability")]
+        public TimeBasedImmutability? TimeBasedImmutability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeBasedImmutability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceLongTermRetentionPolicyProperties();
+                }
+                Properties.TimeBasedImmutability = value;
+            }
+        }
+
+        /// <summary> The setting for time-based immutability mode for future backup (Value can be either Locked or UnLocked. Only effective if TimeBasedImmutability is enabled). Caution: Immutability of LTR backup cannot be removed if TimeBasedImmutabilityMode is Locked. </summary>
+        [WirePath("properties.timeBasedImmutabilityMode")]
+        public TimeBasedImmutabilityMode? TimeBasedImmutabilityMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeBasedImmutabilityMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceLongTermRetentionPolicyProperties();
+                }
+                Properties.TimeBasedImmutabilityMode = value;
+            }
+        }
+
         /// <summary> The weekly retention policy for an LTR backup in an ISO 8601 format. </summary>
         [WirePath("properties.weeklyRetention")]
         public string WeeklyRetention

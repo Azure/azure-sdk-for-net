@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Sql
         private readonly AzureLocation _locationName;
         private readonly bool? _onlyLatestPerDatabase;
         private readonly string _databaseState;
+        private readonly string _skiptoken;
+        private readonly long? _top;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -33,9 +35,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT(LongTermRetentionBackups client, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT(LongTermRetentionBackups client, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, string skiptoken, long? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,6 +47,8 @@ namespace Azure.ResourceManager.Sql
             _locationName = locationName;
             _onlyLatestPerDatabase = onlyLatestPerDatabase;
             _databaseState = databaseState;
+            _skiptoken = skiptoken;
+            _top = top;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -77,7 +83,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetLongTermRetentionBackupsWithResourceGroupLocationRequest(nextLink, _subscriptionId, _resourceGroupName, _locationName, _onlyLatestPerDatabase, _databaseState, _context) : _client.CreateGetLongTermRetentionBackupsWithResourceGroupLocationRequest(_subscriptionId, _resourceGroupName, _locationName, _onlyLatestPerDatabase, _databaseState, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetLongTermRetentionBackupsWithResourceGroupLocationRequest(nextLink, _subscriptionId, _resourceGroupName, _locationName, _onlyLatestPerDatabase, _databaseState, _skiptoken, _top, _context) : _client.CreateGetLongTermRetentionBackupsWithResourceGroupLocationRequest(_subscriptionId, _resourceGroupName, _locationName, _onlyLatestPerDatabase, _databaseState, _skiptoken, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

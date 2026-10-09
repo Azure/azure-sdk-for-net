@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("diffBackupIntervalInHours"u8);
                 writer.WriteNumberValue(DiffBackupIntervalInHours.Value.ToSerialInt32());
             }
+            if (Optional.IsDefined(LockImmutability))
+            {
+                writer.WritePropertyName("lockImmutability"u8);
+                writer.WriteBooleanValue(LockImmutability.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ImmutabilityStatus))
+            {
+                writer.WritePropertyName("immutabilityStatus"u8);
+                writer.WriteStringValue(ImmutabilityStatus.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +138,8 @@ namespace Azure.ResourceManager.Sql.Models
             }
             int? retentionDays = default;
             DiffBackupIntervalInHours? diffBackupIntervalInHours = default;
+            bool? lockImmutability = default;
+            ImmutabilityStatus? immutabilityStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,12 +161,30 @@ namespace Azure.ResourceManager.Sql.Models
                     diffBackupIntervalInHours = new DiffBackupIntervalInHours(prop.Value.GetInt32());
                     continue;
                 }
+                if (prop.NameEquals("lockImmutability"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lockImmutability = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("immutabilityStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    immutabilityStatus = new ImmutabilityStatus(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BackupShortTermRetentionPolicyProperties(retentionDays, diffBackupIntervalInHours, additionalBinaryDataProperties);
+            return new BackupShortTermRetentionPolicyProperties(retentionDays, diffBackupIntervalInHours, lockImmutability, immutabilityStatus, additionalBinaryDataProperties);
         }
     }
 }
