@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             get
             {
-                return Properties is null ? default : Properties.DatabaseEdition;
+                return Properties is null ? (DBSystemDatabaseEditionType?)default : Properties.DatabaseEdition;
             }
         }
     }

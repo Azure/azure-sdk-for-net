@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("lifecycleDetails"u8);
                 writer.WriteStringValue(LifecycleDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanDnsNameV2))
+            if (options.Format != "W" && Optional.IsDefined(ScanDnsName))
             {
                 writer.WritePropertyName("scanDnsName"u8);
-                writer.WriteStringValue(ScanDnsNameV2);
+                writer.WriteStringValue(ScanDnsName);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ScanIPIds))
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int totalEcpuCount = default;
             ExadbVmClusterStorageDetails vmFileSystem = default;
             string lifecycleDetails = default;
-            string scanDnsNameV2 = default;
+            string scanDnsName = default;
             IReadOnlyList<string> scanIPIds = default;
             string scanDnsRecordId = default;
             ExadbVmClusterStorageDetails snapshotFileSystemStorage = default;
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("scanDnsName"u8))
                 {
-                    scanDnsNameV2 = prop.Value.GetString();
+                    scanDnsName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("scanIpIds"u8))
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 totalEcpuCount,
                 vmFileSystem,
                 lifecycleDetails,
-                scanDnsNameV2,
+                scanDnsName,
                 scanIPIds ?? new ChangeTrackingList<string>(),
                 scanDnsRecordId,
                 snapshotFileSystemStorage,

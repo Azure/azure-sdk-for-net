@@ -191,22 +191,5 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> The national character set for the DB system. The default is AL16UTF16. </summary>
         public string NcharacterSet { get; set; }
-
-        /// <summary> The storage option used in DB system. ASM - Automatic storage management, LVM - Logical Volume management. </summary>
-        public StorageManagementType? DbSystemOptionsStorageManagement
-        {
-            get
-            {
-                return DbSystemOptions is null ? default : DbSystemOptions.StorageManagement;
-            }
-            set
-            {
-                if (DbSystemOptions is null)
-                {
-                    DbSystemOptions = new OracleDBSystemOptions();
-                }
-                DbSystemOptions.StorageManagement = value;
-            }
-        }
     }
 }

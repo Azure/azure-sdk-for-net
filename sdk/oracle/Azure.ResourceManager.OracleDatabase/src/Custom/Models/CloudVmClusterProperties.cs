@@ -12,8 +12,52 @@ using Azure.Core;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> CloudVmCluster resource model. </summary>
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CloudVmClusterProperties", typeof(string), typeof(int), typeof(ResourceIdentifier), typeof(IEnumerable<string>), typeof(ResourceIdentifier), typeof(string), typeof(ResourceIdentifier), typeof(string))]
     public partial class CloudVmClusterProperties
     {
+        /// <summary> Initializes a new instance of <see cref="CloudVmClusterProperties"/>. </summary>
+        /// <param name="hostnameV2"> The hostname for the cloud VM cluster. </param>
+        /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
+        /// <param name="cloudExadataInfrastructureId"> Cloud Exadata Infrastructure ID. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
+        /// <param name="vnetId"> VNET for network connectivity. </param>
+        /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
+        /// <param name="subnetId"> Client subnet. </param>
+        /// <param name="displayName"> Display Name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostnameV2"/>, <paramref name="cloudExadataInfrastructureId"/>, <paramref name="sshPublicKeys"/>, <paramref name="vnetId"/>, <paramref name="giVersion"/>, <paramref name="subnetId"/> or <paramref name="displayName"/> is null. </exception>
+        public CloudVmClusterProperties(string hostnameV2, int cpuCoreCount, ResourceIdentifier cloudExadataInfrastructureId, IEnumerable<string> sshPublicKeys, ResourceIdentifier vnetId, string giVersion, ResourceIdentifier subnetId, string displayName)
+        {
+            Argument.AssertNotNull(hostnameV2, nameof(hostnameV2));
+            Argument.AssertNotNull(cloudExadataInfrastructureId, nameof(cloudExadataInfrastructureId));
+            Argument.AssertNotNull(sshPublicKeys, nameof(sshPublicKeys));
+            Argument.AssertNotNull(vnetId, nameof(vnetId));
+            Argument.AssertNotNull(giVersion, nameof(giVersion));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            Argument.AssertNotNull(displayName, nameof(displayName));
+
+            FileSystemConfigurationDetails = new ChangeTrackingList<FileSystemConfigurationDetails>();
+            HostnameV2 = hostnameV2;
+            CpuCoreCount = cpuCoreCount;
+            CloudExadataInfrastructureId = cloudExadataInfrastructureId;
+            SshPublicKeys = sshPublicKeys.ToList();
+            ScanIPIds = new ChangeTrackingList<string>();
+            VipIds = new ChangeTrackingList<string>();
+            VnetId = vnetId;
+            GiVersion = giVersion;
+            SubnetId = subnetId;
+            NsgCidrs = new ChangeTrackingList<CloudVmClusterNsgCidr>();
+            DisplayName = displayName;
+            ComputeNodeOcids = new ChangeTrackingList<string>();
+            DBServerOcids = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> The FQDN of the DNS record for the SCAN IP addresses associated with the VM cluster. </summary>
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("ScanDnsNameV2")]
+        public string ScanDnsName { get; }
+
+        /// <summary> The hostname for the cloud VM cluster. </summary>
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("HostnameV2")]
+        public string HostnameV2 { get; set; }
         /// <summary> Cloud VM Cluster ocid. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

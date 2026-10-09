@@ -263,10 +263,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanDnsNameV2))
+            if (options.Format != "W" && Optional.IsDefined(ScanDnsName))
             {
                 writer.WritePropertyName("scanDnsName"u8);
-                writer.WriteStringValue(ScanDnsNameV2);
+                writer.WriteStringValue(ScanDnsName);
             }
             if (Optional.IsDefined(ScanListenerPortTcp))
             {
@@ -462,6 +462,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string lifecycleDetails = default;
             string timeZone = default;
             string zoneOcid = default;
+            string hostnameV2 = default;
             string domain = default;
             int cpuCoreCount = default;
             float? ocpuCount = default;
@@ -479,7 +480,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             CloudVmClusterDiskRedundancy? diskRedundancy = default;
             IReadOnlyList<string> scanIPIds = default;
             IReadOnlyList<string> vipIds = default;
-            string scanDnsNameV2 = default;
+            string scanDnsName = default;
             int? scanListenerPortTcp = default;
             int? scanListenerPortTcpSsl = default;
             string scanDnsRecordOcid = default;
@@ -625,7 +626,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("hostname"u8))
                 {
-                    hostname = prop.Value.GetString();
+                    hostnameV2 = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("domain"u8))
@@ -795,7 +796,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("scanDnsName"u8))
                 {
-                    scanDnsNameV2 = prop.Value.GetString();
+                    scanDnsName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("scanListenerPortTcp"u8))
@@ -1032,7 +1033,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 timeZone,
                 zoneOcid,
-                default,
+                hostnameV2,
                 domain,
                 cpuCoreCount,
                 ocpuCount,
@@ -1050,7 +1051,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 diskRedundancy,
                 scanIPIds ?? new ChangeTrackingList<string>(),
                 vipIds ?? new ChangeTrackingList<string>(),
-                scanDnsNameV2,
+                scanDnsName,
                 scanListenerPortTcp,
                 scanListenerPortTcpSsl,
                 scanDnsRecordOcid,
