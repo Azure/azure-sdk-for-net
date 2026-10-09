@@ -91,10 +91,17 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("idle_timeout_ms"u8);
                 writer.WriteNumberValue(Convert.ToInt32(Math.Round(IdleTimeoutMs.Value.TotalMilliseconds)));
             }
-            if (Optional.IsDefined(EndOfUtteranceDetection))
+            if (_endOfUtteranceDetectionIsDefined || Optional.IsDefined(EndOfUtteranceDetection))
             {
-                writer.WritePropertyName("end_of_utterance_detection"u8);
-                writer.WriteObjectValue(EndOfUtteranceDetection, options);
+                if (EndOfUtteranceDetection != null)
+                {
+                    writer.WritePropertyName("end_of_utterance_detection"u8);
+                    writer.WriteObjectValue(EndOfUtteranceDetection, options);
+                }
+                else
+                {
+                    writer.WriteNull("end_of_utterance_detection"u8);
+                }
             }
             if (Optional.IsDefined(SpeechDurationMs))
             {
@@ -150,6 +157,7 @@ namespace Azure.AI.Projects.Agents
             TimeSpan? prefixPaddingMs = default;
             TimeSpan? silenceDurationMs = default;
             TimeSpan? idleTimeoutMs = default;
+            bool endOfUtteranceDetectionIsDefined = false;
             VoiceAgentEndOfUtteranceDetection endOfUtteranceDetection = default;
             TimeSpan? speechDurationMs = default;
             bool? removeFillerWords = default;
@@ -209,6 +217,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("end_of_utterance_detection"u8))
                 {
+                    endOfUtteranceDetectionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endOfUtteranceDetection = null;
@@ -270,7 +279,10 @@ namespace Azure.AI.Projects.Agents
                 speechDurationMs,
                 removeFillerWords,
                 createResponse,
-                interruptResponse);
+                interruptResponse)
+            {
+                _endOfUtteranceDetectionIsDefined = endOfUtteranceDetectionIsDefined
+            };
         }
     }
 }

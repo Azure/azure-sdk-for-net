@@ -107,41 +107,62 @@ namespace Azure.AI.Projects.Agents
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers"u8);
-                writer.WriteStartObject();
-                foreach (var item in Headers)
+                if (Headers != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("headers"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Headers)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(AllowedTools))
-            {
-                writer.WritePropertyName("allowed_tools"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(AllowedTools);
-#else
-                using (JsonDocument document = JsonDocument.Parse(AllowedTools))
+                else
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WriteNull("headers"u8);
                 }
+            }
+            if (_allowedToolsIsDefined || Optional.IsDefined(AllowedTools))
+            {
+                if (AllowedTools != null)
+                {
+                    writer.WritePropertyName("allowed_tools"u8);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(AllowedTools);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(AllowedTools))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                else
+                {
+                    writer.WriteNull("allowed_tools"u8);
+                }
             }
             if (Optional.IsCollectionDefined(AllowedCallers))
             {
-                writer.WritePropertyName("allowed_callers"u8);
-                writer.WriteStartArray();
-                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                if (AllowedCallers != null)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WritePropertyName("allowed_callers"u8);
+                    writer.WriteStartArray();
+                    foreach (CallableToolAllowedCaller item in AllowedCallers)
+                    {
+                        writer.WriteStringValue(item.ToSerialString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("allowed_callers"u8);
+                }
             }
             if (Optional.IsDefined(RequireApprovalInternal))
             {
@@ -203,9 +224,10 @@ namespace Azure.AI.Projects.Agents
             string tunnelId = default;
             string authorization = default;
             string serverDescription = default;
-            IDictionary<string, string> headers = default;
+            IDictionary<string, string> headers = new ChangeTrackingDictionary<string, string>();
+            bool allowedToolsIsDefined = false;
             BinaryData allowedTools = default;
-            IList<CallableToolAllowedCaller> allowedCallers = default;
+            IList<CallableToolAllowedCaller> allowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
             BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
@@ -289,6 +311,7 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        headers = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -308,6 +331,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("allowed_tools"u8))
                 {
+                    allowedToolsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         allowedTools = null;
@@ -320,6 +344,7 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        allowedCallers = null;
                         continue;
                     }
                     List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
@@ -371,12 +396,15 @@ namespace Azure.AI.Projects.Agents
                 tunnelId,
                 authorization,
                 serverDescription,
-                headers ?? new ChangeTrackingDictionary<string, string>(),
+                headers,
                 allowedTools,
-                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
+                allowedCallers,
                 requireApprovalInternal,
                 deferLoading,
-                projectConnectionId);
+                projectConnectionId)
+            {
+                _allowedToolsIsDefined = allowedToolsIsDefined
+            };
         }
     }
 }

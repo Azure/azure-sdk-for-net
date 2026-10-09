@@ -80,13 +80,20 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(AllowedCallers))
             {
-                writer.WritePropertyName("allowed_callers"u8);
-                writer.WriteStartArray();
-                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                if (AllowedCallers != null)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WritePropertyName("allowed_callers"u8);
+                    writer.WriteStartArray();
+                    foreach (CallableToolAllowedCaller item in AllowedCallers)
+                    {
+                        writer.WriteStringValue(item.ToSerialString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("allowed_callers"u8);
+                }
             }
             writer.WritePropertyName("environment"u8);
             writer.WriteObjectValue(Environment, options);
@@ -122,7 +129,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<CallableToolAllowedCaller> allowedCallers = default;
+            IList<CallableToolAllowedCaller> allowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
             ToolboxShellEnvironment environment = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,6 +173,7 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        allowedCallers = null;
                         continue;
                     }
                     List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
@@ -192,7 +200,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
-                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
+                allowedCallers,
                 environment);
         }
     }
