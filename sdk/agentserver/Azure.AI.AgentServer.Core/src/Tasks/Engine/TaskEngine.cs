@@ -204,9 +204,25 @@ internal sealed partial class TaskEngine : IDisposable
                     // Cancellation callbacks may submit another input. Release startup admission
                     // before signalling, and preserve this input's identity if suspension wins.
                     ReleaseStart(taskId, admission);
-                    TaskRun<TOutput>? accepted = await TryStartActiveRunAsync<TInput, TOutput>(
-                        existing, registration, taskId, inputId, persistInputId, input, options, cancellationToken)
-                        .ConfigureAwait(false);
+                    TaskRun<TOutput>? accepted;
+                    try
+                    {
+                        accepted = await TryStartActiveRunAsync<TInput, TOutput>(
+                            existing,
+                            registration,
+                            taskId,
+                            inputId,
+                            persistInputId,
+                            input,
+                            options,
+                            cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (TaskStoreException ex) when (
+                        requireExisting && ex.StatusCode == 404)
+                    {
+                        return null;
+                    }
+
                     if (accepted is not null)
                     {
                         return accepted;

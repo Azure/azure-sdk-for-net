@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
@@ -9,6 +10,7 @@ using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
+using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -147,11 +149,10 @@ public sealed class SessionInstanceIdTaskIdProtocolTests
             const string sessionInstanceValue = "33333333333333333333333333333333";
             SetHostedSessionGuid(sessionInstanceValue);
             var secondStore = new DeleteAfterLegacyProbeStore(
-                new LocalTaskStore(tasksDirectory),
-                legacyTaskId);
+                new LocalTaskStore(tasksDirectory));
             using var secondFactory = CreateFactory(root, secondStore);
             using HttpClient secondClient = secondFactory.CreateClient();
-            secondStore.Arm();
+            secondStore.Arm(legacyTaskId);
 
             using HttpResponseMessage secondResponse = await PostConversationAsync(
                 secondClient,
@@ -183,9 +184,104 @@ public sealed class SessionInstanceIdTaskIdProtocolTests
         }
     }
 
-    private static TestWebApplicationFactory CreateFactory(string root, ITaskStore store)
+    [Test]
+    public async Task HostedSessionInstanceIdFallsBackWhenActiveLegacyTaskIsDeletedAfterProbe()
+    {
+        string root = CreateRoot();
+        string tasksDirectory = Path.Combine(root, "tasks");
+        string? previousHosted = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+        string? previousGuid = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
+        var firstTurnGate =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var firstTurnStarted =
+            new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        try
+        {
+            SetHostedSessionGuid(null);
+            var handler = new TestHandler
+            {
+                EventFactory = (request, context, ct) =>
+                    EmitFirstTurnGatedAsync(
+                        request,
+                        context,
+                        firstTurnStarted,
+                        firstTurnGate,
+                        ct),
+            };
+            var store = new DeleteAfterLegacyProbeStore(
+                new LocalTaskStore(tasksDirectory));
+            using var factory = CreateFactory(
+                root,
+                store,
+                handler,
+                steerable: true);
+            using HttpClient client = factory.CreateClient();
+
+            using HttpResponseMessage firstResponse = await PostConversationAsync(client);
+            Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            string firstResponseId = await ReadResponseIdAsync(firstResponse);
+            await firstTurnStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            string legacyTaskId = store.CreatedTaskIds.Single();
+
+            const string sessionInstanceValue = "44444444444444444444444444444444";
+            SetHostedSessionGuid(sessionInstanceValue);
+            store.Arm(legacyTaskId);
+
+            using HttpResponseMessage secondResponse = await PostConversationAsync(
+                client,
+                previousResponseId: firstResponseId);
+            string secondBody = await secondResponse.Content.ReadAsStringAsync();
+            Assert.That(
+                secondResponse.StatusCode,
+                Is.EqualTo(HttpStatusCode.OK),
+                secondBody);
+            using JsonDocument secondDocument = JsonDocument.Parse(secondBody);
+            string secondResponseId =
+                secondDocument.RootElement.GetProperty("id").GetString()!;
+
+            string scopedTaskId = TaskIdDerivation.Derive(
+                ConversationId,
+                firstResponseId,
+                secondResponseId,
+                AgentName,
+                PublicSessionId,
+                TaskIdDerivation.DeriveSessionScope(
+                    PublicSessionId,
+                    Guid.ParseExact(sessionInstanceValue, "N")),
+                steerable: false);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(store.CreatedTaskIds, Does.Contain(scopedTaskId));
+                Assert.That(
+                    store.CreatedTaskIds.Count(id => id == legacyTaskId),
+                    Is.EqualTo(1),
+                    "the active legacy ID must not be recreated after deletion");
+            });
+
+            firstTurnGate.TrySetResult();
+            await factory.StopAsync();
+        }
+        finally
+        {
+            firstTurnGate.TrySetResult();
+            RestoreEnvironment(previousHosted, previousGuid);
+            DeleteRoot(root);
+        }
+    }
+
+    private static TestWebApplicationFactory CreateFactory(
+        string root,
+        ITaskStore store,
+        TestHandler? handler = null,
+        bool steerable = false)
         => new(
-            configureOptions: options => options.ResilientBackground = true,
+            handler,
+            configureOptions: options =>
+            {
+                options.ResilientBackground = true;
+                options.SteerableConversations = steerable;
+            },
             configureTestServices: services =>
             {
                 services.AddSingleton(store);
@@ -194,6 +290,27 @@ public sealed class SessionInstanceIdTaskIdProtocolTests
                     _ => new FileResponsesProvider(Path.Combine(root, "responses")));
             },
             hosted: true);
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> EmitFirstTurnGatedAsync(
+        CreateResponse request,
+        ResponseContext context,
+        TaskCompletionSource firstTurnStarted,
+        TaskCompletionSource firstTurnGate,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var response = new ResponseObject(
+            context.ResponseId,
+            request.Model ?? "test-model");
+        yield return new ResponseCreatedEvent(0, response);
+
+        if (firstTurnStarted.TrySetResult())
+        {
+            await firstTurnGate.Task.WaitAsync(cancellationToken);
+        }
+
+        response.SetCompleted();
+        yield return new ResponseCompletedEvent(0, response);
+    }
 
     private static async Task<HttpResponseMessage> PostConversationAsync(
         HttpClient client,
@@ -274,15 +391,19 @@ public sealed class SessionInstanceIdTaskIdProtocolTests
     }
 
     private sealed class DeleteAfterLegacyProbeStore(
-        ITaskStore inner,
-        string legacyTaskId) : ITaskStore
+        ITaskStore inner) : ITaskStore
     {
         private int _armed;
         private int _deleted;
+        private string? _legacyTaskId;
 
         public List<string> CreatedTaskIds { get; } = new();
 
-        public void Arm() => Volatile.Write(ref _armed, 1);
+        public void Arm(string legacyTaskId)
+        {
+            _legacyTaskId = legacyTaskId;
+            Volatile.Write(ref _armed, 1);
+        }
 
         public async Task<TaskRecord> CreateAsync(
             TaskCreateRequest request,
@@ -299,7 +420,7 @@ public sealed class SessionInstanceIdTaskIdProtocolTests
             TaskRecord? record = await inner.GetAsync(taskId, cancellationToken);
             if (Volatile.Read(ref _armed) != 0
                 && record is not null
-                && string.Equals(taskId, legacyTaskId, StringComparison.Ordinal)
+                && string.Equals(taskId, _legacyTaskId, StringComparison.Ordinal)
                 && Interlocked.Exchange(ref _deleted, 1) == 0)
             {
                 await inner.DeleteAsync(
