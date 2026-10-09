@@ -109,7 +109,8 @@
       },
       "apiVersions": [
         "2023-11-01",
-        "2025-01-15-preview"
+        "2025-01-15-preview",
+        "2026-09-01-preview"
       ],
       "rbacRoles": []
     }

@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomLocationsGetEnabledResourceTypesAsyncCollectionResultOfT(
+            return new CustomLocationEnabledResourceTypeAsyncCollectionResultOfT(
                 _customLocationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new CustomLocationsGetEnabledResourceTypesCollectionResultOfT(
+            return new CustomLocationEnabledResourceTypeCollectionResultOfT(
                 _customLocationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

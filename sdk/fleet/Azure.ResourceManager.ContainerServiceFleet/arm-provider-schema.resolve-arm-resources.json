@@ -100,7 +100,9 @@
         "2025-04-01-preview",
         "2025-08-01-preview",
         "2026-02-01-preview",
-        "2026-03-02-preview"
+        "2026-03-02-preview",
+        "2026-06-01",
+        "2026-06-02-preview"
       ],
       "rbacRoles": []
     },
@@ -178,7 +180,9 @@
         "2025-04-01-preview",
         "2025-08-01-preview",
         "2026-02-01-preview",
-        "2026-03-02-preview"
+        "2026-03-02-preview",
+        "2026-06-01",
+        "2026-06-02-preview"
       ],
       "rbacRoles": []
     },
@@ -251,7 +255,8 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2026-03-02-preview"
+        "2026-03-02-preview",
+        "2026-06-02-preview"
       ],
       "rbacRoles": []
     },
@@ -307,7 +312,9 @@
         "2025-04-01-preview",
         "2025-08-01-preview",
         "2026-02-01-preview",
-        "2026-03-02-preview"
+        "2026-03-02-preview",
+        "2026-06-01",
+        "2026-06-02-preview"
       ],
       "rbacRoles": []
     },
@@ -382,7 +389,9 @@
       "apiVersions": [
         "2025-08-01-preview",
         "2026-02-01-preview",
-        "2026-03-02-preview"
+        "2026-03-02-preview",
+        "2026-06-01",
+        "2026-06-02-preview"
       ],
       "rbacRoles": []
     },
@@ -467,7 +476,9 @@
         "2025-04-01-preview",
         "2025-08-01-preview",
         "2026-02-01-preview",
-        "2026-03-02-preview"
+        "2026-03-02-preview",
+        "2026-06-01",
+        "2026-06-02-preview"
       ],
       "rbacRoles": []
     },
@@ -571,7 +582,9 @@
         "2025-04-01-preview",
         "2025-08-01-preview",
         "2026-02-01-preview",
-        "2026-03-02-preview"
+        "2026-03-02-preview",
+        "2026-06-01",
+        "2026-06-02-preview"
       ],
       "rbacRoles": []
     },
@@ -643,7 +656,9 @@
         "2025-04-01-preview",
         "2025-08-01-preview",
         "2026-02-01-preview",
-        "2026-03-02-preview"
+        "2026-03-02-preview",
+        "2026-06-01",
+        "2026-06-02-preview"
       ],
       "rbacRoles": []
     }

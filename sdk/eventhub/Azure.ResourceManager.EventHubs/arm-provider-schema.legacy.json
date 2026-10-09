@@ -102,10 +102,88 @@
         "scopeResourceType": "Microsoft.Resources/resourceGroups"
       },
       "resourceName": "EventHubsCluster",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]+$",
+        "minLength": 6,
+        "maxLength": 50
+      },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
+      ],
+      "rbacRoles": [
+        {
+          "name": "AzureEventHubsDataOwner",
+          "value": "f526a384-b230-433a-b45c-95f59c4a2dec"
+        },
+        {
+          "name": "AzureEventHubsDataReceiver",
+          "value": "a638d3c7-ab3a-418d-83e6-5f17a39d4fde"
+        },
+        {
+          "name": "AzureEventHubsDataSender",
+          "value": "2b629674-e913-4c01-ae53-ef4638d8f975"
+        },
+        {
+          "name": "SchemaRegistryContributor",
+          "value": "5dffeca3-4936-4216-b2bc-10343a5abb25"
+        },
+        {
+          "name": "SchemaRegistryReader",
+          "value": "2c56ea50-c6b3-40a6-83c0-9d98858bc7d2"
+        }
+      ]
+    },
+    {
+      "resourceModelId": "Microsoft.EventHub.UpgradePreferences",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/upgradePreferences/default",
+      "resourceType": "Microsoft.EventHub/clusters/upgradePreferences",
+      "methods": [
+        {
+          "methodId": "Microsoft.EventHub.UpgradePreferencesOperations.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/upgradePreferences/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/upgradePreferences/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.EventHub.UpgradePreferencesOperations.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/upgradePreferences/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/upgradePreferences/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.EventHub.UpgradePreferencesOperations.upgradeNow",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/upgradePreferences/default/upgradeNow",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/upgradePreferences/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}",
+      "singletonResourceName": "default",
+      "resourceName": "EventHubsUpgradePreferences",
+      "nameConstraints": {
+        "pattern": "^default$"
+      },
+      "apiVersions": [
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -222,13 +300,37 @@
       },
       "resourceName": "EventHubsNamespace",
       "nameConstraints": {
-        "pattern": "^[a-zA-Z][a-zA-Z0-9-]{6,50}[a-zA-Z0-9]$"
+        "pattern": "^[a-zA-Z0-9._-]+$",
+        "minLength": 1,
+        "maxLength": 256
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "AzureEventHubsDataOwner",
+          "value": "f526a384-b230-433a-b45c-95f59c4a2dec"
+        },
+        {
+          "name": "AzureEventHubsDataReceiver",
+          "value": "a638d3c7-ab3a-418d-83e6-5f17a39d4fde"
+        },
+        {
+          "name": "AzureEventHubsDataSender",
+          "value": "2b629674-e913-4c01-ae53-ef4638d8f975"
+        },
+        {
+          "name": "SchemaRegistryContributor",
+          "value": "5dffeca3-4936-4216-b2bc-10343a5abb25"
+        },
+        {
+          "name": "SchemaRegistryReader",
+          "value": "2c56ea50-c6b3-40a6-83c0-9d98858bc7d2"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.EventHub.ApplicationGroup",
@@ -289,7 +391,8 @@
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -367,11 +470,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}",
       "resourceName": "EventHubsNamespaceAuthorizationRule",
       "nameConstraints": {
-        "minLength": 1
+        "pattern": "^[a-zA-Z0-9._-]+$",
+        "minLength": 1,
+        "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -449,12 +555,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}",
       "resourceName": "EventHubsDisasterRecovery",
       "nameConstraints": {
-        "minLength": 1,
+        "pattern": "^[a-zA-Z0-9-]+$",
+        "minLength": 6,
         "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -502,11 +610,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}",
       "resourceName": "EventHubsDisasterRecoveryAuthorizationRule",
       "nameConstraints": {
-        "minLength": 1
+        "pattern": "^[a-zA-Z0-9._-]+$",
+        "minLength": 1,
+        "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -569,7 +680,8 @@
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -647,11 +759,14 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}",
       "resourceName": "EventHubAuthorizationRule",
       "nameConstraints": {
-        "minLength": 1
+        "pattern": "^[a-zA-Z0-9._-]+$",
+        "minLength": 1,
+        "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -709,12 +824,95 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}",
       "resourceName": "EventHubsConsumerGroup",
       "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9._-]+$",
         "minLength": 1,
         "maxLength": 50
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.EventHub.FabricShortcut",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}",
+      "resourceType": "Microsoft.EventHub/namespaces/eventhubs/fabricShortcuts",
+      "methods": [
+        {
+          "methodId": "Microsoft.EventHub.FabricShortcuts.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.EventHub.FabricShortcuts.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.EventHub.FabricShortcuts.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.EventHub.FabricShortcuts.listByEventHub",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.EventHub.FabricShortcuts.approve",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}/approve",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.EventHub.FabricShortcuts.reject",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}/reject",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/fabricShortcuts/{fabricShortcutName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}",
+      "resourceName": "EventHubsFabricShortcut",
+      "nameConstraints": {
+        "pattern": "^.+$"
+      },
+      "apiVersions": [
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -755,7 +953,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -805,7 +1004,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -865,7 +1065,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     },
@@ -928,7 +1129,8 @@
       },
       "apiVersions": [
         "2025-05-01-preview",
-        "2026-01-01"
+        "2026-01-01",
+        "2026-07-01-preview"
       ],
       "rbacRoles": []
     }
