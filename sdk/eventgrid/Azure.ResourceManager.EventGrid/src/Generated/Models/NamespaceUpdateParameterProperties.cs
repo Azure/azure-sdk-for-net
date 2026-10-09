@@ -31,13 +31,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="ipAddressType"> IP address type for the namespace resource. </param>
+        /// <param name="autoScaleConfiguration"> Auto-scale configuration for the namespace resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceUpdateParameterProperties(UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration, UpdateTopicsConfigurationInfo topicsConfiguration, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NamespaceUpdateParameterProperties(UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration, UpdateTopicsConfigurationInfo topicsConfiguration, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, IPAddressType? ipAddressType, UpdateAutoScaleConfiguration autoScaleConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TopicSpacesConfiguration = topicSpacesConfiguration;
             TopicsConfiguration = topicsConfiguration;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIPRules = inboundIPRules;
+            IPAddressType = ipAddressType;
+            AutoScaleConfiguration = autoScaleConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,6 +63,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         [WirePath("inboundIpRules")]
         public IList<EventGridInboundIPRule> InboundIPRules { get; } = new ChangeTrackingList<EventGridInboundIPRule>();
+
+        /// <summary> IP address type for the namespace resource. </summary>
+        [WirePath("ipAddressType")]
+        public IPAddressType? IPAddressType { get; set; }
+
+        /// <summary> Auto-scale configuration for the namespace resource. </summary>
+        [WirePath("autoScaleConfiguration")]
+        public UpdateAutoScaleConfiguration AutoScaleConfiguration { get; set; }
 
         /// <summary> Custom domain info for topics configuration. </summary>
         [WirePath("topicsConfiguration.customDomains")]

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(ResourceType, out string partnerConfigurationApiVersion);
             _partnerConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _partnerConfigurationsRestClient = new PartnerConfigurations(_partnerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerConfigurationApiVersion ?? "2025-07-15-preview");
+            _partnerConfigurationsRestClient = new PartnerConfigurations(_partnerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerConfigurationApiVersion ?? "2026-06-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

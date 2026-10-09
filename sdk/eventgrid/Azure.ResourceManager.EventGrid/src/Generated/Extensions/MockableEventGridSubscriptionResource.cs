@@ -54,43 +54,43 @@ namespace Azure.ResourceManager.EventGrid.Mocking
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics PartnerNamespacesClientDiagnostics => _partnerNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerNamespaces PartnerNamespacesRestClient => _partnerNamespacesRestClient ??= new PartnerNamespaces(PartnerNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerNamespaces PartnerNamespacesRestClient => _partnerNamespacesRestClient ??= new PartnerNamespaces(PartnerNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(DomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(DomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics EventSubscriptionsClientDiagnostics => _eventSubscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EventSubscriptions EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptions(EventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private EventSubscriptions EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptions(EventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics PartnerConfigurationsClientDiagnostics => _partnerConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerConfigurations PartnerConfigurationsRestClient => _partnerConfigurationsRestClient ??= new PartnerConfigurations(PartnerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerConfigurations PartnerConfigurationsRestClient => _partnerConfigurationsRestClient ??= new PartnerConfigurations(PartnerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics PartnerDestinationsClientDiagnostics => _partnerDestinationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerDestinations PartnerDestinationsRestClient => _partnerDestinationsRestClient ??= new PartnerDestinations(PartnerDestinationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerDestinations PartnerDestinationsRestClient => _partnerDestinationsRestClient ??= new PartnerDestinations(PartnerDestinationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics PartnerRegistrationsClientDiagnostics => _partnerRegistrationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerRegistrations PartnerRegistrationsRestClient => _partnerRegistrationsRestClient ??= new PartnerRegistrations(PartnerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerRegistrations PartnerRegistrationsRestClient => _partnerRegistrationsRestClient ??= new PartnerRegistrations(PartnerRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics PartnerTopicsClientDiagnostics => _partnerTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PartnerTopics PartnerTopicsRestClient => _partnerTopicsRestClient ??= new PartnerTopics(PartnerTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private PartnerTopics PartnerTopicsRestClient => _partnerTopicsRestClient ??= new PartnerTopics(PartnerTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics SystemTopicsClientDiagnostics => _systemTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SystemTopics SystemTopicsRestClient => _systemTopicsRestClient ??= new SystemTopics(SystemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private SystemTopics SystemTopicsRestClient => _systemTopicsRestClient ??= new SystemTopics(SystemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         private ClientDiagnostics TopicsClientDiagnostics => _topicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Topics TopicsRestClient => _topicsRestClient ??= new Topics(TopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-15-preview");
+        private Topics TopicsRestClient => _topicsRestClient ??= new Topics(TopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
 
         /// <summary>
         /// List all the namespaces under an Azure subscription.
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

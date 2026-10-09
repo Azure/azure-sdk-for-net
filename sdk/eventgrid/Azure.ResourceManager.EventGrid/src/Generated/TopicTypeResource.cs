@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(ResourceType, out string topicTypeApiVersion);
             _topicTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _topicTypesRestClient = new TopicTypes(_topicTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topicTypeApiVersion ?? "2025-07-15-preview");
+            _topicTypesRestClient = new TopicTypes(_topicTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topicTypeApiVersion ?? "2026-06-15-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

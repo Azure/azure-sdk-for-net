@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(SystemTopicResource.ResourceType, out string systemTopicApiVersion);
             _systemTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", SystemTopicResource.ResourceType.Namespace, Diagnostics);
-            _systemTopicsRestClient = new SystemTopics(_systemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, systemTopicApiVersion ?? "2025-07-15-preview");
+            _systemTopicsRestClient = new SystemTopics(_systemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, systemTopicApiVersion ?? "2026-06-15-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
+        /// <description> 2026-06-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
