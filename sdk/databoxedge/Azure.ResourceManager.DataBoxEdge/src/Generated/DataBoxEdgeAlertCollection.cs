@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new AlertsGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new DataBoxEdgeAlertDataAsyncCollectionResultOfT(
                 _alertsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new AlertsGetByDataBoxEdgeDeviceCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new DataBoxEdgeAlertDataCollectionResultOfT(
                 _alertsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

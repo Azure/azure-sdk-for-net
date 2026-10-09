@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataTransferJobData, DataTransferJobResource>(new DataTransferJobsGetByDatabaseAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataTransferJobData, DataTransferJobResource>(new DataTransferJobDataAsyncCollectionResultOfT(
                 _dataTransferJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataTransferJobData, DataTransferJobResource>(new DataTransferJobsGetByDatabaseAccountCollectionResultOfT(
+            return new PageableWrapper<DataTransferJobData, DataTransferJobResource>(new DataTransferJobDataCollectionResultOfT(
                 _dataTransferJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

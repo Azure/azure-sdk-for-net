@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CassandraRoleDefinitionData, CassandraRoleDefinitionResource>(new CassandraResourcesGetCassandraRoleDefinitionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CassandraRoleDefinitionData, CassandraRoleDefinitionResource>(new CassandraRoleDefinitionDataAsyncCollectionResultOfT(
                 _cassandraResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CassandraRoleDefinitionData, CassandraRoleDefinitionResource>(new CassandraResourcesGetCassandraRoleDefinitionsCollectionResultOfT(
+            return new PageableWrapper<CassandraRoleDefinitionData, CassandraRoleDefinitionResource>(new CassandraRoleDefinitionDataCollectionResultOfT(
                 _cassandraResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

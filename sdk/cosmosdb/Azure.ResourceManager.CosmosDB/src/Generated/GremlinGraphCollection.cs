@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GremlinGraphData, GremlinGraphResource>(new GremlinResourcesGetGremlinGraphsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GremlinGraphData, GremlinGraphResource>(new GremlinGraphDataAsyncCollectionResultOfT(
                 _gremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GremlinGraphData, GremlinGraphResource>(new GremlinResourcesGetGremlinGraphsCollectionResultOfT(
+            return new PageableWrapper<GremlinGraphData, GremlinGraphResource>(new GremlinGraphDataCollectionResultOfT(
                 _gremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
