@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperationalInsightsLinkedStorageAccountsData, OperationalInsightsLinkedStorageAccountsResource>(new LinkedStorageAccountsGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OperationalInsightsLinkedStorageAccountsData, OperationalInsightsLinkedStorageAccountsResource>(new OperationalInsightsLinkedStorageAccountsDataAsyncCollectionResultOfT(
                 _linkedStorageAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperationalInsightsLinkedStorageAccountsData, OperationalInsightsLinkedStorageAccountsResource>(new LinkedStorageAccountsGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<OperationalInsightsLinkedStorageAccountsData, OperationalInsightsLinkedStorageAccountsResource>(new OperationalInsightsLinkedStorageAccountsDataCollectionResultOfT(
                 _linkedStorageAccountsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

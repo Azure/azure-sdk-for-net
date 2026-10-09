@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubConsumerGroupInfoData, EventHubConsumerGroupInfoResource>(new IotHubResourceGetEventHubConsumerGroupsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventHubConsumerGroupInfoData, EventHubConsumerGroupInfoResource>(new EventHubConsumerGroupInfoDataAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubConsumerGroupInfoData, EventHubConsumerGroupInfoResource>(new IotHubResourceGetEventHubConsumerGroupsCollectionResultOfT(
+            return new PageableWrapper<EventHubConsumerGroupInfoData, EventHubConsumerGroupInfoResource>(new EventHubConsumerGroupInfoDataCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

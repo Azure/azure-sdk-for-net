@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicasGetReplicaSkusAsyncCollectionResultOfT(
+            return new SignalRSkuAsync0CollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicasGetReplicaSkusCollectionResultOfT(
+            return new SignalRSku0CollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

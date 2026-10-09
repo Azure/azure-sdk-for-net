@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new AlertsGetSubscriptionLevelByRegionAsyncCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new SecurityAlertDataAsyncCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new AlertsGetSubscriptionLevelByRegionCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
+            return new PageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new SecurityAlertDataCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
         }
 
         /// <summary>

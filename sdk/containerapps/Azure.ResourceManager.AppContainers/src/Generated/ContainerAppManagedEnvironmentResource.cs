@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedEnvironmentPrivateLinkResourcesGetManagedEnvironmentPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new ContainerAppPrivateLinkAsync0CollectionResultOfT(
                 _managedEnvironmentPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedEnvironmentPrivateLinkResourcesGetManagedEnvironmentPrivateLinkResourcesCollectionResultOfT(
+            return new ContainerAppPrivateLink0CollectionResultOfT(
                 _managedEnvironmentPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppManagedEnvironmentsGetWorkloadProfileStatesAsyncCollectionResultOfT(
+            return new ContainerAppWorkloadProfileStateAsyncCollectionResultOfT(
                 _containerAppManagedEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerAppManagedEnvironmentsGetWorkloadProfileStatesCollectionResultOfT(
+            return new ContainerAppWorkloadProfileStateCollectionResultOfT(
                 _containerAppManagedEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedEnvironmentUsagesGetManagedEnvironmentUsagesAsyncCollectionResultOfT(
+            return new ContainerAppUsageAsyncCollectionResultOfT(
                 _managedEnvironmentUsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedEnvironmentUsagesGetManagedEnvironmentUsagesCollectionResultOfT(
+            return new ContainerAppUsageCollectionResultOfT(
                 _managedEnvironmentUsagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

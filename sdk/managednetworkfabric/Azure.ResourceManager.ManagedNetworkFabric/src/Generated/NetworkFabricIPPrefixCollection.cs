@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new IpPrefixesGetByResourceGroupAsyncCollectionResultOfT(_ipPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPPrefixCollection.GetAll"), data => new NetworkFabricIPPrefixResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixDataAsyncCollectionResultOfT(_ipPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPPrefixCollection.GetAll"), data => new NetworkFabricIPPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new IpPrefixesGetByResourceGroupCollectionResultOfT(_ipPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPPrefixCollection.GetAll"), data => new NetworkFabricIPPrefixResource(Client, data));
+            return new PageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixDataCollectionResultOfT(_ipPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPPrefixCollection.GetAll"), data => new NetworkFabricIPPrefixResource(Client, data));
         }
 
         /// <summary>

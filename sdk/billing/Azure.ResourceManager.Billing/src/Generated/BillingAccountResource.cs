@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestDataAsync0CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Name,
                 filter,
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestData0CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Name,
                 filter,
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingAccountsGetBillingPermissionsAsyncCollectionResultOfT(_billingAccountsRestClient, Id.Name, context, "BillingAccountResource.GetBillingPermissions");
+            return new BillingPermissionAsyncCollectionResultOfT(_billingAccountsRestClient, Id.Name, context, "BillingAccountResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingAccountsGetBillingPermissionsCollectionResultOfT(_billingAccountsRestClient, Id.Name, context, "BillingAccountResource.GetBillingPermissions");
+            return new BillingPermissionCollectionResultOfT(_billingAccountsRestClient, Id.Name, context, "BillingAccountResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingAccountsGetInvoiceSectionsByCreateSubscriptionPermissionAsyncCollectionResultOfT(_billingAccountsRestClient, Id.Name, filter, context, "BillingAccountResource.GetInvoiceSectionsByCreateSubscriptionPermission");
+            return new InvoiceSectionWithCreateSubPermissionAsyncCollectionResultOfT(_billingAccountsRestClient, Id.Name, filter, context, "BillingAccountResource.GetInvoiceSectionsByCreateSubscriptionPermission");
         }
 
         /// <summary>
@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingAccountsGetInvoiceSectionsByCreateSubscriptionPermissionCollectionResultOfT(_billingAccountsRestClient, Id.Name, filter, context, "BillingAccountResource.GetInvoiceSectionsByCreateSubscriptionPermission");
+            return new InvoiceSectionWithCreateSubPermissionCollectionResultOfT(_billingAccountsRestClient, Id.Name, filter, context, "BillingAccountResource.GetInvoiceSectionsByCreateSubscriptionPermission");
         }
 
         /// <summary>
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationDataAsync0CollectionResultOfT(
                 _reservationsRestClient,
                 Id.Name,
                 filter,
@@ -1257,7 +1257,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationData0CollectionResultOfT(
                 _reservationsRestClient,
                 Id.Name,
                 filter,
@@ -1419,7 +1419,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new SavingsPlansGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new BillingSavingsPlanModelDataAsyncCollectionResultOfT(
                 _savingsPlansRestClient,
                 Id.Name,
                 filter,
@@ -1467,7 +1467,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new SavingsPlansGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new BillingSavingsPlanModelDataCollectionResultOfT(
                 _savingsPlansRestClient,
                 Id.Name,
                 filter,

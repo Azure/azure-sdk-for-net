@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GoalMembersData, GoalMembersResource>(new GoalResourcesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GoalMembersData, GoalMembersResource>(new GoalMembersDataAsyncCollectionResultOfT(
                 _goalResourcesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GoalMembersData, GoalMembersResource>(new GoalResourcesGetAllCollectionResultOfT(
+            return new PageableWrapper<GoalMembersData, GoalMembersResource>(new GoalMembersDataCollectionResultOfT(
                 _goalResourcesRestClient,
                 Id.Parent.Name,
                 Id.Name,

@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new ThroughputPoolsGetByResourceGroupAsyncCollectionResultOfT(_throughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBThroughputPoolCollection.GetAll"), data => new CosmosDBThroughputPoolResource(Client, data));
+            return new AsyncPageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new CosmosDBThroughputPoolDataAsyncCollectionResultOfT(_throughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBThroughputPoolCollection.GetAll"), data => new CosmosDBThroughputPoolResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new ThroughputPoolsGetByResourceGroupCollectionResultOfT(_throughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBThroughputPoolCollection.GetAll"), data => new CosmosDBThroughputPoolResource(Client, data));
+            return new PageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new CosmosDBThroughputPoolDataCollectionResultOfT(_throughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CosmosDBThroughputPoolCollection.GetAll"), data => new CosmosDBThroughputPoolResource(Client, data));
         }
 
         /// <summary>

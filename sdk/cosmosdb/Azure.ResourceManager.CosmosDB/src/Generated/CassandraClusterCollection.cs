@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClustersGetByResourceGroupAsyncCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CassandraClusterCollection.GetAll"), data => new CassandraClusterResource(Client, data));
+            return new AsyncPageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClusterDataAsyncCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CassandraClusterCollection.GetAll"), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClustersGetByResourceGroupCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CassandraClusterCollection.GetAll"), data => new CassandraClusterResource(Client, data));
+            return new PageableWrapper<CassandraClusterData, CassandraClusterResource>(new CassandraClusterDataCollectionResultOfT(_cassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CassandraClusterCollection.GetAll"), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>

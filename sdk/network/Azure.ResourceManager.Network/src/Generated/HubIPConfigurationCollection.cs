@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HubIPConfigurationData, HubIPConfigurationResource>(new VirtualHubIpConfigurationGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HubIPConfigurationData, HubIPConfigurationResource>(new HubIPConfigurationDataAsyncCollectionResultOfT(
                 _virtualHubIpConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HubIPConfigurationData, HubIPConfigurationResource>(new VirtualHubIpConfigurationGetAllCollectionResultOfT(
+            return new PageableWrapper<HubIPConfigurationData, HubIPConfigurationResource>(new HubIPConfigurationDataCollectionResultOfT(
                 _virtualHubIpConfigurationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

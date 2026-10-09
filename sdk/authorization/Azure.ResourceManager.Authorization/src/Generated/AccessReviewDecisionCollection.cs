@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewInstanceMyDecisionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewDecisionDataAsync1CollectionResultOfT(
                 _accessReviewInstanceMyDecisionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewInstanceMyDecisionsGetAllCollectionResultOfT(
+            return new PageableWrapper<AccessReviewDecisionData, AccessReviewDecisionResource>(new AccessReviewDecisionData1CollectionResultOfT(
                 _accessReviewInstanceMyDecisionsRestClient,
                 Id.Parent.Name,
                 Id.Name,

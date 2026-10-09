@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new PreconfiguredEndpointsGetPreconfiguredEndpointsAsyncCollectionResultOfT(
+            return new PreconfiguredEndpointAsyncCollectionResultOfT(
                 _preconfiguredEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new PreconfiguredEndpointsGetPreconfiguredEndpointsCollectionResultOfT(
+            return new PreconfiguredEndpointCollectionResultOfT(
                 _preconfiguredEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

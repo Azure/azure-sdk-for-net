@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetPrivateLinksAsyncCollectionResultOfT(
+            return new HealthDataAIServicesPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetPrivateLinksCollectionResultOfT(
+            return new HealthDataAIServicesPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

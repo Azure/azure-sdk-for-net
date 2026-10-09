@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertsGetByResourceGroupAsyncCollectionResultOfT(_metricAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MetricAlertCollection.GetAll"), data => new MetricAlertResource(Client, data));
+            return new AsyncPageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertDataAsyncCollectionResultOfT(_metricAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MetricAlertCollection.GetAll"), data => new MetricAlertResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertsGetByResourceGroupCollectionResultOfT(_metricAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MetricAlertCollection.GetAll"), data => new MetricAlertResource(Client, data));
+            return new PageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertDataCollectionResultOfT(_metricAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MetricAlertCollection.GetAll"), data => new MetricAlertResource(Client, data));
         }
 
         /// <summary>

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodeDataAsyncCollectionResultOfT(
                 _ispCacheNodesOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceCollectionResultOfT(
+            return new PageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodeDataCollectionResultOfT(
                 _ispCacheNodesOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

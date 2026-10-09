@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoGetAllAsyncCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
+            return new AsyncPageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoDataAsyncCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoGetAllCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
+            return new PageableWrapper<PrivateStoreCollectionInfoData, PrivateStoreCollectionInfoResource>(new PrivateStoreCollectionInfoDataCollectionResultOfT(_privateStoreCollectionInfoRestClient, Guid.Parse(Id.Name), context, "PrivateStoreCollectionInfoCollection.GetAll"), data => new PrivateStoreCollectionInfoResource(Client, data));
         }
 
         /// <summary>

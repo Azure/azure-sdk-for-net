@@ -1641,7 +1641,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AFDProfilesGetFrontDoorProfileResourceUsagesAsyncCollectionResultOfT(
+            return new FrontDoorUsageAsyncCollectionResultOfT(
                 _afdProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1679,7 +1679,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new AFDProfilesGetFrontDoorProfileResourceUsagesCollectionResultOfT(
+            return new FrontDoorUsageCollectionResultOfT(
                 _afdProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2009,7 +2009,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new ProfilesGetResourceUsagesAsyncCollectionResultOfT(
+            return new CdnUsageAsyncCollectionResultOfT(
                 _profilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2047,7 +2047,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 CancellationToken = cancellationToken
             };
-            return new ProfilesGetResourceUsagesCollectionResultOfT(
+            return new CdnUsageCollectionResultOfT(
                 _profilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

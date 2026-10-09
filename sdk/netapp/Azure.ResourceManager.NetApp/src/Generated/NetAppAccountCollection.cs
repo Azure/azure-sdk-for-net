@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetAllAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
+            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new NetAppAccountDataAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetAllCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
+            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new NetAppAccountDataCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>

@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScopeConnectionData, ScopeConnectionResource>(new ScopeConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScopeConnectionData, ScopeConnectionResource>(new ScopeConnectionDataAsyncCollectionResultOfT(
                 _scopeConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScopeConnectionData, ScopeConnectionResource>(new ScopeConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<ScopeConnectionData, ScopeConnectionResource>(new ScopeConnectionDataCollectionResultOfT(
                 _scopeConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

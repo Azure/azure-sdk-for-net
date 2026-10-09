@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkGatewayConnectionData, VirtualNetworkGatewayConnectionResource>(new VirtualNetworkGatewayConnectionsGetAllAsyncCollectionResultOfT(_virtualNetworkGatewayConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkGatewayConnectionCollection.GetAll"), data => new VirtualNetworkGatewayConnectionResource(Client, data));
+            return new AsyncPageableWrapper<VirtualNetworkGatewayConnectionData, VirtualNetworkGatewayConnectionResource>(new VirtualNetworkGatewayConnectionDataAsyncCollectionResultOfT(_virtualNetworkGatewayConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkGatewayConnectionCollection.GetAll"), data => new VirtualNetworkGatewayConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkGatewayConnectionData, VirtualNetworkGatewayConnectionResource>(new VirtualNetworkGatewayConnectionsGetAllCollectionResultOfT(_virtualNetworkGatewayConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkGatewayConnectionCollection.GetAll"), data => new VirtualNetworkGatewayConnectionResource(Client, data));
+            return new PageableWrapper<VirtualNetworkGatewayConnectionData, VirtualNetworkGatewayConnectionResource>(new VirtualNetworkGatewayConnectionDataCollectionResultOfT(_virtualNetworkGatewayConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkGatewayConnectionCollection.GetAll"), data => new VirtualNetworkGatewayConnectionResource(Client, data));
         }
 
         /// <summary>

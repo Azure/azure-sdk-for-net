@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManufacturingDataServiceData, ManufacturingDataServiceResource>(new ManufacturingDataServicesGetByResourceGroupAsyncCollectionResultOfT(_manufacturingDataServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManufacturingDataServiceCollection.GetAll"), data => new ManufacturingDataServiceResource(Client, data));
+            return new AsyncPageableWrapper<ManufacturingDataServiceData, ManufacturingDataServiceResource>(new ManufacturingDataServiceDataAsyncCollectionResultOfT(_manufacturingDataServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManufacturingDataServiceCollection.GetAll"), data => new ManufacturingDataServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManufacturingDataServiceData, ManufacturingDataServiceResource>(new ManufacturingDataServicesGetByResourceGroupCollectionResultOfT(_manufacturingDataServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManufacturingDataServiceCollection.GetAll"), data => new ManufacturingDataServiceResource(Client, data));
+            return new PageableWrapper<ManufacturingDataServiceData, ManufacturingDataServiceResource>(new ManufacturingDataServiceDataCollectionResultOfT(_manufacturingDataServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManufacturingDataServiceCollection.GetAll"), data => new ManufacturingDataServiceResource(Client, data));
         }
 
         /// <summary>

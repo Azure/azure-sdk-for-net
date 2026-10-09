@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceFeaturesGetWorkspaceFeaturesAsyncCollectionResultOfT(
+            return new MachineLearningUserFeatureAsyncCollectionResultOfT(
                 _workspaceFeaturesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspaceFeaturesGetWorkspaceFeaturesCollectionResultOfT(
+            return new MachineLearningUserFeatureCollectionResultOfT(
                 _workspaceFeaturesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new MachineLearningPrivateLinkResourceAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1177,7 +1177,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(
+            return new MachineLearningPrivateLinkResourceCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

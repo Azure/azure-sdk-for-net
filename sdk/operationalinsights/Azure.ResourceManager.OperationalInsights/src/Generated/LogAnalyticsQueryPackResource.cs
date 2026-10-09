@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LogAnalyticsQueryData, LogAnalyticsQueryResource>(new QueriesSearchQueriesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LogAnalyticsQueryData, LogAnalyticsQueryResource>(new LogAnalyticsQueryDataAsync0CollectionResultOfT(
                 _queriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LogAnalyticsQueryData, LogAnalyticsQueryResource>(new QueriesSearchQueriesCollectionResultOfT(
+            return new PageableWrapper<LogAnalyticsQueryData, LogAnalyticsQueryResource>(new LogAnalyticsQueryData0CollectionResultOfT(
                 _queriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

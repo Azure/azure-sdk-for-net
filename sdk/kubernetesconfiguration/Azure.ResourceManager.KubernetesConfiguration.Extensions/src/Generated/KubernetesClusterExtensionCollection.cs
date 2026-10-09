@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesClusterExtensionData, KubernetesClusterExtensionResource>(new ExtensionsInterfaceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KubernetesClusterExtensionData, KubernetesClusterExtensionResource>(new KubernetesClusterExtensionDataAsyncCollectionResultOfT(
                 _extensionsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesClusterExtensionData, KubernetesClusterExtensionResource>(new ExtensionsInterfaceGetAllCollectionResultOfT(
+            return new PageableWrapper<KubernetesClusterExtensionData, KubernetesClusterExtensionResource>(new KubernetesClusterExtensionDataCollectionResultOfT(
                 _extensionsInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
