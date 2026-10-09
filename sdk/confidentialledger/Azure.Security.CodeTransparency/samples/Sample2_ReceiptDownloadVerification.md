@@ -51,7 +51,7 @@ try
 {
     var verificationOptions = new CodeTransparencyVerificationOptions
     {
-        AuthorizedDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+        AuthorizedDomains = { "<< service name >>.confidential-ledger.azure.com" },
         AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
         UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
     };

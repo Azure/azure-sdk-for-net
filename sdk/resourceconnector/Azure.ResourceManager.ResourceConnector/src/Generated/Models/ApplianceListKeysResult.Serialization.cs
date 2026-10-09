@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplianceListKeysResult(artifactProfiles ?? new ChangeTrackingDictionary<string, ApplianceArtifactProfile>(), kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>(), sshKeys ?? new ChangeTrackingDictionary<string, ApplianceSshKey>(), additionalBinaryDataProperties);

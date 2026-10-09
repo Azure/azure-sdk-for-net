@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlDatabaseColumnResource.ResourceType, out string sqlDatabaseColumnApiVersion);
             _databaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseColumnResource.ResourceType.Namespace, Diagnostics);
-            _databaseColumnsRestClient = new DatabaseColumns(_databaseColumnsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseColumnApiVersion ?? "2025-02-01-preview");
+            _databaseColumnsRestClient = new DatabaseColumns(_databaseColumnsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseColumnApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseColumnData, SqlDatabaseColumnResource>(new DatabaseColumnsGetByTableAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatabaseColumnData, SqlDatabaseColumnResource>(new DatabaseColumnDataAsyncCollectionResultOfT(
                 _databaseColumnsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseColumnData, SqlDatabaseColumnResource>(new DatabaseColumnsGetByTableCollectionResultOfT(
+            return new PageableWrapper<DatabaseColumnData, SqlDatabaseColumnResource>(new DatabaseColumnDataCollectionResultOfT(
                 _databaseColumnsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

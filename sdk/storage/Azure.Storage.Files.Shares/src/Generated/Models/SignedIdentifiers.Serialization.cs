@@ -159,7 +159,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new SignedIdentifiers(items);
+            return new SignedIdentifiers(items ?? new ChangeTrackingList<ShareSignedIdentifier>());
         }
 
         /// <param name="writer"> The XML writer. </param>

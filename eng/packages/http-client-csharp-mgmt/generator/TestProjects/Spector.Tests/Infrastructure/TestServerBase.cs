@@ -44,8 +44,11 @@ namespace TestProjects.Spector.Tests
                     var indexOfPort = s?.IndexOf(portPhrase);
                     if (indexOfPort >= 0)
                     {
-                        Port = s!.Substring(indexOfPort.Value + portPhrase.Length).Trim();
-                        Host = new Uri($"http://localhost:{Port}");
+                        var address = s!.Substring(indexOfPort.Value + portPhrase.Length).Trim();
+                        Host = int.TryParse(address, out var port)
+                            ? new Uri($"http://localhost:{port}")
+                            : new Uri($"http://{address}");
+                        Port = Host.Port.ToString();
                         Client = new HttpClient
                         {
                             BaseAddress = Host

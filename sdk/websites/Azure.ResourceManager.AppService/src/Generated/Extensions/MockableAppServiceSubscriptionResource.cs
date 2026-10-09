@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentResourcesGetAllAsyncCollectionResultOfT(AppServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAppServiceEnvironments"), data => new AppServiceEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentDataAsync0CollectionResultOfT(AppServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAppServiceEnvironments"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentResourcesGetAllCollectionResultOfT(AppServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAppServiceEnvironments"), data => new AppServiceEnvironmentResource(Client, data));
+            return new PageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentData0CollectionResultOfT(AppServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAppServiceEnvironments"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlansGetAllAsyncCollectionResultOfT(AppServicePlansRestClient, Guid.Parse(Id.SubscriptionId), detailed, context, "MockableAppServiceSubscriptionResource.GetAppServicePlans"), data => new AppServicePlanResource(Client, data));
+            return new AsyncPageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlanDataAsync1CollectionResultOfT(AppServicePlansRestClient, Guid.Parse(Id.SubscriptionId), detailed, context, "MockableAppServiceSubscriptionResource.GetAppServicePlans"), data => new AppServicePlanResource(Client, data));
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlansGetAllCollectionResultOfT(AppServicePlansRestClient, Guid.Parse(Id.SubscriptionId), detailed, context, "MockableAppServiceSubscriptionResource.GetAppServicePlans"), data => new AppServicePlanResource(Client, data));
+            return new PageableWrapper<AppServicePlanData, AppServicePlanResource>(new AppServicePlanData1CollectionResultOfT(AppServicePlansRestClient, Guid.Parse(Id.SubscriptionId), detailed, context, "MockableAppServiceSubscriptionResource.GetAppServicePlans"), data => new AppServicePlanResource(Client, data));
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppCertificateData, AppCertificateResource>(new CertificatesGetAllAsyncCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetAppCertificates"), data => new AppCertificateResource(Client, data));
+            return new AsyncPageableWrapper<AppCertificateData, AppCertificateResource>(new AppCertificateDataAsync1CollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetAppCertificates"), data => new AppCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppCertificateData, AppCertificateResource>(new CertificatesGetAllCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetAppCertificates"), data => new AppCertificateResource(Client, data));
+            return new PageableWrapper<AppCertificateData, AppCertificateResource>(new AppCertificateData1CollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetAppCertificates"), data => new AppCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubeEnvironmentData, KubeEnvironmentResource>(new KubeEnvironmentsGetBySubscriptionAsyncCollectionResultOfT(KubeEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetKubeEnvironments"), data => new KubeEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<KubeEnvironmentData, KubeEnvironmentResource>(new KubeEnvironmentDataAsync0CollectionResultOfT(KubeEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetKubeEnvironments"), data => new KubeEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubeEnvironmentData, KubeEnvironmentResource>(new KubeEnvironmentsGetBySubscriptionCollectionResultOfT(KubeEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetKubeEnvironments"), data => new KubeEnvironmentResource(Client, data));
+            return new PageableWrapper<KubeEnvironmentData, KubeEnvironmentResource>(new KubeEnvironmentData0CollectionResultOfT(KubeEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetKubeEnvironments"), data => new KubeEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebSiteData, WebSiteResource>(new SitesGetAllAsyncCollectionResultOfT(SitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetWebSites"), data => new WebSiteResource(Client, data));
+            return new AsyncPageableWrapper<WebSiteData, WebSiteResource>(new WebSiteDataAsync3CollectionResultOfT(SitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetWebSites"), data => new WebSiteResource(Client, data));
         }
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebSiteData, WebSiteResource>(new SitesGetAllCollectionResultOfT(SitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetWebSites"), data => new WebSiteResource(Client, data));
+            return new PageableWrapper<WebSiteData, WebSiteResource>(new WebSiteData3CollectionResultOfT(SitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetWebSites"), data => new WebSiteResource(Client, data));
         }
 
         /// <summary>
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteARMResourcesGetAllAsyncCollectionResultOfT(StaticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetStaticSites"), data => new StaticSiteResource(Client, data));
+            return new AsyncPageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteDataAsync0CollectionResultOfT(StaticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetStaticSites"), data => new StaticSiteResource(Client, data));
         }
 
         /// <summary>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteARMResourcesGetAllCollectionResultOfT(StaticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetStaticSites"), data => new StaticSiteResource(Client, data));
+            return new PageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSiteData0CollectionResultOfT(StaticSiteARMResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetStaticSites"), data => new StaticSiteResource(Client, data));
         }
 
         /// <summary>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewaysGetBySubscriptionAsyncCollectionResultOfT(AiGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAiGateways"), data => new AiGatewayResource(Client, data));
+            return new AsyncPageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewayDataAsyncCollectionResultOfT(AiGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAiGateways"), data => new AiGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewaysGetBySubscriptionCollectionResultOfT(AiGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAiGateways"), data => new AiGatewayResource(Client, data));
+            return new PageableWrapper<AiGatewayData, AiGatewayResource>(new AiGatewayDataCollectionResultOfT(AiGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAiGateways"), data => new AiGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetAseRegionsAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAseRegions");
+            return new AppServiceAseRegionAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAseRegions");
         }
 
         /// <summary>
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetAseRegionsCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAseRegions");
+            return new AppServiceAseRegionCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAseRegions");
         }
 
         /// <summary>
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetBillingMetersAsyncCollectionResultOfT(
+            return new AppServiceBillingMeterAsyncCollectionResultOfT(
                 WebClientRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 billingLocation,
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetBillingMetersCollectionResultOfT(
+            return new AppServiceBillingMeterCollectionResultOfT(
                 WebClientRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 billingLocation,
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetCustomHostNameSitesAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), hostname, context, "MockableAppServiceSubscriptionResource.GetCustomHostNameSites");
+            return new CustomHostnameSitesAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), hostname, context, "MockableAppServiceSubscriptionResource.GetCustomHostNameSites");
         }
 
         /// <summary>
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetCustomHostNameSitesCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), hostname, context, "MockableAppServiceSubscriptionResource.GetCustomHostNameSites");
+            return new CustomHostnameSitesCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), hostname, context, "MockableAppServiceSubscriptionResource.GetCustomHostNameSites");
         }
 
         /// <summary>
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetGeoRegionsAsyncCollectionResultOfT(
+            return new AppServiceGeoRegionAsyncCollectionResultOfT(
                 WebClientRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 sku?.ToString(),
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetGeoRegionsCollectionResultOfT(
+            return new AppServiceGeoRegionCollectionResultOfT(
                 WebClientRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 sku?.ToString(),
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetPremierAddOnOffersAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers");
+            return new PremierAddOnOfferAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers");
         }
 
         /// <summary>
@@ -1166,7 +1166,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetPremierAddOnOffersCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers");
+            return new PremierAddOnOfferCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers");
         }
 
         /// <summary>
@@ -1671,7 +1671,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetAvailableStacksOnPremProvidersAsyncCollectionResultOfT(ProviderOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), osTypeSelected?.ToString(), context, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders");
+            return new ApplicationStackResourceAsync0CollectionResultOfT(ProviderOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), osTypeSelected?.ToString(), context, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders");
         }
 
         /// <summary>
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetAvailableStacksOnPremProvidersCollectionResultOfT(ProviderOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), osTypeSelected?.ToString(), context, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders");
+            return new ApplicationStackResource0CollectionResultOfT(ProviderOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), osTypeSelected?.ToString(), context, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders");
         }
 
         /// <summary>
@@ -1730,7 +1730,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new RecommendationsOperationGroupGetRecommendationsAsyncCollectionResultOfT(
+            return new AppServiceRecommendationAsync3CollectionResultOfT(
                 RecommendationsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 featured,
@@ -1766,7 +1766,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new RecommendationsOperationGroupGetRecommendationsCollectionResultOfT(
+            return new AppServiceRecommendation3CollectionResultOfT(
                 RecommendationsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 featured,
@@ -1966,7 +1966,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceHealthMetadataNonResourceOperationGroupGetAllResourceHealthMetadataAsyncCollectionResultOfT(ResourceHealthMetadataNonResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata");
+            return new ResourceHealthMetadataDataAsync1CollectionResultOfT(ResourceHealthMetadataNonResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata");
         }
 
         /// <summary>
@@ -1994,7 +1994,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceHealthMetadataNonResourceOperationGroupGetAllResourceHealthMetadataCollectionResultOfT(ResourceHealthMetadataNonResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata");
+            return new ResourceHealthMetadataData1CollectionResultOfT(ResourceHealthMetadataNonResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata");
         }
     }
 }

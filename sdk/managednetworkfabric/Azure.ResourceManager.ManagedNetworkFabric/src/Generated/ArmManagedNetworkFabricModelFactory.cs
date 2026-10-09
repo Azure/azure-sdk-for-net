@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="globalAccessControlListActionsEnableCount"> Configuration to enable or disable ACL action count. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
-        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType configurationType, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, DateTimeOffset? lastSyncedOn = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default, string lastOperationDetails = default)
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricAclType? aclType, NetworkFabricDeviceRole? deviceRole, IEnumerable<ResourceIdentifier> networkFabricIds, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                new AccessControlListProperties(
+                annotation is null && configurationType is null && aclsUri is null && defaultAction is null && matchConfigurations is null && dynamicMatchConfigurations is null && lastSyncedOn is null && aclType is null && deviceRole is null && globalAccessControlListActionsEnableCount is null && lastOperationDetails is null && networkFabricIds is null && controlPlaneAclConfiguration is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new AccessControlListProperties(
                     annotation,
-                    configurationType,
+                    configurationType.GetValueOrDefault(),
                     aclsUri,
                     defaultAction,
                     (matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>()).ToList(),
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     lastSyncedOn,
                     aclType,
                     deviceRole,
-                    new GlobalAccessControlListActionProperties(globalAccessControlListActionsEnableCount, default),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    globalAccessControlListActionsEnableCount is null ? default : new GlobalAccessControlListActionProperties(globalAccessControlListActionsEnableCount, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclProperties>()).ToList(),
                     configurationState,
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 (controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclPatchProperties>()).ToList(),
                 aclType,
                 deviceRole,
-                new GlobalAccessControlListActionPatchProperties(globalAccessControlListActionsEnableCount, default),
+                globalAccessControlListActionsEnableCount is null ? default : new GlobalAccessControlListActionPatchProperties(globalAccessControlListActionsEnableCount, default),
                 annotation,
                 default));
         }
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     default,
                     ruleProperties,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     (internetGatewayIds ?? new ChangeTrackingList<string>()).ToList()),
                 default);
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     internetGatewayType,
                     internetGatewayType,
                     networkFabricControllerId,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     default),
                 default);
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     networkFabricId,
                     (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
                     networkFabricId,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     networkFabricId,
                     (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     mtu,
                     extendedVlan,
                     networkToNetworkInterconnectId,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState),
@@ -1218,12 +1218,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     aggregateRouteConfiguration,
                     connectedSubnetRoutePolicy,
                     networkFabricId,
-                    new StaticRouteRoutePolicy(staticRouteExportRoutePolicy, default),
-                    new L3UniqueRouteDistinguisherProperties((uniqueRds ?? new ChangeTrackingList<string>()).ToList(), default),
+                    staticRouteExportRoutePolicy is null ? default : new StaticRouteRoutePolicy(staticRouteExportRoutePolicy, default),
+                    uniqueRds is null ? default : new L3UniqueRouteDistinguisherProperties((uniqueRds ?? new ChangeTrackingList<string>()).ToList(), default),
                     v4RoutePrefixLimit,
                     v6RoutePrefixLimit,
-                    new LastOperationProperties(lastOperationDetails, default),
-                    new BmpExportPolicyProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
+                    exportPolicies is null ? default : new BmpExportPolicyProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -1299,11 +1299,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 redistributeConnectedSubnets,
                 redistributeStaticRoutes,
                 aggregateRouteSettings,
-                new ConnectedSubnetRoutePolicyPatch(connectedSubnetExportRoutePolicy, default),
-                new StaticRouteRoutePolicyPatch(staticRouteExportRoutePolicy, default),
+                connectedSubnetExportRoutePolicy is null ? default : new ConnectedSubnetRoutePolicyPatch(connectedSubnetExportRoutePolicy, default),
+                staticRouteExportRoutePolicy is null ? default : new StaticRouteRoutePolicyPatch(staticRouteExportRoutePolicy, default),
                 v4RoutePrefixLimit,
                 v6RoutePrefixLimit,
-                new BmpExportPolicyPatchProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), default),
+                exportPolicies is null ? default : new BmpExportPolicyPatchProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), default),
                 default), identity);
         }
 
@@ -1383,9 +1383,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     vlanId,
                     bgpSettings,
                     staticRouteSettings,
-                    new NativeIPv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
-                    new NativeIPv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    nativeIPv4PrefixLimits is null ? default : new NativeIPv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
+                    nativeIPv6PrefixLimits is null ? default : new NativeIPv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
                     configurationState,
                     provisioningState,
@@ -1557,8 +1557,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 isMonitoringEnabled,
                 bgpSettings,
                 staticRouteSettings,
-                new NativeIPv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
-                new NativeIPv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
+                nativeIPv4PrefixLimits is null ? default : new NativeIPv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
+                nativeIPv6PrefixLimits is null ? default : new NativeIPv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
                 default), default);
         }
 
@@ -1809,7 +1809,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     optionBProperties,
                     optionAProperties,
                     staticRouteConfiguration,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
                     configurationState,
                     provisioningState,
@@ -2113,7 +2113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (networkTapRuleIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     configurationState,
                     default),
@@ -2295,7 +2295,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     managementIPv4Address,
                     managementIPv6Address,
                     rwDeviceConfig,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -2684,7 +2684,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipv6Address,
                     description,
                     additionalDescription,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
                     provisioningState,
                     administrativeState,
@@ -2849,13 +2849,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     uniqueRdConfiguration,
                     storageArrayCount,
                     (activeCommitBatches ?? new ChangeTrackingList<string>()).ToList(),
-                    new SecretRotationSummary(secretRotationSummaryActivePasswordSetCount, default),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    secretRotationSummaryActivePasswordSetCount is null ? default : new SecretRotationSummary(secretRotationSummaryActivePasswordSetCount, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     authorizedTransceiver,
                     configurationState,
                     provisioningState,
                     administrativeState,
-                    new QosProperties(qosConfigurationState, default)),
+                    qosConfigurationState is null ? default : new QosProperties(qosConfigurationState, default)),
                 identity,
                 default);
         }
@@ -3116,7 +3116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 (controlPlaneAcls ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 (trustedIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 uniqueRdConfiguration,
-                new QosPatchProperties(qosConfigurationState, default),
+                qosConfigurationState is null ? default : new QosPatchProperties(qosConfigurationState, default),
                 (featureFlags ?? new ChangeTrackingList<NetworkFabricFeatureFlag>()).ToList(),
                 authorizedTransceiver,
                 default), identity);
@@ -3598,7 +3598,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ingressAclId,
                     microBfdState,
                     conditionalDefaultRouteConfiguration,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -3920,7 +3920,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     (sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     configurationState,
                     default),
@@ -3970,7 +3970,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     networkRackType,
                     networkFabricId,
                     (networkDevices ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     configurationState),
                 default);
@@ -4023,7 +4023,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     pollingIntervalInSecond,
                     lastSyncedOn,
                     globalNetworkTapRuleActions,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     configurationState,
                     provisioningState,
@@ -4259,7 +4259,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (destinationSettings ?? new ChangeTrackingList<NetworkTapDestinationProperties>()).ToList(),
                     pollingType,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState),
@@ -4399,7 +4399,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     (statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>()).ToList(),
                     networkFabricId,
                     addressFamilyType,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -4578,7 +4578,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     default,
                     bmpConfiguration,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState),
@@ -5312,8 +5312,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     lastSyncedOn,
                     aclType,
                     deviceRole,
-                    new GlobalAccessControlListActionProperties(globalAccessControlListActionsEnableCount, default),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    globalAccessControlListActionsEnableCount is null ? default : new GlobalAccessControlListActionProperties(globalAccessControlListActionsEnableCount, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclProperties>()).ToList(),
                     configurationState,
@@ -5350,7 +5350,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     default,
                     ruleProperties,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     default),
                 default);
@@ -5391,7 +5391,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     internetGatewayType,
                     internetGatewayType,
                     networkFabricControllerId,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     default),
                 default);
@@ -5426,7 +5426,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     networkFabricId,
                     (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -5463,7 +5463,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
                     networkFabricId,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -5500,7 +5500,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     networkFabricId,
                     (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -5545,7 +5545,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     mtu,
                     extendedVlan,
                     networkToNetworkInterconnectId,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState),
@@ -5594,12 +5594,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     aggregateRouteConfiguration,
                     connectedSubnetRoutePolicy,
                     networkFabricId,
-                    new StaticRouteRoutePolicy(staticRouteExportRoutePolicy, default),
-                    new L3UniqueRouteDistinguisherProperties((uniqueRds ?? new ChangeTrackingList<string>()).ToList(), default),
+                    staticRouteExportRoutePolicy is null ? default : new StaticRouteRoutePolicy(staticRouteExportRoutePolicy, default),
+                    uniqueRds is null ? default : new L3UniqueRouteDistinguisherProperties((uniqueRds ?? new ChangeTrackingList<string>()).ToList(), default),
                     v4RoutePrefixLimit,
                     v6RoutePrefixLimit,
-                    new LastOperationProperties(lastOperationDetails, default),
-                    new BmpExportPolicyProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
+                    exportPolicies is null ? default : new BmpExportPolicyProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -5641,7 +5641,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (networkTapRuleIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     configurationState,
                     default),
@@ -5751,7 +5751,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     managementIPv4Address,
                     managementIPv6Address,
                     rwDeviceConfig,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -5809,7 +5809,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipv4AddressSpace,
                     ipv6AddressSpace,
                     nfcSku,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     default),
                 identity,
@@ -5844,7 +5844,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation,
                     default,
                     bmpConfiguration,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState),
@@ -5884,7 +5884,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     (sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     configurationState,
                     default),
@@ -5923,7 +5923,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     networkRackType,
                     networkFabricId,
                     (networkDevices ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     provisioningState,
                     configurationState),
                 default);
@@ -5976,7 +5976,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     default,
                     lastSyncedOn,
                     globalNetworkTapRuleActions,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     configurationState,
                     provisioningState,
@@ -6019,7 +6019,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     (statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>()).ToList(),
                     networkFabricId,
                     addressFamilyType,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     configurationState,
                     provisioningState,
                     administrativeState,
@@ -6063,7 +6063,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     optionBProperties,
                     optionAProperties,
                     staticRouteConfiguration,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
                     configurationState,
                     provisioningState,
@@ -6110,7 +6110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipv6Address,
                     description,
                     additionalDescription,
-                    new LastOperationProperties(lastOperationDetails, default),
+                    lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
                     provisioningState,
                     administrativeState,
@@ -6152,6 +6152,55 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     egressAclId,
                     ingressAclId,
                     microBfdState,
+                    default),
+                default);
+        }
+
+        /// <summary> The Access Control List resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        /// <param name="aclsUri"> Access Control List file URL. </param>
+        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return new NetworkFabricAccessControlListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation is null && configurationType is null && aclsUri is null && defaultAction is null && matchConfigurations is null && dynamicMatchConfigurations is null && lastSyncedOn is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new AccessControlListProperties(
+                    annotation,
+                    configurationType.GetValueOrDefault(),
+                    aclsUri,
+                    defaultAction,
+                    (matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>()).ToList(),
+                    (dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>()).ToList(),
+                    lastSyncedOn,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 default);
         }
@@ -6528,6 +6577,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     (statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>()).ToList(),
                     networkFabricId,
                     addressFamilyType,
+                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
+                    default),
+                default);
+        }
+
+        /// <summary> The Access Control List resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        /// <param name="aclsUri"> Access Control List file URL. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return new NetworkFabricAccessControlListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation is null && configurationType is null && aclsUri is null && matchConfigurations is null && dynamicMatchConfigurations is null && lastSyncedOn is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new AccessControlListProperties(
+                    annotation,
+                    configurationType.GetValueOrDefault(),
+                    aclsUri,
+                    default,
+                    (matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>()).ToList(),
+                    (dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>()).ToList(),
+                    lastSyncedOn,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
                     default,
                     configurationState,
                     provisioningState,

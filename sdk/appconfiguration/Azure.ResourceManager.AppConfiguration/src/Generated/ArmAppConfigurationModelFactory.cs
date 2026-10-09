@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     provisioningState,
                     createdOn,
                     endpoint,
-                    new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
+                    encryptionKeyVaultProperties is null ? default : new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>()).ToList(),
                     publicNetworkAccess,
                     disableLocalAuth,
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     enablePurgeProtection,
                     dataPlaneProxy,
                     createMode,
-                    new TelemetryProperties(telemetryResourceId, default),
-                    new AppConfigurationManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>()).ToList(), default),
-                    new AzureFrontDoorProperties(azureFrontDoorResourceId, default),
+                    telemetryResourceId is null ? default : new TelemetryProperties(telemetryResourceId, default),
+                    managedOnBehalfOfMoboBrokerResources is null ? default : new AppConfigurationManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>()).ToList(), default),
+                    azureFrontDoorResourceId is null ? default : new AzureFrontDoorProperties(azureFrontDoorResourceId, default),
                     default),
                 identity,
                 skuName is null ? default : new AppConfigurationSku(skuName, default),
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, default),
+                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
                 default);
         }
 
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AppConfigurationStorePatch(encryptionKeyVaultProperties is null && disableLocalAuth is null && publicNetworkAccess is null && enablePurgeProtection is null && dataPlaneProxy is null && defaultKeyValueRevisionRetentionPeriodInSeconds is null && telemetryResourceId is null && azureFrontDoorResourceId is null ? default : new ConfigurationStorePropertiesUpdateParameters(
-                new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
+                encryptionKeyVaultProperties is null ? default : new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                 disableLocalAuth,
                 publicNetworkAccess,
                 enablePurgeProtection,
                 dataPlaneProxy,
                 defaultKeyValueRevisionRetentionPeriodInSeconds,
-                new TelemetryProperties(telemetryResourceId, default),
-                new AzureFrontDoorProperties(azureFrontDoorResourceId, default),
+                telemetryResourceId is null ? default : new TelemetryProperties(telemetryResourceId, default),
+                azureFrontDoorResourceId is null ? default : new AzureFrontDoorProperties(azureFrontDoorResourceId, default),
                 default), identity, skuName is null ? default : new AppConfigurationSku(skuName, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, default),
+                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
                 default);
         }
 
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     provisioningState,
                     createdOn,
                     endpoint,
-                    new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
+                    encryptionKeyVaultProperties is null ? default : new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>()).ToList(),
                     publicNetworkAccess,
                     disableLocalAuth,
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, default),
+                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
                 default);
         }
 
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, default),
+                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
                 default);
         }
 
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     provisioningState,
                     createdOn,
                     endpoint,
-                    new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
+                    encryptionKeyVaultProperties is null ? default : new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>()).ToList(),
                     publicNetworkAccess,
                     disableLocalAuth,

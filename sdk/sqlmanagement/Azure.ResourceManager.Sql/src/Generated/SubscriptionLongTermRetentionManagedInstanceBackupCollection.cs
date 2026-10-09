@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
             _managedInstanceName = managedInstanceName;
             _databaseName = databaseName;
             _longTermRetentionManagedInstanceBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionLongTermRetentionManagedInstanceBackupResource.ResourceType.Namespace, Diagnostics);
-            _longTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackups(_longTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionLongTermRetentionManagedInstanceBackupApiVersion ?? "2025-02-01-preview");
+            _longTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackups(_longTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionLongTermRetentionManagedInstanceBackupApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(new LongTermRetentionManagedInstanceBackupsGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(new ManagedInstanceLongTermRetentionBackupDataAsync0CollectionResultOfT(
                 _longTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _locationName,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(new LongTermRetentionManagedInstanceBackupsGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(new ManagedInstanceLongTermRetentionBackupData0CollectionResultOfT(
                 _longTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _locationName,
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

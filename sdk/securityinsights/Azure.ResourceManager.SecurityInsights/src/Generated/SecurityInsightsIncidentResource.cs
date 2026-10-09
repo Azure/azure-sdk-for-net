@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new IncidentsGetAlertsAsyncCollectionResultOfT(
+            return new SecurityInsightsAlertAsyncCollectionResultOfT(
                 _incidentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new IncidentsGetAlertsCollectionResultOfT(
+            return new SecurityInsightsAlertCollectionResultOfT(
                 _incidentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new IncidentsGetBookmarksAsyncCollectionResultOfT(
+            return new SecurityInsightsHuntingBookmarkAsyncCollectionResultOfT(
                 _incidentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new IncidentsGetBookmarksCollectionResultOfT(
+            return new SecurityInsightsHuntingBookmarkCollectionResultOfT(
                 _incidentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    content = BinaryData.FromString(prop.Value.GetRawText());
+                    content = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PolicyTokenOperationInfo(uri, httpMethod, content, additionalBinaryDataProperties);

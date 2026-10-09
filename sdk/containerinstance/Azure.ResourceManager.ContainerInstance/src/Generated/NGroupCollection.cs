@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NGroupData, NGroupResource>(new NGroupsGetByResourceGroupAsyncCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
+            return new AsyncPageableWrapper<NGroupData, NGroupResource>(new NGroupDataAsyncCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NGroupData, NGroupResource>(new NGroupsGetByResourceGroupCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
+            return new PageableWrapper<NGroupData, NGroupResource>(new NGroupDataCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>

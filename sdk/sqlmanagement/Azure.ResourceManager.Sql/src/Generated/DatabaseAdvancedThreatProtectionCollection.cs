@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(DatabaseAdvancedThreatProtectionResource.ResourceType, out string databaseAdvancedThreatProtectionApiVersion);
             _databaseAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DatabaseAdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
-            _databaseAdvancedThreatProtectionSettingsRestClient = new DatabaseAdvancedThreatProtectionSettings(_databaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseAdvancedThreatProtectionApiVersion ?? "2025-02-01-preview");
+            _databaseAdvancedThreatProtectionSettingsRestClient = new DatabaseAdvancedThreatProtectionSettings(_databaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseAdvancedThreatProtectionApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseAdvancedThreatProtectionData, DatabaseAdvancedThreatProtectionResource>(new DatabaseAdvancedThreatProtectionSettingsGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatabaseAdvancedThreatProtectionData, DatabaseAdvancedThreatProtectionResource>(new DatabaseAdvancedThreatProtectionDataAsyncCollectionResultOfT(
                 _databaseAdvancedThreatProtectionSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseAdvancedThreatProtectionData, DatabaseAdvancedThreatProtectionResource>(new DatabaseAdvancedThreatProtectionSettingsGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<DatabaseAdvancedThreatProtectionData, DatabaseAdvancedThreatProtectionResource>(new DatabaseAdvancedThreatProtectionDataCollectionResultOfT(
                 _databaseAdvancedThreatProtectionSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

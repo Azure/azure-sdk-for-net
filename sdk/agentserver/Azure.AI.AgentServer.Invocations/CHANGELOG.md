@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+- Updated the resilient research sample to use constructor-injected task handlers and
+  task-bound producer/consumer streams, while retaining registry lookup for later GET
+  replay by invocation id.
+
 ## 1.0.0-beta.7 (2026-09-03)
 
 ### Features Added

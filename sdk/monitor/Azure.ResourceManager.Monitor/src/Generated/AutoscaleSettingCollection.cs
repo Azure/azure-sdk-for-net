@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingsGetByResourceGroupAsyncCollectionResultOfT(_autoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutoscaleSettingCollection.GetAll"), data => new AutoscaleSettingResource(Client, data));
+            return new AsyncPageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingDataAsyncCollectionResultOfT(_autoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutoscaleSettingCollection.GetAll"), data => new AutoscaleSettingResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingsGetByResourceGroupCollectionResultOfT(_autoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutoscaleSettingCollection.GetAll"), data => new AutoscaleSettingResource(Client, data));
+            return new PageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingDataCollectionResultOfT(_autoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutoscaleSettingCollection.GetAll"), data => new AutoscaleSettingResource(Client, data));
         }
 
         /// <summary>

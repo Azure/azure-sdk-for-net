@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.BotService.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.BotService.Models
                 description,
                 helpUri,
                 @default,
-                isRequired is null ? default : new ServiceProviderParameterMetadata(new ServiceProviderParameterMetadataConstraints(isRequired, default), default),
+                isRequired is null ? default : new ServiceProviderParameterMetadata(isRequired is null ? default : new ServiceProviderParameterMetadataConstraints(isRequired, default), default),
                 default);
         }
 
@@ -1495,7 +1495,7 @@ namespace Azure.ResourceManager.BotService.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 

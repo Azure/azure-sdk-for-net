@@ -12,7 +12,7 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Ingestion Source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SharedAccessSignatureTokenIngestionSource"/> and <see cref="ManagedIdentityIngestionSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedIdentityIngestionSource"/> and <see cref="SharedAccessSignatureTokenIngestionSource"/>.
     /// </summary>
     public abstract partial class IngestionSource
     {

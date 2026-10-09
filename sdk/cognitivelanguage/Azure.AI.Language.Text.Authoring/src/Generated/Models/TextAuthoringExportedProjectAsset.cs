@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary>
     /// Represents the assets of an exported project.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="ExportedCustomHealthcareProjectAsset"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/>, and <see cref="CustomTextSentimentProjectAssets"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomTextSentimentProjectAssets"/>, <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="ExportedCustomHealthcareProjectAsset"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAsset"/>, and <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/>.
     /// </summary>
     public abstract partial class TextAuthoringExportedProjectAsset
     {

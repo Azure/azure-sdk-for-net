@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             agentPoolProfiles ??= new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>();
 
             return new ProvisionedClusterProperties(
-                sshPublicKeys is null ? default : new LinuxProfileProperties(new LinuxSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<LinuxSshPublicKey>()).ToList(), default), default),
+                sshPublicKeys is null ? default : new LinuxProfileProperties(sshPublicKeys is null ? default : new LinuxSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<LinuxSshPublicKey>()).ToList(), default), default),
                 controlPlane,
                 kubernetesVersion,
                 networkProfile,
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 securityProfile,
                 clusterVmAccessAuthorizedIPRanges is null ? default : new ClusterVMAccessProfile(clusterVmAccessAuthorizedIPRanges, default),
                 (agentPoolProfiles ?? new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>()).ToList(),
-                infraNetworkVnetSubnetIds is null ? default : new ProvisionedClusterCloudProviderProfile(new ProvisionedClusterInfraNetworkProfile((infraNetworkVnetSubnetIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default),
+                infraNetworkVnetSubnetIds is null ? default : new ProvisionedClusterCloudProviderProfile(infraNetworkVnetSubnetIds is null ? default : new ProvisionedClusterInfraNetworkProfile((infraNetworkVnetSubnetIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default),
                 provisioningState,
                 status,
                 licenseAzureHybridBenefit is null ? default : new ProvisionedClusterLicenseProfile(licenseAzureHybridBenefit, default),
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static ProvisionedClusterProperties ProvisionedClusterProperties(IEnumerable<LinuxSshPublicKey> sshPublicKeys = default, ProvisionedClusterControlPlaneProfile controlPlane = default, string kubernetesVersion = default, ProvisionedClusterNetworkProfile networkProfile = default, StorageProfile storageProfile = default, string clusterVmAccessAuthorizedIPRanges = default, IEnumerable<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles = default, IEnumerable<ResourceIdentifier> infraNetworkVnetSubnetIds = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, ProvisionedClusterStatus status = default, ProvisionedClusterAzureHybridBenefit? licenseAzureHybridBenefit = default, ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile = default)
         {
             return new ProvisionedClusterProperties(
-                sshPublicKeys is null ? default : new LinuxProfileProperties(new LinuxSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<LinuxSshPublicKey>()).ToList(), default), default),
+                sshPublicKeys is null ? default : new LinuxProfileProperties(sshPublicKeys is null ? default : new LinuxSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<LinuxSshPublicKey>()).ToList(), default), default),
                 controlPlane,
                 kubernetesVersion,
                 networkProfile,
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default,
                 clusterVmAccessAuthorizedIPRanges is null ? default : new ClusterVMAccessProfile(clusterVmAccessAuthorizedIPRanges, default),
                 (agentPoolProfiles ?? new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>()).ToList(),
-                infraNetworkVnetSubnetIds is null ? default : new ProvisionedClusterCloudProviderProfile(new ProvisionedClusterInfraNetworkProfile((infraNetworkVnetSubnetIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default),
+                infraNetworkVnetSubnetIds is null ? default : new ProvisionedClusterCloudProviderProfile(infraNetworkVnetSubnetIds is null ? default : new ProvisionedClusterInfraNetworkProfile((infraNetworkVnetSubnetIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default),
                 provisioningState,
                 status,
                 licenseAzureHybridBenefit is null ? default : new ProvisionedClusterLicenseProfile(licenseAzureHybridBenefit, default),

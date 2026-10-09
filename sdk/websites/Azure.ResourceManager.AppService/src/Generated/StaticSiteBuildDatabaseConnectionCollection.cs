@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new DatabaseConnectionsGetBuildDatabaseConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new StaticSiteDatabaseConnectionDataAsync2CollectionResultOfT(
                 _databaseConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new DatabaseConnectionsGetBuildDatabaseConnectionsCollectionResultOfT(
+            return new PageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new StaticSiteDatabaseConnectionData2CollectionResultOfT(
                 _databaseConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

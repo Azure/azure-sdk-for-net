@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Authorization.Models
                     (decisions ?? new ChangeTrackingList<AccessReviewResult>()).ToList(),
                     status,
                     createdOn,
-                    new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
+                    principalId is null && principalType is null && principalName is null && userPrincipalName is null ? default : new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
                     (scopes ?? new ChangeTrackingList<AccessReviewScope>()).ToList(),
-                    new AccessReviewHistoryScheduleSettings(pattern, range, default),
+                    pattern is null && range is null ? default : new AccessReviewHistoryScheduleSettings(pattern, range, default),
                     (instances ?? new ChangeTrackingList<AccessReviewHistoryInstance>()).ToList(),
                     default),
                 default);
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.Authorization.Models
                     status,
                     descriptionForAdmins,
                     descriptionForReviewers,
-                    new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
-                    new AccessReviewScheduleSettings(
+                    principalId is null && principalType is null && principalName is null && userPrincipalName is null ? default : new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
+                    isMailNotificationsEnabled is null && isReminderNotificationsEnabled is null && isDefaultDecisionEnabled is null && isJustificationRequiredOnApproval is null && defaultDecision is null && isAutoApplyDecisionsEnabled is null && isRecommendationsEnabled is null && recommendationLookBackDuration is null && instanceDurationInDays is null && pattern is null && range is null ? default : new AccessReviewScheduleSettings(
                         isMailNotificationsEnabled,
                         isReminderNotificationsEnabled,
                         isDefaultDecisionEnabled,
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         isRecommendationsEnabled,
                         recommendationLookBackDuration,
                         instanceDurationInDays,
-                        new AccessReviewRecurrenceSettings(pattern, range, default),
+                        pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
                         default),
                     scope,
                     (reviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isRecommendationsEnabled,
                     recommendationLookBackDuration,
                     instanceDurationInDays,
-                    new AccessReviewRecurrenceSettings(pattern, range, default),
+                    pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
                     default),
                 scope,
                 (reviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isRecommendationsEnabled,
                     recommendationLookBackDuration,
                     instanceDurationInDays,
-                    new AccessReviewRecurrenceSettings(pattern, range, default),
+                    pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
                     default),
                 default);
         }
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     approvalId,
                     targetRoleAssignmentScheduleId,
                     targetRoleAssignmentScheduleInstanceId,
-                    new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
                     linkedRoleEligibilityScheduleId,
                     justification,
                     ticketInfo,
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     requestType.GetValueOrDefault(),
                     status,
                     approvalId,
-                    new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
                     targetRoleEligibilityScheduleId,
                     targetRoleEligibilityScheduleInstanceId,
                     justification,
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     appliedOn,
                     appliedBy,
                     (insights ?? new ChangeTrackingList<AccessReviewDecisionInsight>()).ToList(),
-                    new AccessReviewDecisionPrincipalResourceMembership((membershipTypes ?? new ChangeTrackingList<AccessReviewDecisionPrincipalResourceMembershipType>()).ToList(), default),
+                    membershipTypes is null ? default : new AccessReviewDecisionPrincipalResourceMembership((membershipTypes ?? new ChangeTrackingList<AccessReviewDecisionPrincipalResourceMembershipType>()).ToList(), default),
                     default),
                 default);
         }
@@ -1665,7 +1665,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary>
         /// Target of the decision.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionUserIdentity"/> and <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/> and <see cref="Models.AccessReviewDecisionUserIdentity"/>.
         /// </summary>
         /// <param name="type"> The type of decision target : User/ServicePrincipal. </param>
         /// <param name="id"> The id of principal whose access was reviewed. </param>
@@ -1853,11 +1853,11 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="denyAssignmentName"> The display name of the deny assignment. </param>
         /// <param name="description"> The description of the deny assignment. </param>
-        /// <param name="permissions"></param>
+        /// <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
         /// <param name="scope"> The deny assignment scope. </param>
         /// <param name="isAppliedToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
-        /// <param name="principals"></param>
-        /// <param name="excludePrincipals"></param>
+        /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
+        /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
         /// <returns> A new <see cref="Authorization.DenyAssignmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1868,14 +1868,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 name,
                 resourceType,
                 systemData,
-                denyAssignmentName is null && description is null && scope is null && isAppliedToChildScopes is null && isSystemProtected is null ? default : new DenyAssignmentProperties(
+                denyAssignmentName is null && description is null && permissions is null && scope is null && isAppliedToChildScopes is null && principals is null && excludePrincipals is null && isSystemProtected is null ? default : new DenyAssignmentProperties(
                     denyAssignmentName,
                     description,
-                    default,
+                    (permissions ?? new ChangeTrackingList<DenyAssignmentPermission>()).ToList(),
                     scope,
                     isAppliedToChildScopes,
-                    default,
-                    default,
+                    (principals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
+                    (excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
                     isSystemProtected,
                     default,
                     default,

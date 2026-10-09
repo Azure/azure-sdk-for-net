@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -1680,7 +1680,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 diskInfo,
                 customConfigurationScriptUri,
                 imageInfo,
-                activeDirectoryInfoDomainCredentials is null ? default : new DomainInfoPatchProperties(new ActiveDirectoryInfoPatchProperties(activeDirectoryInfoDomainCredentials, default), default),
+                activeDirectoryInfoDomainCredentials is null ? default : new DomainInfoPatchProperties(activeDirectoryInfoDomainCredentials is null ? default : new ActiveDirectoryInfoPatchProperties(activeDirectoryInfoDomainCredentials, default), default),
                 securityInfo,
                 vmAdminCredentials,
                 bootDiagnosticsInfo,
@@ -1919,7 +1919,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -1941,7 +1941,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 

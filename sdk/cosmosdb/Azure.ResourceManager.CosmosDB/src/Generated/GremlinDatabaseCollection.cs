@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(GremlinDatabaseResource.ResourceType, out string gremlinDatabaseApiVersion);
             _gremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", GremlinDatabaseResource.ResourceType.Namespace, Diagnostics);
-            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gremlinDatabaseApiVersion ?? "2026-03-15");
+            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gremlinDatabaseApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GremlinDatabaseData, GremlinDatabaseResource>(new GremlinResourcesGetGremlinDatabasesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GremlinDatabaseData, GremlinDatabaseResource>(new GremlinDatabaseDataAsyncCollectionResultOfT(
                 _gremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GremlinDatabaseData, GremlinDatabaseResource>(new GremlinResourcesGetGremlinDatabasesCollectionResultOfT(
+            return new PageableWrapper<GremlinDatabaseData, GremlinDatabaseResource>(new GremlinDatabaseDataCollectionResultOfT(
                 _gremlinResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

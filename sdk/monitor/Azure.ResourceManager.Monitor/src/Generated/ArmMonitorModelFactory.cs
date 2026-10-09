@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 description is null && immutableId is null && configurationAccessEndpoint is null && logsIngestionEndpoint is null && metricsIngestionEndpoint is null && publicNetworkAccess is null && provisioningState is null && privateLinkScopedResources is null && failoverConfiguration is null && metadata is null ? default : new DataCollectionEndpointResourceProperties(
                     description,
                     immutableId,
-                    new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint, default),
-                    new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint, default),
-                    new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint, default),
-                    new DataCollectionEndpointNetworkAcls(publicNetworkAccess, default),
+                    configurationAccessEndpoint is null ? default : new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint, default),
+                    logsIngestionEndpoint is null ? default : new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint, default),
+                    metricsIngestionEndpoint is null ? default : new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint, default),
+                    publicNetworkAccess is null ? default : new DataCollectionEndpointNetworkAcls(publicNetworkAccess, default),
                     provisioningState,
                     (privateLinkScopedResources ?? new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>()).ToList(),
                     failoverConfiguration,
@@ -469,13 +469,13 @@ namespace Azure.ResourceManager.Monitor.Models
                     metadata,
                     endpoints,
                     references,
-                    new DataCollectionRuleAgentSettings((agentLogs ?? new ChangeTrackingList<MonitorAgentSetting>()).ToList(), default),
+                    agentLogs is null ? default : new DataCollectionRuleAgentSettings((agentLogs ?? new ChangeTrackingList<MonitorAgentSetting>()).ToList(), default),
                     streamDeclarations ?? new ChangeTrackingDictionary<string, DataStreamDeclaration>(),
                     dataSources,
                     directDataSources,
                     destinations,
                     (dataFlows ?? new ChangeTrackingList<DataFlow>()).ToList(),
-                    new DataCollectionRuleIngestionQuotas(ingestionQuotasLogs, default),
+                    ingestionQuotasLogs is null ? default : new DataCollectionRuleIngestionQuotas(ingestionQuotasLogs, default),
                     provisioningState,
                     default),
                 kind,
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 (streams ?? new ChangeTrackingList<string>()).ToList(),
                 (filePatterns ?? new ChangeTrackingList<string>()).ToList(),
                 format,
-                textRecordStartTimestampFormat is null ? default : new LogFilesDataSourceSettings(new LogFileSettingsText(textRecordStartTimestampFormat.GetValueOrDefault(), default), default),
+                textRecordStartTimestampFormat is null ? default : new LogFilesDataSourceSettings(textRecordStartTimestampFormat is null ? default : new LogFileSettingsText(textRecordStartTimestampFormat.GetValueOrDefault(), default), default),
                 transformKql,
                 name,
                 default);
@@ -2379,7 +2379,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="Monitor.MetricAlertData"/> instance for mocking. </returns>
-        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, MetricAlertResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
+        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, MetricAlertResolveConfiguration resolveConfiguration, IEnumerable<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2414,7 +2414,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// The rule criteria that defines the conditions of the alert rule.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="Models.WebtestLocationAvailabilityCriteria"/>, <see cref="Models.MetricAlertMultipleResourceMultipleMetricCriteria"/>, and <see cref="Models.PromQLCriteria"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="Models.MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="Models.PromQLCriteria"/>, and <see cref="Models.WebtestLocationAvailabilityCriteria"/>.
         /// </summary>
         /// <param name="odataType"> Specifies the type of the alert criteria. Previously undocumented values might be returned. </param>
         /// <param name="additionalProperties"></param>
@@ -2469,7 +2469,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// The types of conditions for a multi resource alert.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MetricCriteria"/> and <see cref="Models.DynamicMetricCriteria"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.DynamicMetricCriteria"/> and <see cref="Models.MetricCriteria"/>.
         /// </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
@@ -2589,7 +2589,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// The types of conditions for a multi query metric alert.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.StaticPromQLCriteria"/> and <see cref="Models.DynamicPromQLCriteria"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DynamicPromQLCriteria"/> and <see cref="Models.StaticPromQLCriteria"/>.
         /// </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
@@ -2773,7 +2773,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     windowSize,
                     overrideQueryTimeRange,
                     (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
-                    new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
+                    criteriaAllOf is null ? default : new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
                     muteActionsDuration,
                     actions,
                     isWorkspaceAlertsStorageConfigured,
@@ -2906,7 +2906,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 windowSize,
                 overrideQueryTimeRange,
                 (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
-                new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
+                criteriaAllOf is null ? default : new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
                 muteActionsDuration,
                 actions,
                 isWorkspaceAlertsStorageConfigured,
@@ -3585,7 +3585,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     windowSize,
                     overrideQueryTimeRange,
                     (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
-                    new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
+                    criteriaAllOf is null ? default : new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
                     muteActionsDuration,
                     actions,
                     isWorkspaceAlertsStorageConfigured,
@@ -3636,7 +3636,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 windowSize,
                 overrideQueryTimeRange,
                 (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
-                new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
+                criteriaAllOf is null ? default : new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
                 muteActionsDuration,
                 actions,
                 isWorkspaceAlertsStorageConfigured,
@@ -3689,7 +3689,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(default, new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(default, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -3781,10 +3781,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 description is null && immutableId is null && configurationAccessEndpoint is null && logsIngestionEndpoint is null && metricsIngestionEndpoint is null && publicNetworkAccess is null && provisioningState is null && privateLinkScopedResources is null && failoverConfiguration is null && metadata is null ? default : new DataCollectionEndpointResourceProperties(
                     description,
                     immutableId,
-                    new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint, default),
-                    new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint, default),
-                    new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint, default),
-                    new DataCollectionEndpointNetworkAcls(publicNetworkAccess, default),
+                    configurationAccessEndpoint is null ? default : new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint, default),
+                    logsIngestionEndpoint is null ? default : new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint, default),
+                    metricsIngestionEndpoint is null ? default : new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint, default),
+                    publicNetworkAccess is null ? default : new DataCollectionEndpointNetworkAcls(publicNetworkAccess, default),
                     provisioningState,
                     (privateLinkScopedResources ?? new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>()).ToList(),
                     failoverConfiguration,

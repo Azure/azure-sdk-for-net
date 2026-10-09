@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubResourceGetByResourceGroupAsyncCollectionResultOfT(_iotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotHubDescriptionCollection.GetAll"), data => new IotHubDescriptionResource(Client, data));
+            return new AsyncPageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubDescriptionDataAsyncCollectionResultOfT(_iotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotHubDescriptionCollection.GetAll"), data => new IotHubDescriptionResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubResourceGetByResourceGroupCollectionResultOfT(_iotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotHubDescriptionCollection.GetAll"), data => new IotHubDescriptionResource(Client, data));
+            return new PageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubDescriptionDataCollectionResultOfT(_iotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotHubDescriptionCollection.GetAll"), data => new IotHubDescriptionResource(Client, data));
         }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VirtualNetworkResource.ResourceType, out string virtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkApiVersion ?? "2025-09-01");
+            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworksListAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkCollection.GetAll"), data => new VirtualNetworkResource(Client, data));
+            return new AsyncPageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworkDataAsyncCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkCollection.GetAll"), data => new VirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworksListCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkCollection.GetAll"), data => new VirtualNetworkResource(Client, data));
+            return new PageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworkDataCollectionResultOfT(_virtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualNetworkCollection.GetAll"), data => new VirtualNetworkResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

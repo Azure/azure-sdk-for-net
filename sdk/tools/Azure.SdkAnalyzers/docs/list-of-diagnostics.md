@@ -1,5 +1,22 @@
 # List of diagnostics produced by Azure.SdkAnalyzers
 
+## AZC0015
+
+### Cause
+
+A public asynchronous method on a publicly accessible client class, or its matching synchronous counterpart, returns a type outside the supported client result families.
+
+### How to fix violation
+
+Use an appropriate Azure.Core or System.ClientModel result type:
+
+- Azure.Core: `Response`, `Response<T>`, `NullableResponse<T>`, `Operation`, or `Operation<T>`, optionally wrapped in `Task<T>`; or `Pageable<T>` / `AsyncPageable<T>` directly.
+- System.ClientModel: `ClientResult` or `ClientResult<T>`, optionally wrapped in `Task<T>`; or `CollectionResult<T>` / `AsyncCollectionResult<T>` directly.
+- System.ClientModel.Primitives: non-generic `CollectionResult` / `AsyncCollectionResult` directly.
+- Streaming: `System.ClientModel.AsyncStreamingResult<T>` or the experimental `AsyncStreamingClientResult<T>` name, optionally wrapped in `Task<T>`.
+
+Derived result types are also accepted. Collection results and pageables must not be wrapped in `Task<T>`; their asynchronous variants already provide asynchronous enumeration.
+
 ## AZC0034
 
 ### Cause

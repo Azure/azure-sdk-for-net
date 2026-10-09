@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(RaiBlocklistItemResource.ResourceType, out string raiBlocklistItemApiVersion);
             _raiBlocklistItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiBlocklistItemResource.ResourceType.Namespace, Diagnostics);
-            _raiBlocklistItemsRestClient = new RaiBlocklistItems(_raiBlocklistItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiBlocklistItemApiVersion ?? "2026-07-15-preview");
+            _raiBlocklistItemsRestClient = new RaiBlocklistItems(_raiBlocklistItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiBlocklistItemApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new RaiBlocklistItemsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new RaiBlocklistItemDataAsyncCollectionResultOfT(
                 _raiBlocklistItemsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new RaiBlocklistItemsGetAllCollectionResultOfT(
+            return new PageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new RaiBlocklistItemDataCollectionResultOfT(
                 _raiBlocklistItemsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

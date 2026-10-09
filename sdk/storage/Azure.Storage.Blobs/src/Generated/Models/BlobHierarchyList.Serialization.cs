@@ -153,7 +153,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobHierarchyList(blobItems, blobPrefixes ?? new ChangeTrackingList<BlobPrefix>());
+            return new BlobHierarchyList(blobItems ?? new ChangeTrackingList<BlobItemInternal>(), blobPrefixes ?? new ChangeTrackingList<BlobPrefix>());
         }
 
         /// <param name="writer"> The XML writer. </param>

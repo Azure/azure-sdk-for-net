@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The pages of IngestionClientGetAllAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -55,7 +55,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 {
                     yield break;
                 }
-                IngestionDefinitionPagedResponse result = (IngestionDefinitionPagedResponse)response;
+                IngestionDefinitionPagedResult result = (IngestionDefinitionPagedResult)response;
                 nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)

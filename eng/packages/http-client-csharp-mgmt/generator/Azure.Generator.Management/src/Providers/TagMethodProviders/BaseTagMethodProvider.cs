@@ -7,6 +7,8 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -282,35 +284,33 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected List<MethodBodyStatement> BuildIfStatements(
             ParameterProvider cancellationTokenParam,
             System.Func<ValueExpression, MethodBodyStatement> tagOperation,
-            bool includeDeleteOperation)
+            bool replaceTags)
         {
             var createMethod = _isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
-            var deleteMethod = _isAsync ? "DeleteAsync" : "Delete";
-
             var statements = new List<MethodBodyStatement>();
+            ValueExpression tagData;
 
-            // Add delete operation if requested (for SetTags operation)
-            if (includeDeleteOperation)
+            if (replaceTags)
             {
-                statements.Add(
-                    // GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    This.Invoke("GetTagResource").Invoke(deleteMethod, [
-                        Static(typeof(WaitUntil)).Property("Completed"),
-                        cancellationTokenParam
-                    ], null, _isAsync).Terminate()
-                );
+                // Replace the entire set in one request, as GenericResource.SetTags does.
+                // Use the public constructors available to generated service SDKs.
+                statements.Add(Declare("tagData", typeof(TagResourceData),
+                    New.Instance(typeof(TagResourceData), New.Instance(typeof(Tag))), out var newTagData));
+                tagData = newTagData;
+            }
+            else
+            {
+                statements.Add(GetOriginalTagsStatement(_isAsync, cancellationTokenParam, out var originalTagsVar));
+                tagData = originalTagsVar.Property("Value").Property("Data");
             }
 
-            statements.Add(GetOriginalTagsStatement(_isAsync, cancellationTokenParam, out var originalTagsVar));
-
-            // Apply the specific tag operation (add, remove, set, etc.)
-            statements.Add(tagOperation(originalTagsVar.Property("Value").Property("Data").Property("TagValues")));
+            statements.Add(tagOperation(tagData.Property("TagValues")));
 
             statements.Add(
-                // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                // GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                 This.Invoke("GetTagResource").Invoke(createMethod, [
                     Static(typeof(WaitUntil)).Property("Completed"),
-                    originalTagsVar.Property("Value").Property("Data"),
+                    tagData,
                     cancellationTokenParam
                 ], null, _isAsync).Terminate()
             );

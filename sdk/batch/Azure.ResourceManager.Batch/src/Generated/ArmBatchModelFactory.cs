@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Batch.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Batch.Models
                     allocationState,
                     allocationStateTransitionOn,
                     vmSize,
-                    new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
+                    deploymentVmConfiguration is null ? default : new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
                     currentDedicatedNodes,
                     currentLowPriorityNodes,
                     scaleSettings,
@@ -1121,6 +1121,25 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
+        /// <summary> Information about a network security perimeter (NSP). </summary>
+        /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
+        /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
+        /// <param name="location"> Location of the network security perimeter. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location)
+        {
+            return new NetworkSecurityPerimeter(id, perimeterGuid, location, default);
+        }
+
+        /// <summary> Information about resource association. </summary>
+        /// <param name="name"> Name of the resource association. </param>
+        /// <param name="accessMode"> Access mode of the resource association. </param>
+        /// <returns> A new <see cref="Models.BatchResourceAssociation"/> instance for mocking. </returns>
+        public static BatchResourceAssociation BatchResourceAssociation(string name, ResourceAssociationAccessMode? accessMode)
+        {
+            return new BatchResourceAssociation(name, accessMode, default);
+        }
+
         /// <summary> Network security perimeter configuration profile. </summary>
         /// <param name="name"> Name of the profile. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
@@ -1270,7 +1289,7 @@ namespace Azure.ResourceManager.Batch.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -1433,7 +1452,7 @@ namespace Azure.ResourceManager.Batch.Models
                     allocationState,
                     allocationStateTransitionOn,
                     vmSize,
-                    new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
+                    deploymentVmConfiguration is null ? default : new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
                     currentDedicatedNodes,
                     currentLowPriorityNodes,
                     scaleSettings,

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(LedgerDigestUploadResource.ResourceType, out string ledgerDigestUploadApiVersion);
             _ledgerDigestUploadsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LedgerDigestUploadResource.ResourceType.Namespace, Diagnostics);
-            _ledgerDigestUploadsRestClient = new LedgerDigestUploads(_ledgerDigestUploadsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ledgerDigestUploadApiVersion ?? "2025-02-01-preview");
+            _ledgerDigestUploadsRestClient = new LedgerDigestUploads(_ledgerDigestUploadsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ledgerDigestUploadApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadsGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadDataAsyncCollectionResultOfT(
                 _ledgerDigestUploadsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadsGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadDataCollectionResultOfT(
                 _ledgerDigestUploadsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

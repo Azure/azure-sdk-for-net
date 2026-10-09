@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using Microsoft.Extensions.Logging;
@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string CustomEventAttributeName = "microsoft.custom_event.name";
         private const string InstrumentationKeyAttributeName = SemanticConventions.AttributeMicrosoftInstrumentationKey;
         private const string IngestionEndpointAttributeName = SemanticConventions.AttributeMicrosoftIngestionEndpoint;
-        private const string TenantCloudRoleAttributeName = SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
+        private const string CloudRoleAttributeName = SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
         private const string ClientIpAttributeName = "microsoft.client.ip";
         private const string EndUserPseudoIdAttributeName = "enduser.pseudo.id";
         private const string EndUserIdAttributeName = "enduser.id";
@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    telemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter, consumeMultiEndpointAttributes: false, tenantCloudRole: null));
+                    telemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter, consumeMultiEndpointAttributes: false, cloudRole: null));
                 }
                 catch (Exception ex)
                 {
@@ -102,16 +102,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// was stamped with. A record whose routing attributes are missing or invalid is dropped rather
         /// than sent under the exporter's own connection string.
         /// </summary>
-        internal static void OtelToAzureMonitorLogsMultiTenant(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, EndpointRouteBatch routeBatch)
+        internal static void OtelToAzureMonitorLogsMultiEndpoint(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, EndpointRouteBatch routeBatch)
         {
             foreach (var logRecord in batchLogRecord)
             {
                 try
                 {
-                    if (!TryGetLogRoute(logRecord, out var instrumentationKey, out var ingestionEndpoint, out var tenantCloudRole))
+                    if (!TryGetLogRoute(logRecord, out var instrumentationKey, out var ingestionEndpoint, out var cloudRole))
                     {
                         // Routing attributes are stamped upstream only on records meant to be routed;
-                        // a record without them is not addressed to any tenant, so drop it quietly
+                        // a record without them is not addressed to any endpoint, so drop it quietly
                         // instead of misrouting it to the exporter's own connection string. This is a
                         // normal, expected outcome rather than a failed conversion.
                         continue;
@@ -119,9 +119,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     var group = routeBatch.GetOrAdd(ingestionEndpoint);
 
-                    // No schema counter on the routed path: IMultiTenantTransmitter.Track carries none,
-                    // matching the trace multi-tenant conversion.
-                    group.TelemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter: null, consumeMultiEndpointAttributes: true, tenantCloudRole: tenantCloudRole));
+                    // No schema counter on the routed path: IMultiEndpointTransmitter.Track carries none,
+                    // matching the trace multi-endpoint conversion.
+                    group.TelemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter: null, consumeMultiEndpointAttributes: true, cloudRole: cloudRole));
                 }
                 catch (Exception ex)
                 {
@@ -131,7 +131,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         /// <summary>
-        /// Reads the route and tenant cloud role off a <see cref="LogRecord"/>. Only
+        /// Reads the route and cloud role off a <see cref="LogRecord"/>. Only
         /// <c>LogRecord.Attributes</c> are consulted - logging scopes are not a routing or role
         /// source - and only string values are accepted (first occurrence of each key wins),
         /// matching how trace routing reads an <see cref="AzMonList"/>.
@@ -140,14 +140,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             LogRecord logRecord,
             [NotNullWhen(true)] out string? instrumentationKey,
             [NotNullWhen(true)] out string? ingestionEndpoint,
-            [NotNullWhen(true)] out string? tenantCloudRole)
+            [NotNullWhen(true)] out string? cloudRole)
         {
             object? rawKey = null;
             object? rawEndpoint = null;
-            object? rawTenantCloudRole = null;
+            object? rawCloudRole = null;
             bool keySeen = false;
             bool endpointSeen = false;
-            bool tenantCloudRoleSeen = false;
+            bool cloudRoleSeen = false;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
@@ -161,21 +161,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     rawEndpoint = item.Value;
                     endpointSeen = true;
                 }
-                else if (!tenantCloudRoleSeen && item.Key == TenantCloudRoleAttributeName)
+                else if (!cloudRoleSeen && item.Key == CloudRoleAttributeName)
                 {
-                    rawTenantCloudRole = item.Value;
-                    tenantCloudRoleSeen = true;
+                    rawCloudRole = item.Value;
+                    cloudRoleSeen = true;
                 }
             }
 
-            tenantCloudRole = TenantRouting.GetTenantCloudRole(rawTenantCloudRole as string);
+            cloudRole = EndpointRouting.GetCloudRole(rawCloudRole as string);
 
             // A non-string value stringifies unpredictably (e.g. "System.String[]" for an array), so
             // 'as string' drops it and routing fails, exactly as the trace path does.
-            return TenantRouting.TryGetRoute(rawKey as string, rawEndpoint as string, out instrumentationKey, out ingestionEndpoint);
+            return EndpointRouting.TryGetRoute(rawKey as string, rawEndpoint as string, out instrumentationKey, out ingestionEndpoint);
         }
 
-        private static TelemetryItem BuildLogTelemetryItem(LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool consumeMultiEndpointAttributes, string? tenantCloudRole)
+        private static TelemetryItem BuildLogTelemetryItem(LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool consumeMultiEndpointAttributes, string? cloudRole)
         {
             var properties = new ChangeTrackingDictionary<string, string>();
             ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, consumeMultiEndpointAttributes);
@@ -252,9 +252,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            if (tenantCloudRole is not null)
+            if (cloudRole is not null)
             {
-                telemetryItem.SetTenantCloudRole(tenantCloudRole);
+                telemetryItem.SetCloudRole(cloudRole);
             }
 
             return telemetryItem;
@@ -272,13 +272,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 switch (item.Key)
                 {
-                    // On the multi-tenant path these attributes are consumed for routing and role
+                    // On the multi-endpoint path these attributes are consumed for routing and role
                     // attribution, so drop them here rather than leak them into custom dimensions.
-                    // On the single-tenant path (consumeMultiEndpointAttributes false) they fall through to
+                    // On the single-endpoint path (consumeMultiEndpointAttributes false) they fall through to
                     // default and become ordinary properties exactly as before.
                     case InstrumentationKeyAttributeName:
                     case IngestionEndpointAttributeName:
-                    case TenantCloudRoleAttributeName:
+                    case CloudRoleAttributeName:
                         if (!consumeMultiEndpointAttributes)
                         {
                             goto default;
@@ -417,11 +417,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 switch (item.Key)
                 {
-                    // Consumed for routing on the multi-tenant path; otherwise treated as an ordinary
-                    // availability property, matching single-tenant behavior.
+                    // Consumed for routing on the multi-endpoint path; otherwise treated as an ordinary
+                    // availability property, matching single-endpoint behavior.
                     case InstrumentationKeyAttributeName:
                     case IngestionEndpointAttributeName:
-                    case TenantCloudRoleAttributeName:
+                    case CloudRoleAttributeName:
                         if (!consumeMultiEndpointAttributes)
                         {
                             goto default;

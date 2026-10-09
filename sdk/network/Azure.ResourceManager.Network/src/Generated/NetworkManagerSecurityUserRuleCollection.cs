@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkManagerSecurityUserRuleResource.ResourceType, out string networkManagerSecurityUserRuleApiVersion);
             _securityUserRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerSecurityUserRuleResource.ResourceType.Namespace, Diagnostics);
-            _securityUserRulesRestClient = new SecurityUserRules(_securityUserRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkManagerSecurityUserRuleApiVersion ?? "2025-09-01");
+            _securityUserRulesRestClient = new SecurityUserRules(_securityUserRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkManagerSecurityUserRuleApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkManagerSecurityUserRuleData, NetworkManagerSecurityUserRuleResource>(new SecurityUserRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkManagerSecurityUserRuleData, NetworkManagerSecurityUserRuleResource>(new NetworkManagerSecurityUserRuleDataAsyncCollectionResultOfT(
                 _securityUserRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkManagerSecurityUserRuleData, NetworkManagerSecurityUserRuleResource>(new SecurityUserRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkManagerSecurityUserRuleData, NetworkManagerSecurityUserRuleResource>(new NetworkManagerSecurityUserRuleDataCollectionResultOfT(
                 _securityUserRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

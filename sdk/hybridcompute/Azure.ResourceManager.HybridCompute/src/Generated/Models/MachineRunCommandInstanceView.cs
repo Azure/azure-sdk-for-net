@@ -73,5 +73,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Script end time. </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
+
+        /// <summary> The  status information. </summary>
+        [WirePath("statuses")]
+        public IReadOnlyList<ExtensionsResourceStatus> Statuses { get; }
     }
 }

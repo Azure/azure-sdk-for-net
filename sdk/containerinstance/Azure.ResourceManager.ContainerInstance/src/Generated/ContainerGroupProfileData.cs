@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             get
             {
-                return Properties is null ? default : Properties.OSType;
+                return Properties is null ? (ContainerInstanceOperatingSystemType?)default : Properties.OSType;
             }
             set
             {

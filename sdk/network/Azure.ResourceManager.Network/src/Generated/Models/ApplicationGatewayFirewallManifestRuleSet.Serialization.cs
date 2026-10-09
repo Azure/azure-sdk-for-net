@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (Optional.IsCollectionDefined(Tiers))
             {
                 writer.WritePropertyName("tiers"u8);
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.Network.Models
             string ruleSetType = default;
             string ruleSetVersion = default;
             ApplicationGatewayRuleSetStatusOption? status = default;
+            string displayName = default;
             IReadOnlyList<ApplicationGatewayTierType> tiers = default;
             IReadOnlyList<ApplicationGatewayFirewallRuleGroup> ruleGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -172,6 +178,11 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     status = new ApplicationGatewayRuleSetStatusOption(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tiers"u8))
@@ -200,13 +211,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplicationGatewayFirewallManifestRuleSet(
                 ruleSetType,
                 ruleSetVersion,
                 status,
+                displayName,
                 tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>(),
                 ruleGroups,
                 additionalBinaryDataProperties);

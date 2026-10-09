@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(StorageDataShareResource.ResourceType, out string storageDataShareApiVersion);
             _dataSharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageDataShareResource.ResourceType.Namespace, Diagnostics);
-            _dataSharesRestClient = new DataShares(_dataSharesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageDataShareApiVersion ?? "2025-08-01");
+            _dataSharesRestClient = new DataShares(_dataSharesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageDataShareApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageDataShareData, StorageDataShareResource>(new DataSharesGetByStorageAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageDataShareData, StorageDataShareResource>(new StorageDataShareDataAsyncCollectionResultOfT(
                 _dataSharesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageDataShareData, StorageDataShareResource>(new DataSharesGetByStorageAccountCollectionResultOfT(
+            return new PageableWrapper<StorageDataShareData, StorageDataShareResource>(new StorageDataShareDataCollectionResultOfT(
                 _dataSharesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

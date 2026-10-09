@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRulesGetByResourceGroupAsyncCollectionResultOfT(_networkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapRuleCollection.GetAll"), data => new NetworkTapRuleResource(Client, data));
+            return new AsyncPageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRuleDataAsyncCollectionResultOfT(_networkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapRuleCollection.GetAll"), data => new NetworkTapRuleResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRulesGetByResourceGroupCollectionResultOfT(_networkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapRuleCollection.GetAll"), data => new NetworkTapRuleResource(Client, data));
+            return new PageableWrapper<NetworkTapRuleData, NetworkTapRuleResource>(new NetworkTapRuleDataCollectionResultOfT(_networkTapRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkTapRuleCollection.GetAll"), data => new NetworkTapRuleResource(Client, data));
         }
 
         /// <summary>

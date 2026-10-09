@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 customerManagedKeyEncryption is null && displayName is null && catalogItemSyncEnableStatus is null && microsoftHostedNetworkEnableStatus is null && devBoxProvisioningInstallAzureMonitorAgentEnableStatus is null && provisioningState is null && devCenterUri is null ? default : new DevCenterProperties(
-                    new Encryption(customerManagedKeyEncryption, default),
+                    customerManagedKeyEncryption is null ? default : new Encryption(customerManagedKeyEncryption, default),
                     displayName,
-                    new DevCenterProjectCatalogSettings(catalogItemSyncEnableStatus, default),
-                    new DevCenterNetworkSettings(microsoftHostedNetworkEnableStatus, default),
-                    new DevBoxProvisioningSettings(devBoxProvisioningInstallAzureMonitorAgentEnableStatus, default),
+                    catalogItemSyncEnableStatus is null ? default : new DevCenterProjectCatalogSettings(catalogItemSyncEnableStatus, default),
+                    microsoftHostedNetworkEnableStatus is null ? default : new DevCenterNetworkSettings(microsoftHostedNetworkEnableStatus, default),
+                    devBoxProvisioningInstallAzureMonitorAgentEnableStatus is null ? default : new DevBoxProvisioningSettings(devBoxProvisioningInstallAzureMonitorAgentEnableStatus, default),
                     default,
                     provisioningState,
                     devCenterUri),
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.DevCenter.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevCenterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), location, default, identity, customerManagedKeyEncryption is null && displayName is null && catalogItemSyncEnableStatus is null && microsoftHostedNetworkEnableStatus is null && devBoxProvisioningInstallAzureMonitorAgentEnableStatus is null ? default : new DevCenterUpdateProperties(
-                new Encryption(customerManagedKeyEncryption, default),
+                customerManagedKeyEncryption is null ? default : new Encryption(customerManagedKeyEncryption, default),
                 displayName,
-                new DevCenterProjectCatalogSettings(catalogItemSyncEnableStatus, default),
-                new DevCenterNetworkSettings(microsoftHostedNetworkEnableStatus, default),
-                new DevBoxProvisioningSettings(devBoxProvisioningInstallAzureMonitorAgentEnableStatus, default),
+                catalogItemSyncEnableStatus is null ? default : new DevCenterProjectCatalogSettings(catalogItemSyncEnableStatus, default),
+                microsoftHostedNetworkEnableStatus is null ? default : new DevCenterNetworkSettings(microsoftHostedNetworkEnableStatus, default),
+                devBoxProvisioningInstallAzureMonitorAgentEnableStatus is null ? default : new DevBoxProvisioningSettings(devBoxProvisioningInstallAzureMonitorAgentEnableStatus, default),
                 default));
         }
 
@@ -286,12 +286,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                     description,
                     maxDevBoxesPerUser,
                     displayName,
-                    new ProjectCatalogSettings((catalogItemSyncTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(), default),
+                    catalogItemSyncTypes is null ? default : new ProjectCatalogSettings((catalogItemSyncTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(), default),
                     customizationSettings,
                     devBoxScheduleDeleteSettings,
-                    new AzureAiServicesSettings(azureAiServicesMode, default),
+                    azureAiServicesMode is null ? default : new AzureAiServicesSettings(azureAiServicesMode, default),
                     serverlessGpuSessionsSettings,
-                    new WorkspaceStorageSettings(workspaceStorageMode, default),
+                    workspaceStorageMode is null ? default : new WorkspaceStorageSettings(workspaceStorageMode, default),
                     (assignedGroups ?? new ChangeTrackingList<DevCenterAssignedGroup>()).ToList(),
                     default,
                     provisioningState,
@@ -373,12 +373,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                 description,
                 maxDevBoxesPerUser,
                 displayName,
-                new ProjectCatalogSettings((catalogItemSyncTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(), default),
+                catalogItemSyncTypes is null ? default : new ProjectCatalogSettings((catalogItemSyncTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(), default),
                 customizationSettings,
                 devBoxScheduleDeleteSettings,
-                new AzureAiServicesSettings(azureAiServicesMode, default),
+                azureAiServicesMode is null ? default : new AzureAiServicesSettings(azureAiServicesMode, default),
                 serverlessGpuSessionsSettings,
-                new WorkspaceStorageSettings(workspaceStorageMode, default),
+                workspaceStorageMode is null ? default : new WorkspaceStorageSettings(workspaceStorageMode, default),
                 (assignedGroups ?? new ChangeTrackingList<DevCenterAssignedGroup>()).ToList(),
                 default), identity);
         }
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     deploymentTargetId,
                     displayName,
                     status,
-                    new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
+                    roles is null ? default : new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
                     userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
                     default,
                     provisioningState,
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 deploymentTargetId,
                 displayName,
                 status,
-                new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
+                roles is null ? default : new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
                 userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
@@ -1856,7 +1856,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     deploymentTargetId,
                     default,
                     status,
-                    new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
+                    roles is null ? default : new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
                     userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
                     default,
                     provisioningState,

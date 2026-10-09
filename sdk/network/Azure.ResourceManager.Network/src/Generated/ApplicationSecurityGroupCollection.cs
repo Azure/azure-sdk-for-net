@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ApplicationSecurityGroupResource.ResourceType, out string applicationSecurityGroupApiVersion);
             _applicationSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-            _applicationSecurityGroupsRestClient = new ApplicationSecurityGroups(_applicationSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationSecurityGroupApiVersion ?? "2025-09-01");
+            _applicationSecurityGroupsRestClient = new ApplicationSecurityGroups(_applicationSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationSecurityGroupApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupsListAsyncCollectionResultOfT(_applicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationSecurityGroupCollection.GetAll"), data => new ApplicationSecurityGroupResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupDataAsyncCollectionResultOfT(_applicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationSecurityGroupCollection.GetAll"), data => new ApplicationSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupsListCollectionResultOfT(_applicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationSecurityGroupCollection.GetAll"), data => new ApplicationSecurityGroupResource(Client, data));
+            return new PageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupDataCollectionResultOfT(_applicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationSecurityGroupCollection.GetAll"), data => new ApplicationSecurityGroupResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

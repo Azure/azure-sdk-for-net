@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 resourceConcurrencyControlOptions ?? new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>(),
                 resourceGraphConfiguration,
                 management,
-                isNoncompliantCollectionResponseAllowed is null ? default : new OpenApiConfiguration(new OpenApiValidation(isNoncompliantCollectionResponseAllowed, default), default),
+                isNoncompliantCollectionResponseAllowed is null ? default : new OpenApiConfiguration(isNoncompliantCollectionResponseAllowed is null ? default : new OpenApiValidation(isNoncompliantCollectionResponseAllowed, default), default),
                 onBehalfOfTokens,
                 category,
                 resourceValidation,
@@ -1498,6 +1498,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ManifestLevelPropertyBag((resourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>()).ToList(), default);
         }
 
+        /// <summary> The ResourceTypeEndpointBase. </summary>
         /// <param name="enabled"> Whether it's enabled. </param>
         /// <param name="apiVersions"> The api versions. </param>
         /// <param name="endpointUri"> The endpoint uri. </param>
@@ -1511,13 +1512,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="zones"> The zones. </param>
         /// <returns> A new <see cref="Models.ResourceTypeEndpointBase"/> instance for mocking. </returns>
-        public static ResourceTypeEndpointBase ResourceTypeEndpointBase(bool enabled = default, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<string> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy requiredFeaturesPolicy = default, TimeSpan timeout = default, ProviderEndpointType endpointType = default, ProviderDstsConfiguration dstsConfiguration = default, string skuLink = default, string apiVersion = default, IEnumerable<string> zones = default)
+        public static ResourceTypeEndpointBase ResourceTypeEndpointBase(bool enabled = false, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<string> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy requiredFeaturesPolicy = default, TimeSpan timeout = default, ProviderEndpointType endpointType = default, ProviderDstsConfiguration dstsConfiguration = default, string skuLink = default, string apiVersion = default, IEnumerable<string> zones = default)
         {
-            apiVersions ??= new ChangeTrackingList<string>();
-            locations ??= new ChangeTrackingList<string>();
-            requiredFeatures ??= new ChangeTrackingList<string>();
-            zones ??= new ChangeTrackingList<string>();
-
             return new ResourceTypeEndpointBase(
                 enabled,
                 (apiVersions ?? new ChangeTrackingList<string>()).ToList(),

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </summary>
         [WirePath("verticalPodAutoscaler")]
-        public ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler { get; set; }
+        internal ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler { get; set; }
 
         /// <summary> Whether to enable KEDA. </summary>
         [WirePath("keda.enabled")]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Keda is null ? default : Keda.IsKedaEnabled;
+                return Keda is null ? (bool?)default : Keda.IsKedaEnabled;
             }
             set
             {

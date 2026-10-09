@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary>
         /// Describes how the service is partitioned.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.UniformInt64RangePartitionScheme"/>, <see cref="Models.SingletonPartitionScheme"/>, and <see cref="Models.NamedPartitionScheme"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.NamedPartitionScheme"/>, <see cref="Models.SingletonPartitionScheme"/>, and <see cref="Models.UniformInt64RangePartitionScheme"/>.
         /// </summary>
         /// <param name="partitionScheme"></param>
         /// <returns> A new <see cref="Models.ManagedServicePartitionScheme"/> instance for mocking. </returns>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary>
         /// Describes the policy to be used for placement of a Service Fabric service.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ServicePlacementInvalidDomainPolicy"/>, <see cref="Models.ServicePlacementRequiredDomainPolicy"/>, <see cref="Models.ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="Models.ServicePlacementRequireDomainDistributionPolicy"/>, and <see cref="Models.ServicePlacementNonPartiallyPlaceServicePolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ServicePlacementInvalidDomainPolicy"/>, <see cref="Models.ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="Models.ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="Models.ServicePlacementRequireDomainDistributionPolicy"/>, and <see cref="Models.ServicePlacementRequiredDomainPolicy"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.ManagedServicePlacementPolicy"/> instance for mocking. </returns>
@@ -1294,7 +1294,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     vmImageVersion,
                     (vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>()).ToList(),
                     (vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>()).ToList(),
-                    new VmManagedIdentity((vmManagedIdentityUserAssignedIdentities ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
+                    vmManagedIdentityUserAssignedIdentities is null ? default : new VmManagedIdentity((vmManagedIdentityUserAssignedIdentities ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
                     isStateless,
                     hasMultiplePlacementGroups,
                     (frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>()).ToList(),
@@ -1332,7 +1332,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     isZoneBalanceEnabled,
                     isOutboundOnly,
                     enableResilientEphemeralOSDisk,
-                    new ScaleInPolicy(scaleInMode, default),
+                    scaleInMode is null ? default : new ScaleInPolicy(scaleInMode, default),
                     proxyAgentSettings,
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -1715,7 +1715,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     vmImageVersion,
                     (vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>()).ToList(),
                     (vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>()).ToList(),
-                    new VmManagedIdentity((vmManagedIdentityUserAssignedIdentities ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
+                    vmManagedIdentityUserAssignedIdentities is null ? default : new VmManagedIdentity((vmManagedIdentityUserAssignedIdentities ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
                     isStateless,
                     hasMultiplePlacementGroups,
                     (frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>()).ToList(),
@@ -1844,7 +1844,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     (addOnFeatures ?? new ChangeTrackingList<ManagedClusterAddOnFeature>()).ToList(),
                     isAutoOSUpgradeEnabled,
                     hasZoneResiliency,
-                    new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.GetValueOrDefault(), default),
+                    maxUnusedVersionsToKeep is null ? default : new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.GetValueOrDefault(), default),
                     isIPv6Enabled,
                     subnetId,
                     (ipTags ?? new ChangeTrackingList<ManagedClusterIPTag>()).ToList(),
@@ -1953,7 +1953,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     vmImageVersion,
                     (vmSecrets ?? new ChangeTrackingList<NodeTypeVaultSecretGroup>()).ToList(),
                     (vmExtensions ?? new ChangeTrackingList<NodeTypeVmssExtension>()).ToList(),
-                    new VmManagedIdentity((userAssignedIdentities ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
+                    userAssignedIdentities is null ? default : new VmManagedIdentity((userAssignedIdentities ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
                     isStateless,
                     hasMultiplePlacementGroups,
                     (frontendConfigurations ?? new ChangeTrackingList<NodeTypeFrontendConfiguration>()).ToList(),

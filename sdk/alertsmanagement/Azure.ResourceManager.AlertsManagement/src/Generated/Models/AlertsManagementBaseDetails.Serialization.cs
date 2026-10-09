@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
     /// Base details class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServiceAlertPropertyChangeDetails"/>, <see cref="ServiceAlertActionSuppressedDetails"/>, and <see cref="ServiceAlertActionTriggeredDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServiceAlertActionSuppressedDetails"/>, <see cref="ServiceAlertActionTriggeredDetails"/>, and <see cref="ServiceAlertPropertyChangeDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAlertsManagementBaseDetails))]
     public abstract partial class AlertsManagementBaseDetails : IJsonModel<AlertsManagementBaseDetails>
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "PropertyChange":
-                        return ServiceAlertPropertyChangeDetails.DeserializeServiceAlertPropertyChangeDetails(element, options);
                     case "ActionsSuppressed":
                         return ServiceAlertActionSuppressedDetails.DeserializeServiceAlertActionSuppressedDetails(element, options);
                     case "ActionsTriggered":
                         return ServiceAlertActionTriggeredDetails.DeserializeServiceAlertActionTriggeredDetails(element, options);
+                    case "PropertyChange":
+                        return ServiceAlertPropertyChangeDetails.DeserializeServiceAlertPropertyChangeDetails(element, options);
                 }
             }
             return UnknownAlertsManagementBaseDetails.DeserializeUnknownAlertsManagementBaseDetails(element, options);

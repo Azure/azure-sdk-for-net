@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkSecurityPerimeterAssociationResource.ResourceType, out string networkSecurityPerimeterAssociationApiVersion);
             _networkSecurityPerimeterAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityPerimeterAssociationResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterAssociationsRestClient = new NetworkSecurityPerimeterAssociations(_networkSecurityPerimeterAssociationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterAssociationApiVersion ?? "2025-09-01");
+            _networkSecurityPerimeterAssociationsRestClient = new NetworkSecurityPerimeterAssociations(_networkSecurityPerimeterAssociationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterAssociationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityPerimeterAssociationData, NetworkSecurityPerimeterAssociationResource>(new NetworkSecurityPerimeterAssociationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterAssociationData, NetworkSecurityPerimeterAssociationResource>(new NetworkSecurityPerimeterAssociationDataAsyncCollectionResultOfT(
                 _networkSecurityPerimeterAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityPerimeterAssociationData, NetworkSecurityPerimeterAssociationResource>(new NetworkSecurityPerimeterAssociationsGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkSecurityPerimeterAssociationData, NetworkSecurityPerimeterAssociationResource>(new NetworkSecurityPerimeterAssociationDataCollectionResultOfT(
                 _networkSecurityPerimeterAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

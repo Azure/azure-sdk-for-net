@@ -1,0 +1,19 @@
+# Azure.Storage.Files.Shares.ChangeFeed approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# ShareChangeFeedClient is a change-feed reader whose only options-taking constructors accept a
+# change-feed-specific ShareChangeFeedClientOptions as the last (optional) parameter. Following the
+# established Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClient precedent, there is no separate
+# single-options overload to add, so AZC0007 is suppressed for this type.
+nowarn:AZC0007 T:Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedClient
+
+# ShareChangeFeedClient is a change-feed reader that does not follow the standard Azure.Core
+# service-client shape (no service-methods returning Response<T>, no matching mockable virtual
+# members, no ClientOptions-derived options type). These design analyzers are intentionally
+# suppressed to match the Blobs.ChangeFeed reader design.
+nowarn:AZC0002
+nowarn:AZC0015
+nowarn:AZC0035
+
+# XML doc comments are not authored on every public member of this preview change-feed library.
+nowarn:CS1591

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkInterfaceIPConfigurationResource.ResourceType, out string networkInterfaceIPConfigurationApiVersion);
             _networkInterfaceIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterfaceIPConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurations(_networkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceIPConfigurationApiVersion ?? "2025-09-01");
+            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurations(_networkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceIPConfigurationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkInterfaceIPConfigurationData, NetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkInterfaceIPConfigurationData, NetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationDataAsyncCollectionResultOfT(
                 _networkInterfaceIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkInterfaceIPConfigurationData, NetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkInterfaceIPConfigurationData, NetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationDataCollectionResultOfT(
                 _networkInterfaceIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

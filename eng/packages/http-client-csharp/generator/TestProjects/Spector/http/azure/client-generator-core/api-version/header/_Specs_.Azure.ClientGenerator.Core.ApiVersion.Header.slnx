@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/_Specs_.Azure.ClientGenerator.Core.ApiVersion.Header.csproj" />
+  <Project Path="tests/_Specs_.Azure.ClientGenerator.Core.ApiVersion.Header.Tests.csproj" />
 </Solution>

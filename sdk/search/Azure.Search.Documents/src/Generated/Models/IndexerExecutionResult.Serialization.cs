@@ -290,7 +290,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IndexerExecutionResult(
@@ -300,8 +300,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 errorMessage,
                 startTime,
                 endTime,
-                errors,
-                warnings,
+                errors ?? new ChangeTrackingList<SearchIndexerError>(),
+                warnings ?? new ChangeTrackingList<SearchIndexerWarning>(),
                 itemCount,
                 failedItemCount,
                 initialTrackingState,

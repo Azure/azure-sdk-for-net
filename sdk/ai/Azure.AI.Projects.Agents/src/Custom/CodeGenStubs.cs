@@ -14,6 +14,8 @@ public partial class ProjectsAgentRecord
     private string Object { get; } = "agent";
 }
 
+[CodeGenType("SessionFileWriteResult")] public partial class SessionFileWriteResult { }
+
 [CodeGenType("CreateAgentVersionFromManifestRequest1")] public partial class AgentManifestOptions { }
 
 // Internal types

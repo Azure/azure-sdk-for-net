@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetByResourceGroupAsyncCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRuleDataAsyncCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetByResourceGroupCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
+            return new PageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRuleDataCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
         }
 
         /// <summary>

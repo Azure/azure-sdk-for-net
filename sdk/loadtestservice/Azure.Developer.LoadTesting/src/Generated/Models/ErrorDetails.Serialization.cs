@@ -202,7 +202,7 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ErrorDetails(code, message, properties ?? new ChangeTrackingDictionary<string, IList<string>>(), additionalBinaryDataProperties);

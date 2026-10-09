@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.GeoBackupPolicyState;
+                return Properties is null ? (GeoBackupPolicyState?)default : Properties.GeoBackupPolicyState;
             }
             set
             {

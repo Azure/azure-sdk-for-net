@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for the task that migrates Oracle databases to Azure Database for PostgreSQL for online migrations
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, and <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/>, and <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>.
     /// </summary>
     public abstract partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {

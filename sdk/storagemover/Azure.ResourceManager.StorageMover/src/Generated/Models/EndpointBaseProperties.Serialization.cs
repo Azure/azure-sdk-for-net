@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
     /// The resource specific properties for the Storage Mover resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageBlobContainerEndpointProperties"/>, <see cref="NfsMountEndpointProperties"/>, <see cref="S3WithHmacEndpointProperties"/>, <see cref="AzureStorageSmbFileShareEndpointProperties"/>, <see cref="SmbMountEndpointProperties"/>, <see cref="AzureStorageNfsFileShareEndpointProperties"/>, and <see cref="AzureMultiCloudConnectorEndpointProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureMultiCloudConnectorEndpointProperties"/>, <see cref="AzureStorageBlobContainerEndpointProperties"/>, <see cref="AzureStorageNfsFileShareEndpointProperties"/>, <see cref="AzureStorageSmbFileShareEndpointProperties"/>, <see cref="NfsMountEndpointProperties"/>, <see cref="S3WithHmacEndpointProperties"/>, and <see cref="SmbMountEndpointProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEndpointBaseProperties))]
     public abstract partial class EndpointBaseProperties : IJsonModel<EndpointBaseProperties>
@@ -140,20 +140,20 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AzureMultiCloudConnector":
+                        return AzureMultiCloudConnectorEndpointProperties.DeserializeAzureMultiCloudConnectorEndpointProperties(element, options);
                     case "AzureStorageBlobContainer":
                         return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element, options);
+                    case "AzureStorageNfsFileShare":
+                        return AzureStorageNfsFileShareEndpointProperties.DeserializeAzureStorageNfsFileShareEndpointProperties(element, options);
+                    case "AzureStorageSmbFileShare":
+                        return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element, options);
                     case "NfsMount":
                         return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element, options);
                     case "S3WithHMAC":
                         return S3WithHmacEndpointProperties.DeserializeS3WithHmacEndpointProperties(element, options);
-                    case "AzureStorageSmbFileShare":
-                        return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element, options);
                     case "SmbMount":
                         return SmbMountEndpointProperties.DeserializeSmbMountEndpointProperties(element, options);
-                    case "AzureStorageNfsFileShare":
-                        return AzureStorageNfsFileShareEndpointProperties.DeserializeAzureStorageNfsFileShareEndpointProperties(element, options);
-                    case "AzureMultiCloudConnector":
-                        return AzureMultiCloudConnectorEndpointProperties.DeserializeAzureMultiCloudConnectorEndpointProperties(element, options);
                 }
             }
             return UnknownEndpointBaseProperties.DeserializeUnknownEndpointBaseProperties(element, options);

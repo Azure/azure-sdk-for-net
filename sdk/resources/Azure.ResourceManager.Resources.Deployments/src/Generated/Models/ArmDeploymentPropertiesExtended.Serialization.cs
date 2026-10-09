@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     {
                         continue;
                     }
-                    outputs = BinaryData.FromString(prop.Value.GetRawText());
+                    outputs = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("providers"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     {
                         continue;
                     }
-                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    parameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parametersLink"u8))
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ArmDeploymentPropertiesExtended(

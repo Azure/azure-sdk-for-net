@@ -64,4 +64,15 @@ internal static partial class TaskTelemetry
         Level = LogLevel.Information,
         Message = "Reclaimed stale task {TaskId} (generation will increment).")]
     public static partial void StaleTaskReclaimed(this ILogger logger, string taskId);
+
+    [LoggerMessage(
+        EventId = 13,
+        EventName = "resilient_task_stream_close_failure",
+        Level = LogLevel.Warning,
+        Message = "Failed to close resilient task stream for task {TaskId}, input {InputId}: {ErrorType}.")]
+    public static partial void StreamCloseFailure(
+        this ILogger logger,
+        string taskId,
+        string inputId,
+        string errorType);
 }

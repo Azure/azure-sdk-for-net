@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             get
             {
-                return Properties is null ? default : Properties.BudgetCategory;
+                return Properties is null ? (CategoryType?)default : Properties.BudgetCategory;
             }
             set
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             get
             {
-                return Properties is null ? default : Properties.BudgetTimeGrain;
+                return Properties is null ? (TimeGrainType?)default : Properties.BudgetTimeGrain;
             }
             set
             {

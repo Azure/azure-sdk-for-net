@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(WorkloadNetworkGatewayResource.ResourceType, out string workloadNetworkGatewayApiVersion);
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkGatewayResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkGatewayApiVersion ?? "2025-09-01");
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkGatewayApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkGatewayData, WorkloadNetworkGatewayResource>(new WorkloadNetworksGetGatewaysAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkloadNetworkGatewayData, WorkloadNetworkGatewayResource>(new WorkloadNetworkGatewayDataAsyncCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkGatewayData, WorkloadNetworkGatewayResource>(new WorkloadNetworksGetGatewaysCollectionResultOfT(
+            return new PageableWrapper<WorkloadNetworkGatewayData, WorkloadNetworkGatewayResource>(new WorkloadNetworkGatewayDataCollectionResultOfT(
                 _workloadNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

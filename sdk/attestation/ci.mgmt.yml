@@ -1,6 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/attestation/Azure.ResourceManager.Attestation
+    - sdk/attestation/Azure.Provisioning.Attestation
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

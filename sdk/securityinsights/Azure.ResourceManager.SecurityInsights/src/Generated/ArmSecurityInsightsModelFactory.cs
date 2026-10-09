@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     severity,
                     triggerOperator,
                     triggerThreshold,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
@@ -611,14 +611,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     (sentinelEntitiesMappings ?? new ChangeTrackingList<SentinelEntityMapping>()).ToList(),
                     default));
         }
 
         /// <summary>
         /// Alert rule template.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="Models.SecurityInsightsFusionAlertRuleTemplate"/>, <see cref="Models.ThreatIntelligenceAlertRuleTemplate"/>, <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="Models.ScheduledAlertRuleTemplate"/>, and <see cref="Models.NrtAlertRuleTemplate"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="Models.NrtAlertRuleTemplate"/>, <see cref="Models.ScheduledAlertRuleTemplate"/>, <see cref="Models.SecurityInsightsFusionAlertRuleTemplate"/>, and <see cref="Models.ThreatIntelligenceAlertRuleTemplate"/>.
         /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     (techniques ?? new ChangeTrackingList<string>()).ToList(),
                     (subTechniques ?? new ChangeTrackingList<string>()).ToList(),
                     version,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     (sentinelEntitiesMappings ?? new ChangeTrackingList<SentinelEntityMapping>()).ToList(),
                     default));
         }
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// Describes an automation rule condition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BooleanConditionProperties"/>, <see cref="Models.SecurityInsightsPropertyArrayChangedConditionProperties"/>, <see cref="Models.PropertyArrayConditionProperties"/>, <see cref="Models.SecurityInsightsPropertyChangedConditionProperties"/>, and <see cref="Models.SecurityInsightsPropertyConditionProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BooleanConditionProperties"/>, <see cref="Models.PropertyArrayConditionProperties"/>, <see cref="Models.SecurityInsightsPropertyArrayChangedConditionProperties"/>, <see cref="Models.SecurityInsightsPropertyChangedConditionProperties"/>, and <see cref="Models.SecurityInsightsPropertyConditionProperties"/>.
         /// </summary>
         /// <param name="conditionType"></param>
         /// <returns> A new <see cref="Models.SecurityInsightsAutomationRuleCondition"/> instance for mocking. </returns>
@@ -1434,7 +1434,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// Specific entity.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/>, <see cref="Models.SecurityInsightsUriEntity"/>, and <see cref="Models.NicEntity"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/>, and <see cref="Models.SecurityInsightsUriEntity"/>.
         /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -2706,7 +2706,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && dataTypes is null && filteredProvidersAlerts is null ? default : new MtpDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes, new MtpFilteredProviders((filteredProvidersAlerts ?? new ChangeTrackingList<MtpProvider>()).ToList(), default)));
+                tenantId is null && dataTypes is null && filteredProvidersAlerts is null ? default : new MtpDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes, filteredProvidersAlerts is null ? default : new MtpFilteredProviders((filteredProvidersAlerts ?? new ChangeTrackingList<MtpProvider>()).ToList(), default)));
         }
 
         /// <param name="incidentsState"> Describe whether this data type connection is enabled or not. </param>
@@ -2822,7 +2822,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// Base Model for API authentication.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SecurityInsightsApiKeyAuthModel"/>, <see cref="Models.AwsAuthModel"/>, <see cref="Models.BasicAuthModel"/>, <see cref="Models.GcpAuthModel"/>, <see cref="Models.GenericBlobSbsAuthModel"/>, <see cref="Models.GitHubAuthModel"/>, <see cref="Models.NoneAuthModel"/>, <see cref="Models.JwtAuthModel"/>, <see cref="Models.OAuthModel"/>, <see cref="Models.OracleAuthModel"/>, and <see cref="Models.SessionAuthModel"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AwsAuthModel"/>, <see cref="Models.BasicAuthModel"/>, <see cref="Models.GcpAuthModel"/>, <see cref="Models.GenericBlobSbsAuthModel"/>, <see cref="Models.GitHubAuthModel"/>, <see cref="Models.JwtAuthModel"/>, <see cref="Models.NoneAuthModel"/>, <see cref="Models.OAuthModel"/>, <see cref="Models.OracleAuthModel"/>, <see cref="Models.SecurityInsightsApiKeyAuthModel"/>, and <see cref="Models.SessionAuthModel"/>.
         /// </summary>
         /// <param name="type"> The auth type. </param>
         /// <returns> A new <see cref="Models.CcpAuthConfig"/> instance for mocking. </returns>
@@ -4708,7 +4708,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// Specific entity query.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ExpansionEntityQuery"/> and <see cref="Models.ActivityEntityQuery"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ActivityEntityQuery"/> and <see cref="Models.ExpansionEntityQuery"/>.
         /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -4792,7 +4792,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     title,
                     content,
                     description,
-                    new ActivityEntityQueriesPropertiesQueryDefinitions(query, default),
+                    query is null ? default : new ActivityEntityQueriesPropertiesQueryDefinitions(query, default),
                     inputEntityType,
                     (requiredInputFieldsSets ?? new ChangeTrackingList<IList<string>>()).ToList(),
                     entitiesFilter ?? new ChangeTrackingDictionary<string, IList<string>>(),
@@ -4875,7 +4875,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     title,
                     content,
                     description,
-                    new ActivityEntityQueriesPropertiesQueryDefinitions(query, default),
+                    query is null ? default : new ActivityEntityQueriesPropertiesQueryDefinitions(query, default),
                     inputEntityType,
                     (requiredInputFieldsSets ?? new ChangeTrackingList<IList<string>>()).ToList(),
                     entitiesFilter ?? new ChangeTrackingDictionary<string, IList<string>>(),
@@ -5149,7 +5149,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// The Setting.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SecurityInsightsSettingAnomaliesKind"/>, <see cref="Models.SecurityInsightsEyesOn"/>, <see cref="Models.EntityAnalytics"/>, and <see cref="Models.UebaSettings"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EntityAnalytics"/>, <see cref="Models.SecurityInsightsEyesOn"/>, <see cref="Models.SecurityInsightsSettingAnomaliesKind"/>, and <see cref="Models.UebaSettings"/>.
         /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -6185,7 +6185,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// Data connector requirements properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AadCheckRequirements"/>, <see cref="Models.AatpCheckRequirements"/>, <see cref="Models.AscCheckRequirements"/>, <see cref="Models.AwsCloudTrailCheckRequirements"/>, <see cref="Models.AwsS3CheckRequirements"/>, <see cref="Models.Dynamics365CheckRequirements"/>, <see cref="Models.McasCheckRequirements"/>, <see cref="Models.MdatpCheckRequirements"/>, <see cref="Models.MstiCheckRequirements"/>, <see cref="Models.MtpCheckRequirements"/>, <see cref="Models.OfficeAtpCheckRequirements"/>, <see cref="Models.OfficeIrmCheckRequirements"/>, <see cref="Models.MicrosoftPurviewInformationProtectionCheckRequirements"/>, <see cref="Models.Office365ProjectCheckRequirements"/>, <see cref="Models.OfficePowerBICheckRequirements"/>, <see cref="Models.PurviewAuditCheckRequirements"/>, <see cref="Models.ThreatIntelligenceCheckRequirements"/>, <see cref="Models.ThreatIntelligenceTaxiiCheckRequirements"/>, and <see cref="Models.IoTCheckRequirements"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AadCheckRequirements"/>, <see cref="Models.AatpCheckRequirements"/>, <see cref="Models.AscCheckRequirements"/>, <see cref="Models.AwsCloudTrailCheckRequirements"/>, <see cref="Models.AwsS3CheckRequirements"/>, <see cref="Models.Dynamics365CheckRequirements"/>, <see cref="Models.IoTCheckRequirements"/>, <see cref="Models.McasCheckRequirements"/>, <see cref="Models.MdatpCheckRequirements"/>, <see cref="Models.MicrosoftPurviewInformationProtectionCheckRequirements"/>, <see cref="Models.MstiCheckRequirements"/>, <see cref="Models.MtpCheckRequirements"/>, <see cref="Models.Office365ProjectCheckRequirements"/>, <see cref="Models.OfficeAtpCheckRequirements"/>, <see cref="Models.OfficeIrmCheckRequirements"/>, <see cref="Models.OfficePowerBICheckRequirements"/>, <see cref="Models.PurviewAuditCheckRequirements"/>, <see cref="Models.ThreatIntelligenceCheckRequirements"/>, and <see cref="Models.ThreatIntelligenceTaxiiCheckRequirements"/>.
         /// </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <returns> A new <see cref="Models.DataConnectorsCheckRequirements"/> instance for mocking. </returns>
@@ -6729,7 +6729,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// Entity timeline Item.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ActivityTimelineItem"/>, <see cref="Models.BookmarkTimelineItem"/>, <see cref="Models.AnomalyTimelineItem"/>, and <see cref="Models.SecurityAlertTimelineItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ActivityTimelineItem"/>, <see cref="Models.AnomalyTimelineItem"/>, <see cref="Models.BookmarkTimelineItem"/>, and <see cref="Models.SecurityAlertTimelineItem"/>.
         /// </summary>
         /// <param name="kind"> The entity query kind type. </param>
         /// <returns> A new <see cref="Models.EntityTimelineItem"/> instance for mocking. </returns>
@@ -7126,7 +7126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     incidentUri,
                     default,
                     default,
-                    new TeamInformation(
+                    createdOn is null && description is null ? default : new TeamInformation(
                         default,
                         default,
                         createdOn,
@@ -7365,7 +7365,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     severity,
                     triggerOperator,
                     triggerThreshold,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
@@ -7439,7 +7439,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     (techniques ?? new ChangeTrackingList<string>()).ToList(),
                     default,
                     version,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
@@ -7467,7 +7467,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && alertsState is null ? default : new AadDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && alertsState is null ? default : new AadDataConnectorProperties(tenantId.GetValueOrDefault(), alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <summary> Represents AATP (Azure Advanced Threat Protection) data connector. </summary>
@@ -7490,7 +7490,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && alertsState is null ? default : new AatpDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && alertsState is null ? default : new AatpDataConnectorProperties(tenantId.GetValueOrDefault(), alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <summary> Represents ASC (Azure Security Center) data connector. </summary>
@@ -7513,7 +7513,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                alertsState is null && subscriptionId is null ? default : new AscDataConnectorProperties(new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default, subscriptionId));
+                alertsState is null && subscriptionId is null ? default : new AscDataConnectorProperties(alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default, subscriptionId));
         }
 
         /// <summary> Represents MDATP (Microsoft Defender Advanced Threat Protection) data connector. </summary>
@@ -7536,7 +7536,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && alertsState is null ? default : new MdatpDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && alertsState is null ? default : new MdatpDataConnectorProperties(tenantId.GetValueOrDefault(), alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <summary> Represents an IoT device entity. </summary>

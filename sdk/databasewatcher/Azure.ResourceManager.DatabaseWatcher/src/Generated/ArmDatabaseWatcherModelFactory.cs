@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <summary>
         /// The generic properties of a target.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SqlDBSingleDatabaseTargetProperties"/>, <see cref="Models.SqlDBElasticPoolTargetProperties"/>, and <see cref="Models.SqlMITargetProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SqlDBElasticPoolTargetProperties"/>, <see cref="Models.SqlDBSingleDatabaseTargetProperties"/>, and <see cref="Models.SqlMITargetProperties"/>.
         /// </summary>
         /// <param name="targetType"> Discriminator property for DatabaseWatcherTargetProperties. </param>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>

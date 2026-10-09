@@ -10,24 +10,23 @@ namespace Azure.Security.CodeTransparency
     {
         public AzureSecurityCodeTransparencyContext() { }
     }
-    public partial class CcfReceipt
+    public static partial class CcfReceipt
     {
-        public static readonly int CcfProofLeafLabel;
-        public static readonly int CcfProofPathLabel;
-        public static readonly int CcfTreeAlgLabel;
-        public static readonly int CoseHeaderEmbeddedReceipts;
-        public static readonly int CosePhdrVdpLabel;
-        public static readonly int CosePhdrVdsLabel;
-        public static readonly int CoseReceiptCwtIssLabel;
-        public static readonly int CoseReceiptCwtMapLabel;
-        public static readonly int CoseReceiptInclusionProofLabel;
-        public static readonly ulong ReceiptHeaderIssuer;
-        public static readonly ulong ReceiptHeaderKeyId;
-        public static readonly string ReceiptHeaderRegistrationTime;
-        public static readonly string ReceiptHeaderServiceId;
-        public static readonly string ReceiptHeaderTreeAlgorithm;
-        public static readonly string SupportedTreeAlgorithm;
-        public CcfReceipt() { }
+        public static int CcfProofLeafLabel { get { throw null; } }
+        public static int CcfProofPathLabel { get { throw null; } }
+        public static int CcfTreeAlgLabel { get { throw null; } }
+        public static int CoseHeaderEmbeddedReceipts { get { throw null; } }
+        public static int CosePhdrVdpLabel { get { throw null; } }
+        public static int CosePhdrVdsLabel { get { throw null; } }
+        public static int CoseReceiptCwtIssLabel { get { throw null; } }
+        public static int CoseReceiptCwtMapLabel { get { throw null; } }
+        public static int CoseReceiptInclusionProofLabel { get { throw null; } }
+        public static ulong ReceiptHeaderIssuer { get { throw null; } }
+        public static ulong ReceiptHeaderKeyId { get { throw null; } }
+        public static string ReceiptHeaderRegistrationTime { get { throw null; } }
+        public static string ReceiptHeaderServiceId { get { throw null; } }
+        public static string ReceiptHeaderTreeAlgorithm { get { throw null; } }
+        public static string SupportedTreeAlgorithm { get { throw null; } }
         public static string GetRegistrationTransactionId(byte[] receiptCoseSign1Bytes) { throw null; }
     }
     public partial class CcfReceiptVerifier
@@ -49,7 +48,6 @@ namespace Azure.Security.CodeTransparency
     }
     public partial class CodeTransparencyClient
     {
-        public static readonly string UnknownIssuerPrefix;
         protected CodeTransparencyClient() { }
         public CodeTransparencyClient(Azure.Security.CodeTransparency.CodeTransparencyClientSettings settings) { }
         public CodeTransparencyClient(System.Uri endpoint) { }
@@ -99,8 +97,8 @@ namespace Azure.Security.CodeTransparency
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {
         public CodeTransparencyClientOptions(Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion version = Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion.V2026_03_26) { }
-        public double CacheTTLSeconds { get { throw null; } set { } }
-        public string IdentityClientEndpoint { get { throw null; } set { } }
+        public System.TimeSpan CacheTimeToLive { get { throw null; } set { } }
+        public System.Uri IdentityClientEndpoint { get { throw null; } set { } }
         public virtual Azure.Security.CodeTransparency.CodeTransparencyCertificateClient CreateCertificateClient() { throw null; }
         public enum ServiceVersion
         {
@@ -122,12 +120,6 @@ namespace Azure.Security.CodeTransparency
     public static partial class CodeTransparencyModelFactory
     {
         public static Azure.Security.CodeTransparency.ServiceIdentityResult ServiceIdentityResult(string ledgerTlsCertificate) { throw null; }
-    }
-    public enum CodeTransparencyOperationStatus
-    {
-        Running = 0,
-        Failed = 1,
-        Succeeded = 2,
     }
     public sealed partial class CodeTransparencyTrustStore
     {
@@ -154,7 +146,7 @@ namespace Azure.Security.CodeTransparency
     public sealed partial class CodeTransparencyVerificationOptions
     {
         public CodeTransparencyVerificationOptions() { }
-        public System.Collections.Generic.IList<string> AuthorizedDomains { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AuthorizedDomains { get { throw null; } }
         public Azure.Security.CodeTransparency.AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get { throw null; } set { } }
         public Azure.Security.CodeTransparency.CodeTransparencyKeyResolutionMode KeyResolutionMode { get { throw null; } set { } }
         public Azure.Security.CodeTransparency.CodeTransparencyTrustStore TrustStore { get { throw null; } set { } }
@@ -163,7 +155,7 @@ namespace Azure.Security.CodeTransparency
     public partial class ServiceIdentityResult
     {
         internal ServiceIdentityResult() { }
-        public System.DateTime CreatedAt { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string TlsCertificatePem { get { throw null; } }
         public System.Security.Cryptography.X509Certificates.X509Certificate2 GetCertificate() { throw null; }
     }

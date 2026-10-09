@@ -1383,7 +1383,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     minorVersion,
                     state,
                     fullyQualifiedDomainName,
-                    new PostgreSqlFlexibleServerStorage(
+                    storageSizeInGB is null ? default : new PostgreSqlFlexibleServerStorage(
                         storageSizeInGB,
                         default,
                         default,
@@ -1402,7 +1402,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     availabilityZone,
                     replicationRole,
                     replicaCapacity,
-                    new PostgreSqlFlexibleServersReplica(
+                    replicationRole is null && replicaCapacity is null ? default : new PostgreSqlFlexibleServersReplica(
                         replicationRole,
                         replicaCapacity,
                         default,

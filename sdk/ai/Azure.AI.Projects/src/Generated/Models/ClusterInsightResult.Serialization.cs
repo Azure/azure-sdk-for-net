@@ -175,10 +175,10 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterInsightResult(summary, clusters, coordinates ?? new ChangeTrackingDictionary<string, ChartCoordinate>(), additionalBinaryDataProperties);
+            return new ClusterInsightResult(summary, clusters ?? new ChangeTrackingList<InsightCluster>(), coordinates ?? new ChangeTrackingDictionary<string, ChartCoordinate>(), additionalBinaryDataProperties);
         }
     }
 }

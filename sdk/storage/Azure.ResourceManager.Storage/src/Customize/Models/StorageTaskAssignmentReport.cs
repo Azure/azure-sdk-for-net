@@ -19,16 +19,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentReport"/>. </summary>
         /// <param name="prefix"> The container prefix for the location of storage task assignment report. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
-        public StorageTaskAssignmentReport(string prefix)
-        {
-            Argument.AssertNotNull(prefix, nameof(prefix));
-
-            Prefix = prefix;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentReport"/>. </summary>
-        /// <param name="prefix"> The container prefix for the location of storage task assignment report. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal StorageTaskAssignmentReport(string prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {

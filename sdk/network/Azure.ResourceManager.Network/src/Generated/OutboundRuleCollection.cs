@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(OutboundRuleResource.ResourceType, out string outboundRuleApiVersion);
             _loadBalancerOutboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", OutboundRuleResource.ResourceType.Namespace, Diagnostics);
-            _loadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRules(_loadBalancerOutboundRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, outboundRuleApiVersion ?? "2025-09-01");
+            _loadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRules(_loadBalancerOutboundRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, outboundRuleApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OutboundRuleData, OutboundRuleResource>(new LoadBalancerOutboundRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OutboundRuleData, OutboundRuleResource>(new OutboundRuleDataAsyncCollectionResultOfT(
                 _loadBalancerOutboundRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OutboundRuleData, OutboundRuleResource>(new LoadBalancerOutboundRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<OutboundRuleData, OutboundRuleResource>(new OutboundRuleDataCollectionResultOfT(
                 _loadBalancerOutboundRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

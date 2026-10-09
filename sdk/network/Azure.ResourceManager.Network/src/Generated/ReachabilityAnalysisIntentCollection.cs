@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ReachabilityAnalysisIntentResource.ResourceType, out string reachabilityAnalysisIntentApiVersion);
             _reachabilityAnalysisIntentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ReachabilityAnalysisIntentResource.ResourceType.Namespace, Diagnostics);
-            _reachabilityAnalysisIntentsRestClient = new ReachabilityAnalysisIntents(_reachabilityAnalysisIntentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reachabilityAnalysisIntentApiVersion ?? "2025-09-01");
+            _reachabilityAnalysisIntentsRestClient = new ReachabilityAnalysisIntents(_reachabilityAnalysisIntentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reachabilityAnalysisIntentApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReachabilityAnalysisIntentData, ReachabilityAnalysisIntentResource>(new ReachabilityAnalysisIntentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ReachabilityAnalysisIntentData, ReachabilityAnalysisIntentResource>(new ReachabilityAnalysisIntentDataAsyncCollectionResultOfT(
                 _reachabilityAnalysisIntentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReachabilityAnalysisIntentData, ReachabilityAnalysisIntentResource>(new ReachabilityAnalysisIntentsGetAllCollectionResultOfT(
+            return new PageableWrapper<ReachabilityAnalysisIntentData, ReachabilityAnalysisIntentResource>(new ReachabilityAnalysisIntentDataCollectionResultOfT(
                 _reachabilityAnalysisIntentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(FirewallPolicyKubeSelectorGroupResource.ResourceType, out string firewallPolicyKubeSelectorGroupApiVersion);
             _firewallPolicyKubeSelectorGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicyKubeSelectorGroupResource.ResourceType.Namespace, Diagnostics);
-            _firewallPolicyKubeSelectorGroupsRestClient = new FirewallPolicyKubeSelectorGroups(_firewallPolicyKubeSelectorGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyKubeSelectorGroupApiVersion ?? "2025-09-01");
+            _firewallPolicyKubeSelectorGroupsRestClient = new FirewallPolicyKubeSelectorGroups(_firewallPolicyKubeSelectorGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyKubeSelectorGroupApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FirewallPolicyKubeSelectorGroupData, FirewallPolicyKubeSelectorGroupResource>(new FirewallPolicyKubeSelectorGroupsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FirewallPolicyKubeSelectorGroupData, FirewallPolicyKubeSelectorGroupResource>(new FirewallPolicyKubeSelectorGroupDataAsyncCollectionResultOfT(
                 _firewallPolicyKubeSelectorGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FirewallPolicyKubeSelectorGroupData, FirewallPolicyKubeSelectorGroupResource>(new FirewallPolicyKubeSelectorGroupsGetAllCollectionResultOfT(
+            return new PageableWrapper<FirewallPolicyKubeSelectorGroupData, FirewallPolicyKubeSelectorGroupResource>(new FirewallPolicyKubeSelectorGroupDataCollectionResultOfT(
                 _firewallPolicyKubeSelectorGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -118,7 +118,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 {
                     Console.WriteLine("Creating model failed.");
                     Console.WriteLine("Errors:");
-                    ErrorResponse error = response.ModelInfo.Errors[0];
+                    ErrorResult error = response.ModelInfo.Errors[0];
                     try
                     {
                         Console.WriteLine($"Error code: {error.Code}, Message: {error.Message}");
@@ -170,7 +170,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 {
                     Console.WriteLine("Detection failed.");
                     Console.WriteLine("Errors:");
-                    ErrorResponse error = resultResponse.Results[0].Errors[0];
+                    ErrorResult error = resultResponse.Results[0].Errors[0];
                     Console.WriteLine($"Error code: {error.Code}. Message: {error.Message}");
                     return null;
                 }

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceChangesResourceChangeDetailsAsyncCollectionResultOfT(ResourceChangesOperationsRestClient, ResourceChangeDetailsRequestParameters.ToRequestContent(content), context, "MockableResourceGraphTenantResource.GetResourceChangeDetails");
+            return new MockableResourceGraphTenantResourceGetResourceChangeDetailsAsyncCollectionResultOfT(ResourceChangesOperationsRestClient, ResourceChangeDetailsRequestParameters.ToRequestContent(content), context, "MockableResourceGraphTenantResource.GetResourceChangeDetails");
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceChangesResourceChangeDetailsCollectionResultOfT(ResourceChangesOperationsRestClient, ResourceChangeDetailsRequestParameters.ToRequestContent(content), context, "MockableResourceGraphTenantResource.GetResourceChangeDetails");
+            return new MockableResourceGraphTenantResourceGetResourceChangeDetailsCollectionResultOfT(ResourceChangesOperationsRestClient, ResourceChangeDetailsRequestParameters.ToRequestContent(content), context, "MockableResourceGraphTenantResource.GetResourceChangeDetails");
         }
 
         /// <summary>

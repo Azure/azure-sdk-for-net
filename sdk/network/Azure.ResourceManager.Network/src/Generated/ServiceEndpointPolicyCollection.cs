@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ServiceEndpointPolicyResource.ResourceType, out string serviceEndpointPolicyApiVersion);
             _serviceEndpointPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicyResource.ResourceType.Namespace, Diagnostics);
-            _serviceEndpointPoliciesRestClient = new ServiceEndpointPolicies(_serviceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEndpointPolicyApiVersion ?? "2025-09-01");
+            _serviceEndpointPoliciesRestClient = new ServiceEndpointPolicies(_serviceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEndpointPolicyApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetByResourceGroupAsyncCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
+            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPolicyDataAsyncCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetByResourceGroupCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
+            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPolicyDataCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

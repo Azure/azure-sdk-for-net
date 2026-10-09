@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(VirtualMachineScaleSetResource.ResourceType, out string virtualMachineScaleSetApiVersion);
             _virtualMachineScaleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSets(_virtualMachineScaleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetApiVersion ?? "2026-03-01");
+            _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSets(_virtualMachineScaleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VirtualMachineScaleSetCollection.GetAll"), data => new VirtualMachineScaleSetResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetDataAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VirtualMachineScaleSetCollection.GetAll"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VirtualMachineScaleSetCollection.GetAll"), data => new VirtualMachineScaleSetResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetDataCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VirtualMachineScaleSetCollection.GetAll"), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>

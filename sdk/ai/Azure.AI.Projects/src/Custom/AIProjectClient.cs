@@ -8,11 +8,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
+using OpenAI.Realtime;
 
 #pragma warning disable AZC0007
 
@@ -20,6 +23,13 @@ namespace Azure.AI.Projects
 {
     // Data plane generated client.
     /// <summary> The AzureAI service client. </summary>
+    // The generator now also emits its own internal AIProjectClient(AuthenticationPolicy, Uri,
+    // AIProjectClientOptions) constructor to support settings-based construction, but it doesn't
+    // chain to ClientConnectionProvider's required base(int) constructor (a generator emission gap
+    // for this base-class shape), so the generated overload fails to compile. Suppress it in favor
+    // of this file's existing, already-correct customization of the same constructor below (which
+    // also threads a token provider through for ProjectsRealtimeClient's use).
+    [CodeGenSuppress("AIProjectClient", typeof(AuthenticationPolicy), typeof(Uri), typeof(AIProjectClientOptions))]
     public partial class AIProjectClient : ClientConnectionProvider
     {
         private const int _defaultMaxCacheSize = 100;
@@ -30,6 +40,9 @@ namespace Azure.AI.Projects
         private ProjectOpenAIClient _cachedOpenAIClient;
         private AgentAdministrationClient _cachedAgentsClient;
         private readonly TelemetryDetails _telemetryDetails;
+        [Experimental("AAIP002")]
+        private ProjectsRealtimeClient _cachedProjectsRealtimeClient;
+        private static readonly string s_experimentalHeaders = "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview";
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient()
@@ -40,7 +53,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of AIProjectClient from a <see cref="AIProjectClientSettings"/>. </summary>
         /// <param name="settings"> The settings for AIProjectClient. </param>
         [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
-        public AIProjectClient(AIProjectClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
+        public AIProjectClient(AIProjectClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options, settings?.CredentialProvider)
         {
         }
 
@@ -48,7 +61,17 @@ namespace Azure.AI.Projects
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal AIProjectClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AIProjectClientOptions options)
+        /// <param name="tokenProvider">
+        /// The token provider backing <paramref name="authenticationPolicy"/>, if the settings this
+        /// client was constructed from resolved one (for example a token-credential-based
+        /// <see cref="AIProjectClientSettings"/>). REST calls continue to authenticate solely via
+        /// <paramref name="authenticationPolicy"/> on the pipeline; this is stored only so
+        /// subclients with their own independent auth handshake -- such as the WebSocket-based
+        /// <see cref="ProjectsRealtimeClient"/> -- have a provider to use. It is left <see langword="null"/>
+        /// for settings this client cannot resolve one from (for example API-key-based settings),
+        /// in which case such subclients remain unavailable; see <see cref="GetProjectsRealtimeClient"/>.
+        /// </param>
+        internal AIProjectClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AIProjectClientOptions options, AuthenticationTokenProvider tokenProvider = null)
             : base(maxCacheSize: _defaultMaxCacheSize)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -56,6 +79,7 @@ namespace Azure.AI.Projects
             options ??= new AIProjectClientOptions();
 
             _endpoint = endpoint;
+            _tokenProvider = tokenProvider;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AIProjectClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -92,7 +116,7 @@ namespace Azure.AI.Projects
                 "api-version",
                 _apiVersion,
                 conditionToEvaluate: request => request?.Uri?.AbsolutePath?.ToLowerInvariant()?.Contains("openai/v1") != true);
-            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview");
+            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", s_experimentalHeaders);
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", _telemetryDetails.UserAgent.ToString());
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
             PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
@@ -226,6 +250,30 @@ namespace Azure.AI.Projects
         {
             return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
         }
+
+        [Experimental("AAIP002")]
+        internal virtual ProjectsRealtimeClient GetProjectsRealtimeClient()
+        {
+            if (_tokenProvider is null)
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(ProjectsRealtimeClient)} requires an {nameof(AuthenticationTokenProvider)}, but this {nameof(AIProjectClient)} " +
+                    $"was not constructed with one (for example, it was constructed from an {nameof(AIProjectClientSettings)} whose credential " +
+                    $"could not resolve one). Construct the client with the {nameof(AIProjectClient)}(Uri, AuthenticationTokenProvider, AIProjectClientOptions) " +
+                    "constructor to use Voice Agents realtime sessions.");
+            }
+
+            return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient, new ProjectsRealtimeClient(_endpoint, _tokenProvider, _flows[0], _apiVersion, s_experimentalHeaders), null) ?? _cachedProjectsRealtimeClient;
+        }
+
+        /// <summary>
+        /// Gets the client for working with Voice Agents' realtime endpoints. Call
+        /// <see cref="ProjectsRealtimeClient.StartSessionAsync"/> on it (the same method an OpenAI
+        /// <see cref="RealtimeClient"/> consumer would use) to start and connect a session for a
+        /// named voice agent.
+        /// </summary>
+        [Experimental("AAIP002")]
+        public virtual ProjectsRealtimeClient ProjectsRealtimeClient => GetProjectsRealtimeClient();
 
         /// <summary> Initializes a new instance of AgentInsightMonitors. </summary>
         internal virtual AgentInsightMonitors GetAgentInsightMonitorsClient()

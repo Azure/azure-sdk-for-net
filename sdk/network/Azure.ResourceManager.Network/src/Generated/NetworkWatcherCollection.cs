@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkWatcherResource.ResourceType, out string networkWatcherApiVersion);
             _networkWatchersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkWatcherResource.ResourceType.Namespace, Diagnostics);
-            _networkWatchersRestClient = new NetworkWatchers(_networkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkWatcherApiVersion ?? "2025-09-01");
+            _networkWatchersRestClient = new NetworkWatchers(_networkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkWatcherApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatchersListAsyncCollectionResultOfT(_networkWatchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkWatcherCollection.GetAll"), data => new NetworkWatcherResource(Client, data));
+            return new AsyncPageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatcherDataAsyncCollectionResultOfT(_networkWatchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkWatcherCollection.GetAll"), data => new NetworkWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatchersListCollectionResultOfT(_networkWatchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkWatcherCollection.GetAll"), data => new NetworkWatcherResource(Client, data));
+            return new PageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatcherDataCollectionResultOfT(_networkWatchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkWatcherCollection.GetAll"), data => new NetworkWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

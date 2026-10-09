@@ -11,7 +11,7 @@ imports:
 
 engine:
   id: copilot
-  version: "1.0.83"
+  version: "1.0.80"
 
 on:
   workflow_dispatch:

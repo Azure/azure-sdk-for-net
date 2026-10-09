@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             get
             {
-                return Properties is null ? default : Properties.StorageCapacityTiB;
+                return Properties is null ? (float?)default : Properties.StorageCapacityTiB;
             }
             set
             {

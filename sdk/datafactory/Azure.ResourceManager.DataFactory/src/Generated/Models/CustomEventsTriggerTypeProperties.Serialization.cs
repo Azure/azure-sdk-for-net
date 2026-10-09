@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     events = array;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CustomEventsTriggerTypeProperties(subjectBeginsWith, subjectEndsWith, events, scope, additionalBinaryDataProperties);

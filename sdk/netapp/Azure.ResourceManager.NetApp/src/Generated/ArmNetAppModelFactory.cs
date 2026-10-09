@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
                     serviceLevel,
                     usageThreshold,
-                    new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     throughputMibps,
                     dataProtection,
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(default, quotaSizeInKiBs, quotaType, quotaTarget, default),
+                provisioningState is null && quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(provisioningState, quotaSizeInKiBs, quotaType, quotaTarget, default),
                 default);
         }
 
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetAppVolumeQuotaRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(default, quotaSizeInKiBs, quotaType, quotaTarget, default), default);
+            return new NetAppVolumeQuotaRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), provisioningState is null && quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(provisioningState, quotaSizeInKiBs, quotaType, quotaTarget, default), default);
         }
 
         /// <summary>
@@ -2545,7 +2545,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
                     serviceLevel,
                     usageThreshold,
-                    new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     throughputMibps,
                     dataProtection,
@@ -2613,7 +2613,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
                     serviceLevel,
                     usageThreshold,
-                    new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     throughputMibps,
                     dataProtection,
@@ -2727,7 +2727,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -2888,7 +2888,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3149,7 +3149,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3309,7 +3309,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3808,7 +3808,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -4036,7 +4036,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -4256,7 +4256,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -4408,7 +4408,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -4561,7 +4561,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,

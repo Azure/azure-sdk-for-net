@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     principalId,
                     clientId,
                     isolationScope,
-                    new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), default),
+                    assignmentRestrictionsProviders is null ? default : new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), default),
                     default),
                 default);
         }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     principalId,
                     clientId,
                     isolationScope,
-                    new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), default),
+                    assignmentRestrictionsProviders is null ? default : new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), default),
                     default),
                 default);
         }

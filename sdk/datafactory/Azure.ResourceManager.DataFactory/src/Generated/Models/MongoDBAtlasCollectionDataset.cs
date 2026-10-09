@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The MongoDB Atlas database dataset. </summary>
     public partial class MongoDBAtlasCollectionDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="collection"> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
+        public MongoDBAtlasCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base("MongoDbAtlasCollection", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(collection, nameof(collection));
+
+            TypeProperties = new MongoDBAtlasCollectionDatasetTypeProperties(collection);
+        }
+
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

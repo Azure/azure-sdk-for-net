@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && groupIds is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default),
+                privateEndpointId is null && connectionState is null && groupIds is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default),
                 default);
         }
 

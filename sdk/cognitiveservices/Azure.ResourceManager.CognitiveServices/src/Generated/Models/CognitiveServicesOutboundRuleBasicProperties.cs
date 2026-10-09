@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Outbound Rule for the managed network of a cognitive services account.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesFqdnOutboundRule"/>, <see cref="CognitiveServicesPrivateEndpointOutboundRule"/>, and <see cref="ServiceTagOutboundRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesFqdnOutboundRule"/>, <see cref="CognitiveServicesPrivateEndpointOutboundRule"/>, and <see cref="CognitiveServicesServiceTagOutboundRule"/>.
     /// </summary>
     public abstract partial class CognitiveServicesOutboundRuleBasicProperties
     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errorInformation"> Error information about an outbound rule of a cognitive services account if RuleStatus is failed. </param>
         /// <param name="parentRuleNames"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesOutboundRuleBasicProperties(ServiceTagOutboundRuleCategory? category, ServiceTagOutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesOutboundRuleBasicProperties(CognitiveServicesServiceTagOutboundRuleCategory? category, CognitiveServicesServiceTagOutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Status = status;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Category of a managed network Outbound Rule of a cognitive services account. </summary>
         [WirePath("category")]
-        public ServiceTagOutboundRuleCategory? Category { get; set; }
+        public CognitiveServicesServiceTagOutboundRuleCategory? Category { get; set; }
 
         /// <summary> Type of a managed network Outbound Rule of a cognitive services account. </summary>
         [WirePath("status")]
-        public ServiceTagOutboundRuleStatus? Status { get; set; }
+        public CognitiveServicesServiceTagOutboundRuleStatus? Status { get; set; }
 
         /// <summary> Type of a managed network Outbound Rule of a cognitive services account. </summary>
         [WirePath("type")]

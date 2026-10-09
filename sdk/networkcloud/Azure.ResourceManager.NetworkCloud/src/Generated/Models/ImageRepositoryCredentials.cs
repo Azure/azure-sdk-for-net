@@ -45,14 +45,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Username = username;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The password or token used to access an image in the target repository. </summary>
-        public string Password { get; set; }
-
-        /// <summary> The URL of the authentication server used to validate the repository credentials. </summary>
-        public string RegistryUriString { get; set; }
-
-        /// <summary> The username used to access an image in the target repository. </summary>
-        public string Username { get; set; }
     }
 }

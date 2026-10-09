@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RouteFilterPropertiesFormat(rules ?? new ChangeTrackingList<RouteFilterRuleData>(), peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), ipv6Peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), provisioningState, additionalBinaryDataProperties);

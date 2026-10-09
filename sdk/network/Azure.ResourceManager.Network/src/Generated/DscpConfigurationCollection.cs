@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(DscpConfigurationResource.ResourceType, out string dscpConfigurationApiVersion);
             _dscpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DscpConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _dscpConfigurationRestClient = new DscpConfiguration(_dscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dscpConfigurationApiVersion ?? "2025-09-01");
+            _dscpConfigurationRestClient = new DscpConfiguration(_dscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dscpConfigurationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListAsyncCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationDataAsyncCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
+            return new PageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationDataCollectionResultOfT(_dscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DscpConfigurationCollection.GetAll"), data => new DscpConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

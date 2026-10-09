@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(RestorePointGroupResource.ResourceType, out string restorePointGroupApiVersion);
             _restorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointGroupResource.ResourceType.Namespace, Diagnostics);
-            _restorePointCollectionsRestClient = new RestorePointCollections(_restorePointCollectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorePointGroupApiVersion ?? "2026-03-01");
+            _restorePointCollectionsRestClient = new RestorePointCollections(_restorePointCollectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorePointGroupApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsGetAllAsyncCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RestorePointGroupCollection.GetAll"), data => new RestorePointGroupResource(Client, data));
+            return new AsyncPageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointGroupDataAsyncCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RestorePointGroupCollection.GetAll"), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointCollectionsGetAllCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RestorePointGroupCollection.GetAll"), data => new RestorePointGroupResource(Client, data));
+            return new PageableWrapper<RestorePointGroupData, RestorePointGroupResource>(new RestorePointGroupDataCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "RestorePointGroupCollection.GetAll"), data => new RestorePointGroupResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The ExecuteHibernateRequest request for executeHibernate operations. </summary>
+    /// <summary> The virtual machines and execution settings for a bulk hibernate action. </summary>
     public partial class ExecuteHibernateContent : IJsonModel<ExecuteHibernateContent>
     {
         /// <summary> Initializes a new instance of <see cref="ExecuteHibernateContent"/> for deserialization. </summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExecuteHibernateContent(executionParameters, resources, resourcesWithContext, additionalBinaryDataProperties);

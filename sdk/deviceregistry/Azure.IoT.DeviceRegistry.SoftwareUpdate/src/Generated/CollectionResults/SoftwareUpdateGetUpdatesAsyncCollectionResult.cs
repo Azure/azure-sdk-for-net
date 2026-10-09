@@ -44,7 +44,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <returns> The pages of SoftwareUpdateGetUpdatesAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);

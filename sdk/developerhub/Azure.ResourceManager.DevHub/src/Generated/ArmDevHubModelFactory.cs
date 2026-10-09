@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                repositoryName is null && repositoryMainBranch is null && repositoryOwner is null && authStatus is null && pullNumber is null && prStatus is null && branchName is null && storageAccountSubscription is null && storageAccountResourceGroup is null && storageAccountName is null && storageContainerName is null && stages is null && templates is null ? default : new IacProfileProperties(new IacGitHubProfile(
+                repositoryName is null && repositoryMainBranch is null && repositoryOwner is null && authStatus is null && pullNumber is null && prStatus is null && branchName is null && storageAccountSubscription is null && storageAccountResourceGroup is null && storageAccountName is null && storageContainerName is null && stages is null && templates is null ? default : new IacProfileProperties(repositoryName is null && repositoryMainBranch is null && repositoryOwner is null && authStatus is null && pullNumber is null && prStatus is null && branchName is null ? default : new IacGitHubProfile(
                     repositoryName,
                     repositoryMainBranch,
                     repositoryOwner,
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     pullNumber,
                     prStatus,
                     branchName,
-                    default), new TerraformProfile(storageAccountSubscription, storageAccountResourceGroup, storageAccountName, storageContainerName, default), (stages ?? new ChangeTrackingList<DevHubStageInfo>()).ToList(), (templates ?? new ChangeTrackingList<DevHubIacTemplateProperties>()).ToList(), default),
+                    default), storageAccountSubscription is null && storageAccountResourceGroup is null && storageAccountName is null && storageContainerName is null ? default : new TerraformProfile(storageAccountSubscription, storageAccountResourceGroup, storageAccountName, storageContainerName, default), (stages ?? new ChangeTrackingList<DevHubStageInfo>()).ToList(), (templates ?? new ChangeTrackingList<DevHubIacTemplateProperties>()).ToList(), default),
                 eTag,
                 default);
         }

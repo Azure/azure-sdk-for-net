@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppManagedEnvironmentResource.ResourceType, out string containerAppManagedEnvironmentApiVersion);
             _containerAppManagedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentsGetByResourceGroupAsyncCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentDataAsyncCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentsGetByResourceGroupCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
+            return new PageableWrapper<ContainerAppManagedEnvironmentData, ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentDataCollectionResultOfT(_containerAppManagedEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppManagedEnvironmentCollection.GetAll"), data => new ContainerAppManagedEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

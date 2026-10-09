@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(InstancePoolResource.ResourceType, out string instancePoolApiVersion);
             _instancePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", InstancePoolResource.ResourceType.Namespace, Diagnostics);
-            _instancePoolsRestClient = new InstancePools(_instancePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, instancePoolApiVersion ?? "2025-02-01-preview");
+            _instancePoolsRestClient = new InstancePools(_instancePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, instancePoolApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolsGetByResourceGroupAsyncCollectionResultOfT(_instancePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InstancePoolCollection.GetAll"), data => new InstancePoolResource(Client, data));
+            return new AsyncPageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolDataAsyncCollectionResultOfT(_instancePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InstancePoolCollection.GetAll"), data => new InstancePoolResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolsGetByResourceGroupCollectionResultOfT(_instancePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InstancePoolCollection.GetAll"), data => new InstancePoolResource(Client, data));
+            return new PageableWrapper<InstancePoolData, InstancePoolResource>(new InstancePoolDataCollectionResultOfT(_instancePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "InstancePoolCollection.GetAll"), data => new InstancePoolResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

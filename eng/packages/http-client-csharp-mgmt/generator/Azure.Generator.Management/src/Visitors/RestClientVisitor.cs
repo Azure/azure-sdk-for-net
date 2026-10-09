@@ -1,7 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -10,6 +21,125 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class RestClientVisitor : ScmLibraryVisitor
 {
+    private readonly Dictionary<(RestClientProvider Client, InputServiceMethod Method), MethodSignature> _initialRequestSignatures = [];
+
+    protected override ScmMethodProvider? VisitCreateRequestMethod(InputServiceMethod serviceMethod, RestClientProvider enclosingType, ScmMethodProvider? createRequestMethodProvider)
+    {
+        var client = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(serviceMethod)!;
+        var apiVersionParameter = serviceMethod.Operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
+        if (createRequestMethodProvider?.BodyStatements is null || !client.HasOperationApiVersionDefaults || apiVersionParameter is not InputQueryParameter apiVersionQuery)
+        {
+            return createRequestMethodProvider;
+        }
+
+        // The base generator visits the initial request before its continuation. Keep its
+        // actual parameters so filtered next-page signatures can retain resource-type context
+        // without reconstructing parameter types, wire aliases, or compatibility names.
+        var key = (enclosingType, serviceMethod);
+        if (!_initialRequestSignatures.TryGetValue(key, out var initialSignature)
+            || initialSignature.Name == createRequestMethodProvider.Signature.Name)
+        {
+            initialSignature = createRequestMethodProvider.Signature;
+            _initialRequestSignatures[key] = initialSignature;
+        }
+
+        var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
+            .Where(r => r.Methods.Any(m => ReferenceEquals(m.InputMethod, serviceMethod))).ToArray();
+        // A literal parameter is authoritative in the base input model, which deliberately
+        // omits clientDefaultValue for constants. Preserve it in mixed clients as well.
+        var wireDefault = apiVersionParameter.Type is InputLiteralType literal
+            ? literal.Value
+            : apiVersionParameter.DefaultValue?.Value;
+        ValueExpression defaultVersion = Literal(wireDefault as string ?? client.CurrentApiVersion);
+        // SetApiVersion is targeted to the operation's resource type, never to the owning
+        // client/RP or extension scope. Truly non-resource operations have no such runtime key.
+        var effectiveVersion = resources.Length == 0
+            ? defaultVersion
+            : ((ManagementClientProvider)enclosingType.ClientProvider).ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>()
+                .Invoke("Invoke", BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)).NullCoalesce(defaultVersion);
+
+        var statements = new List<MethodBodyStatement>();
+        foreach (var statement in createRequestMethodProvider.BodyStatements)
+        {
+            // The base emitter can mark a client-scoped version optional. Its generated
+            // null guard is unnecessary here: every operation has a non-null default.
+            var queryStatement = statement is IfStatement conditional && conditional.Body.Count() == 1
+                ? conditional.Body.Single()
+                : statement;
+            if (queryStatement is ExpressionStatement
+                { Expression: InvokeMethodExpression { MethodName: "AppendQuery" or "UpdateQuery", Arguments: [ScopedApi { Original: LiteralExpression { Literal: var name } }, _, ..] } invocation }
+                && Equals(name, apiVersionQuery.SerializedName))
+            {
+                invocation.Update(arguments: [invocation.Arguments[0], effectiveVersion, .. invocation.Arguments.Skip(2)]);
+                statements.Add(queryStatement);
+            }
+            else
+            {
+                statements.Add(statement);
+            }
+        }
+        createRequestMethodProvider.Update(bodyStatements: statements);
+        return createRequestMethodProvider;
+    }
+
+    private static ValueExpression BuildResourceTypeExpression(ArmResourceMetadata[] resources, InputServiceMethod serviceMethod, MethodProvider requestMethod, MethodSignature initialSignature)
+    {
+        var resourceType = resources[0].ResourceType;
+        if (resources.All(r => r.ResourceType.Equals(resourceType)) && resourceType.All(segment => segment.IsConstant))
+        {
+            return Literal(resourceType.SerializedResourceType);
+        }
+
+        // An expanded resource can reuse one REST method for several concrete types.
+        // Recover its dynamic type segments from the request parameters rather than
+        // choosing the first metadata entry. Truncate action suffixes to the resource path.
+        var path = new RequestPathPattern(new RequestPathPattern(serviceMethod.Operation.Path).Take(resources[0].ResourceIdPattern.Count));
+        ValueExpression? result = null;
+        var retainedParameters = new List<ParameterProvider>();
+        foreach (var segment in path.ResourceType)
+        {
+            ValueExpression value;
+            if (segment.IsConstant)
+            {
+                value = Literal(segment.Value);
+            }
+            else
+            {
+                var parameter = requestMethod.Signature.Parameters.FirstOrDefault(p => p.WireInfo.SerializedName == segment.VariableName);
+                if (parameter is null)
+                {
+                    parameter = initialSignature.Parameters.FirstOrDefault(p => p.WireInfo.SerializedName == segment.VariableName)
+                        ?? throw new InvalidOperationException($"Cannot resolve the API-version resource type for '{serviceMethod.Name}': missing path parameter '{segment.VariableName}'.");
+                    if (!retainedParameters.Contains(parameter))
+                    {
+                        retainedParameters.Add(parameter);
+                    }
+                }
+                value = parameter.Type.IsEnum ? parameter.Type.ToSerial(parameter) : parameter;
+            }
+            result = result is null ? value : new BinaryOperatorExpression("+", new BinaryOperatorExpression("+", result, Literal("/")), value);
+        }
+        if (retainedParameters.Count > 0)
+        {
+            // Azure paging call sites filter captured fields in their initial order.
+            // Merge restored and surviving parameters in that same order, keeping the
+            // surviving providers intact. Context is not replayed into the next-link URI.
+            var signature = requestMethod.Signature;
+            var parametersByName = signature.Parameters.Skip(1).ToDictionary(p => p.Name, StringComparer.Ordinal);
+            foreach (var parameter in retainedParameters)
+            {
+                parametersByName.TryAdd(parameter.Name, parameter);
+            }
+            signature.Update(parameters:
+            [
+                signature.Parameters[0],
+                .. initialSignature.Parameters.Where(p => parametersByName.ContainsKey(p.Name)).Select(p => parametersByName[p.Name])
+            ]);
+            requestMethod.Update(signature: signature);
+        }
+        return result ?? throw new InvalidOperationException($"Cannot resolve the API-version resource type for '{serviceMethod.Name}'.");
+    }
+
     /// <inheritdoc/>
     protected override TypeProvider? VisitType(TypeProvider type)
     {

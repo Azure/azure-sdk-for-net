@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary>
     /// Additional properties for signal instances assigned to an entity
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceSignal"/>, <see cref="LogAnalyticsSignal"/>, <see cref="PrometheusMetricsSignal"/>, and <see cref="ExternalSignal"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExternalSignal"/>, <see cref="LogAnalyticsSignal"/>, <see cref="PrometheusMetricsSignal"/>, and <see cref="ResourceSignal"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSignalInstanceProperties))]
     public abstract partial class SignalInstanceProperties : IJsonModel<SignalInstanceProperties>
@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureResourceMetric":
-                        return ResourceSignal.DeserializeResourceSignal(element, options);
+                    case "External":
+                        return ExternalSignal.DeserializeExternalSignal(element, options);
                     case "LogAnalyticsQuery":
                         return LogAnalyticsSignal.DeserializeLogAnalyticsSignal(element, options);
                     case "PrometheusMetricsQuery":
                         return PrometheusMetricsSignal.DeserializePrometheusMetricsSignal(element, options);
-                    case "External":
-                        return ExternalSignal.DeserializeExternalSignal(element, options);
+                    case "AzureResourceMetric":
+                        return ResourceSignal.DeserializeResourceSignal(element, options);
                 }
             }
             return UnknownSignalInstanceProperties.DeserializeUnknownSignalInstanceProperties(element, options);

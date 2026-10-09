@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Education
         {
             get
             {
-                return Properties is null ? default : Properties.Role;
+                return Properties is null ? (StudentRole?)default : Properties.Role;
             }
             set
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Education
         {
             get
             {
-                return Properties is null ? default : Properties.ExpiresOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.ExpiresOn;
             }
             set
             {

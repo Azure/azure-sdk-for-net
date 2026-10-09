@@ -50,9 +50,5 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource type. </summary>
         [WirePath("type")]
         public string Type { get; }
-
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public string ETag { get; }
     }
 }

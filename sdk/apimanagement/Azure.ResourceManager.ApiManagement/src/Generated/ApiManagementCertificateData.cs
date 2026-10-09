@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.ExpiresOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.ExpiresOn;
             }
             set
             {

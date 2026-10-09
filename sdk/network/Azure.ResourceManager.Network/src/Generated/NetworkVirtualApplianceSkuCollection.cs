@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkVirtualApplianceSkuResource.ResourceType, out string networkVirtualApplianceSkuApiVersion);
             _virtualApplianceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceSkuResource.ResourceType.Namespace, Diagnostics);
-            _virtualApplianceSkusRestClient = new VirtualApplianceSkus(_virtualApplianceSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkVirtualApplianceSkuApiVersion ?? "2025-09-01");
+            _virtualApplianceSkusRestClient = new VirtualApplianceSkus(_virtualApplianceSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkVirtualApplianceSkuApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkVirtualApplianceSkuData, NetworkVirtualApplianceSkuResource>(new VirtualApplianceSkusGetAllAsyncCollectionResultOfT(_virtualApplianceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkVirtualApplianceSkuCollection.GetAll"), data => new NetworkVirtualApplianceSkuResource(Client, data));
+            return new AsyncPageableWrapper<NetworkVirtualApplianceSkuData, NetworkVirtualApplianceSkuResource>(new NetworkVirtualApplianceSkuDataAsyncCollectionResultOfT(_virtualApplianceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkVirtualApplianceSkuCollection.GetAll"), data => new NetworkVirtualApplianceSkuResource(Client, data));
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkVirtualApplianceSkuData, NetworkVirtualApplianceSkuResource>(new VirtualApplianceSkusGetAllCollectionResultOfT(_virtualApplianceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkVirtualApplianceSkuCollection.GetAll"), data => new NetworkVirtualApplianceSkuResource(Client, data));
+            return new PageableWrapper<NetworkVirtualApplianceSkuData, NetworkVirtualApplianceSkuResource>(new NetworkVirtualApplianceSkuDataCollectionResultOfT(_virtualApplianceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkVirtualApplianceSkuCollection.GetAll"), data => new NetworkVirtualApplianceSkuResource(Client, data));
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

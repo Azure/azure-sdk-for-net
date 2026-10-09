@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 location,
                 distro is null && infrastructureConfigProvider is null && provisioningState is null && publicKey is null && status is null && version is null && events is null && networkProfile is null ? default : new ApplianceProperties(
                     distro,
-                    new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider, default),
+                    infrastructureConfigProvider is null ? default : new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider, default),
                     provisioningState,
                     publicKey,
                     status,

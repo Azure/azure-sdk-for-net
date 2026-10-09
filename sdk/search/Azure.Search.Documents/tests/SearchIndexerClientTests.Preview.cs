@@ -3,6 +3,14 @@
 
 #if AZURE_SEARCH_PREVIEW
 
+using System;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Tests.Utilities;
+using NUnit.Framework;
+
 namespace Azure.Search.Documents.Tests
 {
     /// <summary>
@@ -17,22 +25,53 @@ namespace Azure.Search.Documents.Tests
     /// </summary>
     public partial class SearchIndexerClientTests
     {
-        // This file intentionally contains no tests in GA releases.
-        // It is scaffolding for the next preview API version and should not be counted as active coverage.
-        //
-        // Add preview-only indexer tests here.
-        // Each test should have [ServiceVersion(Min = CurrentPreviewVersion)] to ensure
-        // it only runs against the preview API version in the test matrix.
-        //
-        // Example:
-        // [Test]
-        // [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
-        // public async Task PreviewIndexerFeature()
-        // {
-        //     await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexerAsync(this);
-        //     SearchIndexerClient client = resources.GetIndexerClient();
-        //     // ... test preview-only indexer behavior
-        // }
+        // search-preview:2026-08-01-preview
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
+        public async Task CreateOrUpdateSendsCacheControlParameters()
+        {
+            var transport = new MockTransport(
+                SearchTestHelpers.CreateMockJsonResponse(
+                    200,
+                    """{"name":"test-data-source","type":"azureblob","credentials":{"connectionString":"fake-connection-string"},"container":{"name":"test-container"}}"""),
+                SearchTestHelpers.CreateMockJsonResponse(
+                    200,
+                    """{"name":"test-skillset","skills":[]}"""),
+                SearchTestHelpers.CreateMockJsonResponse(
+                    200,
+                    """{"name":"test-indexer","dataSourceName":"test-data-source","targetIndexName":"test-index"}"""));
+            var options = new SearchClientOptions(ServiceVersion)
+            {
+                Transport = transport,
+            };
+            SearchIndexerClient client = InstrumentClient(
+                new SearchIndexerClient(
+                    new Uri("https://fake-search.search.windows.net"),
+                    new AzureKeyCredential("fake-api-key"),
+                    options));
+
+            await client.CreateOrUpdateDataSourceConnectionAsync(
+                new SearchIndexerDataSourceConnection(
+                    "test-data-source",
+                    SearchIndexerDataSourceType.AzureBlob,
+                    "fake-connection-string",
+                    new SearchIndexerDataContainer("test-container")),
+                ignoreCacheResetRequirements: true);
+            await client.CreateOrUpdateSkillsetAsync(
+                new SearchIndexerSkillset("test-skillset", Array.Empty<SearchIndexerSkill>()),
+                ignoreCacheResetRequirements: true,
+                disableCacheReprocessingChangeDetection: true);
+            await client.CreateOrUpdateIndexerAsync(
+                new SearchIndexer("test-indexer", "test-data-source", "test-index"),
+                ignoreCacheResetRequirements: true,
+                disableCacheReprocessingChangeDetection: true);
+
+            Assert.That(transport.Requests[0].Uri.ToString(), Does.Contain("ignoreResetRequirements=true"));
+            Assert.That(transport.Requests[1].Uri.ToString(), Does.Contain("ignoreResetRequirements=true"));
+            Assert.That(transport.Requests[1].Uri.ToString(), Does.Contain("disableCacheReprocessingChangeDetection=true"));
+            Assert.That(transport.Requests[2].Uri.ToString(), Does.Contain("ignoreResetRequirements=true"));
+            Assert.That(transport.Requests[2].Uri.ToString(), Does.Contain("disableCacheReprocessingChangeDetection=true"));
+        }
     }
 }
 #endif

@@ -121,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         /// <summary>
         /// Builds the absolute track URI for an ingestion endpoint supplied at export time, for
-        /// multi-tenant routing where the destination is not the one this client was built with.
+        /// multi-endpoint routing where the destination is not the one this client was built with.
         /// </summary>
         internal static Uri CreateTrackUri(string ingestionEndpoint) => new(new Uri(ingestionEndpoint), TrackPath);
 

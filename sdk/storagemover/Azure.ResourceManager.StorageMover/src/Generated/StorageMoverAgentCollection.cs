@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             TryGetApiVersion(StorageMoverAgentResource.ResourceType, out string storageMoverAgentApiVersion);
             _agentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", StorageMoverAgentResource.ResourceType.Namespace, Diagnostics);
-            _agentsRestClient = new Agents(_agentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageMoverAgentApiVersion ?? "2025-12-01");
+            _agentsRestClient = new Agents(_agentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageMoverAgentApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new AgentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new StorageMoverAgentDataAsyncCollectionResultOfT(
                 _agentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new AgentsGetAllCollectionResultOfT(
+            return new PageableWrapper<StorageMoverAgentData, StorageMoverAgentResource>(new StorageMoverAgentDataCollectionResultOfT(
                 _agentsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -180,6 +180,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("interconnectBlockProfile"u8);
                 writer.WriteObjectValue(InterconnectBlockProfile, options);
             }
+            if (Optional.IsDefined(CapacityReservation))
+            {
+                writer.WritePropertyName("capacityReservation"u8);
+                writer.WriteObjectValue(CapacityReservation, options);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -240,6 +245,7 @@ namespace Azure.ResourceManager.Compute.Models
             DateTimeOffset? timeCreated = default;
             ResourceIdentifier virtualMachineResourceId = default;
             InterconnectBlockProfile interconnectBlockProfile = default;
+            CapacityReservationProfile capacityReservation = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -412,7 +418,16 @@ namespace Azure.ResourceManager.Compute.Models
                     interconnectBlockProfile = InterconnectBlockProfile.DeserializeInterconnectBlockProfile(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                if (prop.NameEquals("capacityReservation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(prop.Value, options);
+                    continue;
+                }
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new VirtualMachineScaleSetVmProperties(
                 latestModelApplied,
@@ -436,6 +451,7 @@ namespace Azure.ResourceManager.Compute.Models
                 timeCreated,
                 virtualMachineResourceId,
                 interconnectBlockProfile,
+                capacityReservation,
                 additionalProperties);
         }
     }

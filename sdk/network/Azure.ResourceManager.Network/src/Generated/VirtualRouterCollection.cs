@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VirtualRouterResource.ResourceType, out string virtualRouterApiVersion);
             _virtualRoutersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouterResource.ResourceType.Namespace, Diagnostics);
-            _virtualRoutersRestClient = new VirtualRouters(_virtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualRouterApiVersion ?? "2025-09-01");
+            _virtualRoutersRestClient = new VirtualRouters(_virtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualRouterApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRoutersGetByResourceGroupAsyncCollectionResultOfT(_virtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualRouterCollection.GetAll"), data => new VirtualRouterResource(Client, data));
+            return new AsyncPageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRouterDataAsyncCollectionResultOfT(_virtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualRouterCollection.GetAll"), data => new VirtualRouterResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRoutersGetByResourceGroupCollectionResultOfT(_virtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualRouterCollection.GetAll"), data => new VirtualRouterResource(Client, data));
+            return new PageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRouterDataCollectionResultOfT(_virtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualRouterCollection.GetAll"), data => new VirtualRouterResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

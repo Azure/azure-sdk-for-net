@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.PricingTier;
+                return Properties is null ? (SecurityCenterPricingTier?)default : Properties.PricingTier;
             }
             set
             {

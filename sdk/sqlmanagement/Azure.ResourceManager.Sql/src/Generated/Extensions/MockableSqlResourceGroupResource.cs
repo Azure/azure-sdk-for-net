@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Sql.Mocking
 
         private ClientDiagnostics LongTermRetentionBackupsClientDiagnostics => _longTermRetentionBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LongTermRetentionBackups LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackups(LongTermRetentionBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-01-preview");
+        private LongTermRetentionBackups LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackups(LongTermRetentionBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics LongTermRetentionManagedInstanceBackupsClientDiagnostics => _longTermRetentionManagedInstanceBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LongTermRetentionManagedInstanceBackups LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackups(LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-01-preview");
+        private LongTermRetentionManagedInstanceBackups LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackups(LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         /// <summary> Gets a collection of SqlServers in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of SqlServers and their operations over a SqlServerResource. </returns>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupDataAsync3CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationCollectionResultOfT(
+            return new LongTermRetentionBackupData3CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupDataAsync4CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerCollectionResultOfT(
+            return new LongTermRetentionBackupData4CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationAsyncCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupDataAsync3CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupData3CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceAsyncCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupDataAsync4CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupData4CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

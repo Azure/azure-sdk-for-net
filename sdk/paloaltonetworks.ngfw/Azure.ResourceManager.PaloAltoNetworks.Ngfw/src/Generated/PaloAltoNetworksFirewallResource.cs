@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string paloAltoNetworksFirewallApiVersion);
             _firewallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paloAltoNetworksFirewallApiVersion ?? "2025-10-08");
+            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paloAltoNetworksFirewallApiVersion ?? "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +307,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +356,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -404,7 +405,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -452,7 +453,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -500,7 +501,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -548,7 +549,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -596,7 +597,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -645,7 +646,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -694,7 +695,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -738,7 +739,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-07-29-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -879,10 +880,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -922,10 +922,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1041,6 +1040,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets an object representing a <see cref="CustomCaptureConfigurationsFirewallResource"/> along with the instance operations that can be performed on it in the <see cref="PaloAltoNetworksFirewallResource"/>. </summary>
+        /// <returns> Returns a <see cref="CustomCaptureConfigurationsFirewallResource"/> object. </returns>
+        public virtual CustomCaptureConfigurationsFirewallResource GetCustomCaptureConfigurationsFirewall()
+        {
+            return new CustomCaptureConfigurationsFirewallResource(Client, Id.AppendChildResource("customCaptureConfigurations", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="LogIngestionSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="PaloAltoNetworksFirewallResource"/>. </summary>
+        /// <returns> Returns a <see cref="LogIngestionSettingsResource"/> object. </returns>
+        public virtual LogIngestionSettingsResource GetLogIngestionSettings()
+        {
+            return new LogIngestionSettingsResource(Client, Id.AppendChildResource("logIngestionSettings", "default"));
         }
 
         /// <summary> Gets an object representing a <see cref="MetricsObjectFirewallResource"/> along with the instance operations that can be performed on it in the <see cref="PaloAltoNetworksFirewallResource"/>. </summary>

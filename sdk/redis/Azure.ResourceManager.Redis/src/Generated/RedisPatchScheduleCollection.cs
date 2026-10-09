@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RedisPatchScheduleData, RedisPatchScheduleResource>(new RedisPatchSchedulesGetByRedisResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RedisPatchScheduleData, RedisPatchScheduleResource>(new RedisPatchScheduleDataAsyncCollectionResultOfT(
                 _redisPatchSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Redis
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RedisPatchScheduleData, RedisPatchScheduleResource>(new RedisPatchSchedulesGetByRedisResourceCollectionResultOfT(
+            return new PageableWrapper<RedisPatchScheduleData, RedisPatchScheduleResource>(new RedisPatchScheduleDataCollectionResultOfT(
                 _redisPatchSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

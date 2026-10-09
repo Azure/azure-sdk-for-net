@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     (azureRbacActions ?? new ChangeTrackingList<string>()).ToList(),
                     (azureRbacDataActions ?? new ChangeTrackingList<string>()).ToList(),
                     (requiredAzureRoleDefinitionIds ?? new ChangeTrackingList<string>()).ToList(),
-                    new ChaosCapabilityMetadataRuntimeProperties(runtimeKind, default),
+                    runtimeKind is null ? default : new ChaosCapabilityMetadataRuntimeProperties(runtimeKind, default),
                     default),
                 default);
         }
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     provisioningState,
                     failureReason,
                     lastActionOn,
-                    new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
+                    runInformationSteps is null ? default : new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
                     default),
                 default);
         }
@@ -1633,7 +1633,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     default,
                     failureReason,
                     lastActionOn,
-                    new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
+                    runInformationSteps is null ? default : new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
                     default),
                 default);
         }

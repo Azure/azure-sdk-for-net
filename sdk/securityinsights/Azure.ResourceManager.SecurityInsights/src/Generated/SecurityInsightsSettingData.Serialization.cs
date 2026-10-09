@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// The Setting.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityInsightsSettingAnomaliesKind"/>, <see cref="SecurityInsightsEyesOn"/>, <see cref="EntityAnalytics"/>, and <see cref="UebaSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntityAnalytics"/>, <see cref="SecurityInsightsEyesOn"/>, <see cref="SecurityInsightsSettingAnomaliesKind"/>, and <see cref="UebaSettings"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityInsightsSetting))]
     public abstract partial class SecurityInsightsSettingData : ResourceData, IJsonModel<SecurityInsightsSettingData>
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "Anomalies":
-                        return SecurityInsightsSettingAnomaliesKind.DeserializeSecurityInsightsSettingAnomaliesKind(element, options);
-                    case "EyesOn":
-                        return SecurityInsightsEyesOn.DeserializeSecurityInsightsEyesOn(element, options);
                     case "EntityAnalytics":
                         return EntityAnalytics.DeserializeEntityAnalytics(element, options);
+                    case "EyesOn":
+                        return SecurityInsightsEyesOn.DeserializeSecurityInsightsEyesOn(element, options);
+                    case "Anomalies":
+                        return SecurityInsightsSettingAnomaliesKind.DeserializeSecurityInsightsSettingAnomaliesKind(element, options);
                     case "Ueba":
                         return UebaSettings.DeserializeUebaSettings(element, options);
                 }

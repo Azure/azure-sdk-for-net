@@ -280,6 +280,21 @@ graceful shutdown window and delivers the final batch without leaving it for a r
 Concurrent processes may share a directory safely, but separate directories keep one application's
 backlog from filling another's storage quota.
 
+**One application made of several processes or entry points** may find its telemetry split across
+several storage directories, because the directory name is derived from the process name and
+application base directory. A component that runs rarely then never drains its own backlog. Give
+each component the same `Azure.Monitor.OpenTelemetry.Exporter.StorageSubDirectory` value so they
+share one directory:
+
+```json
+{ "configProperties": { "Azure.Monitor.OpenTelemetry.Exporter.StorageSubDirectory": "my-app" } }
+```
+
+The value replaces only the process name and base directory in the name. The instrumentation key
+and user name still contribute, so different users and Application Insights resources stay
+isolated. Setting or changing the value moves storage to a new directory, and any backlog left in
+the previous one is not delivered.
+
 ## Examples
 
 Refer to [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/Program.cs) for a complete demo.

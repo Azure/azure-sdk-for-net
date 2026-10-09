@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary>
         /// Defines the resource properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualNetworkInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/>, and <see cref="Models.VirtualMachineInventoryItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualMachineInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/>, and <see cref="Models.VirtualNetworkInventoryItem"/>.
         /// </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
@@ -522,8 +522,8 @@ namespace Azure.ResourceManager.ScVmm.Models
                     (availabilitySets ?? new ChangeTrackingList<ScVmmAvailabilitySetItem>()).ToList(),
                     osProfile,
                     hardwareProfile,
-                    new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
-                    new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
+                    networkInterfaces is null ? default : new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
+                    storageDisks is null ? default : new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
                     infrastructureProfile,
                     powerState,
                     provisioningState,
@@ -651,9 +651,9 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new ScVmmVirtualMachineInstancePatch(availabilitySets is null && hardwareProfile is null && networkInterfaces is null && storageDisks is null && infrastructureCheckpointType is null ? default : new VirtualMachineInstanceUpdateProperties(
                 (availabilitySets ?? new ChangeTrackingList<ScVmmAvailabilitySetItem>()).ToList(),
                 hardwareProfile,
-                new ScVmmNetworkProfileUpdate((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterfaceUpdate>()).ToList(), default),
-                new ScVmmStorageProfileUpdate((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDiskUpdate>()).ToList(), default),
-                new ScVmmInfrastructureProfileUpdate(infrastructureCheckpointType, default),
+                networkInterfaces is null ? default : new ScVmmNetworkProfileUpdate((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterfaceUpdate>()).ToList(), default),
+                storageDisks is null ? default : new ScVmmStorageProfileUpdate((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDiskUpdate>()).ToList(), default),
+                infrastructureCheckpointType is null ? default : new ScVmmInfrastructureProfileUpdate(infrastructureCheckpointType, default),
                 default), default);
         }
 
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 uuid is null && credentials is null && httpsProxy is null && provisioningAction is null && status is null && customResourceName is null && provisioningState is null && privateLinkScopeResourceId is null ? default : new GuestAgentProperties(
                     uuid,
                     credentials,
-                    new ScVmmHttpProxyConfiguration(httpsProxy, default),
+                    httpsProxy is null ? default : new ScVmmHttpProxyConfiguration(httpsProxy, default),
                     provisioningAction,
                     status,
                     customResourceName,
@@ -1058,8 +1058,8 @@ namespace Azure.ResourceManager.ScVmm.Models
                     (availabilitySets ?? new ChangeTrackingList<ScVmmAvailabilitySetItem>()).ToList(),
                     osProfile,
                     hardwareProfile,
-                    new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
-                    new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
+                    networkInterfaces is null ? default : new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
+                    storageDisks is null ? default : new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
                     infrastructureProfile,
                     powerState,
                     provisioningState,
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 uuid is null && credentials is null && httpsProxy is null && provisioningAction is null && status is null && customResourceName is null && provisioningState is null ? default : new GuestAgentProperties(
                     uuid,
                     credentials,
-                    new ScVmmHttpProxyConfiguration(httpsProxy, default),
+                    httpsProxy is null ? default : new ScVmmHttpProxyConfiguration(httpsProxy, default),
                     provisioningAction,
                     status,
                     customResourceName,

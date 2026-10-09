@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The class describes a parameter of a template.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTemplateText"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateVideo"/>, <see cref="MessageTemplateLocation"/>, and <see cref="MessageTemplateQuickAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateLocation"/>, <see cref="MessageTemplateQuickAction"/>, <see cref="MessageTemplateText"/>, and <see cref="MessageTemplateVideo"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMessageTemplateValue))]
     public abstract partial class MessageTemplateValue : IJsonModel<MessageTemplateValue>
@@ -131,18 +131,18 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "text":
-                        return MessageTemplateText.DeserializeMessageTemplateText(element, options);
-                    case "image":
-                        return MessageTemplateImage.DeserializeMessageTemplateImage(element, options);
                     case "document":
                         return MessageTemplateDocument.DeserializeMessageTemplateDocument(element, options);
-                    case "video":
-                        return MessageTemplateVideo.DeserializeMessageTemplateVideo(element, options);
+                    case "image":
+                        return MessageTemplateImage.DeserializeMessageTemplateImage(element, options);
                     case "location":
                         return MessageTemplateLocation.DeserializeMessageTemplateLocation(element, options);
                     case "quickAction":
                         return MessageTemplateQuickAction.DeserializeMessageTemplateQuickAction(element, options);
+                    case "text":
+                        return MessageTemplateText.DeserializeMessageTemplateText(element, options);
+                    case "video":
+                        return MessageTemplateVideo.DeserializeMessageTemplateVideo(element, options);
                 }
             }
             return UnknownMessageTemplateValue.DeserializeUnknownMessageTemplateValue(element, options);

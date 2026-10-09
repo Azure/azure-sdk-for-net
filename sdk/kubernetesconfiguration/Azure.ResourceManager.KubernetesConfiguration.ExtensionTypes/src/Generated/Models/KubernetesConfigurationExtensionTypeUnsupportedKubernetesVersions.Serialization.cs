@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions(connectedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), appliances ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), provisionedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), managedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), additionalBinaryDataProperties);

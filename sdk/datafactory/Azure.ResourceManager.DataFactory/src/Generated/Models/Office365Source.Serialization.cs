@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadOutputColumns(prop, ref outputColumns);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new Office365Source(
                 copySourceType,

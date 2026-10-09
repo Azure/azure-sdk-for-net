@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ArizeAIObservabilityEvalOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);

@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicIPAddressCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(PublicIPAddressResource.ResourceType, out string publicIPAddressApiVersion);
+            TryGetApiVersion(PublicIPAddressResource.ResourceType, out string publicIPAddressApiVersion);
             _publicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPAddressResource.ResourceType.Namespace, Diagnostics);
-            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPAddressApiVersion ?? "2025-09-01");
-            PublicIPAddressCollection.ValidateResourceId(id);
+            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPAddressApiVersion ?? "2026-01-01");
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressesListAsyncCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPAddressCollection.GetAll"), data => new PublicIPAddressResource(Client, data));
+            return new AsyncPageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressDataAsyncCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPAddressCollection.GetAll"), data => new PublicIPAddressResource(Client, data));
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressesListCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPAddressCollection.GetAll"), data => new PublicIPAddressResource(Client, data));
+            return new PageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressDataCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PublicIPAddressCollection.GetAll"), data => new PublicIPAddressResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -569,18 +569,18 @@ namespace Azure.ResourceManager.Network
 
         IEnumerator<PublicIPAddressResource> IEnumerable<PublicIPAddressResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PublicIPAddressResource> IAsyncEnumerable<PublicIPAddressResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -267,7 +267,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AnalysisResult(
@@ -277,7 +277,7 @@ namespace Azure.AI.ContentUnderstanding
                 warnings ?? new ChangeTrackingList<ResponseError>(),
                 infos ?? new ChangeTrackingList<ResponseError>(),
                 stringEncoding,
-                contents,
+                contents ?? new ChangeTrackingList<AnalysisContent>(),
                 additionalBinaryDataProperties);
         }
 

@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Container Apps Job execution status. </summary>
     internal partial class ExecutionStatus : ProvisionableConstruct
     {
-        private BicepList<ReplicaExecutionStatus> _replicas;
+        private BicepList<ContainerAppJobExecutionReplicaStatus> _replicas;
 
         /// <summary> Creates a new ExecutionStatus. </summary>
         public ExecutionStatus()
@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Replicas. </summary>
-        public BicepList<ReplicaExecutionStatus> Replicas
+        public BicepList<ContainerAppJobExecutionReplicaStatus> Replicas
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _replicas = DefineListProperty<ReplicaExecutionStatus>(nameof(Replicas), new string[] { "replicas" });
+            _replicas = DefineListProperty<ContainerAppJobExecutionReplicaStatus>(nameof(Replicas), new string[] { "replicas" });
             DefineAdditionalProperties();
         }
 

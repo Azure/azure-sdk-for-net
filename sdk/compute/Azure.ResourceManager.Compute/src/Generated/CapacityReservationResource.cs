@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string capacityReservationApiVersion);
             _capacityReservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _capacityReservationsRestClient = new CapacityReservations(_capacityReservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, capacityReservationApiVersion ?? "2026-03-01");
+            _capacityReservationsRestClient = new CapacityReservations(_capacityReservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, capacityReservationApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to delete a capacity reservation. This operation is allowed only when all the associated resources are disassociated from the capacity reservation. Please refer to https://aka.ms/CapacityReservation for more details. Note: Block capacity reservations cannot be deleted after it has been successfully allocated until the schedule end time.
+        /// The operation to delete a capacity reservation. This operation is allowed only when all the associated resources are disassociated from the capacity reservation. Please refer to https://aka.ms/CapacityReservation for more details. Note: Block capacity reservations cannot be deleted after they have been successfully allocated until the schedule end time. Future capacity reservations (Minimum API version: 2026-04-01) can be deleted if their reservation state is one of: Pending, Declined, FulfillmentFailed, or Approved. Otherwise, Future capacity reservations in the Committed, Live, or PartiallyFulfilled state cannot be deleted until minimumCommitmentDays have elapsed since their scheduled start date.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -323,7 +324,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -360,7 +361,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to delete a capacity reservation. This operation is allowed only when all the associated resources are disassociated from the capacity reservation. Please refer to https://aka.ms/CapacityReservation for more details. Note: Block capacity reservations cannot be deleted after it has been successfully allocated until the schedule end time.
+        /// The operation to delete a capacity reservation. This operation is allowed only when all the associated resources are disassociated from the capacity reservation. Please refer to https://aka.ms/CapacityReservation for more details. Note: Block capacity reservations cannot be deleted after they have been successfully allocated until the schedule end time. Future capacity reservations (Minimum API version: 2026-04-01) can be deleted if their reservation state is one of: Pending, Declined, FulfillmentFailed, or Approved. Otherwise, Future capacity reservations in the Committed, Live, or PartiallyFulfilled state cannot be deleted until minimumCommitmentDays have elapsed since their scheduled start date.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -372,7 +373,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -518,10 +519,9 @@ namespace Azure.ResourceManager.Compute
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -561,10 +561,9 @@ namespace Azure.ResourceManager.Compute
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

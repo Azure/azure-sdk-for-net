@@ -139,6 +139,26 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
+        internal PipelineMessage CreateInvokeLatestToolboxMcpRequest(string name, BinaryContent content, string contentType, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/toolboxes/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath(":invoke_mcp", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Content-Type", contentType);
+            request.Headers.Set("Accept", "*/*");
+            request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
         internal PipelineMessage CreateUpdateDefaultVersionRequest(string name, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();

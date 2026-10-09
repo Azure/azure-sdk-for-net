@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -64,7 +64,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
 
             #region Snippet:CodeTransparencySubmission
@@ -129,7 +129,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
 
             #region Snippet:CodeTransparencySubmissionSyncReceipt
@@ -197,7 +197,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
 
             #region Snippet:CodeTransparencyVerification_StoreForOfflineUse
@@ -304,7 +304,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             #region Snippet:CodeTransparencyVerification
 #if !SNIPPET
@@ -320,10 +320,10 @@ namespace Azure.Security.CodeTransparency.Tests
                 var verificationOptions = new CodeTransparencyVerificationOptions
                 {
 #if !SNIPPET
-                    AuthorizedDomains = new string[] { "foo.bar.com" },
+                    AuthorizedDomains = { "foo.bar.com" },
 #endif
 #if SNIPPET
-                    AuthorizedDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+                    AuthorizedDomains = { "<< service name >>.confidential-ledger.azure.com" },
 #endif
                     AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
                     UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
@@ -363,7 +363,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<CodeTransparencyVerificationKeySet> jwksDoc = client.GetPublicKeys();

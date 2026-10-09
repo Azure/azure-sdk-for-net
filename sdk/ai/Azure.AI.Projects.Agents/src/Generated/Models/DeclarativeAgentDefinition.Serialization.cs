@@ -77,22 +77,58 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Harness))
+            {
+                writer.WritePropertyName("harness"u8);
+                writer.WriteObjectValue(Harness, options);
+            }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Optional.IsDefined(Instructions))
+            if (_instructionsIsDefined || Optional.IsDefined(Instructions))
             {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStringValue(Instructions);
+                if (Instructions != null)
+                {
+                    writer.WritePropertyName("instructions"u8);
+                    writer.WriteStringValue(Instructions);
+                }
+                else
+                {
+                    writer.WriteNull("instructions"u8);
+                }
             }
-            if (Optional.IsDefined(Temperature))
+            if (Optional.IsCollectionDefined(Skills))
             {
-                writer.WritePropertyName("temperature"u8);
-                writer.WriteNumberValue(Temperature.Value);
+                writer.WritePropertyName("skills"u8);
+                writer.WriteStartArray();
+                foreach (SkillReference item in Skills)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TopP))
+            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
             {
-                writer.WritePropertyName("top_p"u8);
-                writer.WriteNumberValue(TopP.Value);
+                if (Temperature != null)
+                {
+                    writer.WritePropertyName("temperature"u8);
+                    writer.WriteNumberValue(Temperature.Value);
+                }
+                else
+                {
+                    writer.WriteNull("temperature"u8);
+                }
+            }
+            if (_topPIsDefined || Optional.IsDefined(TopP))
+            {
+                if (TopP != null)
+                {
+                    writer.WritePropertyName("top_p"u8);
+                    writer.WriteNumberValue(TopP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_p"u8);
+                }
             }
             if (Optional.IsDefined(ReasoningOptions))
             {
@@ -167,9 +203,14 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AgentHarness harness = default;
             string model = default;
+            bool instructionsIsDefined = false;
             string instructions = default;
+            IList<SkillReference> skills = default;
+            bool temperatureIsDefined = false;
             float? temperature = default;
+            bool topPIsDefined = false;
             float? topP = default;
             ResponseReasoningOptions reasoningOptions = default;
             IList<ResponseTool> tools = default;
@@ -192,6 +233,15 @@ namespace Azure.AI.Projects.Agents
                     contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("harness"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    harness = AgentHarness.DeserializeAgentHarness(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("model"u8))
                 {
                     model = prop.Value.GetString();
@@ -199,6 +249,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("instructions"u8))
                 {
+                    instructionsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instructions = null;
@@ -207,8 +258,23 @@ namespace Azure.AI.Projects.Agents
                     instructions = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("skills"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SkillReference> array = new List<SkillReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SkillReference.DeserializeSkillReference(item, options));
+                    }
+                    skills = array;
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
+                    temperatureIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         temperature = null;
@@ -219,6 +285,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("top_p"u8))
                 {
+                    topPIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         topP = null;
@@ -243,7 +310,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    toolChoice = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("text"u8))
@@ -267,22 +334,29 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeclarativeAgentDefinition(
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
+                harness,
                 model,
                 instructions,
+                skills ?? new ChangeTrackingList<SkillReference>(),
                 temperature,
                 topP,
                 reasoningOptions,
                 tools ?? new ChangeTrackingList<ResponseTool>(),
                 toolChoice,
                 textOptions,
-                structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());
+                structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>())
+            {
+                _instructionsIsDefined = instructionsIsDefined,
+                _temperatureIsDefined = temperatureIsDefined,
+                _topPIsDefined = topPIsDefined
+            };
         }
     }
 }
