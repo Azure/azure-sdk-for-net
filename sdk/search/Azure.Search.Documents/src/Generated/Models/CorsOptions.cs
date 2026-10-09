@@ -17,6 +17,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private long? _maxAgeInSeconds;
+        internal bool _maxAgeInSecondsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CorsOptions"/>. </summary>
         /// <param name="allowedOrigins"> The list of origins from which JavaScript code will be granted access to your index. Can contain a list of hosts of the form {protocol}://{fully-qualified-domain-name}[:{port#}], or a single '*' to allow all origins (not recommended). </param>
@@ -35,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal CorsOptions(IList<string> allowedOrigins, long? maxAgeInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowedOrigins = allowedOrigins;
-            MaxAgeInSeconds = maxAgeInSeconds;
+            _maxAgeInSeconds = maxAgeInSeconds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +45,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public IList<string> AllowedOrigins { get; }
 
         /// <summary> The duration for which browsers should cache CORS preflight responses. Defaults to 5 minutes. </summary>
-        public long? MaxAgeInSeconds { get; set; }
+        public long? MaxAgeInSeconds
+        {
+            get
+            {
+                return _maxAgeInSeconds;
+            }
+            set
+            {
+                _maxAgeInSeconds = value;
+                _maxAgeInSecondsIsDefined = true;
+            }
+        }
     }
 }

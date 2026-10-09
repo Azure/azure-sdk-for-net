@@ -17,6 +17,8 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private BinaryData _responseFormat;
+        internal bool _responseFormatIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PersistentAgent"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
@@ -93,7 +95,7 @@ namespace Azure.AI.Agents.Persistent
             ToolResources = toolResources;
             Temperature = temperature;
             TopP = topP;
-            ResponseFormat = responseFormat;
+            _responseFormat = responseFormat;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -183,7 +185,13 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ResponseFormat { get; }
+        public BinaryData ResponseFormat
+        {
+            get
+            {
+                return _responseFormat;
+            }
+        }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }

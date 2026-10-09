@@ -16,6 +16,18 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _name;
+        internal bool _nameIsDefined;
+        private string _description;
+        internal bool _descriptionIsDefined;
+        private string _instructions;
+        internal bool _instructionsIsDefined;
+        private float? _temperature;
+        internal bool _temperatureIsDefined;
+        private float? _topP;
+        internal bool _topPIsDefined;
+        private BinaryData _responseFormat;
+        internal bool _responseFormatIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="UpdateAgentRequest"/>. </summary>
         internal UpdateAgentRequest()
@@ -49,14 +61,14 @@ namespace Azure.AI.Agents.Persistent
         internal UpdateAgentRequest(string model, string name, string description, string instructions, IList<ToolDefinition> tools, ToolResources toolResources, float? temperature, float? topP, BinaryData responseFormat, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
-            Name = name;
-            Description = description;
-            Instructions = instructions;
+            _name = name;
+            _description = description;
+            _instructions = instructions;
             Tools = tools;
             ToolResources = toolResources;
-            Temperature = temperature;
-            TopP = topP;
-            ResponseFormat = responseFormat;
+            _temperature = temperature;
+            _topP = topP;
+            _responseFormat = responseFormat;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -65,13 +77,31 @@ namespace Azure.AI.Agents.Persistent
         public string Model { get; }
 
         /// <summary> The modified name for the agent to use. </summary>
-        public string Name { get; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
 
         /// <summary> The modified description for the agent to use. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+        }
 
         /// <summary> The modified system instructions for the new agent to use. </summary>
-        public string Instructions { get; }
+        public string Instructions
+        {
+            get
+            {
+                return _instructions;
+            }
+        }
 
         /// <summary> The modified collection of tools to enable for the agent. </summary>
         public IList<ToolDefinition> Tools { get; }
@@ -86,14 +116,26 @@ namespace Azure.AI.Agents.Persistent
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random,
         /// while lower values like 0.2 will make it more focused and deterministic.
         /// </summary>
-        public float? Temperature { get; }
+        public float? Temperature
+        {
+            get
+            {
+                return _temperature;
+            }
+        }
 
         /// <summary>
         /// An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass.
         /// So 0.1 means only the tokens comprising the top 10% probability mass are considered.
         /// We generally recommend altering this or temperature but not both.
         /// </summary>
-        public float? TopP { get; }
+        public float? TopP
+        {
+            get
+            {
+                return _topP;
+            }
+        }
 
         /// <summary>
         /// The response format of the tool calls used by this agent.
@@ -140,7 +182,13 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ResponseFormat { get; }
+        public BinaryData ResponseFormat
+        {
+            get
+            {
+                return _responseFormat;
+            }
+        }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IDictionary<string, string> Metadata { get; }

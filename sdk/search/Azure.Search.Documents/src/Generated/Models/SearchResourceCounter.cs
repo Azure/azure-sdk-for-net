@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private long? _quota;
+        internal bool _quotaIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchResourceCounter"/>. </summary>
         /// <param name="usage"> The resource usage amount. </param>
@@ -30,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal SearchResourceCounter(long usage, long? quota, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Usage = usage;
-            Quota = quota;
+            _quota = quota;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +40,12 @@ namespace Azure.Search.Documents.Indexes.Models
         public long Usage { get; }
 
         /// <summary> The resource amount quota. </summary>
-        public long? Quota { get; }
+        public long? Quota
+        {
+            get
+            {
+                return _quota;
+            }
+        }
     }
 }
