@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Azure.Provisioning.Fabric.Tests;
 
 public class BasicLiveFabricTests(bool async)
-    : ProvisioningTestBase(async)
+    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
 {
     [Test]
     [LiveOnly]
