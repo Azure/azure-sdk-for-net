@@ -26,19 +26,26 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the <see cref="System.Threading.CancellationToken"/> instance which
         /// will be cancelled when <see cref="ServiceBusSessionProcessor.StopProcessingAsync"/>
-        /// is called, or when the session lock has been lost, or if <see cref="ReleaseSession"/> is called.
+        /// is called, when the client detects session lock loss, or if <see cref="ReleaseSession"/> is called.
         /// </summary>
+        /// <remarks>
+        /// By default, closure of the established session receive link cancels this token without waiting for another operation.
+        /// A local lock-expiry notification through <see cref="SessionLockLostAsync"/> alone does not cancel this token.
+        /// </remarks>
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
         /// An event that is raised when the session lock is lost. This event is only raised for the scope of the Process Session Message handler.
-        /// Once the handler returns, the event will not be raised. There are two cases in which this event can be raised:
+        /// Once the handler returns, the event will not be raised. This event can be raised:
         /// <list type="numbered">
         ///     <item>
         ///         <description>When the session lock has expired based on the <see cref="SessionLockedUntil"/> property</description>
         ///     </item>
         ///     <item>
         ///         <description>When a non-transient exception occurs while attempting to renew the session lock.</description>
+        ///     </item>
+        ///     <item>
+        ///         <description>By default, when the client detects closure of the established session receive link.</description>
         ///     </item>
         /// </list>
         /// </summary>
