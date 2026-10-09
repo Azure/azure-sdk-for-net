@@ -277,5 +277,31 @@ namespace Azure.ResourceManager.Compute.BulkActions
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateBulkAcknowledgeOperationErrorsRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath("/acknowledgeBulkOperationErrors", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
     }
 }
