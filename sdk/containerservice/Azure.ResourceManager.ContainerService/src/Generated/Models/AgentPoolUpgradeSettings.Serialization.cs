@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("maxUnavailable"u8);
                 writer.WriteStringValue(MaxUnavailable);
             }
+            if (Optional.IsDefined(MaxBlockedNodes))
+            {
+                writer.WritePropertyName("maxBlockedNodes"u8);
+                writer.WriteStringValue(MaxBlockedNodes);
+            }
             if (Optional.IsDefined(DrainTimeoutInMinutes))
             {
                 writer.WritePropertyName("drainTimeoutInMinutes"u8);
@@ -98,6 +103,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("undrainableNodeBehavior"u8);
                 writer.WriteStringValue(UndrainableNodeBehavior.Value.ToString());
+            }
+            if (Optional.IsDefined(UpgradeGateSettings))
+            {
+                writer.WritePropertyName("upgradeGateSettings"u8);
+                writer.WriteObjectValue(UpgradeGateSettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,9 +153,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string maxSurge = default;
             string maxUnavailable = default;
+            string maxBlockedNodes = default;
             int? drainTimeoutInMinutes = default;
             int? nodeSoakDurationInMinutes = default;
             UndrainableNodeBehavior? undrainableNodeBehavior = default;
+            UpgradeGateSettings upgradeGateSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,6 +169,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 if (prop.NameEquals("maxUnavailable"u8))
                 {
                     maxUnavailable = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("maxBlockedNodes"u8))
+                {
+                    maxBlockedNodes = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("drainTimeoutInMinutes"u8))
@@ -186,6 +203,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     undrainableNodeBehavior = new UndrainableNodeBehavior(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("upgradeGateSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    upgradeGateSettings = UpgradeGateSettings.DeserializeUpgradeGateSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -194,9 +220,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new AgentPoolUpgradeSettings(
                 maxSurge,
                 maxUnavailable,
+                maxBlockedNodes,
                 drainTimeoutInMinutes,
                 nodeSoakDurationInMinutes,
                 undrainableNodeBehavior,
+                upgradeGateSettings,
                 additionalBinaryDataProperties);
         }
     }
