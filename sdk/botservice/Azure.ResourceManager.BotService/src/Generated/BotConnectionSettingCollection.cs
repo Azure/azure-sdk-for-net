@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new BotConnectionSettingDataAsyncCollectionResultOfT(
                 _connectionSettingsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.BotService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceCollectionResultOfT(
+            return new PageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new BotConnectionSettingDataCollectionResultOfT(
                 _connectionSettingsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

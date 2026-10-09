@@ -42,7 +42,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -90,9 +91,83 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "AzureAIDeveloper",
+          "value": "64702f94-c441-49e6-a78b-ef80e0188fee"
+        },
+        {
+          "name": "AzureAIEnterpriseNetworkConnectionApprover",
+          "value": "b556d68e-0be0-4f35-a333-ad7ee1ce17ea"
+        },
+        {
+          "name": "AzureAIInferenceDeploymentOperator",
+          "value": "3afb7f49-54cb-416e-8c09-6dc049efa503"
+        },
+        {
+          "name": "CognitiveServicesContributor",
+          "value": "25fbc0a9-bd7c-42a3-aa1a-3b75d497ee68"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionContributor",
+          "value": "c1ff6cc2-c111-46fe-8896-e0ef812ad9f3"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionDeployment",
+          "value": "5c4089e1-6d96-4d2f-b296-c1bc7137275f"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionLabeler",
+          "value": "88424f51-ebe7-446f-bc41-7fa16989e96c"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionReader",
+          "value": "93586559-c37d-4a6b-ba08-b9f0940c2d73"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionTrainer",
+          "value": "0a5ae4ab-0d65-4eeb-be61-29fc9b54394b"
+        },
+        {
+          "name": "CognitiveServicesDataReader",
+          "value": "b59867f0-fa02-499b-be73-45a86b5b3e1c"
+        },
+        {
+          "name": "CognitiveServicesFaceRecognizer",
+          "value": "9894cab4-e18a-44aa-828b-cb588cd6f2d7"
+        },
+        {
+          "name": "CognitiveServicesMetricsAdvisorAdministrator",
+          "value": "cb43c632-a144-4ec5-977c-e80c4affc34a"
+        },
+        {
+          "name": "CognitiveServicesOpenAIContributor",
+          "value": "a001fd3d-188f-4b5d-821b-7da978bf7442"
+        },
+        {
+          "name": "CognitiveServicesOpenAIUser",
+          "value": "5e0bd9bd-7b93-4f28-af87-19fc36ad61bd"
+        },
+        {
+          "name": "CognitiveServicesQnAMakerEditor",
+          "value": "f4cc2bf9-21be-47a1-bdf1-5c5804381025"
+        },
+        {
+          "name": "CognitiveServicesQnAMakerReader",
+          "value": "466ccd10-b268-4a11-b098-b4849f024126"
+        },
+        {
+          "name": "CognitiveServicesUsagesReader",
+          "value": "bba48692-92b0-4667-a9ad-c31c7b334ac2"
+        },
+        {
+          "name": "CognitiveServicesUser",
+          "value": "a97b65f3-24c7-4388-baec-2e87135dc908"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.CognitiveServices.QuotaTier",
@@ -154,7 +229,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -220,7 +296,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -276,7 +353,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -352,16 +430,6 @@
           "scope": {
             "kind": "ResourceGroup",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Accounts.evaluateDeploymentPolicies",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/evaluateDeploymentPolicies",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
         },
@@ -444,9 +512,83 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "AzureAIDeveloper",
+          "value": "64702f94-c441-49e6-a78b-ef80e0188fee"
+        },
+        {
+          "name": "AzureAIEnterpriseNetworkConnectionApprover",
+          "value": "b556d68e-0be0-4f35-a333-ad7ee1ce17ea"
+        },
+        {
+          "name": "AzureAIInferenceDeploymentOperator",
+          "value": "3afb7f49-54cb-416e-8c09-6dc049efa503"
+        },
+        {
+          "name": "CognitiveServicesContributor",
+          "value": "25fbc0a9-bd7c-42a3-aa1a-3b75d497ee68"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionContributor",
+          "value": "c1ff6cc2-c111-46fe-8896-e0ef812ad9f3"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionDeployment",
+          "value": "5c4089e1-6d96-4d2f-b296-c1bc7137275f"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionLabeler",
+          "value": "88424f51-ebe7-446f-bc41-7fa16989e96c"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionReader",
+          "value": "93586559-c37d-4a6b-ba08-b9f0940c2d73"
+        },
+        {
+          "name": "CognitiveServicesCustomVisionTrainer",
+          "value": "0a5ae4ab-0d65-4eeb-be61-29fc9b54394b"
+        },
+        {
+          "name": "CognitiveServicesDataReader",
+          "value": "b59867f0-fa02-499b-be73-45a86b5b3e1c"
+        },
+        {
+          "name": "CognitiveServicesFaceRecognizer",
+          "value": "9894cab4-e18a-44aa-828b-cb588cd6f2d7"
+        },
+        {
+          "name": "CognitiveServicesMetricsAdvisorAdministrator",
+          "value": "cb43c632-a144-4ec5-977c-e80c4affc34a"
+        },
+        {
+          "name": "CognitiveServicesOpenAIContributor",
+          "value": "a001fd3d-188f-4b5d-821b-7da978bf7442"
+        },
+        {
+          "name": "CognitiveServicesOpenAIUser",
+          "value": "5e0bd9bd-7b93-4f28-af87-19fc36ad61bd"
+        },
+        {
+          "name": "CognitiveServicesQnAMakerEditor",
+          "value": "f4cc2bf9-21be-47a1-bdf1-5c5804381025"
+        },
+        {
+          "name": "CognitiveServicesQnAMakerReader",
+          "value": "466ccd10-b268-4a11-b098-b4849f024126"
+        },
+        {
+          "name": "CognitiveServicesUsagesReader",
+          "value": "bba48692-92b0-4667-a9ad-c31c7b334ac2"
+        },
+        {
+          "name": "CognitiveServicesUser",
+          "value": "a97b65f3-24c7-4388-baec-2e87135dc908"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.CognitiveServices.CapabilityHost",
@@ -511,7 +653,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -576,111 +719,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.CognitiveServices.Compute",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-      "resourceType": "Microsoft.CognitiveServices/accounts/computes",
-      "methods": [
-        {
-          "methodId": "Microsoft.CognitiveServices.Computes.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Computes.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Computes.update",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Computes.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Computes.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Computes.restart",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}/restart",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Computes.start",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}/start",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Computes.stop",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}/stop",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/computes/{computeName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}",
-      "resourceName": "Compute",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_-]*[a-zA-Z0-9])?$",
-        "minLength": 1,
-        "maxLength": 63
-      },
-      "apiVersions": [
-        "2026-03-15-preview",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -757,7 +797,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -824,7 +865,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -929,7 +971,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -996,79 +1039,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.CognitiveServices.ManagedComputeDeployment",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments/{deploymentName}",
-      "resourceType": "Microsoft.CognitiveServices/accounts/managedComputeDeployments",
-      "methods": [
-        {
-          "methodId": "Microsoft.CognitiveServices.ManagedComputeDeployments.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.ManagedComputeDeployments.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.ManagedComputeDeployments.update",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.ManagedComputeDeployments.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments/{deploymentName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments/{deploymentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.ManagedComputeDeployments.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/managedComputeDeployments",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}",
-      "resourceName": "ManagedComputeDeployment",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,63}$"
-      },
-      "apiVersions": [
-        "2026-03-15-preview",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1165,7 +1137,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1232,7 +1205,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1289,7 +1263,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1354,7 +1329,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1433,7 +1409,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1518,7 +1495,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1613,7 +1591,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1680,7 +1659,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1757,111 +1737,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.CognitiveServices.Workbench",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-      "resourceType": "Microsoft.CognitiveServices/accounts/projects/workbenches",
-      "methods": [
-        {
-          "methodId": "Microsoft.CognitiveServices.Workbenches.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Workbenches.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Workbenches.update",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Workbenches.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Workbenches.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Workbenches.restart",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}/restart",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Workbenches.start",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}/start",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.CognitiveServices.Workbenches.stop",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}/stop",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/workbenches/{workbenchName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}",
-      "resourceName": "Workbench",
-      "nameConstraints": {
-        "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_-]*[a-zA-Z0-9])?$",
-        "minLength": 1,
-        "maxLength": 63
-      },
-      "apiVersions": [
-        "2026-03-15-preview",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1948,7 +1825,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2015,7 +1893,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2082,7 +1961,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2149,7 +2029,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2216,7 +2097,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2300,7 +2182,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2367,7 +2250,8 @@
         "2026-03-01",
         "2026-03-15-preview",
         "2026-05-01",
-        "2026-05-15-preview"
+        "2026-05-15-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     }
@@ -2380,15 +2264,6 @@
         "kind": "Tenant",
         "scopeIdPattern": "",
         "scopeResourceType": "Microsoft.Resources/tenants"
-      }
-    },
-    {
-      "methodId": "Microsoft.CognitiveServices.ManagedComputeUsagesOperationGroup.list",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/managedComputeUsages",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
       }
     },
     {
@@ -2475,15 +2350,6 @@
     {
       "methodId": "Microsoft.CognitiveServices.DeletedAccounts.list",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts",
-      "scope": {
-        "kind": "Subscription",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}",
-        "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.CognitiveServices.ManagedComputeCapacities.list",
-      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/managedComputeCapacities",
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",

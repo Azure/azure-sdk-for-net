@@ -1,0 +1,23 @@
+{
+  "resources": [],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.Commerce.UsageAggregatesOperationGroup.list",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Commerce/usageAggregates",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Commerce.RateCardOperationGroup.get",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Commerce/rateCard",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    }
+  ]
+}
