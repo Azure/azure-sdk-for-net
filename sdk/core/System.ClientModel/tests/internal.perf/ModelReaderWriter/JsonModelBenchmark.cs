@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
-using System.IO;
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.ClientModel.Tests.Client.Models;
+using System.ClientModel.Tests.ModelReaderWriterTests;
+using System.IO;
 using System.Reflection;
 using System.Text.Json;
-using System.ClientModel.Internal;
-using System.ClientModel.Tests.ModelReaderWriterTests;
-using System.ClientModel.Tests.Client.Models;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {

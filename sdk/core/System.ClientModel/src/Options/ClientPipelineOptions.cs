@@ -28,6 +28,7 @@ public class ClientPipelineOptions
     private TimeSpan? _timeout;
     private ClientLoggingOptions? _loggingOptions;
     private bool? _enabledDistributedTracing;
+    private ModelReaderWriterOptions? _modelReaderWriterOptions;
 
     /// <summary>
     /// Initializes a new instance of <see cref="ClientPipelineOptions"/>.
@@ -121,6 +122,30 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _transport = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the <see cref="Primitives.ModelReaderWriterOptions"/> a client should use when it
+    /// serializes and deserializes models. When set, the client stores these options and passes them to
+    /// <see cref="ModelReaderWriter"/> automatically, so any proxies registered on them take effect for
+    /// every call — without changing the client's constructors. A derived options type (e.g. a
+    /// first-party library's) inherits this property, letting that library inject its proxies transparently.
+    /// </summary>
+    /// <remarks>
+    /// PROTOTYPE (MRW proxy E2E): this property models the agreed design of carrying
+    /// <see cref="Primitives.ModelReaderWriterOptions"/> on the client options so a generated client can
+    /// inject them at (de)serialization time. It exists to validate the end-to-end scenario locally and is
+    /// pending API review before it becomes part of the public surface.
+    /// </remarks>
+    public ModelReaderWriterOptions? ModelReaderWriterOptions
+    {
+        get => _modelReaderWriterOptions;
+        set
+        {
+            AssertNotFrozen();
+
+            _modelReaderWriterOptions = value;
         }
     }
 
@@ -280,6 +305,7 @@ public class ClientPipelineOptions
         clone._timeout = _timeout;
         clone._enabledDistributedTracing = _enabledDistributedTracing;
         clone._loggingOptions = _loggingOptions?.Clone();
+        clone._modelReaderWriterOptions = _modelReaderWriterOptions;
         clone.PerCallPolicies = PerCallPolicies is not null
             ? (PipelinePolicy[])PerCallPolicies.Clone()
             : null;

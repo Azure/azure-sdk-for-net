@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
-using System.IO;
 
 namespace System.ClientModel.Tests.Message;
 
