@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PrivateEndpointConnectionPropertiesV2(groupIds ?? new ChangeTrackingList<string>(), provisioningState, privateEndpoint, privateLinkServiceConnectionState, additionalBinaryDataProperties);
