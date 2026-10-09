@@ -17,7 +17,7 @@ nowarn:AAIP001 M:Azure.AI.Projects.SimpleQnADataGenerationJobConfiguration.#ctor
 nowarn:AAIP001 M:Azure.AI.Projects.SimpleQnADataGenerationJobConfiguration.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.SimpleQnADataGenerationJobConfiguration.DeserializeSimpleQnADataGenerationJobConfiguration(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.DataGenerationJobOutput.DeserializeDataGenerationJobOutput(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluatorDefinition.DeserializeEvaluatorDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions()
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluatorDefinition.DeserializeEvaluatorDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.DataGenerationJobConfiguration.DeserializeDataGenerationJobConfiguration(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 
 # AAIP002 is the [Experimental] marker for this library's own preview surface

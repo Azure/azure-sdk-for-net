@@ -319,7 +319,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+                new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_MCP_CONNECTION_NAME)
             ))
             {
                 Name = "browser-automation",
@@ -435,7 +435,9 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                     await jobsClient.DeleteAsync(jobId: record, cancellationToken: default);
                     break;
                 }
-                catch { }
+                catch {
+                    await Task.Delay(500);
+                }
             }
         }
     }

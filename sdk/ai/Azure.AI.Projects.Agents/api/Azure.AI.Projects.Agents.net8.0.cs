@@ -5895,17 +5895,3 @@ namespace Azure.AI.Projects.Agents
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.WorkIQPreviewToolboxTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
-namespace OpenAI
-{
-    public enum MCPToolboxToolConnectorId
-    {
-        ConnectorDropbox = 0,
-        ConnectorGmail = 1,
-        ConnectorGooglecalendar = 2,
-        ConnectorGoogledrive = 3,
-        ConnectorMicrosoftteams = 4,
-        ConnectorOutlookcalendar = 5,
-        ConnectorOutlookemail = 6,
-        ConnectorSharepoint = 7,
-    }
-}

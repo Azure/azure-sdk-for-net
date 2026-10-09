@@ -11,6 +11,7 @@
 - Redesigned the Agent Optimization API and model hierarchy. Job creation now uses optimization model and configuration objects, job listings return `AgentOptimizationJob`, and the previous dataset input, job input, options, progress, and list-item models were removed.
 - Renamed the Teams Phone Extension telephony APIs to Teams Phone Extensibility and renamed `MCPToolboxToolConnectorId` to `McpToolConnectorId`.
 - Replaced voice response status, output modality, semantic VAD eagerness, and web-search context-size types with the corresponding shared OpenAI types.
+- Moved `CallableToolAllowedCaller`, `VoiceAgentAudioInputConfigTranscriptionDelay`, `RealtimeFunctionToolParameters`, `ContainerSkill`, `InlineSkillParam`, and `SkillReferenceParam` from the `OpenAI` namespace to `Azure.AI.Projects.Agents`.
 
 ### Bugs Fixed
 

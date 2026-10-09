@@ -7,8 +7,8 @@
 - Agent optimization does not require `AAIP001` warning suppression anymore.
 
 ### Breaking Changes
-- `EvaluatorGenerationJobs.CreateAsync` and `EvaluatorGenerationJobs.Async` are now returning the LRO poller.
-- To create a data generation job `DataGenerationJobInputs` is now need to be used. It can be of three types: `EvaluationDataGenerationJobInputs`, `ReinforcementFineTuningDataGenerationJobInputs` and `SupervisedFineTuningDataGenerationJobInputs`. 
+- `EvaluatorGenerationJobs.Create` and `EvaluatorGenerationJobs.CreateAsync` are now returning the LRO poller.
+- To create a data generation job, `DataGenerationJobInputs` is now need to be used. It can be of three types: `EvaluationDataGenerationJobInputs`, `ReinforcementFineTuningDataGenerationJobInputs` and `SupervisedFineTuningDataGenerationJobInputs`. 
 - `DataGenerationJobOptions` was replaced by `DataGenerationJobConfiguration` subtypes.
 - `DataGenerationJobOutputOptions` was replaced by `EvaluationDataGenerationJobOutputConfiguration`.
 

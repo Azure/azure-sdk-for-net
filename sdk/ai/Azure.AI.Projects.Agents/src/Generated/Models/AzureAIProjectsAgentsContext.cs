@@ -89,12 +89,8 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(BrowserAutomationPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.BrowserAutomationPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolboxTool))]
-#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolConnectionOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ChatTool))]
     [ModelReaderWriterBuildable(typeof(CodeConfiguration))]
     [ModelReaderWriterBuildable(typeof(CodeInterpreterToolboxTool))]
