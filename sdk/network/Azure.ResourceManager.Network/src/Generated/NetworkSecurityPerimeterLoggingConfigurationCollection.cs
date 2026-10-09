@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityPerimeterLoggingConfigurationData, NetworkSecurityPerimeterLoggingConfigurationResource>(new NetworkSecurityPerimeterLoggingConfigurationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterLoggingConfigurationData, NetworkSecurityPerimeterLoggingConfigurationResource>(new NetworkSecurityPerimeterLoggingConfigurationDataAsyncCollectionResultOfT(
                 _networkSecurityPerimeterLoggingConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityPerimeterLoggingConfigurationData, NetworkSecurityPerimeterLoggingConfigurationResource>(new NetworkSecurityPerimeterLoggingConfigurationsGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkSecurityPerimeterLoggingConfigurationData, NetworkSecurityPerimeterLoggingConfigurationResource>(new NetworkSecurityPerimeterLoggingConfigurationDataCollectionResultOfT(
                 _networkSecurityPerimeterLoggingConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

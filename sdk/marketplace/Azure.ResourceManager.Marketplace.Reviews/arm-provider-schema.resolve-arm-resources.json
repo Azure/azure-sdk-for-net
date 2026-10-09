@@ -1,0 +1,23 @@
+{
+  "resources": [],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.Marketplace/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Marketplace.RatingAndReviewsOperations.checkUserHasReview",
+      "operationPath": "/providers/Microsoft.Marketplace/products/{uniqueProductId}/checkUserHasReview",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

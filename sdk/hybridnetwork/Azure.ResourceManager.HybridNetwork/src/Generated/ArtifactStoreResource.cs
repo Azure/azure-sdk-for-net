@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new ProxyArtifactGetProxyArtifactsAsyncCollectionResultOfT(
+            return new ProxyArtifactListOverviewAsyncCollectionResultOfT(
                 _proxyArtifactRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new ProxyArtifactGetProxyArtifactsCollectionResultOfT(
+            return new ProxyArtifactListOverviewCollectionResultOfT(
                 _proxyArtifactRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1153,7 +1153,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new ProxyArtifactGetProxyArtifactVersionsAsyncCollectionResultOfT(
+            return new ProxyArtifactVersionsListOverviewAsyncCollectionResultOfT(
                 _proxyArtifactRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1198,7 +1198,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new ProxyArtifactGetProxyArtifactVersionsCollectionResultOfT(
+            return new ProxyArtifactVersionsListOverviewCollectionResultOfT(
                 _proxyArtifactRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

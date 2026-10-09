@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabCustomImageData, DevTestLabCustomImageResource>(new CustomImagesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabCustomImageData, DevTestLabCustomImageResource>(new DevTestLabCustomImageDataAsyncCollectionResultOfT(
                 _customImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabCustomImageData, DevTestLabCustomImageResource>(new CustomImagesGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabCustomImageData, DevTestLabCustomImageResource>(new DevTestLabCustomImageDataCollectionResultOfT(
                 _customImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

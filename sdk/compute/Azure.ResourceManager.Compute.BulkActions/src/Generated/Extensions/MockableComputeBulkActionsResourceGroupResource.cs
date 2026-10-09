@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineBulkOperationsBulkListOperationErrorsAsyncCollectionResultOfT(
+            return new ComputeBulkOperationResultAsync1CollectionResultOfT(
                 VirtualMachineBulkOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualMachineBulkOperationsBulkListOperationErrorsCollectionResultOfT(
+            return new ComputeBulkOperationResult1CollectionResultOfT(
                 VirtualMachineBulkOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

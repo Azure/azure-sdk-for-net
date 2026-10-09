@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiBlocklistData, RaiBlocklistResource>(new RaiBlocklistsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RaiBlocklistData, RaiBlocklistResource>(new RaiBlocklistDataAsyncCollectionResultOfT(
                 _raiBlocklistsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiBlocklistData, RaiBlocklistResource>(new RaiBlocklistsGetAllCollectionResultOfT(
+            return new PageableWrapper<RaiBlocklistData, RaiBlocklistResource>(new RaiBlocklistDataCollectionResultOfT(
                 _raiBlocklistsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

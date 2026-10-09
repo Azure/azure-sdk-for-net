@@ -1,0 +1,443 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.AppComplianceAutomation.ReportResource",
+      "resourceIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+      "resourceType": "Microsoft.AppComplianceAutomation/reports",
+      "methods": [
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.checkNameAvailability",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/checkNameAvailability",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.fix",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/fix",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.getScopingQuestions",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/getScopingQuestions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.syncCertRecord",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/syncCertRecord",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Report.verify",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/verify",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "AppComplianceReport",
+      "nameConstraints": {
+        "pattern": "^[-a-zA-Z0-9_]{1,50}$"
+      },
+      "apiVersions": [
+        "2024-06-27"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AppComplianceAutomation.EvidenceResource",
+      "resourceIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}",
+      "resourceType": "Microsoft.AppComplianceAutomation/reports/evidences",
+      "methods": [
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Evidence.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Evidence.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Evidence.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Evidence.listByReport",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Evidence.download",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}/download",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/evidences/{evidenceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+      "resourceName": "AppComplianceReportEvidence",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-_.]+$"
+      },
+      "apiVersions": [
+        "2024-06-27"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AppComplianceAutomation.ScopingConfigurationResource",
+      "resourceIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}",
+      "resourceType": "Microsoft.AppComplianceAutomation/reports/scopingConfigurations",
+      "methods": [
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.ScopingConfiguration.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.ScopingConfiguration.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.ScopingConfiguration.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.ScopingConfiguration.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+      "resourceName": "AppComplianceReportScopingConfiguration",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9_]*$"
+      },
+      "apiVersions": [
+        "2024-06-27"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AppComplianceAutomation.SnapshotResource",
+      "resourceIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}",
+      "resourceType": "Microsoft.AppComplianceAutomation/reports/snapshots",
+      "methods": [
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Snapshot.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Snapshot.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Snapshot.download",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}/download",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+      "resourceName": "AppComplianceReportSnapshot",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-_]{1,64}$"
+      },
+      "apiVersions": [
+        "2024-06-27"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AppComplianceAutomation.WebhookResource",
+      "resourceIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}",
+      "resourceType": "Microsoft.AppComplianceAutomation/reports/webhooks",
+      "methods": [
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Webhook.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Webhook.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Webhook.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Webhook.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.AppComplianceAutomation.Webhook.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.AppComplianceAutomation/reports/{reportName}",
+      "resourceName": "AppComplianceReportWebhook",
+      "nameConstraints": {
+        "pattern": "^[-a-zA-Z0-9_]{1,50}$"
+      },
+      "apiVersions": [
+        "2024-06-27"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.AppComplianceAutomation/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.AppComplianceAutomation.ProviderActions.checkNameAvailability",
+      "operationPath": "/providers/Microsoft.AppComplianceAutomation/checkNameAvailability",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.AppComplianceAutomation.ProviderActions.getCollectionCount",
+      "operationPath": "/providers/Microsoft.AppComplianceAutomation/getCollectionCount",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.AppComplianceAutomation.ProviderActions.getOverviewStatus",
+      "operationPath": "/providers/Microsoft.AppComplianceAutomation/getOverviewStatus",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.AppComplianceAutomation.ProviderActions.onboard",
+      "operationPath": "/providers/Microsoft.AppComplianceAutomation/onboard",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.AppComplianceAutomation.ProviderActions.triggerEvaluation",
+      "operationPath": "/providers/Microsoft.AppComplianceAutomation/triggerEvaluation",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.AppComplianceAutomation.ProviderActions.listInUseStorageAccounts",
+      "operationPath": "/providers/Microsoft.AppComplianceAutomation/listInUseStorageAccounts",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

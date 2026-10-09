@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppSubscriptionQuotaItemData, NetAppResourceQuotaLimitsAccountResource>(new NetAppResourceQuotaLimitsAccountGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetAppSubscriptionQuotaItemData, NetAppResourceQuotaLimitsAccountResource>(new NetAppSubscriptionQuotaItemDataAsyncCollectionResultOfT(
                 _netAppResourceQuotaLimitsAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppSubscriptionQuotaItemData, NetAppResourceQuotaLimitsAccountResource>(new NetAppResourceQuotaLimitsAccountGetAllCollectionResultOfT(
+            return new PageableWrapper<NetAppSubscriptionQuotaItemData, NetAppResourceQuotaLimitsAccountResource>(new NetAppSubscriptionQuotaItemDataCollectionResultOfT(
                 _netAppResourceQuotaLimitsAccountRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

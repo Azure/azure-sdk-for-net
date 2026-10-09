@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperationalInsightsSavedSearchData, OperationalInsightsSavedSearchResource>(new SavedSearchesGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OperationalInsightsSavedSearchData, OperationalInsightsSavedSearchResource>(new OperationalInsightsSavedSearchDataAsyncCollectionResultOfT(
                 _savedSearchesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperationalInsightsSavedSearchData, OperationalInsightsSavedSearchResource>(new SavedSearchesGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<OperationalInsightsSavedSearchData, OperationalInsightsSavedSearchResource>(new OperationalInsightsSavedSearchDataCollectionResultOfT(
                 _savedSearchesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

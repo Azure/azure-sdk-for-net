@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetBySubscriptionAsyncCollectionResultOfT(OnlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspaces"), data => new OnlineExperimentationWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspaceDataAsync0CollectionResultOfT(OnlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspaces"), data => new OnlineExperimentationWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetBySubscriptionCollectionResultOfT(OnlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspaces"), data => new OnlineExperimentationWorkspaceResource(Client, data));
+            return new PageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspaceData0CollectionResultOfT(OnlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspaces"), data => new OnlineExperimentationWorkspaceResource(Client, data));
         }
     }
 }

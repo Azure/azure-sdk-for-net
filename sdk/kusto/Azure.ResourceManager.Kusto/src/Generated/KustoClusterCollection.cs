@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
+            return new AsyncPageableWrapper<KustoClusterData, KustoClusterResource>(new KustoClusterDataAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
+            return new PageableWrapper<KustoClusterData, KustoClusterResource>(new KustoClusterDataCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>

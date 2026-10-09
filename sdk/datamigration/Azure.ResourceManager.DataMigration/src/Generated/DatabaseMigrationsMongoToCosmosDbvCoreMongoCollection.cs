@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDbvCoreMongoResource>(new DatabaseMigrationsMongoToCosmosDbvCoreMongoGetForScopeAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDbvCoreMongoResource>(new DatabaseMigrationCosmosDBMongoDataAsyncCollectionResultOfT(
                 _databaseMigrationsMongoToCosmosDbvCoreMongoRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDbvCoreMongoResource>(new DatabaseMigrationsMongoToCosmosDbvCoreMongoGetForScopeCollectionResultOfT(
+            return new PageableWrapper<DatabaseMigrationCosmosDBMongoData, DatabaseMigrationsMongoToCosmosDbvCoreMongoResource>(new DatabaseMigrationCosmosDBMongoDataCollectionResultOfT(
                 _databaseMigrationsMongoToCosmosDbvCoreMongoRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

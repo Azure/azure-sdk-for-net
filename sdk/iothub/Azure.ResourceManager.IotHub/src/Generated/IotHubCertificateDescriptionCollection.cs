@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotHubCertificateDescriptionData, IotHubCertificateDescriptionResource>(new CertificatesGetByIotHubAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IotHubCertificateDescriptionData, IotHubCertificateDescriptionResource>(new IotHubCertificateDescriptionDataAsyncCollectionResultOfT(
                 _certificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotHubCertificateDescriptionData, IotHubCertificateDescriptionResource>(new CertificatesGetByIotHubCollectionResultOfT(
+            return new PageableWrapper<IotHubCertificateDescriptionData, IotHubCertificateDescriptionResource>(new IotHubCertificateDescriptionDataCollectionResultOfT(
                 _certificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

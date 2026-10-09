@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetPrivateEndpointConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new ComputePrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetPrivateEndpointConnectionsCollectionResultOfT(
+            return new PageableWrapper<ComputePrivateEndpointConnectionData, ComputePrivateEndpointConnectionResource>(new ComputePrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

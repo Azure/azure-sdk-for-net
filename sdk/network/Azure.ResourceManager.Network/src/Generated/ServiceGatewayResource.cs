@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceGatewaysGetAddressLocationsAsyncCollectionResultOfT(
+            return new ServiceGatewayAddressLocationResponseAsyncCollectionResultOfT(
                 _serviceGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceGatewaysGetAddressLocationsCollectionResultOfT(
+            return new ServiceGatewayAddressLocationResponseCollectionResultOfT(
                 _serviceGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceGatewaysGetServicesAsyncCollectionResultOfT(
+            return new ServiceGatewayServiceAsyncCollectionResultOfT(
                 _serviceGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ServiceGatewaysGetServicesCollectionResultOfT(
+            return new ServiceGatewayServiceCollectionResultOfT(
                 _serviceGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

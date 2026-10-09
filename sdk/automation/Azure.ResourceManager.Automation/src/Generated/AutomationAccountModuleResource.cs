@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new ActivityGetActivitiesAsyncCollectionResultOfT(
+            return new AutomationActivityAsyncCollectionResultOfT(
                 _activityRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new ActivityGetActivitiesCollectionResultOfT(
+            return new AutomationActivityCollectionResultOfT(
                 _activityRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new FieldsGetFieldsByTypeAsyncCollectionResultOfT(
+            return new AutomationModuleFieldAsync1CollectionResultOfT(
                 _fieldsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new FieldsGetFieldsByTypeCollectionResultOfT(
+            return new AutomationModuleField1CollectionResultOfT(
                 _fieldsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new ObjectDataTypesGetFieldsByModuleAndTypeAsyncCollectionResultOfT(
+            return new AutomationModuleFieldAsync0CollectionResultOfT(
                 _objectDataTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new ObjectDataTypesGetFieldsByModuleAndTypeCollectionResultOfT(
+            return new AutomationModuleField0CollectionResultOfT(
                 _objectDataTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

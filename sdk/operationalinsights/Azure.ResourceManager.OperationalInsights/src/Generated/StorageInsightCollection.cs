@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageInsightData, StorageInsightResource>(new StorageInsightConfigsGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageInsightData, StorageInsightResource>(new StorageInsightDataAsyncCollectionResultOfT(
                 _storageInsightConfigsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageInsightData, StorageInsightResource>(new StorageInsightConfigsGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<StorageInsightData, StorageInsightResource>(new StorageInsightDataCollectionResultOfT(
                 _storageInsightConfigsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

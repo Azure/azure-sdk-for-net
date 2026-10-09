@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleryImagesGetGalleryImagesAsyncCollectionResultOfT(
+            return new DevTestLabGalleryImageAsyncCollectionResultOfT(
                 _galleryImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new GalleryImagesGetGalleryImagesCollectionResultOfT(
+            return new DevTestLabGalleryImageCollectionResultOfT(
                 _galleryImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new LabsGetDevTestLabVhdsAsyncCollectionResultOfT(
+            return new DevTestLabVhdAsyncCollectionResultOfT(
                 _labsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1081,7 +1081,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new LabsGetDevTestLabVhdsCollectionResultOfT(
+            return new DevTestLabVhdCollectionResultOfT(
                 _labsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

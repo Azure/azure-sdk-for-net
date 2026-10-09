@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetFaultSimulationAsyncCollectionResultOfT(
+            return new FaultSimulationAsyncCollectionResultOfT(
                 _managedClustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedClustersGetFaultSimulationCollectionResultOfT(
+            return new FaultSimulationCollectionResultOfT(
                 _managedClustersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -1,0 +1,339 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.ServiceLinker.DryrunResource",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}",
+      "resourceType": "Microsoft.ServiceLinker/dryruns",
+      "methods": [
+        {
+          "methodId": "Microsoft.ServiceLinker.Linkers.createDryrun",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linkers.getDryrun",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linkers.updateDryrun",
+          "kind": "Update",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linkers.deleteDryrun",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linkers.listDryrun",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "resourceName": "LinkerDryrun",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ServiceLinker.LinkerResource",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}",
+      "resourceType": "Microsoft.ServiceLinker/linkers",
+      "methods": [
+        {
+          "methodId": "Microsoft.ServiceLinker.Linker.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linker.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linker.update",
+          "kind": "Update",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linker.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linker.list",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linker.generateConfigurations",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}/generateConfigurations",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linker.listConfigurations",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}/listConfigurations",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.Linker.validate",
+          "kind": "Action",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}/validateLinker",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "resourceName": "LinkerResource",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ServiceLinker.LinkerResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+      "resourceType": "Microsoft.ServiceLinker/locations/connectors",
+      "methods": [
+        {
+          "methodId": "Microsoft.ServiceLinker.LinkerResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.LinkerResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.LinkerResources.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.LinkerResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.LinkerResources.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.LinkerResources.generateConfigurations",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}/generateConfigurations",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.LinkerResources.validate",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}/validate",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "LinkerConnector",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-07-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ServiceLinker.DryrunResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}",
+      "resourceType": "Microsoft.ServiceLinker/locations/dryruns",
+      "methods": [
+        {
+          "methodId": "Microsoft.ServiceLinker.DryrunResources.createDryrun",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.DryrunResources.getDryrun",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.DryrunResources.updateDryrun",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.DryrunResources.deleteDryrun",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.ServiceLinker.DryrunResources.listDryrun",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "ConnectorDryrun",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-07-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.ServiceLinker/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.ServiceLinker.LinkersOperationGroup.listDaprConfigurations",
+      "operationPath": "/{resourceUri}/providers/Microsoft.ServiceLinker/daprConfigurations",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      }
+    },
+    {
+      "methodId": "Microsoft.ServiceLinker.ConfigurationNamesOperationGroup.list",
+      "operationPath": "/providers/Microsoft.ServiceLinker/configurationNames",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudDatastoreData, AvsPrivateCloudDatastoreResource>(new DatastoresGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvsPrivateCloudDatastoreData, AvsPrivateCloudDatastoreResource>(new AvsPrivateCloudDatastoreDataAsyncCollectionResultOfT(
                 _datastoresRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudDatastoreData, AvsPrivateCloudDatastoreResource>(new DatastoresGetAllCollectionResultOfT(
+            return new PageableWrapper<AvsPrivateCloudDatastoreData, AvsPrivateCloudDatastoreResource>(new AvsPrivateCloudDatastoreDataCollectionResultOfT(
                 _datastoresRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

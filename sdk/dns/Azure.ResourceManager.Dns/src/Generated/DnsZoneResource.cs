@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Dns
             {
                 CancellationToken = cancellationToken
             };
-            return new RecordSetsGetByDnsZoneAsyncCollectionResultOfT(
+            return new DnsRecordDataAsyncCollectionResultOfT(
                 _recordSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Dns
             {
                 CancellationToken = cancellationToken
             };
-            return new RecordSetsGetByDnsZoneCollectionResultOfT(
+            return new DnsRecordDataCollectionResultOfT(
                 _recordSetsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

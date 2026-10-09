@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetAllAsyncCollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
+            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterDataAsync0CollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetAllCollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
+            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterData0CollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationsGetHDInsightUsagesAsyncCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
+            return new HDInsightUsageAsyncCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationsGetHDInsightUsagesCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
+            return new HDInsightUsageCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
         }
 
         /// <summary>

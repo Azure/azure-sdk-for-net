@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetAllAsyncCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroups"), data => new ContainerGroupResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupDataAsyncCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroups"), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetAllCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroups"), data => new ContainerGroupResource(Client, data));
+            return new PageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupDataCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroups"), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NGroupData, NGroupResource>(new NGroupsGetAllAsyncCollectionResultOfT(NGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetNGroups"), data => new NGroupResource(Client, data));
+            return new AsyncPageableWrapper<NGroupData, NGroupResource>(new NGroupDataAsync0CollectionResultOfT(NGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetNGroups"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NGroupData, NGroupResource>(new NGroupsGetAllCollectionResultOfT(NGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetNGroups"), data => new NGroupResource(Client, data));
+            return new PageableWrapper<NGroupData, NGroupResource>(new NGroupData0CollectionResultOfT(NGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetNGroups"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetBySubscriptionAsyncCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfileDataAsync0CollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetBySubscriptionCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfileData0CollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles"), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new SandboxGroupsGetBySubscriptionAsyncCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxes"), data => new ContainerGroupSandboxResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new ContainerGroupSandboxDataAsyncCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxes"), data => new ContainerGroupSandboxResource(Client, data));
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new SandboxGroupsGetBySubscriptionCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxes"), data => new ContainerGroupSandboxResource(Client, data));
+            return new PageableWrapper<ContainerGroupSandboxData, ContainerGroupSandboxResource>(new ContainerGroupSandboxDataCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetContainerGroupSandboxes"), data => new ContainerGroupSandboxResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetUsagesWithLocationAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation");
+            return new ContainerInstanceUsageAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation");
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetUsagesWithLocationCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation");
+            return new ContainerInstanceUsageCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation");
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCachedImagesWithLocationAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation");
+            return new CachedImagesAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation");
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCachedImagesWithLocationCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation");
+            return new CachedImagesCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation");
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCapabilitiesWithLocationAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation");
+            return new ContainerCapabilitiesAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation");
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCapabilitiesWithLocationCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation");
+            return new ContainerCapabilitiesCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation");
         }
     }
 }

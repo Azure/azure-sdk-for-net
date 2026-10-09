@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetByResourceGroupAsyncCollectionResultOfT(_customLocationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CustomLocationCollection.GetAll"), data => new CustomLocationResource(Client, data));
+            return new AsyncPageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationDataAsyncCollectionResultOfT(_customLocationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CustomLocationCollection.GetAll"), data => new CustomLocationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationsGetByResourceGroupCollectionResultOfT(_customLocationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CustomLocationCollection.GetAll"), data => new CustomLocationResource(Client, data));
+            return new PageableWrapper<CustomLocationData, CustomLocationResource>(new CustomLocationDataCollectionResultOfT(_customLocationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "CustomLocationCollection.GetAll"), data => new CustomLocationResource(Client, data));
         }
 
         /// <summary>

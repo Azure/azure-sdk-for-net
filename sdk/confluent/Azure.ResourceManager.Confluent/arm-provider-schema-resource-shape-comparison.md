@@ -1,0 +1,39 @@
+# ARM resource shape comparison: Azure.ResourceManager.Confluent
+
+This report compares only resource-shape fields from the current snapshots: resource ID, ARM resource type, parent, scope, Read lifecycle operations, and Create lifecycle operations. Other methods and metadata are intentionally ignored.
+
+Resource rows are matched by normalized resource ID, where path parameter names are ignored. Exact resource-ID differences are still reported as a separate axis for matched rows.
+
+## Summary
+
+| Metric | Count |
+| --- | ---: |
+| Legacy resources | 5 |
+| resolveArmResources resources | 5 |
+| Matching normalized resource IDs | 5 |
+| Legacy-only normalized resource IDs | 0 |
+| resolveArmResources-only normalized resource IDs | 0 |
+| Exact resource ID differences on matched resources | 0 |
+| ARM resource type differences | 0 |
+| Parent differences | 0 |
+| Scope differences | 0 |
+| Read lifecycle differences | 0 |
+| Create lifecycle differences | 5 |
+
+## Legacy-only resources
+
+None.
+
+## resolveArmResources-only resources
+
+None.
+
+## Matched resource-shape differences
+
+| Normalized resource ID | Axis | Legacy | resolveArmResources |
+| --- | --- | --- | --- |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Confluent/organizations/{}` | create | `Microsoft.Confluent.OrganizationResources.create /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName} [ResourceGroup, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}, Microsoft.Resources/resourceGroups]` | _none_ |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Confluent/organizations/{}/environments/{}` | create | `Microsoft.Confluent.SCEnvironmentRecords.createOrUpdate /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId} [ResourceGroup, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}, Microsoft.Resources/resourceGroups]` | _none_ |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Confluent/organizations/{}/environments/{}/clusters/{}` | create | `Microsoft.Confluent.SCClusterRecords.createOrUpdate /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId} [ResourceGroup, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId}, Microsoft.Resources/resourceGroups]` | _none_ |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Confluent/organizations/{}/environments/{}/clusters/{}/connectors/{}` | create | `Microsoft.Confluent.ConnectorResources.createOrUpdate /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId}/connectors/{connectorName} [ResourceGroup, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId}/connectors/{connectorName}, Microsoft.Resources/resourceGroups]` | _none_ |
+| `/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Confluent/organizations/{}/environments/{}/clusters/{}/topics/{}` | create | `Microsoft.Confluent.TopicRecords.create /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId}/topics/{topicName} [ResourceGroup, /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId}/topics/{topicName}, Microsoft.Resources/resourceGroups]` | _none_ |

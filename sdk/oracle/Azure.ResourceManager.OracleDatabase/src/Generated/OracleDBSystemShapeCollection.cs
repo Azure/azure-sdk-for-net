@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDBSystemShapeData, OracleDBSystemShapeResource>(new DbSystemShapesGetByLocationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<OracleDBSystemShapeData, OracleDBSystemShapeResource>(new OracleDBSystemShapeDataAsyncCollectionResultOfT(
                 _dbSystemShapesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDBSystemShapeData, OracleDBSystemShapeResource>(new DbSystemShapesGetByLocationCollectionResultOfT(
+            return new PageableWrapper<OracleDBSystemShapeData, OracleDBSystemShapeResource>(new OracleDBSystemShapeDataCollectionResultOfT(
                 _dbSystemShapesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
