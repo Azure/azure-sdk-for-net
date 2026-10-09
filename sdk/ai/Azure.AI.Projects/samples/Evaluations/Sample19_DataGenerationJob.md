@@ -1,6 +1,11 @@
 # Sample for data generation in Azure.AI.Projects.
 
 In this example we will demonstrate how the data can be generated using `DataGenerationJobs` client in `Azure.AI.Projects`.
+Data generation job creation involves creating experimental class `OperationResult`, which requires `SCME0006` warning to be suppressed.
+
+```C#
+# pragma warning disable SCME0006
+```
 
 1. First, we need to create clients and read the environment variables, which will be used in the next steps.
 

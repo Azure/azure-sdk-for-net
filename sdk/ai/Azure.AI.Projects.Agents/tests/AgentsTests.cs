@@ -1251,15 +1251,13 @@ public class AgentsTests : AgentsTestBase
                 ModelSearchSpace = { TestEnvironment.FOUNDRY_MODEL_NAME, TestEnvironment.FOUNDRY_MODEL_NAME2 }
             }
         );
-        AgentOptimizationJob job = new()
+        AgentOptimizationJob job = new(optimizationModelConfiguration: new(TestEnvironment.FOUNDRY_MODEL_NAME), optimizationConfiguration: conf)
         {
-            OptimizationConfiguration = conf,
             DisplayName = "Sample agent optimization",
             TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(name: agentVersion.Name)
             {
                 Version = agentVersion.Version,
             },
-            OptimizationModelConfiguration = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         };
         return job;
     }

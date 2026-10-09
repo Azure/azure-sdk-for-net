@@ -12,7 +12,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
-#pragma warning disable AAIP001
+#pragma warning disable SCME0006
 
 /// <summary>
 /// Asynchronous recorded tests for data generation job operations using test-proxy.

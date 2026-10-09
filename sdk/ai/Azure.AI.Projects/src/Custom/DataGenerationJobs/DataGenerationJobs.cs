@@ -10,7 +10,6 @@ using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects;
 
-[Experimental("AAIP001")]
 [CodeGenSuppress("GetGenerationJobs", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetGenerationJobsAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetGenerationJobs", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
@@ -129,6 +128,7 @@ public partial class DataGenerationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
     public virtual ClientResult<DataGenerationJob> Create(DataGenerationJobInputs job, string operationId = default, CancellationToken cancellationToken = default)
     {
         OperationResult operation = Create(false, job, operationId, cancellationToken);
@@ -161,6 +161,7 @@ public partial class DataGenerationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
     public virtual async Task<ClientResult<DataGenerationJob>> CreateAsync(DataGenerationJobInputs job, string operationId = default, CancellationToken cancellationToken = default)
     {
         OperationResult operation = await CreateAsync(false, job, operationId, cancellationToken).ConfigureAwait(false);

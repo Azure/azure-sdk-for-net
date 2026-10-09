@@ -59,7 +59,6 @@ public partial class AgentAdministrationClient
     private AgentToolboxes _cachedAgentsToolboxes;
     [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
-    [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
     [Experimental("AAIP001")]
     private BetaVoiceAgentsConversations _cachedAgentEndpointConversations;
@@ -1116,7 +1115,6 @@ public partial class AgentAdministrationClient
     }
 
     /// <summary> Gets the lazily-initialized agent optimization jobs sub-client. </summary>
-    [Experimental("AAIP001")]
     public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
     {
         return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;

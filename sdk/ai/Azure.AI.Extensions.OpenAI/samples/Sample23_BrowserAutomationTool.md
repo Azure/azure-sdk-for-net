@@ -23,7 +23,7 @@ See the [Playwright Workspaces remote MCP quickstart](https://learn.microsoft.co
 3. In the opened window select **Custom** tab, choose **Model Context Protocol (MCP)** and click **Create**.
 4. Name the connection.
 5. Open the Playwright workspace in the Azure portal and copy the Mcp endpoint address to `Remote MCP Server endpoint` (Mcp endpoint can be found on the **Overview** section).
-6. Paste the token generagted in the previous section to "Credential" section and name this key `Authorization`.
+6. Paste the token generagted in the previous section to "Credential" section and name this key `x-api-k`.
 7. Click **Connect**.
 
 ## Run this sample.

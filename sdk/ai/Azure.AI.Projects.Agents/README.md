@@ -630,15 +630,13 @@ AgentOptimizationConfiguration conf = new(
         ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
     }
 );
-AgentOptimizationJob job = new()
+AgentOptimizationJob job = new(optimizationModelConfiguration: new(modelDeploymentName), optimizationConfiguration: conf)
 {
-    OptimizationConfiguration = conf,
     DisplayName = "Sample agent optimization",
     TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(name: agentVersion.Name)
     {
         Version = agentVersion.Version,
     },
-    OptimizationModelConfiguration = new(modelDeploymentName)
 };
 OperationResult jobOperation = await jobsClient.CreateAsync(waitUntilCompleted: true, job: job, operationId: null, cancellationToken: default);
 AgentOptimizationJob submittedJob = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());

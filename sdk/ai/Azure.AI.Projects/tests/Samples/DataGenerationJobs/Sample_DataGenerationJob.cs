@@ -9,6 +9,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
+# pragma warning disable SCME0006
 
 public class Sample_DataGenerationJob : SamplesBase
 {

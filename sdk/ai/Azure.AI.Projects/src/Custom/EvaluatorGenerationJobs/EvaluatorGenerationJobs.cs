@@ -8,8 +8,6 @@ using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects.Evaluation;
 
-[Experimental("AAIP001")]
-
 [CodeGenSuppress("GetAll", typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAllAsync", typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAll", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
