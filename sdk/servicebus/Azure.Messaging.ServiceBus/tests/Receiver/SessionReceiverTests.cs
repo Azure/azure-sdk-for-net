@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
     public class SessionReceiverTests
     {
+        [Test]
+        public async Task PurgeMessagesUsesFixedCutoffUntilServiceReturnsZero()
+        {
+            var timestamps = new List<DateTimeOffset>();
+            var requestedCounts = new List<int>();
+            var deleteCounts = new Queue<int>(new[] { 500, 2, 0 });
+            var transport = new Mock<TransportReceiver>();
+
+            transport
+                .Setup(receiver => receiver.DeleteMessagesAsync(
+                    It.IsAny<int>(),
+                    It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<int, DateTimeOffset, CancellationToken>((count, timestamp, _) =>
+                {
+                    requestedCounts.Add(count);
+                    timestamps.Add(timestamp);
+                    return Task.FromResult(deleteCounts.Dequeue());
+                });
+
+            var receiver = new ServiceBusSessionReceiver(
+                ServiceBusTestUtilities.GetMockedReceiverConnection(transport),
+                "fakeQueue",
+                options: new ServiceBusSessionReceiverOptions(),
+                cancellationToken: CancellationToken.None,
+                sessionId: "sessionId");
+
+            var result = await receiver.PurgeMessagesAsync();
+
+            Assert.That(result.DeletedCount, Is.EqualTo(502));
+            Assert.That(requestedCounts, Is.EqualTo(new[] { 500, 500, 500 }));
+            Assert.That(timestamps, Has.Count.EqualTo(3));
+            Assert.That(timestamps, Is.All.EqualTo(timestamps[0]));
+        }
+
         [Test]
         public void SessionReceiverCannotPerformMessageLock()
         {

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string trafficManagerProfileApiVersion);
             _profilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerProfileApiVersion ?? "2024-04-01-preview");
+            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerProfileApiVersion ?? "2026-09-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
