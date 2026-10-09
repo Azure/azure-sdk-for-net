@@ -43,8 +43,9 @@
 
 ### Bugs Fixed
 
-- Recovered handlers can invoke other registered task definitions while the cold-start scan is
-  still running. External callers remain gated until startup recovery completes.
+- Recovered handlers and queued turns drained by their recovered chain can invoke other registered
+  task definitions while the cold-start scan is still running. External callers remain gated until
+  startup recovery completes.
 - Multi-turn suspension now coordinates the empty-queue decision and execution
   retirement with steering admission. Inputs waiting at that boundary are drained
   or resumed with their own identity instead of being accepted and then erased.

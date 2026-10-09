@@ -349,6 +349,7 @@ public sealed class ResilientTaskEnablementTests
 
                     return ctx.Input;
                 });
+
             builder.Services.AddResilientTask<string, string>(
                 "recovery-blocker",
                 (ctx, ct) => Task.FromResult(ctx.Input));
@@ -364,6 +365,169 @@ public sealed class ResilientTaskEnablementTests
             Assert.That(
                 await childResult.Task.WaitAsync(TimeSpan.FromSeconds(5)),
                 Is.EqualTo("child:nested"));
+
+            await host.StopAsync();
+        }
+        finally
+        {
+            seed?.Dispose();
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+    }
+
+    [Test]
+    public async Task RecoveredQueuedTurn_CanInvokeTaskDefinitionBeforeStartupScanCompletes()
+    {
+        string root = Path.Combine(
+            Path.GetTempPath(),
+            "agentserver-task-optin-recovery-queued-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        const string ParentTaskId = "a-recovered-queued-parent";
+        const string BlockerTaskId = "b-recovery-queued-blocker";
+        TaskTestHost? seed = null;
+        try
+        {
+            seed = TaskTestHost.Create(
+                root,
+                agentName: TaskEngineConstants.DefaultAgentName,
+                sessionId: TaskEngineConstants.DefaultSessionId);
+            var firstTurnGate =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            TaskDefinition<string, string> parent =
+                seed.Builder.AddMultiTurnTask<string, string>(
+                    "recovered-queued-parent",
+                    async (ctx, ct) =>
+                    {
+                        if (ctx.IsSteeredTurn)
+                        {
+                            await ctx.ExitForRecoveryAsync(ct);
+                            return "deferred";
+                        }
+
+                        await firstTurnGate.Task;
+                        return ctx.Input;
+                    },
+                    steerable: true);
+            TaskDefinition<string, string> blocker =
+                seed.Builder.AddTask<string, string>(
+                    "recovery-queued-blocker",
+                    async (ctx, ct) =>
+                    {
+                        await ctx.ExitForRecoveryAsync(ct);
+                        return ctx.Input;
+                    });
+
+            seed.SignalShutdown();
+            TaskRun<string> first = await parent.StartAsync(
+                "first",
+                new RunOptions { TaskId = ParentTaskId, InputId = "input-1" });
+            await seed.WaitForStatusAsync(
+                ParentTaskId,
+                TaskWireKeys.StatusInProgress,
+                TimeSpan.FromSeconds(5));
+            TaskRun<string> recoveredTurn = await parent.StartAsync(
+                "recovered-turn",
+                new RunOptions { TaskId = ParentTaskId, InputId = "input-2" });
+            TaskRun<string> queuedTurn = await parent.StartAsync(
+                "queued-turn",
+                new RunOptions { TaskId = ParentTaskId, InputId = "input-3" });
+            Assert.That(recoveredTurn.IsQueued, Is.True);
+            Assert.That(queuedTurn.IsQueued, Is.True);
+
+            firstTurnGate.TrySetResult();
+            Assert.That(await first.Completion, Is.EqualTo("first"));
+            await seed.WaitUntilInactiveAsync(ParentTaskId, TimeSpan.FromSeconds(5));
+            await blocker.StartAsync(
+                "blocker",
+                new RunOptions { TaskId = BlockerTaskId });
+            await seed.WaitUntilInactiveAsync(BlockerTaskId, TimeSpan.FromSeconds(5));
+
+            var recoveredChildResult =
+                new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var queuedChildResult =
+                new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var queuedChildAttemptCompleted =
+                new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var store = new RecoveryOrderingStore(
+                new LocalTaskStore(root),
+                ParentTaskId,
+                BlockerTaskId,
+                queuedChildAttemptCompleted.Task);
+
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.SetResilientTasksEnabled();
+            builder.Services.AddSingleton<ITaskStore>(store);
+            TaskDefinition<string, string> child =
+                builder.Services.AddResilientTask<string, string>(
+                    "recovery-queued-child",
+                    (ctx, ct) => Task.FromResult("child:" + ctx.Input));
+            builder.Services.AddResilientMultiTurnTask<string, string>(
+                "recovered-queued-parent",
+                async (ctx, ct) =>
+                {
+                    try
+                    {
+                        string result = await child.RunAsync(
+                            ctx.Input,
+                            cancellationToken: ct);
+                        if (ctx.Input == "recovered-turn")
+                        {
+                            recoveredChildResult.TrySetResult(result);
+                        }
+                        else if (ctx.Input == "queued-turn")
+                        {
+                            queuedChildResult.TrySetResult(result);
+                        }
+
+                        return ctx.Input;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ctx.Input == "recovered-turn")
+                        {
+                            recoveredChildResult.TrySetException(ex);
+                        }
+                        else if (ctx.Input == "queued-turn")
+                        {
+                            queuedChildResult.TrySetException(ex);
+                        }
+
+                        throw;
+                    }
+                    finally
+                    {
+                        if (ctx.Input == "queued-turn")
+                        {
+                            queuedChildAttemptCompleted.TrySetResult();
+                        }
+                    }
+                },
+                steerable: true);
+            builder.Services.AddResilientTask<string, string>(
+                "recovery-queued-blocker",
+                (ctx, ct) => Task.FromResult(ctx.Input));
+
+            using IHost host = builder.Build();
+            Task start = host.StartAsync();
+            await store.BlockerGetEntered.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.ThrowsAsync<InvalidOperationException>(
+                () => child.RunAsync("external-before-ready"));
+            await queuedChildAttemptCompleted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            store.ReleaseBlocker.TrySetResult();
+            await start.WaitAsync(TimeSpan.FromSeconds(10));
+
+            string recoveredResult =
+                await recoveredChildResult.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            string queuedResult =
+                await queuedChildResult.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(recoveredResult, Is.EqualTo("child:recovered-turn"));
+                Assert.That(queuedResult, Is.EqualTo("child:queued-turn"));
+            });
 
             await host.StopAsync();
         }
