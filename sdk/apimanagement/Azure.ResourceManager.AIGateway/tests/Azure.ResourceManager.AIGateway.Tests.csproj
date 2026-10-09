@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.AIGateway.csproj" />
+  </ItemGroup>
+</Project>
