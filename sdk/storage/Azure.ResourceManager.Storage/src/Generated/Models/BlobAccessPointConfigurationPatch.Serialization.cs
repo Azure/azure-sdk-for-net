@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            BlobAccessPointConfigurationPropertiesUpdate properties = default;
+            BlobAccessPointConfigurationPropertiesPatch properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    properties = BlobAccessPointConfigurationPropertiesUpdate.DeserializeBlobAccessPointConfigurationPropertiesUpdate(prop.Value, options);
+                    properties = BlobAccessPointConfigurationPropertiesPatch.DeserializeBlobAccessPointConfigurationPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

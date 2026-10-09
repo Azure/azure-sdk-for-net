@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Storage
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckContextCacheNameAvailabilityRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

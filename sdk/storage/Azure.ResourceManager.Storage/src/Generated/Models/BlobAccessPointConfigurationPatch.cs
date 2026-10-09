@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobAccessPointConfigurationPatch(IDictionary<string, string> tags, BlobAccessPointConfigurationPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobAccessPointConfigurationPatch(IDictionary<string, string> tags, BlobAccessPointConfigurationPropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public BlobAccessPointConfigurationPropertiesUpdate Properties { get; set; }
+        public BlobAccessPointConfigurationPropertiesPatch Properties { get; set; }
     }
 }

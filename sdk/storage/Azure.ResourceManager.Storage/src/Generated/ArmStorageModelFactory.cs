@@ -2377,20 +2377,20 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The parameters used to check the availability of the context cache resource name. </summary>
         /// <param name="name"> The name of the context cache resource to check for availability. </param>
-        /// <returns> A new <see cref="Models.ContextCacheCheckNameAvailabilityParameters"/> instance for mocking. </returns>
-        public static ContextCacheCheckNameAvailabilityParameters ContextCacheCheckNameAvailabilityParameters(string name = default)
+        /// <returns> A new <see cref="Models.ContextCacheNameAvailabilityContent"/> instance for mocking. </returns>
+        public static ContextCacheNameAvailabilityContent ContextCacheNameAvailabilityContent(string name = default)
         {
-            return new ContextCacheCheckNameAvailabilityParameters(name, default, default);
+            return new ContextCacheNameAvailabilityContent(name, default, default);
         }
 
         /// <summary> The result of the context cache name availability check. </summary>
-        /// <param name="nameAvailable"> A boolean value that indicates whether the context cache name is available to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
+        /// <param name="isNameAvailable"> A boolean value that indicates whether the context cache name is available to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason why the context cache name is not available. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> The error message providing additional information about the context cache name availability check failure. </param>
-        /// <returns> A new <see cref="Models.ContextCacheCheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static ContextCacheCheckNameAvailabilityResult ContextCacheCheckNameAvailabilityResult(bool nameAvailable = default, ContextCacheCheckNameAvailabilityFailureReason? reason = default, string message = default)
+        /// <returns> A new <see cref="Models.ContextCacheNameAvailabilityResult"/> instance for mocking. </returns>
+        public static ContextCacheNameAvailabilityResult ContextCacheNameAvailabilityResult(bool isNameAvailable = default, ContextCacheNameUnavailableReason? reason = default, string message = default)
         {
-            return new ContextCacheCheckNameAvailabilityResult(nameAvailable, reason, message, default);
+            return new ContextCacheNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <summary> A container resource within a Context Cache. </summary>
@@ -2645,7 +2645,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.BlobAccessPointConfigurationPatch"/> instance for mocking. </returns>
-        public static BlobAccessPointConfigurationPatch BlobAccessPointConfigurationPatch(IDictionary<string, string> tags = default, BlobAccessPointConfigurationPropertiesUpdate properties = default)
+        public static BlobAccessPointConfigurationPatch BlobAccessPointConfigurationPatch(IDictionary<string, string> tags = default, BlobAccessPointConfigurationPropertiesPatch properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2656,68 +2656,68 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="state"> The configuration state. A configuration is created in the Active state when this value is not specified. </param>
         /// <param name="description"> An arbitrary description of the Blob Access Point configuration. </param>
         /// <param name="source"> Information about the backing data source. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointConfigurationPropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointConfigurationPropertiesUpdate BlobAccessPointConfigurationPropertiesUpdate(BlobAccessPointConfigurationState? state = default, string description = default, BlobAccessPointSourcePropertiesUpdate source = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointConfigurationPropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointConfigurationPropertiesPatch BlobAccessPointConfigurationPropertiesPatch(BlobAccessPointConfigurationState? state = default, string description = default, BlobAccessPointSourcePropertiesPatch source = default)
         {
-            return new BlobAccessPointConfigurationPropertiesUpdate(state, description, source, default);
+            return new BlobAccessPointConfigurationPropertiesPatch(state, description, source, default);
         }
 
         /// <summary>
         /// Information about the data source exposed through a Blob Access Point.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobAccessPointAzureNetAppFilesSourcePropertiesUpdate"/>, <see cref="Models.BlobAccessPointCommvaultSourcePropertiesUpdate"/>, <see cref="Models.BlobAccessPointDellOneFsSourcePropertiesUpdate"/>, <see cref="Models.BlobAccessPointGenericS3SourcePropertiesUpdate"/>, <see cref="Models.BlobAccessPointNasuniSourcePropertiesUpdate"/>, <see cref="Models.BlobAccessPointNetAppOntapSourcePropertiesUpdate"/>, and <see cref="Models.BlobAccessPointQumuloSourcePropertiesUpdate"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobAccessPointAzureNetAppFilesSourcePropertiesPatch"/>, <see cref="Models.BlobAccessPointCommvaultSourcePropertiesPatch"/>, <see cref="Models.BlobAccessPointDellOneFsSourcePropertiesPatch"/>, <see cref="Models.BlobAccessPointGenericS3SourcePropertiesPatch"/>, <see cref="Models.BlobAccessPointNasuniSourcePropertiesPatch"/>, <see cref="Models.BlobAccessPointNetAppOntapSourcePropertiesPatch"/>, and <see cref="Models.BlobAccessPointQumuloSourcePropertiesPatch"/>.
         /// </summary>
         /// <param name="sourceType"> The source type. This value determines the remaining shape of the source object. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointSourcePropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointSourcePropertiesUpdate BlobAccessPointSourcePropertiesUpdate(string sourceType = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointSourcePropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointSourcePropertiesPatch BlobAccessPointSourcePropertiesPatch(string sourceType = default)
         {
-            return new UnknownBlobAccessPointSourcePropertiesUpdate(default, default);
+            return new UnknownBlobAccessPointSourcePropertiesPatch(default, default);
         }
 
         /// <summary> A NetApp ONTAP backing source. </summary>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
         /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointNetAppOntapSourcePropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointNetAppOntapSourcePropertiesUpdate BlobAccessPointNetAppOntapSourcePropertiesUpdate(BlobAccessPointConnectionPropertiesUpdate connection = default, BlobAccessPointRemoteAuthPropertiesUpdate auth = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointNetAppOntapSourcePropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointNetAppOntapSourcePropertiesPatch BlobAccessPointNetAppOntapSourcePropertiesPatch(BlobAccessPointConnectionPropertiesPatch connection = default, BlobAccessPointRemoteAuthPropertiesPatch auth = default)
         {
-            return new BlobAccessPointNetAppOntapSourcePropertiesUpdate(default, default, connection, auth);
+            return new BlobAccessPointNetAppOntapSourcePropertiesPatch(default, default, connection, auth);
         }
 
         /// <summary>
         /// Details for connecting to a backing data source.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobAccessPointEndpointConnectionPropertiesUpdate"/> and <see cref="Models.BlobAccessPointPrivateLinkConnectionPropertiesUpdate"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobAccessPointEndpointConnectionPropertiesPatch"/> and <see cref="Models.BlobAccessPointPrivateLinkConnectionPropertiesPatch"/>.
         /// </summary>
         /// <param name="connectionType"> The connection type. This value determines the remaining shape of the connection object. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointConnectionPropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointConnectionPropertiesUpdate BlobAccessPointConnectionPropertiesUpdate(string connectionType = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointConnectionPropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointConnectionPropertiesPatch BlobAccessPointConnectionPropertiesPatch(string connectionType = default)
         {
-            return new UnknownBlobAccessPointConnectionPropertiesUpdate(default, default);
+            return new UnknownBlobAccessPointConnectionPropertiesPatch(default, default);
         }
 
         /// <summary> A direct endpoint connection. </summary>
         /// <param name="tlsVerification"> TLS certificate verification behavior. Defaults to Perform when not specified. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointEndpointConnectionPropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointEndpointConnectionPropertiesUpdate BlobAccessPointEndpointConnectionPropertiesUpdate(BlobAccessPointTlsVerification? tlsVerification = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointEndpointConnectionPropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointEndpointConnectionPropertiesPatch BlobAccessPointEndpointConnectionPropertiesPatch(BlobAccessPointTlsVerification? tlsVerification = default)
         {
-            return new BlobAccessPointEndpointConnectionPropertiesUpdate(default, default, tlsVerification);
+            return new BlobAccessPointEndpointConnectionPropertiesPatch(default, default, tlsVerification);
         }
 
         /// <summary> A connection established through Azure Private Link. </summary>
         /// <param name="tlsVerification"> TLS certificate verification behavior. Defaults to Perform when not specified. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointPrivateLinkConnectionPropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointPrivateLinkConnectionPropertiesUpdate BlobAccessPointPrivateLinkConnectionPropertiesUpdate(BlobAccessPointTlsVerification? tlsVerification = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointPrivateLinkConnectionPropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointPrivateLinkConnectionPropertiesPatch BlobAccessPointPrivateLinkConnectionPropertiesPatch(BlobAccessPointTlsVerification? tlsVerification = default)
         {
-            return new BlobAccessPointPrivateLinkConnectionPropertiesUpdate(default, default, tlsVerification);
+            return new BlobAccessPointPrivateLinkConnectionPropertiesPatch(default, default, tlsVerification);
         }
 
         /// <summary>
         /// Authentication properties for a non-Azure S3-compatible source.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobAccessPointAccessKeyAuthPropertiesUpdate"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobAccessPointAccessKeyAuthPropertiesPatch"/>.
         /// </summary>
         /// <param name="authType"> The authentication type. This value determines the remaining shape of the authentication object. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointRemoteAuthPropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointRemoteAuthPropertiesUpdate BlobAccessPointRemoteAuthPropertiesUpdate(string authType = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointRemoteAuthPropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointRemoteAuthPropertiesPatch BlobAccessPointRemoteAuthPropertiesPatch(string authType = default)
         {
-            return new UnknownBlobAccessPointRemoteAuthPropertiesUpdate(default, default);
+            return new UnknownBlobAccessPointRemoteAuthPropertiesPatch(default, default);
         }
 
         /// <summary> S3 access-key authentication properties. </summary>
@@ -2725,10 +2725,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="secretAccessKey"> The secret access key. This value is never returned by read or list operations. </param>
         /// <param name="signingRegion"> The region used by the request-signing algorithm. Defaults to 'us-east-1' when not specified. </param>
         /// <param name="hostOverride"> The host used when computing request signatures. The endpoint host is used by default. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointAccessKeyAuthPropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointAccessKeyAuthPropertiesUpdate BlobAccessPointAccessKeyAuthPropertiesUpdate(string accessKeyId = default, string secretAccessKey = default, string signingRegion = default, string hostOverride = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointAccessKeyAuthPropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointAccessKeyAuthPropertiesPatch BlobAccessPointAccessKeyAuthPropertiesPatch(string accessKeyId = default, string secretAccessKey = default, string signingRegion = default, string hostOverride = default)
         {
-            return new BlobAccessPointAccessKeyAuthPropertiesUpdate(
+            return new BlobAccessPointAccessKeyAuthPropertiesPatch(
                 default,
                 default,
                 accessKeyId,
@@ -2740,55 +2740,55 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> An Azure NetApp Files backing source. </summary>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
         /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointAzureNetAppFilesSourcePropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointAzureNetAppFilesSourcePropertiesUpdate BlobAccessPointAzureNetAppFilesSourcePropertiesUpdate(BlobAccessPointConnectionPropertiesUpdate connection = default, BlobAccessPointRemoteAuthPropertiesUpdate auth = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointAzureNetAppFilesSourcePropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointAzureNetAppFilesSourcePropertiesPatch BlobAccessPointAzureNetAppFilesSourcePropertiesPatch(BlobAccessPointConnectionPropertiesPatch connection = default, BlobAccessPointRemoteAuthPropertiesPatch auth = default)
         {
-            return new BlobAccessPointAzureNetAppFilesSourcePropertiesUpdate(default, default, connection, auth);
+            return new BlobAccessPointAzureNetAppFilesSourcePropertiesPatch(default, default, connection, auth);
         }
 
         /// <summary> A Dell OneFS backing source. </summary>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
         /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointDellOneFsSourcePropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointDellOneFsSourcePropertiesUpdate BlobAccessPointDellOneFsSourcePropertiesUpdate(BlobAccessPointConnectionPropertiesUpdate connection = default, BlobAccessPointRemoteAuthPropertiesUpdate auth = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointDellOneFsSourcePropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointDellOneFsSourcePropertiesPatch BlobAccessPointDellOneFsSourcePropertiesPatch(BlobAccessPointConnectionPropertiesPatch connection = default, BlobAccessPointRemoteAuthPropertiesPatch auth = default)
         {
-            return new BlobAccessPointDellOneFsSourcePropertiesUpdate(default, default, connection, auth);
+            return new BlobAccessPointDellOneFsSourcePropertiesPatch(default, default, connection, auth);
         }
 
         /// <summary> A Qumulo backing source. </summary>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
         /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointQumuloSourcePropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointQumuloSourcePropertiesUpdate BlobAccessPointQumuloSourcePropertiesUpdate(BlobAccessPointConnectionPropertiesUpdate connection = default, BlobAccessPointRemoteAuthPropertiesUpdate auth = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointQumuloSourcePropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointQumuloSourcePropertiesPatch BlobAccessPointQumuloSourcePropertiesPatch(BlobAccessPointConnectionPropertiesPatch connection = default, BlobAccessPointRemoteAuthPropertiesPatch auth = default)
         {
-            return new BlobAccessPointQumuloSourcePropertiesUpdate(default, default, connection, auth);
+            return new BlobAccessPointQumuloSourcePropertiesPatch(default, default, connection, auth);
         }
 
         /// <summary> A Commvault backing source. </summary>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
         /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointCommvaultSourcePropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointCommvaultSourcePropertiesUpdate BlobAccessPointCommvaultSourcePropertiesUpdate(BlobAccessPointConnectionPropertiesUpdate connection = default, BlobAccessPointRemoteAuthPropertiesUpdate auth = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointCommvaultSourcePropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointCommvaultSourcePropertiesPatch BlobAccessPointCommvaultSourcePropertiesPatch(BlobAccessPointConnectionPropertiesPatch connection = default, BlobAccessPointRemoteAuthPropertiesPatch auth = default)
         {
-            return new BlobAccessPointCommvaultSourcePropertiesUpdate(default, default, connection, auth);
+            return new BlobAccessPointCommvaultSourcePropertiesPatch(default, default, connection, auth);
         }
 
         /// <summary> A Nasuni backing source. </summary>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
         /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointNasuniSourcePropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointNasuniSourcePropertiesUpdate BlobAccessPointNasuniSourcePropertiesUpdate(BlobAccessPointConnectionPropertiesUpdate connection = default, BlobAccessPointRemoteAuthPropertiesUpdate auth = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointNasuniSourcePropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointNasuniSourcePropertiesPatch BlobAccessPointNasuniSourcePropertiesPatch(BlobAccessPointConnectionPropertiesPatch connection = default, BlobAccessPointRemoteAuthPropertiesPatch auth = default)
         {
-            return new BlobAccessPointNasuniSourcePropertiesUpdate(default, default, connection, auth);
+            return new BlobAccessPointNasuniSourcePropertiesPatch(default, default, connection, auth);
         }
 
         /// <summary> Another S3-compatible backing source. </summary>
         /// <param name="connection"> Details for connecting to the backing data source. The connection target is fixed when the configuration is created; only the TLS verification behavior can be changed afterwards. </param>
         /// <param name="auth"> Details for authenticating to the backing data source. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPointGenericS3SourcePropertiesUpdate"/> instance for mocking. </returns>
-        public static BlobAccessPointGenericS3SourcePropertiesUpdate BlobAccessPointGenericS3SourcePropertiesUpdate(BlobAccessPointConnectionPropertiesUpdate connection = default, BlobAccessPointRemoteAuthPropertiesUpdate auth = default)
+        /// <returns> A new <see cref="Models.BlobAccessPointGenericS3SourcePropertiesPatch"/> instance for mocking. </returns>
+        public static BlobAccessPointGenericS3SourcePropertiesPatch BlobAccessPointGenericS3SourcePropertiesPatch(BlobAccessPointConnectionPropertiesPatch connection = default, BlobAccessPointRemoteAuthPropertiesPatch auth = default)
         {
-            return new BlobAccessPointGenericS3SourcePropertiesUpdate(default, default, connection, auth);
+            return new BlobAccessPointGenericS3SourcePropertiesPatch(default, default, connection, auth);
         }
 
         /// <summary> The request used to test an existing Blob Access Point configuration. </summary>

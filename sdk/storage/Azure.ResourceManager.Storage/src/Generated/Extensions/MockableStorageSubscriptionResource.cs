@@ -359,11 +359,11 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ContextCacheCheckNameAvailabilityResult>> CheckNameAvailabilityAsync(ContextCacheCheckNameAvailabilityParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContextCacheNameAvailabilityResult>> CheckContextCacheNameAvailabilityAsync(ContextCacheNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ContextCachesClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = ContextCachesClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckContextCacheNameAvailability");
             scope.Start();
             try
             {
@@ -371,9 +371,9 @@ namespace Azure.ResourceManager.Storage.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ContextCachesRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheCheckNameAvailabilityParameters.ToRequestContent(content), context);
+                HttpMessage message = ContextCachesRestClient.CreateCheckContextCacheNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContextCacheCheckNameAvailabilityResult> response = Response.FromValue(ContextCacheCheckNameAvailabilityResult.FromResponse(result), result);
+                Response<ContextCacheNameAvailabilityResult> response = Response.FromValue(ContextCacheNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -407,11 +407,11 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ContextCacheCheckNameAvailabilityResult> CheckNameAvailability(ContextCacheCheckNameAvailabilityParameters content, CancellationToken cancellationToken = default)
+        public virtual Response<ContextCacheNameAvailabilityResult> CheckContextCacheNameAvailability(ContextCacheNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ContextCachesClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = ContextCachesClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.CheckContextCacheNameAvailability");
             scope.Start();
             try
             {
@@ -419,9 +419,9 @@ namespace Azure.ResourceManager.Storage.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ContextCachesRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheCheckNameAvailabilityParameters.ToRequestContent(content), context);
+                HttpMessage message = ContextCachesRestClient.CreateCheckContextCacheNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContextCacheCheckNameAvailabilityResult> response = Response.FromValue(ContextCacheCheckNameAvailabilityResult.FromResponse(result), result);
+                Response<ContextCacheNameAvailabilityResult> response = Response.FromValue(ContextCacheNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

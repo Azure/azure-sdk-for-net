@@ -805,36 +805,36 @@ namespace Azure.ResourceManager.Storage
         /// Check the availability of a context cache resource name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableStorageSubscriptionResource.CheckNameAvailabilityAsync(ContextCacheCheckNameAvailabilityParameters, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableStorageSubscriptionResource.CheckContextCacheNameAvailabilityAsync(ContextCacheNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ContextCacheCheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ContextCacheCheckNameAvailabilityParameters content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContextCacheNameAvailabilityResult>> CheckContextCacheNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ContextCacheNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableStorageSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStorageSubscriptionResource(subscriptionResource).CheckContextCacheNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check the availability of a context cache resource name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableStorageSubscriptionResource.CheckNameAvailability(ContextCacheCheckNameAvailabilityParameters, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableStorageSubscriptionResource.CheckContextCacheNameAvailability(ContextCacheNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ContextCacheCheckNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, ContextCacheCheckNameAvailabilityParameters content, CancellationToken cancellationToken = default)
+        public static Response<ContextCacheNameAvailabilityResult> CheckContextCacheNameAvailability(this SubscriptionResource subscriptionResource, ContextCacheNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableStorageSubscriptionResource(subscriptionResource).CheckNameAvailability(content, cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).CheckContextCacheNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
