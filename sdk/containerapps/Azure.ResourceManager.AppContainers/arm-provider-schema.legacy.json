@@ -1,161 +1,6 @@
 {
   "resources": [
     {
-      "resourceModelId": "Microsoft.App.BuilderResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-      "resourceType": "Microsoft.App/builders",
-      "methods": [
-        {
-          "methodId": "Microsoft.App.Builders.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.Builders.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.Builders.update",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.Builders.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.Builders.listByResourceGroup",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.Builders.listBySubscription",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.App/builders",
-          "scope": {
-            "kind": "Subscription",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}",
-            "scopeResourceType": "Microsoft.Resources/subscriptions"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "resourceName": "Builder",
-      "nameConstraints": {
-        "pattern": "^[-\\w\\._\\(\\)]+$",
-        "minLength": 2,
-        "maxLength": 32
-      },
-      "apiVersions": [
-        "2025-10-02-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.App.BuildResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}",
-      "resourceType": "Microsoft.App/builders/builds",
-      "methods": [
-        {
-          "methodId": "Microsoft.App.Builds.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.Builds.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.Builds.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.Builds.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.Builds.buildAuthTokenList",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}/listAuthToken",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}",
-      "resourceName": "Build",
-      "nameConstraints": {
-        "pattern": "^[-\\w\\._\\(\\)]+$",
-        "minLength": 2,
-        "maxLength": 64
-      },
-      "apiVersions": [
-        "2025-10-02-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
       "resourceModelId": "Microsoft.App.ConnectedEnvironment",
       "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}",
       "resourceType": "Microsoft.App/connectedEnvironments",
@@ -239,7 +84,10 @@
       "resourceName": "ContainerAppConnectedEnvironment",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -308,7 +156,10 @@
       "resourceName": "ContainerAppConnectedEnvironmentCertificate",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -377,7 +228,10 @@
       "resourceName": "ContainerAppConnectedEnvironmentDaprComponent",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -436,78 +290,10 @@
       "resourceName": "ContainerAppConnectedEnvironmentStorage",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.App.AppResiliency",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}",
-      "resourceType": "Microsoft.App/containerApps/resiliencyPolicies",
-      "methods": [
-        {
-          "methodId": "Microsoft.App.AppResiliencies.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.AppResiliencies.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.AppResiliencies.update",
-          "kind": "Update",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.AppResiliencies.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.AppResiliencies.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
-      "resourceName": "AppResiliency",
-      "nameConstraints": {
-        "pattern": "^[-\\w\\._\\(\\)]+$"
-      },
-      "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -577,6 +363,26 @@
           }
         },
         {
+          "methodId": "Microsoft.App.ContainerAppPrivateLinkResources.get",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateLinkResources/{privateLinkResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.ContainerAppPrivateLinkResources.list",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateLinkResources",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
           "methodId": "Microsoft.App.ContainerApps.getAuthToken",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/getAuthtoken",
@@ -633,9 +439,16 @@
         "scopeResourceType": "Microsoft.Resources/resourceGroups"
       },
       "resourceName": "ContainerApp",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]+$",
+        "minLength": 2,
+        "maxLength": 32
+      },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -694,60 +507,10 @@
       "resourceName": "ContainerAppAuthConfig",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.App.ContainerAppsBuildResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/builds/{buildName}",
-      "resourceType": "Microsoft.App/containerApps/builds",
-      "methods": [
-        {
-          "methodId": "Microsoft.App.ContainerAppsBuilds.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/builds/{buildName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/builds/{buildName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.ContainerAppsBuilds.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/builds/{buildName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/builds/{buildName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.ContainerAppsBuilds.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/builds",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
-      "resourceName": "ContainerAppsBuild",
-      "nameConstraints": {
-        "pattern": "^[-\\w\\._\\(\\)]+$",
-        "minLength": 2,
-        "maxLength": 64
-      },
-      "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -786,7 +549,10 @@
       "resourceName": "ContainerAppDetectorPropertyRevision",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -814,9 +580,16 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
       "singletonResourceName": "rootApi",
       "resourceName": "ContainerAppDetectorProperty",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]+$",
+        "minLength": 2,
+        "maxLength": 32
+      },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -855,7 +628,10 @@
       "resourceName": "ContainerAppDetector",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -896,32 +672,33 @@
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
     {
       "resourceModelId": "Microsoft.App.LabelHistory",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}",
-      "resourceType": "Microsoft.App/containerApps/labelHistory",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}",
+      "resourceType": "Microsoft.App/containerApps/labelHistories",
       "methods": [
         {
           "methodId": "Microsoft.App.ContainerAppsLabelHistory.getLabelHistory",
           "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}",
           "scope": {
             "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
         },
         {
           "methodId": "Microsoft.App.ContainerAppsLabelHistory.deleteLabelHistory",
           "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}",
           "scope": {
             "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
         }
@@ -932,69 +709,59 @@
         "scopeResourceType": "Microsoft.Resources/resourceGroups"
       },
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
-      "resourceName": "LabelHistory",
+      "resourceName": "ContainerAppLabelHistory",
       "nameConstraints": {
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
     {
-      "resourceModelId": "Microsoft.App.ContainerAppsPatchResource",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}",
-      "resourceType": "Microsoft.App/containerApps/patches",
+      "resourceModelId": "Microsoft.App.PrivateEndpointConnection",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}",
+      "resourceType": "Microsoft.App/containerApps/privateEndpointConnections",
       "methods": [
         {
-          "methodId": "Microsoft.App.ContainerAppsPatches.get",
+          "methodId": "Microsoft.App.ContainerAppPrivateEndpointConnections.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.ContainerAppPrivateEndpointConnections.get",
           "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}",
           "scope": {
             "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
         },
         {
-          "methodId": "Microsoft.App.ContainerAppsPatches.delete",
+          "methodId": "Microsoft.App.ContainerAppPrivateEndpointConnections.delete",
           "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}",
           "scope": {
             "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections/{privateEndpointConnectionName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
         },
         {
-          "methodId": "Microsoft.App.ContainerAppsPatches.listByContainerApp",
+          "methodId": "Microsoft.App.ContainerAppPrivateEndpointConnections.list",
           "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/privateEndpointConnections",
           "scope": {
             "kind": "ResourceGroup",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
-        },
-        {
-          "methodId": "Microsoft.App.ContainerAppsPatches.apply",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}/apply",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.ContainerAppsPatches.skipConfigure",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}/skipConfig",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
         }
       ],
       "scope": {
@@ -1003,14 +770,10 @@
         "scopeResourceType": "Microsoft.Resources/resourceGroups"
       },
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}",
-      "resourceName": "ContainerAppsPatch",
-      "nameConstraints": {
-        "pattern": "^[-\\w\\._\\(\\)]+$",
-        "minLength": 2,
-        "maxLength": 64
-      },
+      "resourceName": "ContainerAppContainerPrivateEndpointConnection",
+      "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1020,7 +783,7 @@
       "resourceType": "Microsoft.App/logicApps",
       "methods": [
         {
-          "methodId": "Microsoft.App.LogicApps.createOrUpdate",
+          "methodId": "Microsoft.App.LogicApps.createOrUpdateStable",
           "kind": "Create",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}",
           "scope": {
@@ -1050,26 +813,6 @@
           }
         },
         {
-          "methodId": "Microsoft.App.LogicApps.deployWorkflowArtifacts",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/deployWorkflowArtifacts",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}",
-            "scopeResourceType": "Microsoft.App/containerApps"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.LogicApps.invoke",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/invoke",
-          "scope": {
-            "kind": "Extension",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}",
-            "scopeResourceType": "Microsoft.App/containerApps"
-          }
-        },
-        {
           "methodId": "Microsoft.App.LogicApps.listWorkflowsConnections",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/listWorkflowsConnections",
@@ -1091,7 +834,9 @@
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1134,7 +879,10 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1213,7 +961,10 @@
       "resourceName": "ContainerAppRevision",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1254,7 +1005,10 @@
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1293,7 +1047,10 @@
       "resourceName": "ContainerAppReplica",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1352,7 +1109,10 @@
       "resourceName": "ContainerAppSourceControl",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1482,7 +1242,10 @@
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1513,7 +1276,10 @@
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1552,7 +1318,10 @@
       "resourceName": "ContainerAppJobDetector",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1603,7 +1372,10 @@
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1673,6 +1445,26 @@
           }
         },
         {
+          "methodId": "Microsoft.App.ManagedEnvironmentPrivateLinkResources.get",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateLinkResources/{privateLinkResourceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.ManagedEnvironments.checkMigrationEligibility",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkMigrationEligibility",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
           "methodId": "Microsoft.App.ManagedEnvironments.checkNameAvailability",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability",
@@ -1729,11 +1521,29 @@
         "scopeResourceType": "Microsoft.Resources/resourceGroups"
       },
       "resourceName": "ContainerAppManagedEnvironment",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$"
+      },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "Contributor",
+          "value": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+        },
+        {
+          "name": "Owner",
+          "value": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+        },
+        {
+          "name": "Reader",
+          "value": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.App.Certificate",
@@ -1800,7 +1610,10 @@
       "resourceName": "ContainerAppManagedEnvironmentCertificate",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1869,7 +1682,10 @@
       "resourceName": "ContainerAppManagedEnvironmentDaprComponent",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -1928,66 +1744,7 @@
       "resourceName": "DaprComponentResiliencyPolicy",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Microsoft.App.DaprSubscription",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}",
-      "resourceType": "Microsoft.App/managedEnvironments/daprSubscriptions",
-      "methods": [
-        {
-          "methodId": "Microsoft.App.DaprSubscriptions.createOrUpdate",
-          "kind": "Create",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.DaprSubscriptions.get",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.DaprSubscriptions.delete",
-          "kind": "Delete",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.DaprSubscriptions.list",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}",
-      "resourceName": "DaprSubscription",
-      "nameConstraints": {},
-      "apiVersions": [
-        "2025-10-02-preview"
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2015,11 +1772,29 @@
       "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}",
       "singletonResourceName": "rootApi",
       "resourceName": "ContainerAppManagedEnvironmentDetectorResourceProperty",
-      "nameConstraints": {},
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$"
+      },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
-      "rbacRoles": []
+      "rbacRoles": [
+        {
+          "name": "Contributor",
+          "value": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+        },
+        {
+          "name": "Owner",
+          "value": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+        },
+        {
+          "name": "Reader",
+          "value": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+        }
+      ]
     },
     {
       "resourceModelId": "Microsoft.App.Diagnostics",
@@ -2056,7 +1831,10 @@
       "resourceName": "ContainerAppManagedEnvironmentDetector",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2127,7 +1905,8 @@
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2200,7 +1979,10 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2271,7 +2053,10 @@
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2332,7 +2117,10 @@
         "pattern": "^[-\\w\\._\\(\\)]+$"
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2401,7 +2189,10 @@
       "resourceName": "ContainerAppManagedCertificate",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2460,7 +2251,10 @@
       "resourceName": "ContainerAppPrivateEndpointConnection",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2519,7 +2313,151 @@
       "resourceName": "ContainerAppManagedEnvironmentStorage",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.App.SandboxGroup",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+      "resourceType": "Microsoft.App/sandboxGroups",
+      "methods": [
+        {
+          "methodId": "Microsoft.App.SandboxGroups.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.SandboxGroups.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.SandboxGroups.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.SandboxGroups.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.SandboxGroups.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.SandboxGroups.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.App/sandboxGroups",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "SandboxGroup",
+      "nameConstraints": {
+        "pattern": "^(?![.-])[A-Za-z0-9-]{1,32}$"
+      },
+      "apiVersions": [
+        "2026-07-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.App.VnetConnection",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}/vnetConnections/{vnetConnectionName}",
+      "resourceType": "Microsoft.App/sandboxGroups/vnetConnections",
+      "methods": [
+        {
+          "methodId": "Microsoft.App.VnetConnections.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}/vnetConnections/{vnetConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}/vnetConnections/{vnetConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.VnetConnections.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}/vnetConnections/{vnetConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}/vnetConnections/{vnetConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.VnetConnections.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}/vnetConnections/{vnetConnectionName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}/vnetConnections/{vnetConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.App.VnetConnections.listBySandboxGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}/vnetConnections",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sandboxGroups/{sandboxGroupName}",
+      "resourceName": "SandboxGroupVnetConnection",
+      "nameConstraints": {
+        "pattern": "^(?![.-])[A-Za-z0-9-]{1,32}$"
+      },
+      "apiVersions": [
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -2587,26 +2525,6 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}",
             "scopeResourceType": "Microsoft.Resources/subscriptions"
           }
-        },
-        {
-          "methodId": "Microsoft.App.ContainerAppsSessionPools.fetchMcpServerCredentials",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}/fetchMcpServerCredentials",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.App.ContainerAppsSessionPools.rotateMcpServerCredentials",
-          "kind": "Action",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}/rotateMcpServerCredentials",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
         }
       ],
       "scope": {
@@ -2621,7 +2539,10 @@
         "maxLength": 63
       },
       "apiVersions": [
-        "2025-10-02-preview"
+        "2025-10-02-preview",
+        "2026-01-01",
+        "2026-03-02-preview",
+        "2026-07-01"
       ],
       "rbacRoles": []
     }
@@ -2648,6 +2569,15 @@
     {
       "methodId": "Microsoft.App.AvailableWorkloadProfilesOperationGroup.get",
       "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.App.AvailableEnvironmentModesOperationGroup.list",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsModes",
       "scope": {
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",

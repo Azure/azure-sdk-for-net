@@ -47,7 +47,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -178,7 +179,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -259,7 +261,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -331,7 +334,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -1421,7 +1425,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -1523,7 +1528,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -1604,7 +1610,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -1682,7 +1689,8 @@
       "resourceName": "InterconnectBlock",
       "nameConstraints": {},
       "apiVersions": [
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -1763,7 +1771,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -1844,7 +1853,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -1896,7 +1906,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -2168,7 +2179,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -2449,7 +2461,77 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Compute.VirtualMachineDiagnosticRunCommand",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}",
+      "resourceType": "Microsoft.Compute/virtualMachines/diagnosticRunCommands",
+      "methods": [
+        {
+          "methodId": "Compute.VirtualMachineDiagnosticRunCommands.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Compute.VirtualMachineDiagnosticRunCommands.getByVirtualMachine",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Compute.VirtualMachineDiagnosticRunCommands.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Compute.VirtualMachineDiagnosticRunCommands.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands/{runCommandName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Compute.VirtualMachineDiagnosticRunCommands.diagnosticListByVirtualMachine",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/diagnosticRunCommands",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+      "resourceName": "VirtualMachineDiagnosticRunCommand",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -2521,7 +2603,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -2593,7 +2676,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -2753,6 +2837,16 @@
           }
         },
         {
+          "methodId": "Compute.VirtualMachineScaleSets.migrateVMAvailabilityZone",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/migrateVMAvailabilityZone",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
           "methodId": "Compute.VirtualMachineScaleSets.performMaintenance",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/performMaintenance",
@@ -2894,7 +2988,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -2966,7 +3061,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -3016,7 +3112,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -3049,7 +3146,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -3251,7 +3349,77 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Compute.VirtualMachineDiagnosticRunCommand",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands/{runCommandName}",
+      "resourceType": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/diagnosticRunCommands",
+      "methods": [
+        {
+          "methodId": "Compute.VirtualMachineScaleSetVMDiagnosticRunCommands.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands/{runCommandName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands/{runCommandName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Compute.VirtualMachineScaleSetVMDiagnosticRunCommands.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands/{runCommandName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands/{runCommandName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Compute.VirtualMachineScaleSetVMDiagnosticRunCommands.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands/{runCommandName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands/{runCommandName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Compute.VirtualMachineScaleSetVMDiagnosticRunCommands.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands/{runCommandName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands/{runCommandName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Compute.VirtualMachineScaleSetVMDiagnosticRunCommands.diagnosticList",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/diagnosticRunCommands",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}",
+      "resourceName": "VirtualMachineScaleSetVMDiagnosticRunCommand",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -3323,7 +3491,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     },
@@ -3395,7 +3564,8 @@
         "2024-11-01",
         "2025-04-01",
         "2025-11-01",
-        "2026-03-01"
+        "2026-03-01",
+        "2026-04-01"
       ],
       "rbacRoles": []
     }

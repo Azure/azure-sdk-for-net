@@ -79,7 +79,8 @@
       },
       "apiVersions": [
         "2023-05-01-preview",
-        "2024-11-30-preview"
+        "2024-11-30-preview",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -193,7 +194,8 @@
       },
       "apiVersions": [
         "2023-05-01-preview",
-        "2024-11-30-preview"
+        "2024-11-30-preview",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -276,7 +278,8 @@
       },
       "apiVersions": [
         "2023-05-01-preview",
-        "2024-11-30-preview"
+        "2024-11-30-preview",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -390,7 +393,8 @@
       },
       "apiVersions": [
         "2023-05-01-preview",
-        "2024-11-30-preview"
+        "2024-11-30-preview",
+        "2026-06-01"
       ],
       "rbacRoles": []
     }

@@ -36,7 +36,8 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-06-05",
-        "2026-05-05-preview"
+        "2026-05-05-preview",
+        "2026-09-05-preview"
       ],
       "rbacRoles": []
     },
@@ -75,7 +76,8 @@
       "resourceName": "SkuMixPlacementBase",
       "nameConstraints": {},
       "apiVersions": [
-        "2026-05-05-preview"
+        "2026-05-05-preview",
+        "2026-09-05-preview"
       ],
       "rbacRoles": []
     }
