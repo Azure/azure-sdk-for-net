@@ -81,7 +81,9 @@
         "2024-11-01",
         "2025-04-01",
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -145,7 +147,9 @@
       },
       "apiVersions": [
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -209,7 +213,73 @@
       },
       "apiVersions": [
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.IoTOperations.AkriServiceResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriServices/{akriServiceName}",
+      "resourceType": "Microsoft.IoTOperations/instances/akriServices",
+      "methods": [
+        {
+          "methodId": "Microsoft.IoTOperations.AkriService.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriServices/{akriServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriServices/{akriServiceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.IoTOperations.AkriService.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriServices/{akriServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriServices/{akriServiceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.IoTOperations.AkriService.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriServices/{akriServiceName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriServices/{akriServiceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.IoTOperations.AkriService.listByInstanceResource",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriServices",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}",
+      "resourceName": "AkriServiceResource",
+      "nameConstraints": {
+        "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
+        "minLength": 3,
+        "maxLength": 63
+      },
+      "apiVersions": [
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -275,7 +345,9 @@
         "2024-11-01",
         "2025-04-01",
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -341,7 +413,9 @@
         "2024-11-01",
         "2025-04-01",
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -407,7 +481,9 @@
         "2024-11-01",
         "2025-04-01",
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -473,7 +549,9 @@
         "2024-11-01",
         "2025-04-01",
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -539,7 +617,9 @@
         "2024-11-01",
         "2025-04-01",
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -605,7 +685,9 @@
         "2024-11-01",
         "2025-04-01",
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -669,7 +751,9 @@
       },
       "apiVersions": [
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -735,7 +819,9 @@
         "2024-11-01",
         "2025-04-01",
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     },
@@ -799,7 +885,9 @@
       },
       "apiVersions": [
         "2025-07-01-preview",
-        "2025-10-01"
+        "2025-10-01",
+        "2026-03-01",
+        "2026-07-01"
       ],
       "rbacRoles": []
     }
