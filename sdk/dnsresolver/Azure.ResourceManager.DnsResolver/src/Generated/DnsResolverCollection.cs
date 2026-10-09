@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolverDataAsyncCollectionResultOfT(
                 _dnsResolversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolverDataCollectionResultOfT(
                 _dnsResolversRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

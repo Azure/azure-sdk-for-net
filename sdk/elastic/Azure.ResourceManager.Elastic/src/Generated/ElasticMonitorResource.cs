@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetConnectedPartnerResourcesAsyncCollectionResultOfT(
+            return new ConnectedPartnerResourceInfoAsyncCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetConnectedPartnerResourcesCollectionResultOfT(
+            return new ConnectedPartnerResourceInfoCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1577,7 +1577,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetMonitoredResourcesAsyncCollectionResultOfT(
+            return new MonitoredResourceInfoAsyncCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1615,7 +1615,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetMonitoredResourcesCollectionResultOfT(
+            return new MonitoredResourceInfoCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2137,7 +2137,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetVmHostsAsyncCollectionResultOfT(
+            return new ElasticVmResourceInfoAsyncCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2175,7 +2175,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticMonitorResourcesGetVmHostsCollectionResultOfT(
+            return new ElasticVmResourceInfoCollectionResultOfT(
                 _elasticMonitorResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
