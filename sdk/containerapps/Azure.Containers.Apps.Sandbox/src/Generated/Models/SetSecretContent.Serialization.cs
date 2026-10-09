@@ -171,7 +171,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SetSecretContent(values, additionalBinaryDataProperties);
+            return new SetSecretContent(values ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

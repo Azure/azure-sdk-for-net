@@ -155,7 +155,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerVolumeMounts(containerName, volumeMounts, additionalBinaryDataProperties);
+            return new ContainerVolumeMounts(containerName, volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedSnapshot(value, nextLink, additionalBinaryDataProperties);
+            return new PagedSnapshot(value ?? new ChangeTrackingList<SandboxSnapshot>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

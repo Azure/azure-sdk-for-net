@@ -163,7 +163,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SandboxDirectoryListingResult(path, entries, additionalBinaryDataProperties);
+            return new SandboxDirectoryListingResult(path, entries ?? new ChangeTrackingList<SandboxFileInfo>(), additionalBinaryDataProperties);
         }
     }
 }

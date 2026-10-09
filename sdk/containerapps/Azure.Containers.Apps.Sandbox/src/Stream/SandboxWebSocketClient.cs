@@ -6,6 +6,7 @@ using System.IO;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Containers.Apps.Sandbox.Models;
 
 namespace Azure.Containers.Apps.Sandbox
 {
@@ -40,7 +41,8 @@ namespace Azure.Containers.Apps.Sandbox
 
         public async Task SendAsync(BinaryData data, SandboxStreamMessageType type, CancellationToken cancellationToken)
         {
-            if (data is null) throw new ArgumentNullException(nameof(data));
+            if (data is null)
+                throw new ArgumentNullException(nameof(data));
             WebSocketMessageType messageType = type switch
             {
                 SandboxStreamMessageType.Text => WebSocketMessageType.Text,
@@ -99,14 +101,16 @@ namespace Azure.Containers.Apps.Sandbox
 
         public void Dispose()
         {
-            if (Interlocked.Exchange(ref _disposed, 1) != 0) return;
+            if (Interlocked.Exchange(ref _disposed, 1) != 0)
+                return;
             _socket.Abort();
             _socket.Dispose();
         }
 
         public async ValueTask DisposeAsync()
         {
-            if (Interlocked.Exchange(ref _disposed, 1) != 0) return;
+            if (Interlocked.Exchange(ref _disposed, 1) != 0)
+                return;
             try
             {
                 if (_socket.State is WebSocketState.Open or WebSocketState.CloseReceived)
@@ -137,7 +141,8 @@ namespace Azure.Containers.Apps.Sandbox
 
         private void ThrowIfDisposed()
         {
-            if (Volatile.Read(ref _disposed) != 0) throw new ObjectDisposedException(nameof(SandboxWebSocketClient));
+            if (Volatile.Read(ref _disposed) != 0)
+                throw new ObjectDisposedException(nameof(SandboxWebSocketClient));
         }
     }
 }

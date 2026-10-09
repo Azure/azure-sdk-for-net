@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Format of the HTTP sandbox log stream. </summary>
     public enum SandboxLogFormat

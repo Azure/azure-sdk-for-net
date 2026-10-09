@@ -167,7 +167,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
             }
             return new ApplicationInsightsTelemetryEndpoint(
                 kind,
-                data,
+                data ?? new ChangeTrackingList<TelemetryData>(),
                 columns ?? new ChangeTrackingDictionary<string, TelemetryLogColumn>(),
                 dynamicJsonColumns,
                 additionalBinaryDataProperties,

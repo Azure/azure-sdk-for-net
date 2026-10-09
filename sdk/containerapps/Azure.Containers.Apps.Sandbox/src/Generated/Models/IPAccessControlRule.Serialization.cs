@@ -183,7 +183,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IPAccessControlRule(name, action, priority, sourceAddressPrefixes, additionalBinaryDataProperties);
+            return new IPAccessControlRule(name, action, priority, sourceAddressPrefixes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

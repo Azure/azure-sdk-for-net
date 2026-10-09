@@ -183,7 +183,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
             }
             return new LogAnalyticsLegacyTelemetryEndpoint(
                 kind,
-                data,
+                data ?? new ChangeTrackingList<TelemetryData>(),
                 columns ?? new ChangeTrackingDictionary<string, TelemetryLogColumn>(),
                 dynamicJsonColumns,
                 additionalBinaryDataProperties,

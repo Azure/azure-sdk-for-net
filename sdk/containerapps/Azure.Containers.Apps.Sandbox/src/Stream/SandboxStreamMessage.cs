@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> The kind of WebSocket message in a sandbox stream. </summary>
     public enum SandboxStreamMessageType

@@ -228,7 +228,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                 }
             }
             return new SandboxSourcePod(
-                containers,
+                containers ?? new ChangeTrackingList<ContainerSpec>(),
                 volumes ?? new ChangeTrackingList<PodVolume>(),
                 contentPackages ?? new ChangeTrackingList<PodContentPackage>(),
                 securityContext,

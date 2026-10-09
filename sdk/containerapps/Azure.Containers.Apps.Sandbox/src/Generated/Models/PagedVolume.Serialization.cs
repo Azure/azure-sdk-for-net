@@ -170,7 +170,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedVolume(value, nextLink, additionalBinaryDataProperties);
+            return new PagedVolume(value ?? new ChangeTrackingList<SandboxGroupVolume>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

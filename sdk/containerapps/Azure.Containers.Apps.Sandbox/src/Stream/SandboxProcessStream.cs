@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Containers.Apps.Sandbox.Models;
 
 namespace Azure.Containers.Apps.Sandbox
 {

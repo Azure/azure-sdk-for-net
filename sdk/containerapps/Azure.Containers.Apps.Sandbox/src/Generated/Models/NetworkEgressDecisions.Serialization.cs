@@ -165,7 +165,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkEgressDecisions(allowed, denied, additionalBinaryDataProperties);
+            return new NetworkEgressDecisions(allowed ?? new ChangeTrackingList<EgressDecisionEntry>(), denied ?? new ChangeTrackingList<EgressDecisionEntry>(), additionalBinaryDataProperties);
         }
     }
 }

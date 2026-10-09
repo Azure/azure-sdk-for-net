@@ -176,7 +176,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PodVolumeMountsContent(volumes, containerMounts, additionalBinaryDataProperties);
+            return new PodVolumeMountsContent(volumes ?? new ChangeTrackingList<PodVolume>(), containerMounts ?? new ChangeTrackingList<ContainerVolumeMounts>(), additionalBinaryDataProperties);
         }
     }
 }

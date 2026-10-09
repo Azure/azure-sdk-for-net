@@ -230,7 +230,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
             return new DiskImage(
                 id,
                 name,
-                labels,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
                 image,
                 status,
                 sizeInMb,

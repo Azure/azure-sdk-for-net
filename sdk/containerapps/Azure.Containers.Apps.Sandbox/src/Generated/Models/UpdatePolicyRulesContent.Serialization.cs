@@ -195,7 +195,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UpdatePolicyRulesContent(policyRules, enabledToolGroups ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new UpdatePolicyRulesContent(policyRules ?? new ChangeTrackingList<McpPolicyRule>(), enabledToolGroups ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

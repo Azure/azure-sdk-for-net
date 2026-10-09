@@ -173,7 +173,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TdsEgressSection(defaultAction, credentials, rules, additionalBinaryDataProperties);
+            return new TdsEgressSection(defaultAction, credentials ?? new ChangeTrackingList<TdsCredential>(), rules ?? new ChangeTrackingList<TdsEgressRule>(), additionalBinaryDataProperties);
         }
     }
 }

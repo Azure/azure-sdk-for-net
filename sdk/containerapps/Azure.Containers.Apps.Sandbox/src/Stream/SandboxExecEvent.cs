@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A service event received from an interactive sandbox exec session. </summary>
     public enum SandboxExecEventType

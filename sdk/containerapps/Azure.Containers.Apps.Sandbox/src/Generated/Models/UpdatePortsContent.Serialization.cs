@@ -158,7 +158,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UpdatePortsContent(ports, additionalBinaryDataProperties);
+            return new UpdatePortsContent(ports ?? new ChangeTrackingList<SandboxPortUpdate>(), additionalBinaryDataProperties);
         }
     }
 }

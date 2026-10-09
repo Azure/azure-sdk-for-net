@@ -213,7 +213,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
             return new ContentPackage(
                 id,
                 size,
-                labels,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
                 contentType,
                 createdOn,
                 additionalBinaryDataProperties);

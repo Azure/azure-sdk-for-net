@@ -156,7 +156,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownTelemetryEndpoint(kind, data, columns ?? new ChangeTrackingDictionary<string, TelemetryLogColumn>(), dynamicJsonColumns, additionalBinaryDataProperties);
+            return new UnknownTelemetryEndpoint(kind, data ?? new ChangeTrackingList<TelemetryData>(), columns ?? new ChangeTrackingDictionary<string, TelemetryLogColumn>(), dynamicJsonColumns, additionalBinaryDataProperties);
         }
     }
 }

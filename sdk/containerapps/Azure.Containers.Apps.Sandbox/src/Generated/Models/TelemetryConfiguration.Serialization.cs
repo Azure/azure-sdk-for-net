@@ -162,7 +162,7 @@ namespace Azure.Containers.Apps.Sandbox.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TelemetryConfiguration(endpoints, metricsIntervalSeconds, additionalBinaryDataProperties);
+            return new TelemetryConfiguration(endpoints ?? new ChangeTrackingList<TelemetryEndpoint>(), metricsIntervalSeconds, additionalBinaryDataProperties);
         }
     }
 }
