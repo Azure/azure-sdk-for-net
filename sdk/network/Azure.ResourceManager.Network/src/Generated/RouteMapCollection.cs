@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RouteMapData, RouteMapResource>(new RouteMapsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RouteMapData, RouteMapResource>(new RouteMapDataAsyncCollectionResultOfT(
                 _routeMapsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RouteMapData, RouteMapResource>(new RouteMapsGetAllCollectionResultOfT(
+            return new PageableWrapper<RouteMapData, RouteMapResource>(new RouteMapDataCollectionResultOfT(
                 _routeMapsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

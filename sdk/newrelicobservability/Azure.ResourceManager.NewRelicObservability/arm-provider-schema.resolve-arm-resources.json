@@ -216,7 +216,8 @@
         "pattern": "^.*$"
       },
       "apiVersions": [
-        "2025-05-01-preview"
+        "2025-05-01-preview",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -287,7 +288,8 @@
         "pattern": "^[a-zA-Z0-9-]{3,24}$"
       },
       "apiVersions": [
-        "2025-05-01-preview"
+        "2025-05-01-preview",
+        "2026-06-01"
       ],
       "rbacRoles": []
     },
@@ -356,7 +358,8 @@
       "resourceName": "TagRule",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-05-01-preview"
+        "2025-05-01-preview",
+        "2026-06-01"
       ],
       "rbacRoles": []
     }

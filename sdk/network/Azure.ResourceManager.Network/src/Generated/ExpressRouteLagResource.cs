@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ExpressRouteLagsLinksListAsyncCollectionResultOfT(
+            return new ExpressRouteLagLinkAsyncCollectionResultOfT(
                 _expressRouteLagsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ExpressRouteLagsLinksListCollectionResultOfT(
+            return new ExpressRouteLagLinkCollectionResultOfT(
                 _expressRouteLagsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ExpressRouteLagsMembersListAsyncCollectionResultOfT(
+            return new ExpressRouteLagMemberAsyncCollectionResultOfT(
                 _expressRouteLagsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new ExpressRouteLagsMembersListCollectionResultOfT(
+            return new ExpressRouteLagMemberCollectionResultOfT(
                 _expressRouteLagsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

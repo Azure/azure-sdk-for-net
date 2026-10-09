@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRoutersGetByResourceGroupAsyncCollectionResultOfT(_virtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualRouterCollection.GetAll"), data => new VirtualRouterResource(Client, data));
+            return new AsyncPageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRouterDataAsyncCollectionResultOfT(_virtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualRouterCollection.GetAll"), data => new VirtualRouterResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRoutersGetByResourceGroupCollectionResultOfT(_virtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualRouterCollection.GetAll"), data => new VirtualRouterResource(Client, data));
+            return new PageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRouterDataCollectionResultOfT(_virtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualRouterCollection.GetAll"), data => new VirtualRouterResource(Client, data));
         }
 
         /// <summary>

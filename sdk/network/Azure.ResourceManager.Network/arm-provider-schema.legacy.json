@@ -55,7 +55,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -105,7 +107,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -144,7 +148,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -183,7 +189,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -212,7 +220,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -252,7 +262,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -311,7 +323,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -350,7 +364,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -389,86 +405,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Common.NetworkInterface",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}",
-      "resourceType": "microsoft.Compute/cloudServices/roleInstances/networkInterfaces",
-      "methods": [
-        {
-          "methodId": "Microsoft.Network.NetworkInterfaces.getCloudServiceNetworkInterface",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Network.NetworkInterfaces.listCloudServiceRoleInstanceNetworkInterfaces",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "resourceName": "NetworkInterface",
-      "nameConstraints": {},
-      "apiVersions": [
-        "2025-05-01",
-        "2025-07-01"
-      ],
-      "rbacRoles": []
-    },
-    {
-      "resourceModelId": "Common.PublicIPAddress",
-      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIpAddressName}",
-      "resourceType": "microsoft.Compute/cloudServices/roleInstances/networkInterfaces/ipconfigurations/publicipaddresses",
-      "methods": [
-        {
-          "methodId": "Microsoft.Network.PublicIPAddresses.getCloudServicePublicIPAddress",
-          "kind": "Read",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIpAddressName}",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIpAddressName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        },
-        {
-          "methodId": "Microsoft.Network.PublicIPAddresses.listCloudServiceRoleInstancePublicIPAddresses",
-          "kind": "List",
-          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses",
-          "scope": {
-            "kind": "ResourceGroup",
-            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}",
-            "scopeResourceType": "Microsoft.Resources/resourceGroups"
-          }
-        }
-      ],
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      },
-      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}",
-      "resourceName": "PublicIPAddress",
-      "nameConstraints": {},
-      "apiVersions": [
-        "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -713,7 +652,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -773,7 +714,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -844,7 +787,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -923,7 +868,152 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.AddressPrefixSet",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}/addressPrefixSets/{addressPrefixSetName}",
+      "resourceType": "Microsoft.Network/applicationSecurityGroups/addressPrefixSets",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.AddressPrefixSets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}/addressPrefixSets/{addressPrefixSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}/addressPrefixSets/{addressPrefixSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.AddressPrefixSets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}/addressPrefixSets/{addressPrefixSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}/addressPrefixSets/{addressPrefixSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.AddressPrefixSets.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}/addressPrefixSets/{addressPrefixSetName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}/addressPrefixSets/{addressPrefixSetName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.AddressPrefixSets.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}/addressPrefixSets",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}",
+      "resourceName": "AddressPrefixSet",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9_.-]{0,78}[a-zA-Z0-9_])?$"
+      },
+      "apiVersions": [
+        "2025-09-01",
+        "2026-01-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.AuthenticationPolicy",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies/{authenticationPolicyName}",
+      "resourceType": "Microsoft.Network/authenticationPolicies",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.AuthenticationPolicies.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies/{authenticationPolicyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies/{authenticationPolicyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.AuthenticationPolicies.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies/{authenticationPolicyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies/{authenticationPolicyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.AuthenticationPolicies.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies/{authenticationPolicyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies/{authenticationPolicyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.AuthenticationPolicies.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies/{authenticationPolicyName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies/{authenticationPolicyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.AuthenticationPolicies.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/authenticationPolicies",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.AuthenticationPolicies.listAll",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Network/authenticationPolicies",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "IdentityIntegrationAuthenticationPolicy",
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9_-]{1,80}$",
+        "maxLength": 80
+      },
+      "apiVersions": [
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1032,7 +1122,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1062,7 +1154,7 @@
           }
         },
         {
-          "methodId": "Microsoft.Network.BastionHosts.updateTags",
+          "methodId": "Microsoft.Network.BastionHosts.update",
           "kind": "Update",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}",
           "scope": {
@@ -1171,7 +1263,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1320,7 +1414,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1399,7 +1495,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1478,7 +1576,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1557,7 +1657,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1626,7 +1728,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1755,7 +1859,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1803,6 +1909,16 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteCircuitAuthorizations.listKeys",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/authorizations/{authorizationName}/listKeys",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/authorizations/{authorizationName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
         }
       ],
       "scope": {
@@ -1815,7 +1931,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1915,7 +2033,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -1975,7 +2095,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2015,7 +2137,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2073,6 +2197,86 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteCrossConnections.commitCircuitMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/commitCircuitMigration",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteCrossConnections.getCircuitMigrationInfo",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/getCircuitMigrationInfo",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteCrossConnections.migrateCircuit",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/migrateCircuit",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteCrossConnections.prepareCircuitMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/prepareCircuitMigration",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteCrossConnections.restoreBgpForCircuitMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/restoreBgpForCircuitMigration",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteCrossConnections.rollbackCircuitMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/rollbackCircuitMigration",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteCrossConnections.shutDownBgpForCircuitMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/shutDownBgpForCircuitMigration",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteCrossConnections.validateCircuitMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/validateCircuitMigration",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
         }
       ],
       "scope": {
@@ -2084,7 +2288,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2174,7 +2380,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2303,7 +2511,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2353,7 +2563,142 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.ExpressRouteLag",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+      "resourceType": "Microsoft.Network/expressRouteLags",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteLags",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.generateLoa",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}/generateLoa",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.linksGet",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}/links/{linkName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.linksList",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}/links",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.membersGet",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}/links/{linkName}/members/{memberName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRouteLags.membersList",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}/links/{linkName}/members",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteLags/{expressRouteLagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "ExpressRouteLag",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+        "minLength": 1,
+        "maxLength": 80
+      },
+      "apiVersions": [
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2442,7 +2787,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2490,6 +2837,16 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
+        },
+        {
+          "methodId": "Microsoft.Network.ExpressRoutePortAuthorizations.listKeys",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}/listKeys",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
         }
       ],
       "scope": {
@@ -2502,7 +2859,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2542,7 +2901,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2661,7 +3022,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2712,7 +3075,71 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.FirewallPolicyKubeSelectorGroup",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/kubeSelectorGroups/{kubeSelectorGroupName}",
+      "resourceType": "Microsoft.Network/firewallPolicies/kubeSelectorGroups",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.FirewallPolicyKubeSelectorGroups.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/kubeSelectorGroups/{kubeSelectorGroupName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/kubeSelectorGroups/{kubeSelectorGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.FirewallPolicyKubeSelectorGroups.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/kubeSelectorGroups/{kubeSelectorGroupName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/kubeSelectorGroups/{kubeSelectorGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.FirewallPolicyKubeSelectorGroups.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/kubeSelectorGroups/{kubeSelectorGroupName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/kubeSelectorGroups/{kubeSelectorGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.FirewallPolicyKubeSelectorGroups.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/kubeSelectorGroups",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}",
+      "resourceName": "FirewallPolicyKubeSelectorGroup",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9-._]{0,78}[a-zA-Z0-9_])?$"
+      },
+      "apiVersions": [
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2772,7 +3199,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2823,7 +3252,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2874,7 +3305,91 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.FirstPartyServiceTag",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags/{firstPartyServiceTagName}",
+      "resourceType": "Microsoft.Network/firstPartyServiceTags",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.FirstPartyServiceTags.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags/{firstPartyServiceTagName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags/{firstPartyServiceTagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.FirstPartyServiceTags.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags/{firstPartyServiceTagName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags/{firstPartyServiceTagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.FirstPartyServiceTags.updateTags",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags/{firstPartyServiceTagName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags/{firstPartyServiceTagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.FirstPartyServiceTags.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags/{firstPartyServiceTagName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags/{firstPartyServiceTagName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.FirstPartyServiceTags.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firstPartyServiceTags",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.FirstPartyServiceTags.listAll",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Network/firstPartyServiceTags",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "FirstPartyServiceTag",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,79}$",
+        "maxLength": 80
+      },
+      "apiVersions": [
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -2964,7 +3479,9 @@
         "pattern": "^[^_\\W][\\w-._]{0,79}(?<![-.])$"
       },
       "apiVersions": [
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3003,7 +3520,9 @@
       "resourceName": "InterconnectGroupSubgroup",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3082,7 +3601,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3161,7 +3682,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3260,7 +3783,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3330,7 +3855,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3370,7 +3897,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3430,7 +3959,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3480,7 +4011,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3520,7 +4053,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3560,7 +4095,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3631,7 +4168,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3710,7 +4249,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3819,7 +4360,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3859,7 +4402,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -3919,7 +4464,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4040,7 +4587,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4101,7 +4650,9 @@
         "pattern": "^(?![.-])[a-zA-Z0-9_.-]{1,128}$"
       },
       "apiVersions": [
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4161,7 +4712,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4253,7 +4806,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4315,7 +4870,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4375,7 +4932,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4435,7 +4994,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4497,7 +5058,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4559,7 +5122,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4621,7 +5186,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4681,7 +5248,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4741,7 +5310,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4801,7 +5372,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4861,7 +5434,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4923,7 +5498,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -4985,7 +5562,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5047,7 +5626,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5119,7 +5700,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5181,7 +5764,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5243,7 +5828,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5322,7 +5909,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5401,7 +5990,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5441,7 +6032,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5501,7 +6094,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5583,7 +6178,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5636,7 +6233,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5699,7 +6298,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5762,7 +6363,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5825,7 +6428,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5898,7 +6503,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -5971,7 +6578,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6041,9 +6650,49 @@
           }
         },
         {
+          "methodId": "Microsoft.Network.NetworkVirtualAppliances.abortMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/abortMigration",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.NetworkVirtualAppliances.commitMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/commitMigration",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.NetworkVirtualAppliances.executeMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/executeMigration",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
           "methodId": "Microsoft.Network.NetworkVirtualAppliances.getBootDiagnosticLogs",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/getBootDiagnosticLogs",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.NetworkVirtualAppliances.prepareMigration",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/prepareMigration",
           "scope": {
             "kind": "ResourceGroup",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}",
@@ -6080,7 +6729,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6120,7 +6771,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6180,7 +6833,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6240,7 +6895,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6439,7 +7096,89 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Network.ConnectionAnalyzer",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+      "resourceType": "Microsoft.Network/networkWatchers/connectionAnalyzers",
+      "methods": [
+        {
+          "methodId": "Microsoft.Network.NetworkWatchers.connectionAnalyzersCreate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.NetworkWatchers.connectionAnalyzersGet",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.NetworkWatchers.connectionAnalyzersUpdateTags",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.NetworkWatchers.connectionAnalyzersDelete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.NetworkWatchers.connectionAnalyzersList",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.NetworkWatchers.connectionAnalyzersQuery",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}/query",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionAnalyzers/{connectionAnalyzerName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}",
+      "resourceName": "ConnectionAnalyzer",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6519,7 +7258,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6589,7 +7330,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6669,7 +7412,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6798,7 +7543,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6867,7 +7614,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6927,7 +7676,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -6996,7 +7747,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7056,7 +7809,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7165,7 +7920,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7244,7 +8001,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7323,7 +8082,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7383,7 +8144,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7462,7 +8225,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7522,7 +8287,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7601,7 +8368,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7680,7 +8449,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7740,7 +8511,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7861,7 +8634,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -7970,7 +8745,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8050,7 +8827,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8111,7 +8890,9 @@
         "pattern": "^(?![.-])[a-zA-Z0-9_.-]{1,128}$"
       },
       "apiVersions": [
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8171,7 +8952,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8231,7 +9014,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8291,7 +9076,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8351,7 +9138,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8411,7 +9200,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8471,7 +9262,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8552,7 +9345,9 @@
       },
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8655,6 +9450,16 @@
           "methodId": "Microsoft.Network.VirtualNetworkGateways.getBgpPeerStatus",
           "kind": "Action",
           "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getBgpPeerStatus",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Network.VirtualNetworkGateways.getEffectiveRoutes",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getEffectiveRoutes",
           "scope": {
             "kind": "ResourceGroup",
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}",
@@ -8891,7 +9696,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -8951,7 +9758,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9069,6 +9878,16 @@
             "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}",
             "scopeResourceType": "Microsoft.Resources/resourceGroups"
           }
+        },
+        {
+          "methodId": "Microsoft.Network.VirtualNetworks.moveIpConfigurations",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/moveIpConfigurations",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
         }
       ],
       "scope": {
@@ -9080,7 +9899,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9180,7 +10001,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9240,7 +10063,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9319,7 +10144,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9388,7 +10215,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9448,7 +10277,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9567,7 +10398,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9676,7 +10509,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9736,7 +10571,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9816,7 +10653,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9876,7 +10715,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -9937,7 +10778,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -10026,7 +10869,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -10086,7 +10931,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -10165,7 +11012,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     },
@@ -10205,7 +11054,9 @@
       "nameConstraints": {},
       "apiVersions": [
         "2025-05-01",
-        "2025-07-01"
+        "2025-07-01",
+        "2025-09-01",
+        "2026-01-01"
       ],
       "rbacRoles": []
     }
@@ -10254,24 +11105,6 @@
         "kind": "Subscription",
         "scopeIdPattern": "/subscriptions/{subscriptionId}",
         "scopeResourceType": "Microsoft.Resources/subscriptions"
-      }
-    },
-    {
-      "methodId": "Microsoft.Network.NetworkInterfacesOperationGroup.listCloudServiceNetworkInterfaces",
-      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/networkInterfaces",
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
-      }
-    },
-    {
-      "methodId": "Microsoft.Network.PublicIPAddressesOperationGroup.listCloudServicePublicIPAddresses",
-      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/publicipaddresses",
-      "scope": {
-        "kind": "ResourceGroup",
-        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
-        "scopeResourceType": "Microsoft.Resources/resourceGroups"
       }
     },
     {
