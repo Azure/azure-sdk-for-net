@@ -1750,6 +1750,7 @@ namespace Azure.Provisioning.Billing
         public Azure.Provisioning.BicepValue<string> ProductCategory { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProductType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProductTypeId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Billing.BillingProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> ProvisioningTenantId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> PurchaseOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> Quantity { get { throw null; } set { } }
