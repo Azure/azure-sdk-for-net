@@ -6,16 +6,13 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The instance view of a capacity reservation that includes the name of the capacity reservation. It is used for the response to the instance view of a capacity reservation group. </summary>
-    public partial class CapacityReservationInstanceViewWithName : ProvisionableConstruct
+    public partial class CapacityReservationInstanceViewWithName : CapacityReservationInstanceView
     {
         private BicepValue<string> _name;
-        private CapacityReservationUtilization _utilizationInfo;
-        private BicepList<InstanceViewStatus> _statuses;
 
         /// <summary> Creates a new CapacityReservationInstanceViewWithName. </summary>
         public CapacityReservationInstanceViewWithName()
@@ -32,33 +29,11 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the UtilizationInfo. </summary>
-        public CapacityReservationUtilization UtilizationInfo
-        {
-            get
-            {
-                Initialize();
-                return _utilizationInfo;
-            }
-        }
-
-        /// <summary> Gets the Statuses. </summary>
-        public BicepList<InstanceViewStatus> Statuses
-        {
-            get
-            {
-                Initialize();
-                return _statuses;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CapacityReservationInstanceViewWithName. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
-            _utilizationInfo = DefineModelProperty<CapacityReservationUtilization>(nameof(UtilizationInfo), new string[] { "utilizationInfo" });
-            _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
             DefineAdditionalProperties();
         }
 

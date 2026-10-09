@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceVirtualNetworkData, SiteVirtualNetworkConnectionResource>(new MicrosoftWebVnetConnectionOperationGroupListVnetConnectionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceVirtualNetworkData, SiteVirtualNetworkConnectionResource>(new SiteVirtualNetworkConnectionCollectionGetAllAsyncCollectionResultOfT(
                 _vnetConnectionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceVirtualNetworkData, SiteVirtualNetworkConnectionResource>(new MicrosoftWebVnetConnectionOperationGroupListVnetConnectionsCollectionResultOfT(
+            return new PageableWrapper<AppServiceVirtualNetworkData, SiteVirtualNetworkConnectionResource>(new SiteVirtualNetworkConnectionCollectionGetAllCollectionResultOfT(
                 _vnetConnectionOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

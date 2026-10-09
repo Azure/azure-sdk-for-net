@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 #pragma warning disable AAIP001
 
-public class Sample_DataGenerationJob: SamplesBase
+public class Sample_DataGenerationJob : SamplesBase
 {
     [Test]
     [AsyncOnly]

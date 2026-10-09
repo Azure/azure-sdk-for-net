@@ -20,8 +20,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal HorizonDBPrivateEndpointConnectionProperties(HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
+        public HorizonDBPrivateEndpointConnectionProperties(HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
+            Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
+
             GroupIds = new ChangeTrackingList<string>();
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
@@ -45,10 +48,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public IReadOnlyList<string> GroupIds { get; }
 
         /// <summary> The private endpoint resource. </summary>
-        internal PrivateEndpoint PrivateEndpoint { get; }
+        internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public HorizonDBPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public HorizonDBPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public HorizonDBPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }

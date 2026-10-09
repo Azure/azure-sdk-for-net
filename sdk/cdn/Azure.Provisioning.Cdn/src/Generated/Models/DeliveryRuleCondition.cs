@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
     /// <summary>
     /// A condition for the delivery rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleUriPathCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, and <see cref="DeliveryRuleSslProtocolCondition"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleUriPathCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, and <see cref="DeliveryRuleSslProtocolCondition"/>.
     /// </summary>
     public partial class DeliveryRuleCondition : ProvisionableConstruct
     {
+        private BicepValue<DeliveryRuleMatchVariable> _name;
+
         /// <summary> Creates a new DeliveryRuleCondition. </summary>
         public DeliveryRuleCondition()
         {
+        }
+
+        /// <summary> The name of the condition for the delivery rule. </summary>
+        internal BicepValue<DeliveryRuleMatchVariable> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
+            }
         }
 
         /// <summary> Define all the provisionable properties for DeliveryRuleCondition. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _name = DefineProperty<DeliveryRuleMatchVariable>(nameof(Name), new string[] { "name" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

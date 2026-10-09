@@ -36,9 +36,9 @@ namespace Azure.Developer.LoadTesting
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
         /// <param name="scope"> The scope of the notification rule. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="testIds"> The test ids to include. If not provided, notification will be sent for all testIds. </param>
@@ -46,7 +46,7 @@ namespace Azure.Developer.LoadTesting
         /// The event to receive notifications for along with filtering conditions.
         /// Key is a user-assigned identifier for the event filter.
         /// </param>
-        internal TestsNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> testIds, IDictionary<string, TestsNotificationEventFilter> eventFilters) : base(notificationRuleId, displayName, actionGroupIds, scope, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
+        internal TestsNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> testIds, IDictionary<string, TestsNotificationEventFilter> eventFilters) : base(notificationRuleId, displayName, actionGroupIds, scope, createdOn, createdBy, lastModifiedOn, lastModifiedBy, additionalBinaryDataProperties)
         {
             TestIds = testIds;
             EventFilters = eventFilters;

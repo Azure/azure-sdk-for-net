@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The request to acknowledge bulk operation errors. </summary>
+    /// <summary> The operations for which errors should be acknowledged. </summary>
     public partial class AcknowledgeBulkOperationErrorsRequestContent : IJsonModel<AcknowledgeBulkOperationErrorsRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="AcknowledgeBulkOperationErrorsRequestContent"/> for deserialization. </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AcknowledgeBulkOperationErrorsRequestContent(operationIds, additionalBinaryDataProperties);

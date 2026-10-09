@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Connection property base schema.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PatAuthTypeConnectionProperties"/>, <see cref="ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="UsernamePasswordAuthTypeConnectionProperties"/>, <see cref="NoneAuthTypeConnectionProperties"/>, <see cref="SASAuthTypeConnectionProperties"/>, <see cref="AccountKeyAuthTypeConnectionProperties"/>, <see cref="ServicePrincipalAuthTypeConnectionProperties"/>, <see cref="AccessKeyAuthTypeConnectionProperties"/>, <see cref="ApiKeyAuthConnectionProperties"/>, <see cref="CustomKeysConnectionProperties"/>, <see cref="OAuth2AuthTypeConnectionProperties"/>, and <see cref="AadAuthTypeConnectionProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AadAuthTypeConnectionProperties"/>, <see cref="AccessKeyAuthTypeConnectionProperties"/>, <see cref="AccountKeyAuthTypeConnectionProperties"/>, <see cref="ApiKeyAuthConnectionProperties"/>, <see cref="CustomKeysConnectionProperties"/>, <see cref="ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="NoneAuthTypeConnectionProperties"/>, <see cref="OAuth2AuthTypeConnectionProperties"/>, <see cref="PatAuthTypeConnectionProperties"/>, <see cref="SASAuthTypeConnectionProperties"/>, <see cref="ServicePrincipalAuthTypeConnectionProperties"/>, and <see cref="UsernamePasswordAuthTypeConnectionProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConnectionPropertiesV2))]
     public abstract partial class CognitiveServicesConnectionProperties : IJsonModel<CognitiveServicesConnectionProperties>
@@ -206,30 +206,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "PAT":
-                        return PatAuthTypeConnectionProperties.DeserializePatAuthTypeConnectionProperties(element, options);
-                    case "ManagedIdentity":
-                        return ManagedIdentityAuthTypeConnectionProperties.DeserializeManagedIdentityAuthTypeConnectionProperties(element, options);
-                    case "UsernamePassword":
-                        return UsernamePasswordAuthTypeConnectionProperties.DeserializeUsernamePasswordAuthTypeConnectionProperties(element, options);
-                    case "None":
-                        return NoneAuthTypeConnectionProperties.DeserializeNoneAuthTypeConnectionProperties(element, options);
-                    case "SAS":
-                        return SASAuthTypeConnectionProperties.DeserializeSASAuthTypeConnectionProperties(element, options);
-                    case "AccountKey":
-                        return AccountKeyAuthTypeConnectionProperties.DeserializeAccountKeyAuthTypeConnectionProperties(element, options);
-                    case "ServicePrincipal":
-                        return ServicePrincipalAuthTypeConnectionProperties.DeserializeServicePrincipalAuthTypeConnectionProperties(element, options);
+                    case "AAD":
+                        return AadAuthTypeConnectionProperties.DeserializeAadAuthTypeConnectionProperties(element, options);
                     case "AccessKey":
                         return AccessKeyAuthTypeConnectionProperties.DeserializeAccessKeyAuthTypeConnectionProperties(element, options);
+                    case "AccountKey":
+                        return AccountKeyAuthTypeConnectionProperties.DeserializeAccountKeyAuthTypeConnectionProperties(element, options);
                     case "ApiKey":
                         return ApiKeyAuthConnectionProperties.DeserializeApiKeyAuthConnectionProperties(element, options);
                     case "CustomKeys":
                         return CustomKeysConnectionProperties.DeserializeCustomKeysConnectionProperties(element, options);
+                    case "ManagedIdentity":
+                        return ManagedIdentityAuthTypeConnectionProperties.DeserializeManagedIdentityAuthTypeConnectionProperties(element, options);
+                    case "None":
+                        return NoneAuthTypeConnectionProperties.DeserializeNoneAuthTypeConnectionProperties(element, options);
                     case "OAuth2":
                         return OAuth2AuthTypeConnectionProperties.DeserializeOAuth2AuthTypeConnectionProperties(element, options);
-                    case "AAD":
-                        return AadAuthTypeConnectionProperties.DeserializeAadAuthTypeConnectionProperties(element, options);
+                    case "PAT":
+                        return PatAuthTypeConnectionProperties.DeserializePatAuthTypeConnectionProperties(element, options);
+                    case "SAS":
+                        return SASAuthTypeConnectionProperties.DeserializeSASAuthTypeConnectionProperties(element, options);
+                    case "ServicePrincipal":
+                        return ServicePrincipalAuthTypeConnectionProperties.DeserializeServicePrincipalAuthTypeConnectionProperties(element, options);
+                    case "UsernamePassword":
+                        return UsernamePasswordAuthTypeConnectionProperties.DeserializeUsernamePasswordAuthTypeConnectionProperties(element, options);
                 }
             }
             return UnknownConnectionPropertiesV2.DeserializeUnknownConnectionPropertiesV2(element, options);

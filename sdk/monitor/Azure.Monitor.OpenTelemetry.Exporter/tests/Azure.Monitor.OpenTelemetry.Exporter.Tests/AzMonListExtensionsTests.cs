@@ -50,40 +50,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("443")]
         [InlineData("8888")]
 
-        public void HttpRequestUrlIsSetUsing_Scheme_ServerName_Port_Target(string port)
-        {
-            var mappedTags = AzMonList.Initialize();
-            string httpScheme;
-            if (port == "80")
-            {
-                httpScheme = "http";
-            }
-            else
-            {
-                httpScheme = "https";
-            }
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpScheme, httpScheme));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpServerName, "servername.com"));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetHostPort, port));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpTarget, "/path"));
-            string expectedUrl;
-            if (port == "80" || port == "443")
-            {
-                expectedUrl = $"{httpScheme}://servername.com/path";
-            }
-            else
-            {
-                expectedUrl = $"{httpScheme}://servername.com:{port}/path";
-            }
-            string? url = mappedTags.GetRequestUrl();
-            Assert.Equal(expectedUrl, url);
-        }
-
-        [Theory]
-        [InlineData("80")]
-        [InlineData("443")]
-        [InlineData("8888")]
-
         public void HttpRequestUrlIsSetUsing_Scheme_NetHostName_Port_Target(string port)
         {
             var mappedTags = AzMonList.Initialize();
@@ -121,7 +87,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpScheme, "http"));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetHostName, "localhost"));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpHost, "www.httphost.org"));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpServerName, "servername.com"));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetHostPort, "8888"));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpTarget, "/path"));
             string expectedUrl = "https://www.wiki.com";
@@ -136,24 +101,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpScheme, "http"));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetHostName, "localhost"));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpHost, "www.httphost.org"));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpServerName, "servername.com"));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetHostPort, "8888"));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpTarget, "/path"));
             string expectedUrl = "http://www.httphost.org/path";
-            string? url = mappedTags.GetRequestUrl();
-            Assert.Equal(expectedUrl, url);
-        }
-
-        [Fact]
-        public void HttpServerNameAttributeTakesPrecedenceSettingHttpRequestUrl()
-        {
-            var mappedTags = AzMonList.Initialize();
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpScheme, "http"));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetHostName, "localhost"));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpServerName, "servername.com"));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetHostPort, "8888"));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpTarget, "/path"));
-            string expectedUrl = "http://servername.com:8888/path";
             string? url = mappedTags.GetRequestUrl();
             Assert.Equal(expectedUrl, url);
         }
@@ -549,12 +499,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData("peerservice", null, null, null, null, null, null, "peerservice | DbName")]
-        [InlineData(null, "servicename.com", null, "8888", null, null, null, "servicename.com:8888 | DbName")]
-        [InlineData(null, null, "127.0.0.1", "8888", null, null, null, "127.0.0.1:8888 | DbName")]
-        [InlineData(null, null, null, null, "servername.com", null, "8888", "servername.com:8888 | DbName")]
-        [InlineData(null, null, null, null, null, "127.0.0.5", "8888", "127.0.0.5:8888 | DbName")]
-        public void DbNameIsAppendedToTargetDerivedFromNetAttributesforDBDependencyTarget(string peerService, string netPeerName, string netPeerIp, string netPeerPort, string serverAddress, string serverSocketAddress, string serverPort, string expectedTarget)
+        [InlineData("peerservice", null, null, null, null, null, "peerservice | DbName")]
+        [InlineData(null, "servicename.com", null, "8888", null, null, "servicename.com:8888 | DbName")]
+        [InlineData(null, null, "127.0.0.1", "8888", null, null, "127.0.0.1:8888 | DbName")]
+        [InlineData(null, null, null, null, "servername.com", "8888", "servername.com:8888 | DbName")]
+        public void DbNameIsAppendedToTargetDerivedFromNetAttributesforDBDependencyTarget(string peerService, string netPeerName, string netPeerIp, string netPeerPort, string serverAddress, string serverPort, string expectedTarget)
         {
             var mappedTags = AzMonList.Initialize();
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributePeerService, peerService));
@@ -563,7 +512,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetPeerPort, netPeerPort));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerAddress, serverAddress));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerPort, serverPort));
-            AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerSocketAddress, serverSocketAddress));
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbNamespace, "DbName"));
 
             Assert.Equal(expectedTarget, mappedTags.GetDbDependencyTargetAndName(true).DbTarget);

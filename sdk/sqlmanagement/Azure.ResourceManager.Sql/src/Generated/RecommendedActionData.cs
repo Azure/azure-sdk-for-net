@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.ExecuteActionStartOn;
+                return Properties is null ? default : Properties.ExecuteActionStartsOn;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.RevertActionStartOn;
+                return Properties is null ? default : Properties.RevertActionStartsOn;
             }
         }
 

@@ -275,11 +275,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FoundryAutoUpgrade))
-            {
-                writer.WritePropertyName("foundryAutoUpgrade"u8);
-                writer.WriteObjectValue(FoundryAutoUpgrade, options);
-            }
             if (Optional.IsDefined(AllowProjectManagement))
             {
                 writer.WritePropertyName("allowProjectManagement"u8);
@@ -378,7 +373,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AbusePenalty abusePenalty = default;
             RaiMonitorConfig raiMonitorConfig = default;
             IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default;
-            FoundryAutoUpgrade foundryAutoUpgrade = default;
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
@@ -697,15 +691,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     aiFoundryNetworkInjections = array;
                     continue;
                 }
-                if (prop.NameEquals("foundryAutoUpgrade"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    foundryAutoUpgrade = FoundryAutoUpgrade.DeserializeFoundryAutoUpgrade(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("allowProjectManagement"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -743,7 +728,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesAccountProperties(
@@ -778,7 +763,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 abusePenalty,
                 raiMonitorConfig,
                 aiFoundryNetworkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>(),
-                foundryAutoUpgrade,
                 allowProjectManagement,
                 defaultProject,
                 associatedProjects ?? new ChangeTrackingList<string>(),

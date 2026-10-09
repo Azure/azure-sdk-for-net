@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="serverCertificate"> Registered Server Certificate. </param>
         /// <param name="agentVersion"> Registered Server Agent Version. </param>
         /// <param name="agentVersionStatus"> Registered Server Agent Version Status. </param>
-        /// <param name="agentVersionExpireOn"> Registered Server Agent Version Expiration Date. </param>
+        /// <param name="agentVersionExpiresOn"> Registered Server Agent Version Expiration Date. </param>
         /// <param name="serverOSVersion"> Registered Server OS Version. </param>
         /// <param name="serverManagementErrorCode"> Registered Server Management Error Code. </param>
         /// <param name="lastHeartbeat"> Registered Server last heart beat. </param>
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="latestApplicationId"> Latest Server Application Id discovered from the server. It is not yet applied. </param>
         /// <param name="activeAuthType"> Server auth type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegisteredServerProperties(BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName, Guid? applicationId, bool? useIdentity, Guid? latestApplicationId, StorageSyncServerAuthType? activeAuthType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegisteredServerProperties(BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpiresOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName, Guid? applicationId, bool? useIdentity, Guid? latestApplicationId, StorageSyncServerAuthType? activeAuthType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
             AgentVersionStatus = agentVersionStatus;
-            AgentVersionExpireOn = agentVersionExpireOn;
+            AgentVersionExpiresOn = agentVersionExpiresOn;
             ServerOSVersion = serverOSVersion;
             ServerManagementErrorCode = serverManagementErrorCode;
             LastHeartbeat = lastHeartbeat;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public RegisteredServerAgentVersionStatus? AgentVersionStatus { get; }
 
         /// <summary> Registered Server Agent Version Expiration Date. </summary>
-        public DateTimeOffset? AgentVersionExpireOn { get; }
+        public DateTimeOffset? AgentVersionExpiresOn { get; }
 
         /// <summary> Registered Server OS Version. </summary>
         public string ServerOSVersion { get; set; }

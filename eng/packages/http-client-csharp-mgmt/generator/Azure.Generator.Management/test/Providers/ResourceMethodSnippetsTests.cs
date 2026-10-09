@@ -108,8 +108,8 @@ namespace Azure.Generator.Management.Tests.Providers
                 "Dictionary responses should be parsed inline with JsonDocument.");
             Assert.That(code, Does.Contain("EnumerateObject()"),
                 "Dictionary responses should be built by enumerating the JSON object.");
-            Assert.That(code, Does.Contain("BinaryData.FromString"),
-                "Each Record<unknown> value should be materialized via BinaryData.FromString.");
+            Assert.That(code, Does.Contain("GetUtf8Bytes()"),
+                "Each Record<unknown> value should be materialized from its JSON element.");
         }
 
         [Test]
@@ -137,8 +137,8 @@ namespace Azure.Generator.Management.Tests.Providers
                 "List responses should be parsed inline with JsonDocument.");
             Assert.That(code, Does.Contain("EnumerateArray()"),
                 "List responses should be built by enumerating the JSON array.");
-            Assert.That(code, Does.Contain("BinaryData.FromString"),
-                "Each list element should be materialized via BinaryData.FromString.");
+            Assert.That(code, Does.Contain("GetUtf8Bytes()"),
+                "Each list element should be materialized from its JSON element.");
         }
 
         [Test]
@@ -169,8 +169,8 @@ namespace Azure.Generator.Management.Tests.Providers
                 "The outer dictionary should be built by enumerating the JSON object.");
             Assert.That(code, Does.Contain("EnumerateArray()"),
                 "The inner list should be built by enumerating the JSON array.");
-            Assert.That(code, Does.Contain("BinaryData.FromString"),
-                "Leaf BinaryData values should be materialized via BinaryData.FromString.");
+            Assert.That(code, Does.Contain("GetUtf8Bytes()"),
+                "Leaf BinaryData values should be materialized from their JSON elements.");
         }
 
         [Test]

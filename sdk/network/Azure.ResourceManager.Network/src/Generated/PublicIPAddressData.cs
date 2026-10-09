@@ -296,6 +296,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Whether the public IP address SKU has been upgraded from Standard to StandardV2. </summary>
+        [WirePath("properties.upgradedToV2")]
+        public bool? IsUpgradedToV2
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsUpgradedToV2;
+            }
+        }
+
         /// <summary> Resource ID. </summary>
         [WirePath("properties.publicIPPrefix.id")]
         public ResourceIdentifier PublicIPPrefixId

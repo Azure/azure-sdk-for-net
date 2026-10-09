@@ -14,7 +14,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> Threat intelligence information object. </summary>
+    /// <summary>
+    /// Threat intelligence information object.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
+    /// </summary>
     public partial class SecurityInsightsThreatIntelligenceIndicatorBaseData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

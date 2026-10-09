@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
     public partial class KnowledgeSourceFabricOntologyPreview : SearchTestBase
     {
         public KnowledgeSourceFabricOntologyPreview(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -159,7 +159,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     IncludeActivity = true
                 };
-                request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What are the key business entities?"));
+                request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What data is available?"));
 
                 // Add per-source runtime parameters with references enabled
                 request.KnowledgeSourceParams.Add(

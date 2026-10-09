@@ -12,12 +12,13 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The MonitoringSignalBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/>, and <see cref="PredictionDriftMonitoringSignal"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/>, and <see cref="PredictionDriftMonitoringSignal"/>.
     /// </summary>
     public partial class MonitoringSignalBase : ProvisionableConstruct
     {
         private BicepList<MonitoringNotificationType> _notificationTypes;
         private BicepDictionary<string> _properties;
+        private BicepValue<MonitoringSignalType> _signalType;
 
         /// <summary> Creates a new MonitoringSignalBase. </summary>
         public MonitoringSignalBase()
@@ -54,12 +55,23 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> [Required] Specifies the type of signal to monitor. </summary>
+        internal BicepValue<MonitoringSignalType> SignalType
+        {
+            get
+            {
+                Initialize();
+                return _signalType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for MonitoringSignalBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _notificationTypes = DefineListProperty<MonitoringNotificationType>(nameof(NotificationTypes), new string[] { "notificationTypes" });
             _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
+            _signalType = DefineProperty<MonitoringSignalType>(nameof(SignalType), new string[] { "signalType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

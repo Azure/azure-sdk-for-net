@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
@@ -12,6 +13,64 @@ namespace Azure.Provisioning.Network.Tests;
 
 public class BasicNetworkTests
 {
+    [Test]
+    public void ResourceNameRequirementsArePreserved()
+    {
+        (ProvisionableResource Resource, int MinLength, int MaxLength)[] resources =
+        [
+            (new NetworkSecurityGroup("nsg"), 1, 80),
+            (new VirtualNetwork("vnet"), 2, 64),
+            (new NetworkInterface("nic"), 1, 80)
+        ];
+
+        foreach (var (resource, minLength, maxLength) in resources)
+        {
+            ResourceNameRequirements requirements = resource.GetResourceNameRequirements();
+            Assert.That(requirements.MinLength, Is.EqualTo(minLength), resource.GetType().Name);
+            Assert.That(requirements.MaxLength, Is.EqualTo(maxLength), resource.GetType().Name);
+            Assert.That(
+                requirements.ValidCharacters,
+                Is.EqualTo(ResourceNameCharacters.Alphanumeric | ResourceNameCharacters.Hyphen |
+                    ResourceNameCharacters.Underscore | ResourceNameCharacters.Period),
+                resource.GetType().Name);
+        }
+    }
+
+    [Test]
+    public async Task DefaultResourceNamesArePreserved()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                infra.Add(new NetworkSecurityGroup("nsg", NetworkSecurityGroup.ResourceVersions.V2020_05_01));
+                infra.Add(new VirtualNetwork("vnet", VirtualNetwork.ResourceVersions.V2021_08_01));
+                infra.Add(new NetworkInterface("nic", NetworkInterface.ResourceVersions.V2025_05_01));
+                return infra;
+            });
+
+        test.Compare(
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource nsg 'Microsoft.Network/networkSecurityGroups@2020-05-01' = {
+              name: take('nsg-${uniqueString(resourceGroup().id)}', 80)
+              location: location
+            }
+
+            resource vnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
+              name: take('vnet-${uniqueString(resourceGroup().id)}', 64)
+              location: location
+            }
+
+            resource nic 'Microsoft.Network/networkInterfaces@2025-05-01' = {
+              name: take('nic-${uniqueString(resourceGroup().id)}', 80)
+              location: location
+            }
+            """);
+    }
+
     internal static Trycep CreateVNetTwoSubnetsTest()
     {
         return new Trycep().Define(
@@ -115,6 +174,7 @@ public class BasicNetworkTests
 
             resource vnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
               name: vnetName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -136,7 +196,6 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
             """);
     }
@@ -283,6 +342,7 @@ public class BasicNetworkTests
 
             resource publicIp 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
               name: publicIpName
+              location: location
               properties: {
                 dnsSettings: {
                   domainNameLabel: publicIpDns
@@ -291,7 +351,6 @@ public class BasicNetworkTests
                 publicIPAddressVersion: 'IPv4'
                 publicIPAllocationMethod: 'Static'
               }
-              location: location
               sku: {
                 name: 'Standard'
               }
@@ -299,6 +358,7 @@ public class BasicNetworkTests
 
             resource natGateway 'Microsoft.Network/natGateways@2020-06-01' = {
               name: natGatewayName
+              location: location
               properties: {
                 idleTimeoutInMinutes: 4
                 publicIpAddresses: [
@@ -307,7 +367,6 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
               sku: {
                 name: 'Standard'
               }
@@ -315,6 +374,7 @@ public class BasicNetworkTests
 
             resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
               name: vnetName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -337,7 +397,6 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
             """);
     }
@@ -468,8 +527,8 @@ public class BasicNetworkTests
 
             resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
               name: storageAccountName
-              kind: 'StorageV2'
               location: location
+              kind: 'StorageV2'
               sku: {
                 name: 'Standard_LRS'
               }
@@ -482,6 +541,8 @@ public class BasicNetworkTests
 
             resource flowLog 'Microsoft.Network/networkWatchers/flowLogs@2022-01-01' = {
               name: '${networkWatcherName}/${flowLogName}'
+              location: location
+              parent: networkWatcher
               properties: {
                 enabled: true
                 format: {
@@ -495,8 +556,6 @@ public class BasicNetworkTests
                 storageId: storageAccount.id
                 targetResourceId: existingNSG
               }
-              location: location
-              parent: networkWatcher
             }
             """);
     }
@@ -648,6 +707,7 @@ public class BasicNetworkTests
 
             resource virtualNetwork 'Microsoft.Network/virtualNetworks@2020-05-01' = {
               name: virtualNetworkName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -666,7 +726,6 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
             """);
     }
@@ -808,8 +867,9 @@ public class BasicNetworkTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource vNetHub 'Microsoft.Network/virtualNetworks@2025-05-01' = {
+            resource vNetHub 'Microsoft.Network/virtualNetworks@2026-01-01' = {
               name: vNetHubName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -825,11 +885,11 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
 
-            resource vNetSpoke 'Microsoft.Network/virtualNetworks@2025-05-01' = {
+            resource vNetSpoke 'Microsoft.Network/virtualNetworks@2026-01-01' = {
               name: vNetSpokeName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -845,11 +905,11 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
 
-            resource hubToSpoke 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2025-05-01' = {
+            resource hubToSpoke 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2026-01-01' = {
               name: 'peering-to-${vNetSpokeName}'
+              parent: vNetHub
               properties: {
                 allowForwardedTraffic: false
                 allowGatewayTransit: false
@@ -859,11 +919,11 @@ public class BasicNetworkTests
                 }
                 useRemoteGateways: false
               }
-              parent: vNetHub
             }
 
-            resource spokeToHub 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2025-05-01' = {
+            resource spokeToHub 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2026-01-01' = {
               name: 'peering-to-${vNetHubName}'
+              parent: vNetSpoke
               properties: {
                 allowForwardedTraffic: false
                 allowGatewayTransit: false
@@ -873,10 +933,9 @@ public class BasicNetworkTests
                 }
                 useRemoteGateways: false
               }
-              parent: vNetSpoke
             }
 
-            resource bastionPublicIP 'Microsoft.Network/publicIPAddresses@2025-05-01' = {
+            resource bastionPublicIP 'Microsoft.Network/publicIPAddresses@2026-01-01' = {
               name: '${bastionHostName}-pip'
               location: location
               properties: {
@@ -887,22 +946,22 @@ public class BasicNetworkTests
               }
             }
 
-            resource bastionHost 'Microsoft.Network/bastionHosts@2025-05-01' = {
+            resource bastionHost 'Microsoft.Network/bastionHosts@2026-01-01' = {
               name: bastionHostName
+              location: location
               properties: {
                 ipConfigurations: [
                   {
+                    name: 'ipconfig1'
                     properties: {
+                      privateIPAllocationMethod: 'Dynamic'
                       publicIPAddress: {
                         id: bastionPublicIP.id
                       }
-                      privateIPAllocationMethod: 'Dynamic'
                     }
-                    name: 'ipconfig1'
                   }
                 ]
               }
-              location: location
             }
             """);
     }
@@ -1022,30 +1081,31 @@ public class BasicNetworkTests
 
             var firewallPolicyName = '${firewallName}-firewallPolicy'
 
-            resource workloadIpGroup 'Microsoft.Network/ipGroups@2025-05-01' = {
+            resource workloadIpGroup 'Microsoft.Network/ipGroups@2026-01-01' = {
               name: 'workload-ipgroup-${uniqueString(resourceGroup().id)}'
+              location: location
               properties: {
                 ipAddresses: [
                   '10.20.0.0/24'
                   '10.30.0.0/24'
                 ]
               }
-              location: location
             }
 
-            resource infraIpGroup 'Microsoft.Network/ipGroups@2025-05-01' = {
+            resource infraIpGroup 'Microsoft.Network/ipGroups@2026-01-01' = {
               name: 'infra-ipgroup-${uniqueString(resourceGroup().id)}'
+              location: location
               properties: {
                 ipAddresses: [
                   '10.40.0.0/24'
                   '10.50.0.0/24'
                 ]
               }
-              location: location
             }
 
-            resource vnet 'Microsoft.Network/virtualNetworks@2025-05-01' = {
+            resource vnet 'Microsoft.Network/virtualNetworks@2026-01-01' = {
               name: virtualNetworkName
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -1061,10 +1121,9 @@ public class BasicNetworkTests
                   }
                 ]
               }
-              location: location
             }
 
-            resource publicIP 'Microsoft.Network/publicIPAddresses@2025-05-01' = {
+            resource publicIP 'Microsoft.Network/publicIPAddresses@2026-01-01' = {
               name: 'publicIP1'
               location: location
               properties: {
@@ -1076,7 +1135,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource firewallPolicy 'Microsoft.Network/firewallPolicies@2025-05-01' = {
+            resource firewallPolicy 'Microsoft.Network/firewallPolicies@2026-01-01' = {
               name: firewallPolicyName
               location: location
               properties: {
@@ -1084,24 +1143,24 @@ public class BasicNetworkTests
               }
             }
 
-            resource firewall 'Microsoft.Network/azureFirewalls@2025-05-01' = {
+            resource firewall 'Microsoft.Network/azureFirewalls@2026-01-01' = {
               name: firewallName
+              location: location
               properties: {
                 firewallPolicy: {
                   id: firewallPolicy.id
                 }
                 ipConfigurations: [
                   {
+                    name: 'IpConf0'
                     properties: {
                       publicIPAddress: {
                         id: publicIP.id
                       }
                     }
-                    name: 'IpConf0'
                   }
                 ]
               }
-              location: location
             }
             """);
     }

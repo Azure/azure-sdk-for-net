@@ -20,10 +20,12 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
     /// Gets the construct that owns the referenced property.
     /// </summary>
     public ProvisionableConstruct Construct { get; } = construct;
+
     /// <summary>
     /// Gets the property name.
     /// </summary>
-    public string PropertyName { get; } = propertyName;
+    public string PropertyName { get; internal set; } = propertyName;
+
     /// <summary>
     /// Gets the Bicep path segments used to resolve the reference.
     /// </summary>

@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Monitor compute configuration base definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MonitorServerlessSparkCompute"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MonitorServerlessSparkCompute"/>.
     /// </summary>
     public partial class MonitorComputeConfigurationBase : ProvisionableConstruct
     {
+        private BicepValue<MonitorComputeType> _computeType;
+
         /// <summary> Creates a new MonitorComputeConfigurationBase. </summary>
         public MonitorComputeConfigurationBase()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of signal to monitor. </summary>
+        internal BicepValue<MonitorComputeType> ComputeType
+        {
+            get
+            {
+                Initialize();
+                return _computeType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MonitorComputeConfigurationBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _computeType = DefineProperty<MonitorComputeType>(nameof(ComputeType), new string[] { "computeType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Discovery.Models
                 writer.WritePropertyName("scaleSetPriority"u8);
                 writer.WriteStringValue(ScaleSetPriority.Value.ToString());
             }
-            if (Optional.IsDefined(OsDiskSizeGb))
+            if (Optional.IsDefined(OSDiskSizeGb))
             {
                 writer.WritePropertyName("osDiskSizeGb"u8);
-                writer.WriteNumberValue(OsDiskSizeGb.Value);
+                writer.WriteNumberValue(OSDiskSizeGb.Value);
             }
             if (Optional.IsDefined(ImageCacheLowerThreshold))
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DiscoveryNodePoolProperties(

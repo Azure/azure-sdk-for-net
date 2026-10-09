@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Maintenance
     [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateListResult))]
     [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(Models.MaintenanceConfigurationAssignmentData))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentFilter))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentListResult))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentResource))]
@@ -42,6 +43,9 @@ namespace Azure.ResourceManager.Maintenance
     [ModelReaderWriterBuildable(typeof(MaintenanceVmTagSettings))]
     [ModelReaderWriterBuildable(typeof(MaintenanceWindow))]
     [ModelReaderWriterBuildable(typeof(MaintenanceWindowsPatchSettings))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetApplyUpdatesByParentOptions))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateProperties))]
     public partial class AzureResourceManagerMaintenanceContext : ModelReaderWriterContext

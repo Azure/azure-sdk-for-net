@@ -179,6 +179,7 @@
       "$id": "21",
       "kind": "model",
       "name": "Fish",
+      "apiVersions": [],
       "namespace": "Type.Model.Inheritance.NestedDiscriminator",
       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish",
       "usage": "Input,Output,Json",
@@ -194,6 +195,7 @@
         "$id": "22",
         "kind": "property",
         "name": "kind",
+        "apiVersions": [],
         "serializedName": "kind",
         "doc": "Discriminator property for Fish.",
         "type": {
@@ -225,6 +227,7 @@
           "$id": "24",
           "kind": "property",
           "name": "age",
+          "apiVersions": [],
           "serializedName": "age",
           "type": {
             "$id": "25",
@@ -253,6 +256,7 @@
           "$id": "26",
           "kind": "model",
           "name": "Shark",
+          "apiVersions": [],
           "namespace": "Type.Model.Inheritance.NestedDiscriminator",
           "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark",
           "usage": "Input,Output,Json",
@@ -269,6 +273,7 @@
             "$id": "27",
             "kind": "property",
             "name": "sharktype",
+            "apiVersions": [],
             "serializedName": "sharktype",
             "type": {
               "$id": "28",
@@ -299,6 +304,7 @@
               "$id": "29",
               "kind": "property",
               "name": "kind",
+              "apiVersions": [],
               "serializedName": "kind",
               "type": {
                 "$ref": "1"
@@ -326,6 +332,7 @@
               "$id": "30",
               "kind": "model",
               "name": "SawShark",
+              "apiVersions": [],
               "namespace": "Type.Model.Inheritance.NestedDiscriminator",
               "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.SawShark",
               "usage": "Input,Output,Json",
@@ -346,6 +353,7 @@
                   "$id": "31",
                   "kind": "property",
                   "name": "sharktype",
+                  "apiVersions": [],
                   "serializedName": "sharktype",
                   "type": {
                     "$ref": "3"
@@ -370,6 +378,7 @@
               "$id": "32",
               "kind": "model",
               "name": "GoblinShark",
+              "apiVersions": [],
               "namespace": "Type.Model.Inheritance.NestedDiscriminator",
               "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.GoblinShark",
               "usage": "Input,Output,Json",
@@ -390,6 +399,7 @@
                   "$id": "33",
                   "kind": "property",
                   "name": "sharktype",
+                  "apiVersions": [],
                   "serializedName": "sharktype",
                   "type": {
                     "$ref": "5"
@@ -416,6 +426,7 @@
           "$id": "34",
           "kind": "model",
           "name": "Salmon",
+          "apiVersions": [],
           "namespace": "Type.Model.Inheritance.NestedDiscriminator",
           "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon",
           "usage": "Input,Output,Json",
@@ -436,6 +447,7 @@
               "$id": "35",
               "kind": "property",
               "name": "kind",
+              "apiVersions": [],
               "serializedName": "kind",
               "type": {
                 "$ref": "7"
@@ -458,6 +470,7 @@
               "$id": "36",
               "kind": "property",
               "name": "friends",
+              "apiVersions": [],
               "serializedName": "friends",
               "type": {
                 "$id": "37",
@@ -487,6 +500,7 @@
               "$id": "38",
               "kind": "property",
               "name": "hate",
+              "apiVersions": [],
               "serializedName": "hate",
               "type": {
                 "$id": "39",
@@ -521,6 +535,7 @@
               "$id": "41",
               "kind": "property",
               "name": "partner",
+              "apiVersions": [],
               "serializedName": "partner",
               "type": {
                 "$ref": "21"

@@ -13,37 +13,8 @@ namespace Azure.Security.ConfidentialLedger.Models
     /// <summary> Response returned to a query for the transaction status. </summary>
     public partial class TransactionStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TransactionStatus"/>. </summary>
         /// <param name="state"> Represents the state of the transaction. </param>
@@ -51,11 +22,8 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// A unique identifier for the state of the ledger. If returned as part of a
         /// LedgerEntry, it indicates the state from which the entry was read.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         internal TransactionStatus(TransactionState state, string transactionId)
         {
-            Argument.AssertNotNull(transactionId, nameof(transactionId));
-
             State = state;
             TransactionId = transactionId;
         }
@@ -66,21 +34,17 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// A unique identifier for the state of the ledger. If returned as part of a
         /// LedgerEntry, it indicates the state from which the entry was read.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TransactionStatus(TransactionState state, string transactionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TransactionStatus(TransactionState state, string transactionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             TransactionId = transactionId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TransactionStatus"/> for deserialization. </summary>
-        internal TransactionStatus()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the state of the transaction. </summary>
         public TransactionState State { get; }
+
         /// <summary>
         /// A unique identifier for the state of the ledger. If returned as part of a
         /// LedgerEntry, it indicates the state from which the entry was read.

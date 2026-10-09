@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainWhois"/>. </summary>
         /// <param name="domain"> The domain for this whois record. </param>
         /// <param name="server"> The hostname of this registrar's whois server. </param>
-        /// <param name="created"> The timestamp at which this record was created. </param>
+        /// <param name="createdOn"> The timestamp at which this record was created. </param>
         /// <param name="updatedOn"> The timestamp at which this record was last updated. </param>
-        /// <param name="expireOn"> The timestamp at which this record will expire. </param>
+        /// <param name="expiresOn"> The timestamp at which this record will expire. </param>
         /// <param name="parsedWhois"> The whois record for a given domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnrichmentDomainWhois(string domain, string server, DateTimeOffset? created, DateTimeOffset? updatedOn, DateTimeOffset? expireOn, EnrichmentDomainWhoisDetails parsedWhois, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnrichmentDomainWhois(string domain, string server, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? expiresOn, EnrichmentDomainWhoisDetails parsedWhois, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             Server = server;
-            Created = created;
+            CreatedOn = createdOn;
             UpdatedOn = updatedOn;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             ParsedWhois = parsedWhois;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The timestamp at which this record was created. </summary>
         [WirePath("created")]
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The timestamp at which this record was last updated. </summary>
         [WirePath("updated")]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The timestamp at which this record will expire. </summary>
         [WirePath("expires")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> The whois record for a given domain. </summary>
         [WirePath("parsedWhois")]

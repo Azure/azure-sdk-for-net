@@ -53,8 +53,8 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Db. </summary>
-        public BicepList<UefiKey> Db
+        /// <summary> Gets or sets the DB. </summary>
+        public BicepList<UefiKey> DB
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _pk = DefineModelProperty<UefiKey>(nameof(Pk), new string[] { "pk" });
             _kek = DefineListProperty<UefiKey>(nameof(Kek), new string[] { "kek" });
-            _db = DefineListProperty<UefiKey>(nameof(Db), new string[] { "db" });
+            _db = DefineListProperty<UefiKey>(nameof(DB), new string[] { "db" });
             _dbx = DefineListProperty<UefiKey>(nameof(Dbx), new string[] { "dbx" });
             DefineAdditionalProperties();
         }

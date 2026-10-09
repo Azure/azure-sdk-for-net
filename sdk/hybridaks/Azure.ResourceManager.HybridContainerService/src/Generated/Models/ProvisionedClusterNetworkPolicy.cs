@@ -7,42 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Network policy used for building Kubernetes network. Possible values include: 'calico'. </summary>
+    /// <summary> Network policy used for building Kubernetes network. Possible values include: 'calico', 'cilium'. </summary>
     public readonly partial struct ProvisionedClusterNetworkPolicy : IEquatable<ProvisionedClusterNetworkPolicy>
     {
         private readonly string _value;
+        /// <summary> Use the calico policy. </summary>
+        private const string CalicoValue = "calico";
+        /// <summary> Use the cilium policy. </summary>
+        private const string CiliumValue = "cilium";
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterNetworkPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProvisionedClusterNetworkPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CalicoValue = "calico";
-
-        /// <summary> calico. </summary>
+        /// <summary> Use the calico policy. </summary>
         public static ProvisionedClusterNetworkPolicy Calico { get; } = new ProvisionedClusterNetworkPolicy(CalicoValue);
+
+        /// <summary> Use the cilium policy. </summary>
+        public static ProvisionedClusterNetworkPolicy Cilium { get; } = new ProvisionedClusterNetworkPolicy(CiliumValue);
+
         /// <summary> Determines if two <see cref="ProvisionedClusterNetworkPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProvisionedClusterNetworkPolicy left, ProvisionedClusterNetworkPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProvisionedClusterNetworkPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProvisionedClusterNetworkPolicy left, ProvisionedClusterNetworkPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProvisionedClusterNetworkPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProvisionedClusterNetworkPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProvisionedClusterNetworkPolicy(string value) => new ProvisionedClusterNetworkPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProvisionedClusterNetworkPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProvisionedClusterNetworkPolicy?(string value) => value == null ? null : new ProvisionedClusterNetworkPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProvisionedClusterNetworkPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProvisionedClusterNetworkPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

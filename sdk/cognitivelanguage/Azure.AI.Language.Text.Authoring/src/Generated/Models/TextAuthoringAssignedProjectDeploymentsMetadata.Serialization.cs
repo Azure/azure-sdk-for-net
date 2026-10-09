@@ -154,10 +154,10 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TextAuthoringAssignedProjectDeploymentsMetadata(projectName, deploymentsMetadata, additionalBinaryDataProperties);
+            return new TextAuthoringAssignedProjectDeploymentsMetadata(projectName, deploymentsMetadata ?? new ChangeTrackingList<TextAuthoringAssignedProjectDeploymentMetadata>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IReadOnlyList<string> iPv4AddressSpaces = default;
-            IReadOnlyList<string> iPv6AddressSpaces = default;
+            IReadOnlyList<string> ipv4AddressSpaces = default;
+            IReadOnlyList<string> ipv6AddressSpaces = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    iPv4AddressSpaces = array;
+                    ipv4AddressSpaces = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6AddressSpaces"u8))
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    iPv6AddressSpaces = array;
+                    ipv6AddressSpaces = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkFabricControllerServices(iPv4AddressSpaces ?? new ChangeTrackingList<string>(), iPv6AddressSpaces ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new NetworkFabricControllerServices(ipv4AddressSpaces ?? new ChangeTrackingList<string>(), ipv6AddressSpaces ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

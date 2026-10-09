@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal NicEntityProperties(IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string macAddress, string ipAddressEntityId, IReadOnlyList<string> vlans) : base(additionalData, friendlyName, additionalBinaryDataProperties)
         {
             MacAddress = macAddress;
-            IpAddressEntityId = ipAddressEntityId;
+            IPAddressEntityId = ipAddressEntityId;
             Vlans = vlans;
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The IP entity id of this network interface. </summary>
         [WirePath("ipAddressEntityId")]
-        public string IpAddressEntityId { get; }
+        public string IPAddressEntityId { get; }
 
         /// <summary> A list of VLANs of the network interface entity. </summary>
         [WirePath("vlans")]

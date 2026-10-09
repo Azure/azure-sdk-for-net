@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SummaryLogsRetryBinProperties"/>. </summary>
-        /// <param name="retryBinStartOn"> The time (UTC) of the bin to retry. </param>
-        public SummaryLogsRetryBinProperties(DateTimeOffset retryBinStartOn)
+        /// <param name="retryBinStartsOn"> The time (UTC) of the bin to retry. </param>
+        public SummaryLogsRetryBinProperties(DateTimeOffset retryBinStartsOn)
         {
-            RetryBinStartOn = retryBinStartOn;
+            RetryBinStartsOn = retryBinStartsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="SummaryLogsRetryBinProperties"/>. </summary>
-        /// <param name="retryBinStartOn"> The time (UTC) of the bin to retry. </param>
+        /// <param name="retryBinStartsOn"> The time (UTC) of the bin to retry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SummaryLogsRetryBinProperties(DateTimeOffset retryBinStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SummaryLogsRetryBinProperties(DateTimeOffset retryBinStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RetryBinStartOn = retryBinStartOn;
+            RetryBinStartsOn = retryBinStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time (UTC) of the bin to retry. </summary>
         [WirePath("retryBinStartTime")]
-        public DateTimeOffset RetryBinStartOn { get; }
+        public DateTimeOffset RetryBinStartsOn { get; }
     }
 }

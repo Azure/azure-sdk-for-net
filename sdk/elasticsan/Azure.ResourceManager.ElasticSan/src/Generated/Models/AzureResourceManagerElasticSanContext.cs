@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
 
@@ -18,10 +19,12 @@ namespace Azure.ResourceManager.ElasticSan
     [ModelReaderWriterBuildable(typeof(AutoScaleProperties))]
     [ModelReaderWriterBuildable(typeof(DiskSnapshotListContent))]
     [ModelReaderWriterBuildable(typeof(ElasticSanData))]
+    [ModelReaderWriterBuildable(typeof(ElasticSanDeleteRetentionPolicy))]
     [ModelReaderWriterBuildable(typeof(ElasticSanEncryptionIdentity))]
     [ModelReaderWriterBuildable(typeof(ElasticSanEncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(ElasticSanKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(ElasticSanList))]
+    [ModelReaderWriterBuildable(typeof(ElasticSanManagedByInfo))]
     [ModelReaderWriterBuildable(typeof(ElasticSanNetworkRuleSet))]
     [ModelReaderWriterBuildable(typeof(ElasticSanPatch))]
     [ModelReaderWriterBuildable(typeof(ElasticSanPreValidationResult))]
@@ -40,6 +43,7 @@ namespace Azure.ResourceManager.ElasticSan
     [ModelReaderWriterBuildable(typeof(ElasticSanSkuInformation))]
     [ModelReaderWriterBuildable(typeof(ElasticSanSkuInformationList))]
     [ModelReaderWriterBuildable(typeof(ElasticSanSkuLocationInfo))]
+    [ModelReaderWriterBuildable(typeof(ElasticSanSkuZoneDetails))]
     [ModelReaderWriterBuildable(typeof(ElasticSanSnapshotData))]
     [ModelReaderWriterBuildable(typeof(ElasticSanSnapshotResource))]
     [ModelReaderWriterBuildable(typeof(ElasticSanUpdateProperties))]
@@ -55,10 +59,10 @@ namespace Azure.ResourceManager.ElasticSan
     [ModelReaderWriterBuildable(typeof(ElasticSanVolumePatch))]
     [ModelReaderWriterBuildable(typeof(ElasticSanVolumeResource))]
     [ModelReaderWriterBuildable(typeof(IscsiTargetInfo))]
-    [ModelReaderWriterBuildable(typeof(ManagedByInfo))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotCreationInfo))]
     [ModelReaderWriterBuildable(typeof(SnapshotList))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]

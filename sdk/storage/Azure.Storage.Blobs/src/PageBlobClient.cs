@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -1802,7 +1802,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResponse.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResult.NextMarker"/>
         /// if the listing operation did not return all blobs remaining to be
         /// listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="marker"/> parameter
@@ -2241,7 +2241,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResponse.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResult.NextMarker"/>
         /// if the listing operation did not return all blobs remaining to be
         /// listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="marker"/> parameter
@@ -4080,7 +4080,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await PageBlobRestClient.UploadPagesFromUrlAsync(
+                        response = await PageBlobRestClient.UploadPagesFromUriAsync(
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRangeString,
                             contentLength: 0,
@@ -4112,7 +4112,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = PageBlobRestClient.UploadPagesFromUrl(
+                        response = PageBlobRestClient.UploadPagesFromUri(
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRangeString,
                             contentLength: 0,

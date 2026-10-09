@@ -11,7 +11,10 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Services response resource. </summary>
+    /// <summary>
+    /// Services response resource.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DataTransferServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, <see cref="MaterializedViewsBuilderServiceProperties"/>, and <see cref="SqlDedicatedGatewayServiceProperties"/>.
+    /// </summary>
     public partial class CosmosDBServiceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -40,6 +43,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ServiceType = serviceType;
             Status = status;
             _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceProperties"/>. </summary>
+        public CosmosDBServiceProperties() : this(default)
+        {
         }
 
         /// <summary> Time of the last state change (ISO-8601 format). </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -14,41 +15,67 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     internal readonly partial struct TargetServiceType : IEquatable<TargetServiceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TargetServiceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TargetServiceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AzureResourceValue = "AzureResource";
         private const string ConfluentBootstrapServerValue = "ConfluentBootstrapServer";
         private const string ConfluentSchemaRegistryValue = "ConfluentSchemaRegistry";
+        private const string SelfHostedServerValue = "SelfHostedServer";
+        private const string FabricPlatformValue = "FabricPlatform";
 
-        /// <summary> AzureResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TargetServiceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AzureResource. </summary>
         public static TargetServiceType AzureResource { get; } = new TargetServiceType(AzureResourceValue);
-        /// <summary> ConfluentBootstrapServer. </summary>
+
+        /// <summary> Gets the ConfluentBootstrapServer. </summary>
         public static TargetServiceType ConfluentBootstrapServer { get; } = new TargetServiceType(ConfluentBootstrapServerValue);
-        /// <summary> ConfluentSchemaRegistry. </summary>
+
+        /// <summary> Gets the ConfluentSchemaRegistry. </summary>
         public static TargetServiceType ConfluentSchemaRegistry { get; } = new TargetServiceType(ConfluentSchemaRegistryValue);
+
+        /// <summary> Gets the SelfHostedServer. </summary>
+        public static TargetServiceType SelfHostedServer { get; } = new TargetServiceType(SelfHostedServerValue);
+
+        /// <summary> Gets the FabricPlatform. </summary>
+        public static TargetServiceType FabricPlatform { get; } = new TargetServiceType(FabricPlatformValue);
+
         /// <summary> Determines if two <see cref="TargetServiceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TargetServiceType left, TargetServiceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TargetServiceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TargetServiceType left, TargetServiceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TargetServiceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TargetServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TargetServiceType(string value) => new TargetServiceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TargetServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TargetServiceType?(string value) => value == null ? null : new TargetServiceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TargetServiceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TargetServiceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

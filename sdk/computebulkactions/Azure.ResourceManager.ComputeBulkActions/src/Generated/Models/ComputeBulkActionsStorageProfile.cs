@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         internal ComputeBulkActionsStorageProfile(ComputeBulkActionsImageReference imageReference, ComputeBulkActionsOSDisk osDisk, IList<ComputeBulkActionsDataDisk> dataDisks, ComputeBulkActionsDiskControllerType? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             DataDisks = dataDisks;
             DiskControllerType = diskControllerType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public ComputeBulkActionsImageReference ImageReference { get; set; }
 
         /// <summary> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
-        public ComputeBulkActionsOSDisk OsDisk { get; set; }
+        public ComputeBulkActionsOSDisk OSDisk { get; set; }
 
         /// <summary> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
         public IList<ComputeBulkActionsDataDisk> DataDisks { get; }

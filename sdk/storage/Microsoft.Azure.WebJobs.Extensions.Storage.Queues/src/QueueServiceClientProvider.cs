@@ -22,6 +22,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         private readonly ILogger<QueueServiceClient> _logger;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
         private readonly SharedQueueWatcher _messageEnqueuedWatcher;
+        private readonly IConfiguration _configuration;
+        private readonly AzureComponentFactory _componentFactory;
+        private readonly AzureEventSourceLogForwarder _logForwarder;
+        private QueueServiceClientProvider _rawProvider;
 
         public QueueServiceClientProvider(
             IConfiguration configuration,
@@ -39,6 +43,45 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _logger = logger;
             _queueProcessorFactory = queueProcessorFactory;
             _messageEnqueuedWatcher = messageEnqueuedWatcher;
+            _configuration = configuration;
+            _componentFactory = componentFactory;
+            _logForwarder = logForwarder;
+        }
+
+        /// <summary>
+        /// Gets a client that reads messages without decoding them, so results are never filtered by
+        /// decode failures. Intended for scale metrics only - it must not be used to process messages,
+        /// because it does not decode message bodies.
+        /// </summary>
+        /// <param name="name">Name of the connection to use.</param>
+        /// <param name="resolver">A resolver to interpret the provided connection <paramref name="name"/>.</param>
+        public virtual QueueServiceClient GetRaw(string name, INameResolver resolver)
+        {
+            // Delegating to Get keeps the raw client identical to the configured one apart from the
+            // encoding. The delegate's own GetRaw is never called, so this does not recurse.
+            _rawProvider ??= new QueueServiceClientProvider(
+                _configuration,
+                _componentFactory,
+                _logForwarder,
+                Options.Create(CreateRawOptions()),
+                _loggerFactory,
+                _logger,
+                _queueProcessorFactory,
+                _messageEnqueuedWatcher);
+
+            return _rawProvider.Get(name, resolver);
+        }
+
+        /// <summary>
+        /// Copies the configured options, overriding only the encoding, so the raw path cannot drift
+        /// from the message-processing path.
+        /// </summary>
+        protected virtual QueuesOptions CreateRawOptions()
+        {
+            QueuesOptions options = _queuesOptions.Clone();
+
+            options.MessageEncoding = QueueMessageEncoding.None;
+            return options;
         }
 
         /// <inheritdoc/>

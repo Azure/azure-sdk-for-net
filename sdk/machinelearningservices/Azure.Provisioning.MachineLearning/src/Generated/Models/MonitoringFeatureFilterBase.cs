@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The MonitoringFeatureFilterBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAllFeatures"/>, <see cref="FeatureSubset"/>, and <see cref="TopNFeaturesByAttribution"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningAllFeatures"/>, <see cref="FeatureSubset"/>, and <see cref="TopNFeaturesByAttribution"/>.
     /// </summary>
     public partial class MonitoringFeatureFilterBase : ProvisionableConstruct
     {
+        private BicepValue<MonitoringFeatureFilterType> _filterType;
+
         /// <summary> Creates a new MonitoringFeatureFilterBase. </summary>
         public MonitoringFeatureFilterBase()
         {
+        }
+
+        /// <summary> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </summary>
+        internal BicepValue<MonitoringFeatureFilterType> FilterType
+        {
+            get
+            {
+                Initialize();
+                return _filterType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MonitoringFeatureFilterBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _filterType = DefineProperty<MonitoringFeatureFilterType>(nameof(FilterType), new string[] { "filterType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

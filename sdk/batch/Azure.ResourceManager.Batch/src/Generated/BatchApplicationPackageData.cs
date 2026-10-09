@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties is null ? default : Properties.StorageUriExpireOn;
+                return Properties is null ? default : Properties.StorageUriExpiresOn;
             }
         }
 

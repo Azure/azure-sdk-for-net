@@ -106,5 +106,22 @@ namespace Azure.ResourceManager.StorageSync.Models
                 Properties.FriendlyName = value;
             }
         }
+
+        /// <summary> The interval for enumerating changes on the cloud endpoint. </summary>
+        public int? ChangeEnumerationIntervalDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChangeEnumerationIntervalDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudEndpointCreateParametersProperties();
+                }
+                Properties.ChangeEnumerationIntervalDays = value;
+            }
+        }
     }
 }

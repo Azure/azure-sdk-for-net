@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </param>
         /// <param name="managedIdentityObjectId"> The object ID of the managedIdentityResourceId. </param>
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
-        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
+        /// <param name="retrievalStartsOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubConnectionWithManagedIdentityProperties(ResourceIdentifier eventHubResourceIdForManagedIdentity, string consumerGroup, string tableName, string mappingRuleName, KustoEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, EventHubMessagesCompressionType? compression, KustoProvisioningState? provisioningState, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubConnectionWithManagedIdentityProperties(ResourceIdentifier eventHubResourceIdForManagedIdentity, string consumerGroup, string tableName, string mappingRuleName, KustoEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, EventHubMessagesCompressionType? compression, KustoProvisioningState? provisioningState, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventHubResourceIdForManagedIdentity = eventHubResourceIdForManagedIdentity;
             ConsumerGroup = consumerGroup;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Kusto.Models
             ManagedIdentityResourceId = managedIdentityResourceId;
             ManagedIdentityObjectId = managedIdentityObjectId;
             DatabaseRouting = databaseRouting;
-            RetrievalStartOn = retrievalStartOn;
+            RetrievalStartsOn = retrievalStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -112,6 +112,6 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </summary>
         [WirePath("retrievalStartDate")]
-        public DateTimeOffset? RetrievalStartOn { get; set; }
+        public DateTimeOffset? RetrievalStartsOn { get; set; }
     }
 }

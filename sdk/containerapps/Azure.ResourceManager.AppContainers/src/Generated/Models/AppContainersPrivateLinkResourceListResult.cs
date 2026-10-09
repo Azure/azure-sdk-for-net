@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The response of a PrivateLinkResource list operation. </summary>
+    /// <summary> List of private link resources for a managed environment. </summary>
     internal partial class AppContainersPrivateLinkResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="value"> The PrivateLinkResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppContainersPrivateLinkResourceListResult(IList<ContainerAppPrivateLink> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppContainersPrivateLinkResourceListResult(IList<ContainerAppPrivateLink> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
-        public Uri NextLink { get; }
+        public string NextLink { get; }
     }
 }

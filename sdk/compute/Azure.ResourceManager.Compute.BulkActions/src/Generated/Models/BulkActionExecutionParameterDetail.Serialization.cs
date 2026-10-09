@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Extra details needed to run the user's request. </summary>
+    /// <summary> The execution settings for a bulk action. </summary>
     public partial class BulkActionExecutionParameterDetail : IJsonModel<BulkActionExecutionParameterDetail>
     {
         /// <param name="data"> The data to parse. </param>
@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 throw new FormatException($"The model {nameof(BulkActionExecutionParameterDetail)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OptimizationPreference))
-            {
-                writer.WritePropertyName("optimizationPreference"u8);
-                writer.WriteStringValue(OptimizationPreference.Value.ToString());
-            }
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
@@ -88,6 +83,34 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("verifyVmAgentHealth"u8);
                 writer.WriteBooleanValue(ShouldVerifyVmAgentHealth.Value);
+            }
+            if (Optional.IsDefined(CapacityRecommendationParameters))
+            {
+                writer.WritePropertyName("capacityRecommendationParameters"u8);
+                writer.WriteObjectValue(CapacityRecommendationParameters, options);
+            }
+            if (Optional.IsCollectionDefined(AdditionalCreateParameters))
+            {
+                writer.WritePropertyName("additionalCreateParameters"u8);
+                writer.WriteStartObject();
+                foreach (var item in AdditionalCreateParameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,21 +154,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            OptimizationPreference? optimizationPreference = default;
             BulkOperationRetryPolicy retryPolicy = default;
             bool? shouldVerifyVmAgentHealth = default;
+            BulkActionsCapacityRecommendationParametersContent capacityRecommendationParameters = default;
+            IDictionary<string, BinaryData> additionalCreateParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("optimizationPreference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    optimizationPreference = new OptimizationPreference(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("retryPolicy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -164,12 +179,42 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     shouldVerifyVmAgentHealth = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("capacityRecommendationParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityRecommendationParameters = BulkActionsCapacityRecommendationParametersContent.DeserializeBulkActionsCapacityRecommendationParametersContent(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("additionalCreateParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
+                        }
+                    }
+                    additionalCreateParameters = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, shouldVerifyVmAgentHealth, additionalBinaryDataProperties);
+            return new BulkActionExecutionParameterDetail(retryPolicy, shouldVerifyVmAgentHealth, capacityRecommendationParameters, additionalCreateParameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

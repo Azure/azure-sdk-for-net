@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="customVirtualNetworkId"> The ID of a Virtual Network where this Databricks Cluster should be created. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="customPublicSubnetName"> The name of a Public Subnet within the Virtual Network. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="customPrivateSubnetName"> The name of the Private Subnet within the Virtual Network. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="enableNoPublicIp"> Boolean indicating whether the public IP should be disabled. Default value is true. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="enableNoPublicIP"> Boolean indicating whether the public IP should be disabled. Default value is true. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="loadBalancerBackendPoolName"> Name of the outbound Load Balancer Backend Pool for Secure Cluster Connectivity (No Public IP). Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="loadBalancerId"> Resource URI of Outbound Load balancer for Secure Cluster Connectivity (No Public IP) workspace. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="natGatewayName"> Name of the NAT gateway for Secure Cluster Connectivity (No Public IP) workspace subnets. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="publicIpName"> Name of the Public IP for No Public IP workspace with managed vNet. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="publicIPName"> Name of the Public IP for No Public IP workspace with managed vNet. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="prepareEncryption"> Prepare the workspace for encryption. Enables the Managed Identity for managed storage account. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="encryption"> Contains the encryption details for Customer-Managed Key (CMK) enabled workspace.Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the DBFS root file system will be enabled with secondary layer of encryption with platform managed keys for data at rest. Not allowed in Serverless ComputeMode workspace. </param>
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="vnetAddressPrefix"> Address prefix for Managed virtual network. Default value for this input is 10.139. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="resourceTags"> Tags applied to resources under Managed resource group. These can be updated by updating tags at workspace level. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceCustomProperties(WorkspaceCustomStringParameterValue amlWorkspaceId, WorkspaceCustomStringParameterValue customVirtualNetworkId, WorkspaceCustomStringParameterValue customPublicSubnetName, WorkspaceCustomStringParameterValue customPrivateSubnetName, WorkspaceNoPublicIPBooleanParameterValue enableNoPublicIp, WorkspaceCustomStringParameterValue loadBalancerBackendPoolName, WorkspaceCustomStringParameterValue loadBalancerId, WorkspaceCustomStringParameterValue natGatewayName, WorkspaceCustomStringParameterValue publicIpName, WorkspaceCustomBooleanParameterValue prepareEncryption, WorkspaceEncryptionParameterValue encryption, WorkspaceCustomBooleanParameterValue requireInfrastructureEncryption, WorkspaceCustomStringParameterValue storageAccountName, WorkspaceCustomStringParameterValue storageAccountSkuName, WorkspaceCustomStringParameterValue vnetAddressPrefix, WorkspaceCustomObjectParameterValue resourceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceCustomProperties(WorkspaceCustomStringParameterValue amlWorkspaceId, WorkspaceCustomStringParameterValue customVirtualNetworkId, WorkspaceCustomStringParameterValue customPublicSubnetName, WorkspaceCustomStringParameterValue customPrivateSubnetName, WorkspaceNoPublicIPBooleanParameterValue enableNoPublicIP, WorkspaceCustomStringParameterValue loadBalancerBackendPoolName, WorkspaceCustomStringParameterValue loadBalancerId, WorkspaceCustomStringParameterValue natGatewayName, WorkspaceCustomStringParameterValue publicIPName, WorkspaceCustomBooleanParameterValue prepareEncryption, WorkspaceEncryptionParameterValue encryption, WorkspaceCustomBooleanParameterValue requireInfrastructureEncryption, WorkspaceCustomStringParameterValue storageAccountName, WorkspaceCustomStringParameterValue storageAccountSkuName, WorkspaceCustomStringParameterValue vnetAddressPrefix, WorkspaceCustomObjectParameterValue resourceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AmlWorkspaceId = amlWorkspaceId;
             CustomVirtualNetworkId = customVirtualNetworkId;
             CustomPublicSubnetName = customPublicSubnetName;
             CustomPrivateSubnetName = customPrivateSubnetName;
-            EnableNoPublicIp = enableNoPublicIp;
+            EnableNoPublicIP = enableNoPublicIP;
             LoadBalancerBackendPoolName = loadBalancerBackendPoolName;
             LoadBalancerId = loadBalancerId;
             NatGatewayName = natGatewayName;
-            PublicIpName = publicIpName;
+            PublicIPName = publicIPName;
             PrepareEncryption = prepareEncryption;
             Encryption = encryption;
             RequireInfrastructureEncryption = requireInfrastructureEncryption;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Databricks.Models
         public WorkspaceCustomStringParameterValue CustomPrivateSubnetName { get; set; }
 
         /// <summary> Boolean indicating whether the public IP should be disabled. Default value is true. Not allowed in Serverless ComputeMode workspace. </summary>
-        public WorkspaceNoPublicIPBooleanParameterValue EnableNoPublicIp { get; set; }
+        public WorkspaceNoPublicIPBooleanParameterValue EnableNoPublicIP { get; set; }
 
         /// <summary> Name of the outbound Load Balancer Backend Pool for Secure Cluster Connectivity (No Public IP). Not allowed in Serverless ComputeMode workspace. </summary>
         public WorkspaceCustomStringParameterValue LoadBalancerBackendPoolName { get; set; }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Databricks.Models
         public WorkspaceCustomStringParameterValue NatGatewayName { get; set; }
 
         /// <summary> Name of the Public IP for No Public IP workspace with managed vNet. Not allowed in Serverless ComputeMode workspace. </summary>
-        public WorkspaceCustomStringParameterValue PublicIpName { get; set; }
+        public WorkspaceCustomStringParameterValue PublicIPName { get; set; }
 
         /// <summary> Prepare the workspace for encryption. Enables the Managed Identity for managed storage account. Not allowed in Serverless ComputeMode workspace. </summary>
         public WorkspaceCustomBooleanParameterValue PrepareEncryption { get; set; }

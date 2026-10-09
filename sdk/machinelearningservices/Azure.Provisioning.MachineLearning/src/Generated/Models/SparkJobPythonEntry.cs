@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new SparkJobPythonEntry. </summary>
         public SparkJobPythonEntry()
         {
+            SparkJobEntryType.Assign(MachineLearning.SparkJobEntryType.SparkJobPythonEntry);
         }
 
         /// <summary> Gets or sets the File. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("sparkJobEntryType", new string[] { "sparkJobEntryType" }, defaultValue: "SparkJobPythonEntry");
             _file = DefineProperty<string>(nameof(File), new string[] { "file" }, isRequired: true);
             DefineAdditionalProperties();
         }

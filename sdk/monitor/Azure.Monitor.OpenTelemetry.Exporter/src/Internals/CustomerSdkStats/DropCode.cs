@@ -34,5 +34,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// Items that are stored for retry due to a backoff period.
         /// </summary>
         BackOffEnabled = 5,
+
+        /// <summary>
+        /// Items that are stored for retry because the provider was shutting down and transmitting
+        /// would have blocked process exit on the network.
+        /// </summary>
+        ShutdownPersisted = 6,
     }
 }

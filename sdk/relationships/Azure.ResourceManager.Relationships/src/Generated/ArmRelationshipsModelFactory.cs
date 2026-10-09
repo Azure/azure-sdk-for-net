@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Relationships.Models
     public static partial class ArmRelationshipsModelFactory
     {
 
+        /// <summary> Defines a dependencyOf relationship resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Relationships.Models
                 default);
         }
 
+        /// <summary> dependencyOf relationship properties. </summary>
         /// <param name="sourceId"> The relationship source resource id. </param>
         /// <param name="targetId"> The relationship target resource id. </param>
         /// <param name="targetTenant"> The relationship target tenant id. </param>
@@ -53,6 +55,7 @@ namespace Azure.ResourceManager.Relationships.Models
                 default);
         }
 
+        /// <summary> Provides information about the origin of a relationship. </summary>
         /// <param name="relationshipOriginType"> Identifies the origin type of the relationship. </param>
         /// <param name="discoveryEngine"> The name of the discovery engine that created the relationship. </param>
         /// <returns> A new <see cref="Models.RelationshipOriginInformation"/> instance for mocking. </returns>
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.Relationships.Models
             return new RelationshipOriginInformation(relationshipOriginType, discoveryEngine, default);
         }
 
+        /// <summary> Provides information about the relationship properties. </summary>
         /// <param name="sourceType"> The type of the relationship source resource. </param>
         /// <param name="targetType"> The type of the relationship target resource. </param>
         /// <returns> A new <see cref="Models.RelationshipMetadata"/> instance for mocking. </returns>
@@ -69,6 +73,7 @@ namespace Azure.ResourceManager.Relationships.Models
             return new RelationshipMetadata(sourceType, targetType, default);
         }
 
+        /// <summary> Defines a ServiceGroupMember relationship resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -86,6 +91,7 @@ namespace Azure.ResourceManager.Relationships.Models
                 default);
         }
 
+        /// <summary> ServiceGroupMember relationship properties. </summary>
         /// <param name="sourceId"> The relationship source resource id. </param>
         /// <param name="targetId"> The relationship target resource id. </param>
         /// <param name="targetTenant"> The relationship target tenant id. </param>

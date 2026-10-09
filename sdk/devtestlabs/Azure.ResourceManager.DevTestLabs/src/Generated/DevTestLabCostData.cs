@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabCostProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabCostProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

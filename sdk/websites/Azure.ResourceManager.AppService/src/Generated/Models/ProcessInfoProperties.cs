@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="handleCount"> Handle count. </param>
         /// <param name="moduleCount"> Module count. </param>
         /// <param name="threadCount"> Thread count. </param>
-        /// <param name="startOn"> Start time. </param>
+        /// <param name="startsOn"> Start time. </param>
         /// <param name="totalCpuTime"> Total CPU time. </param>
         /// <param name="userCpuTime"> User CPU time. </param>
         /// <param name="privilegedCpuTime"> Privileged CPU time. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isWebjob"> Is this a Web Job?. </param>
         /// <param name="description"> Description of process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessInfoProperties(int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadProperties> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProcessInfoProperties(int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadProperties> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startsOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identifier = identifier;
             DeploymentName = deploymentName;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
             HandleCount = handleCount;
             ModuleCount = moduleCount;
             ThreadCount = threadCount;
-            StartOn = startOn;
+            StartsOn = startsOn;
             TotalCpuTime = totalCpuTime;
             UserCpuTime = userCpuTime;
             PrivilegedCpuTime = privilegedCpuTime;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time. </summary>
         [WirePath("start_time")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Total CPU time. </summary>
         [WirePath("total_cpu_time")]

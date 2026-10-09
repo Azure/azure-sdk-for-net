@@ -9,9 +9,6 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 /// </summary>
 internal enum WriteIntent
 {
-    /// <summary>Last-writer-wins metadata namespace flush.</summary>
-    MetadataFlush,
-
     /// <summary>Append to the steering queue (re-read NEW state, re-apply).</summary>
     SteeringAppend,
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Security.ConfidentialLedger.Models
     public readonly partial struct ForwardingRequired : IEquatable<ForwardingRequired>
     {
         private readonly string _value;
+        /// <summary> Forwarding is required sometimes. </summary>
+        private const string SometimesValue = "sometimes";
+        /// <summary> Forwarding is always required. </summary>
+        private const string AlwaysValue = "always";
+        /// <summary> Forwarding is never required. </summary>
+        private const string NeverValue = "never";
 
         /// <summary> Initializes a new instance of <see cref="ForwardingRequired"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ForwardingRequired(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SometimesValue = "sometimes";
-        private const string AlwaysValue = "always";
-        private const string NeverValue = "never";
+            _value = value;
+        }
 
         /// <summary> Forwarding is required sometimes. </summary>
         public static ForwardingRequired Sometimes { get; } = new ForwardingRequired(SometimesValue);
+
         /// <summary> Forwarding is always required. </summary>
         public static ForwardingRequired Always { get; } = new ForwardingRequired(AlwaysValue);
+
         /// <summary> Forwarding is never required. </summary>
         public static ForwardingRequired Never { get; } = new ForwardingRequired(NeverValue);
+
         /// <summary> Determines if two <see cref="ForwardingRequired"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ForwardingRequired left, ForwardingRequired right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ForwardingRequired"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ForwardingRequired left, ForwardingRequired right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ForwardingRequired"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ForwardingRequired"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ForwardingRequired(string value) => new ForwardingRequired(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ForwardingRequired"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ForwardingRequired?(string value) => value == null ? null : new ForwardingRequired(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ForwardingRequired other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ForwardingRequired other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

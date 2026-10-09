@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
                 {
                     ResourceType = ScheduledActionResourceType.VirtualMachine,
                     ActionType = ScheduledActionType.Start,
-                    StartOn = DateTimeOffset.Parse("2025-04-17T00:23:58.149Z"),
-                    EndOn = DateTimeOffset.Parse("2025-04-17T00:23:58.149Z"),
+                    StartsOn = DateTimeOffset.Parse("2025-04-17T00:23:58.149Z"),
+                    EndsOn = DateTimeOffset.Parse("2025-04-17T00:23:58.149Z"),
                     Schedule = new ScheduledActionsSchedule(XmlConvert.ToTimeSpan("19:00:00"), "bni", new ScheduledActionsScheduleWeekDay[] { ScheduledActionsScheduleWeekDay.Monday }, new ScheduledActionsScheduleMonth[] { ScheduledActionsScheduleMonth.January }, new int[] { 15 })
                     {
                         ExecutionParameters = new ScheduledActionExecutionParameterDetail

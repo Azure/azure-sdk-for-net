@@ -7,7 +7,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Snippets
@@ -41,20 +43,50 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         // Choosing a backing — configurator signatures.
         public static void Backings(IServiceCollection services)
         {
-            services.AddAgentEventStreams(o => o.UseInMemoryLive());
-
-            services.AddAgentEventStreams(o => o.UseInMemoryReplay(
-                ttl: TimeSpan.FromMinutes(10)));
-
-            // File-backed replay: the storage directory (~/.agentserver/streams) and a 10-minute
-            // TTL both default. The event text lives in SseItem<string>.Data, so no payload codec
-            // is needed — the caller serializes its own event and supplies an opaque EventId.
-            services.AddAgentEventStreams(o => o.UseFileBackedReplay());
-
             services.AddAgentEventStreams(o => o.UseFileBackedReplay(
                 storageDirectory: "/var/streams",
                 ttl: TimeSpan.FromHours(1)));
         }
+
+        #region Snippet:StreamingGuide_ConfigBinding
+
+        public static IHostApplicationBuilder ConfigureStreams(
+            IHostApplicationBuilder builder)
+        {
+            return builder.AddAgentEventStreams("ResilientTasks:Streams");
+        }
+
+        #endregion
+
+        #region Snippet:StreamingGuide_TaskBoundStreams
+
+        public static ValueTask EmitTaskProgress(
+            TaskContext<string> context,
+            CancellationToken cancellationToken)
+        {
+            return context.Stream.EmitAsync(
+                new SseItem<string>("working", "progress") { EventId = "1" },
+                cancellationToken);
+        }
+
+        public static async Task ConsumeTaskProgress(
+            TaskDefinition<string, string> task,
+            CancellationToken cancellationToken)
+        {
+            TaskRun<string> run = await task.StartAsync(
+                "input",
+                cancellationToken: cancellationToken);
+
+            await foreach (SseItem<string> item in
+                run.Stream.Subscribe(cancellationToken: cancellationToken))
+            {
+                _ = item.Data;
+            }
+
+            _ = await run.Completion;
+        }
+
+        #endregion
 
         // Subscribe-before-start — Pattern 1.
         public static async Task SubscribeBeforeStart(

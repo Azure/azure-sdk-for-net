@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="azureResourceId"> The alert azure resource id. </param>
         /// <param name="displayName"> The alert name. </param>
         /// <param name="severity"> The alert severity. </param>
-        /// <param name="endOn"> The alert end time. </param>
-        /// <param name="startOn"> The alert start time. </param>
+        /// <param name="endsOn"> The alert end time. </param>
+        /// <param name="startsOn"> The alert start time. </param>
         /// <param name="generatedOn"> The alert generated time. </param>
         /// <param name="alertType"> The name of the alert type. </param>
-        internal SecurityAlertTimelineItem(ResourceIdentifier azureResourceId, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string alertType) : base(EntityTimelineKind.SecurityAlert)
+        internal SecurityAlertTimelineItem(ResourceIdentifier azureResourceId, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endsOn, DateTimeOffset startsOn, DateTimeOffset generatedOn, string alertType) : base(EntityTimelineKind.SecurityAlert)
         {
             AzureResourceId = azureResourceId;
             DisplayName = displayName;
             Severity = severity;
-            EndOn = endOn;
-            StartOn = startOn;
+            EndsOn = endsOn;
+            StartsOn = startsOn;
             GeneratedOn = generatedOn;
             AlertType = alertType;
             Techniques = new ChangeTrackingList<string>();
@@ -43,21 +43,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="description"> The alert description. </param>
         /// <param name="displayName"> The alert name. </param>
         /// <param name="severity"> The alert severity. </param>
-        /// <param name="endOn"> The alert end time. </param>
-        /// <param name="startOn"> The alert start time. </param>
+        /// <param name="endsOn"> The alert end time. </param>
+        /// <param name="startsOn"> The alert start time. </param>
         /// <param name="generatedOn"> The alert generated time. </param>
         /// <param name="alertType"> The name of the alert type. </param>
         /// <param name="intent"> The intent of the alert. </param>
         /// <param name="techniques"> The techniques of the alert. </param>
-        internal SecurityAlertTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier azureResourceId, string productName, string description, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string alertType, SecurityInsightsKillChainIntent? intent, IList<string> techniques) : base(kind, additionalBinaryDataProperties)
+        internal SecurityAlertTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier azureResourceId, string productName, string description, string displayName, SecurityInsightsAlertSeverity severity, DateTimeOffset endsOn, DateTimeOffset startsOn, DateTimeOffset generatedOn, string alertType, SecurityInsightsKillChainIntent? intent, IList<string> techniques) : base(kind, additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             ProductName = productName;
             Description = description;
             DisplayName = displayName;
             Severity = severity;
-            EndOn = endOn;
-            StartOn = startOn;
+            EndsOn = endsOn;
+            StartsOn = startsOn;
             GeneratedOn = generatedOn;
             AlertType = alertType;
             Intent = intent;
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The alert end time. </summary>
         [WirePath("endTimeUtc")]
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary> The alert start time. </summary>
         [WirePath("startTimeUtc")]
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The alert generated time. </summary>
         [WirePath("timeGenerated")]

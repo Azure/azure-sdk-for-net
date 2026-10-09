@@ -1,14 +1,21 @@
 # Release History
 
-## 12.28.0-beta.2 (Unreleased)
+## 12.29.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added support for scheduling file deletion with `DataLakeFileClient.Upload` and `UploadAsync`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.28.0 (2026-09-28)
+
+### Features Added
+- Includes all features from 12.28.0-beta.1
 
 ## 12.28.0-beta.1 (2026-07-21)
 

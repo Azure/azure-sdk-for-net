@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get the Update run for a specified update. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Response<UpdateRunResource> Get(CancellationToken cancellationToken)
+        public virtual new Response<UpdateRunResource> Get(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateRunResource instead.");
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get the Update run for a specified update. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<Response<UpdateRunResource>> GetAsync(CancellationToken cancellationToken)
+        public virtual new async Task<Response<UpdateRunResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateRunResource instead.");
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update run data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<UpdateRunResource> Update(WaitUntil waitUntil, UpdateRunData data, CancellationToken cancellationToken)
+        public virtual ArmOperation<UpdateRunResource> Update(WaitUntil waitUntil, UpdateRunData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateRunResource instead.");
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update run data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<UpdateRunResource>> UpdateAsync(WaitUntil waitUntil, UpdateRunData data, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<UpdateRunResource>> UpdateAsync(WaitUntil waitUntil, UpdateRunData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateRunResource instead.");
         }

@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </summary>
         public DateTimeOffset? ExpireOn
         {
-            get => Properties is null ? default : Properties.ExpireOn;
+            get => Properties is null ? default : Properties.ExpiresOn;
             set
             {
                 if (Properties is null)
                 {
                     Properties = new AlertsSuppressionRuleProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

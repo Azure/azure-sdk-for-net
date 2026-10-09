@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -23,13 +22,13 @@ namespace Azure.Security.KeyVault.Secrets
     /// (de)serialization, and LRO polling — is delegated to the TypeSpec-generated
     /// <c>KeyVaultSecretsClient</c> (internal). Public method signatures, return
     /// types, exception contracts and recorded HTTP traffic match every previously
-    /// shipped version of this package, so adopting this build is a no-op for
-    /// existing consumers. The legacy hand-written transport (KeyVaultPipeline,
+    /// shipped version of this package. Reuse clients and call <see cref="Dispose"/>
+    /// when their lifetime ends. The legacy hand-written transport (KeyVaultPipeline,
     /// SecretBackup, JSON read/write methods on the model classes) is no longer
     /// invoked.
     /// </remarks>
     [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/security-keyvault-secrets")]
-    public class SecretClient
+    public class SecretClient : IDisposable
     {
         private const string OTelSecretNameKey    = "az.keyvault.secret.name";
         private const string OTelSecretVersionKey = "az.keyvault.secret.version";
@@ -37,6 +36,7 @@ namespace Azure.Security.KeyVault.Secrets
         private readonly Uri _vaultUri;
         private readonly KeyVaultSecretsClient _generated;
         private readonly ClientDiagnostics _diagnostics;
+        private DisposableHttpPipeline _ownedPipeline;
 
         /// <summary>For mocking.</summary>
         protected SecretClient() { }
@@ -68,12 +68,17 @@ namespace Azure.Security.KeyVault.Secrets
             var authPolicy = new ChallengeBasedAuthenticationPolicy(
                 credential, options.DisableChallengeResourceVerification);
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, authPolicy);
+            _ownedPipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                perRetryPolicies: [authPolicy],
+                transportOptions: new HttpPipelineTransportOptions(),
+                responseClassifier: null);
 
             _generated = new KeyVaultSecretsClient(
                 vaultUri,
                 MapApiVersion(options.Version),
-                pipeline,
+                _ownedPipeline,
                 _diagnostics);
         }
 
@@ -87,6 +92,19 @@ namespace Azure.Security.KeyVault.Secrets
 
         /// <summary>The vault URI used to construct this client.</summary>
         public virtual Uri VaultUri => _vaultUri;
+
+        /// <summary>
+        /// Releases the HTTP pipeline resources owned by this client.
+        /// </summary>
+        /// <remarks>
+        /// Reuse the client for its intended lifetime and dispose it after its operations, including long-running
+        /// operations and pageable enumeration, have completed. Caller-provided transports and credentials are not disposed.
+        /// </remarks>
+        public virtual void Dispose()
+        {
+            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
+            GC.SuppressFinalize(this);
+        }
 
 #pragma warning disable AZC0002 // Client method should have Optional CancellationToken.
         /// <summary>
@@ -818,15 +836,13 @@ namespace Azure.Security.KeyVault.Secrets
 
         private static KeyVaultSecret DeserializeKeyVaultSecret(Response raw)
         {
-            SecretBundle bundle = ModelReaderWriter.Read<SecretBundle>(
-                raw.Content, ModelReaderWriterOptions.Json, AzureSecurityKeyVaultSecretsContext.Default);
+            SecretBundle bundle = (SecretBundle)raw;
             return SecretMapper.ToKeyVaultSecret(bundle);
         }
 
         private static SecretProperties DeserializeSecretProperties(Response raw)
         {
-            SecretBundle bundle = ModelReaderWriter.Read<SecretBundle>(
-                raw.Content, ModelReaderWriterOptions.Json, AzureSecurityKeyVaultSecretsContext.Default);
+            SecretBundle bundle = (SecretBundle)raw;
             return SecretMapper.ToKeyVaultSecret(bundle).Properties;
         }
 

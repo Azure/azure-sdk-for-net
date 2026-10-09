@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary>
     /// Base class for WorkloadNetworkDhcpServer and WorkloadNetworkDhcpRelay to
     /// inherit from
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadNetworkDhcpServer"/> and <see cref="WorkloadNetworkDhcpRelay"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
     /// </summary>
     public abstract partial class WorkloadNetworkDhcpEntity
     {
@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Avs.Models
             ProvisioningState = provisioningState;
             Revision = revision;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpEntity"/>. </summary>
+        protected WorkloadNetworkDhcpEntity() : this(default)
+        {
         }
 
         /// <summary> Type of DHCP: SERVER or RELAY. </summary>

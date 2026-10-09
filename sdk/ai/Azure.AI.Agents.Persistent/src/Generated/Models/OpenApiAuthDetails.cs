@@ -35,6 +35,11 @@ namespace Azure.AI.Agents.Persistent
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenApiAuthDetails"/>. </summary>
+        protected OpenApiAuthDetails() : this(default)
+        {
+        }
+
         /// <summary> The type of authentication, must be anonymous/connection/managed_identity. </summary>
         internal OpenApiAuthType Type { get; set; }
     }

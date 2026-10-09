@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 };
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
+                Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 };
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
+                Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExtensionTypeVersionForReleaseTrainData, LocationExtensionTypeVersionResource>(new ExtensionTypeInterfaceGetVersionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData, LocationExtensionTypeVersionResource>(new ExtensionTypeInterfaceGetVersionsAsyncCollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.Parent.Name,
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExtensionTypeVersionForReleaseTrainData, LocationExtensionTypeVersionResource>(new ExtensionTypeInterfaceGetVersionsCollectionResultOfT(
+            return new PageableWrapper<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData, LocationExtensionTypeVersionResource>(new ExtensionTypeInterfaceGetVersionsCollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.Parent.Name,
@@ -272,14 +272,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ExtensionTypeVersionForReleaseTrainData> response = default;
+                Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionTypeVersionForReleaseTrainData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationExtensionTypeVersionForReleaseTrainData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -329,14 +329,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ExtensionTypeVersionForReleaseTrainData> response = default;
+                Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionTypeVersionForReleaseTrainData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationExtensionTypeVersionForReleaseTrainData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -386,14 +386,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ExtensionTypeVersionForReleaseTrainData> response = default;
+                Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionTypeVersionForReleaseTrainData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationExtensionTypeVersionForReleaseTrainData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -447,14 +447,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ExtensionTypeVersionForReleaseTrainData> response = default;
+                Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionTypeVersionForReleaseTrainData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationExtensionTypeVersionForReleaseTrainData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

@@ -50,11 +50,11 @@ public class BasicServiceFabricTests
 
             resource applicationType 'Microsoft.ServiceFabric/clusters/applicationTypes@2026-03-01-preview' = {
               name: take('applicationtype${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              parent: cluster
               tags: {
                 environment: 'test'
               }
-              location: location
-              parent: cluster
             }
             """);
     }

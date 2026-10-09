@@ -6,17 +6,13 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.FrontDoor
 {
     /// <summary> The JSON object that contains the properties required to create load balancing settings. </summary>
-    internal partial class LoadBalancingSettingsProperties : ProvisionableConstruct
+    internal partial class LoadBalancingSettingsProperties : LoadBalancingSettingsUpdateParameters
     {
         private BicepValue<FrontDoorResourceState> _resourceState;
-        private BicepValue<int> _sampleSize;
-        private BicepValue<int> _successfulSamplesRequired;
-        private BicepValue<int> _additionalLatencyMilliseconds;
 
         /// <summary> Creates a new LoadBalancingSettingsProperties. </summary>
         public LoadBalancingSettingsProperties()
@@ -33,59 +29,11 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the SampleSize. </summary>
-        public BicepValue<int> SampleSize
-        {
-            get
-            {
-                Initialize();
-                return _sampleSize;
-            }
-            set
-            {
-                Initialize();
-                _sampleSize.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the SuccessfulSamplesRequired. </summary>
-        public BicepValue<int> SuccessfulSamplesRequired
-        {
-            get
-            {
-                Initialize();
-                return _successfulSamplesRequired;
-            }
-            set
-            {
-                Initialize();
-                _successfulSamplesRequired.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the AdditionalLatencyMilliseconds. </summary>
-        public BicepValue<int> AdditionalLatencyMilliseconds
-        {
-            get
-            {
-                Initialize();
-                return _additionalLatencyMilliseconds;
-            }
-            set
-            {
-                Initialize();
-                _additionalLatencyMilliseconds.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for LoadBalancingSettingsProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _resourceState = DefineProperty<FrontDoorResourceState>(nameof(ResourceState), new string[] { "resourceState" }, isOutput: true);
-            _sampleSize = DefineProperty<int>(nameof(SampleSize), new string[] { "sampleSize" });
-            _successfulSamplesRequired = DefineProperty<int>(nameof(SuccessfulSamplesRequired), new string[] { "successfulSamplesRequired" });
-            _additionalLatencyMilliseconds = DefineProperty<int>(nameof(AdditionalLatencyMilliseconds), new string[] { "additionalLatencyMilliseconds" });
             DefineAdditionalProperties();
         }
 

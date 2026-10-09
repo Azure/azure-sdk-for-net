@@ -97,11 +97,26 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(AgentVersion);
             }
             writer.WritePropertyName("start_time"u8);
-            writer.WriteNumberValue(StartAt, "U");
-            if (Optional.IsDefined(EndAt))
+            writer.WriteNumberValue(StartsOn, "U");
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("end_time"u8);
-                writer.WriteNumberValue(EndAt.Value, "U");
+                writer.WriteNumberValue(EndsOn.Value, "U");
+            }
+            if (Optional.IsCollectionDefined(TraceIds))
+            {
+                writer.WritePropertyName("trace_ids"u8);
+                writer.WriteStartArray();
+                foreach (string item in TraceIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
         }
 
@@ -136,8 +151,9 @@ namespace Azure.AI.Projects
             string agentId = default;
             string agentName = default;
             string agentVersion = default;
-            DateTimeOffset startAt = default;
-            DateTimeOffset? endAt = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset? endsOn = default;
+            IList<string> traceIds = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -167,7 +183,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("start_time"u8))
                 {
-                    startAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("end_time"u8))
@@ -176,12 +192,33 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    endAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("trace_ids"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    traceIds = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TracesDataGenerationJobSource(
@@ -191,8 +228,9 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startAt,
-                endAt);
+                startsOn,
+                endsOn,
+                traceIds ?? new ChangeTrackingList<string>());
         }
     }
 }

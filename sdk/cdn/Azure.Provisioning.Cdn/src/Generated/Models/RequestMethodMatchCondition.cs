@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new RequestMethodMatchCondition. </summary>
         public RequestMethodMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters);
         }
 
         /// <summary> Gets or sets the RequestMethodOperator. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleRequestMethodConditionParameters");
             _requestMethodOperator = DefineProperty<RequestMethodOperator>(nameof(RequestMethodOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _transforms = DefineListProperty<PreTransformCategory>(nameof(Transforms), new string[] { "transforms" });

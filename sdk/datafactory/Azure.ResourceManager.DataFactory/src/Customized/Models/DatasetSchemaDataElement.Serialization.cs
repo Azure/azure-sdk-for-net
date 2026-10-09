@@ -3,13 +3,13 @@
 
 #nullable disable
 
-using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
-using Microsoft.TypeSpec.Generator.Customizations;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {

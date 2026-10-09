@@ -45,14 +45,14 @@ public class BasicStorageTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 allowBlobPublicAccess: false
                 isHnsEnabled: true
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
             """);
@@ -94,13 +94,13 @@ public class BasicStorageTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 allowBlobPublicAccess: false
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
 
@@ -152,14 +152,14 @@ public class BasicStorageTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 allowBlobPublicAccess: false
                 isHnsEnabled: true
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
 
@@ -170,12 +170,12 @@ public class BasicStorageTests
 
             resource storage_id_StorageBlobDataReader 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
               name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
+              scope: storage
               properties: {
                 principalId: id.properties.principalId
-                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
                 principalType: 'ServicePrincipal'
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
               }
-              scope: storage
             }
             """);
     }
@@ -222,14 +222,14 @@ public class BasicStorageTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 allowBlobPublicAccess: false
                 isHnsEnabled: true
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
 
@@ -240,22 +240,22 @@ public class BasicStorageTests
 
             resource storage_StorageBlobDataReader_custom 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
               name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
+              scope: storage
               properties: {
                 principalId: id.properties.principalId
-                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
                 principalType: 'ServicePrincipal'
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
               }
-              scope: storage
             }
 
             resource storage_writer 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
               name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))
+              scope: storage
               properties: {
                 principalId: id.properties.principalId
-                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
                 principalType: 'ServicePrincipal'
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
               }
-              scope: storage
             }
             """);
     }
@@ -306,14 +306,14 @@ public class BasicStorageTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 allowBlobPublicAccess: false
                 isHnsEnabled: true
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
 
@@ -365,14 +365,14 @@ public class BasicStorageTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 allowBlobPublicAccess: false
                 isHnsEnabled: true
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
 
@@ -430,8 +430,8 @@ public class BasicStorageTests
 
             resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
+              kind: 'StorageV2'
               sku: {
                 name: storageAccountType
               }
@@ -497,13 +497,13 @@ public class BasicStorageTests
 
             resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 accessTier: 'Hot'
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
 
@@ -574,20 +574,20 @@ public class BasicStorageTests
 
             resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
-              kind: 'Storage'
               location: location
-              sku: {
-                name: storageAccountType
-              }
+              kind: 'Storage'
               properties: {
                 encryption: {
+                  keySource: 'Microsoft.Storage'
                   services: {
                     blob: {
                       enabled: true
                     }
                   }
-                  keySource: 'Microsoft.Storage'
                 }
+              }
+              sku: {
+                name: storageAccountType
               }
             }
 
@@ -637,8 +637,8 @@ public class BasicStorageTests
             """
             resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: 'westus2'
+              kind: 'StorageV2'
               sku: {
                 name: 'Standard_LRS'
               }

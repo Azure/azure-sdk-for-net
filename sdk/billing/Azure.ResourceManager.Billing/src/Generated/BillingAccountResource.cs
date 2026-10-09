@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.Billing
         private readonly Invoices _invoicesRestClient;
         private readonly ClientDiagnostics _reservationsClientDiagnostics;
         private readonly Reservations _reservationsRestClient;
+        private readonly ClientDiagnostics _savingsPlansClientDiagnostics;
+        private readonly SavingsPlans _savingsPlansRestClient;
         private readonly BillingAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts";
@@ -74,6 +77,8 @@ namespace Azure.ResourceManager.Billing
             _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion ?? "2024-04-01");
             _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion ?? "2024-04-01");
+            _savingsPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _savingsPlansRestClient = new SavingsPlans(_savingsPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -668,7 +673,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingBillingAccountsCheckAccessByBillingAccountAsyncCollectionResultOfT(_billingAccountsRestClient, Id.Name, BillingCheckAccessContent.ToRequestContent(content), context, "BillingAccountResource.CheckAccessBillingPermissions");
+            return new BillingAccountResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(_billingAccountsRestClient, Id.Name, BillingCheckAccessContent.ToRequestContent(content), context, "BillingAccountResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
@@ -704,7 +709,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingBillingAccountsCheckAccessByBillingAccountCollectionResultOfT(_billingAccountsRestClient, Id.Name, BillingCheckAccessContent.ToRequestContent(content), context, "BillingAccountResource.CheckAccessBillingPermissions");
+            return new BillingAccountResourceCheckAccessBillingPermissionsCollectionResultOfT(_billingAccountsRestClient, Id.Name, BillingCheckAccessContent.ToRequestContent(content), context, "BillingAccountResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
@@ -1380,6 +1385,102 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
+        /// List savings plans by billing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlans. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_SavingsPlansListByBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="take"> The number of savings plans to return. </param>
+        /// <param name="selectedState"> The selected provisioning state. </param>
+        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingSavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingSavingsPlanModelResource> GetByBillingAccountAsync(string filter = default, string orderBy = default, float? skiptoken = default, float? take = default, string selectedState = default, string refreshSummary = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new SavingsPlansGetByBillingAccountAsyncCollectionResultOfT(
+                _savingsPlansRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                skiptoken,
+                take,
+                selectedState,
+                refreshSummary,
+                context,
+                "BillingAccountResource.GetByBillingAccount"), data => new BillingSavingsPlanModelResource(Client, data));
+        }
+
+        /// <summary>
+        /// List savings plans by billing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlans. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_SavingsPlansListByBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="take"> The number of savings plans to return. </param>
+        /// <param name="selectedState"> The selected provisioning state. </param>
+        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingSavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingSavingsPlanModelResource> GetByBillingAccount(string filter = default, string orderBy = default, float? skiptoken = default, float? take = default, string selectedState = default, string refreshSummary = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingSavingsPlanModelData, BillingSavingsPlanModelResource>(new SavingsPlansGetByBillingAccountCollectionResultOfT(
+                _savingsPlansRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                skiptoken,
+                take,
+                selectedState,
+                refreshSummary,
+                context,
+                "BillingAccountResource.GetByBillingAccount"), data => new BillingSavingsPlanModelResource(Client, data));
+        }
+
+        /// <summary>
         /// Validates payment terms on a billing account with agreement type 'Microsoft Customer Agreement' and account type 'Enterprise'.
         /// <list type="bullet">
         /// <item>
@@ -1593,10 +1694,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1636,10 +1736,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

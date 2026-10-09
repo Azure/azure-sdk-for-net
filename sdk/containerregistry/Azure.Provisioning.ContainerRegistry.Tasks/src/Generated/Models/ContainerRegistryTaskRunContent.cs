@@ -18,6 +18,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         /// <summary> Creates a new ContainerRegistryTaskRunContent. </summary>
         public ContainerRegistryTaskRunContent()
         {
+            Type.Assign("TaskRunRequest");
         }
 
         /// <summary> Gets or sets the TaskId. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "TaskRunRequest");
             _taskId = DefineProperty<string>(nameof(TaskId), new string[] { "taskId" }, isRequired: true);
             _overrideTaskStepProperties = DefineModelProperty<ContainerRegistryTaskOverrideStepProperties>(nameof(OverrideTaskStepProperties), new string[] { "overrideTaskStepProperties" });
             DefineAdditionalProperties();

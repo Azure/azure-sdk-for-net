@@ -185,10 +185,10 @@ namespace Azure.AI.Translation.Text
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TranslationLanguage(name, nativeName, directionality, models, additionalBinaryDataProperties);
+            return new TranslationLanguage(name, nativeName, directionality, models ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

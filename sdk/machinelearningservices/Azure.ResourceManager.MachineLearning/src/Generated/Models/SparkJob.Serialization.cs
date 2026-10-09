@@ -258,7 +258,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? isArchived = default;
             JobType jobType = default;
             NotificationSetting notificationSetting = default;
-            string parentJobName = default;
             IDictionary<string, MachineLearningJobService> services = default;
             MachineLearningJobStatus? status = default;
             IList<string> archives = default;
@@ -394,16 +393,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     notificationSetting = NotificationSetting.DeserializeNotificationSetting(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("parentJobName"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        parentJobName = null;
-                        continue;
-                    }
-                    parentJobName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("services"u8))
@@ -635,7 +624,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SparkJob(
@@ -651,7 +640,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 isArchived,
                 jobType,
                 notificationSetting,
-                parentJobName,
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
                 archives ?? new ChangeTrackingList<string>(),

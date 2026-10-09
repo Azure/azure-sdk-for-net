@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The security connector environment data.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GitLabScopeEnvironmentInfo"/>, <see cref="DockerHubEnvironmentInfo"/>, and <see cref="JFrogEnvironmentInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="DockerHubEnvironmentInfo"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GitLabScopeEnvironmentInfo"/>, <see cref="GithubScopeEnvironment"/>, and <see cref="JFrogEnvironmentInfo"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityConnectorEnvironment))]
     public abstract partial class SecurityConnectorEnvironment : IJsonModel<SecurityConnectorEnvironment>
@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     case "AwsAccount":
                         return AwsEnvironment.DeserializeAwsEnvironment(element, options);
-                    case "GcpProject":
-                        return GcpProjectEnvironment.DeserializeGcpProjectEnvironment(element, options);
-                    case "GithubScope":
-                        return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element, options);
                     case "AzureDevOpsScope":
                         return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element, options);
-                    case "GitlabScope":
-                        return GitLabScopeEnvironmentInfo.DeserializeGitLabScopeEnvironmentInfo(element, options);
                     case "DockerHubOrganization":
                         return DockerHubEnvironmentInfo.DeserializeDockerHubEnvironmentInfo(element, options);
+                    case "GcpProject":
+                        return GcpProjectEnvironment.DeserializeGcpProjectEnvironment(element, options);
+                    case "GitlabScope":
+                        return GitLabScopeEnvironmentInfo.DeserializeGitLabScopeEnvironmentInfo(element, options);
+                    case "GithubScope":
+                        return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element, options);
                     case "JFrogArtifactory":
                         return JFrogEnvironmentInfo.DeserializeJFrogEnvironmentInfo(element, options);
                 }

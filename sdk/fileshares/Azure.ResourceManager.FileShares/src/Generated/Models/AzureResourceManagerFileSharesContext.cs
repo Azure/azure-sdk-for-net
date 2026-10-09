@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.FileShares.Models;
 using Azure.ResourceManager.Models;
 
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.FileShares
     [ModelReaderWriterBuildable(typeof(NfsProtocolProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PublicAccessProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerFileSharesContext : ModelReaderWriterContext
     {

@@ -46,7 +46,9 @@ namespace Azure.Generator.Provisioning.Providers
                 new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(string), "EnumName", new ExpressionPropertyBody(_enumNameField), this),
                 new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(string), "MemberName", new ExpressionPropertyBody(_memberNameField), this),
                 new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(int), "Value", new ExpressionPropertyBody(_valueField), this),
-                new PropertyProvider(null, MethodSignatureModifiers.Public, new CSharpType(typeof(string), isNullable: true), "WireName", new AutoPropertyBody(true), this)
+                new PropertyProvider(null, MethodSignatureModifiers.Public, new CSharpType(typeof(string), isNullable: true), "WireName", new AutoPropertyBody(true), this),
+                new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(bool), "EditorBrowsableNever", new AutoPropertyBody(true), this),
+                new PropertyProvider(null, MethodSignatureModifiers.Public, new CSharpType(typeof(string), isNullable: true), "ObsoleteMessage", new AutoPropertyBody(true), this)
             ];
         }
 

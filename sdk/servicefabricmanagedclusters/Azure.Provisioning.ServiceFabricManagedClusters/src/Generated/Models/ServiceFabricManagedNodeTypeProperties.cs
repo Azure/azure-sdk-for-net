@@ -67,7 +67,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         private BicepList<ServiceFabricManagedVmApplication> _vmApplications;
         private BicepValue<bool> _isZoneBalanceEnabled;
         private BicepValue<bool> _isOutboundOnly;
-        private BicepValue<bool> _enableResilientEphemeralOsDisk;
+        private BicepValue<bool> _enableResilientEphemeralOSDisk;
 
         /// <summary> Creates a new ServiceFabricManagedNodeTypeProperties. </summary>
         public ServiceFabricManagedNodeTypeProperties()
@@ -864,18 +864,18 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Gets or sets the EnableResilientEphemeralOsDisk. </summary>
-        public BicepValue<bool> EnableResilientEphemeralOsDisk
+        /// <summary> Gets or sets the EnableResilientEphemeralOSDisk. </summary>
+        public BicepValue<bool> EnableResilientEphemeralOSDisk
         {
             get
             {
                 Initialize();
-                return _enableResilientEphemeralOsDisk;
+                return _enableResilientEphemeralOSDisk;
             }
             set
             {
                 Initialize();
-                _enableResilientEphemeralOsDisk.Assign(value);
+                _enableResilientEphemeralOSDisk.Assign(value);
             }
         }
 
@@ -953,7 +953,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             _vmApplications = DefineListProperty<ServiceFabricManagedVmApplication>(nameof(VmApplications), new string[] { "vmApplications" });
             _isZoneBalanceEnabled = DefineProperty<bool>(nameof(IsZoneBalanceEnabled), new string[] { "zoneBalance" });
             _isOutboundOnly = DefineProperty<bool>(nameof(IsOutboundOnly), new string[] { "isOutboundOnly" });
-            _enableResilientEphemeralOsDisk = DefineProperty<bool>(nameof(EnableResilientEphemeralOsDisk), new string[] { "enableResilientEphemeralOsDisk" });
+            _enableResilientEphemeralOSDisk = DefineProperty<bool>(nameof(EnableResilientEphemeralOSDisk), new string[] { "enableResilientEphemeralOsDisk" });
             DefineAdditionalProperties();
         }
 

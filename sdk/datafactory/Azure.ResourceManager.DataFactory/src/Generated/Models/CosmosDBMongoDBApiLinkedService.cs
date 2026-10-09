@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(connectionString, nameof(connectionString));
             Argument.AssertNotNull(database, nameof(database));
 
-            TypeProperties = new CosmosDbMongoDbApiLinkedServiceTypeProperties(connectionString, database);
+            TypeProperties = new CosmosDBMongoDBApiLinkedServiceTypeProperties(connectionString, database);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiLinkedService"/>. </summary>
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> CosmosDB (MongoDB API) linked service properties. </param>
-        internal CosmosDBMongoDBApiLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, CosmosDbMongoDbApiLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal CosmosDBMongoDBApiLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, CosmosDBMongoDBApiLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> CosmosDB (MongoDB API) linked service properties. </summary>
-        internal CosmosDbMongoDbApiLinkedServiceTypeProperties TypeProperties { get; set; }
+        internal CosmosDBMongoDBApiLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> IsServerVersionAbove32
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new CosmosDbMongoDbApiLinkedServiceTypeProperties();
+                    TypeProperties = new CosmosDBMongoDBApiLinkedServiceTypeProperties();
                 }
                 TypeProperties.IsServerVersionAbove32 = value;
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new CosmosDbMongoDbApiLinkedServiceTypeProperties();
+                    TypeProperties = new CosmosDBMongoDBApiLinkedServiceTypeProperties();
                 }
                 TypeProperties.ConnectionString = value;
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new CosmosDbMongoDbApiLinkedServiceTypeProperties();
+                    TypeProperties = new CosmosDBMongoDBApiLinkedServiceTypeProperties();
                 }
                 TypeProperties.Database = value;
             }

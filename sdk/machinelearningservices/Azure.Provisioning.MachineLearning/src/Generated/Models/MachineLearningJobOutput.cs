@@ -12,11 +12,12 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Job output definition container information on where to find job output/logs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/>, and <see cref="MachineLearningUriFolderJobOutput"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/>, and <see cref="MachineLearningUriFolderJobOutput"/>.
     /// </summary>
     public partial class MachineLearningJobOutput : ProvisionableConstruct
     {
         private BicepValue<string> _description;
+        private BicepValue<JobOutputType> _jobOutputType;
 
         /// <summary> Creates a new MachineLearningJobOutput. </summary>
         public MachineLearningJobOutput()
@@ -38,11 +39,22 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> [Required] Specifies the type of job. </summary>
+        internal BicepValue<JobOutputType> JobOutputType
+        {
+            get
+            {
+                Initialize();
+                return _jobOutputType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for MachineLearningJobOutput. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
+            _jobOutputType = DefineProperty<JobOutputType>(nameof(JobOutputType), new string[] { "jobOutputType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

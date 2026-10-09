@@ -16,6 +16,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MgmtTypeSpecMultiServiceTestsModelFactory
     {
+        /// <summary> The CheckAvailabilityRequest. </summary>
         /// <param name="name"> The name to check availability for. </param>
         /// <returns> A new <see cref="Models.CheckAvailabilityRequest"/> instance for mocking. </returns>
         public static CheckAvailabilityRequest CheckAvailabilityRequest(string name = default)
@@ -23,6 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
             return new CheckAvailabilityRequest(name, default);
         }
 
+        /// <summary> The CheckAvailabilityResponse. </summary>
         /// <param name="isAvailable"> Whether the name is available. </param>
         /// <param name="reason"> Reason the name is not available. </param>
         /// <returns> A new <see cref="Models.CheckAvailabilityResponse"/> instance for mocking. </returns>
@@ -31,6 +33,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
             return new CheckAvailabilityResponse(isAvailable, reason, default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -54,6 +57,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 default);
         }
 
+        /// <summary> The FooProperties. </summary>
         /// <param name="displayName"></param>
         /// <param name="provisioningState"></param>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
@@ -62,6 +66,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
             return new FooProperties(displayName, provisioningState, default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -85,6 +90,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 default);
         }
 
+        /// <summary> The BarProperties. </summary>
         /// <param name="description"></param>
         /// <param name="provisioningState"></param>
         /// <returns> A new <see cref="Models.BarProperties"/> instance for mocking. </returns>

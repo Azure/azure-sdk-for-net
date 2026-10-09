@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal static partial class TypeFormatters
     {

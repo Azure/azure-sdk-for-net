@@ -37,7 +37,9 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             string? primaryNamespace = null,
             IEnumerable<string>? customizationSources = null,
             Func<Compilation?>? customizationCompilation = null,
-            Func<Compilation?>? lastContractCompilation = null)
+            Func<Compilation?>? lastContractCompilation = null,
+            string? configurationJson = null,
+            ApiCompatBaseline? apiCompatBaseline = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? ["2023-01-01"];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -69,7 +71,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             var azureInstance = typeof(AzureClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             // invoke the load method with the config file path
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
-            object?[] parameters = [_configFilePath, null];
+            object?[] parameters = [_configFilePath, configurationJson];
             var config = loadMethod?.Invoke(null, parameters);
             var mockGeneratorContext = new Mock<GeneratorContext>(config!);
             var mockPluginInstance = new Mock<ManagementClientGenerator>(mockGeneratorContext.Object) { CallBase = true };
@@ -84,7 +86,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
                     ? null
                     : Helpers.BuildCompilation(customizationSources.Select((source, index) => ($"Customization{index}.cs", source))));
             var lastContract = lastContractCompilation?.Invoke();
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(customizationCompilationResult, lastContract)) { CallBase = true };
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(customizationCompilationResult, lastContract, apiCompatBaseline ?? ApiCompatBaseline.Empty)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
             var configureMethod = typeof(CodeModelGenerator).GetMethod(
                 "Configure",

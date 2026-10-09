@@ -117,7 +117,7 @@ KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
 {
     IncludeActivity = true
 };
-request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What are the key business entities?"));
+request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What data is available?"));
 
 // Add per-source runtime parameters with references enabled
 request.KnowledgeSourceParams.Add(

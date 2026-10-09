@@ -91,7 +91,7 @@ public sealed class TaskWriteSerializerTests
     }
 
     [Test]
-    public async Task PayloadOnlyWriteDoesNotRefreshLeaseHeartbeatTimestamp()
+    public async Task GenericPayloadWriteDoesNotRefreshLeaseHeartbeatTimestamp()
     {
         await CreateLeasedTaskAsync("leased-payload");
         ActiveTaskEntry entry = _serializer.GetOrAddEntry("leased-payload");
@@ -102,7 +102,7 @@ public sealed class TaskWriteSerializerTests
         {
             PayloadSupplied = true,
             Payload = new JsonObject { ["counter"] = 1 },
-        }, WriteIntent.MetadataFlush);
+        }, WriteIntent.Generic);
 
         Assert.That(entry.LastRefreshUtc, Is.EqualTo(oldRefresh),
             "payload-only writes do not extend lease.expires_at and must not suppress the next heartbeat");

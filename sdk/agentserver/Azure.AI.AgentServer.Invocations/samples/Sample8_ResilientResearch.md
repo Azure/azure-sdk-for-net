@@ -9,9 +9,17 @@ This sample demonstrates a **resilient research agent** that bridges a durable, 
 - **The invocations protocol**:
   - **`POST /invocations`** starts a new turn (or *steers* an in-flight one). With `Accept: text/event-stream` it streams live; otherwise it returns `202 Accepted` with the invocation id to resume later.
   - **`GET /invocations/{invocationId}`** is **resume** — it re-attaches to the *existing* stream after the opaque `last_event_id` / `Last-Event-ID` resume token or returns a JSON status snapshot. It is a read of durable state and **never starts a new run**.
-  - **`POST /invocations/{invocationId}/cancel`** cancels the active run for the session.
-- **Reserve-before-start**: the handler reserves the stream *before* starting the task, so no early events are lost.
+  - **`POST /invocations/{invocationId}/cancel`** cancels the identified active or steering-queued invocation, not an unrelated turn in the session.
+- **Task-bound stream**: the engine binds a lazy stream to the turn's `InputId`; the
+  producer writes through `TaskContext.Stream` and the POST path subscribes through
+  `TaskRun.Stream`. Replay covers events emitted before the HTTP subscriber attaches.
 - **Crash recovery & checkpointing**: per-sub-call metadata watermarks and a file-backed checkpoint store let the task resume mid-phase after a restart; the replay backing retains `SseItem<string>` events so a reconnecting subscriber sees everything after its last event id.
+
+Cancelling a queued invocation does not allocate a stream that was never
+materialized. A later GET can therefore return `404 Not Found`. If a stream
+already exists, Core closes it after the successful durable cancellation
+transition, allowing SSE subscribers to finish and replay. For a turn that has
+already started, Core waits for the producer to wind down before closing its stream.
 
 ## Prerequisites
 
@@ -40,41 +48,16 @@ services.AddSingleton(CreateModelClient());
 // (In-memory replay would lose the pre-crash buffer, defeating this sample's resilience.)
 services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
-// Heavy in-flight artifacts (partial phase output) live in a file-backed store;
-// metadata holds only small integer watermarks. Use a DURABLE state root under the
-// user profile — NOT Path.GetTempPath(), whose contents the OS may clear between
-// runs, which would defeat crash recovery. (Mirrors the Python sample's
-// ~/.agentserver/_checkpoints location.)
-string stateRoot = Path.Combine(
-    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-    ".agentserver", "resilient-research-checkpoints");
-var checkpointStore = new CheckpointStore(stateRoot);
-
-// AddResilientTasks records registrations into a live registry that the engine reads
-// when a task is invoked. The provider-aware overloads were removed (the service-locator
-// shape is being retired ahead of GA), so resolve the handler's singleton dependencies
-// from the built container once and capture them in the plain delegate — a DI-resolved
-// handler wrapped in the delegate. The registry is read lazily at invocation time, so
-// registering after the provider is built is fine.
-ResilientTaskBuilder tasks = services.AddResilientTasks();
-
-ServiceProvider provider = services.BuildServiceProvider();
-AgentEventStreamRegistry streams = provider.GetRequiredService<AgentEventStreamRegistry>();
-ResponsesClient model = provider.GetRequiredService<ResponsesClient>();
-
 // The resilient "research" task is session-scoped and steerable: one durable
 // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
 // in flight is enqueued as steering. Each turn streams a real model per sub-call
-// into the event stream keyed by that turn's invocation id (carried on the input).
-tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
+// through TaskContext.Stream. The task engine constructs ResearchTask in a fresh
+// dependency-injection scope for every execution attempt.
+services.AddResilientMultiTurnTask<
+    ResearchRequest,
+    ResearchResult,
+    ResearchTask>(
     "research",
-    (ctx, ct) => RunResearchAsync(
-        streams,
-        model,
-        ModelDeployment,
-        ctx,
-        checkpointStore,
-        ct: ct),
     steerable: true);
 ```
 
@@ -111,54 +94,10 @@ public static readonly (string Role, string Instructions)[] SubCallRoles = new[]
 };
 
 /// <summary>
-/// A file-backed checkpoint store for heavy in-flight artifacts (potentially
-/// several KB of LLM output). Metadata stores only small integer watermarks;
-/// the actual content lives here keyed by invocation id.
-/// </summary>
-public class CheckpointStore
-{
-    private readonly string _directory;
-
-    public CheckpointStore(string directory)
-    {
-        _directory = directory;
-        Directory.CreateDirectory(directory);
-    }
-
-    public void Save(string key, string content)
-    {
-        string path = PathForKey(key);
-        string tmp = path + ".tmp";
-        File.WriteAllText(tmp, content);
-        File.Move(tmp, path, overwrite: true);
-    }
-
-    public string? Load(string key)
-    {
-        string path = PathForKey(key);
-        return File.Exists(path) ? File.ReadAllText(path) : null;
-    }
-
-    public void Delete(string key)
-    {
-        string path = PathForKey(key);
-        if (File.Exists(path))
-            File.Delete(path);
-    }
-
-    private string PathForKey(string key)
-    {
-        byte[] hash = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(key));
-        string safeKey = Convert.ToHexString(hash).ToLowerInvariant();
-        return Path.Combine(_directory, safeKey + ".json");
-    }
-}
-
-/// <summary>
 /// The durable task that PRODUCES research events with crash-resilient,
 /// per-subcall checkpointing and cooperative steering.
 ///
-/// Metadata watermarks: <c>completed_phases</c>, <c>in_progress_phase</c>,
+/// State Store watermarks: <c>completed_phases</c>, <c>in_progress_phase</c>,
 /// <c>completed_subcalls</c>. On recovery, resumes at the next un-finished
 /// subcall. On steering (a newer input queued behind this turn, observed via
 /// <c>ctx.PendingInputCount &gt; 0</c>), winds down and returns a steered-status so the
@@ -170,11 +109,9 @@ public class CheckpointStore
 /// owns its own replayable stream while the durable task spans the whole session.
 /// </summary>
 public static async Task<ResearchResult> RunResearchAsync(
-    AgentEventStreamRegistry registry,
     ResponsesClient model,
     string modelName,
     TaskContext<ResearchRequest> ctx,
-    CheckpointStore checkpointStore,
     int numPhases = 5,
     int callsPerPhase = 4,
     TimeSpan? interPhaseCooldown = null,
@@ -185,7 +122,33 @@ public static async Task<ResearchResult> RunResearchAsync(
     // The stream id is the per-turn invocation id (one stream per turn), while the
     // durable TaskId spans the whole session.
     string invId = ctx.Input.InvocationId;
-    AgentEventStream stream = await registry.GetOrCreateAsync(invId, ct);
+    string sessionId = ctx.Input.SessionId;
+    TaskStreamWriter stream = ctx.Stream;
+    FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+        $"resilient-research/{sessionId}",
+        s_credential,
+        description: "Deep-research recovery checkpoints",
+        cancellationToken: CancellationToken.None);
+    StateStoreItem? checkpointItem = await store.GetItemAsync(
+        invId,
+        cancellationToken: CancellationToken.None);
+    var checkpoint = checkpointItem?.Value is { } value
+        ? new Dictionary<string, BinaryData>(value, StringComparer.Ordinal)
+        : new Dictionary<string, BinaryData>(StringComparer.Ordinal);
+
+    if (checkpoint.TryGetValue("terminal_status", out BinaryData? terminalData))
+    {
+        string? terminalStatus = terminalData.ToObjectFromJson<string>();
+        if (terminalStatus == "failed")
+        {
+            string error = checkpoint.TryGetValue("error", out BinaryData? errorData)
+                ? errorData.ToObjectFromJson<string>() ?? "Previous task attempt failed."
+                : "Previous task attempt failed.";
+            throw new InvalidOperationException(error);
+        }
+
+        return new ResearchResult(terminalStatus ?? "completed", Array.Empty<string>());
+    }
 
     // On crash recovery, the last event id rehydrates the sequence counter.
     string? lastEventId = await stream.GetLastEventIdAsync(ct);
@@ -210,16 +173,15 @@ public static async Task<ResearchResult> RunResearchAsync(
 
     await Emit("run_start", topic);
 
-    // Read watermarks from metadata (persisted across crashes)
-    int completedPhases = 0;
-    int inProgressPhase = -1;
-    int completedSubcalls = 0;
-    if (ctx.Metadata.TryGetValue("completed_phases", out var cpRaw) && cpRaw is not null)
-        completedPhases = cpRaw.ToObjectFromJson<int>();
-    if (ctx.Metadata.TryGetValue("in_progress_phase", out var ipRaw) && ipRaw is not null)
-        inProgressPhase = ipRaw.ToObjectFromJson<int>();
-    if (ctx.Metadata.TryGetValue("completed_subcalls", out var csRaw) && csRaw is not null)
-        completedSubcalls = csRaw.ToObjectFromJson<int>();
+    int completedPhases = checkpoint.TryGetValue("completed_phases", out BinaryData? cpRaw)
+        ? cpRaw.ToObjectFromJson<int>()
+        : 0;
+    int inProgressPhase = checkpoint.TryGetValue("in_progress_phase", out BinaryData? ipRaw)
+        ? ipRaw.ToObjectFromJson<int>()
+        : -1;
+    int completedSubcalls = checkpoint.TryGetValue("completed_subcalls", out BinaryData? csRaw)
+        ? csRaw.ToObjectFromJson<int>()
+        : 0;
 
     // On recovered entry, emit a recovery event
     if (ctx.EntryMode == EntryMode.Recovered && completedPhases > 0)
@@ -238,7 +200,7 @@ public static async Task<ResearchResult> RunResearchAsync(
             if (ctx.PendingInputCount > 0)
             {
                 await Emit("wind_down", "Steering: winding down for new topic");
-                await FinishTurn(stream, ctx, invId, checkpointStore);
+                await FinishTurn(store, invId, "suspended");
                 return new ResearchResult("steered", allFindings.ToArray());
             }
 
@@ -247,19 +209,23 @@ public static async Task<ResearchResult> RunResearchAsync(
                 : $"Continued research (phase {phaseIdx + 1})";
 
             await Emit("phase_start", title, $"{phaseIdx + 1}/{numPhases}");
-            ctx.Metadata["in_progress_phase"] = BinaryData.FromObjectAsJson(phaseIdx);
-            await ctx.Metadata.FlushAsync(ct);
-
-            // Determine resume point within this phase
-            int startSubcall = (phaseIdx == inProgressPhase) ? completedSubcalls : 0;
+            bool resumingPhase = phaseIdx == inProgressPhase;
+            int startSubcall = resumingPhase ? completedSubcalls : 0;
             StringBuilder phaseText = new();
 
-            // Load checkpoint if resuming mid-phase
-            if (startSubcall > 0)
+            if (resumingPhase
+                && checkpoint.TryGetValue("current_text", out BinaryData? currentText))
             {
-                string? saved = checkpointStore.Load(invId);
+                string? saved = currentText.ToObjectFromJson<string>();
                 if (saved != null)
                     phaseText.Append(saved);
+            }
+            else
+            {
+                checkpoint["in_progress_phase"] = BinaryData.FromObjectAsJson(phaseIdx);
+                checkpoint["completed_subcalls"] = BinaryData.FromObjectAsJson(0);
+                checkpoint["current_text"] = BinaryData.FromObjectAsJson(string.Empty);
+                await SaveCheckpointAsync(store, invId, checkpoint);
             }
 
             int effectiveCalls = Math.Min(callsPerPhase, SubCallRoles.Length);
@@ -268,7 +234,7 @@ public static async Task<ResearchResult> RunResearchAsync(
                 if (ctx.PendingInputCount > 0)
                 {
                     await Emit("wind_down", "Steering: winding down mid-phase");
-                    await FinishTurn(stream, ctx, invId, checkpointStore);
+                    await FinishTurn(store, invId, "suspended");
                     return new ResearchResult("steered", allFindings.ToArray());
                 }
 
@@ -307,7 +273,7 @@ public static async Task<ResearchResult> RunResearchAsync(
                           && !ctx.TimeoutExceeded && !ctx.Shutdown.IsCancellationRequested)
                 {
                     await Emit("wind_down", "Steering: winding down mid-stream");
-                    await FinishTurn(stream, ctx, invId, checkpointStore);
+                    await FinishTurn(store, invId, "suspended");
                     return new ResearchResult("steered", allFindings.ToArray());
                 }
                 string result = sb.ToString();
@@ -316,9 +282,9 @@ public static async Task<ResearchResult> RunResearchAsync(
                 await Emit("subcall_complete", role, phaseLabel);
 
                 // Per-subcall checkpoint
-                ctx.Metadata["completed_subcalls"] = BinaryData.FromObjectAsJson(sc + 1);
-                checkpointStore.Save(invId, phaseText.ToString());
-                await ctx.Metadata.FlushAsync(ct);
+                checkpoint["completed_subcalls"] = BinaryData.FromObjectAsJson(sc + 1);
+                checkpoint["current_text"] = BinaryData.FromObjectAsJson(phaseText.ToString());
+                await SaveCheckpointAsync(store, invId, checkpoint);
 
                 // Intra-phase cooldown
                 if (sc + 1 < effectiveCalls && intraPhaseCooldown.HasValue
@@ -331,7 +297,7 @@ public static async Task<ResearchResult> RunResearchAsync(
                               && !ctx.TimeoutExceeded && !ctx.Shutdown.IsCancellationRequested)
                     {
                         await Emit("wind_down", "Steering during cooldown");
-                        await FinishTurn(stream, ctx, invId, checkpointStore);
+                        await FinishTurn(store, invId, "suspended");
                         return new ResearchResult("steered", allFindings.ToArray());
                     }
                 }
@@ -340,11 +306,11 @@ public static async Task<ResearchResult> RunResearchAsync(
             allFindings.Add(phaseText.ToString());
 
             // Phase complete checkpoint
-            ctx.Metadata["completed_phases"] = BinaryData.FromObjectAsJson(phaseIdx + 1);
-            ctx.Metadata["in_progress_phase"] = BinaryData.FromObjectAsJson(-1);
-            ctx.Metadata["completed_subcalls"] = BinaryData.FromObjectAsJson(0);
-            checkpointStore.Delete(invId);
-            await ctx.Metadata.FlushAsync(ct);
+            checkpoint["completed_phases"] = BinaryData.FromObjectAsJson(phaseIdx + 1);
+            checkpoint["in_progress_phase"] = BinaryData.FromObjectAsJson(-1);
+            checkpoint["completed_subcalls"] = BinaryData.FromObjectAsJson(0);
+            checkpoint["current_text"] = BinaryData.FromObjectAsJson(string.Empty);
+            await SaveCheckpointAsync(store, invId, checkpoint);
 
             await Emit("phase_end", title, $"{phaseIdx + 1}/{numPhases}");
 
@@ -359,15 +325,36 @@ public static async Task<ResearchResult> RunResearchAsync(
                           && !ctx.TimeoutExceeded && !ctx.Shutdown.IsCancellationRequested)
                 {
                     await Emit("wind_down", "Steering between phases");
-                    await FinishTurn(stream, ctx, invId, checkpointStore);
+                    await FinishTurn(store, invId, "suspended");
                     return new ResearchResult("steered", allFindings.ToArray());
                 }
             }
         }
 
         await Emit("done", $"Completed {numPhases} phases");
-        await FinishTurn(stream, ctx, invId, checkpointStore);
+        await FinishTurn(store, invId, "completed");
         return new ResearchResult("done", allFindings.ToArray());
+    }
+    catch (OperationCanceledException)
+        when (ctx.CancelRequested || ctx.TimeoutExceeded)
+    {
+        string terminalStatus = ctx.TimeoutExceeded ? "timed_out" : "cancelled";
+        string message = ctx.TimeoutExceeded ? "Task timed out." : "Task cancelled.";
+
+        // Explicit cancellation and timeout are terminal for this turn. Emit the
+        // protocol event with a non-cancelable token because the handler's token is
+        // already signaled. Shutdown/lease-loss cancellations intentionally bypass
+        // this branch so Core can defer the turn for recovery.
+        seq++;
+        var failEvt = new ResearchEvent(seq, "run_failed", message);
+        await stream.EmitAsync(
+            new SseItem<string>(JsonSerializer.Serialize(failEvt), "run_failed")
+            {
+                EventId = seq.ToString(CultureInfo.InvariantCulture),
+            },
+            cancellationToken: CancellationToken.None);
+        await FinishTurn(store, invId, terminalStatus, message);
+        throw;
     }
     catch (Exception ex) when (ex is not OperationCanceledException)
     {
@@ -380,21 +367,57 @@ public static async Task<ResearchResult> RunResearchAsync(
             {
                 EventId = seq.ToString(CultureInfo.InvariantCulture),
             },
-            close: true, cancellationToken: CancellationToken.None);
+            cancellationToken: CancellationToken.None);
+        await FinishTurn(store, invId, "failed", ex.Message);
         throw;
     }
 }
 
 private static async Task FinishTurn(
-    AgentEventStream stream, TaskContext<ResearchRequest> ctx,
-    string invId, CheckpointStore store)
+    FoundryStateStore store,
+    string invId,
+    string terminalStatus,
+    string? error = null)
 {
-    await stream.CloseAsync();
-    ctx.Metadata.Remove("completed_phases");
-    ctx.Metadata.Remove("in_progress_phase");
-    ctx.Metadata.Remove("completed_subcalls");
-    store.Delete(invId);
+    var terminal = new Dictionary<string, BinaryData>
+    {
+        ["terminal_status"] = BinaryData.FromObjectAsJson(terminalStatus),
+    };
+    if (error is not null)
+    {
+        terminal["error"] = BinaryData.FromObjectAsJson(error);
+    }
+
+    await store.SetItemAsync(
+        invId,
+        terminal,
+        tags: new Dictionary<string, string> { ["invocation_id"] = invId },
+        cancellationToken: CancellationToken.None);
 }
+
+internal sealed class ResearchTask(
+    ResponsesClient model)
+    : IResilientTaskHandler<ResearchRequest, ResearchResult>
+{
+    public Task<ResearchResult> RunAsync(
+        TaskContext<ResearchRequest> context,
+        CancellationToken cancellationToken = default)
+        => RunResearchAsync(
+            model,
+            ModelDeployment,
+            context,
+            ct: cancellationToken);
+}
+
+private static Task SaveCheckpointAsync(
+    FoundryStateStore store,
+    string invocationId,
+    IDictionary<string, BinaryData> checkpoint)
+    => store.SetItemAsync(
+        invocationId,
+        checkpoint,
+        tags: new Dictionary<string, string> { ["invocation_id"] = invocationId },
+        cancellationToken: CancellationToken.None);
 ```
 
 ## Implement the handler
@@ -406,15 +429,15 @@ private static async Task FinishTurn(
 ///
 /// <list type="bullet">
 /// <item><b>POST /invocations</b> (<see cref="HandleAsync"/>) — start a new turn (or
-/// steer an in-flight one). Reserves a stream keyed by the request's invocation id,
-/// starts the durable task with <c>TaskId = research-{sessionId}</c>, then either
+/// steer an in-flight one). Starts the durable task with
+/// <c>TaskId = research-{sessionId}</c> and <c>InputId = invocationId</c>, then either
 /// streams events live (when <c>Accept: text/event-stream</c>) or returns
 /// <c>202 Accepted</c> with the invocation id for later resume.</item>
 /// <item><b>GET /invocations/{id}</b> (<see cref="GetAsync"/>) — RESUME. Re-attaches to
 /// the EXISTING stream after <c>Last-Event-ID</c> (SSE) or returns a JSON status
 /// snapshot. This is a read of durable state — it never starts a new run.</item>
 /// <item><b>POST /invocations/{id}/cancel</b> (<see cref="CancelAsync"/>) — cancel the
-/// active run for the session.</item>
+/// active or steering-queued invocation.</item>
 /// </list>
 /// </summary>
 public class ResilientResearchHandler : InvocationHandler
@@ -424,6 +447,11 @@ public class ResilientResearchHandler : InvocationHandler
     // an in-memory map populated on POST so GET/cancel can find the run.
     private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, string> s_taskIdByInvocation =
         new System.Collections.Concurrent.ConcurrentDictionary<string, string>();
+
+    // Python parity: a queued steering input is cancelled through the TaskRun returned by
+    // StartAsync, not by widening active-run lookup to include queued inputs.
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskRun<ResearchResult>> s_queuedRunsByInvocation =
+        new System.Collections.Concurrent.ConcurrentDictionary<string, TaskRun<ResearchResult>>();
 
     private static string TaskIdForSession(string sessionId) => $"research-{sessionId}";
 
@@ -437,26 +465,27 @@ public class ResilientResearchHandler : InvocationHandler
         var body = await request.ReadFromJsonAsync<ResearchStartRequest>(cancellationToken)
             ?? new ResearchStartRequest("general knowledge");
 
-        var registry = request.HttpContext.RequestServices
-            .GetRequiredService<AgentEventStreamRegistry>();
-        var invoker = request.HttpContext.RequestServices
-            .GetRequiredService<ITaskInvoker>();
+        var research = request.HttpContext.RequestServices
+            .GetResilientTask<ResearchRequest, ResearchResult>("research");
 
         string taskId = TaskIdForSession(context.SessionId);
         string invId = context.InvocationId;
         s_taskIdByInvocation[invId] = taskId;
 
-        // Reserve the per-turn stream BEFORE starting the task so a live subscriber
-        // attaches without missing early events.
-        AgentEventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
-
         // Start a new turn or steer the running one. With the same TaskId, the engine
         // transparently enqueues this input as steering while a turn is in flight.
-        _ = await invoker.StartAsync<ResearchRequest, ResearchResult>(
-            "research",
-            new ResearchRequest(body.Topic, invId),
-            new RunOptions { TaskId = taskId },
+        TaskRun<ResearchResult> run = await research.StartAsync(
+            new ResearchRequest(
+                body.Topic,
+                invId,
+                context.SessionId,
+                context.PlatformContext.CallId),
+            new RunOptions { TaskId = taskId, InputId = invId },
             cancellationToken);
+        if (run.IsQueued)
+        {
+            TrackQueuedRun(invId, run);
+        }
 
         // Non-streaming clients get 202 + the invocation id to resume later via GET.
         if (!AcceptsEventStream(request))
@@ -471,7 +500,10 @@ public class ResilientResearchHandler : InvocationHandler
             return;
         }
 
-        await WriteSseAsync(response, stream, after: null, cancellationToken);
+        await WriteSseAsync(
+            response,
+            run.Stream.Subscribe(cancellationToken: cancellationToken),
+            cancellationToken);
     }
 
     // GET /invocations/{id} — RESUME an existing turn (read-only). Never starts a run.
@@ -499,7 +531,10 @@ public class ResilientResearchHandler : InvocationHandler
         if (AcceptsEventStream(request))
         {
             string? after = ResumeEventId(request);
-            await WriteSseAsync(response, stream, after, cancellationToken);
+            await WriteSseAsync(
+                response,
+                stream.Subscribe(after, cancellationToken),
+                cancellationToken);
             return;
         }
 
@@ -512,7 +547,7 @@ public class ResilientResearchHandler : InvocationHandler
         }, cancellationToken);
     }
 
-    // POST /invocations/{id}/cancel — cancel the active run for this session.
+    // POST /invocations/{id}/cancel — cancel an active or steering-queued invocation.
     public override async Task CancelAsync(
         string invocationId,
         HttpRequest request,
@@ -520,15 +555,15 @@ public class ResilientResearchHandler : InvocationHandler
         InvocationContext context,
         CancellationToken cancellationToken)
     {
-        var invoker = request.HttpContext.RequestServices
-            .GetRequiredService<ITaskInvoker>();
+        var research = request.HttpContext.RequestServices
+            .GetResilientTask<ResearchRequest, ResearchResult>("research");
 
         string taskId = s_taskIdByInvocation.TryGetValue(invocationId, out var mapped)
             ? mapped
             : TaskIdForSession(context.SessionId);
 
-        TaskRun<ResearchResult>? run = await invoker
-            .GetActiveRunAsync<ResearchResult>("research", taskId, cancellationToken);
+        bool queued = s_queuedRunsByInvocation.TryGetValue(invocationId, out TaskRun<ResearchResult>? run);
+        run ??= await research.GetActiveRunAsync(taskId, invocationId, cancellationToken);
 
         if (run is null)
         {
@@ -537,9 +572,36 @@ public class ResilientResearchHandler : InvocationHandler
         }
 
         await run.RequestCancellationAsync();
+        if (queued)
+        {
+            s_queuedRunsByInvocation.TryRemove(invocationId, out _);
+        }
+
         response.StatusCode = StatusCodes.Status202Accepted;
         await response.WriteAsJsonAsync(new { invocation_id = invocationId, status = "cancelling" },
             cancellationToken);
+    }
+
+    private static void TrackQueuedRun(string invocationId, TaskRun<ResearchResult> run)
+    {
+        s_queuedRunsByInvocation[invocationId] = run;
+        _ = run.Completion.ContinueWith(
+            static (completion, state) =>
+            {
+                _ = completion.Exception;
+                var tracked = ((string InvocationId, TaskRun<ResearchResult> Run))state!;
+                if (s_queuedRunsByInvocation.TryGetValue(
+                        tracked.InvocationId,
+                        out TaskRun<ResearchResult>? current)
+                    && ReferenceEquals(current, tracked.Run))
+                {
+                    s_queuedRunsByInvocation.TryRemove(tracked.InvocationId, out _);
+                }
+            },
+            (invocationId, run),
+            CancellationToken.None,
+            TaskContinuationOptions.ExecuteSynchronously,
+            TaskScheduler.Default);
     }
 
     private static bool AcceptsEventStream(HttpRequest request) =>
@@ -556,7 +618,9 @@ public class ResilientResearchHandler : InvocationHandler
     }
 
     private static async Task WriteSseAsync(
-        HttpResponse response, AgentEventStream stream, string? after, CancellationToken ct)
+        HttpResponse response,
+        IAsyncEnumerable<SseItem<string>> events,
+        CancellationToken ct)
     {
         response.ContentType = "text/event-stream";
         response.Headers.CacheControl = "no-cache";
@@ -566,7 +630,7 @@ public class ResilientResearchHandler : InvocationHandler
             // Delegate SSE framing (id:/event:/data: lines) to the BCL SseFormatter — the
             // stream already yields SseItem<string> with the event text in Data, the event
             // name in EventType, and the opaque resume id in EventId.
-            await SseFormatter.WriteAsync(stream.Subscribe(after, ct), response.Body, ct);
+            await SseFormatter.WriteAsync(events, response.Body, ct);
 
             // Clean close: emit a terminal `done` frame so the client can distinguish
             // end-of-stream from a dropped connection.
@@ -595,7 +659,11 @@ public record ResearchStartRequest(string Topic);
 
 /// <summary>Input for the research task. Carries the per-turn invocation id so the
 /// producer can key its event stream to this turn.</summary>
-public record ResearchRequest(string Topic, string InvocationId);
+public record ResearchRequest(
+    string Topic,
+    string InvocationId,
+    string SessionId,
+    [property: JsonPropertyName("call_id")] string? CallId);
 
 /// <summary>Final result of the research task.</summary>
 public record ResearchResult(string Status, string[] Findings);
@@ -649,10 +717,11 @@ This is the **Task ⇄ Stream bridge** pattern. The durable producer is the
 `ResilientResearch_ProducerTask` snippet (`RunResearchAsync`); the HTTP handler is the
 `ResilientResearch_Handler` snippet:
 
-1. **`POST` (`HandleAsync`)** reserves a stream keyed by the per-turn invocation id, then
-   starts the durable task with `TaskId = research-{sessionId}`. With the same `TaskId`, a
-   `POST` while a turn is running is transparently enqueued as *steering*. The replay backing
-   covers late subscribers, so attaching after the producer starts loses nothing.
+1. **`POST` (`HandleAsync`)** starts the durable task with
+   `TaskId = research-{sessionId}` and
+   `InputId = invocationId`. With the same `TaskId`, a `POST` while a turn is running is
+   transparently enqueued as *steering*. The returned `TaskRun.Stream` is already bound
+   to that input; the replay backing covers late subscribers.
 2. The producer makes **real streaming model calls** per sub-call, serializes each
    `ResearchEvent` into `SseItem<string>.Data`, and emits it with the SSE event name and
    opaque `EventId` resume token.
@@ -660,8 +729,13 @@ This is the **Task ⇄ Stream bridge** pattern. The durable producer is the
    `afterEventId` to `Subscribe`, and the replay backing fills in missed events — or returns
    a JSON snapshot with `GetLastEventIdAsync` when SSE isn't requested. HTTP framing is
    delegated to `SseFormatter`. A late reconnect (run already finished) replays the retained stream.
-4. **`POST .../cancel` (`CancelAsync`)** resolves the active run via `GetActiveRunAsync` and
-   calls `CancelAsync`, which the producer observes as a cooperative wind-down.
+4. **`POST .../cancel` (`CancelAsync`)** uses the retained `TaskRun` for a steering-queued
+   invocation, or resolves the currently active turn via `GetActiveRunAsync`. Calling
+   `RequestCancellationAsync` removes only the selected queued input. For an active turn,
+   explicit cancellation and timeout emit a terminal `run_failed` event and persist terminal
+   status; Core then closes the transport after its terminal task-store transition.
+   Shutdown/recovery cancellation intentionally does not close the stream because another
+   process resumes the same turn.
 
 > **Cleanup:** the file-backed replay backing uses its retention settings to reclaim
 > retained streams; long-lived hosts can also call `AgentEventStreamRegistry.DeleteAsync` once a

@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
+            if (Optional.IsDefined(Pwd))
+            {
+                writer.WritePropertyName("pwd"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(Pwd, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -167,6 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> connectionString = default;
+            DataFactoryKeyVaultSecret pwd = default;
             string encryptedCredential = default;
             GreenplumAuthenticationType? authenticationType = default;
             DataFactoryElement<string> host = default;
@@ -186,6 +192,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("pwd"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pwd = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -263,11 +278,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GreenplumLinkedServiceTypeProperties(
                 connectionString,
+                pwd,
                 encryptedCredential,
                 authenticationType,
                 host,

@@ -9,7 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    // The TypeSpec flattening path generates DataTypesAlertsState, but the GA SDK exposed this nested state as AlertsState.
+    // The generated shape nests state under DataTypes.Alerts, but the GA SDK exposed this nested state as AlertsState.
     [CodeGenSuppress("DataTypesAlertsState")]
     public partial class MdatpDataConnector
     {

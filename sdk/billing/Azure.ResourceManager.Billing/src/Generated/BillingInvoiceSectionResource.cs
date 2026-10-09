@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -548,7 +549,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionAsyncCollectionResultOfT(
+            return new BillingInvoiceSectionResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -591,7 +592,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionCollectionResultOfT(
+            return new BillingInvoiceSectionResourceCheckAccessBillingPermissionsCollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -1030,8 +1031,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -1041,7 +1042,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingTransactionData> GetByInvoiceSectionAsync(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingTransactionData> GetByInvoiceSectionAsync(DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1052,8 +1053,8 @@ namespace Azure.ResourceManager.Billing
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 @type.ToString(),
                 filter,
                 orderBy,
@@ -1086,8 +1087,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -1097,7 +1098,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingTransactionData> GetByInvoiceSection(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingTransactionData> GetByInvoiceSection(DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1108,8 +1109,8 @@ namespace Azure.ResourceManager.Billing
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 @type.ToString(),
                 filter,
                 orderBy,
@@ -1435,10 +1436,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1477,10 +1477,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

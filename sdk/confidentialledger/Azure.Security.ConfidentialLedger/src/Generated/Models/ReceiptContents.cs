@@ -8,55 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
     /// <summary> The contents of a receipt. </summary>
     public partial class ReceiptContents
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReceiptContents"/>. </summary>
         /// <param name="nodeId"> Node identifier. </param>
         /// <param name="proof"> Proof. </param>
         /// <param name="signature"> The signature of the receipt. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/>, <paramref name="proof"/> or <paramref name="signature"/> is null. </exception>
         internal ReceiptContents(string nodeId, IEnumerable<ReceiptElement> proof, string signature)
         {
-            Argument.AssertNotNull(nodeId, nameof(nodeId));
-            Argument.AssertNotNull(proof, nameof(proof));
-            Argument.AssertNotNull(signature, nameof(signature));
-
             NodeId = nodeId;
             Proof = proof.ToList();
             ServiceEndorsements = new ChangeTrackingList<string>();
@@ -72,8 +39,8 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <param name="root"> Root. </param>
         /// <param name="serviceEndorsements"> Service endorsements. </param>
         /// <param name="signature"> The signature of the receipt. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReceiptContents(string cert, string leaf, ReceiptLeafComponents leafComponents, string nodeId, IReadOnlyList<ReceiptElement> proof, string root, IReadOnlyList<string> serviceEndorsements, string signature, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReceiptContents(string cert, string leaf, ReceiptLeafComponents leafComponents, string nodeId, IList<ReceiptElement> proof, string root, IList<string> serviceEndorsements, string signature, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cert = cert;
             Leaf = leaf;
@@ -83,28 +50,30 @@ namespace Azure.Security.ConfidentialLedger.Models
             Root = root;
             ServiceEndorsements = serviceEndorsements;
             Signature = signature;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ReceiptContents"/> for deserialization. </summary>
-        internal ReceiptContents()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Certificate. </summary>
         public string Cert { get; }
+
         /// <summary> Leaf. </summary>
         public string Leaf { get; }
+
         /// <summary> Leaf components of the receipt. </summary>
         public ReceiptLeafComponents LeafComponents { get; }
+
         /// <summary> Node identifier. </summary>
         public string NodeId { get; }
+
         /// <summary> Proof. </summary>
-        public IReadOnlyList<ReceiptElement> Proof { get; }
+        public IList<ReceiptElement> Proof { get; }
+
         /// <summary> Root. </summary>
         public string Root { get; }
+
         /// <summary> Service endorsements. </summary>
-        public IReadOnlyList<string> ServiceEndorsements { get; }
+        public IList<string> ServiceEndorsements { get; }
+
         /// <summary> The signature of the receipt. </summary>
         public string Signature { get; }
     }

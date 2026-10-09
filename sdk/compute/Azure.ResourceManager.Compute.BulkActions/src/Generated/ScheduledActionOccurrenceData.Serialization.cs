@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
-    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+    /// <summary> One scheduled execution of a scheduled action. </summary>
     public partial class ScheduledActionOccurrenceData : ResourceData, IJsonModel<ScheduledActionOccurrenceData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScheduledActionOccurrenceData(

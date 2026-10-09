@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -93,6 +94,48 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayRedirectConfigurationPropertiesFormat();
                 }
                 Properties.IncludeQueryString = value;
+            }
+        }
+
+        /// <summary> Request routing specifying redirect configuration. </summary>
+        [WirePath("properties.requestRoutingRules")]
+        public IList<WritableSubResource> RequestRoutingRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRedirectConfigurationPropertiesFormat();
+                }
+                return Properties.RequestRoutingRules;
+            }
+        }
+
+        /// <summary> Url path maps specifying default redirect configuration. </summary>
+        [WirePath("properties.urlPathMaps")]
+        public IList<WritableSubResource> UrlPathMaps
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRedirectConfigurationPropertiesFormat();
+                }
+                return Properties.UrlPathMaps;
+            }
+        }
+
+        /// <summary> Path rules specifying redirect configuration. </summary>
+        [WirePath("properties.pathRules")]
+        public IList<WritableSubResource> PathRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRedirectConfigurationPropertiesFormat();
+                }
+                return Properties.PathRules;
             }
         }
 

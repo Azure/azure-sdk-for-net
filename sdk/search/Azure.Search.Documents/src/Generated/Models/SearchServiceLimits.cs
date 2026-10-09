@@ -28,8 +28,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
         /// <param name="maxStoragePerIndexInBytes"> The maximum amount of storage in bytes allowed per index. </param>
         /// <param name="maxCumulativeIndexerRuntimeSeconds"> The maximum cumulative indexer runtime in seconds allowed for the service. </param>
+        /// <param name="maxVectorIndexSizePerIndexInBytes"> The maximum vector index size (vector memory quota) allowed per index in bytes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds, long? maxVectorIndexSizePerIndexInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxFieldsPerIndex = maxFieldsPerIndex;
             MaxFieldNestingDepthPerIndex = maxFieldNestingDepthPerIndex;
@@ -37,6 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
             MaxComplexObjectsInCollectionsPerDocument = maxComplexObjectsInCollectionsPerDocument;
             MaxStoragePerIndexInBytes = maxStoragePerIndexInBytes;
             MaxCumulativeIndexerRuntimeSeconds = maxCumulativeIndexerRuntimeSeconds;
+            MaxVectorIndexSizePerIndexInBytes = maxVectorIndexSizePerIndexInBytes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,5 +59,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The maximum cumulative indexer runtime in seconds allowed for the service. </summary>
         public long? MaxCumulativeIndexerRuntimeSeconds { get; }
+
+        /// <summary> The maximum vector index size (vector memory quota) allowed per index in bytes. </summary>
+        public long? MaxVectorIndexSizePerIndexInBytes { get; }
     }
 }

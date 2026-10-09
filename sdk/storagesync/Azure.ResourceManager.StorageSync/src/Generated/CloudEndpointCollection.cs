@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(CloudEndpointResource.ResourceType, out string cloudEndpointApiVersion);
             _cloudEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", CloudEndpointResource.ResourceType.Namespace, Diagnostics);
-            _cloudEndpointsRestClient = new CloudEndpoints(_cloudEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudEndpointApiVersion ?? "2022-09-01");
+            _cloudEndpointsRestClient = new CloudEndpoints(_cloudEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudEndpointApiVersion ?? "2025-12-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>

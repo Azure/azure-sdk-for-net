@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="role"> Local replication role. </param>
         /// <param name="partnerRole"> Partner replication role. </param>
         /// <param name="replicationMode"> Replication mode. </param>
-        /// <param name="startOn"> Time at which the link was created. </param>
+        /// <param name="startsOn"> Time at which the link was created. </param>
         /// <param name="percentComplete"> Seeding completion percentage for the link. </param>
         /// <param name="replicationState"> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </param>
         /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
         /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationLinkProperties(string partnerServer, string partnerDatabase, string partnerDatabaseId, AzureLocation? partnerLocation, SqlServerDatabaseReplicationRole? role, SqlServerDatabaseReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startOn, int? percentComplete, ReplicationLinkState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReplicationLinkProperties(string partnerServer, string partnerDatabase, string partnerDatabaseId, AzureLocation? partnerLocation, SqlServerDatabaseReplicationRole? role, SqlServerDatabaseReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startsOn, int? percentComplete, ReplicationLinkState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerServer = partnerServer;
             PartnerDatabase = partnerDatabase;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
             Role = role;
             PartnerRole = partnerRole;
             ReplicationMode = replicationMode;
-            StartOn = startOn;
+            StartsOn = startsOn;
             PercentComplete = percentComplete;
             ReplicationState = replicationState;
             IsTerminationAllowed = isTerminationAllowed;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Time at which the link was created. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Seeding completion percentage for the link. </summary>
         [WirePath("percentComplete")]

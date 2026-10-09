@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.KeyType;
+                return Properties is null ? (TokenGenerationUsedKeyType?)default : Properties.KeyType;
             }
             set
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.ExpiresOn;
             }
             set
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         Properties = new UserTokenParameterProperties();
                     }
-                    Properties.ExpireOn = value.Value;
+                    Properties.ExpiresOn = value.Value;
                 }
             }
         }

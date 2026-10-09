@@ -47,7 +47,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Network.IPAddresses;
+                return Network is null ? default : Network.IPAddresses;
             }
         }
 

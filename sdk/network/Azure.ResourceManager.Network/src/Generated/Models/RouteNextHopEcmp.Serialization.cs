@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("nextHopIpAddresses"u8);
             writer.WriteStartArray();
-            foreach (string item in NextHopIpAddresses)
+            foreach (string item in NextHopIPAddresses)
             {
                 if (item == null)
                 {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<string> nextHopIpAddresses = default;
+            IList<string> nextHopIPAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,15 +151,15 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    nextHopIpAddresses = array;
+                    nextHopIPAddresses = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RouteNextHopEcmp(nextHopIpAddresses, additionalBinaryDataProperties);
+            return new RouteNextHopEcmp(nextHopIPAddresses, additionalBinaryDataProperties);
         }
     }
 }

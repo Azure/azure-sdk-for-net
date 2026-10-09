@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </summary>
         internal ComputeBulkActionsSubResourceInfo CapacityReservationGroup { get; set; }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string CapacityReservationGroupId
         {
             get

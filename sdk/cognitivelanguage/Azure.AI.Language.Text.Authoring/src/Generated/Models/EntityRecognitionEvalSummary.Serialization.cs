@@ -211,12 +211,12 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EntityRecognitionEvalSummary(
-                confusionMatrix,
-                entities,
+                confusionMatrix ?? new ChangeTrackingDictionary<string, TextAuthoringConfusionMatrixRow>(),
+                entities ?? new ChangeTrackingDictionary<string, TextAuthoringEntityEvalSummary>(),
                 microF1,
                 microPrecision,
                 microRecall,

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request model perform a resource operation in a list of resources. </summary>
+    /// <summary> Resource-specific settings to update in a scheduled action. </summary>
     public partial class ResourcePatchRequestContent : IJsonModel<ResourcePatchRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="ResourcePatchRequestContent"/> for deserialization. </summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourcePatchRequestContent(resources, additionalBinaryDataProperties);

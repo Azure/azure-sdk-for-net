@@ -158,7 +158,7 @@ namespace Azure.Provisioning.EventHubs
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ConsumerGroupProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<EventHub>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<EventHub>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

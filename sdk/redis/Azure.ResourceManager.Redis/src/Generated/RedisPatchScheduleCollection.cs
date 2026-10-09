@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RedisPatchScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, RedisPatchScheduleDefaultName @default, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RedisPatchScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, RedisPatchScheduleDefaultName defaultName, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @default.ToString(), RedisPatchScheduleData.ToRequestContent(data), context);
+                HttpMessage message = _redisPatchSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, defaultName.ToString(), RedisPatchScheduleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisPatchScheduleData> response = Response.FromValue(RedisPatchScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RedisPatchScheduleResource> CreateOrUpdate(WaitUntil waitUntil, RedisPatchScheduleDefaultName @default, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RedisPatchScheduleResource> CreateOrUpdate(WaitUntil waitUntil, RedisPatchScheduleDefaultName defaultName, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @default.ToString(), RedisPatchScheduleData.ToRequestContent(data), context);
+                HttpMessage message = _redisPatchSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, defaultName.ToString(), RedisPatchScheduleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisPatchScheduleData> response = Response.FromValue(RedisPatchScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RedisPatchScheduleResource>> GetAsync(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisPatchScheduleResource>> GetAsync(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _redisPatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.Get");
             scope.Start();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @default.ToString(), context);
+                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, defaultName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisPatchScheduleData> response = Response.FromValue(RedisPatchScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RedisPatchScheduleResource> Get(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<RedisPatchScheduleResource> Get(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _redisPatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.Get");
             scope.Start();
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @default.ToString(), context);
+                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, defaultName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisPatchScheduleData> response = Response.FromValue(RedisPatchScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _redisPatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.Exists");
             scope.Start();
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @default.ToString(), context);
+                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, defaultName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RedisPatchScheduleData> response = default;
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _redisPatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.Exists");
             scope.Start();
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @default.ToString(), context);
+                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, defaultName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RedisPatchScheduleData> response = default;
@@ -442,9 +442,9 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<RedisPatchScheduleResource>> GetIfExistsAsync(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<RedisPatchScheduleResource>> GetIfExistsAsync(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _redisPatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.GetIfExists");
             scope.Start();
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @default.ToString(), context);
+                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, defaultName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RedisPatchScheduleData> response = default;
@@ -499,9 +499,9 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> The name of the RedisPatchSchedule. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<RedisPatchScheduleResource> GetIfExists(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<RedisPatchScheduleResource> GetIfExists(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _redisPatchSchedulesClientDiagnostics.CreateScope("RedisPatchScheduleCollection.GetIfExists");
             scope.Start();
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @default.ToString(), context);
+                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, defaultName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RedisPatchScheduleData> response = default;

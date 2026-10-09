@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <summary> Initializes a new instance of <see cref="DomainServiceReplicaSet"/>. </summary>
         public DomainServiceReplicaSet()
         {
-            DomainControllerIpAddress = new ChangeTrackingList<string>();
+            DomainControllerIPAddress = new ChangeTrackingList<string>();
             HealthMonitors = new ChangeTrackingList<DomainServiceHealthMonitor>();
             HealthAlerts = new ChangeTrackingList<DomainServiceHealthAlert>();
         }
@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="location"> Virtual network location. </param>
         /// <param name="vnetSiteId"> Virtual network site id. </param>
         /// <param name="subnetId"> The name of the virtual network that Domain Services will be deployed on. The id of the subnet that Domain Services will be deployed on. /virtualNetwork/vnetName/subnets/subnetName. </param>
-        /// <param name="domainControllerIpAddress"> List of Domain Controller IP Address. </param>
-        /// <param name="externalAccessIpAddress"> External access ip address. </param>
+        /// <param name="domainControllerIPAddress"> List of Domain Controller IP Address. </param>
+        /// <param name="externalAccessIPAddress"> External access ip address. </param>
         /// <param name="serviceStatus"> Status of Domain Service instance. </param>
         /// <param name="selfUnsuspendCounter"> Number of times the customer has self-resumed the domain service. Valid values range from 0 to 5, where 5 is the maximum allowed count before further self-resume is denied and support intervention is required. </param>
         /// <param name="healthLastEvaluatedOn"> Last domain evaluation run DateTime. </param>
         /// <param name="healthMonitors"> List of Domain Health Monitors. </param>
         /// <param name="healthAlerts"> List of Domain Health Alerts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainServiceReplicaSet(string replicaSetId, AzureLocation? location, string vnetSiteId, ResourceIdentifier subnetId, IReadOnlyList<string> domainControllerIpAddress, string externalAccessIpAddress, string serviceStatus, int? selfUnsuspendCounter, DateTimeOffset? healthLastEvaluatedOn, IReadOnlyList<DomainServiceHealthMonitor> healthMonitors, IReadOnlyList<DomainServiceHealthAlert> healthAlerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceReplicaSet(string replicaSetId, AzureLocation? location, string vnetSiteId, ResourceIdentifier subnetId, IReadOnlyList<string> domainControllerIPAddress, string externalAccessIPAddress, string serviceStatus, int? selfUnsuspendCounter, DateTimeOffset? healthLastEvaluatedOn, IReadOnlyList<DomainServiceHealthMonitor> healthMonitors, IReadOnlyList<DomainServiceHealthAlert> healthAlerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReplicaSetId = replicaSetId;
             Location = location;
             VnetSiteId = vnetSiteId;
             SubnetId = subnetId;
-            DomainControllerIpAddress = domainControllerIpAddress;
-            ExternalAccessIpAddress = externalAccessIpAddress;
+            DomainControllerIPAddress = domainControllerIPAddress;
+            ExternalAccessIPAddress = externalAccessIPAddress;
             ServiceStatus = serviceStatus;
             SelfUnsuspendCounter = selfUnsuspendCounter;
             HealthLastEvaluatedOn = healthLastEvaluatedOn;
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.DomainServices.Models
         public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> List of Domain Controller IP Address. </summary>
-        public IReadOnlyList<string> DomainControllerIpAddress { get; }
+        public IReadOnlyList<string> DomainControllerIPAddress { get; }
 
         /// <summary> External access ip address. </summary>
-        public string ExternalAccessIpAddress { get; }
+        public string ExternalAccessIPAddress { get; }
 
         /// <summary> Status of Domain Service instance. </summary>
         public string ServiceStatus { get; }

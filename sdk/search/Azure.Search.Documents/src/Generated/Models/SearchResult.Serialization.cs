@@ -259,7 +259,7 @@ namespace Azure.Search.Documents.Models
                     documentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new SearchResult(
                 score,

@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountAsyncCollectionResultOfT(
+            return new BillingEnrollmentAccountResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(
                 _enrollmentAccountOperationGroupRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountCollectionResultOfT(
+            return new BillingEnrollmentAccountResourceCheckAccessBillingPermissionsCollectionResultOfT(
                 _enrollmentAccountOperationGroupRestClient,
                 Id.Parent.Name,
                 Id.Name,

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    parameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("resources"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     resources = array;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VirtualMachineCaptureResult(

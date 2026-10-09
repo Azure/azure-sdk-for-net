@@ -6,6 +6,7 @@
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -20,6 +21,21 @@ namespace Azure.ResourceManager.Compute
     {
         private void SerializeIdentityValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             => ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+
+        /// <summary> Resource Id. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier CapacityReservationGroupId
+        {
+            get => Properties?.CapacityReservation?.CapacityReservationGroupId;
+            set
+            {
+                if (Properties is null)
+                    Properties = new VirtualMachineProperties();
+                if (Properties.CapacityReservation is null)
+                    Properties.CapacityReservation = new CapacityReservationProfile();
+                Properties.CapacityReservation.CapacityReservationGroupId = value;
+            }
+        }
 
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

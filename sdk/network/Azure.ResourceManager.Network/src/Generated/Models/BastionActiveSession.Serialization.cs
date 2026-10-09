@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(TargetIPAddress))
             {
                 writer.WritePropertyName("targetIpAddress"u8);
-                writer.WriteStringValue(TargetIpAddress);
+                writer.WriteStringValue(TargetIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(Protocol))
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
             string targetHostName = default;
             string targetResourceGroup = default;
             string userName = default;
-            string targetIpAddress = default;
+            string targetIPAddress = default;
             BastionConnectProtocol? protocol = default;
             string targetResourceId = default;
             float? sessionDurationInMins = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    startTime = BinaryData.FromString(prop.Value.GetRawText());
+                    startTime = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("targetSubscriptionId"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("targetIpAddress"u8))
                 {
-                    targetIpAddress = prop.Value.GetString();
+                    targetIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("protocol"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BastionActiveSession(
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network.Models
                 targetHostName,
                 targetResourceGroup,
                 userName,
-                targetIpAddress,
+                targetIPAddress,
                 protocol,
                 targetResourceId,
                 sessionDurationInMins,

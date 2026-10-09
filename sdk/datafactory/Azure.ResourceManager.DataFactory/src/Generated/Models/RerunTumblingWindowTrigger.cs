@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.RequestedStartOn;
+                return TypeProperties is null ? default : TypeProperties.RequestedStartsOn;
             }
             set
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new RerunTumblingWindowTriggerTypeProperties();
                 }
-                TypeProperties.RequestedStartOn = value;
+                TypeProperties.RequestedStartsOn = value;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.RequestedEndOn;
+                return TypeProperties is null ? default : TypeProperties.RequestedEndsOn;
             }
             set
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new RerunTumblingWindowTriggerTypeProperties();
                 }
-                TypeProperties.RequestedEndOn = value;
+                TypeProperties.RequestedEndsOn = value;
             }
         }
 

@@ -6,23 +6,14 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The application resource properties. </summary>
-    internal partial class ApplicationResourceProperties : ProvisionableConstruct
+    internal partial class ApplicationResourceProperties : ApplicationResourceUpdateProperties
     {
         private BicepValue<string> _provisioningState;
         private BicepValue<string> _typeName;
-        private BicepValue<string> _typeVersion;
-        private BicepDictionary<string> _parameters;
-        private ApplicationUpgradePolicy _upgradePolicy;
-        private BicepValue<long> _minimumNodes;
-        private BicepValue<long> _maximumNodes;
-        private BicepValue<bool> _removeApplicationCapacity;
-        private BicepList<ApplicationMetricDescription> _metrics;
-        private BicepList<ApplicationUserAssignedIdentity> _managedIdentities;
 
         /// <summary> Creates a new ApplicationResourceProperties. </summary>
         public ApplicationResourceProperties()
@@ -54,140 +45,12 @@ namespace Azure.Provisioning.ServiceFabric
             }
         }
 
-        /// <summary> Gets or sets the TypeVersion. </summary>
-        public BicepValue<string> TypeVersion
-        {
-            get
-            {
-                Initialize();
-                return _typeVersion;
-            }
-            set
-            {
-                Initialize();
-                _typeVersion.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Parameters. </summary>
-        public BicepDictionary<string> Parameters
-        {
-            get
-            {
-                Initialize();
-                return _parameters;
-            }
-            set
-            {
-                Initialize();
-                _parameters.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the UpgradePolicy. </summary>
-        public ApplicationUpgradePolicy UpgradePolicy
-        {
-            get
-            {
-                Initialize();
-                return _upgradePolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _upgradePolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the MinimumNodes. </summary>
-        public BicepValue<long> MinimumNodes
-        {
-            get
-            {
-                Initialize();
-                return _minimumNodes;
-            }
-            set
-            {
-                Initialize();
-                _minimumNodes.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the MaximumNodes. </summary>
-        public BicepValue<long> MaximumNodes
-        {
-            get
-            {
-                Initialize();
-                return _maximumNodes;
-            }
-            set
-            {
-                Initialize();
-                _maximumNodes.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the RemoveApplicationCapacity. </summary>
-        public BicepValue<bool> RemoveApplicationCapacity
-        {
-            get
-            {
-                Initialize();
-                return _removeApplicationCapacity;
-            }
-            set
-            {
-                Initialize();
-                _removeApplicationCapacity.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Metrics. </summary>
-        public BicepList<ApplicationMetricDescription> Metrics
-        {
-            get
-            {
-                Initialize();
-                return _metrics;
-            }
-            set
-            {
-                Initialize();
-                _metrics.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ManagedIdentities. </summary>
-        public BicepList<ApplicationUserAssignedIdentity> ManagedIdentities
-        {
-            get
-            {
-                Initialize();
-                return _managedIdentities;
-            }
-            set
-            {
-                Initialize();
-                _managedIdentities.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ApplicationResourceProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _typeName = DefineProperty<string>(nameof(TypeName), new string[] { "typeName" });
-            _typeVersion = DefineProperty<string>(nameof(TypeVersion), new string[] { "typeVersion" });
-            _parameters = DefineDictionaryProperty<string>(nameof(Parameters), new string[] { "parameters" });
-            _upgradePolicy = DefineModelProperty<ApplicationUpgradePolicy>(nameof(UpgradePolicy), new string[] { "upgradePolicy" });
-            _minimumNodes = DefineProperty<long>(nameof(MinimumNodes), new string[] { "minimumNodes" });
-            _maximumNodes = DefineProperty<long>(nameof(MaximumNodes), new string[] { "maximumNodes" });
-            _removeApplicationCapacity = DefineProperty<bool>(nameof(RemoveApplicationCapacity), new string[] { "removeApplicationCapacity" });
-            _metrics = DefineListProperty<ApplicationMetricDescription>(nameof(Metrics), new string[] { "metrics" });
-            _managedIdentities = DefineListProperty<ApplicationUserAssignedIdentity>(nameof(ManagedIdentities), new string[] { "managedIdentities" });
             DefineAdditionalProperties();
         }
 

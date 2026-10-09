@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CommonDynamicMatchConfigurationPatch(ipGroups ?? new ChangeTrackingList<IPGroupPatchProperties>(), vlanGroups ?? new ChangeTrackingList<VlanGroupPatchProperties>(), portGroups ?? new ChangeTrackingList<PortGroupPatchProperties>(), additionalBinaryDataProperties);

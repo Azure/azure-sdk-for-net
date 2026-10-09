@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningTable. </summary>
         public MachineLearningTable()
         {
+            DataType.Assign(MachineLearningDataType.Mltable);
         }
 
         /// <summary> Gets or sets the ReferencedUris. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("dataType", new string[] { "dataType" }, defaultValue: "mltable");
             _referencedUris = DefineListProperty<string>(nameof(ReferencedUris), new string[] { "referencedUris" });
             DefineAdditionalProperties();
         }

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of <see cref="AdvisorSuppressionProperties"/>. </summary>
         /// <param name="suppressionId"> The GUID of the suppression. </param>
         /// <param name="ttl"> The duration for which the suppression is valid. </param>
-        /// <param name="expireOn"> Gets or sets the expiration time stamp. </param>
+        /// <param name="expiresOn"> Gets or sets the expiration time stamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdvisorSuppressionProperties(string suppressionId, string ttl, DateTimeOffset? expireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdvisorSuppressionProperties(string suppressionId, string ttl, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SuppressionId = suppressionId;
             Ttl = ttl;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Advisor.Models
         public string Ttl { get; set; }
 
         /// <summary> Gets or sets the expiration time stamp. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

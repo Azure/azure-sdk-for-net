@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Security.ConfidentialLedger.Models
     public readonly partial struct ApplicationClaimKind : IEquatable<ApplicationClaimKind>
     {
         private readonly string _value;
+        /// <summary> Claim derived from a ledger entry. </summary>
+        private const string LedgerEntryValue = "LedgerEntry";
+        /// <summary> Claim in digested form. </summary>
+        private const string ClaimDigestValue = "ClaimDigest";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationClaimKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationClaimKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LedgerEntryValue = "LedgerEntry";
-        private const string ClaimDigestValue = "ClaimDigest";
+            _value = value;
+        }
 
         /// <summary> Claim derived from a ledger entry. </summary>
         public static ApplicationClaimKind LedgerEntry { get; } = new ApplicationClaimKind(LedgerEntryValue);
+
         /// <summary> Claim in digested form. </summary>
         public static ApplicationClaimKind ClaimDigest { get; } = new ApplicationClaimKind(ClaimDigestValue);
+
         /// <summary> Determines if two <see cref="ApplicationClaimKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationClaimKind left, ApplicationClaimKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationClaimKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationClaimKind left, ApplicationClaimKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationClaimKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationClaimKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationClaimKind(string value) => new ApplicationClaimKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationClaimKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationClaimKind?(string value) => value == null ? null : new ApplicationClaimKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationClaimKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationClaimKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

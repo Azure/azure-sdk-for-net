@@ -11,7 +11,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> MDATP (Microsoft Defender Advanced Threat Protection) data connector properties. </summary>
     internal partial class MdatpDataConnectorProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -41,19 +40,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The available data types for the connector. </summary>
         [WirePath("dataTypes")]
-        internal SecurityInsightsAlertsDataTypeOfDataConnector DataTypes { get; set; }
-
-        /// <summary> Gets or sets the AlertsState. </summary>
-        public SecurityInsightsDataTypeConnectionState? DataTypesAlertsState
-        {
-            get
-            {
-                return DataTypes is null ? default : DataTypes.AlertsState;
-            }
-            set
-            {
-                DataTypes = new SecurityInsightsAlertsDataTypeOfDataConnector(value);
-            }
-        }
+        public SecurityInsightsAlertsDataTypeOfDataConnector DataTypes { get; set; }
     }
 }

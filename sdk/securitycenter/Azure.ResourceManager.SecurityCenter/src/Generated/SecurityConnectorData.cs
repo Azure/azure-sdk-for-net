@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.HierarchyIdentifierTrialEndOn;
+                return Properties is null ? default : Properties.HierarchyIdentifierTrialEndsOn;
             }
         }
 

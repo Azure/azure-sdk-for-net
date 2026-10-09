@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization
     internal partial class RoleAssignmentsGetForSubscriptionCollectionResultOfT : Pageable<RoleAssignmentData>
     {
         private readonly RoleAssignments _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _filter;
         private readonly string _tenantId;
         private readonly RequestContext _context;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RoleAssignmentsGetForSubscriptionCollectionResultOfT(RoleAssignments client, string subscriptionId, string filter, string tenantId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RoleAssignmentsGetForSubscriptionCollectionResultOfT(RoleAssignments client, Guid subscriptionId, string filter, string tenantId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

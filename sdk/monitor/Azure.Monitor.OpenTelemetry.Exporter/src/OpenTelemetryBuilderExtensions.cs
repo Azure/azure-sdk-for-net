@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
@@ -79,9 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             builder.Services.ConfigureOpenTelemetryTracerProvider((sp, tracerProviderBuilder) =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
-                tracerProviderBuilder.SetSampler(exporterOptions.TracesPerSecond != null ?
-                    new RateLimitedSampler(exporterOptions.TracesPerSecond.Value) :
-                    new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
+                tracerProviderBuilder.SetSampler(SamplerFactory.Create(exporterOptions, MultiEndpointConfig.Enabled));
             });
 
             builder.Services.Configure<OpenTelemetryLoggerOptions>((loggingOptions) =>
@@ -95,11 +94,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 serviceProvider!.EnsureSingleUseAzureMonitorExporterRegistration();
 
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
-                meterProviderBuilder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions))
-                    { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
+                meterProviderBuilder.AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions)));
 
                 // Register customer SDK stats if enabled
-                CustomerSdkStatsRegistration.RegisterCustomerSdkStats(builder.Services, exporterOptions);
+                CustomerSdkStatsRegistration.RegisterCustomerSdkStats(exporterOptions);
             });
 
             // Register Manager as a singleton

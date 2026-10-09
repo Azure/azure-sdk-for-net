@@ -9,28 +9,29 @@ using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Customizations;
+using TypeSpecCodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.EventGrid
 {
     // The generator emits these extension methods under names/shapes that differ from main's GA surface
     // (GetByResource / GetEventSubscriptions / GetAll / Reconcile). They are suppressed and re-exposed under
     // the GA method names, including the data-returning (...Data) list variants the generator does not produce.
-    [CodeGenSuppress("GetByResource", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByResourceAsync", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("Get", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAsync", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByResource", typeof(ResourceGroupResource), typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByResourceAsync", typeof(ResourceGroupResource), typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByResource", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetByResourceAsync", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetEventSubscriptions", typeof(ResourceGroupResource), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetEventSubscriptionsAsync", typeof(ResourceGroupResource), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetEventSubscriptions", typeof(SubscriptionResource), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetEventSubscriptionsAsync", typeof(SubscriptionResource), typeof(string), typeof(int?), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAll", typeof(ResourceGroupResource), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAllAsync", typeof(ResourceGroupResource), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Reconcile", typeof(ResourceGroupResource), typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("ReconcileAsync", typeof(ResourceGroupResource), typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResource", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResourceAsync", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("Get", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetAsync", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResource", typeof(ResourceGroupResource), typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResourceAsync", typeof(ResourceGroupResource), typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResource", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetByResourceAsync", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetEventSubscriptions", typeof(ResourceGroupResource), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetEventSubscriptionsAsync", typeof(ResourceGroupResource), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetEventSubscriptions", typeof(SubscriptionResource), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetEventSubscriptionsAsync", typeof(SubscriptionResource), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetAll", typeof(ResourceGroupResource), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetAllAsync", typeof(ResourceGroupResource), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("Reconcile", typeof(ResourceGroupResource), typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("ReconcileAsync", typeof(ResourceGroupResource), typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public static partial class EventGridExtensions
     {
         /// <summary> List global event subscriptions under a resource group for a topic type. </summary>

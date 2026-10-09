@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The path of the Dynamics AX OData entity. </summary>
     public partial class DynamicsAXResourceDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXResourceDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="path"> The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
+        public DynamicsAXResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path) : base("DynamicsAXResource", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(path, nameof(path));
+
+            TypeProperties = new DynamicsAXResourceDatasetTypeProperties(path);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DynamicsAXResourceDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

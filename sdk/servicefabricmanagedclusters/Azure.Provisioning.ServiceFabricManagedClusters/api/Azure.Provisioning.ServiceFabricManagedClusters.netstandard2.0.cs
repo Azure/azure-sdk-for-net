@@ -220,6 +220,17 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         public Azure.Provisioning.BicepValue<string> UpgradeReplicaSetCheckTimeout { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ManagedServiceBaseProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedServiceBaseProperties() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedServiceCorrelation> CorrelationScheme { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedServiceMoveCost> DefaultMoveCost { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PlacementConstraints { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedServiceScalingPolicy> ScalingPolicies { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedServiceLoadMetric> ServiceLoadMetrics { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedServicePlacementPolicy> ServicePlacementPolicies { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ManagedServiceCorrelation : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedServiceCorrelation() { }
@@ -264,19 +275,13 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         public ManagedServicePlacementPolicy() { }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ManagedServiceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ManagedServiceProperties : Azure.Provisioning.ServiceFabricManagedClusters.ManagedServiceBaseProperties
     {
         public ManagedServiceProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedServiceCorrelation> CorrelationScheme { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedServiceMoveCost> DefaultMoveCost { get { throw null; } set { } }
         public Azure.Provisioning.ServiceFabricManagedClusters.ManagedServicePartitionScheme PartitionDescription { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PlacementConstraints { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedServiceScalingPolicy> ScalingPolicies { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ServiceDnsName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedServiceLoadMetric> ServiceLoadMetrics { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ManagedServicePackageActivationMode> ServicePackageActivationMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.ManagedServicePlacementPolicy> ServicePlacementPolicies { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ServiceTypeName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -646,7 +651,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         public Azure.Provisioning.BicepValue<int> DataDiskSizeInGB { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedDataDiskType> DataDiskType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DscpConfigurationId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableResilientEphemeralOsDisk { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableResilientEphemeralOSDisk { get { throw null; } set { } }
         public Azure.Provisioning.ServiceFabricManagedClusters.EndpointRangeDescription EphemeralPorts { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.SpotNodeVmEvictionPolicyType> EvictionPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeFrontendConfiguration> FrontendConfigurations { get { throw null; } set { } }

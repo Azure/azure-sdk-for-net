@@ -11,7 +11,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> List of provisioning errors for a http route config object. </summary>
+    /// <summary> List of provisioning errors for a Http Route Config object. </summary>
     public partial class ContainerAppHttpRouteProvisioningErrors
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

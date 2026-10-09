@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for the task that migrates Schema for SQL Server databases to Azure SQL databases
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputError"/>, and <see cref="MigrateSchemaSqlTaskOutputError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputError"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>, and <see cref="MigrateSchemaSqlTaskOutputError"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMigrateSchemaSqlServerSqlDBTaskOutput))]
     public abstract partial class MigrateSchemaSqlServerSqlDBTaskOutput : IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MigrationLevelOutput":
-                        return MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(element, options);
                     case "DatabaseLevelOutput":
                         return MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(element, options);
                     case "SchemaErrorOutput":
                         return MigrateSchemaSqlServerSqlDBTaskOutputError.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputError(element, options);
+                    case "MigrationLevelOutput":
+                        return MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(element, options);
                     case "ErrorOutput":
                         return MigrateSchemaSqlTaskOutputError.DeserializeMigrateSchemaSqlTaskOutputError(element, options);
                 }

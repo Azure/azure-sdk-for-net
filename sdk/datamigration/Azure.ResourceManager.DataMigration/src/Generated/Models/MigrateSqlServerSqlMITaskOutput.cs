@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for task that migrates SQL Server databases to Azure SQL Database Managed Instance.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/>, and <see cref="MigrateSqlServerSqlMITaskOutputError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputError"/>, <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/>, and <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>.
     /// </summary>
     public abstract partial class MigrateSqlServerSqlMITaskOutput
     {

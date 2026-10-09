@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadAzureTableInsertType(prop, ref azureTableInsertType);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new AzureTableSink(
                 copySinkType,

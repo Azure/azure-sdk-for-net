@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="name"> Gets or sets the name of the network interface. </param>
         /// <param name="macAddress"> Gets or sets the nic MAC address. </param>
         /// <param name="virtualNetworkId"> Gets or sets the ARM Id of the Microsoft.ScVmm/virtualNetwork resource to connect the nic. </param>
-        /// <param name="iPv4AddressType"> Gets or sets the ipv4 address type. </param>
-        /// <param name="iPv6AddressType"> Gets or sets the ipv6 address type. </param>
+        /// <param name="ipv4AddressType"> Gets or sets the ipv4 address type. </param>
+        /// <param name="ipv6AddressType"> Gets or sets the ipv6 address type. </param>
         /// <param name="macAddressType"> Gets or sets the mac address type. </param>
         /// <param name="nicId"> Gets or sets the nic id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmNetworkInterfaceUpdate(string name, string macAddress, string virtualNetworkId, AllocationMethod? iPv4AddressType, AllocationMethod? iPv6AddressType, AllocationMethod? macAddressType, string nicId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScVmmNetworkInterfaceUpdate(string name, string macAddress, string virtualNetworkId, AllocationMethod? ipv4AddressType, AllocationMethod? ipv6AddressType, AllocationMethod? macAddressType, string nicId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             MacAddress = macAddress;
             VirtualNetworkId = virtualNetworkId;
-            IPv4AddressType = iPv4AddressType;
-            IPv6AddressType = iPv6AddressType;
+            IPv4AddressType = ipv4AddressType;
+            IPv6AddressType = ipv6AddressType;
             MacAddressType = macAddressType;
             NicId = nicId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

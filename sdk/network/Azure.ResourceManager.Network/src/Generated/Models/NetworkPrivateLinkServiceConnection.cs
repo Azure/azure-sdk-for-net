@@ -119,5 +119,23 @@ namespace Azure.ResourceManager.Network.Models
                 Properties.PrivateLinkServiceConnectionState = value;
             }
         }
+
+        /// <summary> The ARM resource id of an existing approved private endpoint whose approval state is inherited by this connection. </summary>
+        [WirePath("properties.approvalReference.privateEndpointId")]
+        public ResourceIdentifier ApprovalReferencePrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApprovalReferencePrivateEndpointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceConnectionProperties();
+                }
+                Properties.ApprovalReferencePrivateEndpointId = value;
+            }
+        }
     }
 }

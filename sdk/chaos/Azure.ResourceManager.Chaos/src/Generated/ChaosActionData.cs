@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary> JSON Schema describing the parameters for this action. </summary>
-        public ChaosActionParametersSchema ParametersSchema
+        public ActionPropertiesParametersSchema ParametersSchema
         {
             get
             {

@@ -15,8 +15,8 @@ namespace Azure.Provisioning.MachineLearning
     {
         private BicepValue<string> _currentImageVersion;
         private BicepValue<string> _latestImageVersion;
-        private BicepValue<bool> _isLatestOsImageVersion;
-        private OsPatchingStatus _osPatchingStatus;
+        private BicepValue<bool> _isLatestOSImageVersion;
+        private OSPatchingStatus _osPatchingStatus;
 
         /// <summary> Creates a new ImageMetadata. </summary>
         public ImageMetadata()
@@ -43,18 +43,18 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets the IsLatestOsImageVersion. </summary>
-        public BicepValue<bool> IsLatestOsImageVersion
+        /// <summary> Gets the IsLatestOSImageVersion. </summary>
+        public BicepValue<bool> IsLatestOSImageVersion
         {
             get
             {
                 Initialize();
-                return _isLatestOsImageVersion;
+                return _isLatestOSImageVersion;
             }
         }
 
-        /// <summary> Gets the OsPatchingStatus. </summary>
-        public OsPatchingStatus OsPatchingStatus
+        /// <summary> Gets the OSPatchingStatus. </summary>
+        public OSPatchingStatus OSPatchingStatus
         {
             get
             {
@@ -69,8 +69,8 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             _currentImageVersion = DefineProperty<string>(nameof(CurrentImageVersion), new string[] { "currentImageVersion" });
             _latestImageVersion = DefineProperty<string>(nameof(LatestImageVersion), new string[] { "latestImageVersion" });
-            _isLatestOsImageVersion = DefineProperty<bool>(nameof(IsLatestOsImageVersion), new string[] { "isLatestOsImageVersion" });
-            _osPatchingStatus = DefineModelProperty<OsPatchingStatus>(nameof(OsPatchingStatus), new string[] { "osPatchingStatus" }, isOutput: true);
+            _isLatestOSImageVersion = DefineProperty<bool>(nameof(IsLatestOSImageVersion), new string[] { "isLatestOsImageVersion" });
+            _osPatchingStatus = DefineModelProperty<OSPatchingStatus>(nameof(OSPatchingStatus), new string[] { "osPatchingStatus" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

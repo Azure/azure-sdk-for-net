@@ -339,7 +339,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SearchDocumentsResult(
@@ -349,7 +349,7 @@ namespace Azure.Search.Documents.Models
                 answers ?? new ChangeTrackingList<QueryAnswerResult>(),
                 debugInfo,
                 nextPageParameters,
-                results,
+                results ?? new ChangeTrackingList<SearchResult>(),
                 nextLink,
                 semanticPartialResponseReason,
                 semanticPartialResponseType,

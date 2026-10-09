@@ -401,9 +401,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContainerRegistryTaskRunLogResult>> GetLogSasUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryTaskRunLogResult>> GetLogSasUriAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.GetLogSasUrl");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.GetLogSasUri");
             scope.Start();
             try
             {
@@ -449,9 +449,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerRegistryTaskRunLogResult> GetLogSasUrl(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryTaskRunLogResult> GetLogSasUri(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.GetLogSasUrl");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.GetLogSasUri");
             scope.Start();
             try
             {

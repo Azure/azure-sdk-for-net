@@ -238,7 +238,7 @@ namespace Azure.Provisioning.OperationalInsights
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SavedSearchProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<OperationalInsightsWorkspace>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<OperationalInsightsWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

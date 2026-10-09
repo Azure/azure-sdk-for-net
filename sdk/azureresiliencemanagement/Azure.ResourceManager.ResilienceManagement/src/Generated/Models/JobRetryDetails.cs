@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="JobRetryDetails"/>. </summary>
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="retryAttempt"> The retry attempt number of the job. </param>
         /// <param name="userComments"> User Comments. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobRetryDetails(ResilienceManagementJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, int retryAttempt, IReadOnlyList<JobUserComment> userComments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobRetryDetails(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, JobErrorInfo errorDetails, int retryAttempt, IReadOnlyList<JobUserComment> userComments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Duration = duration;
             ErrorDetails = errorDetails;
             RetryAttempt = retryAttempt;
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResilienceManagementJobStatus? Status { get; }
 
         /// <summary> The start time of the job execution. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the job execution. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The time elapsed during the execution of this job. </summary>
         public TimeSpan? Duration { get; }

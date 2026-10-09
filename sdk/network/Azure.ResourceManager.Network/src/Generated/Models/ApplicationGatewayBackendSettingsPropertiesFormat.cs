@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
         /// <param name="hostName"> Server name indication to be sent to the backend servers for Tls protocol. </param>
         /// <param name="pickHostNameFromBackendAddress"> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </param>
-        /// <param name="enableL4ClientIpPreservation"> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </param>
+        /// <param name="enableL4ClientIPPreservation"> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayBackendSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, int? timeout, NetworkSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, bool? enableL4ClientIpPreservation, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayBackendSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, int? timeout, NetworkSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, bool? enableL4ClientIPPreservation, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Port = port;
             Protocol = protocol;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             TrustedRootCertificates = trustedRootCertificates;
             HostName = hostName;
             PickHostNameFromBackendAddress = pickHostNameFromBackendAddress;
-            EnableL4ClientIpPreservation = enableL4ClientIpPreservation;
+            EnableL4ClientIPPreservation = enableL4ClientIPPreservation;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </summary>
         [WirePath("enableL4ClientIpPreservation")]
-        public bool? EnableL4ClientIpPreservation { get; set; }
+        public bool? EnableL4ClientIPPreservation { get; set; }
 
         /// <summary> The provisioning state of the backend HTTP settings resource. </summary>
         [WirePath("provisioningState")]

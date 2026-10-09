@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
 
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.Authorization
     [ModelReaderWriterBuildable(typeof(PolicyPropertiesScope))]
     [ModelReaderWriterBuildable(typeof(ProviderOperationsMetadataListResult))]
     [ModelReaderWriterBuildable(typeof(RecordAllDecisionsProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentData))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentListResult))]

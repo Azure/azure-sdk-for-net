@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Elastic.Models;
 using Azure.ResourceManager.Models;
 
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.Elastic
     [ModelReaderWriterBuildable(typeof(MonitorResourceProjectDetails))]
     [ModelReaderWriterBuildable(typeof(OpenAIIntegrationRPModelListResponse))]
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionListResult))]

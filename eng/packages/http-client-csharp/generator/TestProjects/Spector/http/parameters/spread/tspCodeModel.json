@@ -162,6 +162,7 @@
       "$id": "19",
       "kind": "model",
       "name": "BodyParameter",
+      "apiVersions": [],
       "namespace": "Parameters.Spread.Model",
       "crossLanguageDefinitionId": "Parameters.Spread.Model.BodyParameter",
       "usage": "Input,Spread,Json",
@@ -178,6 +179,7 @@
           "$id": "20",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "21",
@@ -206,6 +208,7 @@
       "$id": "22",
       "kind": "model",
       "name": "SpreadCompositeRequestMixRequest",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.Request.anonymous",
       "usage": "Spread,Json",
@@ -221,6 +224,7 @@
           "$id": "23",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$id": "24",
@@ -249,6 +253,7 @@
       "$id": "25",
       "kind": "model",
       "name": "SpreadAsRequestBodyRequest",
+      "apiVersions": [],
       "namespace": "Parameters.Spread.Alias",
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.Request.anonymous",
       "usage": "Spread,Json",
@@ -264,6 +269,7 @@
           "$id": "26",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "27",
@@ -292,6 +298,7 @@
       "$id": "28",
       "kind": "model",
       "name": "SpreadParameterWithInnerModelRequest",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.Request.anonymous",
       "usage": "Spread,Json",
@@ -307,6 +314,7 @@
           "$id": "29",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "30",
@@ -335,6 +343,7 @@
       "$id": "31",
       "kind": "model",
       "name": "SpreadAsRequestParameterRequest",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.Request.anonymous",
       "usage": "Spread,Json",
@@ -350,6 +359,7 @@
           "$id": "32",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "33",
@@ -378,6 +388,7 @@
       "$id": "34",
       "kind": "model",
       "name": "SpreadWithMultipleParametersRequest",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.Request.anonymous",
       "usage": "Spread,Json",
@@ -393,6 +404,7 @@
           "$id": "35",
           "kind": "property",
           "name": "requiredString",
+          "apiVersions": [],
           "serializedName": "requiredString",
           "doc": "required string",
           "type": {
@@ -420,6 +432,7 @@
           "$id": "37",
           "kind": "property",
           "name": "optionalInt",
+          "apiVersions": [],
           "serializedName": "optionalInt",
           "doc": "optional int",
           "type": {
@@ -447,6 +460,7 @@
           "$id": "39",
           "kind": "property",
           "name": "requiredIntList",
+          "apiVersions": [],
           "serializedName": "requiredIntList",
           "doc": "required int",
           "type": {
@@ -481,6 +495,7 @@
           "$id": "42",
           "kind": "property",
           "name": "optionalStringList",
+          "apiVersions": [],
           "serializedName": "optionalStringList",
           "doc": "optional string",
           "type": {
@@ -517,6 +532,7 @@
       "$id": "45",
       "kind": "model",
       "name": "SpreadParameterWithInnerAliasRequest",
+      "apiVersions": [],
       "namespace": "",
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.Request.anonymous",
       "usage": "Spread,Json",
@@ -532,6 +548,7 @@
           "$id": "46",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "name of the Thing",
           "type": {
@@ -559,6 +576,7 @@
           "$id": "48",
           "kind": "property",
           "name": "age",
+          "apiVersions": [],
           "serializedName": "age",
           "doc": "age of the Thing",
           "type": {

@@ -96,11 +96,11 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Represents a training config version. </summary>
         /// <param name="trainingConfigVersion"> Represents the version of the config. </param>
-        /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
+        /// <param name="modelExpiresOn"> Represents the training config version expiration date. </param>
         /// <returns> A new <see cref="Authoring.ConversationAuthoringTrainingConfigVersion"/> instance for mocking. </returns>
-        public static ConversationAuthoringTrainingConfigVersion ConversationAuthoringTrainingConfigVersion(string trainingConfigVersion = default, DateTimeOffset modelExpirationDate = default)
+        public static ConversationAuthoringTrainingConfigVersion ConversationAuthoringTrainingConfigVersion(string trainingConfigVersion = default, DateTimeOffset modelExpiresOn = default)
         {
-            return new ConversationAuthoringTrainingConfigVersion(trainingConfigVersion, modelExpirationDate, additionalBinaryDataProperties: null);
+            return new ConversationAuthoringTrainingConfigVersion(trainingConfigVersion, modelExpiresOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a trained model. </summary>
@@ -159,9 +159,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainingStatus"> Represents the model training status. </param>
         /// <param name="dataGenerationStatus"> Represents the model data generation status. </param>
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
-        /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
+        /// <param name="estimatedEndsOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <returns> A new <see cref="Authoring.ConversationAuthoringTrainingJobResult"/> instance for mocking. </returns>
-        public static ConversationAuthoringTrainingJobResult ConversationAuthoringTrainingJobResult(string modelLabel = default, string trainingConfigVersion = default, ConversationAuthoringTrainingMode? trainingMode = default, ConversationAuthoringSubTrainingState trainingStatus = default, ConversationAuthoringSubTrainingState dataGenerationStatus = default, ConversationAuthoringSubTrainingState evaluationStatus = default, DateTimeOffset? estimatedEndOn = default)
+        public static ConversationAuthoringTrainingJobResult ConversationAuthoringTrainingJobResult(string modelLabel = default, string trainingConfigVersion = default, ConversationAuthoringTrainingMode? trainingMode = default, ConversationAuthoringSubTrainingState trainingStatus = default, ConversationAuthoringSubTrainingState dataGenerationStatus = default, ConversationAuthoringSubTrainingState evaluationStatus = default, DateTimeOffset? estimatedEndsOn = default)
         {
             return new ConversationAuthoringTrainingJobResult(
                 modelLabel,
@@ -170,7 +170,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 trainingStatus,
                 dataGenerationStatus,
                 evaluationStatus,
-                estimatedEndOn,
+                estimatedEndsOn,
                 additionalBinaryDataProperties: null);
         }
 
@@ -696,17 +696,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="targetProjectName"> The project name to be copied-into. </param>
         /// <param name="accessToken"> The access token. </param>
-        /// <param name="expiresAt"> The expiration of the access token. </param>
+        /// <param name="expiresOn"> The expiration of the access token. </param>
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
         /// <returns> A new <see cref="Authoring.ConversationAuthoringCopyProjectDetails"/> instance for mocking. </returns>
-        public static ConversationAuthoringCopyProjectDetails ConversationAuthoringCopyProjectDetails(ConversationAuthoringProjectKind projectKind = default, string targetProjectName = default, string accessToken = default, DateTimeOffset expiresAt = default, string targetResourceId = default, string targetResourceRegion = default)
+        public static ConversationAuthoringCopyProjectDetails ConversationAuthoringCopyProjectDetails(ConversationAuthoringProjectKind projectKind = default, string targetProjectName = default, string accessToken = default, DateTimeOffset expiresOn = default, string targetResourceId = default, string targetResourceRegion = default)
         {
             return new ConversationAuthoringCopyProjectDetails(
                 projectKind,
                 targetProjectName,
                 accessToken,
-                expiresAt,
+                expiresOn,
                 targetResourceId,
                 targetResourceRegion,
                 additionalBinaryDataProperties: null);

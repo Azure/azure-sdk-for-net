@@ -94,7 +94,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.TimeCreated;
+                return Properties is null ? default : Properties.TimeCreated;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.SourceResourceId;
+                return Properties is null ? default : Properties.SourceResourceId;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.OSType;
+                return Properties is null ? default : Properties.OSType;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.HyperVGeneration;
+                return Properties is null ? default : Properties.HyperVGeneration;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.PurchasePlan;
+                return Properties is null ? default : Properties.PurchasePlan;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.SupportedCapabilities;
+                return Properties is null ? default : Properties.SupportedCapabilities;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.FamilyId;
+                return Properties is null ? default : Properties.FamilyId;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.SourceUniqueId;
+                return Properties is null ? default : Properties.SourceUniqueId;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.Encryption;
+                return Properties is null ? default : Properties.Encryption;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.SupportsHibernation;
+                return Properties is null ? default : Properties.SupportsHibernation;
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.NetworkAccessPolicy;
+                return Properties is null ? default : Properties.NetworkAccessPolicy;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.PublicNetworkAccess;
+                return Properties is null ? default : Properties.PublicNetworkAccess;
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.DiskAccessId;
+                return Properties is null ? default : Properties.DiskAccessId;
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.CompletionPercent;
+                return Properties is null ? default : Properties.CompletionPercent;
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.ReplicationState;
+                return Properties is null ? default : Properties.ReplicationState;
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.SourceResourceLocation;
+                return Properties is null ? default : Properties.SourceResourceLocation;
             }
         }
 
@@ -238,7 +238,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.SecurityProfile;
+                return Properties is null ? default : Properties.SecurityProfile;
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.LogicalSectorSize;
+                return Properties is null ? default : Properties.LogicalSectorSize;
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.SnapshotAccessState;
+                return Properties is null ? default : Properties.SnapshotAccessState;
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DiskRestorePointProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<RestorePoint>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<RestorePoint>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

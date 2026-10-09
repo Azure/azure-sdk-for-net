@@ -126,57 +126,6 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Mode. </summary>
-        public BicepValue<GalleryInVmAccessControlRulesMode> Mode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Mode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
-                }
-                Properties.Mode = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultAccess. </summary>
-        public BicepValue<ComputeGalleryEndpointAccess> DefaultAccess
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DefaultAccess;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
-                }
-                Properties.DefaultAccess = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Rules. </summary>
-        public GalleryInVmAccessControlRules Rules
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Rules;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
-                }
-                Properties.Rules = value;
-            }
-        }
-
         /// <summary> Gets or sets the TargetLocations. </summary>
         public BicepList<TargetRegion> TargetLocations
         {
@@ -246,6 +195,57 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the Mode. </summary>
+        public BicepValue<GalleryInVmAccessControlRulesMode> Mode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                }
+                Properties.Mode = value;
+            }
+        }
+
+        /// <summary> Gets or sets the DefaultAccess. </summary>
+        public BicepValue<ComputeGalleryEndpointAccess> DefaultAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                }
+                Properties.DefaultAccess = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Rules. </summary>
+        public GalleryInVmAccessControlRules Rules
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Rules;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                }
+                Properties.Rules = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for GalleryInVmAccessControlProfileVersion. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -256,7 +256,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<GalleryInVmAccessControlProfileVersionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<GalleryInVmAccessControlProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<GalleryInVmAccessControlProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

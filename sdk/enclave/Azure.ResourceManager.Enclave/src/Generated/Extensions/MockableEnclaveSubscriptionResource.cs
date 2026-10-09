@@ -50,35 +50,35 @@ namespace Azure.ResourceManager.Enclave.Mocking
 
         private ClientDiagnostics WorkloadClientDiagnostics => _workloadClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Enclave.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workload WorkloadRestClient => _workloadRestClient ??= new Workload(WorkloadClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private Workload WorkloadRestClient => _workloadRestClient ??= new Workload(WorkloadClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics VirtualEnclaveClientDiagnostics => _virtualEnclaveClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Enclave.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualEnclave VirtualEnclaveRestClient => _virtualEnclaveRestClient ??= new VirtualEnclave(VirtualEnclaveClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private VirtualEnclave VirtualEnclaveRestClient => _virtualEnclaveRestClient ??= new VirtualEnclave(VirtualEnclaveClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics CommunityClientDiagnostics => _communityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Enclave.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Community CommunityRestClient => _communityRestClient ??= new Community(CommunityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private Community CommunityRestClient => _communityRestClient ??= new Community(CommunityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics TransitHubClientDiagnostics => _transitHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Enclave.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TransitHub TransitHubRestClient => _transitHubRestClient ??= new TransitHub(TransitHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private TransitHub TransitHubRestClient => _transitHubRestClient ??= new TransitHub(TransitHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics EnclaveConnectionClientDiagnostics => _enclaveConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Enclave.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EnclaveConnection EnclaveConnectionRestClient => _enclaveConnectionRestClient ??= new EnclaveConnection(EnclaveConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private EnclaveConnection EnclaveConnectionRestClient => _enclaveConnectionRestClient ??= new EnclaveConnection(EnclaveConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics EnclaveEndpointsClientDiagnostics => _enclaveEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Enclave.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EnclaveEndpoints EnclaveEndpointsRestClient => _enclaveEndpointsRestClient ??= new EnclaveEndpoints(EnclaveEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private EnclaveEndpoints EnclaveEndpointsRestClient => _enclaveEndpointsRestClient ??= new EnclaveEndpoints(EnclaveEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics CommunityEndpointsClientDiagnostics => _communityEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Enclave.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunityEndpoints CommunityEndpointsRestClient => _communityEndpointsRestClient ??= new CommunityEndpoints(CommunityEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private CommunityEndpoints CommunityEndpointsRestClient => _communityEndpointsRestClient ??= new CommunityEndpoints(CommunityEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics DedicatedHubClientDiagnostics => _dedicatedHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Enclave.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DedicatedHub DedicatedHubRestClient => _dedicatedHubRestClient ??= new DedicatedHub(DedicatedHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private DedicatedHub DedicatedHubRestClient => _dedicatedHubRestClient ??= new DedicatedHub(DedicatedHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         /// <summary>
         /// List WorkloadResource resources by subscription ID
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>

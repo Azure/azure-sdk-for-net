@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             get
             {
-                return FailingPeriods is null ? default : FailingPeriods.For;
+                return FailingPeriods is null ? (TimeSpan?)default : FailingPeriods.For;
             }
             set
             {

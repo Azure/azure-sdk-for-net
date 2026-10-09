@@ -85,11 +85,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             writer.WriteStringValue(Priority.ToString());
             writer.WritePropertyName("capacity"u8);
             writer.WriteNumberValue(Capacity);
-            if (Optional.IsDefined(CapacityMax))
-            {
-                writer.WritePropertyName("capacityMax"u8);
-                writer.WriteNumberValue(CapacityMax.Value);
-            }
             if (Optional.IsDefined(Zone))
             {
                 writer.WritePropertyName("zone"u8);
@@ -140,7 +135,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             string name = default;
             SkuMixPlacementPriority priority = default;
             int capacity = default;
-            int? capacityMax = default;
             string zone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,15 +154,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     capacity = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("capacityMax"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capacityMax = prop.Value.GetInt32();
-                    continue;
-                }
                 if (prop.NameEquals("zone"u8))
                 {
                     zone = prop.Value.GetString();
@@ -176,16 +161,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputeSkuMixPlacementItem(
-                name,
-                priority,
-                capacity,
-                capacityMax,
-                zone,
-                additionalBinaryDataProperties);
+            return new ComputeSkuMixPlacementItem(name, priority, capacity, zone, additionalBinaryDataProperties);
         }
     }
 }

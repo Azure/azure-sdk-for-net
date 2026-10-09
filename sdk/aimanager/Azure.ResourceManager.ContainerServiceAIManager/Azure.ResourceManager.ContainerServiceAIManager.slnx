@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ContainerServiceAIManager.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ContainerServiceAIManager.Tests.csproj" />
+</Solution>

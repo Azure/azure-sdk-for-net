@@ -77,21 +77,21 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties.Endpoints;
+                return Properties is null ? default : Properties.Endpoints;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties.TrafficFlows;
+                return Properties is null ? default : Properties.TrafficFlows;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.Provisioning.TrafficManager
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<HeatMapProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<TrafficManagerProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<TrafficManagerProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="createdOn"> Gets or sets the creation time of the job. </param>
         /// <param name="status"> Gets or sets the status of the job. </param>
         /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
-        /// <param name="startOn"> Gets or sets the start time of the job. </param>
-        /// <param name="endOn"> Gets or sets the end time of the job. </param>
+        /// <param name="startsOn"> Gets or sets the start time of the job. </param>
+        /// <param name="endsOn"> Gets or sets the end time of the job. </param>
         /// <param name="exception"> Gets or sets the exception of the job. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time of the job. </param>
         /// <param name="lastStatusModifiedOn"> Gets or sets the last status modified time of the job. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job. </param>
         /// <param name="provisioningState"> The current provisioning state of the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(RunbookAssociationProperty runbook, string startedBy, string runOn, JobRuntimeEnvironment jobRuntimeEnvironment, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobProperties(RunbookAssociationProperty runbook, string startedBy, string runOn, JobRuntimeEnvironment jobRuntimeEnvironment, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Runbook = runbook;
             StartedBy = startedBy;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Automation.Models
             CreatedOn = createdOn;
             Status = status;
             StatusDetails = statusDetails;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Exception = exception;
             LastModifiedOn = lastModifiedOn;
             LastStatusModifiedOn = lastStatusModifiedOn;
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Automation.Models
         public string StatusDetails { get; set; }
 
         /// <summary> Gets or sets the start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Gets or sets the end time of the job. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Gets or sets the exception of the job. </summary>
         public string Exception { get; set; }

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.SubscriptionId, scheduleDefinitionId, AccessReviewScheduleDefinitionProperties.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Guid.Parse(Id.SubscriptionId), scheduleDefinitionId, AccessReviewScheduleDefinitionProperties.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewScheduleDefinitionData> response = Response.FromValue(AccessReviewScheduleDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.SubscriptionId, scheduleDefinitionId, AccessReviewScheduleDefinitionProperties.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Guid.Parse(Id.SubscriptionId), scheduleDefinitionId, AccessReviewScheduleDefinitionProperties.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewScheduleDefinitionData> response = Response.FromValue(AccessReviewScheduleDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, scheduleDefinitionId, context);
+                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), scheduleDefinitionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewScheduleDefinitionData> response = Response.FromValue(AccessReviewScheduleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, scheduleDefinitionId, context);
+                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), scheduleDefinitionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewScheduleDefinitionData> response = Response.FromValue(AccessReviewScheduleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessReviewScheduleDefinitionData, AccessReviewScheduleDefinitionResource>(new AccessReviewScheduleDefinitionsGetAllAsyncCollectionResultOfT(_accessReviewScheduleDefinitionsRestClient, Id.SubscriptionId, filter, context, "AccessReviewScheduleDefinitionCollection.GetAll"), data => new AccessReviewScheduleDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<AccessReviewScheduleDefinitionData, AccessReviewScheduleDefinitionResource>(new AccessReviewScheduleDefinitionsGetAllAsyncCollectionResultOfT(_accessReviewScheduleDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewScheduleDefinitionCollection.GetAll"), data => new AccessReviewScheduleDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessReviewScheduleDefinitionData, AccessReviewScheduleDefinitionResource>(new AccessReviewScheduleDefinitionsGetAllCollectionResultOfT(_accessReviewScheduleDefinitionsRestClient, Id.SubscriptionId, filter, context, "AccessReviewScheduleDefinitionCollection.GetAll"), data => new AccessReviewScheduleDefinitionResource(Client, data));
+            return new PageableWrapper<AccessReviewScheduleDefinitionData, AccessReviewScheduleDefinitionResource>(new AccessReviewScheduleDefinitionsGetAllCollectionResultOfT(_accessReviewScheduleDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewScheduleDefinitionCollection.GetAll"), data => new AccessReviewScheduleDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, scheduleDefinitionId, context);
+                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), scheduleDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewScheduleDefinitionData> response = default;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, scheduleDefinitionId, context);
+                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), scheduleDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewScheduleDefinitionData> response = default;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, scheduleDefinitionId, context);
+                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), scheduleDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewScheduleDefinitionData> response = default;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, scheduleDefinitionId, context);
+                HttpMessage message = _accessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), scheduleDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewScheduleDefinitionData> response = default;

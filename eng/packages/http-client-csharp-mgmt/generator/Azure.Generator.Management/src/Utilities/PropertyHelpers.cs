@@ -31,11 +31,9 @@ namespace Azure.Generator.Management.Utilities
             }
             while (baseTypes.TryPop(out var item))
             {
-                result.AddRange(item.Properties);
-                result.AddRange(item.CustomCodeView?.Properties ?? []);
+                result.AddRange(item.CanonicalView.Properties);
             }
-            result.AddRange(propertyModelProvider.Properties);
-            result.AddRange(propertyModelProvider.CustomCodeView?.Properties ?? []);
+            result.AddRange(propertyModelProvider.CanonicalView.Properties);
             return result;
         }
 
@@ -82,16 +80,25 @@ namespace Azure.Generator.Management.Utilities
             return false;
         }
 
-        public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty)
+        public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty, CSharpType publicPropertyType)
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
+            ValueExpression value = new MemberExpression(internalProperty, innerProperty.Name);
+            if (publicPropertyType is { IsValueType: true, IsNullable: false } && innerProperty.Type.IsNullable)
+            {
+                // Keep the wire value optional without changing the shipped non-nullable API.
+                value = value.Invoke(nameof(Nullable<int>.GetValueOrDefault));
+            }
+            var guardedDefault = publicPropertyType.IsNullable && innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable
+                ? Default.CastTo(innerProperty.Type.WithNullable(true))
+                : Default;
             var shouldNullGuard = internalProperty.Type.IsNullable || internalProperty.WireInfo?.IsRequired == false || innerModel.Type.IsNullable;
             // For collection types, we initialize the internal property if it's null and return the inner property.
             if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
                 if (!internalProperty.Body.HasSetter)
                 {
-                    return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
+                    return Return(new TernaryConditionalExpression(checkNullExpression, guardedDefault, value));
                 }
 
                 return new List<MethodBodyStatement> {
@@ -99,7 +106,7 @@ namespace Azure.Generator.Management.Utilities
                     {
                         internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
                     },
-                    Return(new MemberExpression(internalProperty, innerProperty.Name))
+                    Return(value)
                 };
             }
 
@@ -110,7 +117,7 @@ namespace Azure.Generator.Management.Utilities
                     {
                         internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
                     },
-                    Return(new MemberExpression(internalProperty, innerProperty.Name))
+                    Return(value)
                 };
             }
             else if (includeGetterNullCheck == false)
@@ -124,18 +131,18 @@ namespace Azure.Generator.Management.Utilities
                         {
                             internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
                         },
-                        Return(new MemberExpression(internalProperty, innerProperty.Name))
+                        Return(value)
                     };
                 }
-                return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
+                return Return(new TernaryConditionalExpression(checkNullExpression, guardedDefault, value));
             }
             else
             {
                 if (shouldNullGuard)
                 {
-                    return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
+                    return Return(new TernaryConditionalExpression(checkNullExpression, guardedDefault, value));
                 }
-                return Return(new MemberExpression(internalProperty, innerProperty.Name));
+                return Return(value);
             }
         }
 
@@ -233,19 +240,20 @@ namespace Azure.Generator.Management.Utilities
             return lazyCreateAndAssign;
         }
 
-        public static string GetCombinedPropertyName(PropertyProvider innerProperty, PropertyProvider immediateParentProperty)
+        public static string GetCombinedPropertyName(PropertyProvider innerProperty, PropertyProvider immediateParentProperty, string? innerPropertyName = null)
         {
             var immediateParentPropertyName = GetPropertyName(immediateParentProperty);
+            var name = innerPropertyName ?? innerProperty.Name;
 
             if (innerProperty.Type.Equals(typeof(bool)) || innerProperty.Type.Equals(typeof(bool?)))
             {
-                return innerProperty.Name.Equals("Enabled", StringComparison.Ordinal) ? $"{immediateParentPropertyName}{innerProperty.Name}" : innerProperty.Name;
+                return name.Equals("Enabled", StringComparison.Ordinal) ? $"{immediateParentPropertyName}{name}" : name;
             }
 
-            if (innerProperty.Name.Equals("Id", StringComparison.Ordinal))
-                return $"{immediateParentPropertyName}{innerProperty.Name}";
+            if (name.Equals("Id", StringComparison.Ordinal))
+                return $"{immediateParentPropertyName}{name}";
 
-            if (immediateParentPropertyName.EndsWith(innerProperty.Name, StringComparison.Ordinal))
+            if (immediateParentPropertyName.EndsWith(name, StringComparison.Ordinal))
                 return immediateParentPropertyName;
 
             var parentWords = immediateParentPropertyName.SplitByCamelCase();
@@ -262,7 +270,7 @@ namespace Azure.Generator.Management.Utilities
 
             var parentWordArray = parentWords.ToArray();
             var parentWordsHash = new HashSet<string>(parentWordArray);
-            var nameWords = innerProperty.Name.SplitByCamelCase().ToArray();
+            var nameWords = name.SplitByCamelCase().ToArray();
             var lastWord = string.Empty;
             for (int i = 0; i < nameWords.Length; i++)
             {
@@ -276,18 +284,18 @@ namespace Azure.Generator.Management.Utilities
                         break;
                     }
                     {
-                        return innerProperty.Name;
+                        return name;
                     }
                 }
 
                 //need to pluralize or singularize the last word and check
                 if (i == nameWords.Length - 1 && (parentWordsHash.Contains(lastWord.Pluralize()) || (suffixStripped && parentWordsHash.Contains(lastWord.Singularize()))))
-                    return innerProperty.Name;
+                    return name;
             }
 
             immediateParentPropertyName = string.Join("", parentWords);
 
-            return $"{immediateParentPropertyName}{innerProperty.Name}";
+            return $"{immediateParentPropertyName}{name}";
         }
 
         private static string GetPropertyName(PropertyProvider property)

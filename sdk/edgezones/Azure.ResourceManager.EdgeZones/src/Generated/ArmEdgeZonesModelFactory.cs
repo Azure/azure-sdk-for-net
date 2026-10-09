@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
     public static partial class ArmEdgeZonesModelFactory
     {
 
+        /// <summary> Resource that represents an Azure Extended Zone available to a subscription for registering and unregistering. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
                 default);
         }
 
+        /// <summary> The properties of an Extended Zone resource. </summary>
         /// <param name="provisioningState"> Status of the last operation performed by the subscription on the Edge Zone resource. </param>
         /// <param name="registrationState"> Indicates the Azure Extended Zone registration’s approval status. </param>
         /// <param name="displayName"> Display name of the Azure Extended Zone. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Connector read setting.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="SftpReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="HdfsReadSettings"/>, and <see cref="LakeHouseReadSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="LakeHouseReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/>, and <see cref="SftpReadSettings"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownStoreReadSettings))]
     public abstract partial class StoreReadSettings : IJsonModel<StoreReadSettings>
@@ -133,34 +133,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBlobStorageReadSettings":
-                        return AzureBlobStorageReadSettings.DeserializeAzureBlobStorageReadSettings(element, options);
-                    case "AzureBlobFSReadSettings":
-                        return AzureBlobFSReadSettings.DeserializeAzureBlobFSReadSettings(element, options);
-                    case "AzureDataLakeStoreReadSettings":
-                        return AzureDataLakeStoreReadSettings.DeserializeAzureDataLakeStoreReadSettings(element, options);
-                    case "AmazonS3ReadSettings":
-                        return AmazonS3ReadSettings.DeserializeAmazonS3ReadSettings(element, options);
-                    case "FileServerReadSettings":
-                        return FileServerReadSettings.DeserializeFileServerReadSettings(element, options);
-                    case "AzureFileStorageReadSettings":
-                        return AzureFileStorageReadSettings.DeserializeAzureFileStorageReadSettings(element, options);
                     case "AmazonS3CompatibleReadSettings":
                         return AmazonS3CompatibleReadSettings.DeserializeAmazonS3CompatibleReadSettings(element, options);
-                    case "OracleCloudStorageReadSettings":
-                        return OracleCloudStorageReadSettings.DeserializeOracleCloudStorageReadSettings(element, options);
-                    case "GoogleCloudStorageReadSettings":
-                        return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element, options);
+                    case "AmazonS3ReadSettings":
+                        return AmazonS3ReadSettings.DeserializeAmazonS3ReadSettings(element, options);
+                    case "AzureBlobFSReadSettings":
+                        return AzureBlobFSReadSettings.DeserializeAzureBlobFSReadSettings(element, options);
+                    case "AzureBlobStorageReadSettings":
+                        return AzureBlobStorageReadSettings.DeserializeAzureBlobStorageReadSettings(element, options);
+                    case "AzureDataLakeStoreReadSettings":
+                        return AzureDataLakeStoreReadSettings.DeserializeAzureDataLakeStoreReadSettings(element, options);
+                    case "AzureFileStorageReadSettings":
+                        return AzureFileStorageReadSettings.DeserializeAzureFileStorageReadSettings(element, options);
+                    case "FileServerReadSettings":
+                        return FileServerReadSettings.DeserializeFileServerReadSettings(element, options);
                     case "FtpReadSettings":
                         return FtpReadSettings.DeserializeFtpReadSettings(element, options);
-                    case "SftpReadSettings":
-                        return SftpReadSettings.DeserializeSftpReadSettings(element, options);
-                    case "HttpReadSettings":
-                        return HttpReadSettings.DeserializeHttpReadSettings(element, options);
+                    case "GoogleCloudStorageReadSettings":
+                        return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element, options);
                     case "HdfsReadSettings":
                         return HdfsReadSettings.DeserializeHdfsReadSettings(element, options);
+                    case "HttpReadSettings":
+                        return HttpReadSettings.DeserializeHttpReadSettings(element, options);
                     case "LakeHouseReadSettings":
                         return LakeHouseReadSettings.DeserializeLakeHouseReadSettings(element, options);
+                    case "OracleCloudStorageReadSettings":
+                        return OracleCloudStorageReadSettings.DeserializeOracleCloudStorageReadSettings(element, options);
+                    case "SftpReadSettings":
+                        return SftpReadSettings.DeserializeSftpReadSettings(element, options);
                 }
             }
             return UnknownStoreReadSettings.DeserializeUnknownStoreReadSettings(element, options);

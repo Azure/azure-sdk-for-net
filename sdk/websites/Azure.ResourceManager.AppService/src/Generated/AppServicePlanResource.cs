@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebAppServicePlansListCapabilitiesAsyncCollectionResultOfT(
+            return new AppServicePlanResourceGetCapabilitiesAsyncCollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebAppServicePlansListCapabilitiesCollectionResultOfT(
+            return new AppServicePlanResourceGetCapabilitiesCollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

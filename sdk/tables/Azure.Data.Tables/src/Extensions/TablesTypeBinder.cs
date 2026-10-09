@@ -161,20 +161,24 @@ namespace Azure.Data.Tables
             }
             else if (typeof(T).IsEnum)
             {
-                if (!Enum.IsDefined(memberInfo.Type, propertyValue as string))
+                if (!TryParseEnum(memberInfo.Type, propertyValue as string, out var parsedEnum))
+                {
                     return false;
+                }
 
-                value = (T)Enum.Parse(memberInfo.Type, propertyValue as string);
+                value = (T)parsedEnum;
             }
             else if (typeof(T).IsGenericType &&
                      typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>) &&
                      typeof(T).GetGenericArguments() is { Length: 1 } arguments &&
                      arguments[0].IsEnum)
             {
-                if (!Enum.IsDefined(arguments[0], propertyValue as string))
+                if (!TryParseEnum(arguments[0], propertyValue as string, out var parsedEnum))
+                {
                     return false;
+                }
 
-                value = (T)Enum.Parse(arguments[0], propertyValue as string);
+                value = (T)parsedEnum;
             }
             else if (typeof(T) == typeof(ETag))
             {
@@ -182,6 +186,46 @@ namespace Azure.Data.Tables
             }
 
             return true;
+        }
+
+        private static bool TryParseEnum(Type enumType, string enumValue, out object parsedEnum)
+        {
+            parsedEnum = default;
+
+            if (string.IsNullOrWhiteSpace(enumValue))
+            {
+                return false;
+            }
+
+            string[] enumParts = enumValue.Split(',');
+            if (enumParts.Length == 0)
+            {
+                return false;
+            }
+
+            if (enumParts.Length > 1 && !enumType.IsDefined(typeof(FlagsAttribute), false))
+            {
+                return false;
+            }
+
+            foreach (string part in enumParts)
+            {
+                string trimmedPart = part.Trim();
+                if (trimmedPart.Length == 0 || !Enum.IsDefined(enumType, trimmedPart))
+                {
+                    return false;
+                }
+            }
+
+            try
+            {
+                parsedEnum = Enum.Parse(enumType, enumValue, false);
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
         }
     }
 }

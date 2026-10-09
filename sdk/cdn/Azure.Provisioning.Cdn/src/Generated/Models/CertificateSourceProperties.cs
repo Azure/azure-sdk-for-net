@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
     /// <summary>
     /// Defines the parameters for certificate source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnCertificateSource"/> and <see cref="KeyVaultCertificateSource"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CdnCertificateSource"/> and <see cref="KeyVaultCertificateSource"/>.
     /// </summary>
     public partial class CertificateSourceProperties : ProvisionableConstruct
     {
+        private BicepValue<CertificateSourceParametersType> _typeName;
+
         /// <summary> Creates a new CertificateSourceProperties. </summary>
         public CertificateSourceProperties()
         {
+        }
+
+        /// <summary> Gets the TypeName. </summary>
+        internal BicepValue<CertificateSourceParametersType> TypeName
+        {
+            get
+            {
+                Initialize();
+                return _typeName;
+            }
         }
 
         /// <summary> Define all the provisionable properties for CertificateSourceProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _typeName = DefineProperty<CertificateSourceParametersType>(nameof(TypeName), new string[] { "typeName" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -378,36 +378,36 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// Get the upload location for the user to be able to upload the source.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUrlAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUriAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ContainerRegistryTaskSourceUploadResult>> GetBuildSourceUploadUrlAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryTaskSourceUploadResult>> GetBuildSourceUploadUriAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetBuildSourceUploadUrlAsync(registryName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetBuildSourceUploadUriAsync(registryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the upload location for the user to be able to upload the source.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUrl(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUri(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ContainerRegistryTaskSourceUploadResult> GetBuildSourceUploadUrl(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryTaskSourceUploadResult> GetBuildSourceUploadUri(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetBuildSourceUploadUrl(registryName, cancellationToken);
+            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetBuildSourceUploadUri(registryName, cancellationToken);
         }
     }
 }

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 return null;
             }
             long? lastRevisionApplied = default;
-            ObjectReference helmChartRef = default;
+            FluxObjectReference helmChartRef = default;
             long? failureCount = default;
             long? installFailureCount = default;
             long? upgradeFailureCount = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    helmChartRef = ObjectReference.DeserializeObjectReference(prop.Value, options);
+                    helmChartRef = FluxObjectReference.DeserializeFluxObjectReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("failureCount"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HelmReleaseProperties(

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ScVmm.Models;
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.ScVmm
     [ModelReaderWriterBuildable(typeof(GuestAgentProperties))]
     [ModelReaderWriterBuildable(typeof(InventoryItemListResult))]
     [ModelReaderWriterBuildable(typeof(OSProfileForVmInstance))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScVmmAvailabilitySetData))]
     [ModelReaderWriterBuildable(typeof(ScVmmAvailabilitySetItem))]
     [ModelReaderWriterBuildable(typeof(ScVmmAvailabilitySetResource))]

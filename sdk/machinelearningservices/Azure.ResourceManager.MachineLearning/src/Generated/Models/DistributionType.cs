@@ -18,8 +18,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PyTorchValue = "PyTorch";
         private const string TensorFlowValue = "TensorFlow";
         private const string MpiValue = "Mpi";
-        /// <summary> Ray distribution type. </summary>
-        private const string RayValue = "Ray";
 
         /// <summary> Initializes a new instance of <see cref="DistributionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,9 +37,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets the Mpi. </summary>
         public static DistributionType Mpi { get; } = new DistributionType(MpiValue);
-
-        /// <summary> Ray distribution type. </summary>
-        public static DistributionType Ray { get; } = new DistributionType(RayValue);
 
         /// <summary> Determines if two <see cref="DistributionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

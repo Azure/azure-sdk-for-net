@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Primitives;
 
 /// <summary>
@@ -20,6 +22,7 @@ public sealed class ResourceBicepMetadata
     /// If set, the resource will be wrapped in an 'if (condition)' statement.
     /// Supports literal boolean values, parameter references, or complex expressions.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public BicepValue<bool> Condition { get { Initialize(); return _condition!; } set { Initialize(); _condition!.Assign(value); } }
     private BicepValue<bool>? _condition;
 

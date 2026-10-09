@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Fabric specific details.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmFabricDetails"/>, <see cref="VMwareDetails"/>, and <see cref="VMwareV2FabricSpecificDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="VMwareDetails"/>, <see cref="VMwareV2FabricSpecificDetails"/>, and <see cref="VmmFabricDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFabricSpecificDetails))]
     public abstract partial class FabricSpecificDetails : IJsonModel<FabricSpecificDetails>
@@ -125,18 +125,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Azure":
-                        return SiteRecoveryFabricProviderSpecificDetails.DeserializeSiteRecoveryFabricProviderSpecificDetails(element, options);
                     case "HyperVSite":
                         return HyperVSiteDetails.DeserializeHyperVSiteDetails(element, options);
                     case "InMageRcm":
                         return InMageRcmFabricSpecificDetails.DeserializeInMageRcmFabricSpecificDetails(element, options);
-                    case "VMM":
-                        return VmmFabricDetails.DeserializeVmmFabricDetails(element, options);
+                    case "Azure":
+                        return SiteRecoveryFabricProviderSpecificDetails.DeserializeSiteRecoveryFabricProviderSpecificDetails(element, options);
                     case "VMware":
                         return VMwareDetails.DeserializeVMwareDetails(element, options);
                     case "VMwareV2":
                         return VMwareV2FabricSpecificDetails.DeserializeVMwareV2FabricSpecificDetails(element, options);
+                    case "VMM":
+                        return VmmFabricDetails.DeserializeVmmFabricDetails(element, options);
                 }
             }
             return UnknownFabricSpecificDetails.DeserializeUnknownFabricSpecificDetails(element, options);

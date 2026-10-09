@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DocumentDbCollectionDatasetTypeProperties typeProperties = default;
+            DocumentDBCollectionDatasetTypeProperties typeProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     annotations = array;
@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("typeProperties"u8))
                 {
-                    typeProperties = DocumentDbCollectionDatasetTypeProperties.DeserializeDocumentDbCollectionDatasetTypeProperties(prop.Value, options);
+                    typeProperties = DocumentDBCollectionDatasetTypeProperties.DeserializeDocumentDBCollectionDatasetTypeProperties(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new DocumentDBCollectionDataset(
                 datasetType,

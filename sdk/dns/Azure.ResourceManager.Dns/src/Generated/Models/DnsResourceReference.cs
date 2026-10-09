@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="dnsResources"> A list of dns Records. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResourceReference(IReadOnlyList<WritableSubResource> dnsResources, WritableSubResource targetResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsResourceReference(IReadOnlyList<WritableSubResource> dnsResources, DnsSubResourceInfo targetResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DnsResources = dnsResources;
             TargetResource = targetResource;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Dns.Models
         public IReadOnlyList<WritableSubResource> DnsResources { get; }
 
         /// <summary> A reference to an azure resource from where the dns resource value is taken. </summary>
-        public WritableSubResource TargetResource { get; }
+        internal DnsSubResourceInfo TargetResource { get; }
     }
 }

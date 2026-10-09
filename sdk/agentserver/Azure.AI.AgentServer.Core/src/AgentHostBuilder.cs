@@ -90,13 +90,14 @@ public sealed class AgentHostBuilder
     }
 
     /// <summary>
-    /// Add custom tracing sources or configure the <see cref="TracerProviderBuilder"/>.
+    /// Add custom tracing sources or configure the <see cref="TracerProviderBuilder"/>. Composes
+    /// with any previously registered callback rather than replacing it.
     /// </summary>
     /// <param name="configure">The tracing configuration callback.</param>
     /// <returns>This builder for chaining.</returns>
     public AgentHostBuilder ConfigureTracing(Action<TracerProviderBuilder> configure)
     {
-        _tracingConfigure = configure;
+        _tracingConfigure += configure;
         return this;
     }
 

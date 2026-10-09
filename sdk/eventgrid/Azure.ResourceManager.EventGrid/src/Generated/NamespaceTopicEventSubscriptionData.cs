@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     Properties = new SubscriptionProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

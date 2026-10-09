@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
     {
         /// <summary>
         /// The base class of a conversation input task.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationalAITask"/> and <see cref="Models.ConversationLanguageUnderstandingInput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationLanguageUnderstandingInput"/> and <see cref="Models.ConversationalAITask"/>.
         /// </summary>
         /// <param name="kind"> The base class of a conversation input task. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationInput"/> instance for mocking. </returns>
@@ -221,7 +221,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// This is the parameter set of either the Orchestration project itself or one of the target services.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LuisConfig"/>, <see cref="Models.QuestionAnsweringConfig"/>, and <see cref="Models.ConversationConfig"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationConfig"/>, <see cref="Models.LuisConfig"/>, and <see cref="Models.QuestionAnsweringConfig"/>.
         /// </summary>
         /// <param name="targetProjectKind"> The type of a target service. </param>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
@@ -370,7 +370,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// The base class of a conversation input task result.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationalAITaskResult"/> and <see cref="Models.ConversationActionResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationActionResult"/> and <see cref="Models.ConversationalAITaskResult"/>.
         /// </summary>
         /// <param name="kind"> The base class of a conversation input task result. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationActionResult"/> instance for mocking. </returns>
@@ -466,7 +466,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// The abstract base class for entity resolutions.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AgeResolution"/>, <see cref="Models.VolumeResolution"/>, <see cref="Models.SpeedResolution"/>, <see cref="Models.AreaResolution"/>, <see cref="Models.LengthResolution"/>, <see cref="Models.InformationResolution"/>, <see cref="Models.TemperatureResolution"/>, <see cref="Models.WeightResolution"/>, <see cref="Models.CurrencyResolution"/>, <see cref="Models.BooleanResolution"/>, <see cref="Models.DateTimeResolution"/>, <see cref="Models.NumberResolution"/>, <see cref="Models.OrdinalResolution"/>, <see cref="Models.TemporalSpanResolution"/>, and <see cref="Models.NumericRangeResolution"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AgeResolution"/>, <see cref="Models.AreaResolution"/>, <see cref="Models.BooleanResolution"/>, <see cref="Models.CurrencyResolution"/>, <see cref="Models.DateTimeResolution"/>, <see cref="Models.InformationResolution"/>, <see cref="Models.LengthResolution"/>, <see cref="Models.NumberResolution"/>, <see cref="Models.NumericRangeResolution"/>, <see cref="Models.OrdinalResolution"/>, <see cref="Models.SpeedResolution"/>, <see cref="Models.TemperatureResolution"/>, <see cref="Models.TemporalSpanResolution"/>, <see cref="Models.VolumeResolution"/>, and <see cref="Models.WeightResolution"/>.
         /// </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <returns> A new <see cref="Models.ResolutionBase"/> instance for mocking. </returns>
@@ -768,7 +768,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// This is the base class of an intent prediction
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LuisTargetIntentResult"/>, <see cref="Models.QuestionAnsweringTargetIntentResult"/>, <see cref="Models.NoneLinkedTargetIntentResult"/>, and <see cref="Models.ConversationTargetIntentResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationTargetIntentResult"/>, <see cref="Models.LuisTargetIntentResult"/>, <see cref="Models.NoneLinkedTargetIntentResult"/>, and <see cref="Models.QuestionAnsweringTargetIntentResult"/>.
         /// </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
@@ -950,26 +950,26 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Contains the status of the submitted job for analyzing a conversation, along with related statistics. </summary>
         /// <param name="displayName"> display name. </param>
-        /// <param name="createdDateTime"> Date and time job created. </param>
-        /// <param name="expirationDateTime"> Date and time job expires. </param>
+        /// <param name="createdOn"> Date and time job created. </param>
+        /// <param name="expiresOn"> Date and time job expires. </param>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="lastUpdatedDateTime"> last updated date and time. </param>
+        /// <param name="lastUpdatedOn"> last updated date and time. </param>
         /// <param name="status"> status. </param>
         /// <param name="errors"> errors. </param>
         /// <param name="nextLink"> next link. </param>
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
         /// <param name="statistics"> Contains the statistics for the submitted job. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationOperationState"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = default, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, Guid jobId = default, DateTimeOffset lastUpdatedDateTime = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = default, string nextLink = default, ConversationActions actions = default, ConversationRequestStatistics statistics = default)
+        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedOn = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = default, string nextLink = default, ConversationActions actions = default, ConversationRequestStatistics statistics = default)
         {
             errors ??= new ChangeTrackingList<ConversationError>();
 
             return new AnalyzeConversationOperationState(
                 displayName,
-                createdDateTime,
-                expirationDateTime,
+                createdOn,
+                expiresOn,
                 jobId,
-                lastUpdatedDateTime,
+                lastUpdatedOn,
                 status,
                 errors.ToList(),
                 nextLink,
@@ -1000,28 +1000,28 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// Container for results of all tasks in the conversation job.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SummarizationOperationResult"/>, <see cref="Models.CustomSummarizationOperationResult"/>, and <see cref="Models.ConversationPiiOperationResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationPiiOperationResult"/>, <see cref="Models.CustomSummarizationOperationResult"/>, and <see cref="Models.SummarizationOperationResult"/>.
         /// </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> discriminator kind. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationOperationResult"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationResult AnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, string kind = default)
+        public static AnalyzeConversationOperationResult AnalyzeConversationOperationResult(DateTimeOffset lastUpdateOn = default, ConversationActionState status = default, string name = default, string kind = default)
         {
-            return new UnknownAnalyzeConversationOperationResult(lastUpdateDateTime, status, name, new AnalyzeConversationOperationResultsKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownAnalyzeConversationOperationResult(lastUpdateOn, status, name, new AnalyzeConversationOperationResultsKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result for the summarization task on the conversation. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> results. </param>
         /// <returns> A new <see cref="Models.SummarizationOperationResult"/> instance for mocking. </returns>
-        public static SummarizationOperationResult SummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, SummaryResult results = default)
+        public static SummarizationOperationResult SummarizationOperationResult(DateTimeOffset lastUpdateOn = default, ConversationActionState status = default, string name = default, SummaryResult results = default)
         {
             return new SummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 name,
                 AnalyzeConversationOperationResultsKind.SummarizationOperationResults,
@@ -1118,15 +1118,15 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Result for the custom summarization task on the conversation. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> Custom Summary Result. </param>
         /// <returns> A new <see cref="Models.CustomSummarizationOperationResult"/> instance for mocking. </returns>
-        public static CustomSummarizationOperationResult CustomSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, CustomSummaryResult results = default)
+        public static CustomSummarizationOperationResult CustomSummarizationOperationResult(DateTimeOffset lastUpdateOn = default, ConversationActionState status = default, string name = default, CustomSummaryResult results = default)
         {
             return new CustomSummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 name,
                 AnalyzeConversationOperationResultsKind.CustomSummarizationOperationResults,
@@ -1156,15 +1156,15 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Result from the personally identifiable information detection and redaction operation performed on a list of conversations. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> results. </param>
         /// <returns> A new <see cref="Models.ConversationPiiOperationResult"/> instance for mocking. </returns>
-        public static ConversationPiiOperationResult ConversationPiiOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, ConversationPiiResults results = default)
+        public static ConversationPiiOperationResult ConversationPiiOperationResult(DateTimeOffset lastUpdateOn = default, ConversationActionState status = default, string name = default, ConversationPiiResults results = default)
         {
             return new ConversationPiiOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 name,
                 AnalyzeConversationOperationResultsKind.PiiOperationResults,
@@ -1314,7 +1314,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// Base class for a long-running conversation input task.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CustomSummarizationOperationAction"/>, <see cref="Models.SummarizationOperationAction"/>, and <see cref="Models.PiiOperationAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CustomSummarizationOperationAction"/>, <see cref="Models.PiiOperationAction"/>, and <see cref="Models.SummarizationOperationAction"/>.
         /// </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
@@ -1428,7 +1428,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// The abstract base class for RedactionPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CharacterMaskPolicyType"/>, <see cref="Models.NoMaskPolicyType"/>, and <see cref="Models.EntityMaskTypePolicyType"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CharacterMaskPolicyType"/>, <see cref="Models.EntityMaskTypePolicyType"/>, and <see cref="Models.NoMaskPolicyType"/>.
         /// </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <returns> A new <see cref="Models.BaseRedactionPolicy"/> instance for mocking. </returns>

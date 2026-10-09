@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string B2Value = "B2";
         /// <summary> B3. </summary>
         private const string B3Value = "B3";
-        /// <summary> GEN2. </summary>
-        private const string Gen2Value = "GEN2";
 
         /// <summary> Initializes a new instance of <see cref="IotHubSku"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -62,9 +60,6 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> B3. </summary>
         public static IotHubSku B3 { get; } = new IotHubSku(B3Value);
-
-        /// <summary> GEN2. </summary>
-        public static IotHubSku Gen2 { get; } = new IotHubSku(Gen2Value);
 
         /// <summary> Determines if two <see cref="IotHubSku"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

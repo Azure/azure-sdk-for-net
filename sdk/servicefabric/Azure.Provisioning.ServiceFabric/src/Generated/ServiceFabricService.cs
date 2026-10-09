@@ -149,7 +149,7 @@ namespace Azure.Provisioning.ServiceFabric
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ServiceResourceProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<ServiceFabricApplication>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ServiceFabricApplication>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

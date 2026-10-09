@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request model to attach a list of scheduled action resources. </summary>
+    /// <summary> Resources to attach to a scheduled action. </summary>
     public partial class ResourceAttachRequestContent : IJsonModel<ResourceAttachRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceAttachRequestContent"/> for deserialization. </summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourceAttachRequestContent(resources, additionalBinaryDataProperties);

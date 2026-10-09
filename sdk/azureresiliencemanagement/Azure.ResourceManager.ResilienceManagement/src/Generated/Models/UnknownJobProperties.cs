@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobProperties"/>. </summary>
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="executionConfigurations"> Execution configurations for the job. </param>
         /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownJobProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(status, startOn, endOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType != default ? jobType : "unknown", executionConfigurations, triggeredBy, additionalBinaryDataProperties)
+        internal UnknownJobProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType != default ? jobType : "unknown", executionConfigurations, triggeredBy, additionalBinaryDataProperties)
         {
         }
     }

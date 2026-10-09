@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
@@ -808,7 +809,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DbMigrateNetworkStatus>> MigrateNetworkModeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DBMigrateNetworkStatus>> MigrateNetworkModeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serversClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.MigrateNetworkMode");
             scope.Start();
@@ -820,8 +821,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _serversRestClient.CreateMigrateNetworkModeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FlexibleServersArmOperation<DbMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DbMigrateNetworkStatus>(
-                    new DbMigrateNetworkStatusOperationSource(),
+                FlexibleServersArmOperation<DBMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DBMigrateNetworkStatus>(
+                    new DBMigrateNetworkStatusOperationSource(),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -863,7 +864,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DbMigrateNetworkStatus> MigrateNetworkMode(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DBMigrateNetworkStatus> MigrateNetworkMode(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serversClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.MigrateNetworkMode");
             scope.Start();
@@ -875,8 +876,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _serversRestClient.CreateMigrateNetworkModeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                FlexibleServersArmOperation<DbMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DbMigrateNetworkStatus>(
-                    new DbMigrateNetworkStatusOperationSource(),
+                FlexibleServersArmOperation<DBMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DBMigrateNetworkStatus>(
+                    new DBMigrateNetworkStatusOperationSource(),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1613,10 +1614,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1656,10 +1656,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

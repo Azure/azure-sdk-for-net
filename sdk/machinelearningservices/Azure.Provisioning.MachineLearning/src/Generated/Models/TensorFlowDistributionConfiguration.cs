@@ -18,6 +18,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new TensorFlowDistributionConfiguration. </summary>
         public TensorFlowDistributionConfiguration()
         {
+            DistributionType.Assign(MachineLearning.DistributionType.TensorFlow);
         }
 
         /// <summary> Gets or sets the ParameterServerCount. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("distributionType", new string[] { "distributionType" }, defaultValue: "TensorFlow");
             _parameterServerCount = DefineProperty<int>(nameof(ParameterServerCount), new string[] { "parameterServerCount" });
             _workerCount = DefineProperty<int>(nameof(WorkerCount), new string[] { "workerCount" });
             DefineAdditionalProperties();

@@ -9,7 +9,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
@@ -93,61 +92,39 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> A reference to an azure resource from where the dns resource value is taken. </summary>
-        public WritableSubResource TargetResource
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TargetResource;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DnsRecordSetProperties();
-                }
-                Properties.TargetResource = value;
-            }
-        }
-
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier TargetResourceId
         {
-            get => TargetResource is null ? default : TargetResource.Id;
-            set
-            {
-                if (TargetResource is null)
-                    TargetResource = new WritableSubResource();
-                TargetResource.Id = value;
-            }
-        }
-
-        /// <summary> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </summary>
-        public WritableSubResource TrafficManagementProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TrafficManagementProfile;
-            }
+            get => Properties?.TargetResource?.Id;
             set
             {
                 if (Properties is null)
                 {
                     Properties = new DnsRecordSetProperties();
                 }
-                Properties.TrafficManagementProfile = value;
+                if (Properties.TargetResource is null)
+                {
+                    Properties.TargetResource = new DnsSubResourceInfo();
+                }
+                Properties.TargetResource.Id = value;
             }
         }
 
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier TrafficManagementProfileId
         {
-            get => TrafficManagementProfile is null ? default : TrafficManagementProfile.Id;
+            get => Properties?.TrafficManagementProfile?.Id;
             set
             {
-                if (TrafficManagementProfile is null)
-                    TrafficManagementProfile = new WritableSubResource();
-                TrafficManagementProfile.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                if (Properties.TrafficManagementProfile is null)
+                {
+                    Properties.TrafficManagementProfile = new DnsSubResourceInfo();
+                }
+                Properties.TrafficManagementProfile.Id = value;
             }
         }
     }

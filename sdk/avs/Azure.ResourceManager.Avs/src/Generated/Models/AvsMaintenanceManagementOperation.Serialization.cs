@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// Defines operations that can be performed on maintenance
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvsScheduleOperation"/>, <see cref="AvsRescheduleOperation"/>, and <see cref="AvsMaintenanceReadinessRefreshOperation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvsMaintenanceReadinessRefreshOperation"/>, <see cref="AvsRescheduleOperation"/>, and <see cref="AvsScheduleOperation"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAvsMaintenanceManagementOperation))]
     public abstract partial class AvsMaintenanceManagementOperation : IJsonModel<AvsMaintenanceManagementOperation>
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Schedule":
-                        return AvsScheduleOperation.DeserializeAvsScheduleOperation(element, options);
-                    case "Reschedule":
-                        return AvsRescheduleOperation.DeserializeAvsRescheduleOperation(element, options);
                     case "MaintenanceReadinessRefresh":
                         return AvsMaintenanceReadinessRefreshOperation.DeserializeAvsMaintenanceReadinessRefreshOperation(element, options);
+                    case "Reschedule":
+                        return AvsRescheduleOperation.DeserializeAvsRescheduleOperation(element, options);
+                    case "Schedule":
+                        return AvsScheduleOperation.DeserializeAvsScheduleOperation(element, options);
                 }
             }
             return UnknownAvsMaintenanceManagementOperation.DeserializeUnknownAvsMaintenanceManagementOperation(element, options);

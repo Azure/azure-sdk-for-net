@@ -412,7 +412,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TileJsonMetadata(
@@ -424,7 +424,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 template,
                 legend,
                 scheme,
-                tiles,
+                tiles ?? new ChangeTrackingList<string>(),
                 grids ?? new ChangeTrackingList<string>(),
                 data ?? new ChangeTrackingList<string>(),
                 minZoom,

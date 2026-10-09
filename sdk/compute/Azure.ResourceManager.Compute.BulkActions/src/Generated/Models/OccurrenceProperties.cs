@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Properties for an occurrence. </summary>
+    /// <summary> Properties of a scheduled action occurrence. </summary>
     public partial class OccurrenceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceProperties"/>. </summary>
-        /// <param name="scheduledOn"> The time the occurrence is scheduled for. This value can be changed by calling the delay API. </param>
-        /// <param name="resultSummary"> The result for occurrences that achieved a terminal state. </param>
-        /// <param name="provisioningState"> The aggregated provisioning state of the occurrence. </param>
+        /// <param name="scheduledOn"> Read-only. The UTC date and time when the occurrence is scheduled to run. </param>
+        /// <param name="resultSummary"> Read-only. The result summary after the occurrence reaches a final state. </param>
+        /// <param name="provisioningState"> Read-only. The current state of the occurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OccurrenceProperties(DateTimeOffset scheduledOn, OccurrenceResultSummary resultSummary, OccurrenceState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The time the occurrence is scheduled for. This value can be changed by calling the delay API. </summary>
+        /// <summary> Read-only. The UTC date and time when the occurrence is scheduled to run. </summary>
         public DateTimeOffset ScheduledOn { get; }
 
-        /// <summary> The result for occurrences that achieved a terminal state. </summary>
+        /// <summary> Read-only. The result summary after the occurrence reaches a final state. </summary>
         public OccurrenceResultSummary ResultSummary { get; }
 
-        /// <summary> The aggregated provisioning state of the occurrence. </summary>
+        /// <summary> Read-only. The current state of the occurrence. </summary>
         public OccurrenceState? ProvisioningState { get; }
     }
 }

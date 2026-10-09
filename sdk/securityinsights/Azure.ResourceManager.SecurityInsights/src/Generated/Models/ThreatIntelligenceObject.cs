@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Represents a threat intelligence object in Azure Security Insights.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ThreatIntelligenceThreatActor"/>, <see cref="ThreatIntelligenceAttackPattern"/>, <see cref="ThreatIntelligenceIdentity"/>, <see cref="ThreatIntelligenceRelationship"/>, and <see cref="ThreatIntelligenceIndicator"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ThreatIntelligenceAttackPattern"/>, <see cref="ThreatIntelligenceIdentity"/>, <see cref="ThreatIntelligenceIndicator"/>, <see cref="ThreatIntelligenceRelationship"/>, and <see cref="ThreatIntelligenceThreatActor"/>.
     /// </summary>
     public abstract partial class ThreatIntelligenceObject : ResourceData
     {

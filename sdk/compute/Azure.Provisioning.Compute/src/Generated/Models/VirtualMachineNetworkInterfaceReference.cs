@@ -5,17 +5,14 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Describes a network interface reference. </summary>
-    public partial class VirtualMachineNetworkInterfaceReference : ProvisionableConstruct
+    public partial class VirtualMachineNetworkInterfaceReference : ComputeWriteableSubResourceData
     {
         private NetworkInterfaceReferenceProperties _properties;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new VirtualMachineNetworkInterfaceReference. </summary>
         public VirtualMachineNetworkInterfaceReference()
@@ -34,21 +31,6 @@ namespace Azure.Provisioning.Compute
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
             }
         }
 
@@ -91,7 +73,6 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<NetworkInterfaceReferenceProperties>(nameof(Properties), new string[] { "properties" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             DefineAdditionalProperties();
         }
 

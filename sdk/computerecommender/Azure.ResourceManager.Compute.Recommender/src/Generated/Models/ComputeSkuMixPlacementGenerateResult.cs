@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute.Recommender;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
@@ -18,26 +19,49 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeSkuMixPlacementGenerateResult"/>. </summary>
+        /// <param name="id">
+        /// Unique identifier for this placement response, including responses that contain no placement choices.
+        /// Replaces the per-choice id that was present on placementChoices in earlier API versions.
+        /// </param>
         /// <param name="placementChoices"> List of placement choice recommendations. </param>
         /// <param name="partialFulfillmentReason"> Indicates whether the response is a complete or partial fulfillment. </param>
-        internal ComputeSkuMixPlacementGenerateResult(IEnumerable<ComputeSkuMixPlacementDeploymentChoice> placementChoices, SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason)
+        internal ComputeSkuMixPlacementGenerateResult(string id, IEnumerable<ComputeSkuMixPlacementDeploymentChoice> placementChoices, SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason)
         {
+            Id = id;
             PlacementChoices = placementChoices.ToList();
             PartialFulfillmentReason = partialFulfillmentReason;
+            CapacityLimits = new ChangeTrackingList<ComputeSkuMixPlacementCapacityLimit>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeSkuMixPlacementGenerateResult"/>. </summary>
+        /// <param name="id">
+        /// Unique identifier for this placement response, including responses that contain no placement choices.
+        /// Replaces the per-choice id that was present on placementChoices in earlier API versions.
+        /// </param>
         /// <param name="placementChoices"> List of placement choice recommendations. </param>
         /// <param name="validUntilOn"> Date/time until which the recommendations are valid. Callers should request fresh recommendations after this time. </param>
         /// <param name="partialFulfillmentReason"> Indicates whether the response is a complete or partial fulfillment. </param>
+        /// <param name="capacityLimits">
+        /// Capacity availability for each requested (VM size, zone) combination, independent of the recommended
+        /// placement. An entry is present for every requested combination, including those excluded by capacity
+        /// or quota. Only returned for requests that describe instances by VM sizes.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSkuMixPlacementGenerateResult(IList<ComputeSkuMixPlacementDeploymentChoice> placementChoices, DateTimeOffset? validUntilOn, SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeSkuMixPlacementGenerateResult(string id, IList<ComputeSkuMixPlacementDeploymentChoice> placementChoices, DateTimeOffset? validUntilOn, SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason, IList<ComputeSkuMixPlacementCapacityLimit> capacityLimits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
             PlacementChoices = placementChoices;
             ValidUntilOn = validUntilOn;
             PartialFulfillmentReason = partialFulfillmentReason;
+            CapacityLimits = capacityLimits;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary>
+        /// Unique identifier for this placement response, including responses that contain no placement choices.
+        /// Replaces the per-choice id that was present on placementChoices in earlier API versions.
+        /// </summary>
+        public string Id { get; }
 
         /// <summary> List of placement choice recommendations. </summary>
         public IList<ComputeSkuMixPlacementDeploymentChoice> PlacementChoices { get; }
@@ -47,5 +71,12 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <summary> Indicates whether the response is a complete or partial fulfillment. </summary>
         public SkuMixPlacementPartialFulfillmentReason PartialFulfillmentReason { get; }
+
+        /// <summary>
+        /// Capacity availability for each requested (VM size, zone) combination, independent of the recommended
+        /// placement. An entry is present for every requested combination, including those excluded by capacity
+        /// or quota. Only returned for requests that describe instances by VM sizes.
+        /// </summary>
+        public IList<ComputeSkuMixPlacementCapacityLimit> CapacityLimits { get; }
     }
 }

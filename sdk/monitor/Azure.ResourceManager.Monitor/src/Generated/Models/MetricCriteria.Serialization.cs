@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     threshold = prop.Value.GetDouble();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new MetricCriteria(
                 criterionType,

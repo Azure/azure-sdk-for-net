@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// multi-instance deployments.
 /// </para>
 /// <para>
-/// For event streaming, extend <see cref="ResponsesStreamProvider"/>.
+/// Event streaming is handled by the Core event-stream primitive, not by this provider.
 /// For cancellation signalling, extend <see cref="ResponsesCancellationSignalProvider"/>.
 /// </para>
 /// <para>
@@ -112,10 +112,10 @@ public abstract class ResponsesProvider
     /// </summary>
     /// <param name="previousResponseId">The previous response ID to look up history from, or <c>null</c>.</param>
     /// <param name="conversationId">The conversation ID to scope history, or <c>null</c>.</param>
-    /// <param name="limit">Maximum number of history item IDs to return.</param>
+    /// <param name="limit">Maximum number of history item IDs to return, or <c>-1</c> for all items.</param>
     /// <param name="context">The platform context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    /// <returns>An enumerable of history item IDs.</returns>
+    /// <returns>An ordered enumerable of unique history item IDs.</returns>
     public abstract Task<IEnumerable<string>> GetHistoryItemIdsAsync(
         string? previousResponseId,
         string? conversationId,

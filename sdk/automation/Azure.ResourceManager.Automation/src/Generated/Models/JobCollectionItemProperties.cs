@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="startedBy"> Gets or sets the job started by. </param>
         /// <param name="createdOn"> The creation time of the job. </param>
         /// <param name="status"> The status of the job. </param>
-        /// <param name="startOn"> The start time of the job. </param>
-        /// <param name="endOn"> The end time of the job. </param>
+        /// <param name="startsOn"> The start time of the job. </param>
+        /// <param name="endsOn"> The end time of the job. </param>
         /// <param name="lastModifiedOn"> The last modified time of the job. </param>
         /// <param name="provisioningState"> The provisioning state of a resource. </param>
         /// <param name="jobRuntimeEnvironment"> Runtime Environment Property. </param>
         /// <param name="runOn"> Specifies the runOn group name where the job was executed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobCollectionItemProperties(RunbookAssociationProperty runbook, Guid? jobId, string startedBy, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, JobRuntimeEnvironment jobRuntimeEnvironment, string runOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobCollectionItemProperties(RunbookAssociationProperty runbook, Guid? jobId, string startedBy, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, DateTimeOffset? lastModifiedOn, string provisioningState, JobRuntimeEnvironment jobRuntimeEnvironment, string runOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Runbook = runbook;
             JobId = jobId;
             StartedBy = startedBy;
             CreatedOn = createdOn;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             LastModifiedOn = lastModifiedOn;
             ProvisioningState = provisioningState;
             JobRuntimeEnvironment = jobRuntimeEnvironment;
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationJobStatus? Status { get; }
 
         /// <summary> The start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the job. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The last modified time of the job. </summary>
         public DateTimeOffset? LastModifiedOn { get; }

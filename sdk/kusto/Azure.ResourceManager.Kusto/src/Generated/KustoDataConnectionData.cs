@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> Class representing an data connection. </summary>
+    /// <summary>
+    /// Class representing an data connection.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="EventGridDataConnectionWithManagedIdentity"/>, <see cref="EventHubDataConnectionWithManagedIdentity"/>, <see cref="KustoCosmosDBDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoEventHubDataConnection"/>, and <see cref="KustoIotHubDataConnection"/>.
+    /// </summary>
     public partial class KustoDataConnectionData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -39,6 +42,11 @@ namespace Azure.ResourceManager.Kusto
             Location = location;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionData"/>. </summary>
+        public KustoDataConnectionData() : this(default)
+        {
         }
 
         /// <summary> Resource location. </summary>

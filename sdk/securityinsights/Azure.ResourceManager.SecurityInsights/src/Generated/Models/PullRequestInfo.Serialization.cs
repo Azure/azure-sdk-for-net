@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string uri = default;
-            RecommendationState? state = default;
+            PullRequestState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    state = new RecommendationState(prop.Value.GetString());
+                    state = new PullRequestState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PullRequestInfo(uri, state, additionalBinaryDataProperties);

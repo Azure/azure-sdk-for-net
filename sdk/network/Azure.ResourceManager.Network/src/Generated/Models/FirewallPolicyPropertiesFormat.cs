@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         public FirewallPolicyPropertiesFormat()
         {
             RuleCollectionGroups = new ChangeTrackingList<WritableSubResource>();
+            KubeSelectorGroups = new ChangeTrackingList<NetworkSubResource>();
             Firewalls = new ChangeTrackingList<WritableSubResource>();
             ChildPolicies = new ChangeTrackingList<WritableSubResource>();
         }
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyPropertiesFormat"/>. </summary>
         /// <param name="size"> A read-only string that represents the size of the FirewallPolicyPropertiesFormat in MB. (ex 0.5MB). </param>
         /// <param name="ruleCollectionGroups"> List of references to FirewallPolicyRuleCollectionGroups. </param>
+        /// <param name="kubeSelectorGroups"> List of references to FirewallPolicyKubeSelectorGroups. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy resource. </param>
         /// <param name="basePolicy"> The parent firewall policy from which rules are inherited. </param>
         /// <param name="firewalls"> List of references to Azure Firewalls that this Firewall Policy is associated with. </param>
@@ -44,11 +46,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
         /// <param name="sku"> The Firewall Policy SKU. </param>
+        /// <param name="isAfcManaged"> Indicates that the Firewall Policy is managed by AFC (Azure Firewall for Containers). When set, the policy is treated as read-only for callers that do not supply the AFC-managed sync marker on write operations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPolicyPropertiesFormat(string size, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, NetworkSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallPolicyPropertiesFormat(string size, IReadOnlyList<WritableSubResource> ruleCollectionGroups, IReadOnlyList<NetworkSubResource> kubeSelectorGroups, NetworkProvisioningState? provisioningState, NetworkSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, bool? isAfcManaged, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             RuleCollectionGroups = ruleCollectionGroups;
+            KubeSelectorGroups = kubeSelectorGroups;
             ProvisioningState = provisioningState;
             BasePolicy = basePolicy;
             Firewalls = firewalls;
@@ -63,6 +67,7 @@ namespace Azure.ResourceManager.Network.Models
             IntrusionDetection = intrusionDetection;
             TransportSecurity = transportSecurity;
             Sku = sku;
+            IsAfcManaged = isAfcManaged;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -73,6 +78,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>
         [WirePath("ruleCollectionGroups")]
         public IReadOnlyList<WritableSubResource> RuleCollectionGroups { get; } = new ChangeTrackingList<WritableSubResource>();
+
+        /// <summary> List of references to FirewallPolicyKubeSelectorGroups. </summary>
+        [WirePath("kubeSelectorGroups")]
+        public IReadOnlyList<NetworkSubResource> KubeSelectorGroups { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> The provisioning state of the firewall policy resource. </summary>
         [WirePath("provisioningState")]
@@ -129,6 +138,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Firewall Policy SKU. </summary>
         [WirePath("sku")]
         internal FirewallPolicySku Sku { get; set; }
+
+        /// <summary> Indicates that the Firewall Policy is managed by AFC (Azure Firewall for Containers). When set, the policy is treated as read-only for callers that do not supply the AFC-managed sync marker on write operations. </summary>
+        [WirePath("afcManaged")]
+        public bool? IsAfcManaged { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("basePolicy.id")]

@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The desired maximum forecast horizon in units of time-series frequency.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
     /// </summary>
     public partial class ForecastHorizon : ProvisionableConstruct
     {
+        private BicepValue<ForecastHorizonMode> _mode;
+
         /// <summary> Creates a new ForecastHorizon. </summary>
         public ForecastHorizon()
         {
+        }
+
+        /// <summary> [Required] Set forecast horizon value selection mode. </summary>
+        internal BicepValue<ForecastHorizonMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ForecastHorizon. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _mode = DefineProperty<ForecastHorizonMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

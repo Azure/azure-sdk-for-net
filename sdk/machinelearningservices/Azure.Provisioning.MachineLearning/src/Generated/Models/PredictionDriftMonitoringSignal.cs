@@ -20,6 +20,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new PredictionDriftMonitoringSignal. </summary>
         public PredictionDriftMonitoringSignal()
         {
+            SignalType.Assign(MonitoringSignalType.PredictionDrift);
         }
 
         /// <summary> Gets or sets the FeatureDataTypeOverride. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("signalType", new string[] { "signalType" }, defaultValue: "PredictionDrift");
             _featureDataTypeOverride = DefineDictionaryProperty<MonitoringFeatureDataType>(nameof(FeatureDataTypeOverride), new string[] { "featureDataTypeOverride" });
             _metricThresholds = DefineListProperty<PredictionDriftMetricThresholdBase>(nameof(MetricThresholds), new string[] { "metricThresholds" }, isRequired: true);
             _productionData = DefineModelProperty<MonitoringInputDataBase>(nameof(ProductionData), new string[] { "productionData" }, isRequired: true);

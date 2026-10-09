@@ -13,12 +13,13 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Monitoring input data base definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FixedInputData"/>, <see cref="RollingInputData"/>, and <see cref="StaticInputData"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="FixedInputData"/>, <see cref="RollingInputData"/>, and <see cref="StaticInputData"/>.
     /// </summary>
     public partial class MonitoringInputDataBase : ProvisionableConstruct
     {
         private BicepDictionary<string> _columns;
         private BicepValue<string> _dataContext;
+        private BicepValue<MonitoringInputDataType> _inputDataType;
         private BicepValue<JobInputType> _jobInputType;
         private BicepValue<Uri> _uri;
 
@@ -54,6 +55,16 @@ namespace Azure.Provisioning.MachineLearning
             {
                 Initialize();
                 _dataContext.Assign(value);
+            }
+        }
+
+        /// <summary> [Required] Specifies the type of signal to monitor. </summary>
+        internal BicepValue<MonitoringInputDataType> InputDataType
+        {
+            get
+            {
+                Initialize();
+                return _inputDataType;
             }
         }
 
@@ -93,6 +104,7 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             _columns = DefineDictionaryProperty<string>(nameof(Columns), new string[] { "columns" });
             _dataContext = DefineProperty<string>(nameof(DataContext), new string[] { "dataContext" });
+            _inputDataType = DefineProperty<MonitoringInputDataType>(nameof(InputDataType), new string[] { "inputDataType" }, isRequired: true);
             _jobInputType = DefineProperty<JobInputType>(nameof(JobInputType), new string[] { "jobInputType" }, isRequired: true);
             _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "uri" }, isRequired: true);
             DefineAdditionalProperties();

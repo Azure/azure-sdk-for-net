@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeploymentSettingQosPolicyOverrides(priorityValue8021ActionCluster, priorityValue8021ActionSmb, bandwidthPercentageSmb, additionalBinaryDataProperties);

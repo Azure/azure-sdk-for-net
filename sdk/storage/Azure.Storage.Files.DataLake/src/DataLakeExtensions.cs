@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -729,7 +729,7 @@ namespace Azure.Storage.Files.DataLake
                 Permissions = response.Headers.TryGetValue(PermissionsHeader, out string sysPermissions) ? PathPermissions.ParseSymbolicPermissions(sysPermissions) : null,
             };
 
-        internal static PathDeletedSegment ToPathDeletedSegment(this Response<ListBlobsHierarchySegmentResponse> response)
+        internal static PathDeletedSegment ToPathDeletedSegment(this Response<ListBlobsHierarchySegmentResult> response)
         {
             if (response == null)
             {
@@ -756,7 +756,7 @@ namespace Azure.Storage.Files.DataLake
                 {
                     Path = blobItemInternal.Name,
                     DeletionId = blobItemInternal.DeletionId,
-                    DeletedOn = blobItemInternal.Properties.DeletedTime,
+                    DeletedOn = blobItemInternal.Properties.DeletedOn,
                     RemainingRetentionDays = blobItemInternal.Properties.RemainingRetentionDays
                 }
             };

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.OperationalInsights
         private BicepValue<string> _query;
         private BicepValue<int> _binSize;
         private BicepValue<int> _binDelay;
-        private BicepValue<DateTimeOffset> _binStartOn;
+        private BicepValue<DateTimeOffset> _binStartsOn;
         private BicepValue<OperationalInsightsSummaryTimeSelector> _timeSelector;
         private BicepValue<string> _destinationTable;
 
@@ -71,18 +71,18 @@ namespace Azure.Provisioning.OperationalInsights
             }
         }
 
-        /// <summary> Gets or sets the BinStartOn. </summary>
-        public BicepValue<DateTimeOffset> BinStartOn
+        /// <summary> Gets or sets the BinStartsOn. </summary>
+        public BicepValue<DateTimeOffset> BinStartsOn
         {
             get
             {
                 Initialize();
-                return _binStartOn;
+                return _binStartsOn;
             }
             set
             {
                 Initialize();
-                _binStartOn.Assign(value);
+                _binStartsOn.Assign(value);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.OperationalInsights
             _query = DefineProperty<string>(nameof(Query), new string[] { "query" });
             _binSize = DefineProperty<int>(nameof(BinSize), new string[] { "binSize" });
             _binDelay = DefineProperty<int>(nameof(BinDelay), new string[] { "binDelay" });
-            _binStartOn = DefineProperty<DateTimeOffset>(nameof(BinStartOn), new string[] { "binStartTime" }, format: "O");
+            _binStartsOn = DefineProperty<DateTimeOffset>(nameof(BinStartsOn), new string[] { "binStartTime" }, format: "O");
             _timeSelector = DefineProperty<OperationalInsightsSummaryTimeSelector>(nameof(TimeSelector), new string[] { "timeSelector" });
             _destinationTable = DefineProperty<string>(nameof(DestinationTable), new string[] { "destinationTable" });
             DefineAdditionalProperties();

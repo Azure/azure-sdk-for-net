@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using Azure;
 
 namespace Azure.AI.AgentServer.Core.Storage
 {
@@ -33,7 +34,9 @@ namespace Azure.AI.AgentServer.Core.Storage
                 case 400:
                     throw new FoundryStorageBadRequestException(message, param, 400, code);
                 case 412:
-                    string? currentETag = response.Headers.TryGetValue("ETag", out string? etag) ? etag : null;
+                    ETag currentETag = response.Headers.TryGetValue("ETag", out string? etag)
+                        ? new ETag(etag)
+                        : default;
                     throw new FoundryStoragePreconditionException(message, currentETag, code);
                 default:
                     throw new FoundryStorageApiException(status, message, code);

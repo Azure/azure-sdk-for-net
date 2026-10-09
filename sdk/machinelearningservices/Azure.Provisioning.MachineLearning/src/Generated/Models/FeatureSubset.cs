@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new FeatureSubset. </summary>
         public FeatureSubset()
         {
+            FilterType.Assign(MonitoringFeatureFilterType.FeatureSubset);
         }
 
         /// <summary> Gets or sets the Features. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("filterType", new string[] { "filterType" }, defaultValue: "FeatureSubset");
             _features = DefineListProperty<string>(nameof(Features), new string[] { "features" }, isRequired: true);
             DefineAdditionalProperties();
         }

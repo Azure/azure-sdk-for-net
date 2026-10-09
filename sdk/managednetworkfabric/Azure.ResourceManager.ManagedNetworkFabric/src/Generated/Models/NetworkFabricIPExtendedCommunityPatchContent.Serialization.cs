@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IpExtendedCommunityPatchProperties properties = default;
+            IPExtendedCommunityPatchProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tags"u8))
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    properties = IpExtendedCommunityPatchProperties.DeserializeIpExtendedCommunityPatchProperties(prop.Value, options);
+                    properties = IPExtendedCommunityPatchProperties.DeserializeIPExtendedCommunityPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkFabricIPExtendedCommunityPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);

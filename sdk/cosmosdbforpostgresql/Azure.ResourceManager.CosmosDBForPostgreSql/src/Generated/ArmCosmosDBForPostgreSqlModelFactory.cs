@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="authConfig"> Authentication configuration of a cluster. </param>
         /// <param name="identity"> Describes the identity of the cluster. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AadEnabledEnum? aadAuthEnabled = default, string administratorLogin = default, string administratorLoginPassword = default, DataEncryption dataEncryption = default, string provisioningState = default, string state = default, string postgresqlVersion = default, string citusVersion = default, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = default, string preferredPrimaryZone = default, bool? isShardsOnCoordinatorEnabled = default, bool? isHAEnabled = default, string coordinatorServerEdition = default, int? coordinatorStorageQuotaInMb = default, int? coordinatorVCores = default, bool? isCoordinatorPublicIPAccessEnabled = default, string nodeServerEdition = default, int? nodeCount = default, int? nodeStorageQuotaInMb = default, int? nodeVCores = default, bool? isNodePublicIPAccessEnabled = default, IEnumerable<CosmosDBForPostgreSqlServerNameItem> serverNames = default, ResourceIdentifier sourceResourceId = default, AzureLocation? sourceLocation = default, PasswordEnabledEnum? passwordEnabled = default, DateTimeOffset? pointInTimeUTC = default, IEnumerable<string> readReplicas = default, DateTimeOffset? earliestRestoreOn = default, IEnumerable<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = default, string databaseName = default, bool? enableGeoBackup = default, AuthConfig authConfig = default, IdentityProperties identity = default)
+        public static CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AadEnabledEnum? aadAuthEnabled, string administratorLogin, string administratorLoginPassword, DataEncryption dataEncryption, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IEnumerable<CosmosDBForPostgreSqlServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, PasswordEnabledEnum? passwordEnabled, DateTimeOffset? pointInTimeUTC, IEnumerable<string> readReplicas, DateTimeOffset? earliestRestoreOn = default, IEnumerable<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = default, string databaseName = default, bool? enableGeoBackup = default, AuthConfig authConfig = default, IdentityProperties identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 default);
         }
 
+        /// <summary> The data encryption properties of a cluster. </summary>
         /// <param name="primaryKeyUri"> URI for the key in keyvault for data encryption of the primary server. </param>
         /// <param name="primaryUserAssignedIdentityId"> Resource Id for the User assigned identity to be used for data encryption of the primary server. </param>
         /// <param name="type"></param>
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new DataEncryption(primaryKeyUri, primaryUserAssignedIdentityId, @type, default);
         }
 
+        /// <summary> Schedule settings for regular cluster updates. </summary>
         /// <param name="customWindow"> Indicates whether custom maintenance window is enabled or not. </param>
         /// <param name="startHour"> Start hour within preferred day of the week for maintenance window. </param>
         /// <param name="startMinute"> Start minute within the start hour for maintenance window. </param>
@@ -128,6 +130,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlMaintenanceWindow(customWindow, startHour, startMinute, dayOfWeek, default);
         }
 
+        /// <summary> The name object for a server. </summary>
         /// <param name="name"> The name of a server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
         /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlServerNameItem"/> instance for mocking. </returns>
@@ -144,17 +147,18 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
         /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlSimplePrivateEndpointConnection CosmosDBForPostgreSqlSimplePrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, CosmosDBForPostgreSqlPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ResourceIdentifier privateEndpointId = default)
+        public static CosmosDBForPostgreSqlSimplePrivateEndpointConnection CosmosDBForPostgreSqlSimplePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, CosmosDBForPostgreSqlPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ResourceIdentifier privateEndpointId)
         {
             return new CosmosDBForPostgreSqlSimplePrivateEndpointConnection(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionSimpleProperties(new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default),
+                privateEndpointId is null && groupIds is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionSimpleProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default),
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -164,6 +168,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Authentication configuration of a cluster. </summary>
         /// <param name="activeDirectoryAuth"></param>
         /// <param name="passwordAuth"></param>
         /// <returns> A new <see cref="Models.AuthConfig"/> instance for mocking. </returns>
@@ -172,6 +177,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new AuthConfig(activeDirectoryAuth, passwordAuth, default);
         }
 
+        /// <summary> Describes the identity of the cluster. </summary>
         /// <param name="type"></param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         /// <returns> A new <see cref="Models.IdentityProperties"/> instance for mocking. </returns>
@@ -225,6 +231,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 default), identity, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Request from client to promote geo-redundant replica. </summary>
         /// <param name="enableGeoBackup"> Boolean property to enable geo-redundant replica promotion. </param>
         /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlPromoteRequestContent"/> instance for mocking. </returns>
         public static CosmosDBForPostgreSqlPromoteRequestContent CosmosDBForPostgreSqlPromoteRequestContent(bool? enableGeoBackup = default)
@@ -232,6 +239,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlPromoteRequestContent(enableGeoBackup, default);
         }
 
+        /// <summary> Request from client to check cluster name availability. </summary>
         /// <param name="name"> Cluster name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlClusterNameAvailabilityContent"/> instance for mocking. </returns>
@@ -240,6 +248,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlClusterNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> Represents cluster name availability. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="isNameAvailable"> Indicates whether the cluster name is available. </param>
         /// <param name="name"> Name of the cluster. </param>
@@ -279,6 +288,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 default);
         }
 
+        /// <summary> Represents server role group configuration value. </summary>
         /// <param name="role"> The role of servers in the server role group. </param>
         /// <param name="value"> Value of the configuration. </param>
         /// <param name="defaultValue"> Default value of the configuration. </param>
@@ -329,7 +339,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="startIPAddress"> The start IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="provisioningState"> Provisioning state of the firewall rule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlFirewallRuleData"/> instance for mocking. </returns>
         public static CosmosDBForPostgreSqlFirewallRuleData CosmosDBForPostgreSqlFirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IPAddress startIPAddress = default, IPAddress endIPAddress = default, CosmosDBForPostgreSqlProvisioningState? provisioningState = default)
         {
@@ -338,7 +347,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                startIPAddress is null && endIPAddress is null && provisioningState is null ? default : new FirewallRuleProperties(startIPAddress, endIPAddress, provisioningState, default),
                 default);
         }
 
@@ -351,14 +360,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlPrivateEndpointConnectionData CosmosDBForPostgreSqlPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, CosmosDBForPostgreSqlPrivateLinkServiceConnectionState connectionState = default, CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static CosmosDBForPostgreSqlPrivateEndpointConnectionData CosmosDBForPostgreSqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, CosmosDBForPostgreSqlPrivateLinkServiceConnectionState connectionState, CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
         {
             return new CosmosDBForPostgreSqlPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -392,14 +401,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="principalType"> Gets or sets the PrincipalType. </param>
         /// <param name="tenantId"> A type definition that refers the id to an Azure Resource Manager resource. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlRoleData CosmosDBForPostgreSqlRoleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RoleType? roleType = default, string password = default, CosmosDBForPostgreSqlProvisioningState? provisioningState = default, ResourceIdentifier objectId = default, PrincipalType? principalType = default, ResourceIdentifier tenantId = default)
+        public static CosmosDBForPostgreSqlRoleData CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType? roleType, string password, CosmosDBForPostgreSqlProvisioningState? provisioningState, ResourceIdentifier objectId = default, PrincipalType? principalType = default, ResourceIdentifier tenantId = default)
         {
             return new CosmosDBForPostgreSqlRoleData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                roleType is null ? default : new RoleProperties(roleType, default, default, default, default),
+                roleType is null && password is null && objectId is null && principalType is null && tenantId is null && provisioningState is null ? default : new RoleProperties(roleType, password, objectId is null && principalType is null && tenantId is null ? default : new RolePropertiesExternalIdentity(objectId, principalType.GetValueOrDefault(), tenantId, default), provisioningState, default),
                 default);
         }
 
@@ -448,13 +457,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents a cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="administratorLogin"> The administrator's login name of the servers in the cluster. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. Required for creation. </param>
         /// <param name="provisioningState"> Provisioning state of the cluster. </param>
@@ -530,12 +539,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlSimplePrivateEndpointConnection. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
+        /// <summary> A private endpoint connection. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
         /// <param name="groupIds"> Group ids of the private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection"/> instance for mocking. </returns>
@@ -547,16 +556,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionSimpleProperties(new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default),
+                privateEndpointId is null && groupIds is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionSimpleProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="password"> The password of the cluster role. </param>
+        /// <summary> Represents a cluster role. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="password"> The password of the cluster role. If an identity is used, password will not be required. </param>
         /// <param name="provisioningState"> Provisioning state of the role. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -571,13 +580,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateEndpointConnectionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A private endpoint connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="privateEndpointId"> The private endpoint resource. </param>
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
@@ -589,7 +598,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
     }

@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="lastSuccessfulVersionUpdateOn"> The date and time of the end of the last successful version update for the cluster. </param>
         /// <param name="managedCredentials"> The list of credentials that are managed for the cluster and can be rotated on-demand. </param>
         /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
-        /// <param name="supportExpireOn"> The support end date of the runtime version of the cluster. </param>
+        /// <param name="supportExpiresOn"> The support end date of the runtime version of the cluster. </param>
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier networkFabricId, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, Resources.Models.ExtendedLocation clusterExtendedLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, Resources.Models.ExtendedLocation hybridAksExtendedLocation, DateTimeOffset? lastSuccessfulVersionUpdateOn, IReadOnlyList<string> managedCredentials, long? manualActionCount, DateTimeOffset? supportExpireOn, IReadOnlyList<ResourceIdentifier> workloadResourceIds, ClusterProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier networkFabricId, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, Resources.Models.ExtendedLocation clusterExtendedLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, Resources.Models.ExtendedLocation hybridAksExtendedLocation, DateTimeOffset? lastSuccessfulVersionUpdateOn, IReadOnlyList<string> managedCredentials, long? manualActionCount, DateTimeOffset? supportExpiresOn, IReadOnlyList<ResourceIdentifier> workloadResourceIds, ClusterProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AnalyticsOutputSettings = analyticsOutputSettings;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             LastSuccessfulVersionUpdateOn = lastSuccessfulVersionUpdateOn;
             ManagedCredentials = managedCredentials;
             ManualActionCount = manualActionCount;
-            SupportExpireOn = supportExpireOn;
+            SupportExpiresOn = supportExpiresOn;
             WorkloadResourceIds = workloadResourceIds;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? ManualActionCount { get; }
 
         /// <summary> The support end date of the runtime version of the cluster. </summary>
-        public DateTimeOffset? SupportExpireOn { get; }
+        public DateTimeOffset? SupportExpiresOn { get; }
 
         /// <summary> The list of workload resource IDs that are hosted within this cluster. </summary>
         public IReadOnlyList<ResourceIdentifier> WorkloadResourceIds { get; } = new ChangeTrackingList<ResourceIdentifier>();

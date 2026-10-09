@@ -21,7 +21,7 @@ namespace Azure.Analytics.OnlineExperimentation
                   desiredDirection: default,
                   definition: null,
                   eTag: default,
-                  lastModifiedAt: default,
+                  lastModifiedOn: default,
                   additionalBinaryDataProperties: null)
         {
         }

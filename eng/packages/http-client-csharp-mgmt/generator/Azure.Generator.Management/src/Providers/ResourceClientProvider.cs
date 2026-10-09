@@ -144,10 +144,11 @@ namespace Azure.Generator.Management.Providers
                     }
                 }
 
-                var customProvider = ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCustomization(
+                var customProvider = ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCurrentCompilation(
                     customizedDataType.Namespace,
                     customizedDataType.Name,
-                    declaringTypeName: null);
+                    declaringTypeName: null,
+                    includeReferencedAssemblies: true);
                 if (customProvider is not null)
                 {
                     return customProvider;
@@ -358,7 +359,7 @@ namespace Azure.Generator.Management.Providers
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate());
                 var effectiveApiVersion = apiVersion.NullCoalesce(Literal(inputClient.CurrentApiVersion));
-                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), effectiveApiVersion)).Terminate());
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, [clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), effectiveApiVersion, .. inputClient.HasOperationApiVersionDefaults ? new[] { InputClientExtensions.BuildApiVersionResolver() } : []])).Terminate());
             }
 
             bodyStatements.Add(Static(Type).As<ArmResource>().ValidateResourceId(idParameter).Terminate());
@@ -432,6 +433,14 @@ namespace Azure.Generator.Management.Providers
             return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
         }
 
+        internal IEnumerable<ArrayResponseCollectionResultPlan> ArrayCollectionResultPlans =>
+            _resourceServiceMethods
+                .Where(method => ArrayResponseCollectionResultPlan.IsArrayResponse(method.InputMethod) &&
+                    (IsSingleton || method.Kind is not (ResourceOperationKind.Create or ResourceOperationKind.Update)))
+                .Select(method => new ArrayResponseCollectionResultPlan(this, method.InputClient, method.InputMethod,
+                    ResourceHelpers.GetOperationMethodName(method.Kind, false, false),
+                    ResourceHelpers.GetOperationMethodName(method.Kind, true, false)));
+
         protected override MethodProvider[] BuildMethods()
         {
             var operationMethods = new List<MethodProvider>();
@@ -448,8 +457,8 @@ namespace Azure.Generator.Management.Providers
                 // Get the appropriate rest client for this specific method
                 var restClientInfo = _clientInfos[inputClient];
 
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
-                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false, this);
+                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true, this);
 
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
@@ -507,7 +516,7 @@ namespace Azure.Generator.Management.Providers
                         var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
                         MethodProvider tagUpdateMethodAsMethod = tagUpdateMethodProvider;
 
-                        if (!CanPopulateTagUpdateMethodArguments(tagUpdateMethodAsMethod.Signature, parameterMappings))
+                        if (!CanPopulateTagUpdateMethodArguments(tagUpdateMethodAsMethod.Signature, parameterMappings, isPatch))
                         {
                             methods.AddRange(BuildGetChildResourceMethods());
                             return [.. methods];
@@ -545,13 +554,25 @@ namespace Azure.Generator.Management.Providers
             return new ResourceOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, methodKind, isAsync, methodName, forceLro: isFakeLro);
         }
 
-        private static bool CanPopulateTagUpdateMethodArguments(MethodSignature updateSignature, ParameterContextRegistry parameterMappings)
+        private bool CanPopulateTagUpdateMethodArguments(MethodSignature updateSignature, ParameterContextRegistry parameterMappings, bool isPatch)
         {
             foreach (var parameter in updateSignature.Parameters)
             {
+                if (parameter.Location == ParameterLocation.Body)
+                {
+                    // PUT-based tag helpers pass the fetched resource data directly to the update method.
+                    // A separate request model cannot be populated safely because its wire shape may differ.
+                    // Ignore nullability because an optional PUT body can still use the resource data model.
+                    if (!isPatch && !IsResourceDataType(parameter.Type.WithNullable(false)))
+                    {
+                        return false;
+                    }
+
+                    continue;
+                }
+
                 if (parameter.Type.Equals(typeof(WaitUntil)) ||
                     parameter.Type.Equals(typeof(CancellationToken)) ||
-                    parameter.Location == ParameterLocation.Body ||
                     parameter.DefaultValue is not null)
                 {
                     continue;

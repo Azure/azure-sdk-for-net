@@ -26,6 +26,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new CustomerCertificateProperties. </summary>
         public CustomerCertificateProperties()
         {
+            SecretType.Assign(Cdn.SecretType.CustomerCertificate);
         }
 
         /// <summary> Gets or sets the SecretSource. </summary>
@@ -144,7 +145,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "CustomerCertificate");
             _secretSource = DefineModelProperty<CdnResourceReference>(nameof(SecretSource), new string[] { "secretSource" }, isRequired: true);
             _secretVersion = DefineProperty<string>(nameof(SecretVersion), new string[] { "secretVersion" });
             _useLatestVersion = DefineProperty<bool>(nameof(UseLatestVersion), new string[] { "useLatestVersion" });

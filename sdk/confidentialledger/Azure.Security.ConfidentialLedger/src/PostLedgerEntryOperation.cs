@@ -21,6 +21,8 @@ namespace Azure.Security.ConfidentialLedger
     /// </summary>
     internal class PostLedgerEntryOperation : Operation, IOperation
     {
+        private const int MaxNotFoundRetries = 3;
+
         /// <summary>
         /// Identifies the wire endpoint to poll for completion.
         /// </summary>
@@ -45,6 +47,7 @@ namespace Azure.Security.ConfidentialLedger
         private readonly PollingMode _mode;
         private OperationInternal _operationInternal;
         private string _id;
+        private int _consecutiveNotFoundCount;
 
         internal string exceptionMessage => _mode switch
         {
@@ -67,6 +70,19 @@ namespace Azure.Security.ConfidentialLedger
             _mode = mode;
             _id = id;
             _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: initialResponse, nameof(PostLedgerEntryOperation));
+        }
+
+        /// <summary>
+        /// Initializes an already-completed operation for a ledger entry that the service has
+        /// already globally committed (for example, when the entry was posted with
+        /// <c>waitForCommit</c> set to <see langword="true"/>). No status polling is performed.
+        /// </summary>
+        /// <param name="transactionId"> The transaction id of the committed ledger entry. </param>
+        /// <param name="rawResponse"> The final response returned by the create-ledger-entry call. </param>
+        public PostLedgerEntryOperation(string transactionId, Response rawResponse)
+        {
+            _id = transactionId;
+            _operationInternal = OperationInternal.Succeeded(rawResponse);
         }
 
         /// <summary>
@@ -101,12 +117,28 @@ namespace Azure.Security.ConfidentialLedger
 
         private async ValueTask<OperationState> UpdateDirectStateAsync(bool async, CancellationToken cancellationToken)
         {
+            var context = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
+            // A 404 is deliberately counted by this operation, not by the pipeline retry policy. Mark it
+            // non-error for this request so one UpdateStatus call means exactly one HTTP request.
+            context.AddClassifier((int)HttpStatusCode.NotFound, isError: false);
             var statusResponse = async
                 ? await _client.GetTransactionStatusAsync(
                         Id,
-                        new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow })
+                        context)
                     .ConfigureAwait(false)
-                : _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
+                : _client.GetTransactionStatus(Id, context);
+
+            if (statusResponse.Status == (int)HttpStatusCode.NotAcceptable)
+            {
+                _consecutiveNotFoundCount = 0;
+                return OperationState.Pending(statusResponse);
+            }
+
+            if (statusResponse.Status == (int)HttpStatusCode.NotFound
+                && ++_consecutiveNotFoundCount <= MaxNotFoundRetries)
+            {
+                return OperationState.Pending(statusResponse);
+            }
 
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
@@ -114,6 +146,7 @@ namespace Azure.Security.ConfidentialLedger
                 return OperationState.Failure(statusResponse, new RequestFailedException(exceptionMessage, ex));
             }
 
+            _consecutiveNotFoundCount = 0;
             string status = JsonDocument.Parse(statusResponse.Content)
                 .RootElement
                 .GetProperty("state")

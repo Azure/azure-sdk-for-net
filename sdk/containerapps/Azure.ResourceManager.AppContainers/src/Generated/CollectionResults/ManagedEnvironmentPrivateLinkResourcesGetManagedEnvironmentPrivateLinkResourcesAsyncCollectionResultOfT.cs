@@ -56,7 +56,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 AppContainersPrivateLinkResourceListResult result = AppContainersPrivateLinkResourceListResult.FromResponse(response);
-                nextPage = result.NextLink;
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 yield return Page<ContainerAppPrivateLink>.FromValues((IReadOnlyList<ContainerAppPrivateLink>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {

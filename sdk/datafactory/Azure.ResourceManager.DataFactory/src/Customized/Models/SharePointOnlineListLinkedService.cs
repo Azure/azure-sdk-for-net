@@ -21,12 +21,5 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactorySecret ServicePrincipalKey { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SharePointOnlineListLinkedService(DataFactoryElement<string> siteUri, DataFactoryElement<string> tenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey)
-            : this(siteUri, tenantId, servicePrincipalId)
-        {
-            ServicePrincipalKey = servicePrincipalKey;
-        }
     }
 }

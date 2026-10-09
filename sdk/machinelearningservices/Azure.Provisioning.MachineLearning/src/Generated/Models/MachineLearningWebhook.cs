@@ -12,11 +12,12 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Webhook base
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureDevOpsWebhook"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AzureDevOpsWebhook"/>.
     /// </summary>
     public partial class MachineLearningWebhook : ProvisionableConstruct
     {
         private BicepValue<string> _eventType;
+        private BicepValue<WebhookType> _webhookType;
 
         /// <summary> Creates a new MachineLearningWebhook. </summary>
         public MachineLearningWebhook()
@@ -38,11 +39,22 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> [Required] Specifies the type of service to send a callback. </summary>
+        internal BicepValue<WebhookType> WebhookType
+        {
+            get
+            {
+                Initialize();
+                return _webhookType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for MachineLearningWebhook. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _eventType = DefineProperty<string>(nameof(EventType), new string[] { "eventType" });
+            _webhookType = DefineProperty<WebhookType>(nameof(WebhookType), new string[] { "webhookType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

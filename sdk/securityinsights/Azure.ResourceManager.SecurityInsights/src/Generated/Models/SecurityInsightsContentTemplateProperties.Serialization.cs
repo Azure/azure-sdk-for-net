@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    mainTemplate = BinaryData.FromString(prop.Value.GetRawText());
+                    mainTemplate = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("dependantTemplates"u8))
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SecurityInsightsContentTemplateProperties(

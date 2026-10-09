@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
 using Azure.ResourceManager.Models;
 
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(DevOpsStateful))]
     [ModelReaderWriterBuildable(typeof(DevOpsStatelessAgentProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsStorageProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsVmSize))]
     [ModelReaderWriterBuildable(typeof(DevOpsVmssFabricProfile))]
     [ModelReaderWriterBuildable(typeof(ImageVersionListResult))]
     [ModelReaderWriterBuildable(typeof(ImageVersionProperties))]
@@ -63,6 +65,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictionInfo))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictions))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuZoneDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuntimeConfiguration))]
     [ModelReaderWriterBuildable(typeof(SecretsManagementSettings))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

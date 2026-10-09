@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="tlsConfig"> Parameters to authenticate using TLS config for OCI repository. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OciRepository(Uri uri, long? timeoutInSeconds, long? syncIntervalInSeconds, OciRepositoryRef repositoryRef, LayerSelector layerSelector, OciRepositoryVerify verify, bool? isInsecure, bool? useWorkloadIdentity, string serviceAccountName, TlsConfig tlsConfig, string localAuthRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OciRepository(Uri uri, long? timeoutInSeconds, long? syncIntervalInSeconds, OciRepositoryRef repositoryRef, FluxLayerSelector layerSelector, OciRepositoryVerify verify, bool? isInsecure, bool? useWorkloadIdentity, string serviceAccountName, FluxTlsConfig tlsConfig, string localAuthRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             TimeoutInSeconds = timeoutInSeconds;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public OciRepositoryRef RepositoryRef { get; set; }
 
         /// <summary> The layer to be pulled from the OCI artifact. </summary>
-        public LayerSelector LayerSelector { get; set; }
+        public FluxLayerSelector LayerSelector { get; set; }
 
         /// <summary> Verification of the authenticity of an OCI Artifact. </summary>
         public OciRepositoryVerify Verify { get; set; }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public string ServiceAccountName { get; set; }
 
         /// <summary> Parameters to authenticate using TLS config for OCI repository. </summary>
-        public TlsConfig TlsConfig { get; set; }
+        public FluxTlsConfig TlsConfig { get; set; }
 
         /// <summary> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </summary>
         public string LocalAuthRef { get; set; }

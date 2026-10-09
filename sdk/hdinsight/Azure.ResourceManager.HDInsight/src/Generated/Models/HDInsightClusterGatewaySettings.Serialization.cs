@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HDInsightClusterGatewaySettings(isCredentialEnabled, userName, password, restAuthEntraUsers ?? new ChangeTrackingList<EntraUserInfo>(), additionalBinaryDataProperties);

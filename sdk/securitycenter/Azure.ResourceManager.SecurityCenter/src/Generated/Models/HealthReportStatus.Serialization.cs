@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("lastScannedDate"u8);
                 writer.WriteStringValue(LastScannedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusChangeOn))
+            if (options.Format != "W" && Optional.IsDefined(StatusChangedOn))
             {
                 writer.WritePropertyName("statusChangeDate"u8);
-                writer.WriteStringValue(StatusChangeOn.Value, "O");
+                writer.WriteStringValue(StatusChangedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(FirstEvaluationOn))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SecurityCenterHealthStatus? code = default;
             string reason = default;
             DateTimeOffset? lastScannedOn = default;
-            DateTimeOffset? statusChangeOn = default;
+            DateTimeOffset? statusChangedOn = default;
             DateTimeOffset? firstEvaluationOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    statusChangeOn = prop.Value.GetDateTimeOffset("O");
+                    statusChangedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("firstEvaluationDate"u8))
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HealthReportStatus(
                 code,
                 reason,
                 lastScannedOn,
-                statusChangeOn,
+                statusChangedOn,
                 firstEvaluationOn,
                 additionalBinaryDataProperties);
         }

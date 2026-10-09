@@ -1715,7 +1715,7 @@ namespace Azure.ResourceManager.Enclave.Models
         private readonly int _dummyPrimitive;
         public VirtualEnclaveMaintenanceModeConfigurationMode(string value) { throw null; }
         public static Azure.ResourceManager.Enclave.Models.VirtualEnclaveMaintenanceModeConfigurationMode Advanced { get { throw null; } }
-        public static Azure.ResourceManager.Enclave.Models.VirtualEnclaveMaintenanceModeConfigurationMode CanNotDelete { get { throw null; } }
+        public static Azure.ResourceManager.Enclave.Models.VirtualEnclaveMaintenanceModeConfigurationMode CannotDelete { get { throw null; } }
         public static Azure.ResourceManager.Enclave.Models.VirtualEnclaveMaintenanceModeConfigurationMode General { get { throw null; } }
         public static Azure.ResourceManager.Enclave.Models.VirtualEnclaveMaintenanceModeConfigurationMode Off { get { throw null; } }
         public static Azure.ResourceManager.Enclave.Models.VirtualEnclaveMaintenanceModeConfigurationMode On { get { throw null; } }

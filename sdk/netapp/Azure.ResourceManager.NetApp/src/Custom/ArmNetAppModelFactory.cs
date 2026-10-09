@@ -25,16 +25,6 @@ namespace Azure.ResourceManager.NetApp.Models
     [CodeGenSuppress("CapacityPoolData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(Guid?), typeof(long), typeof(NetAppFileServiceLevel), typeof(string), typeof(float?), typeof(float?), typeof(CapacityPoolQosType?), typeof(bool?), typeof(CapacityPoolEncryptionType?))]
     public static partial class ArmNetAppModelFactory
     {
-        /// <summary> Source Cluster properties for a cluster peer request. </summary>
-        /// <param name="peerIPAddresses"> A list of IC-LIF IPs that can be used to connect to the On-prem cluster. </param>
-        /// <returns> A new <see cref="Models.PeerClusterForVolumeMigrationContent"/> instance for mocking. </returns>
-        public static PeerClusterForVolumeMigrationContent PeerClusterForVolumeMigrationContent(IEnumerable<string> peerIPAddresses = default)
-        {
-            peerIPAddresses ??= new ChangeTrackingList<string>();
-
-            return new PeerClusterForVolumeMigrationContent(peerIPAddresses.ToList());
-        }
-
         /// <summary> Migrate Backups Request. </summary>
         /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
         /// <returns> A new <see cref="Models.BackupsMigrationContent"/> instance for mocking. </returns>
@@ -46,21 +36,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of NetAppSecretPasswordKeyVaultPatchProperties. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppSecretPasswordKeyVaultPatchProperties NetAppSecretPasswordKeyVaultPatchProperties(Uri keyVaultUri = default, string secretName = default)
-            => new NetAppSecretPasswordKeyVaultPatchProperties(keyVaultUri, secretName, default);
-
-        /// <summary> Initializes a new instance of NetAppSecretPasswordIdentity. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppSecretPasswordIdentity NetAppSecretPasswordIdentity(string principalId = default, string userAssignedIdentity = default)
-            => new NetAppSecretPasswordIdentity(principalId, userAssignedIdentity, default);
-
-        /// <summary> Initializes a new instance of NetAppSecretPassword. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppSecretPassword NetAppSecretPassword(NetAppSecretPasswordKeyVaultPatchProperties keyVaultProperties = default, NetAppSecretPasswordIdentity identity = default)
-            => new NetAppSecretPassword(keyVaultProperties, identity, default);
-
         /// <summary> Initializes a new instance of ActiveDirectoryConfigProperties. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ActiveDirectoryConfigProperties ActiveDirectoryConfigProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default, NetAppProvisioningState? provisioningState = default, string domain = default, NetAppSecretPassword secretPassword = default)
@@ -71,167 +46,22 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppActiveDirectoryConfigPatchProperties NetAppActiveDirectoryConfigPatchProperties(string userName = default, IEnumerable<IPAddress> dns = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IEnumerable<string> securityOperators = default, string domain = default, NetAppSecretPassword secretPassword = default)
             => new NetAppActiveDirectoryConfigPatchProperties(userName, dns?.ToList() ?? new List<IPAddress>(), smbServerName, organizationalUnit, site, backupOperators?.ToList() ?? new List<string>(), administrators?.ToList() ?? new List<string>(), securityOperators?.ToList() ?? new List<string>(), domain, secretPassword, default);
 
-        /// <summary> Initializes a new instance of NetAppActiveDirectoryConfigPatch. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppActiveDirectoryConfigPatch NetAppActiveDirectoryConfigPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, NetAppActiveDirectoryConfigPatchProperties properties = default)
-            => new NetAppActiveDirectoryConfigPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-
         /// <summary> Initializes a new instance of NetAppActiveDirectoryConfigData. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ActiveDirectoryConfigProperties properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
             => new NetAppActiveDirectoryConfigData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, eTag, identity, default);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChangeZoneContent ChangeZoneContent(string newZone = default)
-            => new ChangeZoneContent(newZone);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CheckElasticVolumeFilePathAvailabilityContent CheckElasticVolumeFilePathAvailabilityContent(string filePath = default)
-            => new CheckElasticVolumeFilePathAvailabilityContent(filePath);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CheckElasticResourceAvailabilityResult CheckElasticResourceAvailabilityResult(CheckElasticResourceAvailabilityStatus? isAvailable = default, CheckElasticResourceAvailabilityReason? reason = default, string message = default)
-            => new CheckElasticResourceAvailabilityResult(isAvailable, reason, message);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticAccountProperties ElasticAccountProperties(NetAppProvisioningState? provisioningState = default, ElasticEncryption encryption = default)
-            => new ElasticAccountProperties(provisioningState, encryption);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticEncryption ElasticEncryption(NetAppKeySource? keySource = default, ElasticKeyVaultProperties keyVaultProperties = default, ElasticEncryptionIdentity identity = default)
-            => new ElasticEncryption(keySource, keyVaultProperties, identity);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticKeyVaultProperties ElasticKeyVaultProperties(Uri keyVaultUri = default, string keyName = default, ResourceIdentifier keyVaultResourceId = default, ElasticKeyVaultStatus? status = default)
-            => new ElasticKeyVaultProperties(keyVaultUri, keyName, keyVaultResourceId, status);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticEncryptionIdentity ElasticEncryptionIdentity(string principalId = default, ResourceIdentifier userAssignedIdentity = default, string federatedClientId = default)
-            => new ElasticEncryptionIdentity(principalId, userAssignedIdentity, federatedClientId);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticAccountPatch NetAppElasticAccountPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ElasticEncryption elasticAccountUpdateEncryption = default)
-            => new NetAppElasticAccountPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), elasticAccountUpdateEncryption);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticAccountData NetAppElasticAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticAccountProperties properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
-            => new NetAppElasticAccountData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, eTag, identity);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticEncryptionConfiguration ElasticEncryptionConfiguration(ElasticPoolEncryptionKeySource elasticPoolEncryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default)
-            => new ElasticEncryptionConfiguration(elasticPoolEncryptionKeySource, keyVaultPrivateEndpointResourceId);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticCapacityPoolProperties ElasticCapacityPoolProperties(long size = default, ElasticServiceLevel serviceLevel = default, NetAppProvisioningState? provisioningState = default, ElasticEncryptionConfiguration encryption = default, double? totalThroughputMibps = default, ResourceIdentifier subnetResourceId = default, string currentZone = default, ElasticResourceAvailabilityStatus? availabilityStatus = default, ResourceIdentifier activeDirectoryConfigResourceId = default)
-            => new ElasticCapacityPoolProperties(size, serviceLevel, provisioningState, encryption, totalThroughputMibps, subnetResourceId, currentZone, availabilityStatus, activeDirectoryConfigResourceId);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticCapacityPoolPatch NetAppElasticCapacityPoolPatch(IDictionary<string, string> tags = default, NetAppElasticCapacityPoolPatchProperties properties = default)
-            => new NetAppElasticCapacityPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticCapacityPoolPatchProperties NetAppElasticCapacityPoolPatchProperties(long? size = default, ElasticEncryptionConfiguration encryption = default, ResourceIdentifier activeDirectoryConfigResourceId = default)
             => new NetAppElasticCapacityPoolPatchProperties(size, encryption, activeDirectoryConfigResourceId);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticCapacityPoolData NetAppElasticCapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticCapacityPoolProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default)
-            => new NetAppElasticCapacityPoolData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, eTag, zones);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticExportPolicyRule ElasticExportPolicyRule(int? ruleIndex = default, ElasticUnixAccessRule? unixAccessRule = default, ElasticNfsv3Access? nfsv3 = default, ElasticNfsv4Access? nfsv4 = default, IEnumerable<string> allowedClients = default, ElasticRootAccess? rootAccess = default)
-            => new ElasticExportPolicyRule(ruleIndex, unixAccessRule, nfsv3, nfsv4, allowedClients, rootAccess);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticMountTargetProperties ElasticMountTargetProperties(IPAddress ipAddress = default, string smbServerFqdn = default)
-            => new ElasticMountTargetProperties(ipAddress, smbServerFqdn);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticVolumeBackupProperties ElasticVolumeBackupProperties(ResourceIdentifier elasticBackupPolicyResourceId = default, ElasticVolumePolicyEnforcement? policyEnforcement = default, ResourceIdentifier elasticBackupVaultResourceId = default)
-            => new ElasticVolumeBackupProperties(elasticBackupPolicyResourceId, policyEnforcement, elasticBackupVaultResourceId);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticVolumeDataProtectionProperties ElasticVolumeDataProtectionProperties(ResourceIdentifier snapshotPolicyResourceId = default, ElasticVolumeBackupProperties backup = default)
-            => new ElasticVolumeDataProtectionProperties(snapshotPolicyResourceId, backup);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticVolumeDataProtectionPatchProperties ElasticVolumeDataProtectionPatchProperties(ResourceIdentifier snapshotPolicyResourceId = default, ElasticVolumeBackupProperties backup = default)
-            => new ElasticVolumeDataProtectionPatchProperties(snapshotPolicyResourceId, backup);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticVolumeProperties ElasticVolumeProperties(string filePath = default, long size = default, IEnumerable<ElasticExportPolicyRule> exportRules = default, IEnumerable<ElasticProtocolType> protocolTypes = default, NetAppProvisioningState? provisioningState = default, ElasticResourceAvailabilityStatus? availabilityStatus = default, ResourceIdentifier snapshotResourceId = default, IEnumerable<ElasticMountTargetProperties> mountTargets = default, ElasticVolumeDataProtectionProperties dataProtection = default, SnapshotDirectoryVisibility? snapshotDirectoryVisibility = default, ElasticSmbEncryption? smbEncryption = default, ResourceIdentifier backupResourceId = default, ElasticVolumeRestorationState? restorationState = default)
-            => new ElasticVolumeProperties(filePath, size, exportRules, protocolTypes, provisioningState, availabilityStatus, snapshotResourceId, mountTargets, dataProtection, snapshotDirectoryVisibility, smbEncryption, backupResourceId, restorationState);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticVolumePatch NetAppElasticVolumePatch(IDictionary<string, string> tags = default, NetAppElasticVolumePatchProperties properties = default)
-            => new NetAppElasticVolumePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticVolumePatchProperties NetAppElasticVolumePatchProperties(long? size = default, IEnumerable<ElasticExportPolicyRule> exportRules = default, ElasticVolumeDataProtectionPatchProperties dataProtection = default, SnapshotDirectoryVisibility? snapshotDirectoryVisibility = default, ElasticSmbEncryption? smbEncryption = default)
             => new NetAppElasticVolumePatchProperties(size, exportRules, dataProtection, snapshotDirectoryVisibility, smbEncryption);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticVolumeRevert ElasticVolumeRevert(ResourceIdentifier snapshotResourceId = default)
-            => new ElasticVolumeRevert(snapshotResourceId);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticVolumeData NetAppElasticVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticVolumeProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default)
-            => new NetAppElasticVolumeData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, eTag, zones);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticSnapshotPolicyHourlySchedule ElasticSnapshotPolicyHourlySchedule(int? snapshotsToKeep = default, int? minute = default)
-            => new ElasticSnapshotPolicyHourlySchedule(snapshotsToKeep, minute);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticSnapshotPolicyDailySchedule ElasticSnapshotPolicyDailySchedule(int? snapshotsToKeep = default, int? hour = default, int? minute = default)
-            => new ElasticSnapshotPolicyDailySchedule(snapshotsToKeep, hour, minute);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticSnapshotPolicyWeeklySchedule ElasticSnapshotPolicyWeeklySchedule(int? snapshotsToKeep = default, IEnumerable<DayOfWeek> days = default, int? hour = default, int? minute = default)
-            => new ElasticSnapshotPolicyWeeklySchedule(snapshotsToKeep, days, hour, minute);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticSnapshotPolicyMonthlySchedule ElasticSnapshotPolicyMonthlySchedule(int? snapshotsToKeep = default, IEnumerable<int> daysOfMonth = default, int? hour = default, int? minute = default)
-            => new ElasticSnapshotPolicyMonthlySchedule(snapshotsToKeep, daysOfMonth, hour, minute);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticSnapshotPolicyProperties ElasticSnapshotPolicyProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule = default, ElasticSnapshotPolicyDailySchedule dailySchedule = default, ElasticSnapshotPolicyWeeklySchedule weeklySchedule = default, ElasticSnapshotPolicyMonthlySchedule monthlySchedule = default, ElasticSnapshotPolicyStatus? policyStatus = default, NetAppProvisioningState? provisioningState = default)
-            => new ElasticSnapshotPolicyProperties(hourlySchedule, dailySchedule, weeklySchedule, monthlySchedule, policyStatus, provisioningState);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticSnapshotPolicyPatch NetAppElasticSnapshotPolicyPatch(IDictionary<string, string> tags = default, NetAppElasticSnapshotPolicyPatchProperties properties = default)
-            => new NetAppElasticSnapshotPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticSnapshotPolicyPatchProperties NetAppElasticSnapshotPolicyPatchProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule = default, ElasticSnapshotPolicyDailySchedule dailySchedule = default, ElasticSnapshotPolicyWeeklySchedule weeklySchedule = default, ElasticSnapshotPolicyMonthlySchedule monthlySchedule = default, ElasticSnapshotPolicyStatus? policyStatus = default)
             => new NetAppElasticSnapshotPolicyPatchProperties(hourlySchedule, dailySchedule, weeklySchedule, monthlySchedule, policyStatus);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticSnapshotPolicyData NetAppElasticSnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticSnapshotPolicyProperties properties = default, ETag? eTag = default)
-            => new NetAppElasticSnapshotPolicyData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, eTag);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticSnapshotData NetAppElasticSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetAppProvisioningState? elasticSnapshotProvisioningState = default)
-            => new NetAppElasticSnapshotData(id, name, resourceType, systemData, elasticSnapshotProvisioningState);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticBackupVaultData NetAppElasticBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppProvisioningState? elasticBackupVaultProvisioningState = default, ETag? eTag = default)
-            => new NetAppElasticBackupVaultData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, elasticBackupVaultProvisioningState, eTag);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticBackupVaultPatch NetAppElasticBackupVaultPatch(IDictionary<string, string> tags = default)
-            => new NetAppElasticBackupVaultPatch(tags ?? new ChangeTrackingDictionary<string, string>());
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticBackupPolicyProperties ElasticBackupPolicyProperties(NetAppProvisioningState? provisioningState = default, int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, int? assignedVolumesCount = default, ElasticBackupPolicyState? policyState = default)
-            => new ElasticBackupPolicyProperties(provisioningState, dailyBackupsToKeep, weeklyBackupsToKeep, monthlyBackupsToKeep, assignedVolumesCount, policyState);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticBackupPolicyData NetAppElasticBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticBackupPolicyProperties properties = default, ETag? eTag = default)
-            => new NetAppElasticBackupPolicyData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, eTag);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticBackupPolicyPatch NetAppElasticBackupPolicyPatch(IDictionary<string, string> tags = default, NetAppElasticBackupPolicyPatchProperties properties = default)
-            => new NetAppElasticBackupPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppElasticBackupPolicyPatchProperties NetAppElasticBackupPolicyPatchProperties(int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, ElasticBackupPolicyState? policyState = default)
@@ -240,10 +70,6 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticBackupProperties ElasticBackupProperties(DateTimeOffset? createdOn = default, DateTimeOffset? snapshotCreationOn = default, DateTimeOffset? completionOn = default, NetAppProvisioningState? provisioningState = default, long? size = default, string label = default, ElasticBackupType? backupType = default, string failureReason = default, ResourceIdentifier elasticVolumeResourceId = default, ElasticBackupSnapshotUsage? snapshotUsage = default, ResourceIdentifier elasticSnapshotResourceId = default, ResourceIdentifier elasticBackupPolicyResourceId = default, ElasticBackupVolumeSize? volumeSize = default)
             => new ElasticBackupProperties(createdOn, snapshotCreationOn, completionOn, provisioningState, size, label, backupType, failureReason, elasticVolumeResourceId, snapshotUsage, elasticSnapshotResourceId, elasticBackupPolicyResourceId, volumeSize);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppElasticBackupData NetAppElasticBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticBackupProperties properties = default)
-            => new NetAppElasticBackupData(id, name, resourceType, systemData, properties);
 
         /// <summary> Initializes a new instance of NetAppBackupData. </summary>
         /// <param name="id"> The id. </param>
@@ -295,16 +121,6 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppVolumeGroupMetadata metadata = NetAppVolumeGroupMetadata(groupDescription, applicationType, applicationIdentifier, globalPlacementRules, volumesCount);
             metadata.DeploymentSpecId = deploymentSpecId;
             return metadata;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AvailabilityZoneMapping"/>. </summary>
-        /// <param name="availabilityZone"> Logical availability zone. </param>
-        /// <param name="isAvailable"> Available availability zone. </param>
-        /// <returns> A new <see cref="Models.AvailabilityZoneMapping"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvailabilityZoneMapping AvailabilityZoneMapping(string availabilityZone = null, bool? isAvailable = null)
-        {
-            return new AvailabilityZoneMapping(availabilityZone, isAvailable, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumePatch"/>. </summary>
@@ -719,64 +535,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static CapacityPoolData CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, int? customThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType)
         {
             return CapacityPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, poolId: poolId, size: size, serviceLevel: serviceLevel, provisioningState: provisioningState, totalThroughputMibps: totalThroughputMibps, utilizedThroughputMibps: utilizedThroughputMibps, customThroughputMibpsInt: customThroughputMibps, qosType: qosType, isCoolAccessEnabled: isCoolAccessEnabled, encryptionType: encryptionType, eTag: etag);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
-        {
-            return CreateNetAppVolumePatchCompat(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                serviceLevel: serviceLevel,
-                usageThreshold: usageThreshold,
-                protocolTypes: protocolTypes,
-                throughputMibps: throughputMibps,
-                dataProtection: dataProtection,
-                isDefaultQuotaEnabled: isDefaultQuotaEnabled,
-                defaultUserQuotaInKiBs: defaultUserQuotaInKiBs,
-                defaultGroupQuotaInKiBs: defaultGroupQuotaInKiBs,
-                unixPermissions: unixPermissions,
-                isCoolAccessEnabled: isCoolAccessEnabled,
-                coolnessPeriod: coolnessPeriod,
-                coolAccessRetrievalPolicy: coolAccessRetrievalPolicy,
-                coolAccessTieringPolicy: coolAccessTieringPolicy,
-                isSnapshotDirectoryVisible: isSnapshotDirectoryVisible,
-                smbAccessBasedEnumeration: smbAccessBasedEnumeration,
-                smbNonBrowsable: smbNonBrowsable,
-                exportRules: exportRules);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
-        {
-            return CreateNetAppVolumePatchCompat(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                serviceLevel: serviceLevel,
-                usageThreshold: usageThreshold,
-                protocolTypes: protocolTypes,
-                throughputMibps: throughputMibps,
-                dataProtection: dataProtection,
-                isDefaultQuotaEnabled: isDefaultQuotaEnabled,
-                defaultUserQuotaInKiBs: defaultUserQuotaInKiBs,
-                defaultGroupQuotaInKiBs: defaultGroupQuotaInKiBs,
-                unixPermissions: unixPermissions,
-                isCoolAccessEnabled: isCoolAccessEnabled,
-                coolnessPeriod: coolnessPeriod,
-                coolAccessRetrievalPolicy: coolAccessRetrievalPolicy,
-                coolAccessTieringPolicy: default,
-                isSnapshotDirectoryVisible: isSnapshotDirectoryVisible,
-                smbAccessBasedEnumeration: smbAccessBasedEnumeration,
-                smbNonBrowsable: smbNonBrowsable,
-                exportRules: exportRules);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -30,6 +30,8 @@ import {
   ArmProviderSchemaSnapshots,
   emitArmProviderSchemaSnapshots
 } from "./arm-provider-schema-snapshot.js";
+import { removeReferenceIdsFromUnknownValues } from "./reference-metadata-sanitizer.js";
+import { markApiVersionOverrides } from "./api-version-override.js";
 
 export type ManagementCodeModelTransformer = (
   codeModel: CodeModel,
@@ -76,8 +78,10 @@ export async function emitManagementCodeModel(
       context.options
     );
     armProviderSchemaSnapshots = armProviderSchemaResult;
+    markApiVersionOverrides(codeModel, sdkContext);
     setFlattenProperty(codeModel, sdkContext);
     setHasClientNameOverride(codeModel, sdkContext);
+    removeReferenceIdsFromUnknownValues(codeModel);
     return (
       transform?.(codeModel, sdkContext, armProviderSchemaResult.selected) ??
       codeModel

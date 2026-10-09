@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// N-Cross validations value.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
     /// </summary>
     public partial class NCrossValidations : ProvisionableConstruct
     {
+        private BicepValue<NCrossValidationsMode> _mode;
+
         /// <summary> Creates a new NCrossValidations. </summary>
         public NCrossValidations()
         {
+        }
+
+        /// <summary> [Required] Mode for determining N-Cross validations. </summary>
+        internal BicepValue<NCrossValidationsMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
         }
 
         /// <summary> Define all the provisionable properties for NCrossValidations. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _mode = DefineProperty<NCrossValidationsMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

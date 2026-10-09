@@ -13,37 +13,8 @@ namespace Azure.Security.ConfidentialLedger.Models
     /// <summary> Components that make up a receipt leaf node. </summary>
     public partial class ReceiptLeafComponents
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReceiptLeafComponents"/>. </summary>
         internal ReceiptLeafComponents()
@@ -54,19 +25,21 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <param name="claimsDigest"> Claims digest. </param>
         /// <param name="commitEvidence"> Commit evidence. </param>
         /// <param name="writeSetDigest"> Write set digest. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReceiptLeafComponents(string claimsDigest, string commitEvidence, string writeSetDigest, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReceiptLeafComponents(string claimsDigest, string commitEvidence, string writeSetDigest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClaimsDigest = claimsDigest;
             CommitEvidence = commitEvidence;
             WriteSetDigest = writeSetDigest;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Claims digest. </summary>
         public string ClaimsDigest { get; }
+
         /// <summary> Commit evidence. </summary>
         public string CommitEvidence { get; }
+
         /// <summary> Write set digest. </summary>
         public string WriteSetDigest { get; }
     }

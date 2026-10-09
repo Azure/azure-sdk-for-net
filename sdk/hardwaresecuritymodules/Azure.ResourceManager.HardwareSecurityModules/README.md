@@ -4,6 +4,8 @@
 
 **Azure Dedicated HSM:** Azure Dedicated HSM is a single-tenant bare metal HSM service that allows customers to lease a general-purpose HSM appliance within Microsoft datacenters, providing complete ownership, management and control. It is particularly beneficial for legacy lift-and-shift workloads.
 
+**Azure Payment HSM:** Azure Payment HSM is a single-tenant HSM service that provides cryptographic key operations for real-time, critical payment transactions in Azure. It is designed to help payment service providers and financial institutions meet PCI DSS, PCI 3DS and PCI PIN compliance requirements.
+
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.

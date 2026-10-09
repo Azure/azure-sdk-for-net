@@ -43,6 +43,7 @@
       "$id": "5",
       "kind": "model",
       "name": "Plant",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.Plant",
       "usage": "Input,Output,Json",
@@ -59,6 +60,7 @@
           "$id": "6",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the plant.",
           "type": {
@@ -86,6 +88,7 @@
           "$id": "8",
           "kind": "property",
           "name": "species",
+          "apiVersions": [],
           "serializedName": "species",
           "doc": "The species of the plant.",
           "type": {

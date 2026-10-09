@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
+        public ExpressRoutePortsLocationData() : this(default)
+        {
+        }
+
         /// <summary> ExpressRoutePort peering location properties. </summary>
         [WirePath("properties")]
         internal ExpressRoutePortsLocationPropertiesFormat Properties { get; }

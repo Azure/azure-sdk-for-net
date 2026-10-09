@@ -5,41 +5,20 @@
 
 #nullable disable
 
-using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The safety profile of the Gallery Script Version. </summary>
-    internal partial class GalleryScriptVersionSafetyProfile : ProvisionableConstruct
+    internal partial class GalleryScriptVersionSafetyProfile : GalleryArtifactSafetyProfileBase
     {
-        private BicepValue<bool> _allowDeletionOfReplicatedLocations;
-
         /// <summary> Creates a new GalleryScriptVersionSafetyProfile. </summary>
         public GalleryScriptVersionSafetyProfile()
         {
-        }
-
-        /// <summary> Gets or sets the AllowDeletionOfReplicatedLocations. </summary>
-        public BicepValue<bool> AllowDeletionOfReplicatedLocations
-        {
-            get
-            {
-                Initialize();
-                return _allowDeletionOfReplicatedLocations;
-            }
-            set
-            {
-                Initialize();
-                _allowDeletionOfReplicatedLocations.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for GalleryScriptVersionSafetyProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _allowDeletionOfReplicatedLocations = DefineProperty<bool>(nameof(AllowDeletionOfReplicatedLocations), new string[] { "allowDeletionOfReplicatedLocations" });
             DefineAdditionalProperties();
         }
 

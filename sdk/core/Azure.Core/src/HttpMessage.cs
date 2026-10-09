@@ -115,6 +115,21 @@ namespace Azure.Core
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
+        internal void CopyPipelineStateTo(HttpMessage destination)
+        {
+            for (int i = 0; i < _propertyBag.Count; i++)
+            {
+                _propertyBag.GetAt(i, out ulong key, out object value);
+                destination._propertyBag.Set(key, value);
+            }
+
+            destination.NetworkTimeout = NetworkTimeout;
+            if (Policies != null)
+            {
+                destination.Policies = new(Policies);
+            }
+        }
+
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
         /// </summary>

@@ -111,10 +111,7 @@ namespace Azure.ResourceManager.AppContainers
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
             _userAgent.Apply(message);
-            if (content != null)
-            {
-                request.Headers.SetValue("Content-Type", "application/json");
-            }
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;

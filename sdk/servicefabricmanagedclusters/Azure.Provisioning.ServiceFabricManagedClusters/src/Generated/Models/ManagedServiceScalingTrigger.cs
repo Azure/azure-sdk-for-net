@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabricManagedClusters
 {
     /// <summary>
     /// Describes the trigger for performing a scaling operation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AveragePartitionLoadScalingTrigger"/> and <see cref="AverageServiceLoadScalingTrigger"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AveragePartitionLoadScalingTrigger"/> and <see cref="AverageServiceLoadScalingTrigger"/>.
     /// </summary>
     public partial class ManagedServiceScalingTrigger : ProvisionableConstruct
     {
+        private BicepValue<ServiceScalingTriggerKind> _kind;
+
         /// <summary> Creates a new ManagedServiceScalingTrigger. </summary>
         public ManagedServiceScalingTrigger()
         {
+        }
+
+        /// <summary> Gets the Kind. </summary>
+        internal BicepValue<ServiceScalingTriggerKind> Kind
+        {
+            get
+            {
+                Initialize();
+                return _kind;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ManagedServiceScalingTrigger. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _kind = DefineProperty<ServiceScalingTriggerKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

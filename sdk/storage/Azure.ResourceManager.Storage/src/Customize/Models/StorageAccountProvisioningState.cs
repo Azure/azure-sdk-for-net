@@ -23,17 +23,6 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CreatingValue = "Creating";
-        private const string ResolvingDnsValue = "ResolvingDNS";
-        private const string SucceededValue = "Succeeded";
-
-        /// <summary> Creating. </summary>
-        public static StorageAccountProvisioningState Creating { get; } = new StorageAccountProvisioningState(CreatingValue);
-        /// <summary> ResolvingDNS. </summary>
-        public static StorageAccountProvisioningState ResolvingDns { get; } = new StorageAccountProvisioningState(ResolvingDnsValue);
-        /// <summary> Succeeded. </summary>
-        public static StorageAccountProvisioningState Succeeded { get; } = new StorageAccountProvisioningState(SucceededValue);
-
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountProvisioningState other && Equals(other);

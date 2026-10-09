@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="location"> The location name. </param>
-        /// <param name="lookbackInMinutes"> The number of minutes to look back for errors. </param>
+        /// <param name="lookbackInMinutes"> The number of minutes before the current time to include when listing bulk action errors. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
         public VirtualMachineBulkOperationsBulkListOperationErrorsAsyncCollectionResultOfT(VirtualMachineBulkOperations client, Guid subscriptionId, string resourceGroupName, AzureLocation location, int? lookbackInMinutes, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)

@@ -509,7 +509,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return PropertyUpdatesInProgress.TargetTier;
+                return PropertyUpdatesInProgress is null ? default : PropertyUpdatesInProgress.TargetTier;
             }
         }
 

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup request. Workload-specific backup requests are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareBackupContent"/>, <see cref="WorkloadBackupContent"/>, and <see cref="IaasVmBackupContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareBackupContent"/>, <see cref="IaasVmBackupContent"/>, and <see cref="WorkloadBackupContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBackupRequest))]
     public abstract partial class BackupContent : IJsonModel<BackupContent>
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     case "AzureFileShareBackupRequest":
                         return FileShareBackupContent.DeserializeFileShareBackupContent(element, options);
-                    case "AzureWorkloadBackupRequest":
-                        return WorkloadBackupContent.DeserializeWorkloadBackupContent(element, options);
                     case "IaasVMBackupRequest":
                         return IaasVmBackupContent.DeserializeIaasVmBackupContent(element, options);
+                    case "AzureWorkloadBackupRequest":
+                        return WorkloadBackupContent.DeserializeWorkloadBackupContent(element, options);
                 }
             }
             return UnknownBackupRequest.DeserializeUnknownBackupRequest(element, options);

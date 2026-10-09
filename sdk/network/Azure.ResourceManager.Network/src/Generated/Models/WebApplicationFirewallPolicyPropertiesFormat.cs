@@ -43,8 +43,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="httpListeners"> A collection of references to application gateway http listeners. </param>
         /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
         /// <param name="applicationGatewayForContainers"> A collection of references to application gateway for containers. </param>
+        /// <param name="tier"> Tier of a web application firewall policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallPolicyPropertiesFormat(PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules, IReadOnlyList<ApplicationGatewayForContainersReferenceDefinition> applicationGatewayForContainers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebApplicationFirewallPolicyPropertiesFormat(PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules, IReadOnlyList<ApplicationGatewayForContainersReferenceDefinition> applicationGatewayForContainers, WebApplicationFirewallPolicyTier? tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicySettings = policySettings;
             CustomRules = customRules;
@@ -55,6 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             HttpListeners = httpListeners;
             PathBasedRules = pathBasedRules;
             ApplicationGatewayForContainers = applicationGatewayForContainers;
+            Tier = tier;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -93,5 +95,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A collection of references to application gateway for containers. </summary>
         [WirePath("applicationGatewayForContainers")]
         public IReadOnlyList<ApplicationGatewayForContainersReferenceDefinition> ApplicationGatewayForContainers { get; } = new ChangeTrackingList<ApplicationGatewayForContainersReferenceDefinition>();
+
+        /// <summary> Tier of a web application firewall policy. </summary>
+        [WirePath("tier")]
+        public WebApplicationFirewallPolicyTier? Tier { get; set; }
     }
 }

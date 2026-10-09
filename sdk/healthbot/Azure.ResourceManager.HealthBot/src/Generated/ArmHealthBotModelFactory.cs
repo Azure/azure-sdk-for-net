@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 default);
         }
 
+        /// <summary> The properties of a Azure Health Bot. The Health Bot Service is a cloud platform that empowers developers in Healthcare organizations to build and deploy their compliant, AI-powered virtual health assistants and health bots, that help them improve processes and reduce costs. </summary>
         /// <param name="provisioningState"> The provisioning state of the Azure Health Bot resource. </param>
         /// <param name="botManagementPortalLink"> The link. </param>
         /// <param name="keyVaultProperties"> KeyVault properties for the resource encryption. </param>
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod, default);
         }
 
+        /// <summary> Properties of the key vault. </summary>
         /// <param name="keyName"> The name of the key vault key. </param>
         /// <param name="keyVersion"> The version of the key vault key. </param>
         /// <param name="keyVaultUri"> The Uri of the key vault. </param>
@@ -66,6 +68,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             return new HealthBotKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity, default);
         }
 
+        /// <summary> The resource model definition representing SKU. </summary>
         /// <param name="name"> The name of the Azure Health Bot SKU. </param>
         /// <returns> A new <see cref="Models.HealthBotSku"/> instance for mocking. </returns>
         public static HealthBotSku HealthBotSku(HealthBotSkuName name = default)
@@ -92,6 +95,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 default);
         }
 
+        /// <summary> Health Bot Keys Response. </summary>
         /// <param name="secrets"> Array of Azure Health Bot Secrets. </param>
         /// <returns> A new <see cref="Models.HealthBotKeysResult"/> instance for mocking. </returns>
         public static HealthBotKeysResult HealthBotKeysResult(IEnumerable<HealthBotKey> secrets = default)
@@ -101,6 +105,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             return new HealthBotKeysResult((secrets ?? new ChangeTrackingList<HealthBotKey>()).ToList(), default);
         }
 
+        /// <summary> An entry of HealthBotKeysResponse. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="value"> The value of the key. </param>
         /// <returns> A new <see cref="Models.HealthBotKey"/> instance for mocking. </returns>
@@ -109,14 +114,14 @@ namespace Azure.ResourceManager.HealthBot.Models
             return new HealthBotKey(keyName, value, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthBot.HealthBotData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> SKU of the Azure Health Bot. </param>
+        /// <summary> Azure Health Bot resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="skuName"> The name of the Azure Health Bot SKU. </param>
         /// <param name="identity"> The identity of the Azure Health Bot. </param>
         /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
         /// <returns> A new <see cref="HealthBot.HealthBotData"/> instance for mocking. </returns>
@@ -136,7 +141,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthBotProperties"/>. </summary>
+        /// <summary> The properties of a Azure Health Bot. The Health Bot Service is a cloud platform that empowers developers in Healthcare organizations to build and deploy their compliant, AI-powered virtual health assistants and health bots, that help them improve processes and reduce costs. </summary>
         /// <param name="provisioningState"> The provisioning state of the Azure Health Bot resource. </param>
         /// <param name="botManagementPortalLink"> The link. </param>
         /// <param name="keyVaultProperties"> KeyVault properties for the resource encryption. </param>

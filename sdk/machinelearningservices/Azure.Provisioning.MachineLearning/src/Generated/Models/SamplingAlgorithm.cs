@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -12,19 +13,32 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary>
     /// The Sampling Algorithm used to generate hyperparameter values, along with properties to
     /// configure the algorithm
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/>, and <see cref="RandomSamplingAlgorithm"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/>, and <see cref="RandomSamplingAlgorithm"/>.
     /// </summary>
     public partial class SamplingAlgorithm : ProvisionableConstruct
     {
+        private BicepValue<SamplingAlgorithmType> _samplingAlgorithmType;
+
         /// <summary> Creates a new SamplingAlgorithm. </summary>
         public SamplingAlgorithm()
         {
+        }
+
+        /// <summary> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </summary>
+        internal BicepValue<SamplingAlgorithmType> SamplingAlgorithmType
+        {
+            get
+            {
+                Initialize();
+                return _samplingAlgorithmType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for SamplingAlgorithm. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _samplingAlgorithmType = DefineProperty<SamplingAlgorithmType>(nameof(SamplingAlgorithmType), new string[] { "samplingAlgorithmType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

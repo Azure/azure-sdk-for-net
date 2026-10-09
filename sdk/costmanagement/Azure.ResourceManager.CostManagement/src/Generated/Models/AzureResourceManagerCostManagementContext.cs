@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.CostManagement.Models;
 using Azure.ResourceManager.Models;
 
@@ -138,6 +139,7 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(ReportOperationStatus))]
     [ModelReaderWriterBuildable(typeof(ReportURL))]
     [ModelReaderWriterBuildable(typeof(Models.RequestContext))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanUtilizationSummary))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanUtilizationSummaryProperties))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionData))]

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
     /// Properties in ServiceResourceCreateUpdateParameters.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>, <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>, and <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>, <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>, and <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownServiceResourceCreateUpdateProperties))]
     public abstract partial class ServiceResourceCreateUpdateProperties : IJsonModel<ServiceResourceCreateUpdateProperties>
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     case "DataTransfer":
                         return DataTransferServiceResourceCreateUpdateProperties.DeserializeDataTransferServiceResourceCreateUpdateProperties(element, options);
-                    case "SqlDedicatedGateway":
-                        return SqlDedicatedGatewayServiceResourceCreateUpdateProperties.DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(element, options);
                     case "GraphAPICompute":
                         return GraphApiComputeServiceResourceCreateUpdateProperties.DeserializeGraphApiComputeServiceResourceCreateUpdateProperties(element, options);
                     case "MaterializedViewsBuilder":
                         return MaterializedViewsBuilderServiceResourceCreateUpdateProperties.DeserializeMaterializedViewsBuilderServiceResourceCreateUpdateProperties(element, options);
+                    case "SqlDedicatedGateway":
+                        return SqlDedicatedGatewayServiceResourceCreateUpdateProperties.DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(element, options);
                 }
             }
             return UnknownServiceResourceCreateUpdateProperties.DeserializeUnknownServiceResourceCreateUpdateProperties(element, options);

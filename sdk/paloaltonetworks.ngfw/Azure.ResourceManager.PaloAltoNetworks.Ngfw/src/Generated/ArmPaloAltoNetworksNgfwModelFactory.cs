@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -18,6 +19,171 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPaloAltoNetworksNgfwModelFactory
     {
+
+        /// <summary> Custom Capture Configuration on a firewall (singleton). Sync child resource — caller polls GET to track pcapStatus until terminal (Success / Failed). </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Ngfw.CustomCaptureConfigurationsFirewallData"/> instance for mocking. </returns>
+        public static CustomCaptureConfigurationsFirewallData CustomCaptureConfigurationsFirewallData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CustomCaptureConfigurationsProperties properties = default)
+        {
+            return new CustomCaptureConfigurationsFirewallData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of a Custom Capture Configuration. NOTE: this is a sync proxy resource, NOT an LRO — there is intentionally no provisioningState field. </summary>
+        /// <param name="pcapFilter"> List of filters to match packets against (1-4 entries). Required on PUT (input). May be omitted in GET responses while pcapStatus is InProgress because the backend has not finalized echo-back yet; echoed in terminal Success responses. </param>
+        /// <param name="pcapStages"> List of firewall stages where packets should be captured (1-4 entries). Required on PUT (input). May be omitted in GET responses while pcapStatus is InProgress because the backend has not finalized echo-back yet; echoed in terminal Success responses. </param>
+        /// <param name="durationInSec"> Capture duration in seconds (1-180). Required on PUT (input). May be omitted in GET responses while pcapStatus is InProgress because the backend has not finalized echo-back yet; echoed in terminal Success responses. </param>
+        /// <param name="storageAccountResourceId"> ARM resource ID of the customer's storage account where the capture file will be written. Required on PUT (input). May be omitted in GET responses while pcapStatus is InProgress because the backend has not finalized echo-back yet; echoed in terminal Success responses. </param>
+        /// <param name="pcapStatus"> Current capture status. Read-only. Clients should poll GET until this is Success or Failed. </param>
+        /// <param name="pcapDetailReason"> Detailed reason for the current status, populated by PAN. Typically set when pcapStatus is Failed. Read-only. </param>
+        /// <param name="nextCheckInSeconds"> Polling-cadence hint in seconds. Set on non-terminal responses (pcapStatus = InProgress) so clients know how long to wait before the next GET. Omitted on terminal responses (Success / Failed). Read-only. </param>
+        /// <param name="message"> Human-readable status message for display in client UIs (Portal blade, CLI output, etc.). English only. Read-only. </param>
+        /// <returns> A new <see cref="Models.CustomCaptureConfigurationsProperties"/> instance for mocking. </returns>
+        public static CustomCaptureConfigurationsProperties CustomCaptureConfigurationsProperties(IEnumerable<CustomCaptureConfigurationsFilter> pcapFilter = default, IEnumerable<CustomCaptureConfigurationsStage> pcapStages = default, int? durationInSec = default, ResourceIdentifier storageAccountResourceId = default, CustomCaptureConfigurationsStatus? pcapStatus = default, string pcapDetailReason = default, int? nextCheckInSeconds = default, string message = default)
+        {
+            pcapFilter ??= new ChangeTrackingList<CustomCaptureConfigurationsFilter>();
+            pcapStages ??= new ChangeTrackingList<CustomCaptureConfigurationsStage>();
+
+            return new CustomCaptureConfigurationsProperties(
+                (pcapFilter ?? new ChangeTrackingList<CustomCaptureConfigurationsFilter>()).ToList(),
+                (pcapStages ?? new ChangeTrackingList<CustomCaptureConfigurationsStage>()).ToList(),
+                durationInSec,
+                storageAccountResourceId,
+                pcapStatus,
+                pcapDetailReason,
+                nextCheckInSeconds,
+                message,
+                default);
+        }
+
+        /// <summary> A single packet-capture filter rule. sourcePort is OPTIONAL — when omitted, any source port matches. </summary>
+        /// <param name="protocol"> Network protocol — TCP or UDP. </param>
+        /// <param name="sourceIPAddress"> Source IPv4 address in dotted format (e.g., 10.0.0.5). </param>
+        /// <param name="sourcePort"> Source port number (1-65535). Optional — omit to match any source port. </param>
+        /// <param name="destinationIPAddress"> Destination IPv4 address in dotted format (e.g., 52.39.204.87). </param>
+        /// <param name="destinationPort"> Destination port number (1-65535). Required. </param>
+        /// <returns> A new <see cref="Models.CustomCaptureConfigurationsFilter"/> instance for mocking. </returns>
+        public static CustomCaptureConfigurationsFilter CustomCaptureConfigurationsFilter(CustomCaptureConfigurationsProtocol protocol = default, string sourceIPAddress = default, int? sourcePort = default, string destinationIPAddress = default, int destinationPort = default)
+        {
+            return new CustomCaptureConfigurationsFilter(
+                protocol,
+                sourceIPAddress,
+                sourcePort,
+                destinationIPAddress,
+                destinationPort,
+                default);
+        }
+
+        /// <summary> Log Ingestion Settings on a firewall (singleton — the name is always 'default'). This is the modern Azure Monitor Log Ingestion (Data Collection Rule based) surface that supersedes the legacy getLogProfile/saveLogProfile actions. Sync child resource — PUT/GET/DELETE forward to the partner synchronously; the caller does not poll a long-running operation. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Ngfw.LogIngestionSettingsData"/> instance for mocking. </returns>
+        public static LogIngestionSettingsData LogIngestionSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LogIngestionSettingsProperties properties = default)
+        {
+            return new LogIngestionSettingsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Log Ingestion Settings for a firewall (Azure Monitor Log Ingestion / Data Collection Rule based). </summary>
+        /// <param name="logType"> One of possible log type. </param>
+        /// <param name="logOption"> Log option SAME/INDIVIDUAL. </param>
+        /// <param name="applicationInsights"> Application Insight details. </param>
+        /// <param name="commonDestination"> Common destination configurations. </param>
+        /// <param name="trafficLogDestination"> Traffic destination configurations. </param>
+        /// <param name="threatLogDestination"> Threat destination configurations. </param>
+        /// <param name="decryptLogDestination"> Decrypt destination configurations. </param>
+        /// <returns> A new <see cref="Models.LogIngestionSettingsProperties"/> instance for mocking. </returns>
+        public static LogIngestionSettingsProperties LogIngestionSettingsProperties(FirewallLogType? logType = default, FirewallLogOption? logOption = default, FirewallApplicationInsights applicationInsights = default, PaloAltoNetworksDcrLogDestination commonDestination = default, PaloAltoNetworksDcrLogDestination trafficLogDestination = default, PaloAltoNetworksDcrLogDestination threatLogDestination = default, PaloAltoNetworksDcrLogDestination decryptLogDestination = default)
+        {
+            return new LogIngestionSettingsProperties(
+                logType,
+                logOption,
+                applicationInsights,
+                commonDestination,
+                trafficLogDestination,
+                threatLogDestination,
+                decryptLogDestination,
+                default);
+        }
+
+        /// <summary> Application Insights key. </summary>
+        /// <param name="id"> Resource id for Application Insights. </param>
+        /// <param name="key"> Application Insights key. </param>
+        /// <returns> A new <see cref="Models.FirewallApplicationInsights"/> instance for mocking. </returns>
+        public static FirewallApplicationInsights FirewallApplicationInsights(string id = default, string key = default)
+        {
+            return new FirewallApplicationInsights(id, key, default);
+        }
+
+        /// <summary> Log Destination for the Azure Monitor Log Ingestion (Data Collection Rule) method. Carries the DCR-based `monitorConfigurationsV2`. </summary>
+        /// <param name="storageConfigurations"> Storage account configurations. </param>
+        /// <param name="eventHubConfigurations"> Event Hub configurations. </param>
+        /// <param name="monitorConfigurationsV2"> Azure Monitor Log Ingestion (Data Collection Rule) configuration for this destination. </param>
+        /// <returns> A new <see cref="Models.PaloAltoNetworksDcrLogDestination"/> instance for mocking. </returns>
+        public static PaloAltoNetworksDcrLogDestination PaloAltoNetworksDcrLogDestination(StorageAccountConfiguration storageConfigurations = default, EventHubConfiguration eventHubConfigurations = default, PaloAltoNetworksMonitorDcrLog monitorConfigurationsV2 = default)
+        {
+            return new PaloAltoNetworksDcrLogDestination(storageConfigurations, eventHubConfigurations, monitorConfigurationsV2, default);
+        }
+
+        /// <summary> Storage Account configurations. </summary>
+        /// <param name="id"> Resource ID of storage account. </param>
+        /// <param name="subscriptionId"> Subscription Id. </param>
+        /// <param name="accountName"> Storage account name. </param>
+        /// <returns> A new <see cref="Models.StorageAccountConfiguration"/> instance for mocking. </returns>
+        public static StorageAccountConfiguration StorageAccountConfiguration(ResourceIdentifier id = default, string subscriptionId = default, string accountName = default)
+        {
+            return new StorageAccountConfiguration(id, subscriptionId, accountName, default);
+        }
+
+        /// <summary> EventHub configurations. </summary>
+        /// <param name="id"> Resource ID of EventHub. </param>
+        /// <param name="subscriptionId"> Subscription Id. </param>
+        /// <param name="name"> EventHub name. </param>
+        /// <param name="nameSpace"> EventHub namespace. </param>
+        /// <param name="policyName"> EventHub policy name. </param>
+        /// <returns> A new <see cref="Models.EventHubConfiguration"/> instance for mocking. </returns>
+        public static EventHubConfiguration EventHubConfiguration(ResourceIdentifier id = default, string subscriptionId = default, string name = default, string nameSpace = default, string policyName = default)
+        {
+            return new EventHubConfiguration(
+                id,
+                subscriptionId,
+                name,
+                nameSpace,
+                policyName,
+                default);
+        }
+
+        /// <summary>
+        /// Log collection using the Azure Monitor Log Ingestion API (Data Collection Rule based).
+        /// This supersedes the legacy HTTP Data Collector `MonitorLog` for firewalls that have migrated
+        /// to the modern DCR ingestion path. When this block is supplied, all four fields are required.
+        /// </summary>
+        /// <param name="dcrId"> ARM resource ID of the Data Collection Rule (DCR) that governs how these logs are transformed and routed. </param>
+        /// <param name="logIngestionEndpoint"> HTTPS logs ingestion endpoint that receives the data (the DCR's logs ingestion endpoint or its Data Collection Endpoint). </param>
+        /// <param name="dcrImmutableId"> Immutable ID of the Data Collection Rule (the value that begins with `dcr-`). </param>
+        /// <param name="streamName"> DCR input stream that receives the data. For a custom table this is typically `Custom-&lt;TableName&gt;`. </param>
+        /// <returns> A new <see cref="Models.PaloAltoNetworksMonitorDcrLog"/> instance for mocking. </returns>
+        public static PaloAltoNetworksMonitorDcrLog PaloAltoNetworksMonitorDcrLog(ResourceIdentifier dcrId = default, Uri logIngestionEndpoint = default, string dcrImmutableId = default, string streamName = default)
+        {
+            return new PaloAltoNetworksMonitorDcrLog(dcrId, logIngestionEndpoint, dcrImmutableId, streamName, default);
+        }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -42,12 +208,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                panETag is null && panLocation is null && scope is null && associatedSubscriptions is null && description is null && defaultMode is null && minAppIdVersion is null && provisioningState is null && securityServices is null ? default : new RulestackProperties(
+                    panETag,
+                    panLocation,
+                    scope,
+                    (associatedSubscriptions ?? new ChangeTrackingList<string>()).ToList(),
+                    description,
+                    defaultMode,
+                    minAppIdVersion,
+                    provisioningState,
+                    securityServices,
+                    default),
                 location,
                 identity,
                 default);
         }
 
+        /// <summary> security services. </summary>
         /// <param name="vulnerabilityProfile"> IPs Vulnerability Profile Data. </param>
         /// <param name="antiSpywareProfile"> Anti spyware Profile data. </param>
         /// <param name="antiVirusProfile"> anti virus profile data. </param>
@@ -71,6 +248,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the GlobalRulestackResource. </summary>
         /// <param name="location"> Global Location. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> The updatable properties of the GlobalRulestackResource. </param>
@@ -80,6 +258,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new GlobalRulestackPatch(location, identity, properties, default);
         }
 
+        /// <summary> The updatable properties of the GlobalRulestackResource. </summary>
         /// <param name="panETag"> PanEtag info. </param>
         /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
         /// <param name="scope"> Rulestack Type. </param>
@@ -105,6 +284,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> Changelog list. </summary>
         /// <param name="changes"> list of changes. </param>
         /// <param name="lastCommittedOn"> lastCommitted timestamp. </param>
         /// <param name="lastModifiedOn"> lastModified timestamp. </param>
@@ -116,6 +296,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new RulestackChangelog((changes ?? new ChangeTrackingList<string>()).ToList(), lastCommittedOn, lastModifiedOn, default);
         }
 
+        /// <summary> advanced security object. </summary>
         /// <param name="value"> response value. </param>
         /// <param name="nextLink"> next link. </param>
         /// <returns> A new <see cref="Models.AdvancedSecurityObjectListResult"/> instance for mocking. </returns>
@@ -124,6 +305,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new AdvancedSecurityObjectListResult(value, nextLink, default);
         }
 
+        /// <summary> List of custom and predefined url category. </summary>
         /// <param name="advSecurityObjectModelType"> type of object. </param>
         /// <param name="entry"> URL entry. </param>
         /// <returns> A new <see cref="Models.AdvancedSecurityObject"/> instance for mocking. </returns>
@@ -134,6 +316,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new AdvancedSecurityObject(advSecurityObjectModelType, (entry ?? new ChangeTrackingList<NameDescriptionObject>()).ToList(), default);
         }
 
+        /// <summary> object type info. </summary>
         /// <param name="name"> name value. </param>
         /// <param name="description"> description value. </param>
         /// <returns> A new <see cref="Models.NameDescriptionObject"/> instance for mocking. </returns>
@@ -142,6 +325,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new NameDescriptionObject(name, description, default);
         }
 
+        /// <summary> Country Description. </summary>
         /// <param name="code"> country code. </param>
         /// <param name="description"> code description. </param>
         /// <returns> A new <see cref="Models.RulestackCountry"/> instance for mocking. </returns>
@@ -150,6 +334,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new RulestackCountry(code, description, default);
         }
 
+        /// <summary> Predefined URL category object. </summary>
         /// <param name="action"></param>
         /// <param name="name"></param>
         /// <returns> A new <see cref="Models.PredefinedUrlCategory"/> instance for mocking. </returns>
@@ -158,6 +343,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PredefinedUrlCategory(action, name, default);
         }
 
+        /// <summary> Security services list response. </summary>
         /// <param name="value"> response value. </param>
         /// <param name="nextLink"> next link. </param>
         /// <returns> A new <see cref="Models.RulestackSecurityServiceListResult"/> instance for mocking. </returns>
@@ -166,6 +352,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new RulestackSecurityServiceListResult(value, nextLink, default);
         }
 
+        /// <summary> Security services type list. </summary>
         /// <param name="securityServicesTypeListType"> security services type. </param>
         /// <param name="entry"> list. </param>
         /// <returns> A new <see cref="Models.RulestackSecurityServiceTypeList"/> instance for mocking. </returns>
@@ -194,12 +381,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                fqdnList is null ? default : new FqdnObject(
-                    default,
+                description is null && fqdnList is null && etag is null && auditComment is null && provisioningState is null ? default : new FqdnObject(
+                    description,
                     (fqdnList ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
+                    etag,
+                    auditComment,
+                    provisioningState,
                     default),
                 default);
         }
@@ -237,31 +424,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                ruleName is null && ruleState is null && decryptionRuleType is null ? default : new RuleEntry(
-                    default,
+                etag is null && ruleName is null && priority is null && description is null && ruleState is null && source is null && negateSource is null && destination is null && negateDestination is null && applications is null && category is null && protocol is null && protocolPortList is null && inboundInspectionCertificate is null && auditComment is null && actionType is null && enableLogging is null && decryptionRuleType is null && tags is null && provisioningState is null ? default : new RuleEntry(
+                    etag,
                     ruleName,
-                    default,
-                    default,
+                    priority,
+                    description,
                     ruleState,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    source,
+                    negateSource,
+                    destination,
+                    negateDestination,
+                    (applications ?? new ChangeTrackingList<string>()).ToList(),
+                    category,
+                    protocol,
+                    (protocolPortList ?? new ChangeTrackingList<string>()).ToList(),
+                    inboundInspectionCertificate,
+                    auditComment,
+                    actionType,
+                    enableLogging,
                     decryptionRuleType,
-                    default,
-                    default,
+                    (tags ?? new ChangeTrackingList<RulestackTagInfo>()).ToList(),
+                    provisioningState,
                     default),
                 default);
         }
 
+        /// <summary> Address properties. </summary>
         /// <param name="cidrs"> special value 'any'. </param>
         /// <param name="countries"> list of countries. </param>
         /// <param name="feeds"> list of feeds. </param>
@@ -277,6 +465,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new SourceAddressInfo((cidrs ?? new ChangeTrackingList<string>()).ToList(), (countries ?? new ChangeTrackingList<string>()).ToList(), (feeds ?? new ChangeTrackingList<string>()).ToList(), (prefixLists ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> destination address. </summary>
         /// <param name="cidrs"> special value 'any'. </param>
         /// <param name="countries"> list of countries. </param>
         /// <param name="feeds"> list of feeds. </param>
@@ -300,6 +489,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> URL/EDL to match. </summary>
         /// <param name="urlCustom"> custom URL. </param>
         /// <param name="feeds"> feed list. </param>
         /// <returns> A new <see cref="Models.EdlMatchCategory"/> instance for mocking. </returns>
@@ -311,6 +501,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new EdlMatchCategory((urlCustom ?? new ChangeTrackingList<string>()).ToList(), (feeds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Tag. </summary>
         /// <param name="key"> tag name. </param>
         /// <param name="value"> tag value. </param>
         /// <returns> A new <see cref="Models.RulestackTagInfo"/> instance for mocking. </returns>
@@ -319,6 +510,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new RulestackTagInfo(key, value, default);
         }
 
+        /// <summary> Rule counter. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleStackName"> rule Stack Name. </param>
         /// <param name="ruleListName"> rule list name. </param>
@@ -346,6 +538,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> Data Type for App Seen. </summary>
         /// <param name="count"> number of rows. </param>
         /// <param name="appSeenList"> array of appSeen. </param>
         /// <returns> A new <see cref="Models.AppSeenInfoList"/> instance for mocking. </returns>
@@ -356,6 +549,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new AppSeenInfoList(count, (appSeenList ?? new ChangeTrackingList<AppSeenInfo>()).ToList(), default);
         }
 
+        /// <summary> Definition for App Seen. </summary>
         /// <param name="title"> title. </param>
         /// <param name="category"> category. </param>
         /// <param name="subCategory"> subCategory. </param>
@@ -377,6 +571,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> Rule counter reset. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleStackName"> rule Stack Name. </param>
         /// <param name="ruleListName"> rule list name. </param>
@@ -412,12 +607,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                prefixList is null ? default : new PrefixObject(
-                    default,
+                description is null && prefixList is null && etag is null && auditComment is null && provisioningState is null ? default : new PrefixObject(
+                    description,
                     (prefixList ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
+                    etag,
+                    auditComment,
+                    provisioningState,
                     default),
                 default);
         }
@@ -455,27 +650,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                ruleName is null && ruleState is null && decryptionRuleType is null ? default : new RuleEntry(
-                    default,
+                etag is null && ruleName is null && priority is null && description is null && ruleState is null && source is null && negateSource is null && destination is null && negateDestination is null && applications is null && category is null && protocol is null && protocolPortList is null && inboundInspectionCertificate is null && auditComment is null && actionType is null && enableLogging is null && decryptionRuleType is null && tags is null && provisioningState is null ? default : new RuleEntry(
+                    etag,
                     ruleName,
-                    default,
-                    default,
+                    priority,
+                    description,
                     ruleState,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    source,
+                    negateSource,
+                    destination,
+                    negateDestination,
+                    (applications ?? new ChangeTrackingList<string>()).ToList(),
+                    category,
+                    protocol,
+                    (protocolPortList ?? new ChangeTrackingList<string>()).ToList(),
+                    inboundInspectionCertificate,
+                    auditComment,
+                    actionType,
+                    enableLogging,
                     decryptionRuleType,
-                    default,
-                    default,
+                    (tags ?? new ChangeTrackingList<RulestackTagInfo>()).ToList(),
+                    provisioningState,
                     default),
                 default);
         }
@@ -487,6 +682,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="panETag"> panEtag info. </param>
+        /// <param name="firewallSku"> Firewall SKU type, Default will be STANDARD. </param>
         /// <param name="networkProfile"> Network settings. </param>
         /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
         /// <param name="isStrataCloudManaged"> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </param>
@@ -499,9 +695,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkProfile"/>, <paramref name="dnsSettings"/>, <paramref name="planData"/> or <paramref name="marketplaceDetails"/> is null. </exception>
         /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallData"/> instance for mocking. </returns>
-        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? panETag = default, FirewallNetworkProfile networkProfile = default, FirewallBooleanType? isPanoramaManaged = default, FirewallBooleanType? isStrataCloudManaged = default, FirewallPanoramaConfiguration panoramaConfig = default, RulestackDetails associatedRulestack = default, FirewallDnsSettings dnsSettings = default, IEnumerable<FirewallFrontendSetting> frontEndSettings = default, FirewallProvisioningState? provisioningState = default, FirewallBillingPlanInfo planData = default, PanFirewallMarketplaceDetails marketplaceDetails = default, string cloudManagerName = default, ManagedServiceIdentity identity = default)
+        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? panETag, string firewallSku, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallBooleanType? isStrataCloudManaged, FirewallPanoramaConfiguration panoramaConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IEnumerable<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, string cloudManagerName, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -512,24 +707,26 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                cloudManagerName is null ? default : new FirewallDeploymentProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    new StrataCloudManagerConfig(cloudManagerName, default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                panETag is null && firewallSku is null && networkProfile is null && isPanoramaManaged is null && isStrataCloudManaged is null && panoramaConfig is null && cloudManagerName is null && associatedRulestack is null && dnsSettings is null && frontEndSettings is null && provisioningState is null && planData is null && marketplaceDetails is null ? default : new FirewallDeploymentProperties(
+                    panETag,
+                    firewallSku,
+                    networkProfile,
+                    isPanoramaManaged,
+                    isStrataCloudManaged,
+                    panoramaConfig,
+                    cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, default),
+                    associatedRulestack,
+                    dnsSettings,
+                    (frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>()).ToList(),
+                    provisioningState,
+                    planData,
+                    marketplaceDetails,
                     default),
                 identity,
                 default);
         }
 
+        /// <summary> Network settings for Firewall. </summary>
         /// <param name="vnetConfiguration"> Vnet configurations. </param>
         /// <param name="vwanConfiguration"> Vwan configurations. </param>
         /// <param name="networkType"> vnet or vwan, cannot be updated. </param>
@@ -558,6 +755,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> VnetInfo for Firewall Networking. </summary>
         /// <param name="vnet"> Azure Virtual Network. </param>
         /// <param name="trustSubnet"> Trust Subnet. </param>
         /// <param name="unTrustSubnet"> Untrust Subnet. </param>
@@ -568,6 +766,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallVnetConfiguration(vnet, trustSubnet, unTrustSubnet, ipOfTrustSubnetForUdr, default);
         }
 
+        /// <summary> IP Address Space. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="addressSpace"> Address Space. </param>
         /// <returns> A new <see cref="Models.IPAddressSpaceInfo"/> instance for mocking. </returns>
@@ -576,6 +775,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new IPAddressSpaceInfo(resourceId, addressSpace, default);
         }
 
+        /// <summary> IP Address. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="address"> Address value. </param>
         /// <returns> A new <see cref="Models.IPAddressInfo"/> instance for mocking. </returns>
@@ -584,6 +784,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new IPAddressInfo(resourceId, address, default);
         }
 
+        /// <summary> VwanInfo for Firewall Networking. </summary>
         /// <param name="networkVirtualApplianceId"> Network Virtual Appliance resource ID. </param>
         /// <param name="vhub"> vHub Address. </param>
         /// <param name="trustSubnet"> Trust Subnet. </param>
@@ -601,6 +802,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> Panorama Config. </summary>
         /// <param name="configString"> Base64 encoded string representing Panorama parameters to be used by Firewall to connect to Panorama. This string is generated via azure plugin in Panorama. </param>
         /// <param name="vmAuthKey"> VM auth key for panorama connectivity. </param>
         /// <param name="panoramaServer"> Primary Panorama Server IP address value in dotted format for IPv4. </param>
@@ -624,6 +826,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> Associated rulestack details. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="rulestackId"> Associated rulestack Id. </param>
         /// <param name="location"> Rulestack location. </param>
@@ -633,6 +836,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new RulestackDetails(resourceId, rulestackId, location, default);
         }
 
+        /// <summary> DNS Proxy settings for Firewall. </summary>
         /// <param name="enableDnsProxy"> Enable DNS proxy, disabled by default. </param>
         /// <param name="enabledDnsType"> Enabled DNS proxy type, disabled by default. </param>
         /// <param name="dnsServers"> List of IPs associated with the Firewall. </param>
@@ -644,6 +848,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallDnsSettings(enableDnsProxy, enabledDnsType, (dnsServers ?? new ChangeTrackingList<IPAddressInfo>()).ToList(), default);
         }
 
+        /// <summary> Frontend setting for Firewall. </summary>
         /// <param name="name"> Settings name. </param>
         /// <param name="protocol"> Protocol Type. </param>
         /// <param name="frontendConfiguration"> Frontend configurations. </param>
@@ -654,6 +859,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallFrontendSetting(name, protocol, frontendConfiguration, backendConfiguration, default);
         }
 
+        /// <summary> Endpoint Configuration for frontend and backend. </summary>
         /// <param name="port"> port ID. </param>
         /// <param name="address"> Address Space. </param>
         /// <returns> A new <see cref="Models.FirewallEndpointConfiguration"/> instance for mocking. </returns>
@@ -662,6 +868,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallEndpointConfiguration(port, address, default);
         }
 
+        /// <summary> Billing plan information. </summary>
         /// <param name="usageType"> different usage type like PAYG/COMMITTED. </param>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. </param>
         /// <param name="planId"> plan id as published by Liftr.PAN. </param>
@@ -672,6 +879,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallBillingPlanInfo(usageType, billingCycle, planId, effectiveOn, default);
         }
 
+        /// <summary> MarketplaceDetails of PAN Firewall resource. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
@@ -682,6 +890,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId, offerId, publisherId, marketplaceSubscriptionStatus, default);
         }
 
+        /// <summary> The type used for update operations of the FirewallResource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the FirewallResource. </param>
@@ -724,6 +933,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> PAN Rulestack Describe Object. </summary>
         /// <param name="azureId"> rulestack description. </param>
         /// <returns> A new <see cref="Models.GlobalRulestackInfo"/> instance for mocking. </returns>
         public static GlobalRulestackInfo GlobalRulestackInfo(string azureId = default)
@@ -731,6 +941,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new GlobalRulestackInfo(azureId, default);
         }
 
+        /// <summary> Log Settings for Firewall. </summary>
         /// <param name="logType"> One of possible log type. </param>
         /// <param name="logOption"> Log option SAME/INDIVIDUAL. </param>
         /// <param name="applicationInsights"> Application Insight details. </param>
@@ -752,14 +963,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
-        /// <param name="id"> Resource id for Application Insights. </param>
-        /// <param name="key"> Application Insights key. </param>
-        /// <returns> A new <see cref="Models.FirewallApplicationInsights"/> instance for mocking. </returns>
-        public static FirewallApplicationInsights FirewallApplicationInsights(string id = default, string key = default)
-        {
-            return new FirewallApplicationInsights(id, key, default);
-        }
-
+        /// <summary> Log Destination. </summary>
         /// <param name="storageConfiguration"> Storage account configurations. </param>
         /// <param name="eventHubConfiguration"> Event Hub configurations. </param>
         /// <param name="monitorConfiguration"> Monitor Log configurations. </param>
@@ -769,32 +973,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallLogDestination(storageConfiguration, eventHubConfiguration, monitorConfiguration, default);
         }
 
-        /// <param name="id"> Resource ID of storage account. </param>
-        /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="accountName"> Storage account name. </param>
-        /// <returns> A new <see cref="Models.StorageAccountConfiguration"/> instance for mocking. </returns>
-        public static StorageAccountConfiguration StorageAccountConfiguration(ResourceIdentifier id = default, string subscriptionId = default, string accountName = default)
-        {
-            return new StorageAccountConfiguration(id, subscriptionId, accountName, default);
-        }
-
-        /// <param name="id"> Resource ID of EventHub. </param>
-        /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="name"> EventHub name. </param>
-        /// <param name="nameSpace"> EventHub namespace. </param>
-        /// <param name="policyName"> EventHub policy name. </param>
-        /// <returns> A new <see cref="Models.EventHubConfiguration"/> instance for mocking. </returns>
-        public static EventHubConfiguration EventHubConfiguration(ResourceIdentifier id = default, string subscriptionId = default, string name = default, string nameSpace = default, string policyName = default)
-        {
-            return new EventHubConfiguration(
-                id,
-                subscriptionId,
-                name,
-                nameSpace,
-                policyName,
-                default);
-        }
-
+        /// <summary> MonitorLog configurations. </summary>
         /// <param name="id"> Resource ID of MonitorLog. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="workspace"> MonitorLog workspace. </param>
@@ -812,6 +991,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> Support information for the resource. </summary>
         /// <param name="productSku"> product SKU associated with given resource. </param>
         /// <param name="productSerial"> product Serial associated with given resource. </param>
         /// <param name="accountRegistered"> account registered in Customer Support Portal. </param>
@@ -871,11 +1051,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                panETag is null && panLocation is null && scope is null && associatedSubscriptions is null && description is null && defaultMode is null && minAppIdVersion is null && provisioningState is null && securityServices is null ? default : new RulestackProperties(
+                    panETag,
+                    panLocation,
+                    scope,
+                    (associatedSubscriptions ?? new ChangeTrackingList<string>()).ToList(),
+                    description,
+                    defaultMode,
+                    minAppIdVersion,
+                    provisioningState,
+                    securityServices,
+                    default),
                 identity,
                 default);
         }
 
+        /// <summary> The type used for update operations of the LocalRulestackResource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the LocalRulestackResource. </param>
@@ -887,6 +1078,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new LocalRulestackPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the LocalRulestackResource. </summary>
         /// <param name="panETag"> PanEtag info. </param>
         /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
         /// <param name="scope"> Rulestack Type. </param>
@@ -920,7 +1112,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="applicationInsightsConnectionString"> Connection string of application insights resource. </param>
         /// <param name="panETag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationInsightsResourceId"/> or <paramref name="applicationInsightsConnectionString"/> is null. </exception>
         /// <returns> A new <see cref="Ngfw.MetricsObjectFirewallData"/> instance for mocking. </returns>
         public static MetricsObjectFirewallData MetricsObjectFirewallData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string applicationInsightsResourceId = default, string applicationInsightsConnectionString = default, ETag? panETag = default, FirewallProvisioningState? provisioningState = default)
         {
@@ -929,7 +1120,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                applicationInsightsResourceId is null && applicationInsightsConnectionString is null && panETag is null && provisioningState is null ? default : new MetricsObject(applicationInsightsResourceId, applicationInsightsConnectionString, panETag, provisioningState, default),
                 default);
         }
 
@@ -952,18 +1143,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                healthStatus is null && panoramaStatus is null ? default : new FirewallStatusProperty(
-                    default,
+                isPanoramaManaged is null && healthStatus is null && healthReason is null && panoramaStatus is null && provisioningState is null && isStrataCloudManaged is null && strataCloudManagerInfo is null ? default : new FirewallStatusProperty(
+                    isPanoramaManaged,
                     healthStatus,
-                    default,
+                    healthReason,
                     panoramaStatus,
-                    default,
-                    default,
-                    default,
+                    provisioningState,
+                    isStrataCloudManaged,
+                    strataCloudManagerInfo,
                     default),
                 default);
         }
 
+        /// <summary> Panorama connectivity information. </summary>
         /// <param name="panoramaServerStatus"> Primary Panorama connection status. </param>
         /// <param name="panoramaServer2Status"> Secondary Panorama connection status. </param>
         /// <returns> A new <see cref="Models.FirewallPanoramaStatus"/> instance for mocking. </returns>
@@ -972,6 +1164,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallPanoramaStatus(panoramaServerStatus, panoramaServer2Status, default);
         }
 
+        /// <summary> Strata Cloud Manager Info. </summary>
         /// <param name="folderName"> Strata Cloud Manager folder in which this firewall has been placed. </param>
         /// <param name="hubUri"> URL for Strata Cloud Manager. </param>
         /// <returns> A new <see cref="Models.StrataCloudManagerInfo"/> instance for mocking. </returns>
@@ -998,12 +1191,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                fqdnList is null ? default : new FqdnObject(
-                    default,
+                description is null && fqdnList is null && etag is null && auditComment is null && provisioningState is null ? default : new FqdnObject(
+                    description,
                     (fqdnList ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
+                    etag,
+                    auditComment,
+                    provisioningState,
                     default),
                 default);
         }
@@ -1041,27 +1234,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                ruleName is null && ruleState is null && decryptionRuleType is null ? default : new RuleEntry(
-                    default,
+                etag is null && ruleName is null && priority is null && description is null && ruleState is null && source is null && negateSource is null && destination is null && negateDestination is null && applications is null && category is null && protocol is null && protocolPortList is null && inboundInspectionCertificate is null && auditComment is null && actionType is null && enableLogging is null && decryptionRuleType is null && tags is null && provisioningState is null ? default : new RuleEntry(
+                    etag,
                     ruleName,
-                    default,
-                    default,
+                    priority,
+                    description,
                     ruleState,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    source,
+                    negateSource,
+                    destination,
+                    negateDestination,
+                    (applications ?? new ChangeTrackingList<string>()).ToList(),
+                    category,
+                    protocol,
+                    (protocolPortList ?? new ChangeTrackingList<string>()).ToList(),
+                    inboundInspectionCertificate,
+                    auditComment,
+                    actionType,
+                    enableLogging,
                     decryptionRuleType,
-                    default,
-                    default,
+                    (tags ?? new ChangeTrackingList<RulestackTagInfo>()).ToList(),
+                    provisioningState,
                     default),
                 default);
         }
@@ -1084,16 +1277,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 name,
                 resourceType,
                 systemData,
-                prefixList is null ? default : new PrefixObject(
-                    default,
+                description is null && prefixList is null && etag is null && auditComment is null && provisioningState is null ? default : new PrefixObject(
+                    description,
                     (prefixList ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
+                    etag,
+                    auditComment,
+                    provisioningState,
                     default),
                 default);
         }
 
+        /// <summary> Create Product Serial Number Request status. </summary>
         /// <param name="status"> allocation status of the product serial number. </param>
         /// <returns> A new <see cref="Models.ProductSerialNumberRequestStatus"/> instance for mocking. </returns>
         public static ProductSerialNumberRequestStatus ProductSerialNumberRequestStatus(string status = default)
@@ -1101,6 +1295,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new ProductSerialNumberRequestStatus(status, default);
         }
 
+        /// <summary> Cloud Manager Tenant. </summary>
         /// <param name="value"> List of Cloud Manager Tenants. </param>
         /// <returns> A new <see cref="Models.CloudManagerTenantList"/> instance for mocking. </returns>
         public static CloudManagerTenantList CloudManagerTenantList(IEnumerable<string> value = default)
@@ -1110,6 +1305,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new CloudManagerTenantList((value ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Product serial and status for the service. </summary>
         /// <param name="serialNumber"> product Serial associated with given resource. </param>
         /// <param name="status"> allocation status of the product serial number. </param>
         /// <returns> A new <see cref="Models.ProductSerialNumberStatus"/> instance for mocking. </returns>
@@ -1118,6 +1314,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new ProductSerialNumberStatus(serialNumber, status, default);
         }
 
+        /// <summary> Support information for the service. </summary>
         /// <param name="productSku"> product SKU associated with given resource. </param>
         /// <param name="productSerial"> product Serial associated with given resource. </param>
         /// <param name="accountRegistrationStatus"> account registered in Customer Support Portal. </param>
@@ -1152,6 +1349,56 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 monthlyCreditLeft,
                 startDateForCredits,
                 endDateForCredits,
+                default);
+        }
+
+        /// <summary> PaloAltoNetworks Firewall. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="panETag"> panEtag info. </param>
+        /// <param name="networkProfile"> Network settings. </param>
+        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="isStrataCloudManaged"> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="panoramaConfig"> Panorama Configuration. </param>
+        /// <param name="associatedRulestack"> Associated Rulestack. </param>
+        /// <param name="dnsSettings"> DNS settings for Firewall. </param>
+        /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="planData"> Billing plan information. </param>
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? panETag = default, FirewallNetworkProfile networkProfile = default, FirewallBooleanType? isPanoramaManaged = default, FirewallBooleanType? isStrataCloudManaged = default, FirewallPanoramaConfiguration panoramaConfig = default, RulestackDetails associatedRulestack = default, FirewallDnsSettings dnsSettings = default, IEnumerable<FirewallFrontendSetting> frontEndSettings = default, FirewallProvisioningState? provisioningState = default, FirewallBillingPlanInfo planData = default, PanFirewallMarketplaceDetails marketplaceDetails = default, string cloudManagerName = default, ManagedServiceIdentity identity = default)
+        {
+            return new PaloAltoNetworksFirewallData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                panETag is null && networkProfile is null && isPanoramaManaged is null && isStrataCloudManaged is null && panoramaConfig is null && cloudManagerName is null && associatedRulestack is null && dnsSettings is null && frontEndSettings is null && provisioningState is null && planData is null && marketplaceDetails is null ? default : new FirewallDeploymentProperties(
+                    panETag,
+                    default,
+                    networkProfile,
+                    isPanoramaManaged,
+                    isStrataCloudManaged,
+                    panoramaConfig,
+                    cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, default),
+                    associatedRulestack,
+                    dnsSettings,
+                    (frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>()).ToList(),
+                    provisioningState,
+                    planData,
+                    marketplaceDetails,
+                    default),
+                identity,
                 default);
         }
     }

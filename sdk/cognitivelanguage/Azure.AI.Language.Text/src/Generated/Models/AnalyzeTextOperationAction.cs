@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The long running task to be performed by the service on the input documents.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/>, <see cref="SentimentAnalysisOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, and <see cref="AbstractiveSummarizationOperationAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/>, and <see cref="SentimentAnalysisOperationAction"/>.
     /// </summary>
     public abstract partial class AnalyzeTextOperationAction
     {

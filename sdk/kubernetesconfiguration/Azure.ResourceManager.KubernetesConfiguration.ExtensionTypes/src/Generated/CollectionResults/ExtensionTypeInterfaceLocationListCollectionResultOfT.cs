@@ -14,7 +14,7 @@ using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
 {
-    internal partial class ExtensionTypeInterfaceLocationListCollectionResultOfT : Pageable<ExtensionTypeData>
+    internal partial class ExtensionTypeInterfaceLocationListCollectionResultOfT : Pageable<KubernetesConfigurationExtensionTypeData>
     {
         private readonly ExtensionTypeInterface _client;
         private readonly string _subscriptionId;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ExtensionTypeInterfaceLocationListCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ExtensionTypeData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<KubernetesConfigurationExtensionTypeData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 }
                 ExtensionTypesList result = ExtensionTypesList.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ExtensionTypeData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<KubernetesConfigurationExtensionTypeData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

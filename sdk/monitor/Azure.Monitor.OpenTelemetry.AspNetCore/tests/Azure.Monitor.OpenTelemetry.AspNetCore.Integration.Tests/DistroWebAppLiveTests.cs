@@ -61,6 +61,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 .UseAzureMonitor(options =>
                 {
                     options.EnableLiveMetrics = false;
+                    options.TracesPerSecond = null;
+                    options.SamplingRatio = 1.0F;
                     options.ConnectionString = TestEnvironment.ConnectionString;
                 })
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
@@ -123,8 +125,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                         }
                         return true;
                     });
-                    builder.AddAzureMonitorTraceExporter(name: "primary", configure: options => options.ConnectionString = TestEnvironment.ConnectionString);
-                    builder.AddAzureMonitorTraceExporter(name: "secondary", configure: options => options.ConnectionString = TestEnvironment.SecondaryConnectionString);
+                    builder.AddAzureMonitorTraceExporter(name: "primary", configure: options =>
+                    {
+                        options.TracesPerSecond = null;
+                        options.SamplingRatio = 1.0F;
+                        options.ConnectionString = TestEnvironment.ConnectionString;
+                    });
+                    builder.AddAzureMonitorTraceExporter(name: "secondary", configure: options =>
+                    {
+                        options.TracesPerSecond = null;
+                        options.SamplingRatio = 1.0F;
+                        options.ConnectionString = TestEnvironment.SecondaryConnectionString;
+                    });
                 })
                 .WithMetrics(builder =>
                 {
@@ -195,6 +207,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 .UseAzureMonitorExporter(options =>
                 {
                     options.EnableLiveMetrics = false;
+                    options.TracesPerSecond = null;
+                    options.SamplingRatio = 1.0F;
                     options.ConnectionString = TestEnvironment.ConnectionString;
                 })
                 .WithTracing(builder => builder
@@ -272,6 +286,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("_MS.ResourceAttributeId", "*"),
                         new("network.protocol.version", "1.1"),
                         new("CustomProperty1", "Value1"),
                     },
@@ -299,6 +314,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     Properties = new List<KeyValuePair<string, string>>
                     {
                         new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("_MS.ResourceAttributeId", "*"),
                         new("network.protocol.version", "1.1"),
                         new("CustomProperty1", "Value1"),
                     },

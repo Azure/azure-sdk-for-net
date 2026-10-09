@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -18,6 +19,12 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccountImmutabilityPolicy))]
     [ModelReaderWriterBuildable(typeof(AccountSasContent))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleConfig))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleData))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleResource))]
+    [ModelReaderWriterBuildable(typeof(ArmEncryption))]
     [ModelReaderWriterBuildable(typeof(BlobContainerData))]
     [ModelReaderWriterBuildable(typeof(BlobContainerImmutabilityPolicy))]
     [ModelReaderWriterBuildable(typeof(BlobContainerResource))]
@@ -41,6 +48,19 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(BurstingConstants))]
     [ModelReaderWriterBuildable(typeof(ConnectorListResult))]
     [ModelReaderWriterBuildable(typeof(ContainerProperties))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheContainerData))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheContainerListResult))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheContainerPatch))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheContainerProperties))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheContainerPropertiesPatch))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheContainerResource))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheData))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheListResult))]
+    [ModelReaderWriterBuildable(typeof(ContextCachePatch))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheProperties))]
+    [ModelReaderWriterBuildable(typeof(ContextCachePropertiesPatch))]
+    [ModelReaderWriterBuildable(typeof(ContextCacheResource))]
+    [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
     [ModelReaderWriterBuildable(typeof(DataShareConnection))]
     [ModelReaderWriterBuildable(typeof(DataShareListResult))]
     [ModelReaderWriterBuildable(typeof(DataShareSource))]
@@ -93,6 +113,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(ImmutabilityPolicyResource))]
     [ModelReaderWriterBuildable(typeof(ImmutableStorageAccount))]
     [ModelReaderWriterBuildable(typeof(ImmutableStorageWithVersioning))]
+    [ModelReaderWriterBuildable(typeof(KeyEncryptionKeyIdentity))]
     [ModelReaderWriterBuildable(typeof(KeyPolicy))]
     [ModelReaderWriterBuildable(typeof(LastAccessTimeTrackingPolicy))]
     [ModelReaderWriterBuildable(typeof(LeaseContainerContent))]
@@ -150,6 +171,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(QueueServiceData))]
     [ModelReaderWriterBuildable(typeof(QueueServicePropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(QueueServiceResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorePolicy))]
     [ModelReaderWriterBuildable(typeof(ServiceSasContent))]
     [ModelReaderWriterBuildable(typeof(ServiceSharedKeyAccessProperties))]

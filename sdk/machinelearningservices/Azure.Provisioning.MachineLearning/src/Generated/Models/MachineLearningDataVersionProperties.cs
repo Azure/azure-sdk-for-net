@@ -7,26 +7,31 @@
 
 using System;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Data version base definition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/>, and <see cref="MachineLearningUriFolderDataVersion"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/>, and <see cref="MachineLearningUriFolderDataVersion"/>.
     /// </summary>
-    public partial class MachineLearningDataVersionProperties : ProvisionableConstruct
+    public partial class MachineLearningDataVersionProperties : MachineLearningAssetBase
     {
+        private BicepValue<MachineLearningDataType> _dataType;
         private BicepValue<Uri> _dataUri;
-        private BicepValue<bool> _isAnonymous;
-        private BicepValue<bool> _isArchived;
-        private BicepValue<string> _description;
-        private BicepDictionary<string> _properties;
-        private BicepDictionary<string> _tags;
 
         /// <summary> Creates a new MachineLearningDataVersionProperties. </summary>
         public MachineLearningDataVersionProperties()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of data. </summary>
+        internal BicepValue<MachineLearningDataType> DataType
+        {
+            get
+            {
+                Initialize();
+                return _dataType;
+            }
         }
 
         /// <summary> Gets or sets the DataUri. </summary>
@@ -44,91 +49,12 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the IsAnonymous. </summary>
-        public BicepValue<bool> IsAnonymous
-        {
-            get
-            {
-                Initialize();
-                return _isAnonymous;
-            }
-            set
-            {
-                Initialize();
-                _isAnonymous.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IsArchived. </summary>
-        public BicepValue<bool> IsArchived
-        {
-            get
-            {
-                Initialize();
-                return _isArchived;
-            }
-            set
-            {
-                Initialize();
-                _isArchived.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        public BicepDictionary<string> Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                _properties.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for MachineLearningDataVersionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _dataType = DefineProperty<MachineLearningDataType>(nameof(DataType), new string[] { "dataType" }, isRequired: true);
             _dataUri = DefineProperty<Uri>(nameof(DataUri), new string[] { "dataUri" }, isRequired: true);
-            _isAnonymous = DefineProperty<bool>(nameof(IsAnonymous), new string[] { "isAnonymous" });
-            _isArchived = DefineProperty<bool>(nameof(IsArchived), new string[] { "isArchived" });
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             DefineAdditionalProperties();
         }
 

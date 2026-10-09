@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -324,6 +325,56 @@ namespace Azure.Storage.Blobs.Test
                 aadBlob.ExistsAsync(),
                 e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
         }
+
+        [Test]
+#pragma warning disable SCME0002 // Experimental
+        public async Task Ctor_BlobClientSettings()
+        {
+            // Arrange
+            string accountName = "accountname";
+            string containerName = "container";
+            string blobName = "blob";
+            Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName}");
+
+            var settings = new BlobClientSettings
+            {
+                Url = uri,
+                Credential = new CredentialSettings(null)
+                {
+                    TokenProvider = new MockCredential()
+                }
+            };
+
+            // Act
+            BlobClient blobClient = new BlobClient(settings);
+
+            // Assert
+            BlobUriBuilder builder = new BlobUriBuilder(blobClient.Uri);
+            Assert.AreEqual(containerName, builder.BlobContainerName);
+            Assert.AreEqual(blobName, builder.BlobName);
+            Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_BlobClientSettings_NullUrl()
+        {
+            // Arrange
+            var settings = new BlobClientSettings
+            {
+                Url = null
+            };
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => new BlobClient(settings));
+        }
+
+        [Test]
+        public void Ctor_BlobClientSettings_NullSettings()
+        {
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => new BlobClient((BlobClientSettings)null));
+        }
+#pragma warning restore SCME0002 // Experimental
 
         #region Upload
 

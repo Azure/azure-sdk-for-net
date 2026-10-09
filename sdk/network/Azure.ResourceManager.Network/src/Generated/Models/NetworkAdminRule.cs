@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
@@ -21,12 +23,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkAdminRule"/>. </summary>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Indicates the properties of the security admin rule. </param>
-        internal NetworkAdminRule(string name, SystemData systemData, AdminRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdminPropertiesFormat properties) : base(name, systemData, kind, additionalBinaryDataProperties)
+        internal NetworkAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdminPropertiesFormat properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
@@ -59,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (SecurityConfigurationRuleProtocol?)default : Properties.Protocol;
             }
             set
             {
@@ -136,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Access;
+                return Properties is null ? (SecurityConfigurationRuleAccess?)default : Properties.Access;
             }
             set
             {
@@ -157,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Priority;
+                return Properties is null ? (int?)default : Properties.Priority;
             }
             set
             {
@@ -178,7 +183,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Direction;
+                return Properties is null ? (SecurityConfigurationRuleDirection?)default : Properties.Direction;
             }
             set
             {

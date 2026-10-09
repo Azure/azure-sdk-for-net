@@ -110,7 +110,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.Policy;
+                return Properties is null ? default : Properties.Policy;
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.RunningStatus;
+                return Properties is null ? default : Properties.RunningStatus;
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.Progress;
+                return Properties is null ? default : Properties.Progress;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.Error;
+                return Properties is null ? default : Properties.Error;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<VirtualMachineScaleSetRollingUpgradeProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualMachineScaleSet>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

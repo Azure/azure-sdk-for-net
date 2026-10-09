@@ -97,7 +97,7 @@ namespace Azure.Provisioning.StandbyPool
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<StandbyVirtualMachinePoolRuntimeViewProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<StandbyVirtualMachinePool>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<StandbyVirtualMachinePool>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

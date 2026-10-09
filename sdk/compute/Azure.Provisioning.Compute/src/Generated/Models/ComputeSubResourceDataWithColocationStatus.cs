@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The ComputeSubResourceDataWithColocationStatus. </summary>
-    public partial class ComputeSubResourceDataWithColocationStatus : ProvisionableConstruct
+    public partial class ComputeSubResourceDataWithColocationStatus : ComputeWriteableSubResourceData
     {
         private InstanceViewStatus _colocationStatus;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new ComputeSubResourceDataWithColocationStatus. </summary>
         public ComputeSubResourceDataWithColocationStatus()
@@ -32,22 +27,11 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ComputeSubResourceDataWithColocationStatus. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _colocationStatus = DefineModelProperty<InstanceViewStatus>(nameof(ColocationStatus), new string[] { "colocationStatus" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             DefineAdditionalProperties();
         }
 

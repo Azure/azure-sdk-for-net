@@ -102,7 +102,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x5t"u8);
-                writer.WriteBase64StringValue(X509Thumbprint.ToArray(), "U");
+                writer.WriteBase64StringValue(X509Thumbprint, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -199,7 +199,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CertificateItem(id, attributes, tags ?? new ChangeTrackingDictionary<string, string>(), x509Thumbprint, additionalBinaryDataProperties);

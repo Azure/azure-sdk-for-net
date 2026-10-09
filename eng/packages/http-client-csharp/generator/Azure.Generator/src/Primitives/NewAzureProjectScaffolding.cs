@@ -47,6 +47,33 @@ namespace Azure.Generator.Primitives
             return builder.Write();
         }
 
+        /// <inheritdoc/>
+        protected override string GetTestProjectFileContent()
+        {
+            string packageName = AzureClientGenerator.Instance.Configuration.PackageName;
+
+            return $"""
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <PropertyGroup>
+                    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+                    <IsTestProject>true</IsTestProject>
+                  </PropertyGroup>
+
+                  <ItemGroup>
+                    <ProjectReference Include="$(AzureCoreTestFramework)" />
+                    <ProjectReference Include="..\src\{packageName}.csproj" />
+                  </ItemGroup>
+
+                  <ItemGroup>
+                    <PackageReference Include="NUnit" />
+                    <PackageReference Include="NUnit3TestAdapter" />
+                    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+                    <PackageReference Include="Moq" />
+                  </ItemGroup>
+                </Project>
+                """ + "\n";
+        }
+
         private static readonly IReadOnlyList<string> _operationSharedFiles =
         [
             "RawRequestUriBuilder.cs",
@@ -85,9 +112,14 @@ namespace Azure.Generator.Primitives
             "XmlWriterContent.cs",
         ];
 
-        private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation, ref bool hasStreamingOperation)
+        private static void TraverseInput(
+            InputClient rootClient,
+            ref bool hasOperation,
+            ref bool hasLongRunningOperation,
+            ref bool hasStreamingOperation,
+            ref bool hasOptionalResponseBody)
         {
-            if (hasOperation && hasLongRunningOperation && hasStreamingOperation)
+            if (hasOperation && hasLongRunningOperation && hasStreamingOperation && hasOptionalResponseBody)
             {
                 return;
             }
@@ -103,10 +135,28 @@ namespace Azure.Generator.Primitives
                 {
                     hasStreamingOperation = true;
                 }
+                var successResponses = method.Operation.Responses.Where(response => !response.IsErrorResponse);
+                var bodyStatusCodes = successResponses
+                    .Where(response => response.BodyType is not null)
+                    .SelectMany(response => response.StatusCodes)
+                    .ToHashSet();
+                if (bodyStatusCodes.Count > 0
+                    && successResponses
+                    .Where(response => response.BodyType is null)
+                    .SelectMany(response => response.StatusCodes)
+                    .Any(statusCode => !bodyStatusCodes.Contains(statusCode)))
+                {
+                    hasOptionalResponseBody = true;
+                }
             }
             foreach (var inputClient in rootClient.Children)
             {
-                TraverseInput(inputClient, ref hasOperation, ref hasLongRunningOperation, ref hasStreamingOperation);
+                TraverseInput(
+                    inputClient,
+                    ref hasOperation,
+                    ref hasLongRunningOperation,
+                    ref hasStreamingOperation,
+                    ref hasOptionalResponseBody);
             }
         }
 
@@ -166,9 +216,15 @@ namespace Azure.Generator.Primitives
             bool hasOperation = false;
             bool hasLongRunningOperation = false;
             bool hasStreamingOperation = false;
+            bool hasOptionalResponseBody = false;
             foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
-                TraverseInput(client, ref hasOperation, ref hasLongRunningOperation, ref hasStreamingOperation);
+                TraverseInput(
+                    client,
+                    ref hasOperation,
+                    ref hasLongRunningOperation,
+                    ref hasStreamingOperation,
+                    ref hasOptionalResponseBody);
             }
 
             // Add operation-related shared files if operations are present
@@ -192,6 +248,11 @@ namespace Azure.Generator.Primitives
             if (hasStreamingOperation)
             {
                 compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("AzurePipelineResponse.cs"), SharedSourceLinkBase));
+            }
+
+            if (hasOptionalResponseBody)
+            {
+                compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("NoValueResponseOfT.cs"), SharedSourceLinkBase));
             }
 
             // Add TaskExtensions if there are multipart form data operations and it hasn't already been added for LRO

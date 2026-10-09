@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net.ServerSentEvents;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Streaming;
@@ -12,6 +15,47 @@ namespace Azure.AI.AgentServer.Core.Tests.Streaming;
 [TestFixture]
 public sealed class EventStreamRegistryTests
 {
+    [Test]
+    public async Task OptionsConfiguredAfterRegistrationDetermineBacking()
+    {
+        var services = new ServiceCollection();
+        services.AddAgentEventStreamsDefault(
+            "test-protocol",
+            serviceProvider =>
+            {
+                var options = new AgentEventStreamOptions();
+                if (serviceProvider.GetRequiredService<IOptions<LateStreamOptions>>().Value.Replay)
+                {
+                    options.UseInMemoryReplay();
+                }
+
+                return options;
+            });
+        services.Configure<LateStreamOptions>(options => options.Replay = true);
+
+        await using ServiceProvider provider = services.BuildServiceProvider();
+        AgentEventStreamRegistry registry =
+            provider.GetRequiredService<AgentEventStreamRegistry>();
+        AgentEventStream stream = await registry.GetOrCreateAsync("late-options");
+        await stream.EmitAsync(
+            new SseItem<string>("retained") { EventId = "1" },
+            close: true);
+
+        var retained = new List<SseItem<string>>();
+        await foreach (SseItem<string> item in stream.Subscribe())
+        {
+            retained.Add(item);
+        }
+
+        Assert.That(retained, Has.Count.EqualTo(1));
+        Assert.That(retained[0].Data, Is.EqualTo("retained"));
+    }
+
+    private sealed class LateStreamOptions
+    {
+        public bool Replay { get; set; }
+    }
+
     [Test]
     public async Task DeleteUnknownStreamIdIsNoOp()
     {

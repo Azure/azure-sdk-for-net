@@ -96,7 +96,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         [Experimental("SCME0006")]
-        internal virtual OperationResult Create(bool waitUntilCompleted, OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        internal virtual OperationResult Create(bool waitUntilCompleted, AgentOptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             OperationResult result = Create(waitUntilCompleted, job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions());
             return result;
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, AgentOptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             OperationResult result = await CreateAsync(waitUntilCompleted, job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return result;
@@ -178,10 +178,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<OptimizationJob> Get(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<AgentOptimizationJob> Get(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = Get(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
         }
 
         /// <summary> Retrieves an optimization job by its identifier. </summary>
@@ -189,10 +189,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<OptimizationJob>> GetAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<AgentOptimizationJob>> GetAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await GetAsync(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -258,10 +258,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<OptimizationJob> Cancel(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<AgentOptimizationJob> Cancel(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = Cancel(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
         }
 
         /// <summary> Requests cancellation of a running or queued job and returns an error if the job is already in a terminal state. </summary>
@@ -269,10 +269,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<OptimizationJob>> CancelAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<AgentOptimizationJob>> CancelAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await CancelAsync(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+            return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
         }
 
         /// <summary>
