@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for Device Registry namespaces linked to a Device Provisioning Service.
+
 ### Breaking Changes
 
 ### Bugs Fixed
