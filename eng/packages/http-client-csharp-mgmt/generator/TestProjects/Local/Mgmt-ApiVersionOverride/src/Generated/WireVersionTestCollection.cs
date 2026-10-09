@@ -294,7 +294,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WireVersionTestData, WireVersionTestResource>(new WireVersionOperationsGetByResourceGroupAsyncCollectionResultOfT(_wireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WireVersionTestCollection.GetAll"), data => new WireVersionTestResource(Client, data));
+            return new AsyncPageableWrapper<WireVersionTestData, WireVersionTestResource>(new WireVersionTestDataAsync0CollectionResultOfT(_wireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WireVersionTestCollection.GetAll"), data => new WireVersionTestResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WireVersionTestData, WireVersionTestResource>(new WireVersionOperationsGetByResourceGroupCollectionResultOfT(_wireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WireVersionTestCollection.GetAll"), data => new WireVersionTestResource(Client, data));
+            return new PageableWrapper<WireVersionTestData, WireVersionTestResource>(new WireVersionTestData0CollectionResultOfT(_wireVersionOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WireVersionTestCollection.GetAll"), data => new WireVersionTestResource(Client, data));
         }
 
         /// <summary>
