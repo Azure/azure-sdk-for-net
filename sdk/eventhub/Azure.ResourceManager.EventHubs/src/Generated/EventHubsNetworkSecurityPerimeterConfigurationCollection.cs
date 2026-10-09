@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new EventHubsNetworkSecurityPerimeterConfigurationDataAsyncCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllCollectionResultOfT(
+            return new PageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new EventHubsNetworkSecurityPerimeterConfigurationDataCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
