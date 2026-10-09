@@ -154,7 +154,11 @@
       "resourceName": "GlobalRulestack",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -213,7 +217,11 @@
       "resourceName": "GlobalRulestackCertificateObject",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -272,7 +280,11 @@
       "resourceName": "GlobalRulestackFqdn",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -361,7 +373,11 @@
       "resourceName": "PostRulestackRule",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -420,7 +436,11 @@
       "resourceName": "GlobalRulestackPrefix",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -509,7 +529,11 @@
       "resourceName": "PreRulestackRule",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -629,7 +653,133 @@
         "pattern": "^(?![-_])(?!.*[-_]{2})(?!.*[-_]$)[a-zA-Z0-9][a-zA-Z0-9-]{0,127}$"
       },
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.CustomCaptureConfigurationsFirewallResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/customCaptureConfigurations/default",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/firewalls/customCaptureConfigurations",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CustomCaptureConfigurationsFirewallResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/customCaptureConfigurations/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/customCaptureConfigurations/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CustomCaptureConfigurationsFirewallResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/customCaptureConfigurations/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/customCaptureConfigurations/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CustomCaptureConfigurationsFirewallResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/customCaptureConfigurations/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/customCaptureConfigurations/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.CustomCaptureConfigurationsFirewallResources.listByFirewall",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/customCaptureConfigurations",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+      "singletonResourceName": "default",
+      "resourceName": "CustomCaptureConfigurationsFirewall",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "PaloAltoNetworks.Cloudngfw.LogIngestionSettingsResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default",
+      "resourceType": "PaloAltoNetworks.Cloudngfw/firewalls/logIngestionSettings",
+      "methods": [
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LogIngestionSettingsResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LogIngestionSettingsResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LogIngestionSettingsResources.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "PaloAltoNetworks.Cloudngfw.LogIngestionSettingsResources.listByFirewall",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}",
+      "singletonResourceName": "default",
+      "resourceName": "LogIngestionSettings",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -689,7 +839,11 @@
       "resourceName": "MetricsObjectFirewall",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -729,7 +883,11 @@
       "resourceName": "PaloAltoNetworksFirewallStatus",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -907,7 +1065,11 @@
       "resourceName": "LocalRulestack",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -966,7 +1128,11 @@
       "resourceName": "LocalRulestackCertificateObject",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -1025,7 +1191,11 @@
       "resourceName": "LocalRulestackFqdn",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -1114,7 +1284,11 @@
       "resourceName": "LocalRulestackRule",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     },
@@ -1173,7 +1347,11 @@
       "resourceName": "LocalRulestackPrefix",
       "nameConstraints": {},
       "apiVersions": [
-        "2025-10-08"
+        "2025-10-08",
+        "2026-01-26-preview",
+        "2026-05-11-preview",
+        "2026-06-01",
+        "2026-07-29-preview"
       ],
       "rbacRoles": []
     }

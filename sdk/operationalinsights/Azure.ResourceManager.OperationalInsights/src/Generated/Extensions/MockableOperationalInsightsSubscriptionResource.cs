@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters"), data => new OperationalInsightsClusterResource(Client, data));
+            return new AsyncPageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new OperationalInsightsClusterDataAsync0CollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters"), data => new OperationalInsightsClusterResource(Client, data));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters"), data => new OperationalInsightsClusterResource(Client, data));
+            return new PageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new OperationalInsightsClusterData0CollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters"), data => new OperationalInsightsClusterResource(Client, data));
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new WorkspacesGetAllAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces"), data => new OperationalInsightsWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceDataAsync0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new WorkspacesGetAllCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces"), data => new OperationalInsightsWorkspaceResource(Client, data));
+            return new PageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceData0CollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new QueryPacksGetAllAsyncCollectionResultOfT(QueryPacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks"), data => new LogAnalyticsQueryPackResource(Client, data));
+            return new AsyncPageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new LogAnalyticsQueryPackDataAsync0CollectionResultOfT(QueryPacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks"), data => new LogAnalyticsQueryPackResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new QueryPacksGetAllCollectionResultOfT(QueryPacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks"), data => new LogAnalyticsQueryPackResource(Client, data));
+            return new PageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new LogAnalyticsQueryPackData0CollectionResultOfT(QueryPacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks"), data => new LogAnalyticsQueryPackResource(Client, data));
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new DeletedWorkspacesGetAllAsyncCollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetAll"), data => new OperationalInsightsWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceDataAsync1CollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetAll"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new DeletedWorkspacesGetAllCollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetAll"), data => new OperationalInsightsWorkspaceResource(Client, data));
+            return new PageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceData1CollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetAll"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
     }
 }
