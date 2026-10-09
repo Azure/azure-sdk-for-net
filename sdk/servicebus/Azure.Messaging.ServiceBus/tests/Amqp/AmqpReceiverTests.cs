@@ -195,7 +195,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(receiver.SessionLockLostTask.IsCompleted, Is.False);
             var link = (ReceivingAmqpLink)scope.Invocations.First(call => call.Method.Name == "OpenAmqpLinkAsync").Arguments[0];
             link.Abort();
-            Assert.That(receiver.SessionLockLostTask.IsCompletedSuccessfully, Is.True);
+            Assert.That(receiver.SessionLockLostTask.Status, Is.EqualTo(TaskStatus.RanToCompletion));
             Assert.That(((ServiceBusException)await receiver.SessionLockLostTask).Reason, Is.EqualTo(ServiceBusFailureReason.SessionLockLost));
             await receiver.CloseAsync(CancellationToken.None);
         }
