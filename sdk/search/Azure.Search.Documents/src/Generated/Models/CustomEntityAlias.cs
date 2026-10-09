@@ -16,6 +16,12 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private bool? _caseSensitive;
+        internal bool _caseSensitiveIsDefined;
+        private bool? _accentSensitive;
+        internal bool _accentSensitiveIsDefined;
+        private int? _fuzzyEditDistance;
+        internal bool _fuzzyEditDistanceIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/>. </summary>
         /// <param name="text"> The text of the alias. </param>
@@ -36,9 +42,9 @@ namespace Azure.Search.Documents.Indexes.Models
         internal CustomEntityAlias(string text, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
-            CaseSensitive = caseSensitive;
-            AccentSensitive = accentSensitive;
-            FuzzyEditDistance = fuzzyEditDistance;
+            _caseSensitive = caseSensitive;
+            _accentSensitive = accentSensitive;
+            _fuzzyEditDistance = fuzzyEditDistance;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,12 +52,45 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Text { get; set; }
 
         /// <summary> Determine if the alias is case sensitive. </summary>
-        public bool? CaseSensitive { get; set; }
+        public bool? CaseSensitive
+        {
+            get
+            {
+                return _caseSensitive;
+            }
+            set
+            {
+                _caseSensitive = value;
+                _caseSensitiveIsDefined = true;
+            }
+        }
 
         /// <summary> Determine if the alias is accent sensitive. </summary>
-        public bool? AccentSensitive { get; set; }
+        public bool? AccentSensitive
+        {
+            get
+            {
+                return _accentSensitive;
+            }
+            set
+            {
+                _accentSensitive = value;
+                _accentSensitiveIsDefined = true;
+            }
+        }
 
         /// <summary> Determine the fuzzy edit distance of the alias. </summary>
-        public int? FuzzyEditDistance { get; set; }
+        public int? FuzzyEditDistance
+        {
+            get
+            {
+                return _fuzzyEditDistance;
+            }
+            set
+            {
+                _fuzzyEditDistance = value;
+                _fuzzyEditDistanceIsDefined = true;
+            }
+        }
     }
 }

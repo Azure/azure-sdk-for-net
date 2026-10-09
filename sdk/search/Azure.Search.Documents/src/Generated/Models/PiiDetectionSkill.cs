@@ -14,6 +14,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Using the Text Analytics API, extracts personal information from an input text and gives you the option of masking it. </summary>
     public partial class PiiDetectionSkill : SearchIndexerSkill
     {
+        private string _modelVersion;
+        internal bool _modelVersionIsDefined;
+        private string _domain;
+        internal bool _domainIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="PiiDetectionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -47,9 +52,9 @@ namespace Azure.Search.Documents.Indexes.Models
             MinPrecision = minPrecision;
             MaskingMode = maskingMode;
             Mask = mask;
-            ModelVersion = modelVersion;
+            _modelVersion = modelVersion;
             PiiCategories = piiCategories;
-            Domain = domain;
+            _domain = domain;
         }
 
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
@@ -62,12 +67,34 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Mask { get; set; }
 
         /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
-        public string ModelVersion { get; set; }
+        public string ModelVersion
+        {
+            get
+            {
+                return _modelVersion;
+            }
+            set
+            {
+                _modelVersion = value;
+                _modelVersionIsDefined = true;
+            }
+        }
 
         /// <summary> A list of PII entity categories that should be extracted and masked. </summary>
         public IList<string> PiiCategories { get; }
 
         /// <summary> If specified, will set the PII domain to include only a subset of the entity categories. Possible values include: 'phi', 'none'. Default is 'none'. </summary>
-        public string Domain { get; set; }
+        public string Domain
+        {
+            get
+            {
+                return _domain;
+            }
+            set
+            {
+                _domain = value;
+                _domainIsDefined = true;
+            }
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
+        private string _highlights;
+        internal bool _highlightsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="QueryCaptionResult"/>. </summary>
         internal QueryCaptionResult()
@@ -30,7 +32,7 @@ namespace Azure.Search.Documents.Models
         internal QueryCaptionResult(string text, string highlights, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Text = text;
-            Highlights = highlights;
+            _highlights = highlights;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>(additionalProperties);
         }
 
@@ -38,7 +40,13 @@ namespace Azure.Search.Documents.Models
         public string Text { get; }
 
         /// <summary> Same text passage as in the Text property with highlighted phrases most relevant to the query. </summary>
-        public string Highlights { get; }
+        public string Highlights
+        {
+            get
+            {
+                return _highlights;
+            }
+        }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IReadOnlyDictionary<string, object> AdditionalProperties => new ReadOnlyDictionary<string, object>(_additionalBinaryDataProperties);
