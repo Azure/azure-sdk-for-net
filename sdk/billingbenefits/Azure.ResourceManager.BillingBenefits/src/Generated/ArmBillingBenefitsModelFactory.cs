@@ -1215,15 +1215,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new SavingsPlanUpdateValidateContent((benefits ?? new ChangeTrackingList<BillingBenefitsSavingsPlanPatchProperties>()).ToList(), default);
         }
 
-        /// <summary> The SavingsPlanValidateResponse. </summary>
+        /// <summary> The SavingsPlanValidateResult. </summary>
         /// <param name="benefits"></param>
         /// <param name="nextLink"> Url to get the next page. </param>
-        /// <returns> A new <see cref="Models.SavingsPlanValidateResponse"/> instance for mocking. </returns>
-        public static SavingsPlanValidateResponse SavingsPlanValidateResponse(IEnumerable<SavingsPlanValidateResult> benefits = default, string nextLink = default)
+        /// <returns> A new <see cref="Models.SavingsPlanValidateResult"/> instance for mocking. </returns>
+        public static SavingsPlanValidateResult SavingsPlanValidateResult(IEnumerable<SavingsPlanValidateResult> benefits = default, string nextLink = default)
         {
             benefits ??= new ChangeTrackingList<SavingsPlanValidateResult>();
 
-            return new SavingsPlanValidateResponse((benefits ?? new ChangeTrackingList<SavingsPlanValidateResult>()).ToList(), nextLink, default);
+            return new SavingsPlanValidateResult(default, default, default, default);
         }
 
         /// <summary> Benefit scope response property. </summary>
@@ -1472,12 +1472,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Benefit validate response. </summary>
         /// <param name="benefits"> Defines benefit validation response for benefits. </param>
         /// <param name="nextLink"> Url to get the next page. </param>
-        /// <returns> A new <see cref="Models.BenefitValidateResponse"/> instance for mocking. </returns>
-        public static BenefitValidateResponse BenefitValidateResponse(IEnumerable<BenefitValidateResponseProperty> benefits = default, string nextLink = default)
+        /// <returns> A new <see cref="Models.BenefitValidateResult"/> instance for mocking. </returns>
+        public static BenefitValidateResult BenefitValidateResult(IEnumerable<BenefitValidateResponseProperty> benefits = default, string nextLink = default)
         {
             benefits ??= new ChangeTrackingList<BenefitValidateResponseProperty>();
 
-            return new BenefitValidateResponse((benefits ?? new ChangeTrackingList<BenefitValidateResponseProperty>()).ToList(), nextLink, default);
+            return new BenefitValidateResult((benefits ?? new ChangeTrackingList<BenefitValidateResponseProperty>()).ToList(), nextLink, default);
         }
 
         /// <summary> Benefit validate response property. </summary>

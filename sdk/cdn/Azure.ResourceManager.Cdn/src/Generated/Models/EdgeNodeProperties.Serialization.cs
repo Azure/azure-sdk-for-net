@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeNodeProperties(ipAddressGroups, additionalBinaryDataProperties);
+            return new EdgeNodeProperties(ipAddressGroups ?? new ChangeTrackingList<IPAddressGroup>(), additionalBinaryDataProperties);
         }
     }
 }

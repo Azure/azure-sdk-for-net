@@ -263,10 +263,17 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Optional.IsDefined(SchemaTransformationVersion))
+            if (_schemaTransformationVersionIsDefined || Optional.IsDefined(SchemaTransformationVersion))
             {
-                writer.WritePropertyName("schemaTransformationVersion"u8);
-                writer.WriteStringValue(SchemaTransformationVersion);
+                if (SchemaTransformationVersion != null)
+                {
+                    writer.WritePropertyName("schemaTransformationVersion"u8);
+                    writer.WriteStringValue(SchemaTransformationVersion);
+                }
+                else
+                {
+                    writer.WriteNull("schemaTransformationVersion"u8);
+                }
             }
             if (Optional.IsDefined(StorageResourceId))
             {
@@ -383,6 +390,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isDeveloperAppInsightsApiKeySet = default;
             string migrationToken = default;
             bool? isLocalAuthDisabled = default;
+            bool schemaTransformationVersionIsDefined = false;
             string schemaTransformationVersion = default;
             ResourceIdentifier storageResourceId = default;
             IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -660,6 +668,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("schemaTransformationVersion"u8))
                 {
+                    schemaTransformationVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         schemaTransformationVersion = null;
@@ -767,7 +776,10 @@ namespace Azure.ResourceManager.BotService.Models
                 appPasswordHint,
                 provisioningState,
                 publishingCredentials,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _schemaTransformationVersionIsDefined = schemaTransformationVersionIsDefined
+            };
         }
     }
 }

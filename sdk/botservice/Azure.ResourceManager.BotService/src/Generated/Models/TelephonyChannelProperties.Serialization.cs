@@ -94,25 +94,53 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (_cognitiveServiceSubscriptionKeyIsDefined || Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
-                writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
-                writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                if (CognitiveServiceSubscriptionKey != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
+                    writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceSubscriptionKey"u8);
+                }
             }
-            if (Optional.IsDefined(CognitiveServiceRegion))
+            if (_cognitiveServiceRegionIsDefined || Optional.IsDefined(CognitiveServiceRegion))
             {
-                writer.WritePropertyName("cognitiveServiceRegion"u8);
-                writer.WriteStringValue(CognitiveServiceRegion);
+                if (CognitiveServiceRegion != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceRegion"u8);
+                    writer.WriteStringValue(CognitiveServiceRegion);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceRegion"u8);
+                }
             }
-            if (Optional.IsDefined(DefaultLocale))
+            if (_defaultLocaleIsDefined || Optional.IsDefined(DefaultLocale))
             {
-                writer.WritePropertyName("defaultLocale"u8);
-                writer.WriteStringValue(DefaultLocale);
+                if (DefaultLocale != null)
+                {
+                    writer.WritePropertyName("defaultLocale"u8);
+                    writer.WriteStringValue(DefaultLocale);
+                }
+                else
+                {
+                    writer.WriteNull("defaultLocale"u8);
+                }
             }
-            if (Optional.IsDefined(PremiumSku))
+            if (_premiumSkuIsDefined || Optional.IsDefined(PremiumSku))
             {
-                writer.WritePropertyName("premiumSKU"u8);
-                writer.WriteStringValue(PremiumSku);
+                if (PremiumSku != null)
+                {
+                    writer.WritePropertyName("premiumSKU"u8);
+                    writer.WriteStringValue(PremiumSku);
+                }
+                else
+                {
+                    writer.WriteNull("premiumSKU"u8);
+                }
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -163,9 +191,13 @@ namespace Azure.ResourceManager.BotService.Models
             }
             IList<TelephonyPhoneNumbers> phoneNumbers = default;
             IList<TelephonyChannelResourceApiConfiguration> apiConfigurations = default;
+            bool cognitiveServiceSubscriptionKeyIsDefined = false;
             string cognitiveServiceSubscriptionKey = default;
+            bool cognitiveServiceRegionIsDefined = false;
             string cognitiveServiceRegion = default;
+            bool defaultLocaleIsDefined = false;
             string defaultLocale = default;
+            bool premiumSkuIsDefined = false;
             string premiumSku = default;
             bool? isEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -201,6 +233,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("cognitiveServiceSubscriptionKey"u8))
                 {
+                    cognitiveServiceSubscriptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceSubscriptionKey = null;
@@ -211,6 +244,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("cognitiveServiceRegion"u8))
                 {
+                    cognitiveServiceRegionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceRegion = null;
@@ -221,6 +255,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("defaultLocale"u8))
                 {
+                    defaultLocaleIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultLocale = null;
@@ -231,6 +266,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("premiumSKU"u8))
                 {
+                    premiumSkuIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         premiumSku = null;
@@ -261,7 +297,13 @@ namespace Azure.ResourceManager.BotService.Models
                 defaultLocale,
                 premiumSku,
                 isEnabled,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _cognitiveServiceSubscriptionKeyIsDefined = cognitiveServiceSubscriptionKeyIsDefined,
+                _cognitiveServiceRegionIsDefined = cognitiveServiceRegionIsDefined,
+                _defaultLocaleIsDefined = defaultLocaleIsDefined,
+                _premiumSkuIsDefined = premiumSkuIsDefined
+            };
         }
     }
 }

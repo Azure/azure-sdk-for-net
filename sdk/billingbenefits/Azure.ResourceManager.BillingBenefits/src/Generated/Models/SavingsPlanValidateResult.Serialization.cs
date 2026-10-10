@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSavingsPlanValidateResult(document.RootElement, options);
+                        return SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support reading '{options.Format}' format.");
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SavingsPlanValidateResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SavingsPlanValidateResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SavingsPlanValidateResult IPersistableModel<SavingsPlanValidateResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SavingsPlanValidateResult IPersistableModel<SavingsPlanValidateResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SavingsPlanValidateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         void IJsonModel<SavingsPlanValidateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SavingsPlanValidateResult IJsonModel<SavingsPlanValidateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SavingsPlanValidateResult IJsonModel<SavingsPlanValidateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSavingsPlanValidateResult(document.RootElement, options);
+            return SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>

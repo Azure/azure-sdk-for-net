@@ -16,6 +16,14 @@ namespace Azure.ResourceManager.BotService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _providerName;
+        internal bool _providerNameIsDefined;
+        private string _cognitiveServiceSubscriptionKey;
+        internal bool _cognitiveServiceSubscriptionKeyIsDefined;
+        private string _cognitiveServiceRegion;
+        internal bool _cognitiveServiceRegionIsDefined;
+        private string _defaultLocale;
+        internal bool _defaultLocaleIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TelephonyChannelResourceApiConfiguration"/>. </summary>
         public TelephonyChannelResourceApiConfiguration()
@@ -33,11 +41,11 @@ namespace Azure.ResourceManager.BotService.Models
         internal TelephonyChannelResourceApiConfiguration(string id, string providerName, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            ProviderName = providerName;
-            CognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
-            CognitiveServiceRegion = cognitiveServiceRegion;
+            _providerName = providerName;
+            _cognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
+            _cognitiveServiceRegion = cognitiveServiceRegion;
             CognitiveServiceResourceId = cognitiveServiceResourceId;
-            DefaultLocale = defaultLocale;
+            _defaultLocale = defaultLocale;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,18 +53,62 @@ namespace Azure.ResourceManager.BotService.Models
         public string Id { get; set; }
 
         /// <summary> The provider name. </summary>
-        public string ProviderName { get; set; }
+        public string ProviderName
+        {
+            get
+            {
+                return _providerName;
+            }
+            set
+            {
+                _providerName = value;
+                _providerNameIsDefined = true;
+            }
+        }
 
         /// <summary> The cognitive service subscription key. </summary>
-        public string CognitiveServiceSubscriptionKey { get; set; }
+        public string CognitiveServiceSubscriptionKey
+        {
+            get
+            {
+                return _cognitiveServiceSubscriptionKey;
+            }
+            set
+            {
+                _cognitiveServiceSubscriptionKey = value;
+                _cognitiveServiceSubscriptionKeyIsDefined = true;
+            }
+        }
 
         /// <summary> The cognitive service region. </summary>
-        public string CognitiveServiceRegion { get; set; }
+        public string CognitiveServiceRegion
+        {
+            get
+            {
+                return _cognitiveServiceRegion;
+            }
+            set
+            {
+                _cognitiveServiceRegion = value;
+                _cognitiveServiceRegionIsDefined = true;
+            }
+        }
 
         /// <summary> The cognitive service resourceId. </summary>
         public ResourceIdentifier CognitiveServiceResourceId { get; set; }
 
         /// <summary> The default locale. </summary>
-        public string DefaultLocale { get; set; }
+        public string DefaultLocale
+        {
+            get
+            {
+                return _defaultLocale;
+            }
+            set
+            {
+                _defaultLocale = value;
+                _defaultLocaleIsDefined = true;
+            }
+        }
     }
 }

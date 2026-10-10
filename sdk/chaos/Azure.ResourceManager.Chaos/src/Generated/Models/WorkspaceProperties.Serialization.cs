@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkspaceProperties(provisioningState, communicationEndpoint, scopes, additionalBinaryDataProperties);
+            return new WorkspaceProperties(provisioningState, communicationEndpoint, scopes ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

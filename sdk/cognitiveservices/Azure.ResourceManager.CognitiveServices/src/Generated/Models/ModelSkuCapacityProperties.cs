@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _scopeId;
+        internal bool _scopeIdIsDefined;
+        private CognitiveServicesQuotaScopeType? _scopeType;
+        internal bool _scopeTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ModelSkuCapacityProperties"/>. </summary>
         public ModelSkuCapacityProperties()
@@ -36,8 +40,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             SkuName = skuName;
             AvailableCapacity = availableCapacity;
             AvailableFinetuneCapacity = availableFinetuneCapacity;
-            ScopeId = scopeId;
-            ScopeType = scopeType;
+            _scopeId = scopeId;
+            _scopeType = scopeType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,10 +63,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The scope identifier for model SKU capacity. </summary>
         [WirePath("scopeId")]
-        public string ScopeId { get; set; }
+        public string ScopeId
+        {
+            get
+            {
+                return _scopeId;
+            }
+            set
+            {
+                _scopeId = value;
+                _scopeIdIsDefined = true;
+            }
+        }
 
         /// <summary> The scope type for model SKU capacity. </summary>
         [WirePath("scopeType")]
-        public CognitiveServicesQuotaScopeType? ScopeType { get; set; }
+        public CognitiveServicesQuotaScopeType? ScopeType
+        {
+            get
+            {
+                return _scopeType;
+            }
+            set
+            {
+                _scopeType = value;
+                _scopeTypeIsDefined = true;
+            }
+        }
     }
 }

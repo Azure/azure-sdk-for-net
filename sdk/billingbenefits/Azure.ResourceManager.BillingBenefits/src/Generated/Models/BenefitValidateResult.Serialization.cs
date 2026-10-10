@@ -15,58 +15,58 @@ using Azure.ResourceManager.BillingBenefits;
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Benefit validate response. </summary>
-    public partial class BenefitValidateResponse : IJsonModel<BenefitValidateResponse>
+    public partial class BenefitValidateResult : IJsonModel<BenefitValidateResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BenefitValidateResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BenefitValidateResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitValidateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BenefitValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBenefitValidateResponse(document.RootElement, options);
+                        return DeserializeBenefitValidateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitValidateResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitValidateResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitValidateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BenefitValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitValidateResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitValidateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BenefitValidateResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BenefitValidateResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BenefitValidateResponse IPersistableModel<BenefitValidateResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BenefitValidateResult IPersistableModel<BenefitValidateResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BenefitValidateResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BenefitValidateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BenefitValidateResponse"/> from. </param>
-        internal static BenefitValidateResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BenefitValidateResult"/> from. </param>
+        internal static BenefitValidateResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBenefitValidateResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeBenefitValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BenefitValidateResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BenefitValidateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitValidateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BenefitValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitValidateResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitValidateResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Benefits))
             {
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BenefitValidateResponse IJsonModel<BenefitValidateResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BenefitValidateResult IJsonModel<BenefitValidateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BenefitValidateResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BenefitValidateResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitValidateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BenefitValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitValidateResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitValidateResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBenefitValidateResponse(document.RootElement, options);
+            return DeserializeBenefitValidateResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BenefitValidateResponse DeserializeBenefitValidateResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static BenefitValidateResult DeserializeBenefitValidateResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BenefitValidateResponse(benefits ?? new ChangeTrackingList<BenefitValidateResponseProperty>(), nextLink, additionalBinaryDataProperties);
+            return new BenefitValidateResult(benefits ?? new ChangeTrackingList<BenefitValidateResponseProperty>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

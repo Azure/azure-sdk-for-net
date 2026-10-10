@@ -74,25 +74,46 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(QuotaTierUpgradeEligibilityInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(NextTierName))
+            if (_nextTierNameIsDefined || Optional.IsDefined(NextTierName))
             {
-                writer.WritePropertyName("nextTierName"u8);
-                writer.WriteStringValue(NextTierName);
+                if (NextTierName != null)
+                {
+                    writer.WritePropertyName("nextTierName"u8);
+                    writer.WriteStringValue(NextTierName);
+                }
+                else
+                {
+                    writer.WriteNull("nextTierName"u8);
+                }
             }
             if (Optional.IsDefined(UpgradeAvailabilityStatus))
             {
                 writer.WritePropertyName("upgradeAvailabilityStatus"u8);
                 writer.WriteStringValue(UpgradeAvailabilityStatus.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradeApplicableOn))
+            if (_upgradeApplicableOnIsDefined || Optional.IsDefined(UpgradeApplicableOn))
             {
-                writer.WritePropertyName("upgradeApplicableDate"u8);
-                writer.WriteStringValue(UpgradeApplicableOn.Value, "O");
+                if (UpgradeApplicableOn != null)
+                {
+                    writer.WritePropertyName("upgradeApplicableDate"u8);
+                    writer.WriteStringValue(UpgradeApplicableOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("upgradeApplicableDate"u8);
+                }
             }
-            if (Optional.IsDefined(UpgradeUnavailabilityReason))
+            if (_upgradeUnavailabilityReasonIsDefined || Optional.IsDefined(UpgradeUnavailabilityReason))
             {
-                writer.WritePropertyName("upgradeUnavailabilityReason"u8);
-                writer.WriteStringValue(UpgradeUnavailabilityReason);
+                if (UpgradeUnavailabilityReason != null)
+                {
+                    writer.WritePropertyName("upgradeUnavailabilityReason"u8);
+                    writer.WriteStringValue(UpgradeUnavailabilityReason);
+                }
+                else
+                {
+                    writer.WriteNull("upgradeUnavailabilityReason"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,15 +157,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            bool nextTierNameIsDefined = false;
             string nextTierName = default;
             QuotaTierUpgradeAvailabilityStatus? upgradeAvailabilityStatus = default;
+            bool upgradeApplicableOnIsDefined = false;
             DateTimeOffset? upgradeApplicableOn = default;
+            bool upgradeUnavailabilityReasonIsDefined = false;
             string upgradeUnavailabilityReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextTierName"u8))
                 {
+                    nextTierNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nextTierName = null;
@@ -164,6 +189,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("upgradeApplicableDate"u8))
                 {
+                    upgradeApplicableOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         upgradeApplicableOn = null;
@@ -174,6 +200,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("upgradeUnavailabilityReason"u8))
                 {
+                    upgradeUnavailabilityReasonIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         upgradeUnavailabilityReason = null;
@@ -187,7 +214,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QuotaTierUpgradeEligibilityInfo(nextTierName, upgradeAvailabilityStatus, upgradeApplicableOn, upgradeUnavailabilityReason, additionalBinaryDataProperties);
+            return new QuotaTierUpgradeEligibilityInfo(nextTierName, upgradeAvailabilityStatus, upgradeApplicableOn, upgradeUnavailabilityReason, additionalBinaryDataProperties)
+            {
+                _nextTierNameIsDefined = nextTierNameIsDefined,
+                _upgradeApplicableOnIsDefined = upgradeApplicableOnIsDefined,
+                _upgradeUnavailabilityReasonIsDefined = upgradeUnavailabilityReasonIsDefined
+            };
         }
     }
 }

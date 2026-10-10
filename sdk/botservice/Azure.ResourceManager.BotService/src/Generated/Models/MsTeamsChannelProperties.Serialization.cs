@@ -101,10 +101,17 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("deploymentEnvironment"u8);
                 writer.WriteStringValue(DeploymentEnvironment);
             }
-            if (Optional.IsDefined(AcceptedTerms))
+            if (_acceptedTermsIsDefined || Optional.IsDefined(AcceptedTerms))
             {
-                writer.WritePropertyName("acceptedTerms"u8);
-                writer.WriteBooleanValue(AcceptedTerms.Value);
+                if (AcceptedTerms != null)
+                {
+                    writer.WritePropertyName("acceptedTerms"u8);
+                    writer.WriteBooleanValue(AcceptedTerms.Value);
+                }
+                else
+                {
+                    writer.WriteNull("acceptedTerms"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,6 +160,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool isEnabled = default;
             string incomingCallRoute = default;
             string deploymentEnvironment = default;
+            bool acceptedTermsIsDefined = false;
             bool? acceptedTerms = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,6 +196,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("acceptedTerms"u8))
                 {
+                    acceptedTermsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         acceptedTerms = null;
@@ -208,7 +217,10 @@ namespace Azure.ResourceManager.BotService.Models
                 incomingCallRoute,
                 deploymentEnvironment,
                 acceptedTerms,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _acceptedTermsIsDefined = acceptedTermsIsDefined
+            };
         }
     }
 }

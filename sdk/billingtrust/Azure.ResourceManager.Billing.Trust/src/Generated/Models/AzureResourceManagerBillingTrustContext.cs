@@ -36,11 +36,7 @@ namespace Azure.ResourceManager.Billing.Trust
     [ModelReaderWriterBuildable(typeof(EduQualificationRuleProperties))]
     [ModelReaderWriterBuildable(typeof(GenerateUploadTokenResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(RuleListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownBillingTrustInitialRuleValueBase))]
-    [ModelReaderWriterBuildable(typeof(UnknownBillingTrustRuleProperties))]
-    [ModelReaderWriterBuildable(typeof(UnknownRulePatchProperties))]
     public partial class AzureResourceManagerBillingTrustContext : ModelReaderWriterContext
     {
     }

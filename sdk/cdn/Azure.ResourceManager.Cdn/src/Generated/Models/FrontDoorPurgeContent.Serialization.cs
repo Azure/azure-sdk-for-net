@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FrontDoorPurgeContent(contentPaths, domains ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new FrontDoorPurgeContent(contentPaths ?? new ChangeTrackingList<string>(), domains ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

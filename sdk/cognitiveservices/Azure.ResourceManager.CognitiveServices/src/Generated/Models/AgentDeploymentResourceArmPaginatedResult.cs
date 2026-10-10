@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _nextLink;
+        internal bool _nextLinkIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AgentDeploymentResourceArmPaginatedResult"/>. </summary>
         internal AgentDeploymentResourceArmPaginatedResult()
@@ -29,14 +31,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AgentDeploymentResourceArmPaginatedResult(string nextLink, IList<CognitiveServicesAgentDeploymentData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextLink = nextLink;
+            _nextLink = nextLink;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The link to the next page of Agent Deployment objects. If null, there are no additional pages. </summary>
         [WirePath("nextLink")]
-        public string NextLink { get; }
+        public string NextLink
+        {
+            get
+            {
+                return _nextLink;
+            }
+        }
 
         /// <summary> An array of objects of type Agent Deployment. </summary>
         [WirePath("value")]

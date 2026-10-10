@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the cache-key query string action. </summary>
     public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionProperties
     {
+        private string _queryParameters;
+        internal bool _queryParametersIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
         public CacheKeyQueryStringActionProperties(QueryStringBehavior queryStringBehavior) : base(DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters)
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         internal CacheKeyQueryStringActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, additionalBinaryDataProperties)
         {
             QueryStringBehavior = queryStringBehavior;
-            QueryParameters = queryParameters;
+            _queryParameters = queryParameters;
         }
 
         /// <summary> Caching behavior for the requests. </summary>
@@ -38,6 +41,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> query parameters to include or exclude (comma separated). </summary>
         [WirePath("queryParameters")]
-        public string QueryParameters { get; set; }
+        public string QueryParameters
+        {
+            get
+            {
+                return _queryParameters;
+            }
+            set
+            {
+                _queryParameters = value;
+                _queryParametersIsDefined = true;
+            }
+        }
     }
 }
