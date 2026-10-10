@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Describes the properties of a Dedicated Hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveDedicatedHubProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _vHubResourceId;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the VHubResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> VHubResourceId
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the FirewallResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> FirewallResourceId
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the FirewallPolicyResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> FirewallPolicyResourceId
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Designation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveDesignation> Designation
         {
             get
@@ -71,6 +77,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveProvisioningState> ProvisioningState
         {
             get

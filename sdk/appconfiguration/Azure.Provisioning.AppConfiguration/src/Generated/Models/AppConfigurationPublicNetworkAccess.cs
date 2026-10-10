@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Control permission for data plane traffic coming from public networks. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppConfigurationPublicNetworkAccess
     {
         /// <summary> Allow public network access to the data plane. </summary>

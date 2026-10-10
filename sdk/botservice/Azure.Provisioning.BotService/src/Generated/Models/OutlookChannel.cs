@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Outlook channel definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class OutlookChannel : BotChannelProperties
     {
         /// <summary> Creates a new OutlookChannel. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Model for inventory to be included or excluded from Agentless. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class InventoryList : ProvisionableConstruct
     {
         private BicepValue<IotSecurityInventoryKind> _inventoryKind;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InventoryKind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotSecurityInventoryKind> InventoryKind
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get

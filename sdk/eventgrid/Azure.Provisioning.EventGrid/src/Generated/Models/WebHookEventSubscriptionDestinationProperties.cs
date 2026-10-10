@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the webhook destination properties for an event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class WebHookEventSubscriptionDestinationProperties : ProvisionableConstruct
     {
         private BicepValue<Uri> _endpoint;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Endpoint
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the BaseEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> BaseEndpoint
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MaxEventsPerBatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxEventsPerBatch
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PreferredBatchSizeInKilobytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PreferredBatchSizeInKilobytes
         {
             get
@@ -84,6 +90,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AzureActiveDirectoryTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> AzureActiveDirectoryTenantId
         {
             get
@@ -99,6 +106,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the UriOrAzureActiveDirectoryApplicationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UriOrAzureActiveDirectoryApplicationId
         {
             get
@@ -114,6 +122,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeliveryAttributeMappings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DeliveryAttributeMapping> DeliveryAttributeMappings
         {
             get
@@ -129,6 +138,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MinimumTlsVersionAllowed. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TlsVersion> MinimumTlsVersionAllowed
         {
             get

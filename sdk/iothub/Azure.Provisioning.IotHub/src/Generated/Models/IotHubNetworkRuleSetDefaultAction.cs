@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> Default Action for Network Rule Set. </summary>
+    [Experimental("AZPROVISION001")]
     public enum IotHubNetworkRuleSetDefaultAction
     {
         /// <summary> Deny. </summary>

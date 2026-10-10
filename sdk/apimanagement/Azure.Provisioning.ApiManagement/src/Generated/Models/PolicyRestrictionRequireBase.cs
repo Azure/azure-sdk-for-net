@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Indicates if base policy should be enforced for the policy document. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PolicyRestrictionRequireBase
     {
         /// <summary> The policy is required to have base policy. </summary>

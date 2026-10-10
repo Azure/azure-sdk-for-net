@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The OS of agent machine. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskOS
     {
         /// <summary> Windows. </summary>

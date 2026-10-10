@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Delivery mode of the event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DeliveryMode
     {
         /// <summary> Queue. </summary>

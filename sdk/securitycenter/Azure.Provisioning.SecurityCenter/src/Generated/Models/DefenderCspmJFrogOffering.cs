@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The CSPM P1 for JFrog Artifactory offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderCspmJFrogOffering : SecurityCenterCloudOffering
     {
         private DefenderCspmJFrogOfferingMdcContainersImageAssessment _mdcContainersImageAssessment;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdcContainersImageAssessment. </summary>
+        [Experimental("AZPROVISION001")]
         internal DefenderCspmJFrogOfferingMdcContainersImageAssessment MdcContainersImageAssessment
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsMdcContainersImageAssessmentEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsMdcContainersImageAssessmentEnabled
         {
             get

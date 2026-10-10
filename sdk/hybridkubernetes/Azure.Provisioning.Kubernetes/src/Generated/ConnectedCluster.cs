@@ -18,6 +18,7 @@ using Azure.Provisioning.Roles;
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Represents a connected cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedCluster : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -117,6 +118,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -132,6 +134,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ConnectedClusterKind> Kind
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the Topics Configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TopicsConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _hostname;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Hostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Hostname
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the CustomDomains. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<CustomDomainConfiguration> CustomDomains
         {
             get

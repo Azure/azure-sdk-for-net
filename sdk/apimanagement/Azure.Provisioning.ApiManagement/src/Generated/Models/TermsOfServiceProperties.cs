@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Terms of service contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TermsOfServiceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _text;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Text. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Text
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsDisplayEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDisplayEnabled
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsConsentRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsConsentRequired
         {
             get

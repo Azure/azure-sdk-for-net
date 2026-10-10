@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SignalR
 {
     /// <summary>
     /// Optional tier of this particular SKU. 'Standard' or 'Free'.
     /// `Basic` is deprecated, use `Standard` instead.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum SignalRSkuTier
     {
         /// <summary> Free. </summary>

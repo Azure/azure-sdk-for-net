@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Static routing enrichment value type. For e.g. this property value can be 'String'. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum StaticRoutingEnrichmentType
     {
         /// <summary> String. </summary>

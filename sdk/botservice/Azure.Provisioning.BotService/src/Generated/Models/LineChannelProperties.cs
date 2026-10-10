@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Line channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LineChannelProperties : ProvisionableConstruct
     {
         private BicepList<LineRegistration> _lineRegistrations;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the LineRegistrations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<LineRegistration> LineRegistrations
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the CallbackUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> CallbackUri
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the IsValidated. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsValidated
         {
             get

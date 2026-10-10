@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The type of managed identity used. Only UserAssigned or SystemAssigned Identity are supported. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridKeyEncryptionIdentityType
     {
         /// <summary> SystemAssigned. </summary>

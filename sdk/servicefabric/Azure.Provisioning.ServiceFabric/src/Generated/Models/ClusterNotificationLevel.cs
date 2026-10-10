@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The level of notification. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterNotificationLevel
     {
         /// <summary> Receive only critical notifications. </summary>

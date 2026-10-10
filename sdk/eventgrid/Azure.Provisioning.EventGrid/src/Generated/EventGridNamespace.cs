@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Namespace resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridNamespace : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -114,6 +115,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public NamespaceSku Sku
         {
             get
@@ -129,6 +131,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -144,6 +147,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<NamespaceProvisioningState> ProvisioningState
         {
             get
@@ -157,6 +161,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the TopicsConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public TopicsConfiguration TopicsConfiguration
         {
             get
@@ -174,6 +179,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the TopicSpacesConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public TopicSpacesConfiguration TopicSpacesConfiguration
         {
             get
@@ -191,6 +197,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IsZoneRedundant. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsZoneRedundant
         {
             get
@@ -208,6 +215,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -225,6 +233,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the InboundIPRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridInboundIPRule> InboundIPRules
         {
             get
@@ -242,6 +251,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MinimumTlsVersionAllowed. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TlsVersion> MinimumTlsVersionAllowed
         {
             get
@@ -259,6 +269,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AutoScaleConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public AutoScaleConfiguration AutoScaleConfiguration
         {
             get

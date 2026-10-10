@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Tenant Settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementTenantSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -90,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Settings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Settings
         {
             get

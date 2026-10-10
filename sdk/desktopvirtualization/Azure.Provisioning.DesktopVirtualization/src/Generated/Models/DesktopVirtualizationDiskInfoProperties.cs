@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Disk information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationDiskInfoProperties : ProvisionableConstruct
     {
         private ManagedDiskProperties _managedDisk;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ManagedDisk. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedDiskProperties ManagedDisk
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DiffDiskSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationDiffDiskProperties DiffDiskSettings
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationVirtualMachineDiskType> ManagedDiskType
         {
             get

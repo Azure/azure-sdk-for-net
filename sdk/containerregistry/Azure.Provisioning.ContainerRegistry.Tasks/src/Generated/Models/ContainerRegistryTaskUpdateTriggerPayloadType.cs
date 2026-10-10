@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> Type of Payload body for Base image update triggers. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskUpdateTriggerPayloadType
     {
         /// <summary> Default. </summary>

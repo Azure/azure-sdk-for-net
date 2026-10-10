@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The provisioning state of this agent pool. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskProvisioningState
     {
         /// <summary> Creating. </summary>

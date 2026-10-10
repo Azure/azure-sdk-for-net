@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The issue that caused the resource to by unhealthy. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityHealthIssue : ProvisionableConstruct
     {
         private BicepValue<string> _issueKey;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the IssueKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IssueKey
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the IssueName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IssueName
         {
             get
@@ -47,6 +51,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SecurityValues. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> SecurityValues
         {
             get
@@ -57,6 +62,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the IssueDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IssueDescription
         {
             get
@@ -67,6 +73,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the RemediationSteps. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RemediationSteps
         {
             get
@@ -77,6 +84,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the RemediationScript. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RemediationScript
         {
             get
@@ -87,6 +95,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the IssueAdditionalData. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> IssueAdditionalData
         {
             get

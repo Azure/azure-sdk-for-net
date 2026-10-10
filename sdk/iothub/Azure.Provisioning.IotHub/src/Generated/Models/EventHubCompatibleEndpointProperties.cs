@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of the provisioned Event Hub-compatible endpoint used by the IoT hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventHubCompatibleEndpointProperties : ProvisionableConstruct
     {
         private BicepValue<long> _retentionTimeInDays;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the RetentionTimeInDays. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> RetentionTimeInDays
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PartitionCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PartitionCount
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the PartitionIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> PartitionIds
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the EventHubCompatibleName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventHubCompatibleName
         {
             get
@@ -75,6 +81,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Endpoint
         {
             get

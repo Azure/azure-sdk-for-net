@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Properties of Redis Enterprise databases, as opposed to general resource properties like location, tags. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DatabaseProperties : ProvisionableConstruct
     {
         private BicepValue<RedisEnterpriseClientProtocol> _clientProtocol;
@@ -33,6 +35,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the ClientProtocol. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseClientProtocol> ClientProtocol
         {
             get
@@ -48,6 +51,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Port. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Port
         {
             get
@@ -63,6 +67,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseProvisioningStatus> ProvisioningState
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ResourceState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseClusterResourceState> ResourceState
         {
             get
@@ -83,6 +89,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the ClusteringPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseClusteringPolicy> ClusteringPolicy
         {
             get
@@ -98,6 +105,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the EvictionPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseEvictionPolicy> EvictionPolicy
         {
             get
@@ -113,6 +121,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Persistence. </summary>
+        [Experimental("AZPROVISION001")]
         public RedisPersistenceSettings Persistence
         {
             get
@@ -128,6 +137,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Modules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RedisEnterpriseModule> Modules
         {
             get
@@ -143,6 +153,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the GeoReplication. </summary>
+        [Experimental("AZPROVISION001")]
         public RedisEnterpriseDatabaseGeoReplication GeoReplication
         {
             get
@@ -158,6 +169,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the RedisVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RedisVersion
         {
             get
@@ -168,6 +180,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the DeferUpgrade. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DeferUpgradeSetting> DeferUpgrade
         {
             get
@@ -183,6 +196,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the AccessKeysAuthentication. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AccessKeysAuthentication> AccessKeysAuthentication
         {
             get
@@ -198,6 +212,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the NotifyKeyspaceEvents. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> NotifyKeyspaceEvents
         {
             get

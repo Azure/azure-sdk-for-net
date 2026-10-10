@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Provisioning state of Network Security Perimeter configuration propagation. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BotServiceSeverity
     {
         /// <summary> Warning. </summary>

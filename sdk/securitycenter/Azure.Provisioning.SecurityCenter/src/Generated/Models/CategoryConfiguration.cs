@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Severity level per category configuration for PR Annotations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CategoryConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _minimumSeverityLevel;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MinimumSeverityLevel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MinimumSeverityLevel
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Category. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RuleCategory> Category
         {
             get

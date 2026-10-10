@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the Partner Destination. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PartnerDestinationProperties : ProvisionableConstruct
     {
         private BicepValue<Guid> _partnerRegistrationImmutableId;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerRegistrationImmutableId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> PartnerRegistrationImmutableId
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EndpointServiceContext. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EndpointServiceContext
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ExpirationTimeIfNotActivatedUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpirationTimeIfNotActivatedUtc
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerDestinationProvisioningState> ProvisioningState
         {
             get
@@ -83,6 +89,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ActivationState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerDestinationActivationState> ActivationState
         {
             get
@@ -98,6 +105,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EndpointBaseUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> EndpointBaseUri
         {
             get
@@ -113,6 +121,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MessageForActivation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MessageForActivation
         {
             get

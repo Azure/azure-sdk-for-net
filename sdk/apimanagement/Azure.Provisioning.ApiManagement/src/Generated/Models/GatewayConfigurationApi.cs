@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class GatewayConfigurationApi : ProvisionableConstruct
     {
         private BicepValue<string> _hostname;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Hostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Hostname
         {
             get

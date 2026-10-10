@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </summary>
+    [Experimental("AZPROVISION001")]
     public enum TopicSpacesConfigurationState
     {
         /// <summary> Disabled. </summary>

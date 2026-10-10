@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Sql
 {
     /// <summary> Azure Active Directory identity configuration for a resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DataSyncParticipantIdentity : ProvisionableConstruct
     {
         private BicepValue<DataSyncParticipantIdentityType> _type;

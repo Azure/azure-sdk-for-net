@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The rule result adjusted with baseline. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BaselineAdjustedResult : ProvisionableConstruct
     {
         private SqlVulnerabilityAssessmentBaseline _baseline;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Baseline. </summary>
+        [Experimental("AZPROVISION001")]
         public SqlVulnerabilityAssessmentBaseline Baseline
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SqlVulnerabilityAssessmentScanResultRuleStatus> Status
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ResultsNotInBaseline. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BicepList<string>> ResultsNotInBaseline
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ResultsOnlyInBaseline. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BicepList<string>> ResultsOnlyInBaseline
         {
             get

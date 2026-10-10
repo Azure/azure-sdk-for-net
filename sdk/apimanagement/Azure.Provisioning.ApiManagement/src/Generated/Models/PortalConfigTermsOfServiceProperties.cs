@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Terms of service contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PortalConfigTermsOfServiceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _text;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Text. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Text
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the RequireConsent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> RequireConsent
         {
             get

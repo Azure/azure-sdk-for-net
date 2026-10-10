@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Represents a RegistrationInfo definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HostPoolRegistrationInfo : ProvisionableConstruct
     {
         private BicepValue<DateTimeOffset> _expiresOn;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Token. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Token
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RegistrationTokenOperation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<HostPoolRegistrationTokenOperation> RegistrationTokenOperation
         {
             get

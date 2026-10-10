@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Minimum TLS version of the publisher allowed to publish to this domain. </summary>
+    [Experimental("AZPROVISION001")]
     public enum TlsVersion
     {
         /// <summary> 1.0. </summary>

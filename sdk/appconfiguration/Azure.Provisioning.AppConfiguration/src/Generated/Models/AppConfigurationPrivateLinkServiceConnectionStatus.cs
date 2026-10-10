@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The private link service connection status. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppConfigurationPrivateLinkServiceConnectionStatus
     {
         /// <summary> Pending. </summary>

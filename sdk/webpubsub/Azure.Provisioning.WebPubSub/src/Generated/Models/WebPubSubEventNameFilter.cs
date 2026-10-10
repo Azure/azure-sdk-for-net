@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Filter events by their name. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubEventNameFilter : WebPubSubEventListenerFilter
     {
         private BicepList<string> _systemEvents;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the SystemEvents. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> SystemEvents
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the UserEventPattern. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UserEventPattern
         {
             get

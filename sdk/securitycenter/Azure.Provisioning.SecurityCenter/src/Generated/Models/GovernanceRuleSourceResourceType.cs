@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The governance rule source, what the rule affects, e.g. Assessments. </summary>
+    [Experimental("AZPROVISION001")]
     public enum GovernanceRuleSourceResourceType
     {
         /// <summary> The source of the governance rule is assessments. </summary>

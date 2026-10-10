@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The common service resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceResourcePropertiesBase : ProvisionableConstruct
     {
         private BicepValue<string> _placementConstraints;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the PlacementConstraints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PlacementConstraints
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the CorrelationScheme. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ServiceCorrelationDescription> CorrelationScheme
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ServiceLoadMetrics. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ServiceLoadMetricDescription> ServiceLoadMetrics
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ServicePlacementPolicies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ServicePlacementPolicyDescription> ServicePlacementPolicies
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the DefaultMoveCost. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApplicationMoveCost> DefaultMoveCost
         {
             get

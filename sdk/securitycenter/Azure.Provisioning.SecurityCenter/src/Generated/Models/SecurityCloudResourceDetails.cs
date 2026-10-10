@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The resource details of the health report. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityCloudResourceDetails : ProvisionableConstruct
     {
         private BicepValue<SecurityCenterResourceSource> _source;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Source. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityCenterResourceSource> Source
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ConnectorId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConnectorId
         {
             get

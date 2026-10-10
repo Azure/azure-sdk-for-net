@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Schema Type. Immutable. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ApiSchemaType
     {
         /// <summary> XML schema type. </summary>

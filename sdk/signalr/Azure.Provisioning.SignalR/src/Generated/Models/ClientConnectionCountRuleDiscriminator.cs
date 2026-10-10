@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SignalR
 {
     /// <summary></summary>
+    [Experimental("AZPROVISION001")]
     internal enum ClientConnectionCountRuleDiscriminator
     {
         /// <summary> ThrottleByJwtSignatureRule. </summary>

@@ -102,6 +102,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets the OriginalResourceGroup. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OriginalResourceGroup
         {
             get
@@ -120,6 +121,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets the ScheduledPurgeOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ScheduledPurgeOn
         {
             get

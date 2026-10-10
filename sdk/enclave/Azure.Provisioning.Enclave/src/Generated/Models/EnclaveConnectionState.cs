@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Specifies the state of the enclave connection. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EnclaveConnectionState
     {
         /// <summary> EnclaveConnectionState Type Pending Approval. </summary>

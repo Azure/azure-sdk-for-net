@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A rule which is evaluated upon event interception. The rule is configured by comparing a specific value from the event model to an expected value. This comparison is done by using one of the supported operators set. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityAutomationTriggeringRule : ProvisionableConstruct
     {
         private BicepValue<string> _propertyJPath;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the PropertyJPath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PropertyJPath
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the PropertyType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AutomationTriggeringRulePropertyType> PropertyType
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExpectedValue. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExpectedValue
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Operator. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AutomationTriggeringRuleOperator> Operator
         {
             get

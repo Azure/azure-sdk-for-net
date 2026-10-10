@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> A single API Management gateway hostname binding resource in List or Get response. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GatewayHostnameBinding : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -108,6 +109,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -121,6 +123,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Hostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Hostname
         {
             get
@@ -138,6 +141,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the KeyVault. </summary>
+        [Experimental("AZPROVISION001")]
         public GatewayHostnameBindingKeyVault KeyVault
         {
             get
@@ -155,6 +159,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Certificate. </summary>
+        [Experimental("AZPROVISION001")]
         public GatewayHostnameBindingCertificate Certificate
         {
             get

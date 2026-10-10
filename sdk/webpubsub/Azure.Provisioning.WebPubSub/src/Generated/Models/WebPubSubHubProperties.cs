@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Properties of a hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubHubProperties : ProvisionableConstruct
     {
         private BicepList<WebPubSubEventHandler> _eventHandlers;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the EventHandlers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WebPubSubEventHandler> EventHandlers
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the EventListeners. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WebPubSubEventListener> EventListeners
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the AnonymousConnectPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AnonymousConnectPolicy
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the WebSocketKeepAliveIntervalInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> WebSocketKeepAliveIntervalInSeconds
         {
             get

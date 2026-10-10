@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> A NAPTR record. For more information about the NAPTR record format, see RFC 3403: https://www.rfc-editor.org/rfc/rfc3403. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsNaptrRecordInfo : ProvisionableConstruct
     {
         private BicepValue<int> _order;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Order. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Order
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Preference. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Preference
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Flags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Flags
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Services. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Services
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Regexp. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Regexp
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Replacement. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Replacement
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Maps
 {
     /// <summary> The name of the SKU, in standard format (such as G2). </summary>
+    [Experimental("AZPROVISION001")]
     public enum MapsSkuName
     {
         /// <summary> G2. </summary>

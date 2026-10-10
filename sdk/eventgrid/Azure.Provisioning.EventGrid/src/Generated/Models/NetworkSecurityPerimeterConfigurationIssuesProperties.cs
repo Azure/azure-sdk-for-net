@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Network security perimeter configuration issues properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class NetworkSecurityPerimeterConfigurationIssuesProperties : ProvisionableConstruct
     {
         private BicepValue<NetworkSecurityPerimeterConfigurationIssueType> _issueType;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the IssueType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<NetworkSecurityPerimeterConfigurationIssueType> IssueType
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Severity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<NetworkSecurityPerimeterConfigurationIssueSeverity> Severity
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the SuggestedResourceIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> SuggestedResourceIds
         {
             get
@@ -65,6 +71,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the SuggestedAccessRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> SuggestedAccessRules
         {
             get

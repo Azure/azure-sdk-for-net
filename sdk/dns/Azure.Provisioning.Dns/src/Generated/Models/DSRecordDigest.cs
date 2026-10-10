@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> A digest. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DSRecordDigest : ProvisionableConstruct
     {
         private BicepValue<int> _algorithmType;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the AlgorithmType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AlgorithmType
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get

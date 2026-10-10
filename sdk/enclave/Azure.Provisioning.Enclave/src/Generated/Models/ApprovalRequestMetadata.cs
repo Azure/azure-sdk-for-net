@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Request Metadata for approvals request. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApprovalRequestMetadata : ProvisionableConstruct
     {
         private BicepValue<string> _resourceAction;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ResourceAction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceAction
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ApprovalCallbackRoute. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApprovalCallbackRoute
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ApprovalCallbackPayload. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApprovalCallbackPayload
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ApprovalStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveApprovalStatus> ApprovalStatus
         {
             get

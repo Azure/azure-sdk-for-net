@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Information about a container with data for a given resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DataContainer : ProvisionableConstruct
     {
         private WorkspaceInfo _workspace;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the Workspace. </summary>
+        [Experimental("AZPROVISION001")]
         public WorkspaceInfo Workspace
         {
             get

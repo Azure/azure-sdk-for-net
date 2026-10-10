@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationCreateDeleteProperties : ProvisionableConstruct
     {
         private BicepValue<int> _rampUpMaximumHostPoolSize;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpMaximumHostPoolSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampUpMaximumHostPoolSize
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpMinimumHostPoolSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampUpMinimumHostPoolSize
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownMaximumHostPoolSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampDownMaximumHostPoolSize
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownMinimumHostPoolSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampDownMinimumHostPoolSize
         {
             get

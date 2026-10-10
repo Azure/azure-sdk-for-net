@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The desired scaling method to be used to scale the hosts in the assigned host pool. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationScalingMethodType
     {
         /// <summary> Scaling will manage hosts in the host pool by power managing the hosts, but will not change the host pool size. </summary>

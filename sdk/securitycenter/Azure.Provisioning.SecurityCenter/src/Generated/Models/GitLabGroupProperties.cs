@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> GitLab Group properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GitLabGroupProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningStatusMessage;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningStatusMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningStatusMessage
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningStatusUpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ProvisioningStatusUpdatedOn
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DevOpsProvisioningState> ProvisioningState
         {
             get
@@ -58,6 +63,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the FullyQualifiedName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FullyQualifiedName
         {
             get
@@ -68,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the FullyQualifiedFriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FullyQualifiedFriendlyName
         {
             get
@@ -78,6 +85,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Uri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Uri
         {
             get
@@ -88,6 +96,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the OnboardingState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<OnboardingState> OnboardingState
         {
             get

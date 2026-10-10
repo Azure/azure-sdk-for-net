@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties related to a storage container endpoint. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RoutingStorageContainerProperties : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -34,6 +36,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConnectionString
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Endpoint
         {
             get
@@ -79,6 +84,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the AuthenticationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubAuthenticationType> AuthenticationType
         {
             get
@@ -94,6 +100,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedIdentity Identity
         {
             get
@@ -109,6 +116,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -124,6 +132,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the SubscriptionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubscriptionId
         {
             get
@@ -139,6 +148,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ResourceGroup. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceGroup
         {
             get
@@ -154,6 +164,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ContainerName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContainerName
         {
             get
@@ -169,6 +180,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the FileNameFormat. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FileNameFormat
         {
             get
@@ -184,6 +196,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the BatchFrequencyInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> BatchFrequencyInSeconds
         {
             get
@@ -199,6 +212,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the MaxChunkSizeInBytes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxChunkSizeInBytes
         {
             get
@@ -214,6 +228,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Encoding. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RoutingStorageContainerPropertiesEncoding> Encoding
         {
             get
@@ -229,6 +244,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the UserAssignedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> UserAssignedIdentity
         {
             get

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the storage blob based dead letter destination. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class StorageBlobDeadLetterDestinationProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _resourceId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ResourceId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the BlobContainerName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> BlobContainerName
         {
             get

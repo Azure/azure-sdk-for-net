@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Security Profile specifies attributes for cluster security features. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ConnectedClusterSecurityProfile : ProvisionableConstruct
     {
         private ConnectedClusterWorkloadIdentityProfile _isWorkloadIdentity;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the IsWorkloadIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         internal ConnectedClusterWorkloadIdentityProfile IsWorkloadIdentity
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsWorkloadIdentityEnabled
         {
             get

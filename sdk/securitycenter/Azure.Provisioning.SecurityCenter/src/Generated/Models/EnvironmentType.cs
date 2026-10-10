@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The type of the environment data. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum EnvironmentType
     {
         /// <summary> AwsAccount. </summary>

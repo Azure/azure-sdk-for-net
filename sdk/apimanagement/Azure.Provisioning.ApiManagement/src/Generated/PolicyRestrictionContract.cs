@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Policy restriction contract details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PolicyRestrictionContract : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Scope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scope
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the RequireBase. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PolicyRestrictionRequireBase> RequireBase
         {
             get

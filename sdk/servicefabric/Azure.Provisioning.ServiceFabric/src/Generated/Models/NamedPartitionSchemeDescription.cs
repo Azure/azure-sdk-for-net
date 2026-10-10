@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the named partition scheme of the service. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NamedPartitionSchemeDescription : PartitionSchemeDescription
     {
         private BicepValue<int> _count;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Count. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Count
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Names. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Names
         {
             get

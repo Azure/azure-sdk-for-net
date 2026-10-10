@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the deadletter destination with resource identity. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DeadLetterWithResourceIdentity : ProvisionableConstruct
     {
         private EventSubscriptionIdentity _identity;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public EventSubscriptionIdentity Identity
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeadLetterDestination. </summary>
+        [Experimental("AZPROVISION001")]
         public DeadLetterDestination DeadLetterDestination
         {
             get

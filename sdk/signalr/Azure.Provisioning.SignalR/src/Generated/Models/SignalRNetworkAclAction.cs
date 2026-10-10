@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Azure Networking ACL Action. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SignalRNetworkAclAction
     {
         /// <summary> Allow. </summary>

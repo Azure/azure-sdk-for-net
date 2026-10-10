@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Delegation settings contract properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PortalDelegationSettingsProperties : ProvisionableConstruct
     {
         private BicepValue<Uri> _uri;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Uri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Uri
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ValidationKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ValidationKey
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Subscriptions. </summary>
+        [Experimental("AZPROVISION001")]
         internal SubscriptionDelegationSettingProperties Subscriptions
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the UserRegistration. </summary>
+        [Experimental("AZPROVISION001")]
         internal RegistrationDelegationSettingProperties UserRegistration
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSubscriptionDelegationEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> SubscriptionsIsSubscriptionDelegationEnabled
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsUserRegistrationDelegationEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsUserRegistrationDelegationEnabled
         {
             get

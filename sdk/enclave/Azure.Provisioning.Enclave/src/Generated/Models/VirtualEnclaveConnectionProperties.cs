@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Enclave Connection Resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveConnectionProperties : ProvisionableConstruct
     {
         private BicepValue<EnclaveConnectionState> _state;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EnclaveConnectionState> State
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the CommunityResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CommunityResourceId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the SourceResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SourceResourceId
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the SourceCidr. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SourceCidr
         {
             get
@@ -84,6 +90,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the DestinationEndpointId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> DestinationEndpointId
         {
             get
@@ -99,6 +106,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveProvisioningState> ProvisioningState
         {
             get
@@ -109,6 +117,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ResourceCollection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceIdentifier> ResourceCollection
         {
             get
@@ -119,6 +128,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the UpdateMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveUpdateMode> UpdateMode
         {
             get

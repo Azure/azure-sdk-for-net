@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The information type keyword. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class InformationProtectionKeyword : ProvisionableConstruct
     {
         private BicepValue<string> _pattern;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Pattern. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Pattern
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsCustom. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCustom
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CanBeNumeric. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> CanBeNumeric
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsExcluded. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsExcluded
         {
             get

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The identity type. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskResourceIdentityType
     {
         /// <summary> SystemAssigned. </summary>

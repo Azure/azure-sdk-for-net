@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Contract details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiTagDescription : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -114,6 +116,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ExternalDocsUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ExternalDocsUri
         {
             get
@@ -131,6 +134,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ExternalDocsDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExternalDocsDescription
         {
             get
@@ -148,6 +152,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TagId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TagId
         {
             get
@@ -165,6 +170,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get

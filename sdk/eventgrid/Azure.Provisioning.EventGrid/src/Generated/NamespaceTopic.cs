@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Namespace topic details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NamespaceTopic : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<NamespaceTopicProvisioningState> ProvisioningState
         {
             get
@@ -109,6 +111,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PublisherType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PublisherType> PublisherType
         {
             get
@@ -126,6 +129,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the InputSchema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventInputSchema> InputSchema
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventRetentionInDays. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> EventRetentionInDays
         {
             get

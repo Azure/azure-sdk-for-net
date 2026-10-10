@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Relay UDP Connection Settings. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationRelayUdp
     {
         /// <summary> AVD-wide settings are used to determine connection availability. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Defines a health policy used to evaluate the health of an application or one of its children entities. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApplicationHealthPolicy : ProvisionableConstruct
     {
         private ServiceTypeHealthPolicy _defaultServiceTypeHealthPolicy;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the DefaultServiceTypeHealthPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         internal ServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ServiceTypeHealthPolicies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<ServiceTypeHealthPolicy> ServiceTypeHealthPolicies
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentUnhealthyServices. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentUnhealthyServices
         {
             get

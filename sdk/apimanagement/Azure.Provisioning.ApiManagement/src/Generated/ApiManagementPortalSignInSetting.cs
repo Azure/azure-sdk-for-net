@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Sign-In settings for the Developer Portal. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementPortalSignInSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -90,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsRedirectEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsRedirectEnabled
         {
             get

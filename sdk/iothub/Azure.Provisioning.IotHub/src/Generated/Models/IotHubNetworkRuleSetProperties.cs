@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> Network Rule Set Properties of IotHub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubNetworkRuleSetProperties : ProvisionableConstruct
     {
         private BicepValue<IotHubNetworkRuleSetDefaultAction> _defaultAction;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the DefaultAction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubNetworkRuleSetDefaultAction> DefaultAction
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ApplyToBuiltInEventHubEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ApplyToBuiltInEventHubEndpoint
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the IPRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IotHubNetworkRuleSetIPRule> IPRules
         {
             get

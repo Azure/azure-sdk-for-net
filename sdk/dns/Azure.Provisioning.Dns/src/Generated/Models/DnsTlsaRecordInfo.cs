@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> A TLSA record. For more information about the TLSA record format, see RFC 6698: https://www.rfc-editor.org/rfc/rfc6698. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsTlsaRecordInfo : ProvisionableConstruct
     {
         private BicepValue<int> _usage;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Usage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Usage
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Selector. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Selector
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the MatchingType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MatchingType
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the CertAssociationData. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CertAssociationData
         {
             get

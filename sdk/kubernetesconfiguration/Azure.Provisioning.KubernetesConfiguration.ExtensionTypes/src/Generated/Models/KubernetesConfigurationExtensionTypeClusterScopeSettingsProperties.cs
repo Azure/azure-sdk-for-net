@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> Extension scope settings. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isMultipleInstancesAllowed;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the IsMultipleInstancesAllowed. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsMultipleInstancesAllowed
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the DefaultReleaseNamespace. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultReleaseNamespace
         {
             get

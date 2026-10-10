@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Diagnostic settings for Large Language Models. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LLMDiagnosticSettings : ProvisionableConstruct
     {
         private BicepValue<LlmDiagnosticLogState> _logs;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Logs. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<LlmDiagnosticLogState> Logs
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Requests. </summary>
+        [Experimental("AZPROVISION001")]
         public LLMMessageDiagnosticSettings Requests
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Responses. </summary>
+        [Experimental("AZPROVISION001")]
         public LLMMessageDiagnosticSettings Responses
         {
             get

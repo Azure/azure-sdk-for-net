@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Identifier for governed services. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveGovernedServiceIdentifier
     {
         /// <summary> Service identifier for AKS. </summary>

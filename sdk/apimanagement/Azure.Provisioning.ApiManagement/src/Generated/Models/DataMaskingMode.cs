@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Data masking mode. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DataMaskingMode
     {
         /// <summary> Mask the value of an entity. </summary>

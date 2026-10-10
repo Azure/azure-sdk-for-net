@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> A PTR record. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsPtrRecordInfo : ProvisionableConstruct
     {
         private BicepValue<string> _dnsPtrDomainName;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsPtrDomainName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DnsPtrDomainName
         {
             get

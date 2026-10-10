@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> Public representation of one of the locations where a resource is provisioned. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubLocationDescription : ProvisionableConstruct
     {
         private BicepValue<string> _location;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Location
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the Role. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubReplicaRoleType> Role
         {
             get

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Static delivery attribute mapping details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class StaticDeliveryAttributeMapping : DeliveryAttributeMapping
     {
         private StaticDeliveryAttributeMappingProperties _properties;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal StaticDeliveryAttributeMappingProperties Properties
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IsSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSecret
         {
             get

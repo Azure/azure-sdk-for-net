@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The mode used to monitor health during a rolling upgrade. The values are UnmonitoredAuto, UnmonitoredManual, and Monitored. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ApplicationRollingUpgradeMode
     {
         /// <summary> Indicates the upgrade mode is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>

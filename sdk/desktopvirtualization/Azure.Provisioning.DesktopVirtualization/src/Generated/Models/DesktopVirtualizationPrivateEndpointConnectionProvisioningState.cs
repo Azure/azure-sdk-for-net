@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The current provisioning state. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationPrivateEndpointConnectionProvisioningState
     {
         /// <summary> Provisioning was successful. </summary>

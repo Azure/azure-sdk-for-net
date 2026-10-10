@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of the fallback route. IoT Hub uses these properties when it routes messages to the fallback endpoint. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubFallbackRouteProperties : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Source. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubRoutingSource> Source
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Condition. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Condition
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the EndpointNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> EndpointNames
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

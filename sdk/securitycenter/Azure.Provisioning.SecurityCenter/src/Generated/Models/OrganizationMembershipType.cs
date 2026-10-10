@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The multi cloud account's membership type in the organization. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum OrganizationMembershipType
     {
         /// <summary> Member. </summary>

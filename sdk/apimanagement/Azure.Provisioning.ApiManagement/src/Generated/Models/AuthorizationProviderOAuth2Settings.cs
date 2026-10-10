@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> OAuth2 settings details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthorizationProviderOAuth2Settings : ProvisionableConstruct
     {
         private BicepValue<Uri> _redirectUri;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the RedirectUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> RedirectUri
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the GrantTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public AuthorizationProviderOAuth2GrantTypes GrantTypes
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the KeyVault. </summary>
+        [Experimental("AZPROVISION001")]
         public AuthorizationProviderKeyVaultContract KeyVault
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the FederatedIdentityCredentialsProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public AuthorizationProviderFederatedIdentityCredentialsProperties FederatedIdentityCredentialsProperties
         {
             get

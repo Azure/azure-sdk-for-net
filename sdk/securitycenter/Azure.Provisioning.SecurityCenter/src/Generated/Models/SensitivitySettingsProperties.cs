@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The sensitivity settings properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SensitivitySettingsProperties : ProvisionableConstruct
     {
         private BicepList<Guid> _sensitiveInfoTypesIds;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SensitiveInfoTypesIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<Guid> SensitiveInfoTypesIds
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SensitivityThresholdLabelOrder. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<float> SensitivityThresholdLabelOrder
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SensitivityThresholdLabelId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SensitivityThresholdLabelId
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MipInformation. </summary>
+        [Experimental("AZPROVISION001")]
         public SensitivitySettingsMipInformation MipInformation
         {
             get

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Dns
 {
     /// <summary> An A record. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsARecordInfo : ProvisionableConstruct
     {
         private BicepValue<IPAddress> _ipv4Address;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the IPv4Address. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IPAddress> IPv4Address
         {
             get

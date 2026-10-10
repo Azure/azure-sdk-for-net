@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The minimum number of violations required within the selected lookback time window required to raise an alert. Relevant only for rules of the kind LogAlert. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConditionFailingPeriods : ProvisionableConstruct
     {
         private BicepValue<long> _numberOfEvaluationPeriods;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the NumberOfEvaluationPeriods. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> NumberOfEvaluationPeriods
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the MinFailingPeriodsToAlert. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MinFailingPeriodsToAlert
         {
             get

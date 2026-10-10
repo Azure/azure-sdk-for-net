@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> StringNotContains Advanced Filter. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class StringNotContainsAdvancedFilter : AdvancedFilter
     {
         private BicepList<string> _values;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Values. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Values
         {
             get

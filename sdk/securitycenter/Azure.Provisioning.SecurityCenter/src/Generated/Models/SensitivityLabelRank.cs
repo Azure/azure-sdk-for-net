@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The rank of the sensitivity label. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SensitivityLabelRank
     {
         /// <summary> None. </summary>

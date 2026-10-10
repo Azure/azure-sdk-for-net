@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Maps
 {
     /// <summary> The Kind of the Maps Account. </summary>
+    [Experimental("AZPROVISION001")]
     public enum MapsAccountKind
     {
         /// <summary> Gen2. </summary>

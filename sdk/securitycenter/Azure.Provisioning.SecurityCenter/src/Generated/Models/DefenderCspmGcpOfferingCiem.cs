@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The GCP Defender CSPM Permissions Management configurations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderCspmGcpOfferingCiem : ProvisionableConstruct
     {
         private DefenderCspmGcpOfferingCiemOidc _ciemOidc;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CiemOidc. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmGcpOfferingCiemOidc CiemOidc
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the LogCollectionOidc. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderCspmGcpOfferingCiemOidc LogCollectionOidc
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the GcpAuditLogIngestion. </summary>
+        [Experimental("AZPROVISION001")]
         public GcpAuditLogConfiguration GcpAuditLogIngestion
         {
             get

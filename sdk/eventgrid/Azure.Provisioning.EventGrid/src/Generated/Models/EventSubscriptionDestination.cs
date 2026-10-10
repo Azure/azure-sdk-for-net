@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -12,8 +13,9 @@ namespace Azure.Provisioning.EventGrid
 {
     /// <summary>
     /// Information about the destination for an event subscription.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="WebHookEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, and <see cref="NamespaceTopicEventSubscriptionDestination"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/>, and <see cref="WebHookEventSubscriptionDestination"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventSubscriptionDestination : ProvisionableConstruct
     {
         private BicepValue<EndpointType> _endpointType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Type of the endpoint for the event subscription destination. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<EndpointType> EndpointType
         {
             get

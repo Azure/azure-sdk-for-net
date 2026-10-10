@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SubscriptionProperties : ProvisionableConstruct
     {
         private BicepValue<SubscriptionProvisioningState> _provisioningState;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SubscriptionProvisioningState> ProvisioningState
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeliveryConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public DeliveryConfiguration DeliveryConfiguration
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventDeliverySchema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DeliverySchema> EventDeliverySchema
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the FiltersConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public FiltersConfiguration FiltersConfiguration
         {
             get
@@ -82,6 +88,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -97,6 +104,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get

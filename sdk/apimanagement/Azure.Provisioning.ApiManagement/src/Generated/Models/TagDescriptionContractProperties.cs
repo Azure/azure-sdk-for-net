@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> TagDescription contract Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TagDescriptionContractProperties : TagDescriptionBaseProperties
     {
         private BicepValue<string> _tagId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TagId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TagId
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get

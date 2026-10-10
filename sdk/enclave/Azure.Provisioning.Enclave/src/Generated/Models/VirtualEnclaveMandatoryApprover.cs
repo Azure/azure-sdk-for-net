@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Approver Metadata for approvals request. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveMandatoryApprover : ProvisionableConstruct
     {
         private BicepValue<string> _approverEntraId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ApproverEntraId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApproverEntraId
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Delegation settings for a developer portal. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementPortalDelegationSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -91,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Uri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Uri
         {
             get
@@ -108,6 +110,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ValidationKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ValidationKey
         {
             get
@@ -125,6 +128,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSubscriptionDelegationEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> SubscriptionsIsSubscriptionDelegationEnabled
         {
             get
@@ -142,6 +146,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsUserRegistrationDelegationEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsUserRegistrationDelegationEnabled
         {
             get

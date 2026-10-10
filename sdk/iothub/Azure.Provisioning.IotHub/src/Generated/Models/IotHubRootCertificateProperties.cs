@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> This property store root certificate related information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubRootCertificateProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isRootCertificateV2Enabled;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the IsRootCertificateV2Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsRootCertificateV2Enabled
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the LastUpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastUpdatedOn
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DeferUpgradeSetting
     {
         /// <summary> Deferred. </summary>

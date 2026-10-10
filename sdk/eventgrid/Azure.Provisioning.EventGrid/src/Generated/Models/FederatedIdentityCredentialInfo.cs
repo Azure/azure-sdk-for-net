@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The details of the Federated Identity Credential (FIC) used with the resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class FederatedIdentityCredentialInfo : ProvisionableConstruct
     {
         private BicepValue<Guid> _federatedClientId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the FederatedClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> FederatedClientId
         {
             get

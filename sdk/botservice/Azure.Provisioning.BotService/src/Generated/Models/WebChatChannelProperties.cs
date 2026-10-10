@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Web Chat channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebChatChannelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _webChatEmbedCode;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the WebChatEmbedCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WebChatEmbedCode
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Sites. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WebChatSite> Sites
         {
             get

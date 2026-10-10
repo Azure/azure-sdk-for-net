@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Defender for Servers AWS offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForServersAwsOffering : SecurityCenterCloudOffering
     {
         private DefenderForServersAwsOfferingDefenderForServers _defenderForServers;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DefenderForServers. </summary>
+        [Experimental("AZPROVISION001")]
         internal DefenderForServersAwsOfferingDefenderForServers DefenderForServers
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ArcAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForServersAwsOfferingArcAutoProvisioning ArcAutoProvisioning
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the VaAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning VaAutoProvisioning
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdeAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForServersAwsOfferingMdeAutoProvisioning MdeAutoProvisioning
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SubPlan. </summary>
+        [Experimental("AZPROVISION001")]
         internal DefenderForServersAwsOfferingSubPlan SubPlan
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the VmScanners. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForServersAwsOfferingVmScanners VmScanners
         {
             get
@@ -116,6 +124,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudRoleArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefenderForServersCloudRoleArn
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AvailableSubPlanType> SubPlanType
         {
             get

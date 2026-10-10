@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Whether the bot is in an isolated network. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BotServicePublicNetworkAccess
     {
         /// <summary> Enabled. </summary>

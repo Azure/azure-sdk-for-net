@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Type of the endpoint for the partner destination. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum PartnerEndpointType
     {
         /// <summary> WebHook. </summary>

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.Maps
 {
     /// <summary> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </summary>
+    [Experimental("AZPROVISION001")]
     public enum MapsPublicNetworkAccess
     {
         /// <summary> enabled. </summary>

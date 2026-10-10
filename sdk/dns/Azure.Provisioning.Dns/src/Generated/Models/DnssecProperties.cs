@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> Represents the DNSSEC properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DnssecProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the SigningKeys. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsSigningKey> SigningKeys
         {
             get

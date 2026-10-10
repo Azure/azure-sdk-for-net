@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ConnectedClusterAzureHybridBenefit
     {
         /// <summary> True. </summary>

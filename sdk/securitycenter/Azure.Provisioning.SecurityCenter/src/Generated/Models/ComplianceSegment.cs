@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A segment of a compliance assessment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ComplianceSegment : ProvisionableConstruct
     {
         private BicepValue<string> _segmentType;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SegmentType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SegmentType
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Percentage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<double> Percentage
         {
             get

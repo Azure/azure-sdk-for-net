@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> This determines the format that is expected for incoming events published to the topic. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventInputSchema
     {
         /// <summary> CloudEventSchemaV1_0. </summary>

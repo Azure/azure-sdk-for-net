@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the client certificate details using common name. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterClientCertificateCommonName : ProvisionableConstruct
     {
         private BicepValue<bool> _isAdmin;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsAdmin. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsAdmin
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the CertificateCommonName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CertificateCommonName
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the CertificateIssuerThumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> CertificateIssuerThumbprint
         {
             get

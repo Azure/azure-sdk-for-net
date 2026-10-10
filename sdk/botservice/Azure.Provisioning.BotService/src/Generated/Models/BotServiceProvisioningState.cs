@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary></summary>
+    [Experimental("AZPROVISION001")]
     public enum BotServiceProvisioningState
     {
         /// <summary> Creating. </summary>

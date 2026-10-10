@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the policy used when upgrading the cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterUpgradePolicy : ProvisionableConstruct
     {
         private BicepValue<bool> _forceRestart;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ForceRestart. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ForceRestart
         {
             get
@@ -45,6 +48,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeReplicaSetCheckTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> UpgradeReplicaSetCheckTimeout
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HealthCheckWaitDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> HealthCheckWaitDuration
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HealthCheckStableDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> HealthCheckStableDuration
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HealthCheckRetryTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> HealthCheckRetryTimeout
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> UpgradeTimeout
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeDomainTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> UpgradeDomainTimeout
         {
             get
@@ -135,6 +144,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HealthPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterHealthPolicy HealthPolicy
         {
             get
@@ -150,6 +160,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the DeltaHealthPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterUpgradeDeltaHealthPolicy DeltaHealthPolicy
         {
             get

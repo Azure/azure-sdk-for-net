@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Enumerates the ways that a service can be partitioned. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum ApplicationPartitionScheme
     {
         /// <summary> Indicates the partition kind is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>

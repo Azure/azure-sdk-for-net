@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describes properties of a standard. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class StandardProperties : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the StandardType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StandardType
         {
             get
@@ -51,6 +55,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -66,6 +71,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Category. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Category
         {
             get
@@ -81,6 +87,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Components. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<StandardComponentProperties> Components
         {
             get
@@ -96,6 +103,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SupportedClouds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<StandardSupportedClouds> SupportedClouds
         {
             get

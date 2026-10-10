@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the corresponding partner topic of a Channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerTopicInfo : ProvisionableConstruct
     {
         private BicepValue<Guid> _azureSubscriptionId;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AzureSubscriptionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> AzureSubscriptionId
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ResourceGroupName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceGroupName
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventTypeInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerTopicEventTypeInfo EventTypeInfo
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Source. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Source
         {
             get

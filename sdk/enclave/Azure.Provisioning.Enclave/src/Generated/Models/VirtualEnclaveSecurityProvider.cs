@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Specifies the security provider for the transit hub. </summary>
+    [Experimental("AZPROVISION001")]
     public enum VirtualEnclaveSecurityProvider
     {
         /// <summary> No security provider. </summary>

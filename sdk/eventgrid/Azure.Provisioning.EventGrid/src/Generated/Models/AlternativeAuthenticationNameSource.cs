@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Alternative authentication name sources related to client authentication settings for namespace resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AlternativeAuthenticationNameSource
     {
         /// <summary> ClientCertificateSubject. </summary>

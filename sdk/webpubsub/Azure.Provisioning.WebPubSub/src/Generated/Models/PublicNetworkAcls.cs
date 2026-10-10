@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Network ACL. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PublicNetworkAcls : ProvisionableConstruct
     {
         private BicepList<WebPubSubRequestType> _allow;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Allow. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WebPubSubRequestType> Allow
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Deny. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WebPubSubRequestType> Deny
         {
             get

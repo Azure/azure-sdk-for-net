@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Describes properties of a task. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SecurityTaskPropertiesInfo : ProvisionableConstruct
     {
         private BicepValue<string> _state;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> State
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SecurityTaskParameters. </summary>
+        [Experimental("AZPROVISION001")]
         internal SecurityTaskProperties SecurityTaskParameters
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the LastStateChangedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastStateChangedOn
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SubState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubState
         {
             get
@@ -76,6 +83,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the TaskName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecurityTaskName
         {
             get

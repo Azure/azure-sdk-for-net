@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The application type name properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApplicationTypeResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the partition scheme of a singleton-partitioned, or non-partitioned service. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SingletonPartitionSchemeDescription : PartitionSchemeDescription
     {
         /// <summary> Creates a new SingletonPartitionSchemeDescription. </summary>

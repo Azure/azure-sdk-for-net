@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary>
@@ -12,6 +14,7 @@ namespace Azure.Provisioning.EventGrid
     /// actively by runtime as expected. When the associated CMK becomes invalid (e.g., if it is deleted, or if versioned CMK is not current anymore), Event Grid
     /// Service will set this state to disabled to indicate that this key is not valid anymore and requires action from user.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridKeyEncryptionKeyStatus
     {
         /// <summary> Active. </summary>

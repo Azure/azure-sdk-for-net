@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Base Properties of an API Management gateway resource description. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApiManagementGatewayBaseProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the TargetProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TargetProvisioningState
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the CreatedAtUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedAtUtc
         {
             get
@@ -59,6 +64,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Frontend. </summary>
+        [Experimental("AZPROVISION001")]
         internal FrontendConfiguration Frontend
         {
             get
@@ -74,6 +80,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Backend. </summary>
+        [Experimental("AZPROVISION001")]
         internal BackendConfiguration Backend
         {
             get
@@ -89,6 +96,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ConfigurationApi. </summary>
+        [Experimental("AZPROVISION001")]
         internal GatewayConfigurationApi ConfigurationApi
         {
             get
@@ -104,6 +112,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the VirtualNetworkType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualNetworkType> VirtualNetworkType
         {
             get
@@ -119,6 +128,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the DefaultHostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FrontendDefaultHostname
         {
             get
@@ -132,6 +142,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SubnetId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> BackendSubnetId
         {
             get
@@ -149,6 +160,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Hostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConfigurationApiHostname
         {
             get

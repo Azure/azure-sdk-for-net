@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterUpgradeCadence
     {
         /// <summary> Cluster upgrade starts immediately after a new version is rolled out. Recommended for Test/Dev clusters. </summary>

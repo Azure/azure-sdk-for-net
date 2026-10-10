@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Specifies Client Application - Product link assignment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClientApplicationProductLinkContract : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ProductId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProductId
         {
             get

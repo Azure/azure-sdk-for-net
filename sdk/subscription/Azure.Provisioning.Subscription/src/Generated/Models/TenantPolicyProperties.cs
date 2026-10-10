@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Tenant policy. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TenantPolicyProperties : ProvisionableConstruct
     {
         private BicepValue<string> _policyId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the PolicyId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PolicyId
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the BlockSubscriptionsLeavingTenant. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> BlockSubscriptionsLeavingTenant
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the BlockSubscriptionsIntoTenant. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> BlockSubscriptionsIntoTenant
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets or sets the ExemptedPrincipals. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<Guid> ExemptedPrincipals
         {
             get

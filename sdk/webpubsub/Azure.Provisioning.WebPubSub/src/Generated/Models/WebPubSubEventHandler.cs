@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Properties of event handler. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubEventHandler : ProvisionableConstruct
     {
         private BicepValue<string> _urlTemplate;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the UrlTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UrlTemplate
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the UserEventPattern. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UserEventPattern
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the SystemEvents. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> SystemEvents
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Auth. </summary>
+        [Experimental("AZPROVISION001")]
         public UpstreamAuthSettings Auth
         {
             get

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Indicates the type of bot service. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BotServiceKind
     {
         /// <summary> Sdk. </summary>

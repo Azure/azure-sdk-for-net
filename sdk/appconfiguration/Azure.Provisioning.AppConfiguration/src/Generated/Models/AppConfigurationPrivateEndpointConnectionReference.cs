@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> A reference to a related private endpoint connection. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppConfigurationPrivateEndpointConnectionReference : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> Id
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal PrivateEndpointConnectionProperties Properties
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationProvisioningState> ProvisioningState
         {
             get
@@ -63,6 +69,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public AppConfigurationPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -72,6 +79,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

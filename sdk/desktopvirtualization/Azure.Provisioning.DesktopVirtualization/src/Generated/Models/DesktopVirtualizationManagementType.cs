@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The type of management for the hostpool. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationManagementType
     {
         /// <summary> Automated management of the hostpool. </summary>

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Publisher type of the namespace topic. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PublisherType
     {
         /// <summary> Custom. </summary>

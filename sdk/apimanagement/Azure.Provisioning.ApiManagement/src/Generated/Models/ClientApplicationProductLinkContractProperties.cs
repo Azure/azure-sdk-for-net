@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The ClientApplicationProductLinkContractProperties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ClientApplicationProductLinkContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _productId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ProductId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProductId
         {
             get

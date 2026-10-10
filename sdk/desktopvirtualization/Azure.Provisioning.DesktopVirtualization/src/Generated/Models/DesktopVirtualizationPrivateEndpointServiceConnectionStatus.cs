@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The private endpoint connection status. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationPrivateEndpointServiceConnectionStatus
     {
         /// <summary> Connection is Pending. </summary>

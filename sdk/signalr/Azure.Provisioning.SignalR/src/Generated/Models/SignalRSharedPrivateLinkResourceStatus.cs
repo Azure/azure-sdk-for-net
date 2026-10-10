@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Status of the shared private link resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SignalRSharedPrivateLinkResourceStatus
     {
         /// <summary> Pending. </summary>

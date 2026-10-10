@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AutomationTriggeringRuleOperator
     {
         /// <summary> Applies for decimal and non-decimal operands. </summary>

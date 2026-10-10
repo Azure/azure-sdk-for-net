@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> An MX record. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsMXRecordInfo : ProvisionableConstruct
     {
         private BicepValue<int> _preference;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Preference. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Preference
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Exchange. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Exchange
         {
             get

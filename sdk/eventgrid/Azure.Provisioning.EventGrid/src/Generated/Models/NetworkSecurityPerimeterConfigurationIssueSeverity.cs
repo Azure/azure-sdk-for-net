@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Provisioning issue severity. </summary>
+    [Experimental("AZPROVISION001")]
     public enum NetworkSecurityPerimeterConfigurationIssueSeverity
     {
         /// <summary> Warning. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Additional data about the assignment. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AssignmentPropertiesAdditionalData : ProvisionableConstruct
     {
         private BicepValue<string> _exemptionCategory;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExemptionCategory. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExemptionCategory
         {
             get

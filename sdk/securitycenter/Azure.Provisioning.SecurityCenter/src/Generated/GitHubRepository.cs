@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> GitHub Repository resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GitHubRepository : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

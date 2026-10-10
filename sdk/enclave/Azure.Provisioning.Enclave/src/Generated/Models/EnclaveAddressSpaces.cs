@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Enclave Address Spaces. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EnclaveAddressSpaces : ProvisionableConstruct
     {
         private BicepValue<string> _enclaveAddressSpace;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the EnclaveAddressSpace. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EnclaveAddressSpace
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ManagedAddressSpace. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedAddressSpace
         {
             get

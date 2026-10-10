@@ -53,6 +53,9 @@ namespace Azure.Generator.Provisioning.Providers
             return modifiers;
         }
 
+        protected override IReadOnlyList<MethodBodyStatement> BuildAttributes()
+            => [.. base.BuildAttributes(), .. ApiVersionHelpers.BuildExperimentalAttributes(_inputEnum.ApiVersions)];
+
         protected override bool GetIsEnum() => true;
 
         protected override FieldProvider[] BuildFields()

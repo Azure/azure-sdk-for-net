@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> AAD Profile specifies attributes for Azure Active Directory integration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedClusterAadProfile : ProvisionableConstruct
     {
         private BicepValue<bool> _enableAzureRbac;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the EnableAzureRbac. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableAzureRbac
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AdminGroupObjectIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AdminGroupObjectIds
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TenantId
         {
             get

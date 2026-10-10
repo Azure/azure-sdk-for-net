@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Routing identity type for topic spaces configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RoutingIdentityType
     {
         /// <summary> None. </summary>

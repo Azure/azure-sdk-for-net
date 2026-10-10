@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> The Extension Type Version object. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterExtensionTypeVersion : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

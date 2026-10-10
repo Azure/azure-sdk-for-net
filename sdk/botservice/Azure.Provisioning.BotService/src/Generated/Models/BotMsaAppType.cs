@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Microsoft App Type for the bot. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BotMsaAppType
     {
         /// <summary> UserAssignedMSI. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The PortalConfigPropertiesSignin. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PortalConfigPropertiesSignin : ProvisionableConstruct
     {
         private BicepValue<bool> _require;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Require. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Require
         {
             get

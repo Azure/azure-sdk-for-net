@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Optional. Determine which blobs get scanned by On Upload malware scanning. An Or operation is performed between each filter type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class OnUploadFilters : ProvisionableConstruct
     {
         private BicepList<string> _excludeBlobsWithPrefix;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExcludeBlobsWithPrefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ExcludeBlobsWithPrefix
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExcludeBlobsWithSuffix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ExcludeBlobsWithSuffix
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExcludeBlobsLargerThan. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> ExcludeBlobsLargerThan
         {
             get

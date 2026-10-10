@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Current provisioning status. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseProvisioningStatus
     {
         /// <summary> Succeeded. </summary>

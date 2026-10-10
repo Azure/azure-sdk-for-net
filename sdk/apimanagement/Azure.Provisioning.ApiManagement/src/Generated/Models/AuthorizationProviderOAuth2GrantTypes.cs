@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization Provider oauth2 grant types settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthorizationProviderOAuth2GrantTypes : ProvisionableConstruct
     {
         private BicepDictionary<string> _authorizationCode;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AuthorizationCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> AuthorizationCode
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ClientCredentials. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> ClientCredentials
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AuthorizationCodeWithFederatedIdentityCredentials. </summary>
+        [Experimental("AZPROVISION001")]
         public AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType AuthorizationCodeWithFederatedIdentityCredentials
         {
             get

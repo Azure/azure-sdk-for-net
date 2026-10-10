@@ -99,6 +99,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets the TrustedRootCertificates. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EndpointTrustedRootCertificateInfo> TrustedRootCertificates
         {
             get

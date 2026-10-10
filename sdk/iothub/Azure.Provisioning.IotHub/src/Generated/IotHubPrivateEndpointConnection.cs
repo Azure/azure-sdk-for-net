@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The private endpoint connection of an IotHub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

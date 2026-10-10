@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationAllowRdpShortPathWithPrivateLink
     {
         /// <summary> Blocks the use of RDPShortPath if the hostpool PublicNetworkAccess setting is configured to require private link. </summary>

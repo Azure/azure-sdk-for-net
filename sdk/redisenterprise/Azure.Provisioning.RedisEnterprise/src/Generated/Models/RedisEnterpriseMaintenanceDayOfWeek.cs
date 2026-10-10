@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Day of week. Required when the maintenance window type is 'Weekly'. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseMaintenanceDayOfWeek
     {
         /// <summary> Sunday. </summary>

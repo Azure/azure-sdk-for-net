@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The GitLab scope connector's environment data. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GitLabScopeEnvironmentInfo : SecurityConnectorEnvironment
     {
         /// <summary> Creates a new GitLabScopeEnvironmentInfo. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> A pointer to an Azure Action Group. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ActivityLogAlertActionGroup : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _actionGroupId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ActionGroupId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ActionGroupId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WebhookProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> WebhookProperties
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ActionProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> ActionProperties
         {
             get

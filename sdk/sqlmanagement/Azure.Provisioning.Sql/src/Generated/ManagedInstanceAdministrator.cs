@@ -164,6 +164,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the PrincipalType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ManagedInstanceAdministratorPrincipalType> PrincipalType
         {
             get

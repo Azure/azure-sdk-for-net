@@ -18,6 +18,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> A single API Management service resource in List or Get response. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ApiManagementService : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -119,6 +120,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public ApiManagementServiceSkuProperties Sku
         {
             get
@@ -134,6 +136,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -149,6 +152,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -174,6 +178,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the NotificationSenderEmail. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> NotificationSenderEmail
         {
             get
@@ -191,6 +196,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -204,6 +210,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the TargetProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TargetProvisioningState
         {
             get
@@ -217,6 +224,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the CreatedAtUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedAtUtc
         {
             get
@@ -230,6 +238,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the GatewayUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> GatewayUri
         {
             get
@@ -243,6 +252,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the GatewayRegionalUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> GatewayRegionalUri
         {
             get
@@ -256,6 +266,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the PortalUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> PortalUri
         {
             get
@@ -269,6 +280,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ManagementApiUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ManagementApiUri
         {
             get
@@ -282,6 +294,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ScmUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ScmUri
         {
             get
@@ -295,6 +308,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the DeveloperPortalUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> DeveloperPortalUri
         {
             get
@@ -308,6 +322,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the HostnameConfigurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<HostnameConfiguration> HostnameConfigurations
         {
             get
@@ -325,6 +340,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the PublicIPAddresses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IPAddress> PublicIPAddresses
         {
             get
@@ -338,6 +354,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the PrivateIPAddresses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IPAddress> PrivateIPAddresses
         {
             get
@@ -351,6 +368,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PublicIPAddressId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PublicIPAddressId
         {
             get
@@ -368,6 +386,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -385,6 +404,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the VirtualNetworkConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualNetworkConfiguration VirtualNetworkConfiguration
         {
             get
@@ -402,6 +422,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AdditionalLocations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<AdditionalLocation> AdditionalLocations
         {
             get
@@ -419,6 +440,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the CustomProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> CustomProperties
         {
             get
@@ -436,6 +458,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Certificates. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<CertificateConfiguration> Certificates
         {
             get
@@ -453,6 +476,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the EnableClientCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableClientCertificate
         {
             get
@@ -470,6 +494,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the NatGatewayState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementNatGatewayState> NatGatewayState
         {
             get
@@ -487,6 +512,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the OutboundPublicIPAddresses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> OutboundPublicIPAddresses
         {
             get
@@ -500,6 +526,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisableGateway. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableGateway
         {
             get
@@ -517,6 +544,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the VirtualNetworkType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualNetworkType> VirtualNetworkType
         {
             get
@@ -534,6 +562,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Restore. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Restore
         {
             get
@@ -551,6 +580,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RemotePrivateEndpointConnectionWrapper> PrivateEndpointConnections
         {
             get
@@ -568,6 +598,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the PlatformVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PlatformVersion> PlatformVersion
         {
             get
@@ -581,6 +612,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LegacyPortalStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<LegacyPortalStatus> LegacyPortalStatus
         {
             get
@@ -598,6 +630,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DeveloperPortalStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DeveloperPortalStatus> DeveloperPortalStatus
         {
             get
@@ -615,6 +648,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ReleaseChannel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ReleaseChannel> ReleaseChannel
         {
             get
@@ -632,6 +666,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsZoneRedundant. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsZoneRedundant
         {
             get
@@ -649,6 +684,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the LegacyApi. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<LegacyApiState> LegacyApi
         {
             get
@@ -666,6 +702,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the MinApiVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MinApiVersion
         {
             get
@@ -683,6 +720,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PublisherEmail. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublisherEmail
         {
             get
@@ -700,6 +738,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PublisherName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublisherName
         {
             get

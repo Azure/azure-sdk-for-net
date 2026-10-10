@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary>
     /// This determines if events published to this partner namespace should use the source attribute in the event payload
     /// or use the channel name in the header when matching to the partner topic. If none is specified, source attribute routing will be used to match the partner topic.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum PartnerTopicRoutingMode
     {
         /// <summary> SourceEventAttribute. </summary>

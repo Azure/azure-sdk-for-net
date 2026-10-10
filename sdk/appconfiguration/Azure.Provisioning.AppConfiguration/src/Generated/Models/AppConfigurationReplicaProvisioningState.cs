@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The provisioning state of the replica. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppConfigurationReplicaProvisioningState
     {
         /// <summary> Creating. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Defines the Arc Agent properties for the clusters. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedClusterArcAgentProfile : ProvisionableConstruct
     {
         private BicepValue<string> _desiredAgentVersion;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the DesiredAgentVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DesiredAgentVersion
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AgentAutoUpgrade. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ConnectedClusterAutoUpgradeMode> AgentAutoUpgrade
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the SystemComponents. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ConnectedClusterSystemComponent> SystemComponents
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AgentErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ConnectedClusterAgentError> AgentErrors
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the AgentState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AgentState
         {
             get

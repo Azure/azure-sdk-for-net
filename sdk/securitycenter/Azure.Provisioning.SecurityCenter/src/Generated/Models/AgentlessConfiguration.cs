@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Details about Agentless configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AgentlessConfiguration : ProvisionableConstruct
     {
         private BicepValue<AgentlessEnablement> _agentlessEnabled;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AgentlessEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AgentlessEnablement> AgentlessEnabled
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AgentlessAutoDiscovery. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AutoDiscovery> AgentlessAutoDiscovery
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Scanners. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Scanners
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InventoryListType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotSecurityInventoryListKind> InventoryListType
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InventoryList. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<InventoryList> InventoryList
         {
             get

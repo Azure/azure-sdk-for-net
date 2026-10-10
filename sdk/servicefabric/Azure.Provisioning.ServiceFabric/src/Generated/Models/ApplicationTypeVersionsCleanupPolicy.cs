@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The policy used to clean up unused versions. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApplicationTypeVersionsCleanupPolicy : ProvisionableConstruct
     {
         private BicepValue<long> _maxUnusedVersionsToKeep;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxUnusedVersionsToKeep. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxUnusedVersionsToKeep
         {
             get

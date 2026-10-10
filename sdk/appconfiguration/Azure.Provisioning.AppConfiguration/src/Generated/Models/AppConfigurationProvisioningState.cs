@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The provisioning state of the configuration store. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AppConfigurationProvisioningState
     {
         /// <summary> Creating. </summary>

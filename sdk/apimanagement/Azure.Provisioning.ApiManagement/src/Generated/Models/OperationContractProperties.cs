@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Operation Contract Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class OperationContractProperties : OperationEntityBaseContract
     {
         private BicepValue<string> _displayName;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Method. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Method
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the UriTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UriTemplate
         {
             get

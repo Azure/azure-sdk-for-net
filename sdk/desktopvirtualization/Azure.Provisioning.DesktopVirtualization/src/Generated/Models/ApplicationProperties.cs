@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for Application properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApplicationProperties : ProvisionableConstruct
     {
         private BicepValue<string> _objectId;
@@ -36,6 +38,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FriendlyName
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FilePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FilePath
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MsixPackageFamilyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MsixPackageFamilyName
         {
             get
@@ -106,6 +113,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MsixPackageApplicationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MsixPackageApplicationId
         {
             get
@@ -121,6 +129,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ApplicationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RemoteApplicationType> ApplicationType
         {
             get
@@ -136,6 +145,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ShortcutsExtension. </summary>
+        [Experimental("AZPROVISION001")]
         internal ShortcutsExtension ShortcutsExtension
         {
             get
@@ -151,6 +161,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the CommandLineSetting. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualApplicationCommandLineSetting> CommandLineSetting
         {
             get
@@ -166,6 +177,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the CommandLineArguments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CommandLineArguments
         {
             get
@@ -181,6 +193,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ShowInPortal. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ShowInPortal
         {
             get
@@ -196,6 +209,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IconPath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IconPath
         {
             get
@@ -211,6 +225,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IconIndex. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> IconIndex
         {
             get
@@ -226,6 +241,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the IconHash. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IconHash
         {
             get
@@ -236,6 +252,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the IconContent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> IconContent
         {
             get
@@ -246,6 +263,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PutShortcutOnDesktop. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ShortcutsExtensionPutShortcutOnDesktop
         {
             get

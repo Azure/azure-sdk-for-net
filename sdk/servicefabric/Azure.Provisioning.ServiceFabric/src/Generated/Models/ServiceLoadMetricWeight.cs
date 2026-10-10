@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Determines the metric weight relative to the other metrics that are configured for this service. During runtime, if two metrics end up in conflict, the Cluster Resource Manager prefers the metric with the higher weight. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ServiceLoadMetricWeight
     {
         /// <summary> Disables resource balancing for this metric. This value is zero. </summary>

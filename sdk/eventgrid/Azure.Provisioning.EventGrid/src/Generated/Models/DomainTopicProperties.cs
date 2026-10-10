@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the Domain Topic. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DomainTopicProperties : ProvisionableConstruct
     {
         private BicepValue<DomainTopicProvisioningState> _provisioningState;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DomainTopicProvisioningState> ProvisioningState
         {
             get

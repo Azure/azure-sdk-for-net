@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The PortalConfigPropertiesSignup. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PortalConfigPropertiesSignup : ProvisionableConstruct
     {
         private PortalConfigTermsOfServiceProperties _termsOfService;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TermsOfService. </summary>
+        [Experimental("AZPROVISION001")]
         public PortalConfigTermsOfServiceProperties TermsOfService
         {
             get

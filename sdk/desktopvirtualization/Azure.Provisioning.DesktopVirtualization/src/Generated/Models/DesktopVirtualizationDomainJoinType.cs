@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The type of domain join done by the virtual machine. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationDomainJoinType
     {
         /// <summary> Using microsoft active directory. </summary>

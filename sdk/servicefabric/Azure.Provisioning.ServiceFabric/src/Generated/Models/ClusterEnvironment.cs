@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Cluster operating system, the default will be Windows. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ClusterEnvironment
     {
         /// <summary> Windows operating system. </summary>

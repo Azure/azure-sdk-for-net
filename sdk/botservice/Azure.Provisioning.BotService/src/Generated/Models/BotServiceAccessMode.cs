@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Access Mode of the resource association. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BotServiceAccessMode
     {
         /// <summary> Enforced. </summary>

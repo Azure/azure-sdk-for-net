@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the delivery configuration information of the event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DeliveryConfiguration : ProvisionableConstruct
     {
         private BicepValue<DeliveryMode> _deliveryMode;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DeliveryMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DeliveryMode> DeliveryMode
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Queue. </summary>
+        [Experimental("AZPROVISION001")]
         public QueueInfo Queue
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Push. </summary>
+        [Experimental("AZPROVISION001")]
         public PushInfo Push
         {
             get

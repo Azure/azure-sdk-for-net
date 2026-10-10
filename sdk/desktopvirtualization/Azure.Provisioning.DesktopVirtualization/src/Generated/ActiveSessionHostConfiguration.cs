@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for ActiveSessionHostConfiguration properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ActiveSessionHostConfiguration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

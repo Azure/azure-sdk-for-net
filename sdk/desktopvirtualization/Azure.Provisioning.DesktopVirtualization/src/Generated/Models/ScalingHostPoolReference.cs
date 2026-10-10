@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Scaling plan reference to hostpool. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ScalingHostPoolReference : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _hostPoolId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the HostPoolId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> HostPoolId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IsScalingPlanEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsScalingPlanEnabled
         {
             get

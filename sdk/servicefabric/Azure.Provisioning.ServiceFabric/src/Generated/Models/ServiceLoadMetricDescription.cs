@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Specifies a metric to load balance a service during runtime. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceLoadMetricDescription : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Weight. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ServiceLoadMetricWeight> Weight
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the PrimaryDefaultLoad. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PrimaryDefaultLoad
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the SecondaryDefaultLoad. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SecondaryDefaultLoad
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the DefaultLoad. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> DefaultLoad
         {
             get

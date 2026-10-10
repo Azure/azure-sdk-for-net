@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Action to perform based on the match or no match of the IpMask. </summary>
+    [Experimental("AZPROVISION001")]
     public enum EventGridIPActionType
     {
         /// <summary> Allow. </summary>

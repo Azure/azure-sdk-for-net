@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BackendType
     {
         /// <summary> supports single backend. </summary>

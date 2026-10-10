@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Describes the access policy assignment of Redis Enterprise database. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AccessPolicyAssignment : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -97,6 +98,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseProvisioningStatus> ProvisioningState
         {
             get
@@ -110,6 +112,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the AccessPolicyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccessPolicyName
         {
             get
@@ -127,6 +130,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the AccessString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccessString
         {
             get
@@ -144,6 +148,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ProvisioningError. </summary>
+        [Experimental("AZPROVISION001")]
         public AccessPolicyAssignmentProvisioningError ProvisioningError
         {
             get
@@ -153,6 +158,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> UserObjectId
         {
             get

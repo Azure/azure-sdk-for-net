@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Tenant Settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TenantAccessInfo : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AccessInfoType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccessInfoType
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PrincipalId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrincipalId
         {
             get
@@ -129,6 +132,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsDirectAccessEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDirectAccessEnabled
         {
             get

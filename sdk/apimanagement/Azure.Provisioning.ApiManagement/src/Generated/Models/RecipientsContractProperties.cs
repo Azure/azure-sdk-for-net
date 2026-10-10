@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Notification Parameter contract. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RecipientsContractProperties : ProvisionableConstruct
     {
         private BicepList<string> _emails;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Emails. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Emails
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Users. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Users
         {
             get

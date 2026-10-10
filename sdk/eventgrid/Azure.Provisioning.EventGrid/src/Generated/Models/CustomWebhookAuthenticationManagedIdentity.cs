@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The identity configuration required for authenticating a custom webhook. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CustomWebhookAuthenticationManagedIdentity : ProvisionableConstruct
     {
         private BicepValue<CustomWebhookAuthenticationManagedIdentityType> _identityType;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IdentityType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CustomWebhookAuthenticationManagedIdentityType> IdentityType
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the UserAssignedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> UserAssignedIdentity
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Feature of a resource, which controls the runtime behavior. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRFeature : ProvisionableConstruct
     {
         private BicepValue<SignalRFeatureFlag> _flag;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Flag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRFeatureFlag> Flag
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Properties
         {
             get

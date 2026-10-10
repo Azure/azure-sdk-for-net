@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -12,8 +13,9 @@ namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
     /// The security offering details
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CspmMonitorAwsOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="DefenderForServersGcpOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorDockerHubOffering"/>, <see cref="DefenderForContainersDockerHubOffering"/>, <see cref="DefenderCspmDockerHubOffering"/>, <see cref="CspmMonitorJFrogOffering"/>, <see cref="DefenderForContainersJFrogOffering"/>, and <see cref="DefenderCspmJFrogOffering"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorDockerHubOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="CspmMonitorJFrogOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmDockerHubOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderCspmJFrogOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersDockerHubOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForContainersJFrogOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForServersAwsOffering"/>, and <see cref="DefenderForServersGcpOffering"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityCenterCloudOffering : ProvisionableConstruct
     {
         private BicepValue<OfferingType> _offeringType;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> The type of the security offering. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<OfferingType> OfferingType
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get

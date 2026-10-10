@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Status of the sub-assessment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SubAssessmentStatus : ProvisionableConstruct
     {
         private BicepValue<SubAssessmentStatusCode> _code;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Code. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SubAssessmentStatusCode> Code
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Cause. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Cause
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Severity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityAssessmentSeverity> Severity
         {
             get

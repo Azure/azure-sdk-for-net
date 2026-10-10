@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> Supported Kubernetes Scopes for this Extension Type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KubernetesConfigurationExtensionTypeSupportedScopes : ProvisionableConstruct
     {
         private BicepValue<string> _defaultScope;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the DefaultScope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultScope
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the ClusterScopeSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public KubernetesConfigurationExtensionTypeClusterScopeSettings ClusterScopeSettings
         {
             get

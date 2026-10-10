@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Specifies when to stop hosts during ramp down period. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DesktopVirtualizationStopHostsWhen
     {
         /// <summary> Zero Total Sessions. </summary>

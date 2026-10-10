@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the Encryption settings. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class KeyEncryption : ProvisionableConstruct
     {
         private BicepList<EventGridCustomerManagedKeyEncryption> _customerManagedKeyEncryption;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridCustomerManagedKeyEncryption> CustomerManagedKeyEncryption
         {
             get

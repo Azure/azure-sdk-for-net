@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The source event types which evaluate the security automation set of rules. For example - security alerts and security assessments. To learn more about the supported security events data models schemas - please visit https://aka.ms/ASCAutomationSchemas. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityAutomationSource : ProvisionableConstruct
     {
         private BicepValue<SecurityEventSource> _eventSource;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EventSource. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityEventSource> EventSource
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the RuleSets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SecurityAutomationRuleSet> RuleSets
         {
             get

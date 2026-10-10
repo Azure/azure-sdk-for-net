@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of the Channel. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ChannelProperties : ProvisionableConstruct
     {
         private BicepValue<PartnerNamespaceChannelType> _channelType;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ChannelType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerNamespaceChannelType> ChannelType
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerTopicInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerTopicInfo PartnerTopicInfo
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PartnerDestinationInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerDestinationInfo PartnerDestinationInfo
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MessageForActivation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MessageForActivation
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerNamespaceChannelProvisioningState> ProvisioningState
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ReadinessState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PartnerTopicReadinessState> ReadinessState
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ExpireOnIfNotActivated. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpireOnIfNotActivated
         {
             get

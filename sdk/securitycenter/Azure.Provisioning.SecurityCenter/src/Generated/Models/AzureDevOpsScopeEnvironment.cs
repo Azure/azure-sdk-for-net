@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The AzureDevOps scope connector's environment data. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AzureDevOpsScopeEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Creates a new AzureDevOpsScopeEnvironment. </summary>

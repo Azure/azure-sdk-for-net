@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The parameters for a docker quick build. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryDockerBuildContent : ContainerRegistryRunContent
     {
         private BicepList<string> _imageNames;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ImageNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ImageNames
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the IsPushEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsPushEnabled
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the IsCacheDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCacheDisabled
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the DockerFilePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DockerFilePath
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Target. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Target
         {
             get
@@ -106,6 +113,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Arguments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskArgument> Arguments
         {
             get
@@ -121,6 +129,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the TimeoutInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TimeoutInSeconds
         {
             get
@@ -136,6 +145,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Platform. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskPlatformProperties Platform
         {
             get
@@ -151,6 +161,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the AgentConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal AgentProperties AgentConfiguration
         {
             get
@@ -166,6 +177,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the SourceLocation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SourceLocation
         {
             get
@@ -181,6 +193,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskCredentials Credentials
         {
             get
@@ -196,6 +209,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Cpu. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AgentCpu
         {
             get

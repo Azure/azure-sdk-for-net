@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Action to be taken after a user disconnect during the ramp up period. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SessionHandlingOperation
     {
         /// <summary> No action will be taken after disconnect. </summary>

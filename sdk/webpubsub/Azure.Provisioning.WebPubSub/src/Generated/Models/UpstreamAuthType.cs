@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Upstream auth type enum. </summary>
+    [Experimental("AZPROVISION001")]
     public enum UpstreamAuthType
     {
         /// <summary> None. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Image configurations of session host in a HostPool. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationImageInfoProperties : ProvisionableConstruct
     {
         private BicepValue<DesktopVirtualizationImageType> _imageType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ImageType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationImageType> ImageType
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MarketplaceInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationMarketplaceInfoProperties MarketplaceInfo
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the CustomInfo. </summary>
+        [Experimental("AZPROVISION001")]
         internal CustomInfoProperties CustomInfo
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CustomInfoResourceId
         {
             get

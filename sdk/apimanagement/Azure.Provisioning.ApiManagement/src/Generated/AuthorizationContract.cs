@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization contract. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthorizationContract : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AuthorizationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementAuthorizationType> AuthorizationType
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OAuth2GrantType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<OAuth2GrantType> OAuth2GrantType
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Parameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Parameters
         {
             get
@@ -147,6 +151,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Error. </summary>
+        [Experimental("AZPROVISION001")]
         public ApiManagementAuthorizationError Error
         {
             get
@@ -164,6 +169,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Status
         {
             get

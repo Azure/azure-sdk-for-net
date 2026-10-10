@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Defender for Containers for JFrog Artifactory offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForContainersJFrogOffering : SecurityCenterCloudOffering
     {
         /// <summary> Creates a new DefenderForContainersJFrogOffering. </summary>

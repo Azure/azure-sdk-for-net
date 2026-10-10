@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Scaling plan properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ScalingPlanProperties : ProvisionableConstruct
     {
         private BicepValue<string> _objectId;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FriendlyName
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the TimeZone. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TimeZone
         {
             get
@@ -83,6 +89,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ScalingHostPoolType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ScalingHostPoolType> ScalingHostPoolType
         {
             get
@@ -98,6 +105,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ExclusionTag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExclusionTag
         {
             get
@@ -113,6 +121,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Schedules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ScalingSchedule> Schedules
         {
             get
@@ -128,6 +137,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the HostPoolReferences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ScalingHostPoolReference> HostPoolReferences
         {
             get

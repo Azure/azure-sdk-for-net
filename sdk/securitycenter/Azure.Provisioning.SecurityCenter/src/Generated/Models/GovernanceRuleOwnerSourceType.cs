@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The owner type for the governance rule owner source. </summary>
+    [Experimental("AZPROVISION001")]
     public enum GovernanceRuleOwnerSourceType
     {
         /// <summary> The rule source type defined using resource tag. </summary>

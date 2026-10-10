@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The governance email weekly notification configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GovernanceEmailNotification : ProvisionableConstruct
     {
         private BicepValue<bool> _disableManagerEmailNotification;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DisableManagerEmailNotification. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableManagerEmailNotification
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DisableOwnerEmailNotification. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableOwnerEmailNotification
         {
             get

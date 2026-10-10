@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The GatewayHostnameBindingBaseProperties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class GatewayHostnameBindingBaseProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Hostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Hostname
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the KeyVault. </summary>
+        [Experimental("AZPROVISION001")]
         public GatewayHostnameBindingKeyVault KeyVault
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Certificate. </summary>
+        [Experimental("AZPROVISION001")]
         public GatewayHostnameBindingCertificate Certificate
         {
             get

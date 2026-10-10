@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Persistence-related configuration for the Redis Enterprise database. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisPersistenceSettings : ProvisionableConstruct
     {
         private BicepValue<bool> _isAofEnabled;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the IsAofEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsAofEnabled
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the IsRdbEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsRdbEnabled
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the AofFrequency. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PersistenceSettingAofFrequency> AofFrequency
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the RdbFrequency. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PersistenceSettingRdbFrequency> RdbFrequency
         {
             get

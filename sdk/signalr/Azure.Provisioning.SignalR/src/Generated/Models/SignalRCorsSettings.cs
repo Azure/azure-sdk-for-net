@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SignalRCorsSettings : ProvisionableConstruct
     {
         private BicepList<string> _allowedOrigins;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the AllowedOrigins. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedOrigins
         {
             get

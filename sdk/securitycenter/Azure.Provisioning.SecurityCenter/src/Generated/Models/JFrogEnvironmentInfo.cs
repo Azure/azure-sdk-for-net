@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The JFrog Artifactory connector environment data. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class JFrogEnvironmentInfo : SecurityConnectorEnvironment
     {
         private BicepValue<int> _scanInterval;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ScanInterval. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ScanInterval
         {
             get

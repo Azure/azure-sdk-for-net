@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The ContentTypeContractProperties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ContentTypeContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _contentTypeIdentifier;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ContentTypeIdentifier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContentTypeIdentifier
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ContentTypeName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContentTypeName
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Schema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Schema
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Custom certificate properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class CustomCertificateProperties : ProvisionableConstruct
     {
         private BicepValue<WebPubSubProvisioningState> _provisioningState;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubProvisioningState> ProvisioningState
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the KeyVaultBaseUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyVaultBaseUri
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the KeyVaultSecretName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KeyVaultSecretName
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the KeyVaultSecretVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KeyVaultSecretVersion
         {
             get

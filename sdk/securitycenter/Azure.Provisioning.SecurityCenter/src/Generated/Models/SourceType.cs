@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The source type that will trigger the notification. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum SourceType
     {
         /// <summary> Alert. </summary>

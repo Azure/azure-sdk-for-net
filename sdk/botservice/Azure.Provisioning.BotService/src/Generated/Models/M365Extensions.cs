@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> M365 Extensions definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class M365Extensions : BotChannelProperties
     {
         /// <summary> Creates a new M365Extensions. </summary>

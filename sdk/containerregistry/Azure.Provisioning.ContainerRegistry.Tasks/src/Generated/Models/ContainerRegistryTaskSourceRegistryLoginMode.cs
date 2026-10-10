@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary>
@@ -12,6 +14,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// will be generated using the given scope. These credentials will be used to login to
     /// the source registry during the run.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskSourceRegistryLoginMode
     {
         /// <summary> None. </summary>

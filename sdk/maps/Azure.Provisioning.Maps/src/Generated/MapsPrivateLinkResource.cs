@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Maps
 {
     /// <summary> A private link resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsPrivateLinkResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

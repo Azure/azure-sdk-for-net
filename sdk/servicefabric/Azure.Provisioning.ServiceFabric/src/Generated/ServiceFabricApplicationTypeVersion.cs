@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> An application type version resource for the specified application type name resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceFabricApplicationTypeVersion : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -115,6 +116,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -140,6 +142,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -153,6 +156,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the AppPackageUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> AppPackageUri
         {
             get
@@ -170,6 +174,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the DefaultParameterList. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> DefaultParameterList
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> HostPool type for desktop. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ScalingHostPoolType
     {
         /// <summary> Users get a new (random) SessionHost every time it connects to the HostPool. </summary>

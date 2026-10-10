@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.SignalR
     /// A base class for client traffic control rules
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SignalRTrafficThrottleByJwtCustomClaimRule"/>, <see cref="SignalRTrafficThrottleByJwtSignatureRule"/>, and <see cref="SignalRTrafficThrottleByUserIdRule"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRClientTrafficControlRule : ProvisionableConstruct
     {
         private BicepValue<ClientTrafficControlRuleDiscriminator> _type;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<ClientTrafficControlRuleDiscriminator> Type
         {
             get

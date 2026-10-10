@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the cluster resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ClusterProperties : ProvisionableConstruct
     {
         private BicepList<ClusterAddOnFeature> _addOnFeatures;
@@ -54,6 +56,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the AddOnFeatures. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ClusterAddOnFeature> AddOnFeatures
         {
             get
@@ -69,6 +72,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the AvailableClusterVersions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ClusterVersionDetails> AvailableClusterVersions
         {
             get
@@ -79,6 +83,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the AzureActiveDirectory. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterAadSetting AzureActiveDirectory
         {
             get
@@ -94,6 +99,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Certificate. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterCertificateDescription Certificate
         {
             get
@@ -109,6 +115,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the CertificateCommonNames. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterServerCertificateCommonNames CertificateCommonNames
         {
             get
@@ -124,6 +131,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ClientCertificateCommonNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ClusterClientCertificateCommonName> ClientCertificateCommonNames
         {
             get
@@ -139,6 +147,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ClientCertificateThumbprints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ClusterClientCertificateThumbprint> ClientCertificateThumbprints
         {
             get
@@ -154,6 +163,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ClusterCodeVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClusterCodeVersion
         {
             get
@@ -169,6 +179,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ClusterEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ClusterEndpoint
         {
             get
@@ -179,6 +190,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ClusterId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> ClusterId
         {
             get
@@ -189,6 +201,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ClusterState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ServiceFabricClusterState> ClusterState
         {
             get
@@ -199,6 +212,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the DiagnosticsStorageAccountConfig. </summary>
+        [Experimental("AZPROVISION001")]
         public DiagnosticsStorageAccountConfig DiagnosticsStorageAccountConfig
         {
             get
@@ -214,6 +228,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsEventStoreServiceEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEventStoreServiceEnabled
         {
             get
@@ -229,6 +244,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the FabricSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SettingsSectionDescription> FabricSettings
         {
             get
@@ -244,6 +260,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ManagementEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ManagementEndpoint
         {
             get
@@ -259,6 +276,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the NodeTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ClusterNodeTypeDescription> NodeTypes
         {
             get
@@ -274,6 +292,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ServiceFabricProvisioningState> ProvisioningState
         {
             get
@@ -284,6 +303,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ReliabilityLevel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClusterReliabilityLevel> ReliabilityLevel
         {
             get
@@ -299,6 +319,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ReverseProxyCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterCertificateDescription ReverseProxyCertificate
         {
             get
@@ -314,6 +335,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ReverseProxyCertificateCommonNames. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterServerCertificateCommonNames ReverseProxyCertificateCommonNames
         {
             get
@@ -329,6 +351,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeDescription. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterUpgradePolicy UpgradeDescription
         {
             get
@@ -344,6 +367,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClusterUpgradeMode> UpgradeMode
         {
             get
@@ -359,6 +383,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ApplicationTypeVersionsCleanupPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         internal ApplicationTypeVersionsCleanupPolicy ApplicationTypeVersionsCleanupPolicy
         {
             get
@@ -374,6 +399,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the VmImage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VmImage
         {
             get
@@ -389,6 +415,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ServiceFabricZonalUpgradeMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SfZonalUpgradeMode> ServiceFabricZonalUpgradeMode
         {
             get
@@ -404,6 +431,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the VmssZonalUpgradeMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VmssZonalUpgradeMode> VmssZonalUpgradeMode
         {
             get
@@ -419,6 +447,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsInfrastructureServiceManagerEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsInfrastructureServiceManagerEnabled
         {
             get
@@ -434,6 +463,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeWave. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClusterUpgradeCadence> UpgradeWave
         {
             get
@@ -449,6 +479,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradePauseStartsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> UpgradePauseStartsOn
         {
             get
@@ -464,6 +495,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradePauseEndsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> UpgradePauseEndsOn
         {
             get
@@ -479,6 +511,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsWaveUpgradePaused. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsWaveUpgradePaused
         {
             get
@@ -494,6 +527,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Notifications. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ClusterNotification> Notifications
         {
             get
@@ -509,6 +543,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsHttpGatewayExclusiveAuthModeEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsHttpGatewayExclusiveAuthModeEnabled
         {
             get
@@ -524,6 +559,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxUnusedVersionsToKeep. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxUnusedVersionsToKeep
         {
             get

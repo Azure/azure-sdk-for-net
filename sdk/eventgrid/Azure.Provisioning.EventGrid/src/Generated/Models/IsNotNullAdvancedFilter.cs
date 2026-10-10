@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> IsNotNull Advanced Filter. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IsNotNullAdvancedFilter : AdvancedFilter
     {
         /// <summary> Creates a new IsNotNullAdvancedFilter. </summary>

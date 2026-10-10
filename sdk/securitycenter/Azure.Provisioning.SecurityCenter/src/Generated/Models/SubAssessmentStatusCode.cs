@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Programmatic code for the status of the assessment. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SubAssessmentStatusCode
     {
         /// <summary> The resource is healthy. </summary>

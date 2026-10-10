@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the delta health policies for the cluster upgrade. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterUpgradeDeltaHealthPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _maxPercentDeltaUnhealthyNodes;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentDeltaUnhealthyNodes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentDeltaUnhealthyNodes
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentUpgradeDomainDeltaUnhealthyNodes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentUpgradeDomainDeltaUnhealthyNodes
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentDeltaUnhealthyApplications. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentDeltaUnhealthyApplications
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ApplicationDeltaHealthPolicies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<ApplicationDeltaHealthPolicy> ApplicationDeltaHealthPolicies
         {
             get

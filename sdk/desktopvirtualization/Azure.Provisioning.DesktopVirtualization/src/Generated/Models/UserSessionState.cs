@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> State of user session. </summary>
+    [Experimental("AZPROVISION001")]
     public enum UserSessionState
     {
         /// <summary> SessionState is unknown. </summary>

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes the client certificate details using thumbprint. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterClientCertificateThumbprint : ProvisionableConstruct
     {
         private BicepValue<bool> _isAdmin;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsAdmin. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsAdmin
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the CertificateThumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> CertificateThumbprint
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Properties for Redis Enterprise migration operation for Azure Cache for Redis. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AzureCacheForRedisMigrationProperties : RedisEnterpriseMigrationProperties
     {
         private BicepValue<ResourceIdentifier> _sourceResourceId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the SourceResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SourceResourceId
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the IsSwitchDns. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSwitchDns
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the IsSkipDataMigration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSkipDataMigration
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the IsForceMigrate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsForceMigrate
         {
             get

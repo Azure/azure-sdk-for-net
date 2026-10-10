@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Federated identity credentials properties returned by the authorization provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AuthorizationProviderFederatedIdentityCredentialsProperties : ProvisionableConstruct
     {
         private BicepValue<string> _issuer;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Issuer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Issuer
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Subject. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Subject
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Audience. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Audience
         {
             get

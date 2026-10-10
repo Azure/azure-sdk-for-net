@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The GatewayConfigConnectionBaseProperties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class GatewayConfigConnectionBaseProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SourceId
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the DefaultHostname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultHostname
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Hostnames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Hostnames
         {
             get

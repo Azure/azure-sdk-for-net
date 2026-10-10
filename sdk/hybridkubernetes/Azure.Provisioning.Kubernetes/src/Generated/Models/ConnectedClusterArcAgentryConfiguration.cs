@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> The ConnectedClusterArcAgentryConfiguration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedClusterArcAgentryConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _feature;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Feature. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Feature
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Settings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Settings
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the ProtectedSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> ProtectedSettings
         {
             get

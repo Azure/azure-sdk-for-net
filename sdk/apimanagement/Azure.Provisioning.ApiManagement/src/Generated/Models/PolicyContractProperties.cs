@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Policy contract Properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PolicyContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _value;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Format. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PolicyContentFormat> Format
         {
             get

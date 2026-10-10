@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Deleted configuration store information with extended details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DeletedAppConfigurationStore : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -76,6 +77,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ConfigurationStoreId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ConfigurationStoreId
         {
             get
@@ -85,6 +87,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -94,6 +97,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the DeletedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> DeletedOn
         {
             get
@@ -103,6 +107,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ScheduledPurgeOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ScheduledPurgeOn
         {
             get
@@ -112,6 +117,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get
@@ -121,6 +127,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the IsPurgeProtectionEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsPurgeProtectionEnabled
         {
             get

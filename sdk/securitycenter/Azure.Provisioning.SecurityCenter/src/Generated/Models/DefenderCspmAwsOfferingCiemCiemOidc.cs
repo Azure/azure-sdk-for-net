@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> AWS Defender CSPM Permissions Management OIDC (open id connect) connection configurations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderCspmAwsOfferingCiemCiemOidc : ProvisionableConstruct
     {
         private BicepValue<string> _cloudRoleArn;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CloudRoleArn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CloudRoleArn
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AzureActiveDirectoryAppName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureActiveDirectoryAppName
         {
             get

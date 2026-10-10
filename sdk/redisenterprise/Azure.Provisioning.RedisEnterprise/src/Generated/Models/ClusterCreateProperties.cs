@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Properties of Redis Enterprise clusters for create operations. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ClusterCreateProperties : ClusterProperties
     {
         private BicepValue<RedisEnterprisePublicNetworkAccess> _publicNetworkAccess;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterprisePublicNetworkAccess> PublicNetworkAccess
         {
             get

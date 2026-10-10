@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Sql
 {
     /// <summary> Trusted root certificate required to validate the instance certificate. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EndpointTrustedRootCertificateInfo : ProvisionableConstruct
     {
         private BicepValue<string> _subject;

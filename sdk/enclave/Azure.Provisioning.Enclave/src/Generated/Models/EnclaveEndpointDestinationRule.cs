@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Enclave Endpoint Rule Properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EnclaveEndpointDestinationRule : ProvisionableConstruct
     {
         private BicepList<EnclaveEndpointProtocol> _protocols;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Protocols. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EnclaveEndpointProtocol> Protocols
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EndpointRuleName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EndpointRuleName
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Destination. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Destination
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Ports. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Ports
         {
             get

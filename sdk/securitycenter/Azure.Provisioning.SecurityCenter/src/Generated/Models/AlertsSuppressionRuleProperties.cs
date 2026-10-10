@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> describes AlertsSuppressionRule properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AlertsSuppressionRuleProperties : ProvisionableConstruct
     {
         private BicepValue<string> _alertType;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the AlertType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AlertType
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the LastModifiedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastModifiedOn
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Reason. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Reason
         {
             get
@@ -83,6 +89,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityAlertsSuppressionRuleState> State
         {
             get
@@ -98,6 +105,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Comment. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Comment
         {
             get
@@ -113,6 +121,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SuppressionAlertsScope. </summary>
+        [Experimental("AZPROVISION001")]
         internal SuppressionAlertsScope SuppressionAlertsScope
         {
             get
@@ -128,6 +137,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SuppressionAlertsScopeAllOf. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
         {
             get

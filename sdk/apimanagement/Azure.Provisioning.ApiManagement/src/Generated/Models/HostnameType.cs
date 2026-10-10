@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Hostname type. </summary>
+    [Experimental("AZPROVISION001")]
     public enum HostnameType
     {
         /// <summary> Proxy. </summary>

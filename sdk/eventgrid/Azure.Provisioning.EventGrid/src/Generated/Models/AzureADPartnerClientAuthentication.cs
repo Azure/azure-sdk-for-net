@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Microsoft Entra ID Partner Client Authentication. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AzureADPartnerClientAuthentication : PartnerClientAuthentication
     {
         private AzureADPartnerClientAuthenticationProperties _properties;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal AzureADPartnerClientAuthenticationProperties Properties
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AzureActiveDirectoryTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureActiveDirectoryTenantId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AzureActiveDirectoryApplicationIdOrUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> AzureActiveDirectoryApplicationIdOrUri
         {
             get

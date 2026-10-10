@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The type of the base image dependency. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ContainerRegistryTaskBaseImageDependencyType
     {
         /// <summary> BuildTime. </summary>

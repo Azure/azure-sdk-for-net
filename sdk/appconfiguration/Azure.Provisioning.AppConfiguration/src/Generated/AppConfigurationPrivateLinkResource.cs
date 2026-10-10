@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> A resource that supports private link capabilities. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppConfigurationPrivateLinkResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -90,6 +91,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the GroupId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GroupId
         {
             get
@@ -99,6 +101,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the RequiredMembers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> RequiredMembers
         {
             get
@@ -108,6 +111,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the RequiredZoneNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> RequiredZoneNames
         {
             get

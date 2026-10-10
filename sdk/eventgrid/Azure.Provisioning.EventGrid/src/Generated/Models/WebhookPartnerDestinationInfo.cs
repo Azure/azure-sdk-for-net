@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the WebHook of the partner destination. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebhookPartnerDestinationInfo : PartnerDestinationInfo
     {
         private WebhookPartnerDestinationProperties _properties;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal WebhookPartnerDestinationProperties Properties
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EndpointUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> EndpointUri
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EndpointBaseUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> EndpointBaseUri
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the ClientAuthentication. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerClientAuthentication ClientAuthentication
         {
             get

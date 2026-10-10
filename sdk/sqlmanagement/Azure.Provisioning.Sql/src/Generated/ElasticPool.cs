@@ -351,6 +351,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets the CurrentSku. </summary>
+        [Experimental("AZPROVISION001")]
         public SqlSku CurrentSku
         {
             get

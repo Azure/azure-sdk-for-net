@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The trip conditions of the circuit breaker. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CircuitBreakerFailureCondition : ProvisionableConstruct
     {
         private BicepValue<long> _count;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Count. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> Count
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Percentage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> Percentage
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Interval. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> Interval
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the StatusCodeRanges. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<FailureStatusCodeRange> StatusCodeRanges
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ErrorReasons. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ErrorReasons
         {
             get

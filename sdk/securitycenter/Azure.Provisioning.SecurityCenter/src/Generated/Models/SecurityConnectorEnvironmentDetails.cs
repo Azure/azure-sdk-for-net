@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The environment details of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityConnectorEnvironmentDetails : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _nativeResourceId;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the NativeResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> NativeResourceId
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the EnvironmentHierarchyId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EnvironmentHierarchyId
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the OrganizationalHierarchyId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OrganizationalHierarchyId
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SubscriptionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubscriptionId
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TenantId
         {
             get

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The PartnerEventSubscriptionDestination. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerEventSubscriptionDestination : EventSubscriptionDestination
     {
         private PartnerEventSubscriptionDestinationProperties _properties;
@@ -19,6 +22,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal PartnerEventSubscriptionDestinationProperties Properties
         {
             get

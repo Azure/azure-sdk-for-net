@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Gets the sku tier. This is based on the SKU name. </summary>
+    [Experimental("AZPROVISION001")]
     public enum BotServiceSkuTier
     {
         /// <summary> Free. </summary>

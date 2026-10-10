@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </summary>
+    [Experimental("AZPROVISION001")]
     public enum CustomJwtAuthenticationManagedIdentityType
     {
         /// <summary> SystemAssigned. </summary>

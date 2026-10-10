@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Tenant access information contract of the API Management service. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TenantSettingsContractProperties : ProvisionableConstruct
     {
         private BicepDictionary<string> _settings;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Settings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Settings
         {
             get

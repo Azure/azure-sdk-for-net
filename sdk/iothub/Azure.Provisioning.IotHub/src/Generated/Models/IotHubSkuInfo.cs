@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> Information about the SKU of the IoT hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubSkuInfo : ProvisionableConstruct
     {
         private BicepValue<IotHubSku> _name;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubSku> Name
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the Tier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubSkuTier> Tier
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Capacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> Capacity
         {
             get

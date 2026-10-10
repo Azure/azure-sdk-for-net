@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary></summary>
+    [Experimental("AZPROVISION001")]
     public enum ClientAuthenticationMethod
     {
         /// <summary> Basic Client Authentication method. </summary>

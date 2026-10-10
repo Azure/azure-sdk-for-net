@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Virtual Enclave Resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveProperties : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveProvisioningState> _provisioningState;
@@ -39,6 +41,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveProvisioningState> ProvisioningState
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EnclaveVirtualNetwork. </summary>
+        [Experimental("AZPROVISION001")]
         public EnclaveVirtualNetwork EnclaveVirtualNetwork
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the EnclaveAddressSpaces. </summary>
+        [Experimental("AZPROVISION001")]
         public EnclaveAddressSpaces EnclaveAddressSpaces
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the CommunityResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CommunityResourceId
         {
             get
@@ -89,6 +95,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ResourceCollection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceIdentifier> ResourceCollection
         {
             get
@@ -99,6 +106,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ManagedResourceGroupName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedResourceGroupName
         {
             get
@@ -109,6 +117,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ManagedOnBehalfOfConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration
         {
             get
@@ -119,6 +128,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the IsBastionEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsBastionEnabled
         {
             get
@@ -134,6 +144,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the WorkloadResourceVisibility. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveResourceVisibilityMode> WorkloadResourceVisibility
         {
             get
@@ -149,6 +160,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the RbacInheritance. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveRbacInheritanceMode> RbacInheritance
         {
             get
@@ -164,6 +176,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EnclaveRoleAssignments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveRoleAssignmentItem> EnclaveRoleAssignments
         {
             get
@@ -179,6 +192,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the WorkloadRoleAssignments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveRoleAssignmentItem> WorkloadRoleAssignments
         {
             get
@@ -194,6 +208,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the GovernedServiceList. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveGovernedService> GovernedServiceList
         {
             get
@@ -209,6 +224,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EnclaveDefaultSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public EnclaveDefaultSettings EnclaveDefaultSettings
         {
             get
@@ -224,6 +240,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the MaintenanceModeConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration
         {
             get
@@ -239,6 +256,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the DedicatedHubResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> DedicatedHubResourceId
         {
             get
@@ -254,6 +272,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ApprovalSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveApprovalSettings ApprovalSettings
         {
             get
@@ -269,6 +288,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the MonitoringSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveMonitoringSettings MonitoringSettings
         {
             get

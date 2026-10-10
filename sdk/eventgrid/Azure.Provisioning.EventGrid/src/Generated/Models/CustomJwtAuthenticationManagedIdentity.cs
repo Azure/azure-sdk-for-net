@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The identity information for retrieving the certificate for custom JWT authentication. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CustomJwtAuthenticationManagedIdentity : ProvisionableConstruct
     {
         private BicepValue<CustomJwtAuthenticationManagedIdentityType> _identityType;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IdentityType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CustomJwtAuthenticationManagedIdentityType> IdentityType
         {
             get

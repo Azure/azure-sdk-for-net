@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The security connector resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityConnector : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -85,6 +86,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get
@@ -100,6 +102,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -115,6 +118,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Kind
         {
             get
@@ -130,6 +134,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -145,6 +150,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the HierarchyIdentifier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HierarchyIdentifier
         {
             get
@@ -162,6 +168,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the HierarchyIdentifierTrialEndsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> HierarchyIdentifierTrialEndsOn
         {
             get
@@ -175,6 +182,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnvironmentName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityCenterCloudName> EnvironmentName
         {
             get
@@ -192,6 +200,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Offerings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SecurityCenterCloudOffering> Offerings
         {
             get
@@ -209,6 +218,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnvironmentData. </summary>
+        [Experimental("AZPROVISION001")]
         public SecurityConnectorEnvironment EnvironmentData
         {
             get

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Configures where to store the OMS agent data for workspaces under a scope. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityWorkspaceSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -79,6 +80,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the WorkspaceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> WorkspaceId
         {
             get
@@ -96,6 +98,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Scope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scope
         {
             get

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Redis eviction policy - default is VolatileLRU. </summary>
+    [Experimental("AZPROVISION001")]
     public enum RedisEnterpriseEvictionPolicy
     {
         /// <summary> AllKeysLFU. </summary>

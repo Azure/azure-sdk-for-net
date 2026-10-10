@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The scanning mode for the VM scan. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DefenderForServersScanningMode
     {
         /// <summary> Default. </summary>

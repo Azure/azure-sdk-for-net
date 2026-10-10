@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Client application details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClientApplicationContract : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OwnerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OwnerId
         {
             get
@@ -147,6 +151,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the EntraApplicationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EntraApplicationId
         {
             get
@@ -160,6 +165,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the EntraTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EntraTenantId
         {
             get
@@ -173,6 +179,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClientApplicationState> State
         {
             get

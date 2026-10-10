@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The status of the health report. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HealthReportStatus : ProvisionableConstruct
     {
         private BicepValue<SecurityCenterHealthStatus> _code;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Code. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityCenterHealthStatus> Code
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Reason. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Reason
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the LastScannedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastScannedOn
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the StatusChangedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StatusChangedOn
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the FirstEvaluationOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> FirstEvaluationOn
         {
             get

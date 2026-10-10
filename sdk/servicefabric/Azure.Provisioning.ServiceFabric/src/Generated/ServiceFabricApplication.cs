@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The application resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceFabricApplication : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -115,6 +116,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -125,6 +127,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -155,6 +158,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the TypeVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TypeVersion
         {
             get
@@ -172,6 +176,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Parameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Parameters
         {
             get
@@ -189,6 +194,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradePolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public ApplicationUpgradePolicy UpgradePolicy
         {
             get
@@ -206,6 +212,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MinimumNodes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MinimumNodes
         {
             get
@@ -223,6 +230,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaximumNodes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaximumNodes
         {
             get
@@ -240,6 +248,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the RemoveApplicationCapacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> RemoveApplicationCapacity
         {
             get
@@ -257,6 +266,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Metrics. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ApplicationMetricDescription> Metrics
         {
             get
@@ -274,6 +284,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ManagedIdentities. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ApplicationUserAssignedIdentity> ManagedIdentities
         {
             get
@@ -291,6 +302,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -304,6 +316,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the TypeName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TypeName
         {
             get

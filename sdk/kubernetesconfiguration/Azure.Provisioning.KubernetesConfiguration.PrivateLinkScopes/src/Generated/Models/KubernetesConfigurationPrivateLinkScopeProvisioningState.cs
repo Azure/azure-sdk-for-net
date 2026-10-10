@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> The provisioning state of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum KubernetesConfigurationPrivateLinkScopeProvisioningState
     {
         /// <summary> Succeeded. </summary>

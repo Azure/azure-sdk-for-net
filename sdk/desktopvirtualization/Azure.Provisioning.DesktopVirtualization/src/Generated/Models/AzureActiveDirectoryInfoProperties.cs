@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Azure Active directory info. Only one should be populated based on the join type. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AzureActiveDirectoryInfoProperties : ProvisionableConstruct
     {
         private BicepValue<string> _mdmProviderGuid;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MdmProviderGuid. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MdmProviderGuid
         {
             get

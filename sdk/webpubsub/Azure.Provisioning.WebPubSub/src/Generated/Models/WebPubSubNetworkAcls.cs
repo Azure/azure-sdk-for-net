@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Network ACLs for the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubNetworkAcls : ProvisionableConstruct
     {
         private BicepValue<AclAction> _defaultAction;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the DefaultAction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AclAction> DefaultAction
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the PublicNetwork. </summary>
+        [Experimental("AZPROVISION001")]
         public PublicNetworkAcls PublicNetwork
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the PrivateEndpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<PrivateEndpointAcl> PrivateEndpoints
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the IPRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WebPubSubIPRule> IPRules
         {
             get

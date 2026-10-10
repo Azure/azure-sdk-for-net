@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties that determine the run agent configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AgentProperties : ProvisionableConstruct
     {
         private BicepValue<int> _cpu;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Cpu. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Cpu
         {
             get

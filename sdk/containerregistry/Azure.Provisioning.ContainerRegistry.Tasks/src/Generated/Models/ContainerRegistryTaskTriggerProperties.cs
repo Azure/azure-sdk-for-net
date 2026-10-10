@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of a trigger. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskTriggerProperties : ProvisionableConstruct
     {
         private BicepList<ContainerRegistryTaskTimerTrigger> _timerTriggers;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the TimerTriggers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskTimerTrigger> TimerTriggers
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the SourceTriggers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskSourceTrigger> SourceTriggers
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the BaseImageTrigger. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskBaseImageTrigger BaseImageTrigger
         {
             get

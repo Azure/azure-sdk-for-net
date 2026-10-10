@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </summary>
+    [Experimental("AZPROVISION001")]
     internal enum AdvancedFilterOperatorType
     {
         /// <summary> NumberIn. </summary>

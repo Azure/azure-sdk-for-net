@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Indicates the type of scheduled query rule. The default is LogAlert. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ScheduledQueryRuleKind
     {
         /// <summary> LogAlert. </summary>

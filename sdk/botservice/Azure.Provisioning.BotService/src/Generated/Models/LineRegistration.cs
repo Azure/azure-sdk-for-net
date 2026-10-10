@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The properties corresponding to a line channel registration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LineRegistration : ProvisionableConstruct
     {
         private BicepValue<string> _generatedId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the GeneratedId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GeneratedId
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ChannelSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ChannelSecret
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ChannelAccessToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ChannelAccessToken
         {
             get

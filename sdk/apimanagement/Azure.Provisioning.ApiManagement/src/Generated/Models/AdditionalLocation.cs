@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Azure.Core;
 using Azure.Provisioning;
@@ -14,6 +15,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Description of an additional API Management resource location. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AdditionalLocation : ProvisionableConstruct
     {
         private BicepValue<AzureLocation> _location;
@@ -35,6 +37,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -50,6 +53,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public ApiManagementServiceSkuProperties Sku
         {
             get
@@ -65,6 +69,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Zones. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Zones
         {
             get
@@ -80,6 +85,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the PublicIPAddresses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IPAddress> PublicIPAddresses
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the PrivateIPAddresses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IPAddress> PrivateIPAddresses
         {
             get
@@ -100,6 +107,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PublicIPAddressId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PublicIPAddressId
         {
             get
@@ -115,6 +123,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the VirtualNetworkConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualNetworkConfiguration VirtualNetworkConfiguration
         {
             get
@@ -130,6 +139,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the GatewayRegionalUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> GatewayRegionalUri
         {
             get
@@ -140,6 +150,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the NatGatewayState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementNatGatewayState> NatGatewayState
         {
             get
@@ -155,6 +166,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the OutboundPublicIPAddresses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> OutboundPublicIPAddresses
         {
             get
@@ -165,6 +177,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisableGateway. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableGateway
         {
             get
@@ -180,6 +193,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the PlatformVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PlatformVersion> PlatformVersion
         {
             get

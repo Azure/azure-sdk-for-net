@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// The environment authentication details
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AccessTokenAuthentication"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityConnectorAuthentication : ProvisionableConstruct
     {
         private BicepValue<AuthenticationType> _authenticationType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> The authentication type. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<AuthenticationType> AuthenticationType
         {
             get

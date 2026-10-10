@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class WorkspaceInfoProperties : ProvisionableConstruct
     {
         private BicepValue<string> _customerId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the CustomerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomerId
         {
             get

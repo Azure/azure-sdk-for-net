@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> An SRV record. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsSrvRecordInfo : ProvisionableConstruct
     {
         private BicepValue<int> _priority;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Priority. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Priority
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Weight. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Weight
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Port. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Port
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Target. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Target
         {
             get

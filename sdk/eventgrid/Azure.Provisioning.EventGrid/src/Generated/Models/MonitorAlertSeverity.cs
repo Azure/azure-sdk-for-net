@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary>
     /// The severity that will be attached to every Alert fired through this event subscription.
     /// This field must be provided.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public enum MonitorAlertSeverity
     {
         /// <summary> Sev0. </summary>

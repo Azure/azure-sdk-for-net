@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The authorization properties for accessing the source code repository. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskAuthInfo : ProvisionableConstruct
     {
         private BicepValue<ContainerRegistryTaskTokenType> _tokenType;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the TokenType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskTokenType> TokenType
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Token. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Token
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the RefreshToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RefreshToken
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Scope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Scope
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ExpiresInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ExpiresInSeconds
         {
             get

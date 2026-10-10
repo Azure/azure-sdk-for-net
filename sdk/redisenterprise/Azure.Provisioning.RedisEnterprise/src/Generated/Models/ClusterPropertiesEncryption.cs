@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Encryption-at-rest configuration for the cluster. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ClusterPropertiesEncryption : ProvisionableConstruct
     {
         private RedisEnterpriseCustomerManagedKeyEncryption _customerManagedKeyEncryption;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
+        [Experimental("AZPROVISION001")]
         public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption
         {
             get

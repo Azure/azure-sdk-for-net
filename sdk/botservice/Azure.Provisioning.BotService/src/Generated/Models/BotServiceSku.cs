@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The SKU of the cognitive services account. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotServiceSku : ProvisionableConstruct
     {
         private BicepValue<BotServiceSkuName> _name;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BotServiceSkuName> Name
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Tier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BotServiceSkuTier> Tier
         {
             get

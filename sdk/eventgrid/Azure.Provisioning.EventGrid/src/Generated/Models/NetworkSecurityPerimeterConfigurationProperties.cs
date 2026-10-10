@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Network security perimeter configuration information to reflect latest association and nsp profile configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class NetworkSecurityPerimeterConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<NetworkSecurityPerimeterConfigProvisioningState> _provisioningState;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<NetworkSecurityPerimeterConfigProvisioningState> ProvisioningState
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningIssues. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<NetworkSecurityPerimeterConfigurationIssues> ProvisioningIssues
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the NetworkSecurityPerimeter. </summary>
+        [Experimental("AZPROVISION001")]
         public NetworkSecurityPerimeterInfo NetworkSecurityPerimeter
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ResourceAssociation. </summary>
+        [Experimental("AZPROVISION001")]
         public ResourceAssociation ResourceAssociation
         {
             get
@@ -65,6 +71,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Profile. </summary>
+        [Experimental("AZPROVISION001")]
         public NetworkSecurityPerimeterConfigurationProfile Profile
         {
             get

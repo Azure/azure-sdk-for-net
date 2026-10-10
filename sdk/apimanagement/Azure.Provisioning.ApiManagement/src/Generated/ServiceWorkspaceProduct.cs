@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Product details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceWorkspaceProduct : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Terms. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Terms
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSubscriptionRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSubscriptionRequired
         {
             get
@@ -147,6 +151,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsApprovalRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsApprovalRequired
         {
             get
@@ -164,6 +169,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SubscriptionsLimit. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SubscriptionsLimit
         {
             get
@@ -181,6 +187,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AuthenticationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ProductAuthType> AuthenticationType
         {
             get
@@ -198,6 +205,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementProductState> State
         {
             get
@@ -215,6 +223,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Entra. </summary>
+        [Experimental("AZPROVISION001")]
         public ProductApplicationContractEntra ApplicationEntra
         {
             get
@@ -232,6 +241,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> API Operation Entity Base Contract details. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class OperationEntityBaseContract : ProvisionableConstruct
     {
         private BicepList<ParameterContract> _templateParameters;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the TemplateParameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ParameterContract> TemplateParameters
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Request. </summary>
+        [Experimental("AZPROVISION001")]
         public RequestContract Request
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Responses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResponseContract> Responses
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Policies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Policies
         {
             get

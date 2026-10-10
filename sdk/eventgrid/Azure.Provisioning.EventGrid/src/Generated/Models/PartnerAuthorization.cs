@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The partner authorization details. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerAuthorization : ProvisionableConstruct
     {
         private BicepValue<int> _defaultMaximumExpirationTimeInDays;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the DefaultMaximumExpirationTimeInDays. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> DefaultMaximumExpirationTimeInDays
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AuthorizedPartnersList. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridPartnerContent> AuthorizedPartnersList
         {
             get

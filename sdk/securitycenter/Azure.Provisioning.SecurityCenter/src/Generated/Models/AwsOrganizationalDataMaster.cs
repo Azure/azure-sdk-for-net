@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The AWS organization data for the master account. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AwsOrganizationalDataMaster : AwsOrganizationalInfo
     {
         private BicepValue<string> _stacksetName;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the StacksetName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StacksetName
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ExcludedAccountIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ExcludedAccountIds
         {
             get

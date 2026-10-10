@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Data Residency Boundary of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DataResidencyBoundary
     {
         /// <summary> WithinGeopair. </summary>

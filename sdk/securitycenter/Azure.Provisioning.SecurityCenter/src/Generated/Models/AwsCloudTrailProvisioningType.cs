@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The provisioning type for AWS CloudTrail resources. </summary>
+    [Experimental("AZPROVISION001")]
     public enum AwsCloudTrailProvisioningType
     {
         /// <summary> The customer provides their own CloudTrail resources. </summary>

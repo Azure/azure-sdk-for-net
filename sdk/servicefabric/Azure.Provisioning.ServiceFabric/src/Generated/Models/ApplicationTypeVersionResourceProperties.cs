@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The properties of the application type version resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApplicationTypeVersionResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the AppPackageUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> AppPackageUri
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the DefaultParameterList. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> DefaultParameterList
         {
             get

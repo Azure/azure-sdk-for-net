@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
+    [Experimental("AZPROVISION001")]
     internal partial class NamespaceProperties : ProvisionableConstruct
     {
         private BicepList<EventGridDomainPrivateEndpointConnection> _privateEndpointConnections;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridDomainPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<NamespaceProvisioningState> ProvisioningState
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the TopicsConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public TopicsConfiguration TopicsConfiguration
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the TopicSpacesConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public TopicSpacesConfiguration TopicSpacesConfiguration
         {
             get
@@ -83,6 +89,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IsZoneRedundant. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsZoneRedundant
         {
             get
@@ -98,6 +105,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -113,6 +121,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the InboundIPRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EventGridInboundIPRule> InboundIPRules
         {
             get
@@ -128,6 +137,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MinimumTlsVersionAllowed. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TlsVersion> MinimumTlsVersionAllowed
         {
             get
@@ -143,6 +153,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AutoScaleConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public AutoScaleConfiguration AutoScaleConfiguration
         {
             get

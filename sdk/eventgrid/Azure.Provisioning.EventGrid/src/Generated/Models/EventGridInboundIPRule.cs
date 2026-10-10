@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The EventGridInboundIPRule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridInboundIPRule : ProvisionableConstruct
     {
         private BicepValue<string> _ipMask;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IPMask. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IPMask
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Action. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridIPActionType> Action
         {
             get

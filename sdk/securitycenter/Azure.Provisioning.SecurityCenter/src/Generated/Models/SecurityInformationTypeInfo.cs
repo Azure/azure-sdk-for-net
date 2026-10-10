@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The information type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecurityInformationTypeInfo : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Order. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Order
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the RecommendedLabelId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> RecommendedLabelId
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsCustom. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCustom
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Keywords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<InformationProtectionKeyword> Keywords
         {
             get

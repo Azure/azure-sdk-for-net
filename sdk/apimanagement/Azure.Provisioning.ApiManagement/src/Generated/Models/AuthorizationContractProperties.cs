@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Authorization details. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AuthorizationContractProperties : ProvisionableConstruct
     {
         private BicepValue<ApiManagementAuthorizationType> _authorizationType;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AuthorizationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementAuthorizationType> AuthorizationType
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the OAuth2GrantType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<OAuth2GrantType> OAuth2GrantType
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Parameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Parameters
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Error. </summary>
+        [Experimental("AZPROVISION001")]
         public ApiManagementAuthorizationError Error
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Status
         {
             get

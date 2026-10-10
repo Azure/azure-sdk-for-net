@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> A Facebook page for Facebook channel registration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class FacebookPage : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AccessToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccessToken
         {
             get

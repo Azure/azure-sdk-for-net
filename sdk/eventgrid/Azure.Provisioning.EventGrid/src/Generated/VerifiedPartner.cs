@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Verified partner information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VerifiedPartner : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -75,6 +76,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PartnerRegistrationImmutableId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> PartnerRegistrationImmutableId
         {
             get
@@ -84,6 +86,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the OrganizationName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OrganizationName
         {
             get
@@ -93,6 +96,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PartnerDisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PartnerDisplayName
         {
             get
@@ -102,6 +106,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PartnerTopicDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerDetails PartnerTopicDetails
         {
             get
@@ -111,6 +116,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the PartnerDestinationDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public PartnerDetails PartnerDestinationDetails
         {
             get
@@ -120,6 +126,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VerifiedPartnerProvisioningState> ProvisioningState
         {
             get

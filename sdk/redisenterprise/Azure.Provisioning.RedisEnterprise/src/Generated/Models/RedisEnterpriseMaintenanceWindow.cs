@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> A single custom maintenance window. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseMaintenanceWindow : ProvisionableConstruct
     {
         private BicepValue<RedisEnterpriseMaintenanceWindowType> _type;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseMaintenanceWindowType> Type
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Duration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> Duration
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the StartHourUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> StartHourUtc
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Schedule. </summary>
+        [Experimental("AZPROVISION001")]
         internal MaintenanceWindowSchedule Schedule
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the DayOfWeek. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseMaintenanceDayOfWeek> ScheduleDayOfWeek
         {
             get

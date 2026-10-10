@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Describes the properties of an existing Shared Private Link Resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SharedPrivateLinkResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _groupId;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the GroupId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GroupId
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the PrivateLinkResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateLinkResourceId
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRProvisioningState> ProvisioningState
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the RequestMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RequestMessage
         {
             get
@@ -82,6 +88,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Fqdns. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Fqdns
         {
             get
@@ -97,6 +104,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRSharedPrivateLinkResourceStatus> Status
         {
             get

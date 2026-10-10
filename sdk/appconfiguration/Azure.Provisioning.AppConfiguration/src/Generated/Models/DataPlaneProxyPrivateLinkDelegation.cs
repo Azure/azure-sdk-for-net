@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </summary>
+    [Experimental("AZPROVISION001")]
     public enum DataPlaneProxyPrivateLinkDelegation
     {
         /// <summary> ARM private endpoint is required if the resource requires private link. </summary>

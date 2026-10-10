@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Facebook channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class FacebookChannelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _verifyToken;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the VerifyToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VerifyToken
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Pages. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<FacebookPage> Pages
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AppId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppId
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AppSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppSecret
         {
             get
@@ -82,6 +88,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the CallbackUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> CallbackUri
         {
             get
@@ -92,6 +99,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

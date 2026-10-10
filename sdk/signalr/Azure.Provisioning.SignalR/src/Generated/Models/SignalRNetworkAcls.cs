@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Network ACLs for the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRNetworkAcls : ProvisionableConstruct
     {
         private BicepValue<SignalRNetworkAclAction> _defaultAction;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the DefaultAction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRNetworkAclAction> DefaultAction
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the PublicNetwork. </summary>
+        [Experimental("AZPROVISION001")]
         public SignalRNetworkAcl PublicNetwork
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the PrivateEndpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRPrivateEndpointAcl> PrivateEndpoints
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the IPRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SignalRIPRule> IPRules
         {
             get

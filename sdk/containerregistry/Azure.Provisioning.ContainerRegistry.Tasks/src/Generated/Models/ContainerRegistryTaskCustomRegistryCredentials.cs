@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> Describes the credentials that will be used to access a custom registry during a run. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskCustomRegistryCredentials : ProvisionableConstruct
     {
         private ContainerRegistryTaskSecretObject _userName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the UserName. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskSecretObject UserName
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Password. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskSecretObject Password
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Identity
         {
             get

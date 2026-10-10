@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A hub setting. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubHub : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

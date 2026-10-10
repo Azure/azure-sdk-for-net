@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Alert notification source. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NotificationsSourceAlert : NotificationsSource
     {
         private BicepValue<SecurityAlertMinimalSeverity> _minimalSeverity;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MinimalSeverity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityAlertMinimalSeverity> MinimalSeverity
         {
             get

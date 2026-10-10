@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Kind of the resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum ResourceKind
     {
         /// <summary> Azure. </summary>

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of a task. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TaskProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerRegistryTaskProvisioningState> _provisioningState;
@@ -33,6 +35,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskProvisioningState> ProvisioningState
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskStatus> Status
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Platform. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskPlatformProperties Platform
         {
             get
@@ -83,6 +89,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the AgentConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal AgentProperties AgentConfiguration
         {
             get
@@ -98,6 +105,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the AgentPoolName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AgentPoolName
         {
             get
@@ -113,6 +121,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the TimeoutInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TimeoutInSeconds
         {
             get
@@ -128,6 +137,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Step. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskStepProperties Step
         {
             get
@@ -143,6 +153,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Trigger. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskTriggerProperties Trigger
         {
             get
@@ -158,6 +169,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskCredentials Credentials
         {
             get
@@ -173,6 +185,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the LogTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogTemplate
         {
             get
@@ -188,6 +201,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the IsSystemTask. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSystemTask
         {
             get
@@ -203,6 +217,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Cpu. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AgentCpu
         {
             get

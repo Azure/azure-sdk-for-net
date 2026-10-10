@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Describes an EventGrid Resource Sku. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ResourceSku : ProvisionableConstruct
     {
         private BicepValue<EventGridSku> _name;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<EventGridSku> Name
         {
             get

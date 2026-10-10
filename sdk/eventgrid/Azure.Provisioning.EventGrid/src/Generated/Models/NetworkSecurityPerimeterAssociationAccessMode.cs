@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Network security perimeter access mode. </summary>
+    [Experimental("AZPROVISION001")]
     public enum NetworkSecurityPerimeterAssociationAccessMode
     {
         /// <summary> Learning. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Regulatory compliance control data. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class RegulatoryComplianceControlProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SecurityAlertNotificationByRoleState> State
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the PassedAssessments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PassedAssessments
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the FailedAssessments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> FailedAssessments
         {
             get
@@ -65,6 +71,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the SkippedAssessments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SkippedAssessments
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for Import Package Information properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppAttachPackageInfoProperties : ProvisionableConstruct
     {
         private BicepValue<string> _packageAlias;
@@ -37,6 +39,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PackageAlias. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PackageAlias
         {
             get
@@ -52,6 +55,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ImagePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ImagePath
         {
             get
@@ -67,6 +71,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PackageName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PackageName
         {
             get
@@ -82,6 +87,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PackageFamilyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PackageFamilyName
         {
             get
@@ -97,6 +103,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PackageFullName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PackageFullName
         {
             get
@@ -112,6 +119,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -127,6 +135,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PackageRelativePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PackageRelativePath
         {
             get
@@ -142,6 +151,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IsRegularRegistration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsRegularRegistration
         {
             get
@@ -157,6 +167,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IsActive. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsActive
         {
             get
@@ -172,6 +183,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PackageDependencies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MsixPackageDependencies> PackageDependencies
         {
             get
@@ -187,6 +199,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get
@@ -202,6 +215,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the LastUpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastUpdatedOn
         {
             get
@@ -217,6 +231,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PackageApplications. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MsixPackageApplications> PackageApplications
         {
             get
@@ -232,6 +247,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the CertificateName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CertificateName
         {
             get
@@ -247,6 +263,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the CertificateExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CertificateExpiresOn
         {
             get
@@ -262,6 +279,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IsPackageTimestamped. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PackageTimestamped> IsPackageTimestamped
         {
             get

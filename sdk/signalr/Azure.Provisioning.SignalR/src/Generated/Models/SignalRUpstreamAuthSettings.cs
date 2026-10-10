@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Upstream auth settings. If not set, no auth is used for upstream messages. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRUpstreamAuthSettings : ProvisionableConstruct
     {
         private BicepValue<SignalRUpstreamAuthType> _authType;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the AuthType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SignalRUpstreamAuthType> AuthType
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the ManagedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedIdentitySettings ManagedIdentity
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.SignalR
         }
 
         /// <summary> Gets or sets the Resource. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedIdentityResource
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Contains details on the failure. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionHostHealthCheckFailureDetails : ProvisionableConstruct
     {
         private BicepValue<string> _message;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the Message. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Message
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ErrorCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ErrorCode
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the LastHealthCheckOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastHealthCheckOn
         {
             get

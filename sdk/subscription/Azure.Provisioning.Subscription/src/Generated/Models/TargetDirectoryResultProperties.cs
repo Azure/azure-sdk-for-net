@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Properties of subscription Response for Changed Target Directory. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TargetDirectoryResultProperties : ProvisionableConstruct
     {
         private BicepValue<Guid> _destinationTenantId;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the DestinationTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> DestinationTenantId
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the DestinationOwnerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> DestinationOwnerId
         {
             get
@@ -51,6 +55,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the SubscriptionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubscriptionId
         {
             get
@@ -61,6 +66,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -71,6 +77,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the AcceptedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> AcceptedOn
         {
             get
@@ -81,6 +88,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the SourceOwnerEmail. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SourceOwnerEmail
         {
             get
@@ -91,6 +99,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the SourceOwnerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> SourceOwnerId
         {
             get
@@ -101,6 +110,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the SourceTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> SourceTenantId
         {
             get
@@ -111,6 +121,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ChangeDirectoryOperationStatus> Status
         {
             get
@@ -121,6 +132,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get

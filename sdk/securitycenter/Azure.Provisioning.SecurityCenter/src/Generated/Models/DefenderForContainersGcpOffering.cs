@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The containers GCP offering. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DefenderForContainersGcpOffering : SecurityCenterCloudOffering
     {
         private DefenderForContainersGcpOfferingNativeCloudConnection _nativeCloudConnection;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the NativeCloudConnection. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForContainersGcpOfferingNativeCloudConnection NativeCloudConnection
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DataPipelineNativeCloudConnection. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection DataPipelineNativeCloudConnection
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnableAuditLogsAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableAuditLogsAutoProvisioning
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InstallationMethod. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<InstallationMethod> InstallationMethod
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the SecurityGatingEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> SecurityGatingEnabled
         {
             get
@@ -106,6 +113,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ContainerAntiMalwareEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ContainerAntiMalwareEnabled
         {
             get
@@ -121,6 +129,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnableDefenderAgentAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableDefenderAgentAutoProvisioning
         {
             get
@@ -136,6 +145,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the EnablePolicyAgentAutoProvisioning. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnablePolicyAgentAutoProvisioning
         {
             get
@@ -151,6 +161,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdcContainersImageAssessment. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForContainersGcpOfferingMdcContainersImageAssessment MdcContainersImageAssessment
         {
             get
@@ -166,6 +177,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the MdcContainersAgentlessDiscoveryK8S. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S MdcContainersAgentlessDiscoveryK8S
         {
             get
@@ -181,6 +193,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the VmScanners. </summary>
+        [Experimental("AZPROVISION001")]
         public DefenderForContainersGcpOfferingVmScanners VmScanners
         {
             get

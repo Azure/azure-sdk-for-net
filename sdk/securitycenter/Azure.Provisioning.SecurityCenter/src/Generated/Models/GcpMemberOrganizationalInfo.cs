@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The gcpOrganization data for the member account. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class GcpMemberOrganizationalInfo : GcpOrganizationalInfo
     {
         private BicepValue<string> _parentHierarchyId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ParentHierarchyId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ParentHierarchyId
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the ManagementProjectNumber. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagementProjectNumber
         {
             get

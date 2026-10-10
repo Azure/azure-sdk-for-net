@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Certificate Source. </summary>
+    [Experimental("AZPROVISION001")]
     public enum CertificateSource
     {
         /// <summary> Managed. </summary>

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The kind of scoped Azure monitor resource. </summary>
+    [Experimental("AZPROVISION001")]
     public enum MonitorScopedResourceKind
     {
         /// <summary> Resource. </summary>

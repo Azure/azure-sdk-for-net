@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The WorkspaceLinksBaseProperties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class WorkspaceLinksBaseProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _workspaceId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the WorkspaceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> WorkspaceId
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets the Gateways. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WritableSubResource> Gateways
         {
             get

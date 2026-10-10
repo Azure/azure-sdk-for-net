@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Specifies identity provider settings needed to authorize applications API calls. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ProductEntityBaseParametersApplication : ProductApplicationContract
     {
         /// <summary> Creates a new ProductEntityBaseParametersApplication. </summary>

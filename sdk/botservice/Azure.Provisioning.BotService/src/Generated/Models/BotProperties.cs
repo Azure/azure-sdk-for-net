@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Bot. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotProperties : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
@@ -58,6 +60,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get
@@ -73,6 +76,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -88,6 +92,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IconUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> IconUri
         {
             get
@@ -103,6 +108,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> Endpoint
         {
             get
@@ -118,6 +124,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the EndpointVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EndpointVersion
         {
             get
@@ -128,6 +135,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AllSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> AllSettings
         {
             get
@@ -143,6 +151,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Parameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Parameters
         {
             get
@@ -158,6 +167,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ManifestUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ManifestUri
         {
             get
@@ -173,6 +183,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the MsaAppType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BotMsaAppType> MsaAppType
         {
             get
@@ -188,6 +199,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the MsaAppId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MsaAppId
         {
             get
@@ -203,6 +215,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the MsaAppTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MsaAppTenantId
         {
             get
@@ -218,6 +231,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the MsaAppMSIResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> MsaAppMSIResourceId
         {
             get
@@ -233,6 +247,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the ConfiguredChannels. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ConfiguredChannels
         {
             get
@@ -243,6 +258,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the EnabledChannels. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> EnabledChannels
         {
             get
@@ -253,6 +269,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the DeveloperAppInsightKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeveloperAppInsightKey
         {
             get
@@ -268,6 +285,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the DeveloperAppInsightsApiKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeveloperAppInsightsApiKey
         {
             get
@@ -283,6 +301,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the DeveloperAppInsightsApplicationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeveloperAppInsightsApplicationId
         {
             get
@@ -298,6 +317,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the LuisAppIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> LuisAppIds
         {
             get
@@ -313,6 +333,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the LuisKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LuisKey
         {
             get
@@ -328,6 +349,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsCmekEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCmekEnabled
         {
             get
@@ -343,6 +365,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CmekKeyVaultUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> CmekKeyVaultUri
         {
             get
@@ -358,6 +381,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the CmekEncryptionStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CmekEncryptionStatus
         {
             get
@@ -368,6 +392,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> TenantId
         {
             get
@@ -383,6 +408,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BotServicePublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -398,6 +424,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsStreamingSupported. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsStreamingSupported
         {
             get
@@ -413,6 +440,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the IsDeveloperAppInsightsApiKeySet. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDeveloperAppInsightsApiKeySet
         {
             get
@@ -423,6 +451,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the MigrationToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MigrationToken
         {
             get
@@ -433,6 +462,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsLocalAuthDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsLocalAuthDisabled
         {
             get
@@ -448,6 +478,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the SchemaTransformationVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SchemaTransformationVersion
         {
             get
@@ -463,6 +494,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the StorageResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> StorageResourceId
         {
             get
@@ -478,6 +510,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BotServicePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -488,6 +521,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the NetworkSecurityPerimeterConfigurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BotServiceNetworkSecurityPerimeterConfiguration> NetworkSecurityPerimeterConfigurations
         {
             get
@@ -498,6 +532,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the OpenWithHint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OpenWithHint
         {
             get
@@ -513,6 +548,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AppPasswordHint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppPasswordHint
         {
             get
@@ -528,6 +564,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -538,6 +575,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the PublishingCredentials. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublishingCredentials
         {
             get

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Information regarding how the gateway should integrate with backend systems. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BackendConfiguration : ProvisionableConstruct
     {
         private BackendSubnetConfiguration _subnet;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Subnet. </summary>
+        [Experimental("AZPROVISION001")]
         internal BackendSubnetConfiguration Subnet
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SubnetId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SubnetId
         {
             get

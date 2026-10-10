@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The current state of a private endpoint connection. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubPrivateLinkServiceConnectionState : ProvisionableConstruct
     {
         private BicepValue<IotHubPrivateLinkServiceConnectionStatus> _status;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubPrivateLinkServiceConnectionStatus> Status
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ActionsRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ActionsRequired
         {
             get

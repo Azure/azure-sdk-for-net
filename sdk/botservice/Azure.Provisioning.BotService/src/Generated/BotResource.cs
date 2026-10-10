@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Bot resource definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -87,6 +88,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -102,6 +104,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get
@@ -117,6 +120,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public BotServiceSku Sku
         {
             get
@@ -132,6 +136,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BotServiceKind> Kind
         {
             get
@@ -147,6 +152,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -162,6 +168,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Zones. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Zones
         {
             get

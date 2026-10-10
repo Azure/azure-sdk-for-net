@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Network security perimeter configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DomainNetworkSecurityPerimeterConfiguration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -90,6 +91,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<NetworkSecurityPerimeterConfigProvisioningState> ProvisioningState
         {
             get
@@ -99,6 +101,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ProvisioningIssues. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<NetworkSecurityPerimeterConfigurationIssues> ProvisioningIssues
         {
             get
@@ -108,6 +111,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the NetworkSecurityPerimeter. </summary>
+        [Experimental("AZPROVISION001")]
         public NetworkSecurityPerimeterInfo NetworkSecurityPerimeter
         {
             get
@@ -117,6 +121,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the ResourceAssociation. </summary>
+        [Experimental("AZPROVISION001")]
         public ResourceAssociation ResourceAssociation
         {
             get
@@ -126,6 +131,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets the Profile. </summary>
+        [Experimental("AZPROVISION001")]
         public NetworkSecurityPerimeterConfigurationProfile Profile
         {
             get

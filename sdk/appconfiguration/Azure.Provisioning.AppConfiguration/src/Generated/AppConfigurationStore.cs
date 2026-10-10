@@ -19,6 +19,7 @@ using Azure.Provisioning.Roles;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The configuration store along with all resource properties. The Configuration Store will have all information to begin utilizing it. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppConfigurationStore : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -118,6 +119,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -133,6 +135,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         internal AppConfigurationSku Sku
         {
             get
@@ -148,6 +151,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationProvisioningState> ProvisioningState
         {
             get
@@ -161,6 +165,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -174,6 +179,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Endpoint
         {
             get
@@ -187,6 +193,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections
         {
             get
@@ -200,6 +207,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -217,6 +225,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the DisableLocalAuth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableLocalAuth
         {
             get
@@ -234,6 +243,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the SoftDeleteRetentionInDays. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SoftDeleteRetentionInDays
         {
             get
@@ -251,6 +261,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the DefaultKeyValueRevisionRetentionPeriodInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> DefaultKeyValueRevisionRetentionPeriodInSeconds
         {
             get
@@ -268,6 +279,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the EnablePurgeProtection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnablePurgeProtection
         {
             get
@@ -285,6 +297,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the DataPlaneProxy. </summary>
+        [Experimental("AZPROVISION001")]
         public AppConfigurationDataPlaneProxyProperties DataPlaneProxy
         {
             get
@@ -302,6 +315,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the CreateMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationCreateMode> CreateMode
         {
             get
@@ -319,6 +333,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the KeyVaultProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get
@@ -336,6 +351,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TelemetryResourceId
         {
             get
@@ -366,6 +382,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> AzureFrontDoorResourceId
         {
             get
@@ -383,6 +400,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SkuName
         {
             get

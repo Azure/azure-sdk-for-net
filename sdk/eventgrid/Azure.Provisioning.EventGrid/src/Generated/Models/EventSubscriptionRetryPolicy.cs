@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the retry policy for an event subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventSubscriptionRetryPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _maxDeliveryAttempts;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the MaxDeliveryAttempts. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxDeliveryAttempts
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the EventTimeToLiveInMinutes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> EventTimeToLiveInMinutes
         {
             get

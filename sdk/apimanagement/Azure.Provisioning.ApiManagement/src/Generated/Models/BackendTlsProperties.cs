@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Properties controlling TLS Certificate Validation. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BackendTlsProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _shouldValidateCertificateChain;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ShouldValidateCertificateChain. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ShouldValidateCertificateChain
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ShouldValidateCertificateName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ShouldValidateCertificateName
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ServerCertificateThumbprints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ServerCertificateThumbprints
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ServerX509Names. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<X509CertificateName> ServerX509Names
         {
             get

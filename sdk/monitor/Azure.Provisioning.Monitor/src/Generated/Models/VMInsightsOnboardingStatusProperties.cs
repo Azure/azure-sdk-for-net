@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class VMInsightsOnboardingStatusProperties : ProvisionableConstruct
     {
         private BicepValue<string> _resourceId;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceId
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the OnboardingStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<OnboardingStatus> OnboardingStatus
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the DataStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DataStatus> DataStatus
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the Data. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DataContainer> Data
         {
             get

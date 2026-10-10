@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Properties of dynamic delivery attribute mapping. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DynamicDeliveryAttributeMappingProperties : ProvisionableConstruct
     {
         private BicepValue<string> _sourceField;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the SourceField. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SourceField
         {
             get

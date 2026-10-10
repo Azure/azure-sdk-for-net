@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary></summary>
+    [Experimental("AZPROVISION001")]
     internal enum EventListenerFilterDiscriminator
     {
         /// <summary> EventName. </summary>

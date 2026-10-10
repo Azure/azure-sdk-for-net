@@ -19,6 +19,7 @@ using Azure.Provisioning.Roles;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A class represent a resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubService : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -119,6 +120,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public BillingInfoSku Sku
         {
             get
@@ -134,6 +136,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubServiceKind> Kind
         {
             get
@@ -149,6 +152,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -164,6 +168,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<WebPubSubProvisioningState> ProvisioningState
         {
             get
@@ -177,6 +182,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ExternalIP. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExternalIP
         {
             get
@@ -190,6 +196,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the HostName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HostName
         {
             get
@@ -203,6 +210,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the PublicPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PublicPort
         {
             get
@@ -216,6 +224,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the ServerPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ServerPort
         {
             get
@@ -229,6 +238,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get
@@ -242,6 +252,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the HostNamePrefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HostNamePrefix
         {
             get
@@ -255,6 +266,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the LiveTraceConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public LiveTraceConfiguration LiveTraceConfiguration
         {
             get
@@ -272,6 +284,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the NetworkAcls. </summary>
+        [Experimental("AZPROVISION001")]
         public WebPubSubNetworkAcls NetworkAcls
         {
             get
@@ -289,6 +302,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ApplicationFirewall. </summary>
+        [Experimental("AZPROVISION001")]
         public WebPubSubApplicationFirewallSettings ApplicationFirewall
         {
             get
@@ -306,6 +320,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublicNetworkAccess
         {
             get
@@ -323,6 +338,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the IsLocalAuthDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsLocalAuthDisabled
         {
             get
@@ -340,6 +356,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the IsAadAuthDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsAadAuthDisabled
         {
             get
@@ -357,6 +374,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the IsRegionEndpointEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IsRegionEndpointEnabled
         {
             get
@@ -374,6 +392,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ResourceStopped. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ResourceStopped
         {
             get
@@ -391,6 +410,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the Categories. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceLogCategory> ResourceLogCategories
         {
             get
@@ -408,6 +428,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets or sets the ServiceMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SocketIOServiceMode
         {
             get

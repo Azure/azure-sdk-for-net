@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
+    [Experimental("AZPROVISION001")]
     internal partial class ZoneProperties : ProvisionableConstruct
     {
         private BicepValue<long> _maxNumberOfRecords;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the MaxNumberOfRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxNumberOfRecords
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the MaxNumberOfRecordsPerRecord. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxNumberOfRecordsPerRecord
         {
             get
@@ -47,6 +51,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the NumberOfRecords. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> NumberOfRecords
         {
             get
@@ -57,6 +62,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the NameServers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> NameServers
         {
             get
@@ -67,6 +73,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the ZoneType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DnsZoneType> ZoneType
         {
             get
@@ -82,6 +89,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the RegistrationVirtualNetworkReferences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsSubResourceInfo> RegistrationVirtualNetworkReferences
         {
             get
@@ -97,6 +105,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the ResolutionVirtualNetworkReferences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsSubResourceInfo> ResolutionVirtualNetworkReferences
         {
             get
@@ -112,6 +121,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the SigningKeys. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsSigningKey> SigningKeys
         {
             get

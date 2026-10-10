@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Product profile. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ProductContractProperties : ProductEntityBaseProperties
     {
         private BicepValue<string> _displayName;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the DisplayName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DisplayName
         {
             get

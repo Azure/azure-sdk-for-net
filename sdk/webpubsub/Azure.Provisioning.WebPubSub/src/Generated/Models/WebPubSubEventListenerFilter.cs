@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.WebPubSub
     /// A base class for event filter which determines whether an event should be sent to an event listener.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="WebPubSubEventNameFilter"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubEventListenerFilter : ProvisionableConstruct
     {
         private BicepValue<EventListenerFilterDiscriminator> _type;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.WebPubSub
         }
 
         /// <summary> Gets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<EventListenerFilterDiscriminator> Type
         {
             get

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Backend pool service information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BackendPoolItem : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> Id
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Weight. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Weight
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Priority. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Priority
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the PreferredCarbonEmission. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CarbonEmissionCategory> PreferredCarbonEmission
         {
             get

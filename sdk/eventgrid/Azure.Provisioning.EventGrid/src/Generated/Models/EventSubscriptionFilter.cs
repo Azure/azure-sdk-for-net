@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Filter for the Event Subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventSubscriptionFilter : ProvisionableConstruct
     {
         private BicepValue<string> _subjectBeginsWith;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the SubjectBeginsWith. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubjectBeginsWith
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the SubjectEndsWith. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubjectEndsWith
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IncludedEventTypes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> IncludedEventTypes
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IsSubjectCaseSensitive. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSubjectCaseSensitive
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the IsAdvancedFilteringOnArraysEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsAdvancedFilteringOnArraysEnabled
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the AdvancedFilters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<AdvancedFilter> AdvancedFilters
         {
             get

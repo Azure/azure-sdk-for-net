@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Status for a SessionHost. </summary>
+    [Experimental("AZPROVISION001")]
     public enum SessionHostStatus
     {
         /// <summary> Session Host has passed all the health checks and is available to handle connections. </summary>

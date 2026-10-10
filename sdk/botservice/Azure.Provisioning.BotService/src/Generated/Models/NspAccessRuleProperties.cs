@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Properties of Access Rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NspAccessRuleProperties : ProvisionableConstruct
     {
         private BicepValue<NspAccessRuleDirection> _direction;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Direction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<NspAccessRuleDirection> Direction
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the AddressPrefixes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AddressPrefixes
         {
             get
@@ -47,6 +51,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Subscriptions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<BotServiceNspAccessRuleSubscription> Subscriptions
         {
             get
@@ -57,6 +62,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the NetworkSecurityPerimeters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<NetworkSecurityPerimeter> NetworkSecurityPerimeters
         {
             get
@@ -67,6 +73,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the FullyQualifiedDomainNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> FullyQualifiedDomainNames
         {
             get
@@ -77,6 +84,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the EmailAddresses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> EmailAddresses
         {
             get
@@ -87,6 +95,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the PhoneNumbers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> PhoneNumbers
         {
             get

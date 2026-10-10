@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> The developer portal Content Security Policy (CSP) settings. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PortalConfigCspProperties : ProvisionableConstruct
     {
         private BicepValue<PortalSettingsCspMode> _mode;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Mode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PortalSettingsCspMode> Mode
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ReportUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ReportUri
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AllowedSources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedSources
         {
             get

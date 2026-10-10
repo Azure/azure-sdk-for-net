@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -12,8 +13,9 @@ namespace Azure.Provisioning.EventGrid
 {
     /// <summary>
     /// Delivery attribute mapping details.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="StaticDeliveryAttributeMapping"/> and <see cref="DynamicDeliveryAttributeMapping"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DeliveryAttributeMapping : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.EventGrid
         }
 
         /// <summary> Type of the delivery attribute or header name. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<DeliveryAttributeMappingType> Type
         {
             get

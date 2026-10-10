@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Sets the frequency at which a snapshot of the database is created. </summary>
+    [Experimental("AZPROVISION001")]
     public enum PersistenceSettingRdbFrequency
     {
         /// <summary> 1h. </summary>

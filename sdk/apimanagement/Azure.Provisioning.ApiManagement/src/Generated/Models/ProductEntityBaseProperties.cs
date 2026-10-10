@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
     /// <summary> Product Entity Base Parameters. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ProductEntityBaseProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Terms. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Terms
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsSubscriptionRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSubscriptionRequired
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the IsApprovalRequired. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsApprovalRequired
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the SubscriptionsLimit. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SubscriptionsLimit
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the AuthenticationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ProductAuthType> AuthenticationType
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Application. </summary>
+        [Experimental("AZPROVISION001")]
         internal ProductEntityBaseParametersApplication Application
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ApiManagementProductState> State
         {
             get
@@ -148,6 +158,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Entra. </summary>
+        [Experimental("AZPROVISION001")]
         public ProductApplicationContractEntra ApplicationEntra
         {
             get
