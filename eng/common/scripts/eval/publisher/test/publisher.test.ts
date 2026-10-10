@@ -163,6 +163,24 @@ test("the archive package has one locked public dependency, not an Azure SDK tra
     assert.match(lock.packages["node_modules/fflate"].integrity, /^sha512-[A-Za-z0-9+/]{86}==$/);
 });
 
+test("PR CI runs every lightweight Node suite and discovers tagged publisher PowerShell tests", async () => {
+    const root = resolve(import.meta.dirname, "../../../../..");
+    const ci = await readFile(join(root, "common-tests/ci.yml"), "utf8");
+    assert.match(ci, /TargetDirectory: eng\/common-tests/);
+    assert.match(ci, /TargetTags: UnitTest,IntegrationTest/);
+    assert.match(ci, /CustomTestSteps:[\s\S]*config.Filter.Tag = @\('UnitTest', 'IntegrationTest'\)/);
+    assert.match(ci, /if \(\$result.FailedCount -gt 0\) \{ throw/);
+    assert.match(ci, /node --experimental-strip-types --test test\/\*\.test\.ts publisher\/test\/\*\.test\.ts/);
+    assert.match(ci, /npm ci --prefix publisher --omit=dev --ignore-scripts/);
+    assert.doesNotMatch(ci, /vally eval|azureSubscription:|npm ci --userconfig/);
+    const pester = await readFile(join(root, "common-tests/eval/Publish-EvalResults.Tests.ps1"), "utf8");
+    assert.match(pester, /Describe 'Azure CLI evaluation publication' -Tag 'UnitTest'/);
+    assert.match(pester, /Microsoft.PowerShell.Utility\\Invoke-WebRequest/);
+    assert.match(pester, /server\.listen\(0,'127\.0\.0\.1'/);
+    const publisher = JSON.parse(await readFile(resolve(import.meta.dirname, "../package.json"), "utf8"));
+    assert.match(publisher.scripts.test, /common-tests\/eval\/Publish-EvalResults.Tests.ps1/);
+});
+
 test("pipeline separates token-bearing attempt verification from rendering and uploads before the score gate", async () => {
     const root = resolve(import.meta.dirname, "../../../..");
     const summary = await readFile(join(root, "pipelines/templates/jobs/eval-summarize.yml"), "utf8");

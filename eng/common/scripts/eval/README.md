@@ -110,7 +110,13 @@ Do not replace viewer authentication or network restrictions to make a signal su
 
 Run `npm ci --ignore-scripts` and `npm test` from `publisher` (`npm.cmd` on Windows),
 then `npm test` from this directory. Publisher tests require **PowerShell 7.4+ and
-Pester 5**; pipeline upload uses the agent's authenticated Azure CLI. Tests use synthetic fixtures and fake transports;
+Pester 5**; pipeline upload uses the agent's authenticated Azure CLI. The existing
+common-tests PR pipeline runs all shared/archive Node tests and discovers the tagged
+PowerShell suite under `eng/common-tests/eval`; failures fail the CI job.
+CI restores only the locked archive dependency, not the Vally evaluator.
+Regression coverage includes the actual HTTP
+cmdlet against loopback, invalid collision metadata and receipt-path aliases.
+Tests use synthetic fixtures and fake Azure transports;
 they do not evaluate models or contact production services. A real-run test remains
 separate from local checks and should use an already approved evaluation run.
 
