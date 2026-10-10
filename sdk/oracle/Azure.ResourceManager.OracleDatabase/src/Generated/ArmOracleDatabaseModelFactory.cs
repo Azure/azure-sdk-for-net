@@ -1270,7 +1270,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             return new UnknownAutonomousDatabaseBaseProperties(
                 adminPassword,
-                default,
+                dataBaseType is null ? default : new OracleDataBaseType(dataBaseType),
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
@@ -1577,7 +1577,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             return new AutonomousDatabaseProperties(
                 adminPassword,
-                default,
+                OracleDataBaseType.Regular,
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
@@ -1754,7 +1754,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             return new AutonomousDatabaseCloneProperties(
                 adminPassword,
-                default,
+                OracleDataBaseType.Clone,
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
@@ -1936,7 +1936,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             return new AutonomousDatabaseCrossRegionDisasterRecoveryProperties(
                 adminPassword,
-                default,
+                OracleDataBaseType.CrossRegionDisasterRecovery,
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
@@ -2115,7 +2115,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             return new AutonomousDatabaseFromBackupTimestampProperties(
                 adminPassword,
-                default,
+                OracleDataBaseType.CloneFromBackupTimestamp,
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
@@ -2843,7 +2843,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             sshPublicKeys ??= new ChangeTrackingList<string>();
 
             return new OracleDBSystemProperties(
-                default,
+                DBSystemSourceType.None,
                 provisioningState,
                 ociUri,
                 resourceAnchorId,
@@ -2917,7 +2917,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             sshPublicKeys ??= new ChangeTrackingList<string>();
 
             return new UnknownOracleDBSystemBaseProperties(
-                default,
+                source is null ? (DBSystemSourceType?)default : new DBSystemSourceType(source),
                 provisioningState,
                 ociUri,
                 resourceAnchorId,
