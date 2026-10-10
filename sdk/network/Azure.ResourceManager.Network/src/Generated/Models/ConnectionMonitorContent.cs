@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the connection monitor. </summary>
         [WirePath("properties")]
-        internal ConnectionMonitorCreateOrUpdateContent Properties { get; }
+        internal ConnectionMonitorCreateOrUpdateContent Properties { get; } = new ConnectionMonitorCreateOrUpdateContent();
 
         /// <summary> Describes the source of connection monitor. </summary>
         [WirePath("properties.source")]
