@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string S3Value = "S3";
         private const string SnowflakeValue = "Snowflake";
         private const string AzureKeyVaultValue = "AzureKeyVault";
-        private const string AzureSqlDBValue = "AzureSqlDb";
+        private const string AzureSqlDbValue = "AzureSqlDb";
         private const string AzureSynapseAnalyticsValue = "AzureSynapseAnalytics";
-        private const string AzureMySqlDBValue = "AzureMySqlDb";
-        private const string AzurePostgresDBValue = "AzurePostgresDb";
+        private const string AzureMySqlDbValue = "AzureMySqlDb";
+        private const string AzurePostgresDbValue = "AzurePostgresDb";
         private const string ADLSGen2Value = "ADLSGen2";
         private const string AzureContainerAppEnvironmentValue = "AzureContainerAppEnvironment";
         private const string RedisValue = "Redis";

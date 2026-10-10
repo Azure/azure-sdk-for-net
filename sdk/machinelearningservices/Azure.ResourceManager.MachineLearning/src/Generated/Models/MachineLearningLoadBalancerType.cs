@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningLoadBalancerType : IEquatable<MachineLearningLoadBalancerType>
     {
         private readonly string _value;
-        private const string PublicIPValue = "PublicIp";
+        private const string PublicIpValue = "PublicIp";
         private const string InternalLoadBalancerValue = "InternalLoadBalancer";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningLoadBalancerType"/>. </summary>

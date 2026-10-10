@@ -13,7 +13,6 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The RequestLogging. </summary>
     internal partial class RequestLogging : IJsonModel<RequestLogging>
     {
         /// <param name="data"> The data to parse. </param>

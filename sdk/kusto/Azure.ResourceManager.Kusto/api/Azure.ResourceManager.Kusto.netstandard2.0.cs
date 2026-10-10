@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DataConnectionKind(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.DataConnectionKind CosmosDb { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.DataConnectionKind CosmosDB { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.DataConnectionKind EventGrid { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.DataConnectionKind EventGridWithManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.DataConnectionKind EventHub { get { throw null; } }

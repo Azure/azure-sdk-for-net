@@ -11,7 +11,6 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MonitorEmailNotificationSettings. </summary>
     internal partial class MonitorEmailNotificationSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,9 +30,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Emails = emails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>
-        [WirePath("emails")]
-        public IList<string> Emails { get; } = new ChangeTrackingList<string>();
     }
 }

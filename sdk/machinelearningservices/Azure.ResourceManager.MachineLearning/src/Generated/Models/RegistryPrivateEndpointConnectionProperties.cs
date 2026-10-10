@@ -11,7 +11,6 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Properties of the Private Endpoint Connection. </summary>
     internal partial class RegistryPrivateEndpointConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -43,10 +42,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _provisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The group ids. </summary>
-        [WirePath("groupIds")]
-        public IList<string> GroupIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The PE network resource that is linked to this PE connection. </summary>
         [WirePath("privateEndpoint")]

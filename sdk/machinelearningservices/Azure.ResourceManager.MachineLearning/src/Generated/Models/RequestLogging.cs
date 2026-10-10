@@ -11,7 +11,6 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The RequestLogging. </summary>
     internal partial class RequestLogging
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,9 +30,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CaptureHeaders = captureHeaders;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> For payload logging, we only collect payload by default. If customers also want to collect the specified headers, they can set them in captureHeaders so that backend will collect those headers along with payload. </summary>
-        [WirePath("captureHeaders")]
-        public IList<string> CaptureHeaders { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -13,7 +13,6 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MonitorEmailNotificationSettings. </summary>
     internal partial class MonitorEmailNotificationSettings : IJsonModel<MonitorEmailNotificationSettings>
     {
         /// <param name="data"> The data to parse. </param>

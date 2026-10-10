@@ -17,6 +17,9 @@ namespace Azure.ResourceManager.IotHub
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CloudToDeviceFeedbackQueueProperties))]
     [ModelReaderWriterBuildable(typeof(CloudToDeviceProperties))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryIdentity))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryLinkingErrorDetails))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryLinkingProperties))]
     [ModelReaderWriterBuildable(typeof(EventHubCompatibleEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(EventHubConsumerGroupInfoCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(EventHubConsumerGroupInfoData))]
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(IotHubUserSubscriptionQuota))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessagingEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(MqttV5TopicGroup))]
     [ModelReaderWriterBuildable(typeof(RouteCompilationError))]
     [ModelReaderWriterBuildable(typeof(RouteErrorPosition))]
     [ModelReaderWriterBuildable(typeof(RouteErrorRange))]
