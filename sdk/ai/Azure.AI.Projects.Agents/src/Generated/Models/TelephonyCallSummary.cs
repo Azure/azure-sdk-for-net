@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="providerCallId"> The provider-assigned call identifier, when available. </param>
         /// <param name="callerNumber"> The caller's phone number, when supplied by the provider. </param>
-        /// <param name="providerNumber"> The Teams Phone Extension or Twilio number that received the call. </param>
+        /// <param name="providerNumber"> The Teams Phone extensibility or Twilio number that received the call. </param>
         /// <param name="status"> The lifecycle status of the call. </param>
         /// <param name="phase"> The provider-neutral lifecycle phase reached by the call. </param>
         /// <param name="startedOn"> The Unix timestamp (in seconds) for when the inbound webhook was received. </param>
@@ -83,7 +83,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The caller's phone number, when supplied by the provider. </summary>
         public string CallerNumber { get; }
 
-        /// <summary> The Teams Phone Extension or Twilio number that received the call. </summary>
+        /// <summary> The Teams Phone extensibility or Twilio number that received the call. </summary>
         public string ProviderNumber { get; }
 
         /// <summary> The lifecycle status of the call. </summary>

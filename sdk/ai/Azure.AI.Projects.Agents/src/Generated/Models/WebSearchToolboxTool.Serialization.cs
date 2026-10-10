@@ -7,7 +7,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
@@ -74,6 +73,11 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(WebSearchToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ExternalWebAccess))
+            {
+                writer.WritePropertyName("external_web_access"u8);
+                writer.WriteBooleanValue(ExternalWebAccess.Value);
+            }
             if (_filtersIsDefined || Optional.IsDefined(Filters))
             {
                 if (Filters != null)
@@ -101,7 +105,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(SearchContextSize))
             {
                 writer.WritePropertyName("search_context_size"u8);
-                writer.WriteStringValue(SearchContextSize.Value.ToSerialString());
+                writer.WriteObjectValue<WebSearchToolContextSize?>(SearchContextSize.Value, options);
             }
             if (Optional.IsDefined(CustomSearchConfiguration))
             {
@@ -140,11 +144,12 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool? externalWebAccess = default;
             bool filtersIsDefined = false;
             WebSearchToolFilters filters = default;
             bool userLocationIsDefined = false;
             WebSearchToolApproximateLocation userLocation = default;
-            WebSearchToolSearchContextSize? searchContextSize = default;
+            WebSearchToolContextSize? searchContextSize = default;
             WebSearchConfiguration customSearchConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,6 +189,15 @@ namespace Azure.AI.Projects.Agents
                     toolConfigs = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("external_web_access"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    externalWebAccess = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("filters"u8))
                 {
                     filtersIsDefined = true;
@@ -212,7 +226,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    searchContextSize = prop.Value.GetString().ToWebSearchToolSearchContextSize();
+                    searchContextSize = ModelReaderWriter.Read<WebSearchToolContextSize?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("custom_search_configuration"u8))
@@ -235,6 +249,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
+                externalWebAccess,
                 filters,
                 userLocation,
                 searchContextSize,

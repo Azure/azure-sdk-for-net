@@ -10,9 +10,14 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Terminal-state result body. Populated when status is succeeded or failed. </summary>
+    /// <summary> Partial or terminal result produced by an agent optimization job. </summary>
     public partial class AgentOptimizationJobResult : IJsonModel<AgentOptimizationJobResult>
     {
+        /// <summary> Initializes a new instance of <see cref="AgentOptimizationJobResult"/> for deserialization. </summary>
+        internal AgentOptimizationJobResult()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AgentOptimizationJobResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -79,25 +84,29 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(AgentOptimizationJobResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Baseline))
+            if (Optional.IsDefined(CandidateSummary))
             {
-                writer.WritePropertyName("baseline"u8);
-                writer.WriteStringValue(Baseline);
+                writer.WritePropertyName("candidate_summary"u8);
+                writer.WriteObjectValue(CandidateSummary, options);
             }
-            if (Optional.IsDefined(Best))
+            writer.WritePropertyName("token_usage"u8);
+            writer.WriteStartArray();
+            foreach (AgentOptimizationJobTokenUsage item in TokenUsage)
             {
-                writer.WritePropertyName("best"u8);
-                writer.WriteStringValue(Best);
+                writer.WriteObjectValue(item, options);
             }
-            if (Optional.IsCollectionDefined(Candidates))
+            writer.WriteEndArray();
+            writer.WritePropertyName("latency_metrics"u8);
+            writer.WriteStartArray();
+            foreach (AgentOptimizationJobLatency item in LatencyMetrics)
             {
-                writer.WritePropertyName("candidates"u8);
-                writer.WriteStartArray();
-                foreach (AgentOptimizationCandidate item in Candidates)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(TerminationReason))
+            {
+                writer.WritePropertyName("termination_reason"u8);
+                writer.WriteStringValue(TerminationReason.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,34 +150,49 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string baseline = default;
-            string best = default;
-            IList<AgentOptimizationCandidate> candidates = default;
+            AgentOptimizationResultCandidateSummary candidateSummary = default;
+            IList<AgentOptimizationJobTokenUsage> tokenUsage = default;
+            IList<AgentOptimizationJobLatency> latencyMetrics = default;
+            AgentOptimizationTerminationReason? terminationReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("baseline"u8))
-                {
-                    baseline = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("best"u8))
-                {
-                    best = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("candidates"u8))
+                if (prop.NameEquals("candidate_summary"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<AgentOptimizationCandidate> array = new List<AgentOptimizationCandidate>();
+                    candidateSummary = AgentOptimizationResultCandidateSummary.DeserializeAgentOptimizationResultCandidateSummary(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("token_usage"u8))
+                {
+                    List<AgentOptimizationJobTokenUsage> array = new List<AgentOptimizationJobTokenUsage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentOptimizationCandidate.DeserializeAgentOptimizationCandidate(item, options));
+                        array.Add(AgentOptimizationJobTokenUsage.DeserializeAgentOptimizationJobTokenUsage(item, options));
                     }
-                    candidates = array;
+                    tokenUsage = array;
+                    continue;
+                }
+                if (prop.NameEquals("latency_metrics"u8))
+                {
+                    List<AgentOptimizationJobLatency> array = new List<AgentOptimizationJobLatency>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AgentOptimizationJobLatency.DeserializeAgentOptimizationJobLatency(item, options));
+                    }
+                    latencyMetrics = array;
+                    continue;
+                }
+                if (prop.NameEquals("termination_reason"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    terminationReason = new AgentOptimizationTerminationReason(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +200,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentOptimizationJobResult(baseline, best, candidates ?? new ChangeTrackingList<AgentOptimizationCandidate>(), additionalBinaryDataProperties);
+            return new AgentOptimizationJobResult(candidateSummary, tokenUsage ?? new ChangeTrackingList<AgentOptimizationJobTokenUsage>(), latencyMetrics ?? new ChangeTrackingList<AgentOptimizationJobLatency>(), terminationReason, additionalBinaryDataProperties);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The supported question types for SimpleQnA data generation jobs used for fine-tuning scenarios. </summary>
+    /// <summary> The supported question types for SimpleQnA data generation jobs used for fine-tuning scenarios. This is a preview feature. </summary>
     [Experimental("AAIP001")]
     public readonly partial struct SimpleQnAFineTuningQuestionType : IEquatable<SimpleQnAFineTuningQuestionType>
     {

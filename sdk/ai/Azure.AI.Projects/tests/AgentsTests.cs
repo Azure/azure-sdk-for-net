@@ -850,8 +850,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
-    // Browser automation is not supported yet.
-    // [TestCase(ToolType.BrowserAutomationGA)]
+    [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
     [TestCase(ToolType.FabricIQ)]
@@ -955,8 +954,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
-    // Browser automation is not supported yet.
-    // [TestCase(ToolType.BrowserAutomationGA)]
+    [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
     [TestCase(ToolType.FabricIQ)]
@@ -1032,7 +1030,7 @@ public class AgentsTests : AgentsTestBase
             }
             else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
             {
-                Assert.Fail($"The stream has failed: {errorUpdate.Message}");
+                Assert.Fail($"The stream has failed: {errorUpdate.Message}, error code: {errorUpdate.Code}");
             }
             else if (streamResponse is StreamingResponseCompletedUpdate streamResponseCompletedUpdate)
             {

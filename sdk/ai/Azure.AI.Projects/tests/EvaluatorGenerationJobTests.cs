@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable OPENAI001 // Type is for evaluation purposes only
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
-#pragma warning disable AAIP001
+#pragma warning disable SCME0006
 
 /// <summary>
 /// Asynchronous recorded tests for evaluator generation job operations using test-proxy.
@@ -41,40 +41,35 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
             agentName: AGENT_NAME,
             options: new(agentDefinition));
         // Create
-        EvaluatorGenerationJob job = new()
+        EvaluatorGenerationInputs job = new(
+            sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
+            model: TestEnvironment.FOUNDRY_MODEL_NAME,
+            evaluatorName: "coherence"
+        )
         {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-                model: TestEnvironment.FOUNDRY_MODEL_NAME,
-                evaluatorName: "coherence"
-            )
-            {
-                EvaluatorDisplayName = INPUT_PREFIX
-            }
+            EvaluatorDisplayName = INPUT_PREFIX
         };
-        EvaluatorGenerationJob runningJob = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
+        OperationResult evalResult = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job);
+        EvaluatorGenerationJob runningJob = EvaluatorGenerationJob.FromClientResult(await evalResult.UpdateStatusAsync());
         while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
         {
             await Delay(500);
-            Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
             runningJob = await projectClient.EvaluatorGenerationJobs.GetAsync(jobId: runningJob.Id);
         }
         Assert.That(runningJob.Status, Is.EqualTo(ProjectsJobStatus.Succeeded));
         Assert.That(runningJob.Result.Name, Is.Not.Null.And.Not.Empty);
         Assert.That(runningJob.Result.Version, Is.Not.Null.And.Not.Empty);
         // Cancel
-        job = new()
+        job = new(
+            sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
+            model: TestEnvironment.FOUNDRY_MODEL_NAME,
+            evaluatorName: "violence"
+        )
         {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-                model: TestEnvironment.FOUNDRY_MODEL_NAME,
-                evaluatorName: "violence"
-            )
-            {
-                EvaluatorDisplayName = INPUT_PREFIX
-            }
+            EvaluatorDisplayName = INPUT_PREFIX
         };
-        EvaluatorGenerationJob jobToCancel = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
+        evalResult = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job: job);
+        EvaluatorGenerationJob jobToCancel = EvaluatorGenerationJob.FromClientResult(await evalResult.UpdateStatusAsync());
         jobToCancel = await projectClient.EvaluatorGenerationJobs.CancelAsync(jobToCancel.Id);
         while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
         {
@@ -109,25 +104,23 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
             options: new(agentDefinition));
         for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
-            EvaluatorGenerationJob job = new()
-            {
-                Inputs = new EvaluatorGenerationInputs(
+            EvaluatorGenerationInputs job = new(
                     sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
                     model: TestEnvironment.FOUNDRY_MODEL_NAME,
                     evaluatorName: "coherence"
-                )
-                {
-                    EvaluatorDisplayName = $"{INPUT_PREFIX}-{i}"
-                }
+            )
+            {
+                EvaluatorDisplayName = $"{INPUT_PREFIX}-{i}"
             };
-            EvaluatorGenerationJob runningJob = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
+            OperationResult evalResult = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job: job);
+            EvaluatorGenerationJob runningJob = EvaluatorGenerationJob.FromClientResult(await evalResult.UpdateStatusAsync());
             await projectClient.EvaluatorGenerationJobs.CancelAsync(runningJob.Id);
         }
         await Delay(60000);
-        List<EvaluatorGenerationJob> records = await projectClient.EvaluatorGenerationJobs.GetAllAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Inputs?.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
+        List<EvaluatorGenerationJob> records = await projectClient.EvaluatorGenerationJobs.GetAllAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<EvaluatorGenerationJob> forward = await projectClient.EvaluatorGenerationJobs.GetAllAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Inputs?.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
+        List<EvaluatorGenerationJob> forward = await projectClient.EvaluatorGenerationJobs.GetAllAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
@@ -138,7 +131,7 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         //Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         //Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         // Go backwards.
-        List<EvaluatorGenerationJob> backwards = await projectClient.EvaluatorGenerationJobs.GetAllAsync(order: "desc", after: records[3].Id, limit: PAGE_SIZE).Where(x => x.Inputs?.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
+        List<EvaluatorGenerationJob> backwards = await projectClient.EvaluatorGenerationJobs.GetAllAsync(order: "desc", after: records[3].Id, limit: PAGE_SIZE).Where(x => x.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[0].Id));
@@ -167,7 +160,7 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         }
         catch { }
         // Delete Jobs and generated evaluators.
-        List<EvaluatorGenerationJob> evaluatorGenerations = await projectClient.EvaluatorGenerationJobs.GetAllAsync().Where(x => x.Inputs?.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
+        List<EvaluatorGenerationJob> evaluatorGenerations = await projectClient.EvaluatorGenerationJobs.GetAllAsync().Where(x => x.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
         foreach (EvaluatorGenerationJob job in evaluatorGenerations)
         {
             await projectClient.EvaluatorGenerationJobs.DeleteAsync(job.Id);

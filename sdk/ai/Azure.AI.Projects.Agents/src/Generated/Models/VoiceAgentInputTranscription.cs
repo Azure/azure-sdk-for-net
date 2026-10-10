@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -23,6 +22,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
         public VoiceAgentInputTranscription(VoiceAgentInputTranscriptionModel model)
         {
+            Languages = new ChangeTrackingList<string>();
+            Keywords = new ChangeTrackingList<string>();
             Model = model;
             CustomSpeech = new ChangeTrackingDictionary<string, string>();
             PhraseList = new ChangeTrackingList<string>();
@@ -34,10 +35,12 @@ namespace Azure.AI.Projects.Agents
         ///   [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
         ///   will improve accuracy and latency.
         /// </param>
+        /// <param name="languages"> Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
+        /// <param name="keywords"> Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
         /// <param name="prompt">
         /// An optional text to guide the model's style or continue a previous audio
         ///   segment.
-        ///   For `whisper-1`, the [prompt is a list of keywords](/docs/guides/speech-to-text#prompting).
+        ///   For `whisper-1`, the [prompt is a list of keywords](https://developers.openai.com/api/docs/guides/speech-to-text#prompting).
         ///   For `gpt-4o-transcribe` models (excluding `gpt-4o-transcribe-diarize`), the prompt is a free text string, for example "expect words related to technology".
         ///   Prompt is not supported with `gpt-realtime-whisper` in GA Realtime sessions.
         /// </param>
@@ -50,9 +53,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentInputTranscription(string language, string prompt, VoiceAgentAudioInputConfigTranscriptionDelay? delay, VoiceAgentInputTranscriptionModel model, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentInputTranscription(string language, IList<string> languages, IList<string> keywords, string prompt, VoiceAgentAudioInputConfigTranscriptionDelay? delay, VoiceAgentInputTranscriptionModel model, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
+            Languages = languages;
+            Keywords = keywords;
             Prompt = prompt;
             Delay = delay;
             Model = model;
@@ -68,10 +73,16 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         public string Language { get; set; }
 
+        /// <summary> Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </summary>
+        public IList<string> Languages { get; }
+
+        /// <summary> Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </summary>
+        public IList<string> Keywords { get; }
+
         /// <summary>
         /// An optional text to guide the model's style or continue a previous audio
         ///   segment.
-        ///   For `whisper-1`, the [prompt is a list of keywords](/docs/guides/speech-to-text#prompting).
+        ///   For `whisper-1`, the [prompt is a list of keywords](https://developers.openai.com/api/docs/guides/speech-to-text#prompting).
         ///   For `gpt-4o-transcribe` models (excluding `gpt-4o-transcribe-diarize`), the prompt is a free text string, for example "expect words related to technology".
         ///   Prompt is not supported with `gpt-realtime-whisper` in GA Realtime sessions.
         /// </summary>

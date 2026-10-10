@@ -4,44 +4,56 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Agent optimization job resource — a long-running job that optimizes an agent's configuration (instructions, model, skills, tools) to maximize evaluation scores. On success, the result contains scored candidates. </summary>
-    [Experimental("AAIP001")]
+    /// <summary> Agent optimization job resource — a long-running job that produces candidate changes to a Foundry agent configuration. </summary>
     public partial class AgentOptimizationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationJob"/>. </summary>
-        public AgentOptimizationJob()
+        /// <param name="optimizationModelConfiguration"> Model used to generate candidate changes. An existing deployment name is also accepted. </param>
+        /// <param name="optimizationConfiguration"> Type-specific optimization configuration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="optimizationModelConfiguration"/> or <paramref name="optimizationConfiguration"/> is null. </exception>
+        public AgentOptimizationJob(AgentOptimizationModelConfiguration optimizationModelConfiguration, AgentOptimizationConfigurationBase optimizationConfiguration)
         {
+            Argument.AssertNotNull(optimizationModelConfiguration, nameof(optimizationModelConfiguration));
+            Argument.AssertNotNull(optimizationConfiguration, nameof(optimizationConfiguration));
+
+            OptimizationModelConfiguration = optimizationModelConfiguration;
+            OptimizationConfiguration = optimizationConfiguration;
             Warnings = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationJob"/>. </summary>
         /// <param name="id"> Server-assigned unique identifier. </param>
-        /// <param name="inputs"> Caller-supplied inputs. </param>
         /// <param name="result"> Result produced on success. </param>
         /// <param name="status"> Current lifecycle status. </param>
         /// <param name="error"> Error details — populated only on failure. </param>
+        /// <param name="displayName"> Human-readable label. Omitted when no label is needed; it has no uniqueness, routing, or idempotency semantics. </param>
+        /// <param name="targetConfiguration"> Foundry agent whose configuration is optimized. Omitted when the workflow does not target a registered Foundry agent. </param>
+        /// <param name="optimizationModelConfiguration"> Model used to generate candidate changes. An existing deployment name is also accepted. </param>
+        /// <param name="optimizationConfiguration"> Type-specific optimization configuration. </param>
+        /// <param name="runDurationMs"> Duration for which the job has been running, in milliseconds. </param>
         /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time. </param>
         /// <param name="updatedOn"> The timestamp when the job was last updated, represented in Unix time. </param>
-        /// <param name="progress"> Progress snapshot. May be present in terminal states reflecting last-known progress. </param>
-        /// <param name="warnings"> Non-fatal warnings emitted at any point during optimization. </param>
+        /// <param name="warnings"> Non-fatal warnings emitted during optimization. Omitted when no warnings were produced. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationJob(string id, AgentOptimizationJobInputs inputs, AgentOptimizationJobResult result, AgentsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdOn, DateTimeOffset updatedOn, AgentOptimizationJobProgress progress, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationJob(string id, AgentOptimizationJobResult result, AgentsJobStatus status, FoundryOpenAIError error, string displayName, AgentOptimizationTargetConfiguration targetConfiguration, AgentOptimizationModelConfiguration optimizationModelConfiguration, AgentOptimizationConfigurationBase optimizationConfiguration, TimeSpan runDurationMs, DateTimeOffset createdOn, DateTimeOffset updatedOn, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Inputs = inputs;
             Result = result;
             Status = status;
             Error = error;
+            DisplayName = displayName;
+            TargetConfiguration = targetConfiguration;
+            OptimizationModelConfiguration = optimizationModelConfiguration;
+            OptimizationConfiguration = optimizationConfiguration;
+            RunDurationMs = runDurationMs;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
-            Progress = progress;
             Warnings = warnings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,14 +61,26 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Server-assigned unique identifier. </summary>
         public string Id { get; }
 
-        /// <summary> Caller-supplied inputs. </summary>
-        public AgentOptimizationJobInputs Inputs { get; set; }
-
         /// <summary> Result produced on success. </summary>
         public AgentOptimizationJobResult Result { get; }
 
         /// <summary> Current lifecycle status. </summary>
         public AgentsJobStatus Status { get; }
+
+        /// <summary> Human-readable label. Omitted when no label is needed; it has no uniqueness, routing, or idempotency semantics. </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary> Foundry agent whose configuration is optimized. Omitted when the workflow does not target a registered Foundry agent. </summary>
+        public AgentOptimizationTargetConfiguration TargetConfiguration { get; set; }
+
+        /// <summary> Model used to generate candidate changes. An existing deployment name is also accepted. </summary>
+        public AgentOptimizationModelConfiguration OptimizationModelConfiguration { get; set; }
+
+        /// <summary> Type-specific optimization configuration. </summary>
+        public AgentOptimizationConfigurationBase OptimizationConfiguration { get; set; }
+
+        /// <summary> Duration for which the job has been running, in milliseconds. </summary>
+        public TimeSpan RunDurationMs { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time. </summary>
         public DateTimeOffset CreatedOn { get; }
@@ -64,10 +88,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The timestamp when the job was last updated, represented in Unix time. </summary>
         public DateTimeOffset UpdatedOn { get; }
 
-        /// <summary> Progress snapshot. May be present in terminal states reflecting last-known progress. </summary>
-        public AgentOptimizationJobProgress Progress { get; }
-
-        /// <summary> Non-fatal warnings emitted at any point during optimization. </summary>
+        /// <summary> Non-fatal warnings emitted during optimization. Omitted when no warnings were produced. </summary>
         public IReadOnlyList<string> Warnings { get; }
     }
 }

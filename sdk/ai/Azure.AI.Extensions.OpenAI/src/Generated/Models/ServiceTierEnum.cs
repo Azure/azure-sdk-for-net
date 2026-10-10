@@ -11,6 +11,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         Auto,
         /// <summary> Default. </summary>
         Default,
+        /// <summary> Fast. </summary>
+        Fast,
         /// <summary> Flex. </summary>
         Flex,
         /// <summary> Priority. </summary>

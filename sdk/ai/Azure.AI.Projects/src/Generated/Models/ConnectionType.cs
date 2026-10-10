@@ -31,6 +31,10 @@ namespace Azure.AI.Projects
         private const string CustomValue = "CustomKeys";
         /// <summary> Remote tool. </summary>
         private const string RemoteToolValue = "RemoteTool_Preview";
+        /// <summary> OpenAPI connection. </summary>
+        private const string OpenAPIValue = "OpenAPI";
+        /// <summary> Remote agent-to-agent (A2A) connection. </summary>
+        private const string RemoteA2AValue = "RemoteA2A";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -71,6 +75,12 @@ namespace Azure.AI.Projects
 
         /// <summary> Remote tool. </summary>
         public static ConnectionType RemoteTool { get; } = new ConnectionType(RemoteToolValue);
+
+        /// <summary> OpenAPI connection. </summary>
+        public static ConnectionType OpenAPI { get; } = new ConnectionType(OpenAPIValue);
+
+        /// <summary> Remote agent-to-agent (A2A) connection. </summary>
+        public static ConnectionType RemoteA2A { get; } = new ConnectionType(RemoteA2AValue);
 
         /// <summary> Determines if two <see cref="ConnectionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

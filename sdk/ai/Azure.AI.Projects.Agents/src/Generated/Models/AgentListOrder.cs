@@ -11,7 +11,9 @@ namespace Azure.AI.Projects.Agents
     public readonly partial struct AgentListOrder : IEquatable<AgentListOrder>
     {
         private readonly string _value;
+        /// <summary> Return items in ascending creation-time order. </summary>
         private const string AscValue = "asc";
+        /// <summary> Return items in descending creation-time order. </summary>
         private const string DescValue = "desc";
 
         /// <summary> Initializes a new instance of <see cref="AgentListOrder"/>. </summary>
