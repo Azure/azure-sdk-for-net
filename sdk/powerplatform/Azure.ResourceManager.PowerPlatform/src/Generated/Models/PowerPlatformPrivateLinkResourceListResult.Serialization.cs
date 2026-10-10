@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PowerPlatformPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PowerPlatformPrivateLinkResourceListResult(value ?? new ChangeTrackingList<PowerPlatformPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

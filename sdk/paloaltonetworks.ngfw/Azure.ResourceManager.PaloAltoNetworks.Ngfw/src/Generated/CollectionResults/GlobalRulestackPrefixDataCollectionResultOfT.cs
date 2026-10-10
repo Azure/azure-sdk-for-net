@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> The pages of GlobalRulestackPrefixDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<GlobalRulestackPrefixData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

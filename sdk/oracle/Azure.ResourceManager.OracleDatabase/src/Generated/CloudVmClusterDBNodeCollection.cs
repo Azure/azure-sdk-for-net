@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.OracleDatabase
     public partial class CloudVmClusterDBNodeCollection : ArmCollection, IEnumerable<CloudVmClusterDBNodeResource>, IAsyncEnumerable<CloudVmClusterDBNodeResource>
     {
         private readonly ClientDiagnostics _dbNodesClientDiagnostics;
-        private readonly DbNodes _dbNodesRestClient;
+        private readonly DBNodes _dbNodesRestClient;
 
         /// <summary> Initializes a new instance of CloudVmClusterDBNodeCollection for mocking. </summary>
         protected CloudVmClusterDBNodeCollection()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(CloudVmClusterDBNodeResource.ResourceType, out string cloudVmClusterDBNodeApiVersion);
             _dbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterDBNodeResource.ResourceType.Namespace, Diagnostics);
-            _dbNodesRestClient = new DbNodes(_dbNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterDBNodeApiVersion ?? "2025-09-01");
+            _dbNodesRestClient = new DBNodes(_dbNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterDBNodeApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

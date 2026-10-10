@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.OracleDatabase
     public partial class OracleDBServerResource : ArmResource
     {
         private readonly ClientDiagnostics _dbServersClientDiagnostics;
-        private readonly DbServers _dbServersRestClient;
+        private readonly DBServers _dbServersRestClient;
         private readonly OracleDBServerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Oracle.Database/cloudExadataInfrastructures/dbServers";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string oracleDBServerApiVersion);
             _dbServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _dbServersRestClient = new DbServers(_dbServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerApiVersion ?? "2025-09-01");
+            _dbServersRestClient = new DBServers(_dbServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

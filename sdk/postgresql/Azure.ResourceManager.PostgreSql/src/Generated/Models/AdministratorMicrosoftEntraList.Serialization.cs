@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AdministratorMicrosoftEntraList(value, nextLink, additionalBinaryDataProperties);
+            return new AdministratorMicrosoftEntraList(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

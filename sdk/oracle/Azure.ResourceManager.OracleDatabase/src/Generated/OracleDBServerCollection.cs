@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.OracleDatabase
     public partial class OracleDBServerCollection : ArmCollection, IEnumerable<OracleDBServerResource>, IAsyncEnumerable<OracleDBServerResource>
     {
         private readonly ClientDiagnostics _dbServersClientDiagnostics;
-        private readonly DbServers _dbServersRestClient;
+        private readonly DBServers _dbServersRestClient;
 
         /// <summary> Initializes a new instance of OracleDBServerCollection for mocking. </summary>
         protected OracleDBServerCollection()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(OracleDBServerResource.ResourceType, out string oracleDBServerApiVersion);
             _dbServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBServerResource.ResourceType.Namespace, Diagnostics);
-            _dbServersRestClient = new DbServers(_dbServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerApiVersion ?? "2025-09-01");
+            _dbServersRestClient = new DBServers(_dbServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

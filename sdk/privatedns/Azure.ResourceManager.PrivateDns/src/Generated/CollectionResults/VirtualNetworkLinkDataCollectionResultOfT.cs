@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> The pages of VirtualNetworkLinkDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<VirtualNetworkLinkData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrationList(value, nextLink, additionalBinaryDataProperties);
+            return new MigrationList(value ?? new ChangeTrackingList<PostgreSqlMigrationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

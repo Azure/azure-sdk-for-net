@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     internal partial class ExascaleDBNodeDataAsyncCollectionResultOfT : AsyncPageable<ExascaleDBNodeData>
     {
-        private readonly ExascaleDbNodes _client;
+        private readonly ExascaleDBNodes _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _exadbVmClusterName;
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ExascaleDBNodeDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ExascaleDbNodes client used to send requests. </param>
+        /// <param name="client"> The ExascaleDBNodes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="exadbVmClusterName"> The name of the ExadbVmCluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ExascaleDBNodeDataAsyncCollectionResultOfT(ExascaleDbNodes client, Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ExascaleDBNodeDataAsyncCollectionResultOfT(ExascaleDBNodes client, Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> The pages of ExascaleDBNodeDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ExascaleDBNodeData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);

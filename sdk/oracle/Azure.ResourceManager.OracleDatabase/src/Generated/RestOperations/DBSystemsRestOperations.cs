@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal partial class DbSystems
+    internal partial class DBSystems
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of DbSystems for mocking. </summary>
-        protected DbSystems()
+        /// <summary> Initializes a new instance of DBSystems for mocking. </summary>
+        protected DBSystems()
         {
         }
 
-        /// <summary> Initializes a new instance of DbSystems. </summary>
+        /// <summary> Initializes a new instance of DBSystems. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DbSystems(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal DBSystems(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(DbSystems).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(DBSystems).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

@@ -90,10 +90,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (Optional.IsDefined(RetentionInDays))
+            if (_retentionInDaysIsDefined || Optional.IsDefined(RetentionInDays))
             {
-                writer.WritePropertyName("retentionInDays"u8);
-                writer.WriteNumberValue(RetentionInDays.Value);
+                if (RetentionInDays != null)
+                {
+                    writer.WritePropertyName("retentionInDays"u8);
+                    writer.WriteNumberValue(RetentionInDays.Value);
+                }
+                else
+                {
+                    writer.WriteNull("retentionInDays"u8);
+                }
             }
             if (Optional.IsDefined(WorkspaceCapping))
             {
@@ -200,6 +207,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             OperationalInsightsWorkspaceEntityStatus? provisioningState = default;
             Guid? customerId = default;
             OperationalInsightsWorkspaceSku sku = default;
+            bool retentionInDaysIsDefined = false;
             int? retentionInDays = default;
             OperationalInsightsWorkspaceCapping workspaceCapping = default;
             DateTimeOffset? createdOn = default;
@@ -244,6 +252,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (prop.NameEquals("retentionInDays"u8))
                 {
+                    retentionInDaysIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         retentionInDays = null;
@@ -377,7 +386,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 defaultDataCollectionRuleResourceId,
                 replication,
                 failover,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _retentionInDaysIsDefined = retentionInDaysIsDefined
+            };
         }
     }
 }

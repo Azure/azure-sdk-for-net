@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    internal partial class ExascaleDbNodes
+    internal partial class DBSystemShapes
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of ExascaleDbNodes for mocking. </summary>
-        protected ExascaleDbNodes()
+        /// <summary> Initializes a new instance of DBSystemShapes for mocking. </summary>
+        protected DBSystemShapes()
         {
         }
 
-        /// <summary> Initializes a new instance of ExascaleDbNodes. </summary>
+        /// <summary> Initializes a new instance of DBSystemShapes. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ExascaleDbNodes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal DBSystemShapes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(ExascaleDbNodes).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(DBSystemShapes).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -44,18 +44,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation location, string dbsystemshapename, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
-            uri.AppendPath(exadbVmClusterName, true);
-            uri.AppendPath("/dbNodes/", false);
-            uri.AppendPath(exascaleDbNodeName, true);
+            uri.AppendPath("/providers/Oracle.Database/locations/", false);
+            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath("/dbSystemShapes/", false);
+            uri.AppendPath(dbsystemshapename, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -69,20 +67,26 @@ namespace Azure.ResourceManager.OracleDatabase
             return message;
         }
 
-        internal HttpMessage CreateGetByParentRequest(Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, RequestContext context)
+        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, AzureLocation location, string zone, string shapeAttribute, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
-            uri.AppendPath(exadbVmClusterName, true);
-            uri.AppendPath("/dbNodes", false);
+            uri.AppendPath("/providers/Oracle.Database/locations/", false);
+            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath("/dbSystemShapes", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (zone != null)
+            {
+                uri.AppendQuery("zone", zone, true);
+            }
+            if (shapeAttribute != null)
+            {
+                uri.AppendQuery("shapeAttribute", shapeAttribute, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return message;
         }
 
-        internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, RequestContext context)
+        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string zone, string shapeAttribute, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -114,34 +118,6 @@ namespace Azure.ResourceManager.OracleDatabase
             request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateActionRequest(Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
-            uri.AppendPath(exadbVmClusterName, true);
-            uri.AppendPath("/dbNodes/", false);
-            uri.AppendPath(exascaleDbNodeName, true);
-            uri.AppendPath("/action", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
             return message;
         }
     }
