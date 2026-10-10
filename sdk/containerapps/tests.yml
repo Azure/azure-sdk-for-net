@@ -1,0 +1,10 @@
+trigger: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: containerapps
+    SupportedClouds: 'Public'
+    CloudConfig:
+      Public:
+        Location: 'eastus2'

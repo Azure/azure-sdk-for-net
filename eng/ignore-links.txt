@@ -10,3 +10,8 @@ https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.Ag
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity/src
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples
 https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/docs/hosting-guide.md
+# Remove these Sandbox documentation exceptions once the package is merged into main.
+https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerapps/Azure.Containers.Apps.Sandbox/README.md#getting-started
+https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerapps/Azure.Containers.Apps.Sandbox/samples/README.md
+https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerapps/Azure.Containers.Apps.Sandbox/samples/Sample1_CreateExecuteAndDeleteSandbox.md
+https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerapps/Azure.Containers.Apps.Sandbox/samples/Sample1_CreateExecuteAndDeleteSandboxAsync.md

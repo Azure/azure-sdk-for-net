@@ -6,3 +6,7 @@ overrides:
       - azprovision
       - Nacos
       - Resiliencies
+  - filename: '**/sdk/containerapps/Azure.Containers.Apps.Sandbox/**/*.cs'
+    words:
+      - rootfs
+      - upserts
