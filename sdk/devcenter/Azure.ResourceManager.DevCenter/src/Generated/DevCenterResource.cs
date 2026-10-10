@@ -56,7 +56,13 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devCenterApiVersion);
             _devCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _devCentersRestClient = new DevCenters(_devCentersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterApiVersion ?? "2026-01-01-preview");
+            _devCentersRestClient = new DevCenters(
+                _devCentersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                devCenterApiVersion ?? "2026-01-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
             _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);

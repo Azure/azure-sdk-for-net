@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of DevTestLabGlobalSchedules for mocking. </summary>
         protected DevTestLabGlobalSchedules()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DevTestLabGlobalSchedules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal DevTestLabGlobalSchedules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(DevTestLabGlobalSchedules).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -81,10 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -106,10 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -131,10 +125,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -152,10 +143,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -192,10 +180,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -212,10 +197,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -252,10 +234,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -276,10 +255,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/execute", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -299,10 +275,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/providers/Microsoft.DevTestLab/schedules/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/retarget", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DevTestLab/schedules") ?? "2018-09-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

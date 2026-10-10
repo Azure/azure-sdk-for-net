@@ -56,7 +56,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string virtualApplicationGroupApiVersion);
             _applicationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _applicationGroupsRestClient = new ApplicationGroups(_applicationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplicationGroupApiVersion ?? "2026-03-01-preview");
+            _applicationGroupsRestClient = new ApplicationGroups(
+                _applicationGroupsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                virtualApplicationGroupApiVersion ?? "2026-03-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _startMenuItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _startMenuItemsRestClient = new StartMenuItems(_startMenuItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplicationGroupApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);

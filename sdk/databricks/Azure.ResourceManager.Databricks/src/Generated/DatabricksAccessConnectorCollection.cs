@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Databricks
         {
             TryGetApiVersion(DatabricksAccessConnectorResource.ResourceType, out string databricksAccessConnectorApiVersion);
             _accessConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Databricks", DatabricksAccessConnectorResource.ResourceType.Namespace, Diagnostics);
-            _accessConnectorsRestClient = new AccessConnectors(_accessConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databricksAccessConnectorApiVersion ?? "2026-01-01");
+            _accessConnectorsRestClient = new AccessConnectors(
+                _accessConnectorsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                databricksAccessConnectorApiVersion ?? "2026-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

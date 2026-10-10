@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
+        private readonly Func<ResourceType, string> _getApiVersion;
 
         /// <summary> Initializes a new instance of HostPools for mocking. </summary>
         protected HostPools()
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal HostPools(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        /// <param name="getApiVersion"> Resolves an explicit API-version override for the operation's resource type. </param>
+        internal HostPools(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion, Func<ResourceType, string> getApiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _getApiVersion = getApiVersion;
             _userAgent = new TelemetryDetails(typeof(HostPools).Assembly, applicationId);
         }
 
@@ -54,10 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
             uri.AppendPath(hostPoolName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
             uri.AppendPath(hostPoolName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +99,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
             uri.AppendPath(hostPoolName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -130,10 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
             uri.AppendPath(hostPoolName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview", true);
             if (force != null)
             {
                 uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
@@ -155,10 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview", true);
             if (pageSize != null)
             {
                 uri.AppendQuery("pageSize", TypeFormatters.ConvertToString(pageSize), true);
@@ -191,10 +179,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -211,10 +196,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview", true);
             if (pageSize != null)
             {
                 uri.AppendQuery("pageSize", TypeFormatters.ConvertToString(pageSize), true);
@@ -247,10 +229,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -271,10 +250,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
             uri.AppendPath(hostPoolName, true);
             uri.AppendPath("/listRegistrationTokens", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -295,10 +271,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
             uri.AppendPath(hostPoolName, true);
             uri.AppendPath("/retrieveRegistrationToken", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DesktopVirtualization/hostPools") ?? "2026-03-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

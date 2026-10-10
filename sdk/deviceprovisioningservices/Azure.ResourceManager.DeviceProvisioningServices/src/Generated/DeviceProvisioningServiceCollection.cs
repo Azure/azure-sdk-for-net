@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             TryGetApiVersion(DeviceProvisioningServiceResource.ResourceType, out string deviceProvisioningServiceApiVersion);
             _provisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
-            _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceApiVersion ?? "2026-08-31");
+            _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(
+                _provisioningServiceDescriptionsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                deviceProvisioningServiceApiVersion ?? "2026-08-31",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

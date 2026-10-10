@@ -46,15 +46,33 @@ namespace Azure.ResourceManager.DataMigration.Mocking
 
         private ClientDiagnostics MigrationServicesClientDiagnostics => _migrationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MigrationServices MigrationServicesRestClient => _migrationServicesRestClient ??= new MigrationServices(MigrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private MigrationServices MigrationServicesRestClient => _migrationServicesRestClient ??= new MigrationServices(
+            MigrationServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SqlMigrationServicesClientDiagnostics => _sqlMigrationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlMigrationServices SqlMigrationServicesRestClient => _sqlMigrationServicesRestClient ??= new SqlMigrationServices(SqlMigrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private SqlMigrationServices SqlMigrationServicesRestClient => _sqlMigrationServicesRestClient ??= new SqlMigrationServices(
+            SqlMigrationServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ServicesClientDiagnostics => _servicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private Services ServicesRestClient => _servicesRestClient ??= new Services(
+            ServicesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

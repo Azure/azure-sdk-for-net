@@ -64,7 +64,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string hostPoolApiVersion);
             _hostPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
+            _hostPoolsRestClient = new HostPools(
+                _hostPoolsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hostPoolApiVersion ?? "2026-03-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _appAttachPackageInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _appAttachPackageInfoRestClient = new AppAttachPackageInfo(_appAttachPackageInfoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
             _msixImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
@@ -72,7 +78,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
             _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
+            _scalingPlansRestClient = new ScalingPlans(
+                _scalingPlansClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hostPoolApiVersion ?? "2026-03-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _userSessionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _userSessionsRestClient = new UserSessions(_userSessionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);

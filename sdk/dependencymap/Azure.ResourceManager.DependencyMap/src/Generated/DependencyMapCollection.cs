@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DependencyMap
         {
             TryGetApiVersion(DependencyMapResource.ResourceType, out string dependencyMapApiVersion);
             _mapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DependencyMap", DependencyMapResource.ResourceType.Namespace, Diagnostics);
-            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyMapApiVersion ?? "2025-07-01-preview");
+            _mapsRestClient = new Maps(
+                _mapsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dependencyMapApiVersion ?? "2025-07-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

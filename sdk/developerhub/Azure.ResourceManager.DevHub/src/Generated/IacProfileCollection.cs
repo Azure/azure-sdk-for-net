@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DevHub
         {
             TryGetApiVersion(IacProfileResource.ResourceType, out string iacProfileApiVersion);
             _iacProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", IacProfileResource.ResourceType.Namespace, Diagnostics);
-            _iacProfilesRestClient = new IacProfiles(_iacProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iacProfileApiVersion ?? "2025-03-01-preview");
+            _iacProfilesRestClient = new IacProfiles(
+                _iacProfilesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                iacProfileApiVersion ?? "2025-03-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
