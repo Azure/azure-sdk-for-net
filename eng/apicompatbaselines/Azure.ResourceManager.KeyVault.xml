@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName.CustomB32</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName.CustomB6</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName.CustomC10</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName.CustomC42</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName.StandardB1</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0007</DiagnosticId>
+    <Target>T:Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName</Target>
+  </Suppression>
+</Suppressions>

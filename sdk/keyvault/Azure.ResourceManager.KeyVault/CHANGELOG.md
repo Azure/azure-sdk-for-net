@@ -1,10 +1,15 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0 (Unreleased)
 
 ### Features Added
 
+- Upgraded API version to `2026-05-15`.
+- Added the `Standard_B1v2`, `Standard_B5v2`, `Standard_B10v2`, `Standard_B15v2` and `Standard_B20v2` Managed HSM SKUs.
+
 ### Breaking Changes
+
+- `ManagedHsmSkuName` is now an extensible enum (`readonly struct`) instead of a closed `enum`, so that new Managed HSM SKUs can be added without a breaking change. The existing values, such as `ManagedHsmSkuName.StandardB1`, are still available as static properties.
 
 ### Bugs Fixed
 
