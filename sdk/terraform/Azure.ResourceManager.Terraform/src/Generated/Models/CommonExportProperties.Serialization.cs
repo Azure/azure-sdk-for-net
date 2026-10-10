@@ -115,6 +115,16 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("includeRoleAssignment"u8);
                 writer.WriteBooleanValue(IncludeRoleAssignment.Value);
             }
+            if (Optional.IsCollectionDefined(IncludeExtensions))
+            {
+                writer.WritePropertyName("includeExtensions"u8);
+                writer.WriteStartArray();
+                foreach (AzureExtensionResourceType item in IncludeExtensions)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(IncludeManagedResource))
             {
                 writer.WritePropertyName("includeManagedResource"u8);

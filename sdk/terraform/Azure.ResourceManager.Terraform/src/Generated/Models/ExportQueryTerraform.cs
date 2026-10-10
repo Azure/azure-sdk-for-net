@@ -29,7 +29,8 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
-        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include role assignments assigned to the resources exported. Defaults to `false`. This is deprecated in favor of `includeExtensions` (with `role-assignments` specified). </param>
+        /// <param name="includeExtensions"> Include extension resource types directly associated to the resources exported. </param>
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="includeResourceGroup"> Includes the resource group in the exported Terraform resources. Defaults to `false`. </param>
         /// <param name="table"> The ARG table name. Defaults to 'Resources'. </param>
         /// <param name="authorizationScopeFilter"> The ARG Scope Filter parameter. </param>
-        internal ExportQueryTerraform(CommonExportType @type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties, string query, string namePattern, bool? isRecursive, bool? includeResourceGroup, string table, TerraformAuthorizationScopeFilter? authorizationScopeFilter) : base(@type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, additionalBinaryDataProperties)
+        internal ExportQueryTerraform(CommonExportType @type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, IList<AzureExtensionResourceType> includeExtensions, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties, string query, string namePattern, bool? isRecursive, bool? includeResourceGroup, string table, TerraformAuthorizationScopeFilter? authorizationScopeFilter) : base(@type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeExtensions, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, additionalBinaryDataProperties)
         {
             Query = query;
             NamePattern = namePattern;
