@@ -14,6 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Allows you to generate a vector embedding for a given text input using the Azure OpenAI resource. </summary>
     public partial class AzureOpenAIEmbeddingSkill : SearchIndexerSkill
     {
+        private int? _dimensions;
+        internal bool _dimensionsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIEmbeddingSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
@@ -46,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ApiKey = apiKey;
             AuthenticationIdentity = authenticationIdentity;
             ModelName = modelName;
-            Dimensions = dimensions;
+            _dimensions = dimensions;
         }
 
         /// <summary> The resource URI of the Azure OpenAI resource. </summary>
@@ -65,6 +68,17 @@ namespace Azure.Search.Documents.Indexes.Models
         public AzureOpenAIModelName? ModelName { get; set; }
 
         /// <summary> The number of dimensions the resulting output embeddings should have. Only supported in text-embedding-3 and later models. </summary>
-        public int? Dimensions { get; set; }
+        public int? Dimensions
+        {
+            get
+            {
+                return _dimensions;
+            }
+            set
+            {
+                _dimensions = value;
+                _dimensionsIsDefined = true;
+            }
+        }
     }
 }

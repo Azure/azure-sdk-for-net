@@ -999,7 +999,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var item = telemetryItems[0];
 
             // Verify envelope tags are set
-            Assert.Equal("10.0.0.1", item.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+            Assert.Equal("10.0.0.1", item.Tags[ContextTagKeys.AiLocationIP.ToString()]);
             Assert.Equal("PseudoUser", item.Tags[ContextTagKeys.AiUserId.ToString()]);
             Assert.Equal("AuthenticatedUser", item.Tags[ContextTagKeys.AiUserAuthUserId.ToString()]);
             Assert.Equal("TestAgent/1.0", item.Tags["ai.user.userAgent"]);
@@ -1035,7 +1035,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var item = telemetryItems[0];
 
             // These tags should not be present when context attributes are not set
-            Assert.False(item.Tags.ContainsKey(ContextTagKeys.AiLocationIp.ToString()));
+            Assert.False(item.Tags.ContainsKey(ContextTagKeys.AiLocationIP.ToString()));
             Assert.False(item.Tags.ContainsKey(ContextTagKeys.AiUserId.ToString()));
             Assert.False(item.Tags.ContainsKey(ContextTagKeys.AiUserAuthUserId.ToString()));
             Assert.False(item.Tags.ContainsKey("ai.user.userAgent"));

@@ -81,20 +81,41 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(CaseSensitive))
+            if (_caseSensitiveIsDefined || Optional.IsDefined(CaseSensitive))
             {
-                writer.WritePropertyName("caseSensitive"u8);
-                writer.WriteBooleanValue(CaseSensitive.Value);
+                if (CaseSensitive != null)
+                {
+                    writer.WritePropertyName("caseSensitive"u8);
+                    writer.WriteBooleanValue(CaseSensitive.Value);
+                }
+                else
+                {
+                    writer.WriteNull("caseSensitive"u8);
+                }
             }
-            if (Optional.IsDefined(AccentSensitive))
+            if (_accentSensitiveIsDefined || Optional.IsDefined(AccentSensitive))
             {
-                writer.WritePropertyName("accentSensitive"u8);
-                writer.WriteBooleanValue(AccentSensitive.Value);
+                if (AccentSensitive != null)
+                {
+                    writer.WritePropertyName("accentSensitive"u8);
+                    writer.WriteBooleanValue(AccentSensitive.Value);
+                }
+                else
+                {
+                    writer.WriteNull("accentSensitive"u8);
+                }
             }
-            if (Optional.IsDefined(FuzzyEditDistance))
+            if (_fuzzyEditDistanceIsDefined || Optional.IsDefined(FuzzyEditDistance))
             {
-                writer.WritePropertyName("fuzzyEditDistance"u8);
-                writer.WriteNumberValue(FuzzyEditDistance.Value);
+                if (FuzzyEditDistance != null)
+                {
+                    writer.WritePropertyName("fuzzyEditDistance"u8);
+                    writer.WriteNumberValue(FuzzyEditDistance.Value);
+                }
+                else
+                {
+                    writer.WriteNull("fuzzyEditDistance"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,8 +160,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string text = default;
+            bool caseSensitiveIsDefined = false;
             bool? caseSensitive = default;
+            bool accentSensitiveIsDefined = false;
             bool? accentSensitive = default;
+            bool fuzzyEditDistanceIsDefined = false;
             int? fuzzyEditDistance = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,6 +176,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("caseSensitive"u8))
                 {
+                    caseSensitiveIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         caseSensitive = null;
@@ -162,6 +187,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("accentSensitive"u8))
                 {
+                    accentSensitiveIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         accentSensitive = null;
@@ -172,6 +198,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("fuzzyEditDistance"u8))
                 {
+                    fuzzyEditDistanceIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         fuzzyEditDistance = null;
@@ -185,7 +212,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomEntityAlias(text, caseSensitive, accentSensitive, fuzzyEditDistance, additionalBinaryDataProperties);
+            return new CustomEntityAlias(text, caseSensitive, accentSensitive, fuzzyEditDistance, additionalBinaryDataProperties)
+            {
+                _caseSensitiveIsDefined = caseSensitiveIsDefined,
+                _accentSensitiveIsDefined = accentSensitiveIsDefined,
+                _fuzzyEditDistanceIsDefined = fuzzyEditDistanceIsDefined
+            };
         }
     }
 }

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `StorageActiveDirectoryProperties.DomainGuid` to share its value with `ActiveDirectoryDomainGuid`, preventing conflicting assignments from emitting an outdated domain GUID.
+
 ### Other Changes
 
 ## 1.2.0-beta.1 (2026-03-02)

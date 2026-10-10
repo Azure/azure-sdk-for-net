@@ -15,6 +15,10 @@ namespace Azure.AI.Projects
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private BinaryData _oldValue;
+        internal bool _oldValueIsDefined;
+        private BinaryData _newValue;
+        internal bool _newValueIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AgentInsightProposedFixChange"/>. </summary>
         internal AgentInsightProposedFixChange()
@@ -37,8 +41,8 @@ namespace Azure.AI.Projects
             Diff = diff;
             Surface = surface;
             Target = target;
-            OldValue = oldValue;
-            NewValue = newValue;
+            _oldValue = oldValue;
+            _newValue = newValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -83,7 +87,13 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData OldValue { get; }
+        public BinaryData OldValue
+        {
+            get
+            {
+                return _oldValue;
+            }
+        }
 
         /// <summary>
         /// The bounded Prompt value after the change. Present for Prompt changes, including when null.
@@ -111,6 +121,12 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData NewValue { get; }
+        public BinaryData NewValue
+        {
+            get
+            {
+                return _newValue;
+            }
+        }
     }
 }

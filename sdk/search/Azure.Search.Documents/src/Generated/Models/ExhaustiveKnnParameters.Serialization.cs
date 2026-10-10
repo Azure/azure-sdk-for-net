@@ -74,10 +74,17 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ExhaustiveKnnParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Metric))
+            if (_metricIsDefined || Optional.IsDefined(Metric))
             {
-                writer.WritePropertyName("metric"u8);
-                writer.WriteStringValue(Metric.Value.ToString());
+                if (Metric != null)
+                {
+                    writer.WritePropertyName("metric"u8);
+                    writer.WriteStringValue(Metric.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("metric"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            bool metricIsDefined = false;
             VectorSearchAlgorithmMetric? metric = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("metric"u8))
                 {
+                    metricIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         metric = null;
@@ -140,7 +149,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExhaustiveKnnParameters(metric, additionalBinaryDataProperties);
+            return new ExhaustiveKnnParameters(metric, additionalBinaryDataProperties)
+            {
+                _metricIsDefined = metricIsDefined
+            };
         }
     }
 }

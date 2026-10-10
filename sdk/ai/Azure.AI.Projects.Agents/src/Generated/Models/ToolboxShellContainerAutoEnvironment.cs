@@ -11,6 +11,9 @@ namespace Azure.AI.Projects.Agents
     /// <summary> An automatically provisioned container environment for a shell tool stored in a toolbox. </summary>
     public partial class ToolboxShellContainerAutoEnvironment : ToolboxShellEnvironment
     {
+        private ContainerMemoryLimit? _memoryLimit;
+        internal bool _memoryLimitIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ToolboxShellContainerAutoEnvironment"/>. </summary>
         public ToolboxShellContainerAutoEnvironment() : base("container_auto")
         {
@@ -28,7 +31,7 @@ namespace Azure.AI.Projects.Agents
         internal ToolboxShellContainerAutoEnvironment(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> fileIds, ContainerMemoryLimit? memoryLimit, IList<ContainerSkill> skills, ToolboxShellNetworkPolicy networkPolicy) : base(@type, additionalBinaryDataProperties)
         {
             FileIds = fileIds;
-            MemoryLimit = memoryLimit;
+            _memoryLimit = memoryLimit;
             Skills = skills;
             NetworkPolicy = networkPolicy;
         }
@@ -37,7 +40,18 @@ namespace Azure.AI.Projects.Agents
         public IList<string> FileIds { get; }
 
         /// <summary> Gets or sets the MemoryLimit. </summary>
-        public ContainerMemoryLimit? MemoryLimit { get; set; }
+        public ContainerMemoryLimit? MemoryLimit
+        {
+            get
+            {
+                return _memoryLimit;
+            }
+            set
+            {
+                _memoryLimit = value;
+                _memoryLimitIsDefined = true;
+            }
+        }
 
         /// <summary> An optional list of skills referenced by id or inline data. </summary>
         public IList<ContainerSkill> Skills { get; }
