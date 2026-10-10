@@ -107,7 +107,11 @@
   </Target>
 
   <Target Name="BuildPlugin">
-    <Exec Command="dotnet build $(MSBuildThisFileDirectory)packages\plugins\client\Client.Plugin\" />
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="BuildPluginIfNeeded"
+             BuildInParallel="false"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
   </Target>
 
   <Target Name="GenerateCode" DependsOnTargets="InstallTspClient;BuildPlugin">
