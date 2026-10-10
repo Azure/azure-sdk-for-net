@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ChaosExperimentAction"/> instance for mocking. </returns>
         public static ChaosExperimentAction ChaosExperimentAction(string name = default, string @type = default)
         {
-            return new UnknownChaosExperimentAction(name, default, default);
+            return new UnknownChaosExperimentAction(name, @type is null ? default : new ExperimentActionType(@type), default);
         }
 
         /// <summary> Model that represents a continuous action. </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
             return new ChaosContinuousAction(
                 name,
-                default,
+                ExperimentActionType.Continuous,
                 default,
                 duration,
                 (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ChaosDelayAction"/> instance for mocking. </returns>
         public static ChaosDelayAction ChaosDelayAction(string name = default, TimeSpan duration = default)
         {
-            return new ChaosDelayAction(name, default, default, duration);
+            return new ChaosDelayAction(name, ExperimentActionType.Delay, default, duration);
         }
 
         /// <summary> Model that represents a discrete action. </summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             parameters ??= new ChangeTrackingList<ChaosKeyValuePair>();
 
-            return new ChaosDiscreteAction(name, default, default, (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(), selectorId);
+            return new ChaosDiscreteAction(name, ExperimentActionType.Discrete, default, (parameters ?? new ChangeTrackingList<ChaosKeyValuePair>()).ToList(), selectorId);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ChaosTargetSelector"/> instance for mocking. </returns>
         public static ChaosTargetSelector ChaosTargetSelector(string id = default, string @type = default, ChaosTargetFilter filter = default)
         {
-            return new UnknownChaosTargetSelector(id, default, filter, default);
+            return new UnknownChaosTargetSelector(id, @type is null ? default : new SelectorType(@type), filter, default);
         }
 
         /// <summary>
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ChaosTargetFilter"/> instance for mocking. </returns>
         public static ChaosTargetFilter ChaosTargetFilter(string @type = default)
         {
-            return new UnknownChaosTargetFilter(default, default);
+            return new UnknownChaosTargetFilter(@type is null ? default : new FilterType(@type), default);
         }
 
         /// <param name="parametersZones"> List of Azure availability zones to filter targets by. </param>
         /// <returns> A new <see cref="Models.ChaosTargetSimpleFilter"/> instance for mocking. </returns>
         public static ChaosTargetSimpleFilter ChaosTargetSimpleFilter(IEnumerable<string> parametersZones = default)
         {
-            return new ChaosTargetSimpleFilter(default, default, parametersZones is null ? default : new ChaosTargetSimpleFilterParameters((parametersZones ?? new ChangeTrackingList<string>()).ToList(), default));
+            return new ChaosTargetSimpleFilter(FilterType.Simple, default, parametersZones is null ? default : new ChaosTargetSimpleFilterParameters((parametersZones ?? new ChangeTrackingList<string>()).ToList(), default));
         }
 
         /// <summary> Model that represents a list selector. </summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             targets ??= new ChangeTrackingList<ChaosTargetReference>();
 
-            return new ChaosTargetListSelector(id, default, filter, default, (targets ?? new ChangeTrackingList<ChaosTargetReference>()).ToList());
+            return new ChaosTargetListSelector(id, SelectorType.List, filter, default, (targets ?? new ChangeTrackingList<ChaosTargetReference>()).ToList());
         }
 
         /// <summary> Model that represents a reference to a Target in the selector. </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
             return new ChaosTargetQuerySelector(
                 id,
-                default,
+                SelectorType.Query,
                 filter,
                 default,
                 queryString,
