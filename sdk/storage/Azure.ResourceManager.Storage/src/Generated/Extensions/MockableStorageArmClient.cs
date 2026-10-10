@@ -215,6 +215,15 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new ContextCacheContainerResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BlobAccessPointConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BlobAccessPointConfigurationResource"/> object. </returns>
+        public virtual BlobAccessPointConfigurationResource GetBlobAccessPointConfigurationResource(ResourceIdentifier id)
+        {
+            BlobAccessPointConfigurationResource.ValidateResourceId(id);
+            return new BlobAccessPointConfigurationResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="AdvancedPlatformMetricsRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AdvancedPlatformMetricsRuleResource"/> object. </returns>

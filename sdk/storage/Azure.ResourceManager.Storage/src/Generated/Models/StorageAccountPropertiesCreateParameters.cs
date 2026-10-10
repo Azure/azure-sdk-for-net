@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="encryption"> Encryption settings to be used for server-side encryption for the storage account. </param>
         /// <param name="networkRuleSet"> Network rule set. </param>
         /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </param>
+        /// <param name="turboTier"> Configures Turbo Tier for the storage account. </param>
         /// <param name="azureFilesIdentityBasedAuthentication"> Provides the identity based authentication settings for Azure Files. </param>
         /// <param name="enableHttpsTrafficOnly"> Allows https traffic only to storage service if sets to true. The default value is true since API version 2019-04-01. </param>
         /// <param name="isSftpEnabled"> Enables Secure File Transfer Protocol, if set to true. </param>
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="dataCollaborationPolicyProperties"> Data Collaboration policy for the storage account. </param>
         /// <param name="allowCrossTenantDelegationSas"> Allow or disallow cross AAD tenant user delegation SAS (shared access signature). The default interpretation is false for this property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountPropertiesCreateParameters(AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, bool? allowCrossTenantDelegationSas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountPropertiesCreateParameters(AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, TurboTier turboTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, bool? allowCrossTenantDelegationSas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowedCopyScope = allowedCopyScope;
             PublicNetworkAccess = publicNetworkAccess;
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
             Encryption = encryption;
             NetworkRuleSet = networkRuleSet;
             AccessTier = accessTier;
+            TurboTier = turboTier;
             AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
             IsSftpEnabled = isSftpEnabled;
@@ -118,6 +120,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         [WirePath("accessTier")]
         public StorageAccountAccessTier? AccessTier { get; set; }
+
+        /// <summary> Configures Turbo Tier for the storage account. </summary>
+        [WirePath("turboTier")]
+        public TurboTier TurboTier { get; set; }
 
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         [WirePath("azureFilesIdentityBasedAuthentication")]

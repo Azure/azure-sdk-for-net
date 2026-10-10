@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             Argument.AssertNotNull(ruleConfig, nameof(ruleConfig));
 
             IsEnabled = isEnabled;
+            MetricsToEmit = new ChangeTrackingList<MetricsEmitted>();
             MetricsEmitted = new ChangeTrackingList<MetricsEmitted>();
             RuleConfig = ruleConfig;
         }
@@ -34,14 +35,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="ruleType"> Indicates the type of the advanced platform metrics rule. Possible values include: ContainerLevelCapacityMetrics. </param>
         /// <param name="isEnabled"> A boolean flag which enables the advanced platform metrics rule. </param>
         /// <param name="lastModifiedOn"> Gets the last modification date and time of the advanced platform metrics rule in UTC. </param>
+        /// <param name="metricsToEmit"> The metrics requested by the caller. If omitted in a create or update request, the service enables all metrics supported by the selected rule type. </param>
         /// <param name="metricsEmitted"> The metrics emitted by the rule. Metrics are mapped according to the rule type from RuleTypeProperty. Rule type to metrics mapping: ContainerLevelCapacityMetrics =&gt; {ContainerUsedSize, ContainerBlobCount}. </param>
         /// <param name="ruleConfig"> Configuration for the advanced platform metrics rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdvancedPlatformMetricsRuleProperties(AdvancedPlatformMetricsRuleType? ruleType, bool isEnabled, DateTimeOffset? lastModifiedOn, IReadOnlyList<MetricsEmitted> metricsEmitted, AdvancedPlatformMetricsRuleConfig ruleConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdvancedPlatformMetricsRuleProperties(AdvancedPlatformMetricsRuleType? ruleType, bool isEnabled, DateTimeOffset? lastModifiedOn, IList<MetricsEmitted> metricsToEmit, IReadOnlyList<MetricsEmitted> metricsEmitted, AdvancedPlatformMetricsRuleConfig ruleConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleType = ruleType;
             IsEnabled = isEnabled;
             LastModifiedOn = lastModifiedOn;
+            MetricsToEmit = metricsToEmit;
             MetricsEmitted = metricsEmitted;
             RuleConfig = ruleConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -58,6 +61,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Gets the last modification date and time of the advanced platform metrics rule in UTC. </summary>
         [WirePath("lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
+
+        /// <summary> The metrics requested by the caller. If omitted in a create or update request, the service enables all metrics supported by the selected rule type. </summary>
+        [WirePath("metricsToEmit")]
+        public IList<MetricsEmitted> MetricsToEmit { get; }
 
         /// <summary> The metrics emitted by the rule. Metrics are mapped according to the rule type from RuleTypeProperty. Rule type to metrics mapping: ContainerLevelCapacityMetrics =&gt; {ContainerUsedSize, ContainerBlobCount}. </summary>
         [WirePath("metricsEmitted")]

@@ -289,5 +289,23 @@ namespace Azure.ResourceManager.Storage
                 ContainerProperties.EnableNfsV3AllSquash = value;
             }
         }
+
+        /// <summary> Configuration that attaches this container to a Blob Access Point. If set, the container is a read-only virtual container whose read/list requests are forwarded to the connected backing data store. Cannot be changed, removed, or added after container creation. </summary>
+        [WirePath("properties.blobAccessPointConfiguration")]
+        public BlobAccessPointConfigurationConnection BlobAccessPointConfiguration
+        {
+            get
+            {
+                return ContainerProperties is null ? default : ContainerProperties.BlobAccessPointConfiguration;
+            }
+            set
+            {
+                if (ContainerProperties is null)
+                {
+                    ContainerProperties = new ContainerProperties();
+                }
+                ContainerProperties.BlobAccessPointConfiguration = value;
+            }
+        }
     }
 }

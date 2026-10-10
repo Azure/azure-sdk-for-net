@@ -136,6 +136,21 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ServiceTags))
+            {
+                writer.WritePropertyName("serviceTags"u8);
+                writer.WriteStartArray();
+                foreach (string item in ServiceTags)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -183,6 +198,7 @@ namespace Azure.ResourceManager.Storage.Models
             IReadOnlyList<SubResource> subscriptions = default;
             IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IReadOnlyList<string> fullyQualifiedDomainNames = default;
+            IList<string> serviceTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -272,6 +288,27 @@ namespace Azure.ResourceManager.Storage.Models
                     fullyQualifiedDomainNames = array;
                     continue;
                 }
+                if (prop.NameEquals("serviceTags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    serviceTags = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -283,6 +320,7 @@ namespace Azure.ResourceManager.Storage.Models
                 subscriptions ?? new ChangeTrackingList<SubResource>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
+                serviceTags ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }
