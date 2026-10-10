@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Hci.Models
                 @type,
                 requiredVersion,
                 installOrder,
-                tags,
+                tags ?? new ChangeTrackingList<string>(),
                 payloads ?? new ChangeTrackingList<ValidatedSolutionRecipeComponentPayload>(),
                 metadata,
                 additionalBinaryDataProperties);

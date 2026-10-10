@@ -89,10 +89,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && (_endOnIsDefined || Optional.IsDefined(EndOn)))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -144,6 +151,7 @@ namespace Azure.ResourceManager.Automation.Models
             string counterProperty = default;
             long? counterValue = default;
             DateTimeOffset? startOn = default;
+            bool endOnIsDefined = false;
             DateTimeOffset? endOn = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -174,6 +182,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endOn = null;
@@ -198,7 +207,10 @@ namespace Azure.ResourceManager.Automation.Models
                 startOn,
                 endOn,
                 id,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _endOnIsDefined = endOnIsDefined
+            };
         }
     }
 }

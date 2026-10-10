@@ -16,6 +16,12 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _startOn;
+        internal bool _startOnIsDefined;
+        private DateTimeOffset? _endOn;
+        internal bool _endOnIsDefined;
+        private DateTimeOffset? _lastStatusModifiedOn;
+        internal bool _lastStatusModifiedOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RunbookTestJob"/>. </summary>
         internal RunbookTestJob()
@@ -42,11 +48,11 @@ namespace Azure.ResourceManager.Automation.Models
             Status = status;
             StatusDetails = statusDetails;
             RunOn = runOn;
-            StartOn = startOn;
-            EndOn = endOn;
+            _startOn = startOn;
+            _endOn = endOn;
             Exception = exception;
             LastModifiedOn = lastModifiedOn;
-            LastStatusModifiedOn = lastStatusModifiedOn;
+            _lastStatusModifiedOn = lastStatusModifiedOn;
             Parameters = parameters;
             LogActivityTrace = logActivityTrace;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -65,10 +71,22 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunOn { get; }
 
         /// <summary> Gets or sets the start time of the test job. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return _startOn;
+            }
+        }
 
         /// <summary> Gets or sets the end time of the test job. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return _endOn;
+            }
+        }
 
         /// <summary> Gets or sets the exception of the test job. </summary>
         public string Exception { get; }
@@ -77,7 +95,13 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> Gets or sets the last status modified time of the test job. </summary>
-        public DateTimeOffset? LastStatusModifiedOn { get; }
+        public DateTimeOffset? LastStatusModifiedOn
+        {
+            get
+            {
+                return _lastStatusModifiedOn;
+            }
+        }
 
         /// <summary> Gets or sets the parameters of the test job. </summary>
         public IReadOnlyDictionary<string, string> Parameters { get; }

@@ -16,6 +16,20 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private AccessReviewDecisionIdentity _principal;
+        internal bool _principalIsDefined;
+        private AccessReviewDecisionResourceTarget _resource;
+        internal bool _resourceIsDefined;
+        private DateTimeOffset? _reviewedOn;
+        internal bool _reviewedOnIsDefined;
+        private AccessReviewActorIdentity _reviewedBy;
+        internal bool _reviewedByIsDefined;
+        private DateTimeOffset? _appliedOn;
+        internal bool _appliedOnIsDefined;
+        private AccessReviewActorIdentity _appliedBy;
+        internal bool _appliedByIsDefined;
+        private AccessReviewDecisionPrincipalResourceMembership _principalResourceMembership;
+        internal bool _principalResourceMembershipIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionPatch"/>. </summary>
         public AccessReviewDecisionPatch()
@@ -39,28 +53,40 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AccessReviewDecisionPatch(AccessReviewDecisionIdentity principal, AccessReviewDecisionResourceTarget resource, AccessRecommendationType? recommendation, AccessReviewResult? decision, string justification, DateTimeOffset? reviewedOn, AccessReviewActorIdentity reviewedBy, AccessReviewApplyResult? applyResult, DateTimeOffset? appliedOn, AccessReviewActorIdentity appliedBy, IList<AccessReviewDecisionInsight> insights, AccessReviewDecisionPrincipalResourceMembership principalResourceMembership, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Principal = principal;
-            Resource = resource;
+            _principal = principal;
+            _resource = resource;
             Recommendation = recommendation;
             Decision = decision;
             Justification = justification;
-            ReviewedOn = reviewedOn;
-            ReviewedBy = reviewedBy;
+            _reviewedOn = reviewedOn;
+            _reviewedBy = reviewedBy;
             ApplyResult = applyResult;
-            AppliedOn = appliedOn;
-            AppliedBy = appliedBy;
+            _appliedOn = appliedOn;
+            _appliedBy = appliedBy;
             Insights = insights;
-            PrincipalResourceMembership = principalResourceMembership;
+            _principalResourceMembership = principalResourceMembership;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Principal associated with the decision record. Can be AccessReviewDecisionUserIdentity or AccessReviewDecisionServicePrincipalIdentity. </summary>
         [WirePath("principal")]
-        public AccessReviewDecisionIdentity Principal { get; }
+        public AccessReviewDecisionIdentity Principal
+        {
+            get
+            {
+                return _principal;
+            }
+        }
 
         /// <summary> Resource associated with this decision record. </summary>
         [WirePath("resource")]
-        public AccessReviewDecisionResourceTarget Resource { get; }
+        public AccessReviewDecisionResourceTarget Resource
+        {
+            get
+            {
+                return _resource;
+            }
+        }
 
         /// <summary> The feature- generated recommendation shown to the reviewer. </summary>
         [WirePath("recommendation")]
@@ -76,11 +102,23 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Date Time when a decision was taken. </summary>
         [WirePath("reviewedDateTime")]
-        public DateTimeOffset? ReviewedOn { get; }
+        public DateTimeOffset? ReviewedOn
+        {
+            get
+            {
+                return _reviewedOn;
+            }
+        }
 
         /// <summary> Details of the approver. </summary>
         [WirePath("reviewedBy")]
-        public AccessReviewActorIdentity ReviewedBy { get; }
+        public AccessReviewActorIdentity ReviewedBy
+        {
+            get
+            {
+                return _reviewedBy;
+            }
+        }
 
         /// <summary> The outcome of applying the decision. </summary>
         [WirePath("applyResult")]
@@ -88,11 +126,23 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The date and time when the review decision was applied. </summary>
         [WirePath("appliedDateTime")]
-        public DateTimeOffset? AppliedOn { get; }
+        public DateTimeOffset? AppliedOn
+        {
+            get
+            {
+                return _appliedOn;
+            }
+        }
 
         /// <summary> Details of the approver. </summary>
         [WirePath("appliedBy")]
-        public AccessReviewActorIdentity AppliedBy { get; }
+        public AccessReviewActorIdentity AppliedBy
+        {
+            get
+            {
+                return _appliedBy;
+            }
+        }
 
         /// <summary> This is the collection of insights for this decision item. </summary>
         [WirePath("insights")]
@@ -100,7 +150,13 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Details of the membership type. </summary>
         [WirePath("principalResourceMembership")]
-        internal AccessReviewDecisionPrincipalResourceMembership PrincipalResourceMembership { get; }
+        internal AccessReviewDecisionPrincipalResourceMembership PrincipalResourceMembership
+        {
+            get
+            {
+                return _principalResourceMembership;
+            }
+        }
 
         /// <summary> Every decision item in an access review represents a principal's membership to a resource. This property represents details of the membership. Examples of this detail might be whether the principal has direct access or indirect access. </summary>
         [WirePath("principalResourceMembership.membershipTypes")]

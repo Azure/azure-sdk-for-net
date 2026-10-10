@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _time;
+        internal bool _timeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobStreamProperties"/>. </summary>
         internal SourceControlSyncJobStreamProperties()
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             SourceControlSyncJobStreamId = sourceControlSyncJobStreamId;
             Summary = summary;
-            Time = time;
+            _time = time;
             StreamType = streamType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +45,13 @@ namespace Azure.ResourceManager.Automation.Models
         public string Summary { get; }
 
         /// <summary> The time of the sync job stream. </summary>
-        public DateTimeOffset? Time { get; }
+        public DateTimeOffset? Time
+        {
+            get
+            {
+                return _time;
+            }
+        }
 
         /// <summary> The type of the sync job stream. </summary>
         public SourceControlStreamType? StreamType { get; }

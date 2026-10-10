@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _endOn;
+        internal bool _endOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AutomationAccountStatistics"/>. </summary>
         internal AutomationAccountStatistics()
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Automation.Models
             CounterProperty = counterProperty;
             CounterValue = counterValue;
             StartOn = startOn;
-            EndOn = endOn;
+            _endOn = endOn;
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +50,13 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Gets the endTime of the statistic. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return _endOn;
+            }
+        }
 
         /// <summary> Gets the id. </summary>
         public string Id { get; }

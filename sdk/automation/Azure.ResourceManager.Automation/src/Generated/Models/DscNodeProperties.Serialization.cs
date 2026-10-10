@@ -95,10 +95,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Optional.IsDefined(NodeConfiguration))
+            if (_nodeConfigurationIsDefined || Optional.IsDefined(NodeConfiguration))
             {
-                writer.WritePropertyName("nodeConfiguration"u8);
-                writer.WriteObjectValue(NodeConfiguration, options);
+                if (NodeConfiguration != null)
+                {
+                    writer.WritePropertyName("nodeConfiguration"u8);
+                    writer.WriteObjectValue(NodeConfiguration, options);
+                }
+                else
+                {
+                    writer.WriteNull("nodeConfiguration"u8);
+                }
             }
             if (Optional.IsDefined(Status))
             {
@@ -176,6 +183,7 @@ namespace Azure.ResourceManager.Automation.Models
             DateTimeOffset? registrationOn = default;
             string ip = default;
             string accountId = default;
+            bool nodeConfigurationIsDefined = false;
             DscNodeConfigurationAssociationProperty nodeConfiguration = default;
             string status = default;
             string nodeId = default;
@@ -215,6 +223,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("nodeConfiguration"u8))
                 {
+                    nodeConfigurationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nodeConfiguration = null;
@@ -281,7 +290,10 @@ namespace Azure.ResourceManager.Automation.Models
                 eTag,
                 totalCount,
                 extensionHandler ?? new ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _nodeConfigurationIsDefined = nodeConfigurationIsDefined
+            };
         }
     }
 }

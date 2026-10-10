@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ArmResponseErrorResponseResult"/>. </summary>
         /// <param name="body"> The body type of the operation request or response. </param>
-        internal ArmResponseErrorResponseResult(ErrorResponse body)
+        internal ArmResponseErrorResponseResult(ErrorResult body)
         {
             Body = body;
         }
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="ArmResponseErrorResponseResult"/>. </summary>
         /// <param name="body"> The body type of the operation request or response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmResponseErrorResponseResult(ErrorResponse body, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmResponseErrorResponseResult(ErrorResult body, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Body = body;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The body type of the operation request or response. </summary>
-        internal ErrorResponse Body { get; }
+        internal ErrorResult Body { get; }
 
         /// <summary> The error object. </summary>
         public ResponseError BodyError

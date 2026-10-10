@@ -89,15 +89,29 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartsOn))
+            if (options.Format != "W" && (_startsOnIsDefined || Optional.IsDefined(StartsOn)))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartsOn.Value, "O");
+                if (StartsOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(EndsOn))
+            if (options.Format != "W" && (_endsOnIsDefined || Optional.IsDefined(EndsOn)))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndsOn.Value, "O");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (Optional.IsDefined(SyncType))
             {
@@ -154,7 +168,9 @@ namespace Azure.ResourceManager.Automation.Models
             string sourceControlSyncJobId = default;
             DateTimeOffset? createdOn = default;
             SourceControlProvisioningState? provisioningState = default;
+            bool startsOnIsDefined = false;
             DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
             DateTimeOffset? endsOn = default;
             SourceControlSyncType? syncType = default;
             string exception = default;
@@ -186,6 +202,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startsOn = null;
@@ -196,6 +213,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endsOn = null;
@@ -231,7 +249,11 @@ namespace Azure.ResourceManager.Automation.Models
                 endsOn,
                 syncType,
                 exception,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _startsOnIsDefined = startsOnIsDefined,
+                _endsOnIsDefined = endsOnIsDefined
+            };
         }
     }
 }

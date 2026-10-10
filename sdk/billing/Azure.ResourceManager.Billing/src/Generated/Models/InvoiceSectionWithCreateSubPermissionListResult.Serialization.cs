@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InvoiceSectionWithCreateSubPermissionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new InvoiceSectionWithCreateSubPermissionListResult(value ?? new ChangeTrackingList<InvoiceSectionWithCreateSubPermission>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

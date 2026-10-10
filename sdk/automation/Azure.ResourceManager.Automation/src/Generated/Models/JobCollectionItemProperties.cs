@@ -15,6 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _startedBy;
+        internal bool _startedByIsDefined;
+        private DateTimeOffset? _startsOn;
+        internal bool _startsOnIsDefined;
+        private DateTimeOffset? _endsOn;
+        internal bool _endsOnIsDefined;
+        private DateTimeOffset? _lastModifiedOn;
+        internal bool _lastModifiedOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="JobCollectionItemProperties"/>. </summary>
         public JobCollectionItemProperties()
@@ -38,12 +46,12 @@ namespace Azure.ResourceManager.Automation.Models
         {
             Runbook = runbook;
             JobId = jobId;
-            StartedBy = startedBy;
+            _startedBy = startedBy;
             CreatedOn = createdOn;
             Status = status;
-            StartsOn = startsOn;
-            EndsOn = endsOn;
-            LastModifiedOn = lastModifiedOn;
+            _startsOn = startsOn;
+            _endsOn = endsOn;
+            _lastModifiedOn = lastModifiedOn;
             ProvisioningState = provisioningState;
             JobRuntimeEnvironment = jobRuntimeEnvironment;
             RunOn = runOn;
@@ -57,7 +65,13 @@ namespace Azure.ResourceManager.Automation.Models
         public Guid? JobId { get; }
 
         /// <summary> Gets or sets the job started by. </summary>
-        public string StartedBy { get; }
+        public string StartedBy
+        {
+            get
+            {
+                return _startedBy;
+            }
+        }
 
         /// <summary> The creation time of the job. </summary>
         public DateTimeOffset? CreatedOn { get; }
@@ -66,13 +80,31 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationJobStatus? Status { get; }
 
         /// <summary> The start time of the job. </summary>
-        public DateTimeOffset? StartsOn { get; }
+        public DateTimeOffset? StartsOn
+        {
+            get
+            {
+                return _startsOn;
+            }
+        }
 
         /// <summary> The end time of the job. </summary>
-        public DateTimeOffset? EndsOn { get; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+        }
 
         /// <summary> The last modified time of the job. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return _lastModifiedOn;
+            }
+        }
 
         /// <summary> The provisioning state of a resource. </summary>
         public string ProvisioningState { get; }

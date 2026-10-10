@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _endsOn;
+        internal bool _endsOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="UpdateConfigurationMachineRunProperties"/>. </summary>
         internal UpdateConfigurationMachineRunProperties()
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
             CorrelationId = correlationId;
             SourceComputerId = sourceComputerId;
             StartsOn = startsOn;
-            EndsOn = endsOn;
+            _endsOn = endsOn;
             ConfiguredDuration = configuredDuration;
             Job = job;
             CreatedOn = createdOn;
@@ -86,7 +88,13 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the software update configuration machine run. </summary>
-        public DateTimeOffset? EndsOn { get; }
+        public DateTimeOffset? EndsOn
+        {
+            get
+            {
+                return _endsOn;
+            }
+        }
 
         /// <summary> configured duration for the software update configuration run. </summary>
         public TimeSpan? ConfiguredDuration { get; }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EnrollmentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EnrollmentListResult(value ?? new ChangeTrackingList<UsagePlanEnrollmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

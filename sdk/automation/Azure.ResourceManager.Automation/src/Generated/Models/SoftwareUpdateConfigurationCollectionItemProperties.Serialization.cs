@@ -109,10 +109,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(NextRunOn))
+            if (_nextRunOnIsDefined || Optional.IsDefined(NextRunOn))
             {
-                writer.WritePropertyName("nextRun"u8);
-                writer.WriteStringValue(NextRunOn.Value, "O");
+                if (NextRunOn != null)
+                {
+                    writer.WritePropertyName("nextRun"u8);
+                    writer.WriteStringValue(NextRunOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("nextRun"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,6 +170,7 @@ namespace Azure.ResourceManager.Automation.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string provisioningState = default;
+            bool nextRunOnIsDefined = false;
             DateTimeOffset? nextRunOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -228,6 +236,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("nextRun"u8))
                 {
+                    nextRunOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nextRunOn = null;
@@ -250,7 +259,10 @@ namespace Azure.ResourceManager.Automation.Models
                 lastModifiedOn,
                 provisioningState,
                 nextRunOn,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _nextRunOnIsDefined = nextRunOnIsDefined
+            };
         }
     }
 }

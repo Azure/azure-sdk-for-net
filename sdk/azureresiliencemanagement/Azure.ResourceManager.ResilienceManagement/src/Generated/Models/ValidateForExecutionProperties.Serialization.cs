@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ValidateForExecutionProperties(sourceLocations, additionalBinaryDataProperties);
+            return new ValidateForExecutionProperties(sourceLocations ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

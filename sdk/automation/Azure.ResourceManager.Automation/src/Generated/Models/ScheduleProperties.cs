@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _expiresOn;
+        internal bool _expiresOnIsDefined;
+        private DateTimeOffset? _nextRunOn;
+        internal bool _nextRunOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
         public ScheduleProperties()
@@ -42,10 +46,10 @@ namespace Azure.ResourceManager.Automation.Models
         {
             StartsOn = startsOn;
             StartInMinutes = startInMinutes;
-            ExpiresOn = expiresOn;
+            _expiresOn = expiresOn;
             ExpireInMinutes = expireInMinutes;
             IsEnabled = isEnabled;
-            NextRunOn = nextRunOn;
+            _nextRunOn = nextRunOn;
             NextRunInMinutes = nextRunInMinutes;
             Interval = interval;
             Frequency = frequency;
@@ -64,7 +68,18 @@ namespace Azure.ResourceManager.Automation.Models
         public double? StartInMinutes { get; }
 
         /// <summary> Gets or sets the end time of the schedule. </summary>
-        public DateTimeOffset? ExpiresOn { get; set; }
+        public DateTimeOffset? ExpiresOn
+        {
+            get
+            {
+                return _expiresOn;
+            }
+            set
+            {
+                _expiresOn = value;
+                _expiresOnIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the expiry time's offset in minutes. </summary>
         public double? ExpireInMinutes { get; set; }
@@ -73,7 +88,18 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsEnabled { get; set; }
 
         /// <summary> Gets or sets the next run time of the schedule. </summary>
-        public DateTimeOffset? NextRunOn { get; set; }
+        public DateTimeOffset? NextRunOn
+        {
+            get
+            {
+                return _nextRunOn;
+            }
+            set
+            {
+                _nextRunOn = value;
+                _nextRunOnIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the next run time's offset in minutes. </summary>
         public double? NextRunInMinutes { get; set; }

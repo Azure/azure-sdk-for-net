@@ -82,20 +82,34 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EndOn))
+            if (_endOnIsDefined || Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(StartOn))
+            if (_startOnIsDefined || Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                if (StartOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
             if (Optional.IsDefined(DscNodeReportType))
             {
@@ -249,8 +263,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
+            bool endOnIsDefined = false;
             DateTimeOffset? endOn = default;
             DateTimeOffset? lastModifiedOn = default;
+            bool startOnIsDefined = false;
             DateTimeOffset? startOn = default;
             string dscNodeReportType = default;
             string reportId = default;
@@ -273,6 +289,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endOn = null;
@@ -292,6 +309,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startOn = null;
@@ -463,7 +481,11 @@ namespace Azure.ResourceManager.Automation.Models
                 ipV6Addresses ?? new ChangeTrackingList<string>(),
                 numberOfResources,
                 rawErrors,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _endOnIsDefined = endOnIsDefined,
+                _startOnIsDefined = startOnIsDefined
+            };
         }
     }
 }

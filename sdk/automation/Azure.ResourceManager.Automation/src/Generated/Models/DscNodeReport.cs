@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _endOn;
+        internal bool _endOnIsDefined;
+        private DateTimeOffset? _startOn;
+        internal bool _startOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DscNodeReport"/>. </summary>
         internal DscNodeReport()
@@ -49,9 +53,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DscNodeReport(DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? startOn, string dscNodeReportType, string reportId, string status, string refreshMode, string rebootRequested, string reportFormatVersion, string configurationVersion, string id, IReadOnlyList<DscReportError> errors, IReadOnlyList<DscReportResource> resources, DscMetaConfiguration metaConfiguration, string hostName, IReadOnlyList<string> ipV4Addresses, IReadOnlyList<string> ipV6Addresses, int? numberOfResources, string rawErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndOn = endOn;
+            _endOn = endOn;
             LastModifiedOn = lastModifiedOn;
-            StartOn = startOn;
+            _startOn = startOn;
             DscNodeReportType = dscNodeReportType;
             ReportId = reportId;
             Status = status;
@@ -72,13 +76,25 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Gets or sets the end time of the node report. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return _endOn;
+            }
+        }
 
         /// <summary> Gets or sets the lastModifiedTime of the node report. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> Gets or sets the start time of the node report. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return _startOn;
+            }
+        }
 
         /// <summary> Gets or sets the type of the node report. </summary>
         public string DscNodeReportType { get; }

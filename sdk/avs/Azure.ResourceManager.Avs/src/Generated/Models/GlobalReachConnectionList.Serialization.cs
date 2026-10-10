@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GlobalReachConnectionList(value, nextLink, additionalBinaryDataProperties);
+            return new GlobalReachConnectionList(value ?? new ChangeTrackingList<GlobalReachConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

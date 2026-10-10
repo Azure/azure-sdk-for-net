@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Billing
         public override async IAsyncEnumerable<Page<BillingTransferValidationResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
-            ValidateTransferListResponse result = ValidateTransferListResponse.FromResponse(response);
+            ValidateTransferListResult result = ValidateTransferListResult.FromResponse(response);
             yield return Page<BillingTransferValidationResult>.FromValues(result.Value, null, response);
         }
 

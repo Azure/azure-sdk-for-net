@@ -102,15 +102,29 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Optional.IsDefined(StartOn))
+            if (_startOnIsDefined || Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                if (StartOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
-            if (Optional.IsDefined(EndOn))
+            if (_endOnIsDefined || Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (Optional.IsDefined(Exception))
             {
@@ -122,10 +136,17 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastStatusModifiedOn))
+            if (_lastStatusModifiedOnIsDefined || Optional.IsDefined(LastStatusModifiedOn))
             {
-                writer.WritePropertyName("lastStatusModifiedTime"u8);
-                writer.WriteStringValue(LastStatusModifiedOn.Value, "O");
+                if (LastStatusModifiedOn != null)
+                {
+                    writer.WritePropertyName("lastStatusModifiedTime"u8);
+                    writer.WriteStringValue(LastStatusModifiedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastStatusModifiedTime"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -194,10 +215,13 @@ namespace Azure.ResourceManager.Automation.Models
             string status = default;
             string statusDetails = default;
             string runOn = default;
+            bool startOnIsDefined = false;
             DateTimeOffset? startOn = default;
+            bool endOnIsDefined = false;
             DateTimeOffset? endOn = default;
             string exception = default;
             DateTimeOffset? lastModifiedOn = default;
+            bool lastStatusModifiedOnIsDefined = false;
             DateTimeOffset? lastStatusModifiedOn = default;
             IReadOnlyDictionary<string, string> parameters = default;
             int? logActivityTrace = default;
@@ -230,6 +254,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    startOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         startOn = null;
@@ -240,6 +265,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         endOn = null;
@@ -264,6 +290,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("lastStatusModifiedTime"u8))
                 {
+                    lastStatusModifiedOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lastStatusModifiedOn = null;
@@ -319,7 +346,12 @@ namespace Azure.ResourceManager.Automation.Models
                 lastStatusModifiedOn,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 logActivityTrace,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _startOnIsDefined = startOnIsDefined,
+                _endOnIsDefined = endOnIsDefined,
+                _lastStatusModifiedOnIsDefined = lastStatusModifiedOnIsDefined
+            };
         }
     }
 }

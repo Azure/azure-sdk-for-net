@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <returns> A new <see cref="Models.ArmResponseErrorResponseResult"/> instance for mocking. </returns>
         public static ArmResponseErrorResponseResult ArmResponseErrorResponseResult(ResponseError bodyError = default)
         {
-            return new ArmResponseErrorResponseResult(bodyError is null ? default : new ErrorResponse(bodyError, default), default);
+            return new ArmResponseErrorResponseResult(bodyError is null ? default : new ErrorResult(bodyError, default), default);
         }
 
         /// <summary> RecoveryResources post action request to update in batch. </summary>

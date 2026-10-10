@@ -16,6 +16,16 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _reviewHistoryPeriodStartsOn;
+        internal bool _reviewHistoryPeriodStartsOnIsDefined;
+        private DateTimeOffset? _reviewHistoryPeriodEndsOn;
+        internal bool _reviewHistoryPeriodEndsOnIsDefined;
+        private DateTimeOffset? _createdOn;
+        internal bool _createdOnIsDefined;
+        private AccessReviewActorIdentity _createdBy;
+        internal bool _createdByIsDefined;
+        private AccessReviewHistoryScheduleSettings _settings;
+        internal bool _settingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewHistoryDefinitionProperties"/>. </summary>
         public AccessReviewHistoryDefinitionProperties()
@@ -40,14 +50,14 @@ namespace Azure.ResourceManager.Authorization.Models
         internal AccessReviewHistoryDefinitionProperties(string displayName, DateTimeOffset? reviewHistoryPeriodStartsOn, DateTimeOffset? reviewHistoryPeriodEndsOn, IList<AccessReviewResult> decisions, AccessReviewHistoryDefinitionStatus? status, DateTimeOffset? createdOn, AccessReviewActorIdentity createdBy, IList<AccessReviewScope> scopes, AccessReviewHistoryScheduleSettings settings, IList<AccessReviewHistoryInstance> instances, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
-            ReviewHistoryPeriodStartsOn = reviewHistoryPeriodStartsOn;
-            ReviewHistoryPeriodEndsOn = reviewHistoryPeriodEndsOn;
+            _reviewHistoryPeriodStartsOn = reviewHistoryPeriodStartsOn;
+            _reviewHistoryPeriodEndsOn = reviewHistoryPeriodEndsOn;
             Decisions = decisions;
             Status = status;
-            CreatedOn = createdOn;
-            CreatedBy = createdBy;
+            _createdOn = createdOn;
+            _createdBy = createdBy;
             Scopes = scopes;
-            Settings = settings;
+            _settings = settings;
             Instances = instances;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,11 +68,23 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </summary>
         [WirePath("reviewHistoryPeriodStartDateTime")]
-        public DateTimeOffset? ReviewHistoryPeriodStartsOn { get; }
+        public DateTimeOffset? ReviewHistoryPeriodStartsOn
+        {
+            get
+            {
+                return _reviewHistoryPeriodStartsOn;
+            }
+        }
 
         /// <summary> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </summary>
         [WirePath("reviewHistoryPeriodEndDateTime")]
-        public DateTimeOffset? ReviewHistoryPeriodEndsOn { get; }
+        public DateTimeOffset? ReviewHistoryPeriodEndsOn
+        {
+            get
+            {
+                return _reviewHistoryPeriodEndsOn;
+            }
+        }
 
         /// <summary> Collection of review decisions which the history data should be filtered on. For example if Approve and Deny are supplied the data will only contain review results in which the decision maker approved or denied a review request. </summary>
         [WirePath("decisions")]
@@ -74,11 +96,23 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Date time when history definition was created. </summary>
         [WirePath("createdDateTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return _createdOn;
+            }
+        }
 
         /// <summary> The user or other identity who created this history definition. </summary>
         [WirePath("createdBy")]
-        internal AccessReviewActorIdentity CreatedBy { get; }
+        internal AccessReviewActorIdentity CreatedBy
+        {
+            get
+            {
+                return _createdBy;
+            }
+        }
 
         /// <summary> A collection of scopes used when selecting review history data. </summary>
         [WirePath("scopes")]
@@ -86,7 +120,18 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Recurrence settings for recurring history reports, skip for one-time reports. </summary>
         [WirePath("settings")]
-        internal AccessReviewHistoryScheduleSettings Settings { get; set; }
+        internal AccessReviewHistoryScheduleSettings Settings
+        {
+            get
+            {
+                return _settings;
+            }
+            set
+            {
+                _settings = value;
+                _settingsIsDefined = true;
+            }
+        }
 
         /// <summary> Set of access review history instances for this history definition. </summary>
         [WirePath("instances")]
