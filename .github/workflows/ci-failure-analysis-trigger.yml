@@ -1,0 +1,76 @@
+name: Azure .NET CI Failure Analysis Trigger
+
+on:
+  check_run:
+    types: [completed]
+
+permissions: {}
+
+concurrency:
+  group: "ci-failure-analysis-${{ github.event.check_run.id }}-${{ github.event.check_run.completed_at }}"
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: >
+      github.event.check_run.name == 'net - pullrequest' &&
+      github.event.check_run.status == 'completed' &&
+      github.event.check_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: read
+    outputs:
+      eligible: ${{ steps.prepare.outputs.eligible }}
+      analysis_context: ${{ steps.prepare.outputs.analysis_context }}
+    steps:
+      - name: Checkout trusted CI analysis guard
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          sparse-checkout: .github/workflows/ci-failure-analysis
+      - name: Claim the completed CI failure
+        id: prepare
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: ./.github/workflows/ci-failure-analysis/Invoke-CiFailureAnalysis.ps1 -Action Prepare
+
+  analyze:
+    needs: prepare
+    if: needs.prepare.outputs.eligible == 'true'
+    uses: ./.github/workflows/ci-failure-analysis.lock.yml
+    permissions:
+      copilot-requests: write
+      contents: read
+      actions: read
+      checks: read
+      issues: write
+      pull-requests: write
+    with:
+      analysis_context: ${{ needs.prepare.outputs.analysis_context }}
+
+  finalize:
+    needs: [prepare, analyze]
+    if: always() && needs.prepare.outputs.eligible == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: read
+    steps:
+      - name: Checkout trusted CI completion guard
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          sparse-checkout: .github/workflows/ci-failure-analysis
+      - name: Complete the CI analysis check
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ANALYSIS_CONTEXT: ${{ needs.prepare.outputs.analysis_context }}
+          ANALYSIS_RESULT: ${{ needs.analyze.result }}
+        run: ./.github/workflows/ci-failure-analysis/Invoke-CiFailureAnalysis.ps1 -Action Finalize

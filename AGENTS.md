@@ -300,6 +300,11 @@ This repository includes agent-specific instructions in `.github/copilot-instruc
 
 **[.github/copilot-instructions.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/copilot-instructions.md)**
 
+For pull request or local code review in any agent harness, load and follow
+[`.github/skills/azure-sdk-dotnet-code-review/SKILL.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/azure-sdk-dotnet-code-review/SKILL.md).
+It preserves general bug and correctness analysis while adding the repository-specific review
+rules.
+
 ### Community and Support
 
 - **GitHub Issues**: [Report bugs or request features](https://github.com/Azure/azure-sdk-for-net/issues/new/choose)
