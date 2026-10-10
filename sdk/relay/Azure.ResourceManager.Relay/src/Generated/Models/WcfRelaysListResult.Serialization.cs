@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Relay.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WcfRelaysListResult(value, nextLink, additionalBinaryDataProperties);
+            return new WcfRelaysListResult(value ?? new ChangeTrackingList<WcfRelayData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

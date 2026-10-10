@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.Relay
     [ModelReaderWriterBuildable(typeof(RelayAccessKeys))]
     [ModelReaderWriterBuildable(typeof(RelayAuthorizationRuleData))]
     [ModelReaderWriterBuildable(typeof(RelayClusterData))]
-    [ModelReaderWriterBuildable(typeof(RelayClusterListResult))]
     [ModelReaderWriterBuildable(typeof(RelayClusterPatch))]
     [ModelReaderWriterBuildable(typeof(RelayClusterProperties))]
     [ModelReaderWriterBuildable(typeof(RelayClusterResource))]

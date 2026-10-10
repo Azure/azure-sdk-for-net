@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ArmDeploymentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ArmDeploymentListResult(value ?? new ChangeTrackingList<ArmDeploymentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

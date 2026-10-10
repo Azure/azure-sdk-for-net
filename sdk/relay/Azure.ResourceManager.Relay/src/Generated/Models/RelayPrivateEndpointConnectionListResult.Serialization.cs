@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Relay.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RelayPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RelayPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

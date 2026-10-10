@@ -75,10 +75,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 throw new FormatException($"The model {nameof(ClusterUpdateProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (_publicNetworkAccessIsDefined || Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                if (PublicNetworkAccess != null)
+                {
+                    writer.WritePropertyName("publicNetworkAccess"u8);
+                    writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("publicNetworkAccess"u8);
+                }
             }
         }
 
@@ -119,6 +126,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
             string migratedEndpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool publicNetworkAccessIsDefined = false;
             RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,6 +224,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
                 {
+                    publicNetworkAccessIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         publicNetworkAccess = null;
@@ -242,7 +251,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(),
                 migratedEndpoint,
                 additionalBinaryDataProperties,
-                publicNetworkAccess);
+                publicNetworkAccess)
+            {
+                _publicNetworkAccessIsDefined = publicNetworkAccessIsDefined
+            };
         }
     }
 }
