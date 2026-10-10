@@ -44,19 +44,43 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
 
         private ClientDiagnostics LicensesClientDiagnostics => _licensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Licenses LicensesRestClient => _licensesRestClient ??= new Licenses(LicensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15");
+        private Licenses LicensesRestClient => _licensesRestClient ??= new Licenses(
+            LicensesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics MachinesClientDiagnostics => _machinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Machines MachinesRestClient => _machinesRestClient ??= new Machines(MachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15");
+        private Machines MachinesRestClient => _machinesRestClient ??= new Machines(
+            MachinesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics GatewaysClientDiagnostics => _gatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Gateways GatewaysRestClient => _gatewaysRestClient ??= new Gateways(GatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15");
+        private Gateways GatewaysRestClient => _gatewaysRestClient ??= new Gateways(
+            GatewaysClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics PrivateLinkScopesClientDiagnostics => _privateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(PrivateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15");
+        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(
+            PrivateLinkScopesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-15",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Gets a collection of HybridComputeExtensionValues in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(ResourceType, out string hybridComputeLicenseApiVersion);
             _licensesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _licensesRestClient = new Licenses(_licensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeLicenseApiVersion ?? "2026-07-15");
+            _licensesRestClient = new Licenses(
+                _licensesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hybridComputeLicenseApiVersion ?? "2026-07-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

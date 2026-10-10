@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.HDInsight.Mocking
 
         private ClientDiagnostics HDInsightClusterClientDiagnostics => _hdInsightClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HDInsightCluster HDInsightClusterRestClient => _hdInsightClusterRestClient ??= new HDInsightCluster(HDInsightClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-15-preview");
+        private HDInsightCluster HDInsightClusterRestClient => _hdInsightClusterRestClient ??= new HDInsightCluster(
+            HDInsightClusterClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-01-15-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

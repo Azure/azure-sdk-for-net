@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(ResourceType, out string arcGatewayApiVersion);
             _gatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, arcGatewayApiVersion ?? "2026-07-15");
+            _gatewaysRestClient = new Gateways(
+                _gatewaysClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                arcGatewayApiVersion ?? "2026-07-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -35,7 +35,13 @@ namespace Azure.ResourceManager.HealthBot.Mocking
 
         private ClientDiagnostics BotsClientDiagnostics => _botsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthBot.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Bots BotsRestClient => _botsRestClient ??= new Bots(BotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private Bots BotsRestClient => _botsRestClient ??= new Bots(
+            BotsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-11-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.
