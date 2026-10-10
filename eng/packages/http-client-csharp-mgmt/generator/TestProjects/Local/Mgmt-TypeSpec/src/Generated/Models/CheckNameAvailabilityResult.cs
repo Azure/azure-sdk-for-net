@@ -11,25 +11,25 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The CheckNameAvailabilityResponse. </summary>
-    public partial class CheckNameAvailabilityResponse
+    /// <summary> The CheckNameAvailabilityResult. </summary>
+    public partial class CheckNameAvailabilityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"></param>
-        internal CheckNameAvailabilityResponse(bool nameAvailable)
+        internal CheckNameAvailabilityResult(bool nameAvailable)
         {
             NameAvailable = nameAvailable;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"></param>
         /// <param name="reason"></param>
         /// <param name="message"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityResponse(bool nameAvailable, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CheckNameAvailabilityResult(bool nameAvailable, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NameAvailable = nameAvailable;
             Reason = reason;

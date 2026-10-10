@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
 {
-    /// <summary> The CheckAvailabilityResponse. </summary>
-    public partial class CheckAvailabilityResponse
+    /// <summary> The CheckAvailabilityResult. </summary>
+    public partial class CheckAvailabilityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CheckAvailabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckAvailabilityResult"/>. </summary>
         /// <param name="isAvailable"> Whether the name is available. </param>
-        internal CheckAvailabilityResponse(bool isAvailable)
+        internal CheckAvailabilityResult(bool isAvailable)
         {
             IsAvailable = isAvailable;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckAvailabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckAvailabilityResult"/>. </summary>
         /// <param name="isAvailable"> Whether the name is available. </param>
         /// <param name="reason"> Reason the name is not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckAvailabilityResponse(bool isAvailable, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CheckAvailabilityResult(bool isAvailable, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAvailable = isAvailable;
             Reason = reason;
