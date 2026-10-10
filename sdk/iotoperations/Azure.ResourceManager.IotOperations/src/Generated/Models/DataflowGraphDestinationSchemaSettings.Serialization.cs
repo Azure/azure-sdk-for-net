@@ -13,57 +13,57 @@ using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Cert-Manager issuerRef properties. </summary>
-    public partial class CertManagerIssuerRef : IJsonModel<CertManagerIssuerRef>
+    /// <summary> DataflowGraph destination node output schema settings. </summary>
+    public partial class DataflowGraphDestinationSchemaSettings : IJsonModel<DataflowGraphDestinationSchemaSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="CertManagerIssuerRef"/> for deserialization. </summary>
-        internal CertManagerIssuerRef()
+        /// <summary> Initializes a new instance of <see cref="DataflowGraphDestinationSchemaSettings"/> for deserialization. </summary>
+        internal DataflowGraphDestinationSchemaSettings()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CertManagerIssuerRef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DataflowGraphDestinationSchemaSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CertManagerIssuerRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowGraphDestinationSchemaSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCertManagerIssuerRef(document.RootElement, options);
+                        return DeserializeDataflowGraphDestinationSchemaSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertManagerIssuerRef)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataflowGraphDestinationSchemaSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CertManagerIssuerRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowGraphDestinationSchemaSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CertManagerIssuerRef)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataflowGraphDestinationSchemaSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CertManagerIssuerRef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataflowGraphDestinationSchemaSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CertManagerIssuerRef IPersistableModel<CertManagerIssuerRef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataflowGraphDestinationSchemaSettings IPersistableModel<DataflowGraphDestinationSchemaSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CertManagerIssuerRef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataflowGraphDestinationSchemaSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CertManagerIssuerRef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataflowGraphDestinationSchemaSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,20 +74,18 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CertManagerIssuerRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowGraphDestinationSchemaSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertManagerIssuerRef)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataflowGraphDestinationSchemaSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Group))
+            writer.WritePropertyName("serializationFormat"u8);
+            writer.WriteStringValue(SerializationFormat.ToString());
+            if (Optional.IsDefined(SchemaRef))
             {
-                writer.WritePropertyName("group"u8);
-                writer.WriteStringValue(Group);
+                writer.WritePropertyName("schemaRef"u8);
+                writer.WriteStringValue(SchemaRef);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -107,48 +105,42 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CertManagerIssuerRef IJsonModel<CertManagerIssuerRef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataflowGraphDestinationSchemaSettings IJsonModel<DataflowGraphDestinationSchemaSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CertManagerIssuerRef JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DataflowGraphDestinationSchemaSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CertManagerIssuerRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowGraphDestinationSchemaSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertManagerIssuerRef)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataflowGraphDestinationSchemaSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCertManagerIssuerRef(document.RootElement, options);
+            return DeserializeDataflowGraphDestinationSchemaSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CertManagerIssuerRef DeserializeCertManagerIssuerRef(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataflowGraphDestinationSchemaSettings DeserializeDataflowGraphDestinationSchemaSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @group = default;
-            CertManagerIssuerKind kind = default;
-            string name = default;
+            DataflowGraphDestinationSchemaSerializationFormat serializationFormat = default;
+            string schemaRef = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("group"u8))
+                if (prop.NameEquals("serializationFormat"u8))
                 {
-                    @group = prop.Value.GetString();
+                    serializationFormat = new DataflowGraphDestinationSchemaSerializationFormat(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("kind"u8))
+                if (prop.NameEquals("schemaRef"u8))
                 {
-                    kind = new CertManagerIssuerKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
+                    schemaRef = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +148,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CertManagerIssuerRef(@group, kind, name, additionalBinaryDataProperties);
+            return new DataflowGraphDestinationSchemaSettings(serializationFormat, schemaRef, additionalBinaryDataProperties);
         }
     }
 }

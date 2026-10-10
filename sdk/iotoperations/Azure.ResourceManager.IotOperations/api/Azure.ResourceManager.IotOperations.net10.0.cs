@@ -637,6 +637,7 @@ namespace Azure.ResourceManager.IotOperations
         public Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.IotOperations.Models.InstanceSkuName? SkuName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1309,7 +1310,9 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationHeaderAction DataflowGraphDestinationHeaderAction(string actionType = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationNode DataflowGraphDestinationNode(string name = null, Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationNodeSettings destinationSettings = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationNodeSettings DataflowGraphDestinationNodeSettings(string endpointRef = null, string dataDestination = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationHeaderAction> headers = null) { throw null; }
+        public static Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationNodeSettings DataflowGraphDestinationNodeSettings(string endpointRef, string dataDestination, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationHeaderAction> headers, Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings outputSchemaSettings) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationRemoveHeaderAction DataflowGraphDestinationRemoveHeaderAction(string key = null) { throw null; }
+        public static Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings DataflowGraphDestinationSchemaSettings(Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat serializationFormat = default(Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat), string schemaRef = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.DataflowGraphGraphNode DataflowGraphGraphNode(string name = null, Azure.ResourceManager.IotOperations.Models.DataflowGraphNodeGraphSettings graphSettings = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.DataflowGraphGraphNodeConfiguration DataflowGraphGraphNodeConfiguration(string key = null, string value = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.DataflowGraphNode DataflowGraphNode(string name = null, string nodeType = null) { throw null; }
@@ -1362,6 +1365,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProperties IotOperationsDataflowProperties(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? mode = default(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode?), Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? requestDiskPersistence = default(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.DataflowOperationProperties> operations = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), Azure.ResourceManager.IotOperations.Models.ResourceHealthState? healthState = default(Azure.ResourceManager.IotOperations.Models.ResourceHealthState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation IotOperationsExtendedLocation(string name = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocationType type = default(Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocationType)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsInstanceData IotOperationsInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.IotOperations.IotOperationsInstanceData IotOperationsInstanceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties properties, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.IotOperations.Models.InstanceSkuName? skuName) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeature IotOperationsInstanceFeature(Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode? mode = default(Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceFeatureMode?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode> settings = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstancePatch IotOperationsInstancePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties IotOperationsInstanceProperties(string description, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState, string version, Azure.Core.ResourceIdentifier schemaRegistryRefResourceId) { throw null; }
@@ -2034,6 +2038,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     }
     public partial class CertManagerIssuerRef : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.CertManagerIssuerRef>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.CertManagerIssuerRef>
     {
+        public CertManagerIssuerRef(Azure.ResourceManager.IotOperations.Models.CertManagerIssuerKind kind, string name) { }
         public CertManagerIssuerRef(string group, Azure.ResourceManager.IotOperations.Models.CertManagerIssuerKind kind, string name) { }
         public string Group { get { throw null; } set { } }
         public Azure.ResourceManager.IotOperations.Models.CertManagerIssuerKind Kind { get { throw null; } set { } }
@@ -2779,6 +2784,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public string DataDestination { get { throw null; } set { } }
         public string EndpointRef { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationHeaderAction> Headers { get { throw null; } }
+        public Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings OutputSchemaSettings { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationNodeSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationNodeSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2802,6 +2808,38 @@ namespace Azure.ResourceManager.IotOperations.Models
         Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationRemoveHeaderAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationRemoveHeaderAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationRemoveHeaderAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationRemoveHeaderAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataflowGraphDestinationSchemaSerializationFormat : System.IEquatable<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataflowGraphDestinationSchemaSerializationFormat(string value) { throw null; }
+        public static Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat Delta { get { throw null; } }
+        public static Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat Parquet { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat left, Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat left, Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DataflowGraphDestinationSchemaSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings>
+    {
+        public DataflowGraphDestinationSchemaSettings(Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat serializationFormat) { }
+        public string SchemaRef { get { throw null; } set { } }
+        public Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSerializationFormat SerializationFormat { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphDestinationSchemaSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataflowGraphGraphNode : Azure.ResourceManager.IotOperations.Models.DataflowGraphNode, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphGraphNode>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowGraphGraphNode>
     {
@@ -3148,6 +3186,23 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static implicit operator Azure.ResourceManager.IotOperations.Models.HighPriorityMessagesBackpressureHandling (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.IotOperations.Models.HighPriorityMessagesBackpressureHandling? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.IotOperations.Models.HighPriorityMessagesBackpressureHandling left, Azure.ResourceManager.IotOperations.Models.HighPriorityMessagesBackpressureHandling right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InstanceSkuName : System.IEquatable<Azure.ResourceManager.IotOperations.Models.InstanceSkuName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InstanceSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.IotOperations.Models.InstanceSkuName Essentials { get { throw null; } }
+        public static Azure.ResourceManager.IotOperations.Models.InstanceSkuName Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotOperations.Models.InstanceSkuName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotOperations.Models.InstanceSkuName left, Azure.ResourceManager.IotOperations.Models.InstanceSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotOperations.Models.InstanceSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotOperations.Models.InstanceSkuName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotOperations.Models.InstanceSkuName left, Azure.ResourceManager.IotOperations.Models.InstanceSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class IotOperationsAkriConnectorProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.IotOperationsAkriConnectorProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.IotOperationsAkriConnectorProperties>

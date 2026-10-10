@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointDataLakeStorage"/>. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
-        /// <param name="host"> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net . </param>
+        /// <param name="host"> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net (Azure Public) or &lt;account&gt;.blob.core.usgovcloudapi.net (Azure US Government). This will be validated by the regex `.*\.blob\.core\.(windows\.net|usgovcloudapi\.net)`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authentication"/> or <paramref name="host"/> is null. </exception>
         public DataflowEndpointDataLakeStorage(DataflowEndpointDataLakeStorageAuthentication authentication, string host)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointDataLakeStorage"/>. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
-        /// <param name="host"> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net . </param>
+        /// <param name="host"> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net (Azure Public) or &lt;account&gt;.blob.core.usgovcloudapi.net (Azure US Government). This will be validated by the regex `.*\.blob\.core\.(windows\.net|usgovcloudapi\.net)`. </param>
         /// <param name="batching"> Azure Data Lake endpoint batching configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DataflowEndpointDataLakeStorage(DataflowEndpointDataLakeStorageAuthentication authentication, string host, IotOperationsBatchingConfig batching, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Authentication configuration. NOTE - only authentication property is allowed per entry. </summary>
         public DataflowEndpointDataLakeStorageAuthentication Authentication { get; set; }
 
-        /// <summary> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net . </summary>
+        /// <summary> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net (Azure Public) or &lt;account&gt;.blob.core.usgovcloudapi.net (Azure US Government). This will be validated by the regex `.*\.blob\.core\.(windows\.net|usgovcloudapi\.net)`. </summary>
         public string Host { get; set; }
 
         /// <summary> Azure Data Lake endpoint batching configuration. </summary>

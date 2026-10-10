@@ -35,12 +35,14 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="endpointRef"> The name of the DataflowEndpoint resource . </param>
         /// <param name="dataDestination"> Data destination at the endpoint. </param>
         /// <param name="headers"> Headers for the output data. </param>
+        /// <param name="outputSchemaSettings"> Output schema settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowGraphDestinationNodeSettings(string endpointRef, string dataDestination, IList<DataflowGraphDestinationHeaderAction> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataflowGraphDestinationNodeSettings(string endpointRef, string dataDestination, IList<DataflowGraphDestinationHeaderAction> headers, DataflowGraphDestinationSchemaSettings outputSchemaSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointRef = endpointRef;
             DataDestination = dataDestination;
             Headers = headers;
+            OutputSchemaSettings = outputSchemaSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,5 +54,8 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Headers for the output data. </summary>
         public IList<DataflowGraphDestinationHeaderAction> Headers { get; }
+
+        /// <summary> Output schema settings. </summary>
+        public DataflowGraphDestinationSchemaSettings OutputSchemaSettings { get; set; }
     }
 }
