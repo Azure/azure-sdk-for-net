@@ -779,6 +779,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionSettings BackupVaultEncryptionSettings(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionState? state = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionState?), System.Uri keyUri = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultCmkKekIdentity kekIdentity = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultInfrastructureEncryptionState? infrastructureEncryption = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultInfrastructureEncryptionState?)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultFeatureSettings BackupVaultFeatureSettings(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState? crossSubscriptionRestoreState = default(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState?), Azure.ResourceManager.DataProtectionBackup.Models.CrossRegionRestoreState? crossRegionRestoreState = default(Azure.ResourceManager.DataProtectionBackup.Models.CrossRegionRestoreState?)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultResourceMoveDetails BackupVaultResourceMoveDetails(string operationId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? completeOn = default(System.DateTimeOffset?), string sourceResourcePath = null, string targetResourcePath = null) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecuritySettings BackupVaultSecuritySettings(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteSettings softDeleteSettings, Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings immutabilitySettings, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionSettings encryptionSettings) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecuritySettings BackupVaultSecuritySettings(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteSettings softDeleteSettings = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState? immutabilityState = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState?), Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionSettings encryptionSettings = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteSettings BackupVaultSoftDeleteSettings(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteState? state = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteState?), double? retentionDurationInDays = default(double?)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BaseResourceProperties BaseResourceProperties(string objectType = null) { throw null; }
@@ -801,6 +802,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDeleteSetting DataProtectionBackupDeleteSetting(System.TimeSpan duration = default(System.TimeSpan), string objectType = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, System.DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, System.DateTimeOffset? expireOn) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = null, System.DateTimeOffset recoverOn = default(System.DateTimeOffset), string policyName = null, string policyVersion = null, string recoveryPointId = null, string recoveryPointType = null, string retentionTagName = null, string retentionTagVersion = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState?)) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, System.DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, System.DateTimeOffset? expireOn, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState? recoveryPointState, Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties immutabilityProperties) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInnerError DataProtectionBackupInnerError(System.Collections.Generic.IDictionary<string, string> additionalInfo = null, string code = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInnerError embeddedInnerError = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceData DataProtectionBackupInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo dataSourceInfo, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo dataSourceSetInfo, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo policyInfo, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceProtectionStatusDetails protectionStatus, Azure.ResourceManager.DataProtectionBackup.Models.CurrentProtectionState? currentProtectionState, Azure.ResponseError protectionErrorDetails, string provisioningState, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials dataSourceAuthCredentials, Azure.ResourceManager.DataProtectionBackup.Models.BackupValidationType? validationType, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionIdentityDetails identityDetails, string objectType) { throw null; }
@@ -861,6 +863,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.GenericBackupDataSourceSettings GenericBackupDataSourceSettings(System.Collections.Generic.IEnumerable<string> resourceSelectors = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.GenericRestoreDataSourceCriteria GenericRestoreDataSourceCriteria(Azure.ResourceManager.DataProtectionBackup.Models.ResourceListSelectionCriteria resourceSelectors = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.ImmediateCopySetting ImmediateCopySetting() { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration ImmutabilityConfiguration(Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType? type = default(Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType?), int? durationInDays = default(int?)) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings ImmutabilitySettings(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState? state = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState?), Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration configuration = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.ItemLevelRestoreCriteria ItemLevelRestoreCriteria(string objectType = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.ItemLevelRestoreTargetInfo ItemLevelRestoreTargetInfo(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting recoverySetting = default(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting), Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.ItemLevelRestoreCriteria> restoreCriteria = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceInfo datasourceInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.DataSourceSetInfo datasourceSetInfo = null, Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials datasourceAuthCredentials = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem, System.Collections.Generic.IEnumerable<string> subItemPathPrefix) { throw null; }
@@ -872,8 +876,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.KubernetesStorageClassRestoreCriteria KubernetesStorageClassRestoreCriteria(string selectedStorageClassName = null, string provisioner = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.NamespacedName NamespacedName(string name = null, string @namespace = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.OperationalDataStoreSettings OperationalDataStoreSettings(Azure.ResourceManager.DataProtectionBackup.Models.DataStoreType dataStoreType = default(Azure.ResourceManager.DataProtectionBackup.Models.DataStoreType), Azure.Core.ResourceIdentifier resourceGroupId = null) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings PostgreSqlFlexibleServerBackupDataSourceSettings(Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType? backupSolutionType = default(Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType?)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RangeBasedItemLevelRestoreCriteria RangeBasedItemLevelRestoreCriteria(string minMatchingValue = null, string maxMatchingValue = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail RecoveryPointDataStoreDetail(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.Guid? recoveryPointDataStoreId = default(System.Guid?), string metadata = null, string state = null, string recoveryPointDataStoreType = null, bool? isVisible = default(bool?), System.DateTimeOffset? rehydrationExpireOn = default(System.DateTimeOffset?), Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus? rehydrationStatus = default(Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus?)) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties RecoveryPointImmutabilityProperties(bool isImmutable = false, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardData ResourceGuardData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardOperationDetail ResourceGuardOperationDetail(string vaultCriticalOperation = null, string defaultResourceRequest = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardOperationDetails ResourceGuardOperationDetails(string vaultCriticalOperation = null, Azure.Core.ResourceType? requestResourceType = default(Azure.Core.ResourceType?)) { throw null; }
@@ -1307,6 +1313,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreWithRehydrationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreWithRehydrationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupSolutionType : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupSolutionType(string value) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType LogicalBackup { get { throw null; } }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType PhysicalBackup { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType left, Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType left, Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BackupSupportedFeature : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeature>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupSupportedFeature>
     {
         internal BackupSupportedFeature() { }
@@ -1555,6 +1578,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         public BackupVaultSecuritySettings() { }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionSettings EncryptionSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings ImmutabilitySettings { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState? ImmutabilityState { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteSettings SoftDeleteSettings { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecuritySettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2013,6 +2037,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public DataProtectionBackupDiscreteRecoveryPointProperties(System.DateTimeOffset recoverOn) { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties ImmutabilityProperties { get { throw null; } }
         public string PolicyName { get { throw null; } set { } }
         public string PolicyVersion { get { throw null; } set { } }
         public System.DateTimeOffset RecoverOn { get { throw null; } set { } }
@@ -2845,6 +2870,53 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmediateCopySetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmediateCopySetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ImmutabilityConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration>
+    {
+        public ImmutabilityConfiguration() { }
+        public int? DurationInDays { get { throw null; } set { } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType? Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ImmutabilitySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings>
+    {
+        public ImmutabilitySettings() { }
+        public Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityConfiguration Configuration { get { throw null; } set { } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState? State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImmutabilityType : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImmutabilityType(string value) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType AsPerPolicy { get { throw null; } }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType TimeBased { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType left, Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType left, Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class ItemLevelRestoreCriteria : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.ItemLevelRestoreCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.ItemLevelRestoreCriteria>
     {
         protected ItemLevelRestoreCriteria() { }
@@ -3057,6 +3129,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode left, Azure.ResourceManager.DataProtectionBackup.Models.PersistentVolumeRestoreMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PostgreSqlFlexibleServerBackupDataSourceSettings : Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings>
+    {
+        public PostgreSqlFlexibleServerBackupDataSourceSettings() { }
+        public Azure.ResourceManager.DataProtectionBackup.Models.BackupSolutionType? BackupSolutionType { get { throw null; } set { } }
+        protected override Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.PostgreSqlFlexibleServerBackupDataSourceSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RangeBasedItemLevelRestoreCriteria : Azure.ResourceManager.DataProtectionBackup.Models.ItemLevelRestoreCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.RangeBasedItemLevelRestoreCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.RangeBasedItemLevelRestoreCriteria>
     {
         public RangeBasedItemLevelRestoreCriteria() { }
@@ -3113,6 +3199,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static implicit operator Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus left, Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RecoveryPointImmutabilityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties>
+    {
+        internal RecoveryPointImmutabilityProperties() { }
+        public System.DateTimeOffset? ExpiryOn { get { throw null; } }
+        public bool IsImmutable { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointImmutabilityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecoverySetting : System.IEquatable<Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting>

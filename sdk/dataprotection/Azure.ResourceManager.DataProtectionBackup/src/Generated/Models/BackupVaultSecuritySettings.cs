@@ -38,26 +38,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public BackupVaultSoftDeleteSettings SoftDeleteSettings { get; set; }
 
         /// <summary> Immutability Settings at vault level. </summary>
-        internal ImmutabilitySettings ImmutabilitySettings { get; set; }
+        public ImmutabilitySettings ImmutabilitySettings { get; set; }
 
         /// <summary> Customer Managed Key details of the resource. </summary>
         public BackupVaultEncryptionSettings EncryptionSettings { get; set; }
-
-        /// <summary> Immutability state. </summary>
-        public BackupVaultImmutabilityState? ImmutabilityState
-        {
-            get
-            {
-                return ImmutabilitySettings is null ? default : ImmutabilitySettings.State;
-            }
-            set
-            {
-                if (ImmutabilitySettings is null)
-                {
-                    ImmutabilitySettings = new ImmutabilitySettings();
-                }
-                ImmutabilitySettings.State = value;
-            }
-        }
     }
 }

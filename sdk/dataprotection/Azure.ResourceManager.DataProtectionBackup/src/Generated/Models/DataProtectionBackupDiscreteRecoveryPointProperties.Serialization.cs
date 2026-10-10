@@ -137,6 +137,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("recoveryPointState"u8);
                 writer.WriteStringValue(RecoveryPointState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ImmutabilityProperties))
+            {
+                writer.WritePropertyName("immutabilityProperties"u8);
+                writer.WriteObjectValue(ImmutabilityProperties, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -177,6 +182,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string retentionTagVersion = default;
             DateTimeOffset? expireOn = default;
             DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default;
+            RecoveryPointImmutabilityProperties immutabilityProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("objectType"u8))
@@ -256,6 +262,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     recoveryPointState = new DataProtectionBackupRecoveryPointCompletionState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("immutabilityProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    immutabilityProperties = RecoveryPointImmutabilityProperties.DeserializeRecoveryPointImmutabilityProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -274,7 +289,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 retentionTagName,
                 retentionTagVersion,
                 expireOn,
-                recoveryPointState);
+                recoveryPointState,
+                immutabilityProperties);
         }
     }
 }
