@@ -1,0 +1,6 @@
+directory: specification/apimanagement/resource-manager/Microsoft.ApiManagement/AIGateway
+commit: 2335fe5db98171e7a78d08e712920b1869c536ce
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

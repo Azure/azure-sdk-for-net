@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.AIGateway.csproj" />
+  <Project Path="tests/Azure.ResourceManager.AIGateway.Tests.csproj" />
+</Solution>
