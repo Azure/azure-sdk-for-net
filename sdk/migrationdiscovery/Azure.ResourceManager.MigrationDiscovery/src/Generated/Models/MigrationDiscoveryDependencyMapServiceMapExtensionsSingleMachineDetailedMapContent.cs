@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
 
         /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent"/>. </summary>
         /// <param name="machineId"> id of machine. </param>
-        /// <param name="startOn"> start time. </param>
-        /// <param name="endOn"> end time. </param>
+        /// <param name="startsOn"> start time. </param>
+        /// <param name="endsOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(string machineId, DateTimeOffset? startOn, DateTimeOffset? endOn, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(string machineId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MachineId = machineId;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Filters = filters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string MachineId { get; set; }
 
         /// <summary> start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> end time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> optional filters. </summary>
         public MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get; set; }

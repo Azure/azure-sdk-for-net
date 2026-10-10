@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <summary> Gets or sets the SQL start time. </summary>
-        public DateTimeOffset? SqlStartOn
+        public DateTimeOffset? SqlStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.SqlStartOn;
+                return Properties is null ? default : Properties.SqlStartsOn;
             }
             set
             {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 {
                     Properties = new SqlServerV2UpdateProperties();
                 }
-                Properties.SqlStartOn = value;
+                Properties.SqlStartsOn = value;
             }
         }
 

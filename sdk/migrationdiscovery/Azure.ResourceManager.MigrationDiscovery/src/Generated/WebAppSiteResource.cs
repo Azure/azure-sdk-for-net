@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new WebApplicationsControllerGetWebApplicationsByWebAppSiteAsyncCollectionResultOfT(
+            return new WebApplicationAsyncCollectionResultOfT(
                 _webApplicationsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new WebApplicationsControllerGetWebApplicationsByWebAppSiteCollectionResultOfT(
+            return new WebApplicationCollectionResultOfT(
                 _webApplicationsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new WebServersControllerGetWebServersByWebAppSiteAsyncCollectionResultOfT(
+            return new WebServerAsyncCollectionResultOfT(
                 _webServersControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1146,7 +1146,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new WebServersControllerGetWebServersByWebAppSiteCollectionResultOfT(
+            return new WebServerCollectionResultOfT(
                 _webServersControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MigrationDiscoveryVcenterData, MigrationDiscoveryVcenterResource>(new VcenterControllerGetByVmwareSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MigrationDiscoveryVcenterData, MigrationDiscoveryVcenterResource>(new MigrationDiscoveryVcenterDataAsyncCollectionResultOfT(
                 _vcenterControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MigrationDiscoveryVcenterData, MigrationDiscoveryVcenterResource>(new VcenterControllerGetByVmwareSiteCollectionResultOfT(
+            return new PageableWrapper<MigrationDiscoveryVcenterData, MigrationDiscoveryVcenterResource>(new MigrationDiscoveryVcenterDataCollectionResultOfT(
                 _vcenterControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

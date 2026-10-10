@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VmwareRunAsAccountData, VmwareRunAsAccountResource>(new RunAsAccountsControllerGetByVmwareSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VmwareRunAsAccountData, VmwareRunAsAccountResource>(new VmwareRunAsAccountDataAsyncCollectionResultOfT(
                 _runAsAccountsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VmwareRunAsAccountData, VmwareRunAsAccountResource>(new RunAsAccountsControllerGetByVmwareSiteCollectionResultOfT(
+            return new PageableWrapper<VmwareRunAsAccountData, VmwareRunAsAccountResource>(new VmwareRunAsAccountDataCollectionResultOfT(
                 _runAsAccountsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

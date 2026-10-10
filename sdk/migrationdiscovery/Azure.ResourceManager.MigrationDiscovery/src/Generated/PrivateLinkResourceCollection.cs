@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MigrationDiscoveryPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinkResourcesControllerGetByMasterSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MigrationDiscoveryPrivateLinkResourceData, PrivateLinkResource>(new MigrationDiscoveryPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MigrationDiscoveryPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinkResourcesControllerGetByMasterSiteCollectionResultOfT(
+            return new PageableWrapper<MigrationDiscoveryPrivateLinkResourceData, PrivateLinkResource>(new MigrationDiscoveryPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

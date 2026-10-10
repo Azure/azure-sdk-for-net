@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerV2Data, SqlServerV2Resource>(new SqlServersControllerGetBySqlSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerV2Data, SqlServerV2Resource>(new SqlServerV2DataAsyncCollectionResultOfT(
                 _sqlServersControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerV2Data, SqlServerV2Resource>(new SqlServersControllerGetBySqlSiteCollectionResultOfT(
+            return new PageableWrapper<SqlServerV2Data, SqlServerV2Resource>(new SqlServerV2DataCollectionResultOfT(
                 _sqlServersControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebAppExtendedMachineData, WebAppExtendedMachineResource>(new WebAppExtendedMachinesControllerGetByWebAppSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebAppExtendedMachineData, WebAppExtendedMachineResource>(new WebAppExtendedMachineDataAsyncCollectionResultOfT(
                 _webAppExtendedMachinesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebAppExtendedMachineData, WebAppExtendedMachineResource>(new WebAppExtendedMachinesControllerGetByWebAppSiteCollectionResultOfT(
+            return new PageableWrapper<WebAppExtendedMachineData, WebAppExtendedMachineResource>(new WebAppExtendedMachineDataCollectionResultOfT(
                 _webAppExtendedMachinesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

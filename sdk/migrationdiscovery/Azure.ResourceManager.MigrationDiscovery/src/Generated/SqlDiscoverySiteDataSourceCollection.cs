@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlDiscoverySiteDataSourceData, SqlDiscoverySiteDataSourceResource>(new SqlDiscoverySiteDataSourceControllerGetBySqlSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlDiscoverySiteDataSourceData, SqlDiscoverySiteDataSourceResource>(new SqlDiscoverySiteDataSourceDataAsyncCollectionResultOfT(
                 _sqlDiscoverySiteDataSourceControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlDiscoverySiteDataSourceData, SqlDiscoverySiteDataSourceResource>(new SqlDiscoverySiteDataSourceControllerGetBySqlSiteCollectionResultOfT(
+            return new PageableWrapper<SqlDiscoverySiteDataSourceData, SqlDiscoverySiteDataSourceResource>(new SqlDiscoverySiteDataSourceDataCollectionResultOfT(
                 _sqlDiscoverySiteDataSourceControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

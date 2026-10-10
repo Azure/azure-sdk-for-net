@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VmwareHostData, VmwareHostResource>(new VmwareHostControllerGetByVmwareSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VmwareHostData, VmwareHostResource>(new VmwareHostDataAsyncCollectionResultOfT(
                 _vmwareHostControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VmwareHostData, VmwareHostResource>(new VmwareHostControllerGetByVmwareSiteCollectionResultOfT(
+            return new PageableWrapper<VmwareHostData, VmwareHostResource>(new VmwareHostDataCollectionResultOfT(
                 _vmwareHostControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

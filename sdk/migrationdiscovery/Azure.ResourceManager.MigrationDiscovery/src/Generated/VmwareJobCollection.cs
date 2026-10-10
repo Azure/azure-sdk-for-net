@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VmwareJobData, VmwareJobResource>(new HypervJobsControllerGetByVmwareSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VmwareJobData, VmwareJobResource>(new VmwareJobDataAsyncCollectionResultOfT(
                 _hypervJobsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VmwareJobData, VmwareJobResource>(new HypervJobsControllerGetByVmwareSiteCollectionResultOfT(
+            return new PageableWrapper<VmwareJobData, VmwareJobResource>(new VmwareJobDataCollectionResultOfT(
                 _hypervJobsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

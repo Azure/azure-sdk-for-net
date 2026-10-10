@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("numberOfMachinesImported"u8);
                 writer.WriteNumberValue(NumberOfMachinesImported.Value);
             }
-            if (Optional.IsDefined(BlobCreationTimeStamp))
+            if (Optional.IsDefined(BlobCreatedOn))
             {
                 writer.WritePropertyName("blobCreationTimeStamp"u8);
-                writer.WriteStringValue(BlobCreationTimeStamp.Value, "O");
+                writer.WriteStringValue(BlobCreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ErrorSummary))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             string blobSasUri = default;
             JobResult? jobResult = default;
             int? numberOfMachinesImported = default;
-            DateTimeOffset? blobCreationTimeStamp = default;
+            DateTimeOffset? blobCreatedOn = default;
             JobErrorSummary errorSummary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    blobCreationTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    blobCreatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("errorSummary"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ImportMachinesJobProperties(
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 blobSasUri,
                 jobResult,
                 numberOfMachinesImported,
-                blobCreationTimeStamp,
+                blobCreatedOn,
                 errorSummary,
                 additionalBinaryDataProperties);
         }

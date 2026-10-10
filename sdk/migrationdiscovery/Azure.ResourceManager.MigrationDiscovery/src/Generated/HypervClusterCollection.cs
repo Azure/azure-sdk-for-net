@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HypervClusterData, HypervClusterResource>(new HypervClusterControllerGetByHypervSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HypervClusterData, HypervClusterResource>(new HypervClusterDataAsyncCollectionResultOfT(
                 _hypervClusterControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HypervClusterData, HypervClusterResource>(new HypervClusterControllerGetByHypervSiteCollectionResultOfT(
+            return new PageableWrapper<HypervClusterData, HypervClusterResource>(new HypervClusterDataCollectionResultOfT(
                 _hypervClusterControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

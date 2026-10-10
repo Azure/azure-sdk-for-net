@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServerSoftwareInventoryData, ServerSoftwareInventoryResource>(new ServerSoftwareInventoriesControllerGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServerSoftwareInventoryData, ServerSoftwareInventoryResource>(new ServerSoftwareInventoryDataAsyncCollectionResultOfT(
                 _serverSoftwareInventoriesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServerSoftwareInventoryData, ServerSoftwareInventoryResource>(new ServerSoftwareInventoriesControllerGetByServerCollectionResultOfT(
+            return new PageableWrapper<ServerSoftwareInventoryData, ServerSoftwareInventoryResource>(new ServerSoftwareInventoryDataCollectionResultOfT(
                 _serverSoftwareInventoriesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TomcatWebApplicationsData, TomcatWebApplicationsResource>(new TomcatWebApplicationsControllerGetByWebAppSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TomcatWebApplicationsData, TomcatWebApplicationsResource>(new TomcatWebApplicationsDataAsyncCollectionResultOfT(
                 _tomcatWebApplicationsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TomcatWebApplicationsData, TomcatWebApplicationsResource>(new TomcatWebApplicationsControllerGetByWebAppSiteCollectionResultOfT(
+            return new PageableWrapper<TomcatWebApplicationsData, TomcatWebApplicationsResource>(new TomcatWebApplicationsDataCollectionResultOfT(
                 _tomcatWebApplicationsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

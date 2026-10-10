@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebAppRunAsAccountData, WebAppRunAsAccountResource>(new WebAppRunAsAccountsControllerGetByWebAppSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebAppRunAsAccountData, WebAppRunAsAccountResource>(new WebAppRunAsAccountDataAsyncCollectionResultOfT(
                 _webAppRunAsAccountsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebAppRunAsAccountData, WebAppRunAsAccountResource>(new WebAppRunAsAccountsControllerGetByWebAppSiteCollectionResultOfT(
+            return new PageableWrapper<WebAppRunAsAccountData, WebAppRunAsAccountResource>(new WebAppRunAsAccountDataCollectionResultOfT(
                 _webAppRunAsAccountsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

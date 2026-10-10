@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="currentVersion"> current version. </param>
         /// <param name="esuStatus"> esu status. </param>
         /// <param name="supportStatus"> support status. </param>
-        /// <param name="supportEndOn"> support end date. </param>
+        /// <param name="supportEndsOn"> support end date. </param>
         /// <param name="esuYear"> esu year. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProductSupportStatus(string currentVersion, EsuStatus? esuStatus, SupportStatus? supportStatus, DateTimeOffset? supportEndOn, EsuYear? esuYear, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProductSupportStatus(string currentVersion, EsuStatus? esuStatus, SupportStatus? supportStatus, DateTimeOffset? supportEndsOn, EsuYear? esuYear, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentVersion = currentVersion;
             EsuStatus = esuStatus;
             SupportStatus = supportStatus;
-            SupportEndOn = supportEndOn;
+            SupportEndsOn = supportEndsOn;
             EsuYear = esuYear;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public SupportStatus? SupportStatus { get; set; }
 
         /// <summary> support end date. </summary>
-        public DateTimeOffset? SupportEndOn { get; set; }
+        public DateTimeOffset? SupportEndsOn { get; set; }
 
         /// <summary> esu year. </summary>
         public EsuYear? EsuYear { get; set; }

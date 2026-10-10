@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSitesControllerGetByResourceGroupAsyncCollectionResultOfT(_serverSitesControllerRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServerSiteCollection.GetAll"), data => new ServerSiteResource(Client, data));
+            return new AsyncPageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSiteDataAsyncCollectionResultOfT(_serverSitesControllerRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServerSiteCollection.GetAll"), data => new ServerSiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSitesControllerGetByResourceGroupCollectionResultOfT(_serverSitesControllerRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServerSiteCollection.GetAll"), data => new ServerSiteResource(Client, data));
+            return new PageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSiteDataCollectionResultOfT(_serverSitesControllerRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServerSiteCollection.GetAll"), data => new ServerSiteResource(Client, data));
         }
 
         /// <summary>

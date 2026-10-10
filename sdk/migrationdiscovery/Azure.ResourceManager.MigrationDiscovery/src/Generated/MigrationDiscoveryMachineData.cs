@@ -303,11 +303,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// of the
         /// machine.
         /// </summary>
-        public DateTimeOffset? GuestDetailsDiscoveryTimestamp
+        public DateTimeOffset? GuestDetailsDiscoveryOn
         {
             get
             {
-                return Properties is null ? default : Properties.GuestDetailsDiscoveryTimestamp;
+                return Properties is null ? default : Properties.GuestDetailsDiscoveryOn;
             }
         }
 
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.MigrationDiscovery
         }
 
         /// <summary> Gets or sets when dependency mapping collection is last started. </summary>
-        public DateTimeOffset? DependencyMappingStartOn
+        public DateTimeOffset? DependencyMappingStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.DependencyMappingStartOn;
+                return Properties is null ? default : Properties.DependencyMappingStartsOn;
             }
         }
 

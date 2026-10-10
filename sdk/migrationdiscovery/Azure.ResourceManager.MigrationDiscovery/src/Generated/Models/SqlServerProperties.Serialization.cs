@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("hyperthreadRatio"u8);
                 writer.WriteNumberValue(HyperthreadRatio.Value);
             }
-            if (Optional.IsDefined(SqlStartOn))
+            if (Optional.IsDefined(SqlStartsOn))
             {
                 writer.WritePropertyName("sqlStartTime"u8);
-                writer.WriteStringValue(SqlStartOn.Value, "O");
+                writer.WriteStringValue(SqlStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MachineArmIds))
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             bool? isHighAvailabilityEnabled = default;
             bool? isClustered = default;
             int? hyperthreadRatio = default;
-            DateTimeOffset? sqlStartOn = default;
+            DateTimeOffset? sqlStartsOn = default;
             IReadOnlyList<string> machineArmIds = default;
             string runAsAccountId = default;
             string hydratedRunAsAccountId = default;
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    sqlStartOn = prop.Value.GetDateTimeOffset("O");
+                    sqlStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("machineArmIds"u8))
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     tags = dictionary;
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SqlServerProperties(
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 isHighAvailabilityEnabled,
                 isClustered,
                 hyperthreadRatio,
-                sqlStartOn,
+                sqlStartsOn,
                 machineArmIds ?? new ChangeTrackingList<string>(),
                 runAsAccountId,
                 hydratedRunAsAccountId,

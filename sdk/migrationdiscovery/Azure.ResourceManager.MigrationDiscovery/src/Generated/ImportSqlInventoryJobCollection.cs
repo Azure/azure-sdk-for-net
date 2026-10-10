@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImportSqlInventoryJobData, ImportSqlInventoryJobResource>(new SqlImportJobsControllerGetImportjobsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImportSqlInventoryJobData, ImportSqlInventoryJobResource>(new ImportSqlInventoryJobDataAsyncCollectionResultOfT(
                 _sqlImportJobsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImportSqlInventoryJobData, ImportSqlInventoryJobResource>(new SqlImportJobsControllerGetImportjobsCollectionResultOfT(
+            return new PageableWrapper<ImportSqlInventoryJobData, ImportSqlInventoryJobResource>(new ImportSqlInventoryJobDataCollectionResultOfT(
                 _sqlImportJobsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

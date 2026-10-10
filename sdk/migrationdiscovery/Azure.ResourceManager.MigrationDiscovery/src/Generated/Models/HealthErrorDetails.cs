@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="severity"> Gets the error severity. </param>
         /// <param name="summaryMessage"> Gets the error summary message. </param>
         /// <param name="source"> Gets the error source. </param>
-        /// <param name="updatedTimeStamp"> Gets the time stamp when the error was updated. </param>
+        /// <param name="updatedOn"> Gets the time stamp when the error was updated. </param>
         /// <param name="runAsAccountId"> Gets run as account id used while performing discovery             of entity. </param>
         /// <param name="discoveryScope"> Gets discovery scope for which             error is encountered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthErrorDetails(string message, IReadOnlyDictionary<string, string> messageParameters, string applianceName, long? id, string code, string possibleCauses, string recommendedAction, string severity, string summaryMessage, HealthErrorDetailsSource? source, DateTimeOffset? updatedTimeStamp, string runAsAccountId, HealthErrorDetailsDiscoveryScope? discoveryScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthErrorDetails(string message, IReadOnlyDictionary<string, string> messageParameters, string applianceName, long? id, string code, string possibleCauses, string recommendedAction, string severity, string summaryMessage, HealthErrorDetailsSource? source, DateTimeOffset? updatedOn, string runAsAccountId, HealthErrorDetailsDiscoveryScope? discoveryScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
             MessageParameters = messageParameters;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             Severity = severity;
             SummaryMessage = summaryMessage;
             Source = source;
-            UpdatedTimeStamp = updatedTimeStamp;
+            UpdatedOn = updatedOn;
             RunAsAccountId = runAsAccountId;
             DiscoveryScope = discoveryScope;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public HealthErrorDetailsSource? Source { get; }
 
         /// <summary> Gets the time stamp when the error was updated. </summary>
-        public DateTimeOffset? UpdatedTimeStamp { get; }
+        public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> Gets run as account id used while performing discovery             of entity. </summary>
         public string RunAsAccountId { get; }

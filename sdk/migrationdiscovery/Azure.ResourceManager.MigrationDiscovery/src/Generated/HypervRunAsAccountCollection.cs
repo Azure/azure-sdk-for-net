@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HypervRunAsAccountData, HypervRunAsAccountResource>(new HypervRunAsAccountsControllerGetByHypervSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HypervRunAsAccountData, HypervRunAsAccountResource>(new HypervRunAsAccountDataAsyncCollectionResultOfT(
                 _hypervRunAsAccountsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HypervRunAsAccountData, HypervRunAsAccountResource>(new HypervRunAsAccountsControllerGetByHypervSiteCollectionResultOfT(
+            return new PageableWrapper<HypervRunAsAccountData, HypervRunAsAccountResource>(new HypervRunAsAccountDataCollectionResultOfT(
                 _hypervRunAsAccountsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

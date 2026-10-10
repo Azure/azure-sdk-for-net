@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VmwareSiteData, VmwareSiteResource>(new SitesControllerGetByResourceGroupAsyncCollectionResultOfT(_sitesControllerRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VmwareSiteCollection.GetAll"), data => new VmwareSiteResource(Client, data));
+            return new AsyncPageableWrapper<VmwareSiteData, VmwareSiteResource>(new VmwareSiteDataAsyncCollectionResultOfT(_sitesControllerRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VmwareSiteCollection.GetAll"), data => new VmwareSiteResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VmwareSiteData, VmwareSiteResource>(new SitesControllerGetByResourceGroupCollectionResultOfT(_sitesControllerRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VmwareSiteCollection.GetAll"), data => new VmwareSiteResource(Client, data));
+            return new PageableWrapper<VmwareSiteData, VmwareSiteResource>(new VmwareSiteDataCollectionResultOfT(_sitesControllerRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "VmwareSiteCollection.GetAll"), data => new VmwareSiteResource(Client, data));
         }
 
         /// <summary>

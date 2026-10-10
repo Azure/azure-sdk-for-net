@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImportSiteData, ImportSiteResource>(new ImportSitesControllerGetBySubscriptionAsyncCollectionResultOfT(ImportSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetImportSites"), data => new ImportSiteResource(Client, data));
+            return new AsyncPageableWrapper<ImportSiteData, ImportSiteResource>(new ImportSiteDataAsync0CollectionResultOfT(ImportSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetImportSites"), data => new ImportSiteResource(Client, data));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImportSiteData, ImportSiteResource>(new ImportSitesControllerGetBySubscriptionCollectionResultOfT(ImportSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetImportSites"), data => new ImportSiteResource(Client, data));
+            return new PageableWrapper<ImportSiteData, ImportSiteResource>(new ImportSiteData0CollectionResultOfT(ImportSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetImportSites"), data => new ImportSiteResource(Client, data));
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MasterSiteData, MasterSiteResource>(new MasterSitesControllerGetBySubscriptionAsyncCollectionResultOfT(MasterSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetMasterSites"), data => new MasterSiteResource(Client, data));
+            return new AsyncPageableWrapper<MasterSiteData, MasterSiteResource>(new MasterSiteDataAsync0CollectionResultOfT(MasterSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetMasterSites"), data => new MasterSiteResource(Client, data));
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MasterSiteData, MasterSiteResource>(new MasterSitesControllerGetBySubscriptionCollectionResultOfT(MasterSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetMasterSites"), data => new MasterSiteResource(Client, data));
+            return new PageableWrapper<MasterSiteData, MasterSiteResource>(new MasterSiteData0CollectionResultOfT(MasterSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetMasterSites"), data => new MasterSiteResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSitesControllerGetBySubscriptionAsyncCollectionResultOfT(ServerSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetServerSites"), data => new ServerSiteResource(Client, data));
+            return new AsyncPageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSiteDataAsync0CollectionResultOfT(ServerSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetServerSites"), data => new ServerSiteResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSitesControllerGetBySubscriptionCollectionResultOfT(ServerSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetServerSites"), data => new ServerSiteResource(Client, data));
+            return new PageableWrapper<ServerSiteData, ServerSiteResource>(new ServerSiteData0CollectionResultOfT(ServerSitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetServerSites"), data => new ServerSiteResource(Client, data));
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VmwareSiteData, VmwareSiteResource>(new SitesControllerGetBySubscriptionAsyncCollectionResultOfT(SitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetVmwareSites"), data => new VmwareSiteResource(Client, data));
+            return new AsyncPageableWrapper<VmwareSiteData, VmwareSiteResource>(new VmwareSiteDataAsync0CollectionResultOfT(SitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetVmwareSites"), data => new VmwareSiteResource(Client, data));
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VmwareSiteData, VmwareSiteResource>(new SitesControllerGetBySubscriptionCollectionResultOfT(SitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetVmwareSites"), data => new VmwareSiteResource(Client, data));
+            return new PageableWrapper<VmwareSiteData, VmwareSiteResource>(new VmwareSiteData0CollectionResultOfT(SitesControllerRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetVmwareSites"), data => new VmwareSiteResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HypervSiteData, HypervSiteResource>(new HypervSitesGetBySubscriptionAsyncCollectionResultOfT(HypervSitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetHypervSites"), data => new HypervSiteResource(Client, data));
+            return new AsyncPageableWrapper<HypervSiteData, HypervSiteResource>(new HypervSiteDataAsync0CollectionResultOfT(HypervSitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetHypervSites"), data => new HypervSiteResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HypervSiteData, HypervSiteResource>(new HypervSitesGetBySubscriptionCollectionResultOfT(HypervSitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetHypervSites"), data => new HypervSiteResource(Client, data));
+            return new PageableWrapper<HypervSiteData, HypervSiteResource>(new HypervSiteData0CollectionResultOfT(HypervSitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySubscriptionResource.GetHypervSites"), data => new HypervSiteResource(Client, data));
         }
     }
 }

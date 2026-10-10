@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImportMachineData, ImportMachineResource>(new ImportMachinesControllerGetByImportSiteAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImportMachineData, ImportMachineResource>(new ImportMachineDataAsyncCollectionResultOfT(
                 _importMachinesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImportMachineData, ImportMachineResource>(new ImportMachinesControllerGetByImportSiteCollectionResultOfT(
+            return new PageableWrapper<ImportMachineData, ImportMachineResource>(new ImportMachineDataCollectionResultOfT(
                 _importMachinesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

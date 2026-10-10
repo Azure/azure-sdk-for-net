@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HypervVmSoftwareInventoryData, HypervVmSoftwareInventoryResource>(new HypervSoftwareInventoriesControllerGetByHypervMachineAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HypervVmSoftwareInventoryData, HypervVmSoftwareInventoryResource>(new HypervVmSoftwareInventoryDataAsyncCollectionResultOfT(
                 _hypervSoftwareInventoriesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HypervVmSoftwareInventoryData, HypervVmSoftwareInventoryResource>(new HypervSoftwareInventoriesControllerGetByHypervMachineCollectionResultOfT(
+            return new PageableWrapper<HypervVmSoftwareInventoryData, HypervVmSoftwareInventoryResource>(new HypervVmSoftwareInventoryDataCollectionResultOfT(
                 _hypervSoftwareInventoriesControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

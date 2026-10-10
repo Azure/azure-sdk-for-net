@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImportMachinesJobContent, ImportMachinesJobResource>(new ImportJobsControllerGetImportjobsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImportMachinesJobContent, ImportMachinesJobResource>(new ImportMachinesJobContentAsyncCollectionResultOfT(
                 _importJobsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImportMachinesJobContent, ImportMachinesJobResource>(new ImportJobsControllerGetImportjobsCollectionResultOfT(
+            return new PageableWrapper<ImportMachinesJobContent, ImportMachinesJobResource>(new ImportMachinesJobContentCollectionResultOfT(
                 _importJobsControllerRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
