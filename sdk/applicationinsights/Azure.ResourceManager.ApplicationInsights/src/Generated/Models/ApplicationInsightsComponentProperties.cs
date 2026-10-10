@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="ingestionMode"> Indicates the flow of the ingestion. </param>
         /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
         /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
+        /// <param name="azureMonitorWorkspaceResourceId"> Resource Id of the Azure Monitor workspace which the OpenTelemetry data will be ingested to. </param>
+        /// <param name="azureMonitorWorkspaceIngestionMode"> Indicates the state of the OpenTelemetry ingestion into the linked Azure Monitor workspace. Clients may set this to `NotOptedIn` or `Enabled`; `Disabled` is set only by the service when the link to the Azure Monitor workspace is broken. </param>
+        /// <param name="dataCollectionRuleResourceId"> Resource Id of the data collection rule that routes the OpenTelemetry data ingested through the OTLP endpoints of this component. </param>
+        /// <param name="otlpMetricsEndpoint"> The OTLP endpoint to which OpenTelemetry metrics for this component are sent. </param>
+        /// <param name="otlpLogsEndpoint"> The OTLP endpoint to which OpenTelemetry logs for this component are sent. </param>
+        /// <param name="otlpTracesEndpoint"> The OTLP endpoint to which OpenTelemetry traces for this component are sent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentProperties(string applicationId, string appId, string namePropertiesName, ApplicationInsightsApplicationType applicationType, ComponentFlowType? flowType, ComponentRequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, ResourceIdentifier workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, ComponentIngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsComponentProperties(string applicationId, string appId, string namePropertiesName, ApplicationInsightsApplicationType applicationType, ComponentFlowType? flowType, ComponentRequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, ResourceIdentifier workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, ComponentIngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, ResourceIdentifier azureMonitorWorkspaceResourceId, ComponentAzureMonitorWorkspaceIngestionMode? azureMonitorWorkspaceIngestionMode, ResourceIdentifier dataCollectionRuleResourceId, Uri otlpMetricsEndpoint, Uri otlpLogsEndpoint, Uri otlpTracesEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationId = applicationId;
             AppId = appId;
@@ -80,6 +86,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             IngestionMode = ingestionMode;
             IsDisableLocalAuth = isDisableLocalAuth;
             IsForceCustomerStorageForProfiler = isForceCustomerStorageForProfiler;
+            AzureMonitorWorkspaceResourceId = azureMonitorWorkspaceResourceId;
+            AzureMonitorWorkspaceIngestionMode = azureMonitorWorkspaceIngestionMode;
+            DataCollectionRuleResourceId = dataCollectionRuleResourceId;
+            OtlpMetricsEndpoint = otlpMetricsEndpoint;
+            OtlpLogsEndpoint = otlpLogsEndpoint;
+            OtlpTracesEndpoint = otlpTracesEndpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -182,5 +194,29 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Force users to create their own storage account for profiler and debugger. </summary>
         [WirePath("ForceCustomerStorageForProfiler")]
         public bool? IsForceCustomerStorageForProfiler { get; set; }
+
+        /// <summary> Resource Id of the Azure Monitor workspace which the OpenTelemetry data will be ingested to. </summary>
+        [WirePath("AzureMonitorWorkspaceResourceId")]
+        public ResourceIdentifier AzureMonitorWorkspaceResourceId { get; set; }
+
+        /// <summary> Indicates the state of the OpenTelemetry ingestion into the linked Azure Monitor workspace. Clients may set this to `NotOptedIn` or `Enabled`; `Disabled` is set only by the service when the link to the Azure Monitor workspace is broken. </summary>
+        [WirePath("AzureMonitorWorkspaceIngestionMode")]
+        public ComponentAzureMonitorWorkspaceIngestionMode? AzureMonitorWorkspaceIngestionMode { get; set; }
+
+        /// <summary> Resource Id of the data collection rule that routes the OpenTelemetry data ingested through the OTLP endpoints of this component. </summary>
+        [WirePath("DataCollectionRuleResourceId")]
+        public ResourceIdentifier DataCollectionRuleResourceId { get; }
+
+        /// <summary> The OTLP endpoint to which OpenTelemetry metrics for this component are sent. </summary>
+        [WirePath("OTLPMetricsEndpoint")]
+        public Uri OtlpMetricsEndpoint { get; }
+
+        /// <summary> The OTLP endpoint to which OpenTelemetry logs for this component are sent. </summary>
+        [WirePath("OTLPLogsEndpoint")]
+        public Uri OtlpLogsEndpoint { get; }
+
+        /// <summary> The OTLP endpoint to which OpenTelemetry traces for this component are sent. </summary>
+        [WirePath("OTLPTracesEndpoint")]
+        public Uri OtlpTracesEndpoint { get; }
     }
 }
