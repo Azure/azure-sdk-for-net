@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationGatewayFirewallRuleGroup(ruleGroupName, description, rules, additionalBinaryDataProperties);
+            return new ApplicationGatewayFirewallRuleGroup(ruleGroupName, description, rules ?? new ChangeTrackingList<ApplicationGatewayFirewallRule>(), additionalBinaryDataProperties);
         }
     }
 }

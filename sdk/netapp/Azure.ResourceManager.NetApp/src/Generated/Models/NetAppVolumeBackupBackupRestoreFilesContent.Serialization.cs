@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetAppVolumeBackupBackupRestoreFilesContent(fileList, restoreFilePath, destinationVolumeId, additionalBinaryDataProperties);
+            return new NetAppVolumeBackupBackupRestoreFilesContent(fileList ?? new ChangeTrackingList<string>(), restoreFilePath, destinationVolumeId, additionalBinaryDataProperties);
         }
     }
 }

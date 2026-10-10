@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class VirtualHubIpConfiguration
+    internal partial class VirtualHubIPConfiguration
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of VirtualHubIpConfiguration for mocking. </summary>
-        protected VirtualHubIpConfiguration()
+        /// <summary> Initializes a new instance of VirtualHubIPConfiguration for mocking. </summary>
+        protected VirtualHubIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualHubIpConfiguration. </summary>
+        /// <summary> Initializes a new instance of VirtualHubIPConfiguration. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal VirtualHubIpConfiguration(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal VirtualHubIPConfiguration(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(VirtualHubIpConfiguration).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(VirtualHubIPConfiguration).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListP2SVpnGatewaysResult(value, nextLink, additionalBinaryDataProperties);
+            return new ListP2SVpnGatewaysResult(value ?? new ChangeTrackingList<P2SVpnGatewayData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -14,64 +14,64 @@ using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> List of all active newrelic deployments. </summary>
-    internal partial class ConnectedPartnerResourcesListResponse : IJsonModel<ConnectedPartnerResourcesListResponse>
+    /// <summary> Response of get all organizations Operation. </summary>
+    internal partial class OrganizationsListResult : IJsonModel<OrganizationsListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourcesListResponse"/> for deserialization. </summary>
-        internal ConnectedPartnerResourcesListResponse()
+        /// <summary> Initializes a new instance of <see cref="OrganizationsListResult"/> for deserialization. </summary>
+        internal OrganizationsListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConnectedPartnerResourcesListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OrganizationsListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedPartnerResourcesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OrganizationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConnectedPartnerResourcesListResponse(document.RootElement, options);
+                        return DeserializeOrganizationsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedPartnerResourcesListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrganizationsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedPartnerResourcesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OrganizationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedPartnerResourcesListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrganizationsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConnectedPartnerResourcesListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OrganizationsListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectedPartnerResourcesListResponse IPersistableModel<ConnectedPartnerResourcesListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OrganizationsListResult IPersistableModel<OrganizationsListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConnectedPartnerResourcesListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OrganizationsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectedPartnerResourcesListResponse"/> from. </param>
-        internal static ConnectedPartnerResourcesListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OrganizationsListResult"/> from. </param>
+        internal static OrganizationsListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConnectedPartnerResourcesListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeOrganizationsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConnectedPartnerResourcesListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OrganizationsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedPartnerResourcesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OrganizationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedPartnerResourcesListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OrganizationsListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NewRelicConnectedPartnerResourceInfo item in Value)
+            foreach (NewRelicOrganizationResourceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectedPartnerResourcesListResponse IJsonModel<ConnectedPartnerResourcesListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OrganizationsListResult IJsonModel<OrganizationsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConnectedPartnerResourcesListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OrganizationsListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedPartnerResourcesListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OrganizationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedPartnerResourcesListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OrganizationsListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectedPartnerResourcesListResponse(document.RootElement, options);
+            return DeserializeOrganizationsListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConnectedPartnerResourcesListResponse DeserializeConnectedPartnerResourcesListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static OrganizationsListResult DeserializeOrganizationsListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<NewRelicConnectedPartnerResourceInfo> value = default;
+            IList<NewRelicOrganizationResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NewRelicConnectedPartnerResourceInfo> array = new List<NewRelicConnectedPartnerResourceInfo>();
+                    List<NewRelicOrganizationResourceData> array = new List<NewRelicOrganizationResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicConnectedPartnerResourceInfo.DeserializeNewRelicConnectedPartnerResourceInfo(item, options));
+                        array.Add(NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectedPartnerResourcesListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new OrganizationsListResult(value ?? new ChangeTrackingList<NewRelicOrganizationResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EffectiveNetworkSecurityGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EffectiveNetworkSecurityGroupListResult(value ?? new ChangeTrackingList<EffectiveNetworkSecurityGroup>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

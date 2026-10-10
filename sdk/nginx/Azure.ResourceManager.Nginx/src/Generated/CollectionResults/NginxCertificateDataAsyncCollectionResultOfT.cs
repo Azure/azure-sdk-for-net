@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> The pages of NginxCertificateDataAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<NginxCertificateData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     yield break;
                 }
-                NginxCertificateListResponse result = NginxCertificateListResponse.FromResponse(response);
+                NginxCertificateListResult result = NginxCertificateListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<NginxCertificateData>.FromValues((IReadOnlyList<NginxCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

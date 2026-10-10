@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SliSpatialAggregation(@type, dimensions, additionalBinaryDataProperties);
+            return new SliSpatialAggregation(@type, dimensions ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

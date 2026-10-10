@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceEndpointPolicyListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ServiceEndpointPolicyListResult(value ?? new ChangeTrackingList<ServiceEndpointPolicyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

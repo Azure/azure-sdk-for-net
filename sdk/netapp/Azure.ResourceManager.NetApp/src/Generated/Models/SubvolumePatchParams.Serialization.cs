@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(SubvolumePatchParams)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Size))
+            if (_sizeIsDefined || Optional.IsDefined(Size))
             {
-                writer.WritePropertyName("size"u8);
-                writer.WriteNumberValue(Size.Value);
+                if (Size != null)
+                {
+                    writer.WritePropertyName("size"u8);
+                    writer.WriteNumberValue(Size.Value);
+                }
+                else
+                {
+                    writer.WriteNull("size"u8);
+                }
             }
             if (Optional.IsDefined(Path))
             {
@@ -126,6 +133,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
+            bool sizeIsDefined = false;
             long? size = default;
             string path = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -133,6 +141,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (prop.NameEquals("size"u8))
                 {
+                    sizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         size = null;
@@ -151,7 +160,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubvolumePatchParams(size, path, additionalBinaryDataProperties);
+            return new SubvolumePatchParams(size, path, additionalBinaryDataProperties)
+            {
+                _sizeIsDefined = sizeIsDefined
+            };
         }
     }
 }

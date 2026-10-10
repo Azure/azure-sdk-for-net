@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Network.Mocking
         private ClientDiagnostics _networkManagersClientDiagnostics;
         private NetworkManagers _networkManagersRestClient;
         private ClientDiagnostics _ipAllocationsClientDiagnostics;
-        private IpAllocations _ipAllocationsRestClient;
+        private IPAllocations _ipAllocationsRestClient;
         private ClientDiagnostics _ipGroupsClientDiagnostics;
-        private IpGroups _ipGroupsRestClient;
+        private IPGroups _ipGroupsRestClient;
         private ClientDiagnostics _loadBalancersClientDiagnostics;
         private LoadBalancers _loadBalancersRestClient;
         private ClientDiagnostics _natGatewaysClientDiagnostics;
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private NetworkManagers NetworkManagersRestClient => _networkManagersRestClient ??= new NetworkManagers(NetworkManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
-        private ClientDiagnostics IpAllocationsClientDiagnostics => _ipAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics IPAllocationsClientDiagnostics => _ipAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpAllocations IpAllocationsRestClient => _ipAllocationsRestClient ??= new IpAllocations(IpAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private IPAllocations IPAllocationsRestClient => _ipAllocationsRestClient ??= new IPAllocations(IPAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
-        private ClientDiagnostics IpGroupsClientDiagnostics => _ipGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics IPGroupsClientDiagnostics => _ipGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpGroups IpGroupsRestClient => _ipGroupsRestClient ??= new IpGroups(IpGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private IPGroups IPGroupsRestClient => _ipGroupsRestClient ??= new IPGroups(IPGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics LoadBalancersClientDiagnostics => _loadBalancersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -1678,7 +1678,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IPAllocationData, IPAllocationResource>(new IPAllocationDataAsync0CollectionResultOfT(IpAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPAllocations"), data => new IPAllocationResource(Client, data));
+            return new AsyncPageableWrapper<IPAllocationData, IPAllocationResource>(new IPAllocationDataAsync0CollectionResultOfT(IPAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPAllocations"), data => new IPAllocationResource(Client, data));
         }
 
         /// <summary>
@@ -1706,7 +1706,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IPAllocationData, IPAllocationResource>(new IPAllocationData0CollectionResultOfT(IpAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPAllocations"), data => new IPAllocationResource(Client, data));
+            return new PageableWrapper<IPAllocationData, IPAllocationResource>(new IPAllocationData0CollectionResultOfT(IPAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPAllocations"), data => new IPAllocationResource(Client, data));
         }
 
         /// <summary>
@@ -1734,7 +1734,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IPGroupData, IPGroupResource>(new IPGroupDataAsync0CollectionResultOfT(IpGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPGroups"), data => new IPGroupResource(Client, data));
+            return new AsyncPageableWrapper<IPGroupData, IPGroupResource>(new IPGroupDataAsync0CollectionResultOfT(IPGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPGroups"), data => new IPGroupResource(Client, data));
         }
 
         /// <summary>
@@ -1762,7 +1762,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IPGroupData, IPGroupResource>(new IPGroupData0CollectionResultOfT(IpGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPGroups"), data => new IPGroupResource(Client, data));
+            return new PageableWrapper<IPGroupData, IPGroupResource>(new IPGroupData0CollectionResultOfT(IPGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIPGroups"), data => new IPGroupResource(Client, data));
         }
 
         /// <summary>

@@ -79,15 +79,29 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Size))
+            if (_sizeIsDefined || Optional.IsDefined(Size))
             {
-                writer.WritePropertyName("size"u8);
-                writer.WriteNumberValue(Size.Value);
+                if (Size != null)
+                {
+                    writer.WritePropertyName("size"u8);
+                    writer.WriteNumberValue(Size.Value);
+                }
+                else
+                {
+                    writer.WriteNull("size"u8);
+                }
             }
-            if (Optional.IsDefined(ParentPath))
+            if (_parentPathIsDefined || Optional.IsDefined(ParentPath))
             {
-                writer.WritePropertyName("parentPath"u8);
-                writer.WriteStringValue(ParentPath);
+                if (ParentPath != null)
+                {
+                    writer.WritePropertyName("parentPath"u8);
+                    writer.WriteStringValue(ParentPath);
+                }
+                else
+                {
+                    writer.WriteNull("parentPath"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -137,7 +151,9 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string path = default;
+            bool sizeIsDefined = false;
             long? size = default;
+            bool parentPathIsDefined = false;
             string parentPath = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,6 +166,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("size"u8))
                 {
+                    sizeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         size = null;
@@ -160,6 +177,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("parentPath"u8))
                 {
+                    parentPathIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         parentPath = null;
@@ -178,7 +196,11 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubvolumeProperties(path, size, parentPath, provisioningState, additionalBinaryDataProperties);
+            return new SubvolumeProperties(path, size, parentPath, provisioningState, additionalBinaryDataProperties)
+            {
+                _sizeIsDefined = sizeIsDefined,
+                _parentPathIsDefined = parentPathIsDefined
+            };
         }
     }
 }

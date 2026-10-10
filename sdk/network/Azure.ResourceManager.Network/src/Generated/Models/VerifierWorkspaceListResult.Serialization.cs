@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VerifierWorkspaceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VerifierWorkspaceListResult(value ?? new ChangeTrackingList<NetworkVerifierWorkspaceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

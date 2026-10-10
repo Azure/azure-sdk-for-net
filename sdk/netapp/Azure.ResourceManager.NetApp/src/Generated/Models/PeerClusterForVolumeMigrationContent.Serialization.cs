@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PeerClusterForVolumeMigrationContent(peerIPAddresses, additionalBinaryDataProperties);
+            return new PeerClusterForVolumeMigrationContent(peerIPAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

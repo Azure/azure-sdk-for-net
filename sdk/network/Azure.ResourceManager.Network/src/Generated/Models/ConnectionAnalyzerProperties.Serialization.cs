@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectionAnalyzerProperties(
                 source,
                 destination,
-                diagnosticOperations,
+                diagnosticOperations ?? new ChangeTrackingList<ConnectionAnalyzerDiagnosticOperation>(),
                 protocolSettings,
                 diagnosticOperationsSettings,
                 expiryInDays,

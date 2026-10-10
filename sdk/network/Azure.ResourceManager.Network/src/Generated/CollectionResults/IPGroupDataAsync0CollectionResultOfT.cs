@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network
 {
     internal partial class IPGroupDataAsync0CollectionResultOfT : AsyncPageable<IPGroupData>
     {
-        private readonly IpGroups _client;
+        private readonly IPGroups _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of IPGroupDataAsync0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The IpGroups client used to send requests. </param>
+        /// <param name="client"> The IPGroups client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public IPGroupDataAsync0CollectionResultOfT(IpGroups client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public IPGroupDataAsync0CollectionResultOfT(IPGroups client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> The pages of IPGroupDataAsync0CollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<IPGroupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);

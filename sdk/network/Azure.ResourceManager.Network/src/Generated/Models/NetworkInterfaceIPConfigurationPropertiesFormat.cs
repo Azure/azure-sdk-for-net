@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _privateIPAddressPrefixLength;
+        internal bool _privateIPAddressPrefixLengthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationPropertiesFormat"/>. </summary>
         public NetworkInterfaceIPConfigurationPropertiesFormat()
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
             LoadBalancerInboundNatRules = loadBalancerInboundNatRules;
             PrivateIPAddress = privateIPAddress;
-            PrivateIPAddressPrefixLength = privateIPAddressPrefixLength;
+            _privateIPAddressPrefixLength = privateIPAddressPrefixLength;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             PrivateIPAddressVersion = privateIPAddressVersion;
             Subnet = subnet;
@@ -91,7 +93,18 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </summary>
         [WirePath("privateIPAddressPrefixLength")]
-        public int? PrivateIPAddressPrefixLength { get; set; }
+        public int? PrivateIPAddressPrefixLength
+        {
+            get
+            {
+                return _privateIPAddressPrefixLength;
+            }
+            set
+            {
+                _privateIPAddressPrefixLength = value;
+                _privateIPAddressPrefixLengthIsDefined = true;
+            }
+        }
 
         /// <summary> The private IP address allocation method. </summary>
         [WirePath("privateIPAllocationMethod")]

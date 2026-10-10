@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubgroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SubgroupListResult(value ?? new ChangeTrackingList<InterconnectGroupSubgroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

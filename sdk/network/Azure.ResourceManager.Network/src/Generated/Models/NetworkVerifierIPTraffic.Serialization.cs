@@ -268,11 +268,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             return new NetworkVerifierIPTraffic(
-                sourceIPs,
-                destinationIPs,
-                sourcePorts,
-                destinationPorts,
-                protocols,
+                sourceIPs ?? new ChangeTrackingList<string>(),
+                destinationIPs ?? new ChangeTrackingList<string>(),
+                sourcePorts ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<NetworkProtocol>(),
                 additionalBinaryDataProperties);
         }
     }

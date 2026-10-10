@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FlowLogListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FlowLogListResult(value ?? new ChangeTrackingList<FlowLogData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

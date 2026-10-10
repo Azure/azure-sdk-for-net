@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> The pages of NewRelicObservabilityVmInfoAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<NewRelicObservabilityVmInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     yield break;
                 }
-                VMHostsListResponse result = VMHostsListResponse.FromResponse(response);
+                VMHostsListResult result = VMHostsListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<NewRelicObservabilityVmInfo>.FromValues((IReadOnlyList<NewRelicObservabilityVmInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

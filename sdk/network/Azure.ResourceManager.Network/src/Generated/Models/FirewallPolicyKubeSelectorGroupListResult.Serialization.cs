@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FirewallPolicyKubeSelectorGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FirewallPolicyKubeSelectorGroupListResult(value ?? new ChangeTrackingList<FirewallPolicyKubeSelectorGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

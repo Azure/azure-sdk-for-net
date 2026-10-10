@@ -12,33 +12,33 @@ using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Response of get all plan data Operation. </summary>
-    internal partial class PlanDataListResponse
+    /// <summary> Response of a list app services Operation. </summary>
+    internal partial class AppServicesListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PlanDataListResponse"/>. </summary>
-        /// <param name="value"> The PlanDataResource items on this page. </param>
-        internal PlanDataListResponse(IEnumerable<NewRelicPlanData> value)
+        /// <summary> Initializes a new instance of <see cref="AppServicesListResult"/>. </summary>
+        /// <param name="value"> The AppServiceInfo items on this page. </param>
+        internal AppServicesListResult(IEnumerable<NewRelicObservabilityAppServiceInfo> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlanDataListResponse"/>. </summary>
-        /// <param name="value"> The PlanDataResource items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="AppServicesListResult"/>. </summary>
+        /// <param name="value"> The AppServiceInfo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlanDataListResponse(IList<NewRelicPlanData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServicesListResult(IList<NewRelicObservabilityAppServiceInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The PlanDataResource items on this page. </summary>
+        /// <summary> The AppServiceInfo items on this page. </summary>
         [WirePath("value")]
-        public IList<NewRelicPlanData> Value { get; }
+        public IList<NewRelicObservabilityAppServiceInfo> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

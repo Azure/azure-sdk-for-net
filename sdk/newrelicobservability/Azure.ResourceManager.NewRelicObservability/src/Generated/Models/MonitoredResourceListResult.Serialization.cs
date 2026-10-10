@@ -15,63 +15,63 @@ using Azure.ResourceManager.NewRelicObservability;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> List of all the resources being monitored by NewRelic monitor resource. </summary>
-    internal partial class MonitoredResourceListResponse : IJsonModel<MonitoredResourceListResponse>
+    internal partial class MonitoredResourceListResult : IJsonModel<MonitoredResourceListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/> for deserialization. </summary>
-        internal MonitoredResourceListResponse()
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResult"/> for deserialization. </summary>
+        internal MonitoredResourceListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitoredResourceListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MonitoredResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonitoredResourceListResponse(document.RootElement, options);
+                        return DeserializeMonitoredResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitoredResourceListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitoredResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitoredResourceListResponse IPersistableModel<MonitoredResourceListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitoredResourceListResult IPersistableModel<MonitoredResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitoredResourceListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitoredResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MonitoredResourceListResponse"/> from. </param>
-        internal static MonitoredResourceListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MonitoredResourceListResult"/> from. </param>
+        internal static MonitoredResourceListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMonitoredResourceListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMonitoredResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitoredResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitoredResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResourceListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitoredResourceListResponse IJsonModel<MonitoredResourceListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitoredResourceListResult IJsonModel<MonitoredResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitoredResourceListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MonitoredResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResourceListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitoredResourceListResponse(document.RootElement, options);
+            return DeserializeMonitoredResourceListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MonitoredResourceListResponse DeserializeMonitoredResourceListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitoredResourceListResult DeserializeMonitoredResourceListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitoredResourceListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new MonitoredResourceListResult(value ?? new ChangeTrackingList<NewRelicResourceMonitorResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

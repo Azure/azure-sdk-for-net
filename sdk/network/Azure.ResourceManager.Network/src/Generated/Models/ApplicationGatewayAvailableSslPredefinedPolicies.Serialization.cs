@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationGatewayAvailableSslPredefinedPolicies(value, nextLink, additionalBinaryDataProperties);
+            return new ApplicationGatewayAvailableSslPredefinedPolicies(value ?? new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

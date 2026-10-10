@@ -12,33 +12,33 @@ using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Response of get all accounts Operation. </summary>
-    internal partial class AccountsListResponse
+    /// <summary> List of all active newrelic deployments. </summary>
+    internal partial class ConnectedPartnerResourcesListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccountsListResponse"/>. </summary>
-        /// <param name="value"> The AccountResource items on this page. </param>
-        internal AccountsListResponse(IEnumerable<NewRelicAccountResourceData> value)
+        /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourcesListResult"/>. </summary>
+        /// <param name="value"> The ConnectedPartnerResourcesListFormat items on this page. </param>
+        internal ConnectedPartnerResourcesListResult(IEnumerable<NewRelicConnectedPartnerResourceInfo> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountsListResponse"/>. </summary>
-        /// <param name="value"> The AccountResource items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourcesListResult"/>. </summary>
+        /// <param name="value"> The ConnectedPartnerResourcesListFormat items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountsListResponse(IList<NewRelicAccountResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedPartnerResourcesListResult(IList<NewRelicConnectedPartnerResourceInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The AccountResource items on this page. </summary>
+        /// <summary> The ConnectedPartnerResourcesListFormat items on this page. </summary>
         [WirePath("value")]
-        public IList<NewRelicAccountResourceData> Value { get; }
+        public IList<NewRelicConnectedPartnerResourceInfo> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
