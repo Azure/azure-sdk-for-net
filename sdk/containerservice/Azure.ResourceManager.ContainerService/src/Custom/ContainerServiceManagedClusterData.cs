@@ -139,5 +139,18 @@ namespace Azure.ResourceManager.ContainerService
                 Properties.LinuxProfile = value;
             }
         }
+
+        /// <summary> Settings for overrides when upgrading a cluster. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public UpgradeOverrideSettings UpgradeOverrideSettings
+        {
+            get => UpgradeSettings is null ? default : UpgradeSettings.OverrideSettings;
+            set
+            {
+                if (UpgradeSettings is null)
+                    UpgradeSettings = new ClusterUpgradeSettings();
+                UpgradeSettings.OverrideSettings = value;
+            }
+        }
     }
 }

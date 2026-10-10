@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Settings for upgrading a cluster. </summary>
-    internal partial class ClusterUpgradeSettings
+    public partial class ClusterUpgradeSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,15 +24,39 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ClusterUpgradeSettings"/>. </summary>
         /// <param name="overrideSettings"> Settings for overrides. </param>
+        /// <param name="upgradeGateSettings"> Settings for upgrade gating on upgrades in this managed cluster. Health signals are `HealthSignal` custom resources published by monitoring components running in the cluster. Setting `enabled` to `true` here is a cluster-wide opt-in that applies to all agent pool upgrades in this cluster; an agent pool cannot opt out of it. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterUpgradeSettings(UpgradeOverrideSettings overrideSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterUpgradeSettings(UpgradeOverrideSettings overrideSettings, UpgradeGateSettings upgradeGateSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OverrideSettings = overrideSettings;
+            UpgradeGateSettings = upgradeGateSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Settings for overrides. </summary>
         [WirePath("overrideSettings")]
         public UpgradeOverrideSettings OverrideSettings { get; set; }
+
+        /// <summary> Settings for upgrade gating on upgrades in this managed cluster. Health signals are `HealthSignal` custom resources published by monitoring components running in the cluster. Setting `enabled` to `true` here is a cluster-wide opt-in that applies to all agent pool upgrades in this cluster; an agent pool cannot opt out of it. </summary>
+        [WirePath("upgradeGateSettings")]
+        internal UpgradeGateSettings UpgradeGateSettings { get; set; }
+
+        /// <summary> Whether upgrade gating is enabled. Defaults to `false` when unset, except on a newly created agent pool in a cluster where upgrade gating is enabled, which defaults to `true`. When `true`, upgrade-gated health checks are enabled for upgrades in the corresponding scope. Setting this to `true` at the cluster scope enables gating for the entire cluster, including all agent pool upgrades. When the cluster scope is unset or `false`, an agent pool can opt in independently by setting this to `true`. When the cluster scope is `true`, an agent pool cannot set this to `false`. Force upgrade (`overrideSettings.forceUpgrade`) overrides the gate: while the override window is active, the upgrade skips health signal validation and proceeds. </summary>
+        [WirePath("upgradeGateSettings.enabled")]
+        public bool? UpgradeGateSettingsEnabled
+        {
+            get
+            {
+                return UpgradeGateSettings is null ? default : UpgradeGateSettings.Enabled;
+            }
+            set
+            {
+                if (UpgradeGateSettings is null)
+                {
+                    UpgradeGateSettings = new UpgradeGateSettings();
+                }
+                UpgradeGateSettings.Enabled = value;
+            }
+        }
     }
 }
