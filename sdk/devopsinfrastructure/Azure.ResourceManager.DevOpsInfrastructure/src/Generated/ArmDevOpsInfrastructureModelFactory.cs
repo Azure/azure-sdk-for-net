@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             organizations ??= new ChangeTrackingList<DevOpsGitHubOrganization>();
 
-            return new DevOpsGitHubOrganizationProfile(default, default, (organizations ?? new ChangeTrackingList<DevOpsGitHubOrganization>()).ToList());
+            return new DevOpsGitHubOrganizationProfile("GitHub", default, (organizations ?? new ChangeTrackingList<DevOpsGitHubOrganization>()).ToList());
         }
 
         /// <summary> Defines a GitHub organization. </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             organizations ??= new ChangeTrackingList<DevOpsOrganization>();
 
             return new DevOpsAzureOrganizationProfile(
-                default,
+                "AzureDevOps",
                 default,
                 description,
                 updateDescription,
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.ResourcePredictionsProfile"/> instance for mocking. </returns>
         public static ResourcePredictionsProfile ResourcePredictionsProfile(string kind = default)
         {
-            return new UnknownResourcePredictionsProfile(default, default);
+            return new UnknownResourcePredictionsProfile(kind is null ? default : new ResourcePredictionsProfileType(kind), default);
         }
 
         /// <summary> Customer provides the stand-by agent scheme. </summary>
         /// <returns> A new <see cref="Models.ManualResourcePredictionsProfile"/> instance for mocking. </returns>
         public static ManualResourcePredictionsProfile ManualResourcePredictionsProfile()
         {
-            return new ManualResourcePredictionsProfile(default, default);
+            return new ManualResourcePredictionsProfile(ResourcePredictionsProfileType.Manual, default);
         }
 
         /// <summary> The stand-by agent scheme is determined based on historical demand. </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.AutomaticResourcePredictionsProfile"/> instance for mocking. </returns>
         public static AutomaticResourcePredictionsProfile AutomaticResourcePredictionsProfile(PredictionPreference? predictionPreference = default)
         {
-            return new AutomaticResourcePredictionsProfile(default, default, predictionPreference);
+            return new AutomaticResourcePredictionsProfile(ResourcePredictionsProfileType.Automatic, default, predictionPreference);
         }
 
         /// <summary> Stateless profile meaning that the machines will be cleaned up after running a job. </summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.DevOpsStatelessAgentProfile"/> instance for mocking. </returns>
         public static DevOpsStatelessAgentProfile DevOpsStatelessAgentProfile(ResourcePredictions resourcePredictions = default, ResourcePredictionsProfile resourcePredictionsProfile = default)
         {
-            return new DevOpsStatelessAgentProfile(default, resourcePredictions, resourcePredictionsProfile, default);
+            return new DevOpsStatelessAgentProfile("Stateless", resourcePredictions, resourcePredictionsProfile, default);
         }
 
         /// <summary> Stateful profile meaning that the machines will be returned to the pool after running a job. </summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static DevOpsStateful DevOpsStateful(ResourcePredictions resourcePredictions = default, ResourcePredictionsProfile resourcePredictionsProfile = default, string maxAgentLifetime = default, string gracePeriodTimeSpan = default)
         {
             return new DevOpsStateful(
-                default,
+                "Stateful",
                 resourcePredictions,
                 resourcePredictionsProfile,
                 default,
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             images ??= new ChangeTrackingList<DevOpsPoolVmImage>();
 
             return new DevOpsVmssFabricProfile(
-                default,
+                "Vmss",
                 default,
                 sku,
                 (images ?? new ChangeTrackingList<DevOpsPoolVmImage>()).ToList(),
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
         {
             return new DevOpsAzureOrganizationProfile(
-                default,
+                "AzureDevOps",
                 default,
                 default,
                 default,
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(string skuName = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
         {
             return new DevOpsVmssFabricProfile(
-                default,
+                "Vmss",
                 default,
                 skuName is null ? default : new DevOpsAzureSku(skuName, default, default, default, default),
                 (images ?? new ChangeTrackingList<DevOpsPoolVmImage>()).ToList(),
