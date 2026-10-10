@@ -1,0 +1,47 @@
+# Builds a data-only archive, then uses the authenticated Azure CLI to publish it.
+parameters:
+  - name: publishDashboardResults
+    type: boolean
+    default: false
+
+steps:
+  - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+    parameters:
+      npmrcPath: $(Build.SourcesDirectory)/.npmrc
+      CustomCondition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
+
+  - script: npm ci --omit=dev --ignore-scripts --userconfig "$(Build.SourcesDirectory)/.npmrc"
+    displayName: 'Install archive dependency'
+    workingDirectory: eng/common/scripts/eval/publisher
+    condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
+
+  - script: |
+      set -euo pipefail
+      organization="${SYSTEM_COLLECTIONURI%/}"
+      node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/bundle.ts" \
+        --index "$(Pipeline.Workspace)/eval-results/shard-index.json" \
+        --summary "$(Build.ArtifactStagingDirectory)/eval-summary/eval-summary.md" \
+        --output "$(Build.ArtifactStagingDirectory)/eval-summary/dashboard-bundle.zip" \
+        --organization "${organization##*/}" --project "$SYSTEM_TEAMPROJECT" \
+        --repository "$BUILD_REPOSITORY_NAME" --pipeline "$BUILD_DEFINITIONNAME" \
+        --definition-id "$SYSTEM_DEFINITIONID" --build-id "$BUILD_BUILDID" \
+        --attempt "$SYSTEM_JOBATTEMPT" --branch "$BUILD_SOURCEBRANCH" --source-version "$BUILD_SOURCEVERSION"
+    displayName: 'Prepare one complete build result bundle'
+    condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
+
+  # Pipeline-owned account configuration is a runtime value, not a template parameter.
+  # Missing configuration skips the task; PRs/foreign repos/non-main never get this task.
+  - ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}:
+    - task: AzureCLI@2
+      displayName: 'Publish saved build bundle directly to Blob'
+      condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'), ne(variables['EvalStorageAccountName'], ''), eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual'))
+      timeoutInMinutes: 20
+      inputs:
+        azureSubscription: eval-dashboard-sc
+        scriptType: pscore
+        scriptLocation: scriptPath
+        scriptPath: $(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/Publish-EvalResults.ps1
+        arguments: >-
+          -StorageAccountName "$(EvalStorageAccountName)"
+          -BundlePath "$(Build.ArtifactStagingDirectory)/eval-summary/dashboard-bundle.zip"
+          -ResultPath "$(Build.ArtifactStagingDirectory)/eval-summary/storage-publication-result.json"

@@ -1,0 +1,16 @@
+{
+  "name": "@azure-tools/eval-result-publisher",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Data-only Vally result bundling; Azure CLI performs publication. No evaluator or dashboard runtime.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test test/*.test.ts && pwsh -NoProfile -Command \"Invoke-Pester -Path ../../../../common-tests/eval/Publish-EvalResults.Tests.ps1 -CI\""
+  },
+  "dependencies": {
+    "fflate": "0.8.3"
+  }
+}
