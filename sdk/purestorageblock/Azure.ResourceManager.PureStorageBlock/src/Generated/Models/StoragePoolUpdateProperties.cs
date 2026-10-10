@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> The updatable properties of the StoragePool. </summary>
-    internal partial class StoragePoolUpdateProperties
+    public partial class StoragePoolUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +23,19 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Initializes a new instance of <see cref="StoragePoolUpdateProperties"/>. </summary>
         /// <param name="provisionedBandwidthMbPerSec"> Total bandwidth provisioned for the pool, in MB/s. </param>
+        /// <param name="platformConsoleSettings"> Platform console access settings for the storage pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StoragePoolUpdateProperties(long? provisionedBandwidthMbPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StoragePoolUpdateProperties(long? provisionedBandwidthMbPerSec, PlatformConsoleSettings platformConsoleSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisionedBandwidthMbPerSec = provisionedBandwidthMbPerSec;
+            PlatformConsoleSettings = platformConsoleSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Total bandwidth provisioned for the pool, in MB/s. </summary>
         public long? ProvisionedBandwidthMbPerSec { get; set; }
+
+        /// <summary> Platform console access settings for the storage pool. </summary>
+        public PlatformConsoleSettings PlatformConsoleSettings { get; set; }
     }
 }
