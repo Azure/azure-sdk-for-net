@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new AlertRuleKind(kind),
                 etag,
                 default);
         }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.MLBehaviorAnalytics,
                 eTag,
                 default,
                 alertRuleTemplateName is null && description is null && displayName is null && isEnabled is null && lastModifiedOn is null && severity is null && tactics is null && techniques is null && subTechniques is null ? default : new MlBehaviorAnalyticsAlertRuleProperties(
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.Fusion,
                 eTag,
                 default,
                 alertRuleTemplateName is null && description is null && displayName is null && isEnabled is null && sourceSettings is null && scenarioExclusionPatterns is null && lastModifiedOn is null && severity is null && tactics is null && techniques is null && subTechniques is null ? default : new FusionAlertRuleProperties(
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.ThreatIntelligence,
                 eTag,
                 default,
                 alertRuleTemplateName is null && description is null && displayName is null && isEnabled is null && lastModifiedOn is null && severity is null && tactics is null && techniques is null && subTechniques is null ? default : new ThreatIntelligenceAlertRuleProperties(
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.MicrosoftSecurityIncidentCreation,
                 etag,
                 default,
                 displayNamesFilter is null && displayNamesExcludeFilter is null && productFilter is null && severitiesFilter is null && alertRuleTemplateName is null && description is null && displayName is null && isEnabled is null && lastModifiedOn is null ? default : new MicrosoftSecurityIncidentCreationAlertRuleProperties(
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.Scheduled,
                 eTag,
                 default,
                 query is null && queryFrequency is null && queryPeriod is null && severity is null && triggerOperator is null && triggerThreshold is null && eventGroupingAggregationKind is null && customDetails is null && entityMappings is null && alertDetailsOverride is null && sentinelEntitiesMappings is null && alertRuleTemplateName is null && templateVersion is null && description is null && displayName is null && isEnabled is null && lastModifiedOn is null && suppressionDuration is null && isSuppressionEnabled is null && tactics is null && techniques is null && subTechniques is null && incidentConfiguration is null ? default : new ScheduledAlertRuleProperties(
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.NRT,
                 eTag,
                 default,
                 alertRuleTemplateName is null && templateVersion is null && description is null && query is null && tactics is null && techniques is null && subTechniques is null && displayName is null && isEnabled is null && lastModifiedOn is null && suppressionDuration is null && isSuppressionEnabled is null && severity is null && incidentConfiguration is null && customDetails is null && entityMappings is null && alertDetailsOverride is null && eventGroupingAggregationKind is null && sentinelEntitiesMappings is null ? default : new NrtAlertRuleProperties(
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new AlertRuleKind(kind),
                 default);
         }
 
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.MLBehaviorAnalytics,
                 default,
                 alertRulesCreatedByTemplateCount is null && lastUpdatedOn is null && createdOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && tactics is null && techniques is null && severity is null ? default : new MlBehaviorAnalyticsAlertRuleTemplateProperties(
                     alertRulesCreatedByTemplateCount,
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.Fusion,
                 default,
                 alertRulesCreatedByTemplateCount is null && createdOn is null && lastUpdatedOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && severity is null && tactics is null && techniques is null && subTechniques is null && sourceSettings is null ? default : new FusionAlertRuleTemplateProperties(
                     alertRulesCreatedByTemplateCount,
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.ThreatIntelligence,
                 default,
                 alertRulesCreatedByTemplateCount is null && lastUpdatedOn is null && createdOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && tactics is null && techniques is null && severity is null ? default : new ThreatIntelligenceAlertRuleTemplateProperties(
                     alertRulesCreatedByTemplateCount,
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.MicrosoftSecurityIncidentCreation,
                 default,
                 alertRulesCreatedByTemplateCount is null && lastUpdatedOn is null && createdOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && displayNamesFilter is null && displayNamesExcludeFilter is null && productFilter is null && severitiesFilter is null ? default : new MicrosoftSecurityIncidentCreationAlertRuleTemplateProperties(
                     alertRulesCreatedByTemplateCount,
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.Scheduled,
                 default,
                 alertRulesCreatedByTemplateCount is null && createdDateUTC is null && lastUpdatedDateUTC is null && description is null && displayName is null && requiredDataConnectors is null && status is null && query is null && queryFrequency is null && queryPeriod is null && severity is null && triggerOperator is null && triggerThreshold is null && tactics is null && techniques is null && subTechniques is null && version is null && eventGroupingAggregationKind is null && customDetails is null && entityMappings is null && alertDetailsOverride is null && sentinelEntitiesMappings is null ? default : new ScheduledAlertRuleTemplateProperties(
                     alertRulesCreatedByTemplateCount,
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.NRT,
                 default,
                 tactics is null && techniques is null && alertRulesCreatedByTemplateCount is null && lastUpdatedOn is null && createdOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && query is null && severity is null && version is null && customDetails is null && entityMappings is null && alertDetailsOverride is null && eventGroupingAggregationKind is null && sentinelEntitiesMappings is null ? default : new NrtAlertRuleTemplateProperties(
                     (tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>()).ToList(),
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsAutomationRuleCondition"/> instance for mocking. </returns>
         public static SecurityInsightsAutomationRuleCondition SecurityInsightsAutomationRuleCondition(string conditionType = default)
         {
-            return new UnknownSecurityInsightsAutomationRuleCondition(default, default);
+            return new UnknownSecurityInsightsAutomationRuleCondition(conditionType is null ? default : new ConditionType(conditionType), default);
         }
 
         /// <summary> Describes an automation rule condition that applies a boolean operator (e.g AND, OR) to conditions. </summary>
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.BooleanConditionProperties"/> instance for mocking. </returns>
         public static BooleanConditionProperties BooleanConditionProperties(AutomationRuleBooleanCondition conditionProperties = default)
         {
-            return new BooleanConditionProperties(default, default, conditionProperties);
+            return new BooleanConditionProperties(ConditionType.Boolean, default, conditionProperties);
         }
 
         /// <summary> The AutomationRuleBooleanCondition. </summary>
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsPropertyArrayChangedConditionProperties"/> instance for mocking. </returns>
         public static SecurityInsightsPropertyArrayChangedConditionProperties SecurityInsightsPropertyArrayChangedConditionProperties(AutomationRulePropertyArrayChangedValuesCondition conditionProperties = default)
         {
-            return new SecurityInsightsPropertyArrayChangedConditionProperties(default, default, conditionProperties);
+            return new SecurityInsightsPropertyArrayChangedConditionProperties(ConditionType.PropertyArrayChanged, default, conditionProperties);
         }
 
         /// <summary> The AutomationRulePropertyArrayChangedValuesCondition. </summary>
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.PropertyArrayConditionProperties"/> instance for mocking. </returns>
         public static PropertyArrayConditionProperties PropertyArrayConditionProperties(AutomationRulePropertyArrayValuesCondition conditionProperties = default)
         {
-            return new PropertyArrayConditionProperties(default, default, conditionProperties);
+            return new PropertyArrayConditionProperties(ConditionType.PropertyArray, default, conditionProperties);
         }
 
         /// <summary> The AutomationRulePropertyArrayValuesCondition. </summary>
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsPropertyChangedConditionProperties"/> instance for mocking. </returns>
         public static SecurityInsightsPropertyChangedConditionProperties SecurityInsightsPropertyChangedConditionProperties(AutomationRulePropertyValuesChangedCondition conditionProperties = default)
         {
-            return new SecurityInsightsPropertyChangedConditionProperties(default, default, conditionProperties);
+            return new SecurityInsightsPropertyChangedConditionProperties(ConditionType.PropertyChanged, default, conditionProperties);
         }
 
         /// <summary> The AutomationRulePropertyValuesChangedCondition. </summary>
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsPropertyConditionProperties"/> instance for mocking. </returns>
         public static SecurityInsightsPropertyConditionProperties SecurityInsightsPropertyConditionProperties(AutomationRulePropertyValuesCondition conditionProperties = default)
         {
-            return new SecurityInsightsPropertyConditionProperties(default, default, conditionProperties);
+            return new SecurityInsightsPropertyConditionProperties(ConditionType.Property, default, conditionProperties);
         }
 
         /// <summary> The AutomationRulePropertyValuesCondition. </summary>
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsAutomationRuleAction"/> instance for mocking. </returns>
         public static SecurityInsightsAutomationRuleAction SecurityInsightsAutomationRuleAction(int order = default, string actionType = default)
         {
-            return new UnknownSecurityInsightsAutomationRuleAction(order, default, default);
+            return new UnknownSecurityInsightsAutomationRuleAction(order, actionType is null ? default : new ActionType(actionType), default);
         }
 
         /// <summary> Describes an automation rule action to add a task to an incident. </summary>
@@ -1134,7 +1134,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.AutomationRuleAddIncidentTaskAction"/> instance for mocking. </returns>
         public static AutomationRuleAddIncidentTaskAction AutomationRuleAddIncidentTaskAction(int order = default, AddIncidentTaskActionProperties actionConfiguration = default)
         {
-            return new AutomationRuleAddIncidentTaskAction(order, default, default, actionConfiguration);
+            return new AutomationRuleAddIncidentTaskAction(order, ActionType.AddIncidentTask, default, actionConfiguration);
         }
 
         /// <summary> The AddIncidentTaskActionProperties. </summary>
@@ -1152,7 +1152,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.AutomationRuleModifyPropertiesAction"/> instance for mocking. </returns>
         public static AutomationRuleModifyPropertiesAction AutomationRuleModifyPropertiesAction(int order = default, SecurityInsightsIncidentActionConfiguration actionConfiguration = default)
         {
-            return new AutomationRuleModifyPropertiesAction(order, default, default, actionConfiguration);
+            return new AutomationRuleModifyPropertiesAction(order, ActionType.ModifyProperties, default, actionConfiguration);
         }
 
         /// <summary> The SecurityInsightsIncidentActionConfiguration. </summary>
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.AutomationRuleRunPlaybookAction"/> instance for mocking. </returns>
         public static AutomationRuleRunPlaybookAction AutomationRuleRunPlaybookAction(int order = default, AutomationRuleRunPlaybookActionProperties actionConfiguration = default)
         {
-            return new AutomationRuleRunPlaybookAction(order, default, default, actionConfiguration);
+            return new AutomationRuleRunPlaybookAction(order, ActionType.RunPlaybook, default, actionConfiguration);
         }
 
         /// <summary> The AutomationRuleRunPlaybookActionProperties. </summary>
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.SecurityAlert,
                 default,
                 additionalData is null && friendlyName is null && alertDisplayName is null && alertType is null && compromisedEntity is null && confidenceLevel is null && confidenceReasons is null && confidenceScore is null && confidenceScoreStatus is null && description is null && endOn is null && intent is null && providerAlertId is null && processingEndOn is null && productComponentName is null && productName is null && productVersion is null && remediationSteps is null && severity is null && startOn is null && status is null && systemAlertId is null && tactics is null && alertGeneratedOn is null && vendorName is null && alertLink is null && resourceIdentifiers is null ? default : new SecurityAlertProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new SecurityInsightsEntityKind(kind),
                 default);
         }
 
@@ -1478,7 +1478,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.Bookmark,
                 default,
                 additionalData is null && friendlyName is null && createdOn is null && createdBy is null && displayName is null && eventOn is null && labels is null && notes is null && query is null && queryResult is null && updatedOn is null && updatedBy is null && incidentInfo is null ? default : new HuntingBookmarkProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1544,7 +1544,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.Account,
                 default,
                 additionalData is null && friendlyName is null && aadTenantId is null && aadUserId is null && accountName is null && displayName is null && hostEntityId is null && isDomainJoined is null && ntDomain is null && objectGuid is null && puid is null && sid is null && upnSuffix is null && dnsDomain is null ? default : new AccountEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.AzureResource,
                 default,
                 additionalData is null && friendlyName is null && resourceId is null && subscriptionId is null ? default : new AzureResourceEntityProperties(additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName, default, resourceId, subscriptionId));
         }
@@ -1602,7 +1602,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.CloudApplication,
                 default,
                 additionalData is null && friendlyName is null && appId is null && appName is null && instanceName is null ? default : new CloudApplicationEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1631,7 +1631,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.DnsResolution,
                 default,
                 additionalData is null && friendlyName is null && dnsServerIPEntityId is null && domainName is null && hostIPAddressEntityId is null && ipAddressEntityIds is null ? default : new DnsEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.File,
                 default,
                 additionalData is null && friendlyName is null && directory is null && fileHashEntityIds is null && fileName is null && hostEntityId is null ? default : new FileEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1689,7 +1689,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.FileHash,
                 default,
                 additionalData is null && friendlyName is null && algorithm is null && hashValue is null ? default : new FileHashEntityProperties(additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName, default, algorithm, hashValue));
         }
@@ -1717,7 +1717,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.Host,
                 default,
                 additionalData is null && friendlyName is null && azureId is null && dnsDomain is null && hostName is null && isDomainJoined is null && netBiosName is null && ntDomain is null && omsAgentId is null && osFamily is null && osVersion is null ? default : new HostEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1776,7 +1776,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.IotDevice,
                 default,
                 additionalData is null && friendlyName is null && deviceId is null && deviceName is null && source is null && iotSecurityAgentId is null && deviceType is null && vendor is null && edgeId is null && macAddress is null && model is null && serialNumber is null && firmwareVersion is null && operatingSystem is null && iotHubEntityId is null && hostEntityId is null && ipAddressEntityId is null && threatIntelligence is null && protocols is null && owners is null && nicEntityIds is null && site is null && zone is null && sensor is null && deviceSubType is null && importance is null && purdueLayer is null && isAuthorized is null && isProgramming is null && isScanner is null ? default : new IoTDeviceEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1849,7 +1849,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.IP,
                 default,
                 additionalData is null && friendlyName is null && address is null && location is null && threatIntelligence is null ? default : new IPEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1900,7 +1900,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.Mailbox,
                 default,
                 additionalData is null && friendlyName is null && mailboxPrimaryAddress is null && displayName is null && upn is null && externalDirectoryObjectId is null ? default : new MailboxEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -1941,7 +1941,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.MailCluster,
                 default,
                 additionalData is null && friendlyName is null && networkMessageIds is null && countByDeliveryStatus is null && countByThreatType is null && countByProtectionStatus is null && threats is null && query is null && queryOn is null && mailCount is null && isVolumeAnomaly is null && source is null && clusterSourceIdentifier is null && clusterSourceType is null && clusterQueryStartOn is null && clusterQueryEndOn is null && clusterGroup is null ? default : new MailClusterEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -2003,7 +2003,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.MailMessage,
                 default,
                 additionalData is null && friendlyName is null && fileEntityIds is null && recipient is null && uris is null && threats is null && p1Sender is null && p1SenderDisplayName is null && p1SenderDomain is null && senderIP is null && p2Sender is null && p2SenderDisplayName is null && p2SenderDomain is null && receiveOn is null && networkMessageId is null && internetMessageId is null && subject is null && language is null && threatDetectionMethods is null && bodyFingerprintBin1 is null && bodyFingerprintBin2 is null && bodyFingerprintBin3 is null && bodyFingerprintBin4 is null && bodyFingerprintBin5 is null && antispamDirection is null && deliveryAction is null && deliveryLocation is null ? default : new MailMessageEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -2054,7 +2054,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.Malware,
                 default,
                 additionalData is null && friendlyName is null && category is null && fileEntityIds is null && malwareName is null && processEntityIds is null ? default : new MalwareEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.Process,
                 default,
                 additionalData is null && friendlyName is null && accountEntityId is null && commandLine is null && createdOn is null && elevationToken is null && hostEntityId is null && hostLogonSessionEntityId is null && imageFileEntityId is null && parentProcessEntityId is null && processId is null ? default : new ProcessEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -2122,7 +2122,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.RegistryKey,
                 default,
                 additionalData is null && friendlyName is null && hive is null && key is null ? default : new RegistryKeyEntityProperties(additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName, default, hive, key));
         }
@@ -2145,7 +2145,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.RegistryValue,
                 default,
                 additionalData is null && friendlyName is null && keyEntityId is null && valueData is null && valueName is null && valueType is null ? default : new RegistryValueEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -2174,7 +2174,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.SecurityGroup,
                 default,
                 additionalData is null && friendlyName is null && distinguishedName is null && objectGuid is null && sid is null ? default : new SecurityGroupEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -2209,7 +2209,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.SubmissionMail,
                 default,
                 additionalData is null && friendlyName is null && networkMessageId is null && submissionId is null && submitter is null && submitOn is null && messageReceivedOn is null && recipient is null && sender is null && senderIP is null && subject is null && reportType is null ? default : new SubmissionMailEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -2242,7 +2242,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.Uri,
                 default,
                 additionalData is null && friendlyName is null && uriString is null ? default : new UrlEntityProperties(additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName, default, uriString));
         }
@@ -2264,7 +2264,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.Nic,
                 default,
                 additionalData is null && friendlyName is null && macAddress is null && ipAddressEntityId is null && vlans is null ? default : new NicEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -2386,7 +2386,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new DataConnectorDefinitionKind(kind),
                 eTag,
                 default);
         }
@@ -2408,7 +2408,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorDefinitionKind.Customizable,
                 eTag,
                 default,
                 createdOn is null && lastModifiedOn is null && connectorUiConfig is null && connectionsConfig is null ? default : new CustomizableConnectorDefinitionProperties(createdOn, lastModifiedOn, connectorUiConfig, connectionsConfig, default));
@@ -2614,7 +2614,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new DataConnectorKind(kind),
                 etag,
                 default);
         }
@@ -2649,7 +2649,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.MicrosoftThreatIntelligence,
                 eTag,
                 default,
                 tenantId is null && dataTypesMicrosoftEmergingThreatFeed is null ? default : new MstiDataConnectorProperties(tenantId.GetValueOrDefault(), default, new MstiDataConnectorDataTypes(dataTypesMicrosoftEmergingThreatFeed, default)));
@@ -2681,7 +2681,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.PremiumMicrosoftDefenderForThreatIntelligence,
                 eTag,
                 default,
                 tenantId is null && lookbackPeriodOn is null && isRequiredSKUsPresent is null && dataTypesConnectorState is null ? default : new PremiumMdtiDataConnectorProperties(tenantId.GetValueOrDefault(), default, lookbackPeriodOn.GetValueOrDefault(), isRequiredSKUsPresent, new PremiumMdtiDataConnectorDataTypes(new PremiumMdtiDataConnectorDataTypesConnector(dataTypesConnectorState.GetValueOrDefault(), default), default)));
@@ -2703,7 +2703,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.MicrosoftThreatProtection,
                 eTag,
                 default,
                 tenantId is null && dataTypes is null && filteredProvidersAlerts is null ? default : new MtpDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes, filteredProvidersAlerts is null ? default : new MtpFilteredProviders((filteredProvidersAlerts ?? new ChangeTrackingList<MtpProvider>()).ToList(), default)));
@@ -2732,7 +2732,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.AzureSecurityCenter,
                 eTag,
                 default,
                 dataTypes is null && subscriptionId is null ? default : new AscDataConnectorProperties(dataTypes, default, subscriptionId));
@@ -2753,7 +2753,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.AmazonWebServicesCloudTrail,
                 etag,
                 default,
                 awsRoleArn is null && logsState is null ? default : new AwsCloudTrailDataConnectorProperties(awsRoleArn, new AwsCloudTrailDataConnectorDataTypes(new AwsCloudTrailDataConnectorDataTypesLogs(logsState.GetValueOrDefault(), default), default), default));
@@ -2776,7 +2776,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.AmazonWebServicesS3,
                 eTag,
                 default,
                 destinationTable is null && sqsUrls is null && roleArn is null && dataTypesLogsState is null ? default : new AwsS3DataConnectorProperties(destinationTable, (sqsUrls ?? new ChangeTrackingList<string>()).ToList(), roleArn, new AwsS3DataConnectorDataTypes(new AwsS3DataConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default), default));
@@ -2804,7 +2804,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.RestApiPoller,
                 eTag,
                 default,
                 connectorDefinitionName is null && auth is null && request is null && dcrConfig is null && isActive is null && dataType is null && response is null && paging is null && addOnAttributes is null ? default : new RestApiPollerDataConnectorProperties(
@@ -2828,7 +2828,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.CcpAuthConfig"/> instance for mocking. </returns>
         public static CcpAuthConfig CcpAuthConfig(string @type = default)
         {
-            return new UnknownCcpAuthConfig(default, default);
+            return new UnknownCcpAuthConfig(@type is null ? default : new CcpAuthType(@type), default);
         }
 
         /// <summary> Model for authentication with the API Key. Will result in additional header on the request (default behavior) to the remote server: 'ApiKeyName: ApiKeyIdentifier ApiKey'. If 'IsApiKeyInPostPayload' is true it will send it in the body of the request and not the header. </summary>
@@ -2840,7 +2840,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsApiKeyAuthModel SecurityInsightsApiKeyAuthModel(string apiKey = default, string apiKeyName = default, string apiKeyIdentifier = default, bool? isApiKeyInPostPayload = default)
         {
             return new SecurityInsightsApiKeyAuthModel(
-                default,
+                CcpAuthType.APIKey,
                 default,
                 apiKey,
                 apiKeyName,
@@ -2854,7 +2854,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.AwsAuthModel"/> instance for mocking. </returns>
         public static AwsAuthModel AwsAuthModel(string roleArn = default, string externalId = default)
         {
-            return new AwsAuthModel(default, default, roleArn, externalId);
+            return new AwsAuthModel(CcpAuthType.AWS, default, roleArn, externalId);
         }
 
         /// <summary> Model for API authentication with basic flow - user name + password. </summary>
@@ -2863,7 +2863,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.BasicAuthModel"/> instance for mocking. </returns>
         public static BasicAuthModel BasicAuthModel(string userName = default, string password = default)
         {
-            return new BasicAuthModel(default, default, userName, password);
+            return new BasicAuthModel(CcpAuthType.Basic, default, userName, password);
         }
 
         /// <summary> Model for API authentication for all GCP kind connectors. </summary>
@@ -2873,7 +2873,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.GcpAuthModel"/> instance for mocking. </returns>
         public static GcpAuthModel GcpAuthModel(string serviceAccountEmail = default, string projectNumber = default, string workloadIdentityProviderId = default)
         {
-            return new GcpAuthModel(default, default, serviceAccountEmail, projectNumber, workloadIdentityProviderId);
+            return new GcpAuthModel(CcpAuthType.GCP, default, serviceAccountEmail, projectNumber, workloadIdentityProviderId);
         }
 
         /// <summary> Model for API authentication for working with service bus or storage account. </summary>
@@ -2885,7 +2885,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             credentialsConfig ??= new ChangeTrackingDictionary<string, string>();
             storageAccountCredentialsConfig ??= new ChangeTrackingDictionary<string, string>();
 
-            return new GenericBlobSbsAuthModel(default, default, credentialsConfig ?? new ChangeTrackingDictionary<string, string>(), storageAccountCredentialsConfig ?? new ChangeTrackingDictionary<string, string>());
+            return new GenericBlobSbsAuthModel(CcpAuthType.ServiceBus, default, credentialsConfig ?? new ChangeTrackingDictionary<string, string>(), storageAccountCredentialsConfig ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <summary> Model for API authentication for GitHub. For this authentication first we need to approve the Router app (Microsoft Security DevOps) to access the GitHub account, Then we only need the InstallationId to get the access token from https://api.github.com/app/installations/{installId}/access_tokens. </summary>
@@ -2893,14 +2893,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.GitHubAuthModel"/> instance for mocking. </returns>
         public static GitHubAuthModel GitHubAuthModel(string installationId = default)
         {
-            return new GitHubAuthModel(default, default, installationId);
+            return new GitHubAuthModel(CcpAuthType.GitHub, default, installationId);
         }
 
         /// <summary> Model for API authentication with no authentication method - public API. </summary>
         /// <returns> A new <see cref="Models.NoneAuthModel"/> instance for mocking. </returns>
         public static NoneAuthModel NoneAuthModel()
         {
-            return new NoneAuthModel(default, default);
+            return new NoneAuthModel(CcpAuthType.None, default);
         }
 
         /// <summary> Model for API authentication with JWT. Simple exchange between user name + password to access token. </summary>
@@ -2921,7 +2921,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             headers ??= new ChangeTrackingDictionary<string, string>();
 
             return new JwtAuthModel(
-                default,
+                CcpAuthType.JwtToken,
                 default,
                 tokenEndpoint,
                 userName ?? new ChangeTrackingDictionary<string, string>(),
@@ -2958,7 +2958,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             authorizationEndpointQueryParameters ??= new ChangeTrackingDictionary<string, string>();
 
             return new OAuthModel(
-                default,
+                CcpAuthType.OAuth2,
                 default,
                 authorizationCode,
                 clientSecret,
@@ -2986,7 +2986,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static OracleAuthModel OracleAuthModel(string tenantId = default, string userId = default, string publicFingerprint = default, string pemFile = default)
         {
             return new OracleAuthModel(
-                default,
+                CcpAuthType.Oracle,
                 default,
                 tenantId,
                 userId,
@@ -3012,7 +3012,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             headers ??= new ChangeTrackingDictionary<string, string>();
 
             return new SessionAuthModel(
-                default,
+                CcpAuthType.Session,
                 default,
                 userName ?? new ChangeTrackingDictionary<string, string>(),
                 password ?? new ChangeTrackingDictionary<string, string>(),
@@ -3136,7 +3136,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.GCP,
                 eTag,
                 default,
                 connectorDefinitionName is null && auth is null && request is null && dcrConfig is null ? default : new GcpDataConnectorProperties(connectorDefinitionName, auth, request, dcrConfig, default));
@@ -3178,7 +3178,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.MicrosoftCloudAppSecurity,
                 etag,
                 default,
                 tenantId is null && dataTypes is null ? default : new McasDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes));
@@ -3207,7 +3207,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.Dynamics365,
                 eTag,
                 default,
                 tenantId is null && dataTypesDynamics365CdsActivitiesState is null ? default : new Dynamics365DataConnectorProperties(tenantId.GetValueOrDefault(), default, new Dynamics365DataConnectorDataTypes(new Dynamics365DataConnectorDataTypesDynamics365CdsActivities(dataTypesDynamics365CdsActivitiesState.GetValueOrDefault(), default), default)));
@@ -3228,7 +3228,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.OfficeATP,
                 eTag,
                 default,
                 tenantId is null && dataTypes is null ? default : new OfficeAtpDataConnectorProperties(tenantId.GetValueOrDefault(), dataTypes, default));
@@ -3249,7 +3249,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.MicrosoftPurviewInformationProtection,
                 eTag,
                 default,
                 tenantId is null && dataTypesLogsState is null ? default : new MicrosoftPurviewInformationProtectionDataConnectorProperties(tenantId.GetValueOrDefault(), default, new MicrosoftPurviewInformationProtectionConnectorDataTypes(new MicrosoftPurviewInformationProtectionConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default)));
@@ -3270,7 +3270,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.Office365Project,
                 eTag,
                 default,
                 tenantId is null && dataTypesLogsState is null ? default : new Office365ProjectDataConnectorProperties(tenantId.GetValueOrDefault(), default, new Office365ProjectConnectorDataTypes(new Office365ProjectConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default)));
@@ -3291,7 +3291,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.OfficePowerBI,
                 eTag,
                 default,
                 tenantId is null && dataTypesLogsState is null ? default : new OfficePowerBiDataConnectorProperties(tenantId.GetValueOrDefault(), default, new OfficePowerBiConnectorDataTypes(new OfficePowerBiConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default)));
@@ -3315,7 +3315,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.PurviewAudit,
                 eTag,
                 default,
                 tenantId is null && connectorDefinitionName is null && sourceType is null && dcrConfig is null && dataTypesLogsState is null ? default : new PurviewAuditDataConnectorProperties(
@@ -3342,7 +3342,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.OfficeIRM,
                 eTag,
                 default,
                 tenantId is null && dataTypes is null ? default : new OfficeIrmDataConnectorProperties(tenantId.GetValueOrDefault(), dataTypes, default));
@@ -3363,7 +3363,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.Office365,
                 etag,
                 default,
                 tenantId is null && dataTypes is null ? default : new OfficeDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes));
@@ -3394,7 +3394,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.ThreatIntelligence,
                 etag,
                 default,
                 tenantId is null && tipLookbackOn is null && indicatorsState is null ? default : new TiDataConnectorProperties(tenantId.GetValueOrDefault(), default, tipLookbackOn, new TiDataConnectorDataTypes(new TiDataConnectorDataTypesIndicators(indicatorsState.GetValueOrDefault(), default), default)));
@@ -3423,7 +3423,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.ThreatIntelligenceTaxii,
                 eTag,
                 default,
                 tenantId is null && workspaceId is null && friendlyName is null && taxiiServer is null && collectionId is null && userName is null && password is null && taxiiLookbackOn is null && pollingFrequency is null && dataTypesTaxiiClientState is null ? default : new TiTaxiiDataConnectorProperties(
@@ -3455,7 +3455,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.IOT,
                 eTag,
                 default,
                 dataTypes is null && subscriptionId is null ? default : new IoTDataConnectorProperties(dataTypes, default, subscriptionId));
@@ -3475,7 +3475,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.GenericUI,
                 eTag,
                 default,
                 connectorUiConfig is null ? default : new CodelessParameters(connectorUiConfig, default));
@@ -3749,7 +3749,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.APIPolling,
                 eTag,
                 default,
                 connectorUiConfig is null && pollingConfig is null ? default : new ApiPollingParameters(connectorUiConfig, pollingConfig, default));
@@ -4020,7 +4020,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new SecurityMlAnalyticsSettingsKind(kind),
                 etag,
                 default);
         }
@@ -4052,7 +4052,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityMlAnalyticsSettingsKind.Anomaly,
                 etag,
                 default,
                 description is null && displayName is null && isEnabled is null && lastModifiedOn is null && requiredDataConnectors is null && tactics is null && techniques is null && anomalyVersion is null && customizableObservations is null && frequency is null && settingsStatus is null && isDefaultSettings is null && anomalySettingsVersion is null && settingsDefinitionId is null ? default : new AnomalySecurityMlAnalyticsSettingsProperties(
@@ -4414,7 +4414,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new BillingStatisticKind(kind),
                 eTag,
                 default);
         }
@@ -4433,7 +4433,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                BillingStatisticKind.SapSolutionUsage,
                 eTag,
                 default,
                 activeSystemIdCount is null ? default : new SapSolutionUsageStatisticProperties(activeSystemIdCount, default));
@@ -4512,7 +4512,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.EntityQueryItem"/> instance for mocking. </returns>
         public static EntityQueryItem EntityQueryItem(string id = default, string name = default, string @type = default, string kind = default)
         {
-            return new UnknownEntityQueryItem(id, name, @type, default, default);
+            return new UnknownEntityQueryItem(id, name, @type, kind is null ? default : new EntityQueryKind(kind), default);
         }
 
         /// <summary> Represents Insight Query. </summary>
@@ -4527,7 +4527,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 @type,
-                default,
+                EntityQueryKind.Insight,
                 default,
                 properties);
         }
@@ -4724,7 +4724,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new EntityQueryKind(kind),
                 eTag,
                 default);
         }
@@ -4748,7 +4748,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                EntityQueryKind.Expansion,
                 eTag,
                 default,
                 dataSources is null && displayName is null && inputEntityType is null && inputFields is null && outputEntityTypes is null && queryTemplate is null ? default : new ExpansionEntityQueriesProperties(
@@ -4785,7 +4785,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                EntityQueryKind.Activity,
                 eTag,
                 default,
                 title is null && content is null && description is null && query is null && inputEntityType is null && requiredInputFieldsSets is null && entitiesFilter is null && templateName is null && isEnabled is null && createdOn is null && lastModifiedOn is null ? default : new ActivityEntityQueriesProperties(
@@ -4823,7 +4823,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 systemData,
                 eTag,
                 default,
-                default);
+                kind is null ? default : new CustomEntityQueryKind(kind));
         }
 
         /// <summary> An azure resource object with an Etag property. </summary>
@@ -4870,7 +4870,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 systemData,
                 eTag,
                 default,
-                default,
+                CustomEntityQueryKind.Activity,
                 title is null && content is null && description is null && query is null && inputEntityType is null && requiredInputFieldsSets is null && entitiesFilter is null && templateName is null && isEnabled is null && createdOn is null && lastModifiedOn is null ? default : new ActivityEntityQueriesProperties(
                     title,
                     content,
@@ -4903,7 +4903,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new EntityQueryTemplateKind(kind),
                 default);
         }
 
@@ -4927,7 +4927,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                EntityQueryTemplateKind.Activity,
                 default,
                 title is null && content is null && description is null && queryDefinitions is null && dataTypes is null && inputEntityType is null && requiredInputFieldsSets is null && entitiesFilter is null ? default : new ActivityEntityQueryTemplateProperties(
                     title,
@@ -5165,7 +5165,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new SettingKind(kind),
                 eTag,
                 default);
         }
@@ -5184,7 +5184,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SettingKind.Anomalies,
                 eTag,
                 default,
                 isEnabled is null ? default : new AnomaliesSettingsProperties(isEnabled, default));
@@ -5204,7 +5204,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SettingKind.EyesOn,
                 eTag,
                 default,
                 isEnabled is null ? default : new EyesOnSettingsProperties(isEnabled, default));
@@ -5224,7 +5224,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SettingKind.EntityAnalytics,
                 eTag,
                 default,
                 entityProviders is null ? default : new EntityAnalyticsProperties((entityProviders ?? new ChangeTrackingList<EntityProvider>()).ToList(), default));
@@ -5244,7 +5244,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SettingKind.Ueba,
                 eTag,
                 default,
                 dataSources is null ? default : new UebaProperties((dataSources ?? new ChangeTrackingList<UebaDataSources>()).ToList(), default));
@@ -5977,7 +5977,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                kind is null ? default : new ThreatIntelligenceResourceInnerKind(kind),
                 etag,
                 default);
         }
@@ -6025,7 +6025,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                ThreatIntelligenceResourceInnerKind.Indicator,
                 etag,
                 default,
                 additionalData is null && friendlyName is null && threatIntelligenceTags is null && lastUpdatedOn is null && source is null && displayName is null && description is null && indicatorTypes is null && pattern is null && patternType is null && patternVersion is null && killChainPhases is null && parsedPattern is null && externalId is null && createdByRef is null && isDefanged is null && externalLastUpdatedOn is null && externalReferences is null && granularMarkings is null && labels is null && isRevoked is null && confidence is null && objectMarkingRefs is null && language is null && threatTypes is null && validFrom is null && validUntil is null && createdOn is null && modified is null && extensions is null ? default : new ThreatIntelligenceIndicatorProperties(
@@ -6191,140 +6191,140 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.DataConnectorsCheckRequirements"/> instance for mocking. </returns>
         public static DataConnectorsCheckRequirements DataConnectorsCheckRequirements(string kind = default)
         {
-            return new UnknownDataConnectorsCheckRequirements(default, default);
+            return new UnknownDataConnectorsCheckRequirements(kind is null ? default : new DataConnectorKind(kind), default);
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.AadCheckRequirements"/> instance for mocking. </returns>
         public static AadCheckRequirements AadCheckRequirements(Guid? tenantId = default)
         {
-            return new AadCheckRequirements(default, default, tenantId is null ? default : new AadCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new AadCheckRequirements(DataConnectorKind.AzureActiveDirectory, default, tenantId is null ? default : new AadCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.AatpCheckRequirements"/> instance for mocking. </returns>
         public static AatpCheckRequirements AatpCheckRequirements(Guid? tenantId = default)
         {
-            return new AatpCheckRequirements(default, default, tenantId is null ? default : new AatpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new AatpCheckRequirements(DataConnectorKind.AzureAdvancedThreatProtection, default, tenantId is null ? default : new AatpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.AscCheckRequirements"/> instance for mocking. </returns>
         public static AscCheckRequirements AscCheckRequirements(string subscriptionId = default)
         {
-            return new AscCheckRequirements(default, default, subscriptionId is null ? default : new AscCheckRequirementsProperties(subscriptionId, default));
+            return new AscCheckRequirements(DataConnectorKind.AzureSecurityCenter, default, subscriptionId is null ? default : new AscCheckRequirementsProperties(subscriptionId, default));
         }
 
         /// <summary> Amazon Web Services CloudTrail requirements check request. </summary>
         /// <returns> A new <see cref="Models.AwsCloudTrailCheckRequirements"/> instance for mocking. </returns>
         public static AwsCloudTrailCheckRequirements AwsCloudTrailCheckRequirements()
         {
-            return new AwsCloudTrailCheckRequirements(default, default);
+            return new AwsCloudTrailCheckRequirements(DataConnectorKind.AmazonWebServicesCloudTrail, default);
         }
 
         /// <summary> Amazon Web Services S3 requirements check request. </summary>
         /// <returns> A new <see cref="Models.AwsS3CheckRequirements"/> instance for mocking. </returns>
         public static AwsS3CheckRequirements AwsS3CheckRequirements()
         {
-            return new AwsS3CheckRequirements(default, default);
+            return new AwsS3CheckRequirements(DataConnectorKind.AmazonWebServicesS3, default);
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.Dynamics365CheckRequirements"/> instance for mocking. </returns>
         public static Dynamics365CheckRequirements Dynamics365CheckRequirements(Guid? tenantId = default)
         {
-            return new Dynamics365CheckRequirements(default, default, tenantId is null ? default : new Dynamics365CheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new Dynamics365CheckRequirements(DataConnectorKind.Dynamics365, default, tenantId is null ? default : new Dynamics365CheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.McasCheckRequirements"/> instance for mocking. </returns>
         public static McasCheckRequirements McasCheckRequirements(Guid? tenantId = default)
         {
-            return new McasCheckRequirements(default, default, tenantId is null ? default : new McasCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new McasCheckRequirements(DataConnectorKind.MicrosoftCloudAppSecurity, default, tenantId is null ? default : new McasCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.MdatpCheckRequirements"/> instance for mocking. </returns>
         public static MdatpCheckRequirements MdatpCheckRequirements(Guid? tenantId = default)
         {
-            return new MdatpCheckRequirements(default, default, tenantId is null ? default : new MdatpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new MdatpCheckRequirements(DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection, default, tenantId is null ? default : new MdatpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.MstiCheckRequirements"/> instance for mocking. </returns>
         public static MstiCheckRequirements MstiCheckRequirements(Guid? tenantId = default)
         {
-            return new MstiCheckRequirements(default, default, tenantId is null ? default : new MstiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new MstiCheckRequirements(DataConnectorKind.MicrosoftThreatIntelligence, default, tenantId is null ? default : new MstiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.MtpCheckRequirements"/> instance for mocking. </returns>
         public static MtpCheckRequirements MtpCheckRequirements(Guid? tenantId = default)
         {
-            return new MtpCheckRequirements(default, default, tenantId is null ? default : new MtpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new MtpCheckRequirements(DataConnectorKind.MicrosoftThreatProtection, default, tenantId is null ? default : new MtpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.OfficeAtpCheckRequirements"/> instance for mocking. </returns>
         public static OfficeAtpCheckRequirements OfficeAtpCheckRequirements(Guid? tenantId = default)
         {
-            return new OfficeAtpCheckRequirements(default, default, tenantId is null ? default : new OfficeAtpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new OfficeAtpCheckRequirements(DataConnectorKind.OfficeATP, default, tenantId is null ? default : new OfficeAtpCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.OfficeIrmCheckRequirements"/> instance for mocking. </returns>
         public static OfficeIrmCheckRequirements OfficeIrmCheckRequirements(Guid? tenantId = default)
         {
-            return new OfficeIrmCheckRequirements(default, default, tenantId is null ? default : new OfficeIrmCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new OfficeIrmCheckRequirements(DataConnectorKind.OfficeIRM, default, tenantId is null ? default : new OfficeIrmCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.MicrosoftPurviewInformationProtectionCheckRequirements"/> instance for mocking. </returns>
         public static MicrosoftPurviewInformationProtectionCheckRequirements MicrosoftPurviewInformationProtectionCheckRequirements(Guid? tenantId = default)
         {
-            return new MicrosoftPurviewInformationProtectionCheckRequirements(default, default, tenantId is null ? default : new MicrosoftPurviewInformationProtectionCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new MicrosoftPurviewInformationProtectionCheckRequirements(DataConnectorKind.MicrosoftPurviewInformationProtection, default, tenantId is null ? default : new MicrosoftPurviewInformationProtectionCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.Office365ProjectCheckRequirements"/> instance for mocking. </returns>
         public static Office365ProjectCheckRequirements Office365ProjectCheckRequirements(Guid? tenantId = default)
         {
-            return new Office365ProjectCheckRequirements(default, default, tenantId is null ? default : new Office365ProjectCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new Office365ProjectCheckRequirements(DataConnectorKind.Office365Project, default, tenantId is null ? default : new Office365ProjectCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.OfficePowerBICheckRequirements"/> instance for mocking. </returns>
         public static OfficePowerBICheckRequirements OfficePowerBICheckRequirements(Guid? tenantId = default)
         {
-            return new OfficePowerBICheckRequirements(default, default, tenantId is null ? default : new OfficePowerBiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new OfficePowerBICheckRequirements(DataConnectorKind.OfficePowerBI, default, tenantId is null ? default : new OfficePowerBiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.PurviewAuditCheckRequirements"/> instance for mocking. </returns>
         public static PurviewAuditCheckRequirements PurviewAuditCheckRequirements(Guid? tenantId = default)
         {
-            return new PurviewAuditCheckRequirements(default, default, tenantId is null ? default : new PurviewAuditCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new PurviewAuditCheckRequirements(DataConnectorKind.PurviewAudit, default, tenantId is null ? default : new PurviewAuditCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.ThreatIntelligenceCheckRequirements"/> instance for mocking. </returns>
         public static ThreatIntelligenceCheckRequirements ThreatIntelligenceCheckRequirements(Guid? tenantId = default)
         {
-            return new ThreatIntelligenceCheckRequirements(default, default, tenantId is null ? default : new TiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new ThreatIntelligenceCheckRequirements(DataConnectorKind.ThreatIntelligence, default, tenantId is null ? default : new TiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.ThreatIntelligenceTaxiiCheckRequirements"/> instance for mocking. </returns>
         public static ThreatIntelligenceTaxiiCheckRequirements ThreatIntelligenceTaxiiCheckRequirements(Guid? tenantId = default)
         {
-            return new ThreatIntelligenceTaxiiCheckRequirements(default, default, tenantId is null ? default : new TiTaxiiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
+            return new ThreatIntelligenceTaxiiCheckRequirements(DataConnectorKind.ThreatIntelligenceTaxii, default, tenantId is null ? default : new TiTaxiiCheckRequirementsProperties(tenantId.GetValueOrDefault(), default));
         }
 
         /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
         /// <returns> A new <see cref="Models.IoTCheckRequirements"/> instance for mocking. </returns>
         public static IoTCheckRequirements IoTCheckRequirements(string subscriptionId = default)
         {
-            return new IoTCheckRequirements(default, default, subscriptionId is null ? default : new IoTCheckRequirementsProperties(subscriptionId, default));
+            return new IoTCheckRequirements(DataConnectorKind.IOT, default, subscriptionId is null ? default : new IoTCheckRequirementsProperties(subscriptionId, default));
         }
 
         /// <summary> Data connector requirements status. </summary>
@@ -6498,7 +6498,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     lastUpdatedOn,
                     (relationshipHints ?? new ChangeTrackingList<RelationshipHint>()).ToList(),
                     default),
-                default,
+                kind is null ? default : new TiObjectKind(kind),
                 default);
         }
 
@@ -6545,7 +6545,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     lastUpdatedOn,
                     (relationshipHints ?? new ChangeTrackingList<RelationshipHint>()).ToList(),
                     default),
-                default,
+                TiObjectKind.ThreatActor,
                 default);
         }
 
@@ -6583,7 +6583,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     lastUpdatedOn,
                     (relationshipHints ?? new ChangeTrackingList<RelationshipHint>()).ToList(),
                     default),
-                default,
+                TiObjectKind.AttackPattern,
                 default);
         }
 
@@ -6621,7 +6621,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     lastUpdatedOn,
                     (relationshipHints ?? new ChangeTrackingList<RelationshipHint>()).ToList(),
                     default),
-                default,
+                TiObjectKind.Identity,
                 default);
         }
 
@@ -6659,7 +6659,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     lastUpdatedOn,
                     (relationshipHints ?? new ChangeTrackingList<RelationshipHint>()).ToList(),
                     default),
-                default,
+                TiObjectKind.Relationship,
                 default);
         }
 
@@ -6700,7 +6700,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     lastUpdatedOn,
                     (relationshipHints ?? new ChangeTrackingList<RelationshipHint>()).ToList(),
                     default),
-                default,
+                TiObjectKind.Indicator,
                 default,
                 (observables ?? new ChangeTrackingList<IndicatorObservablesItem>()).ToList());
         }
@@ -6735,7 +6735,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.EntityTimelineItem"/> instance for mocking. </returns>
         public static EntityTimelineItem EntityTimelineItem(string kind = default)
         {
-            return new UnknownEntityTimelineItem(default, default);
+            return new UnknownEntityTimelineItem(kind is null ? default : new EntityTimelineKind(kind), default);
         }
 
         /// <summary> Represents Activity timeline item. </summary>
@@ -6750,7 +6750,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static ActivityTimelineItem ActivityTimelineItem(string queryId = default, DateTimeOffset bucketStartsOn = default, DateTimeOffset bucketEndsOn = default, DateTimeOffset firstActivityOn = default, DateTimeOffset lastActivityOn = default, string content = default, string title = default)
         {
             return new ActivityTimelineItem(
-                default,
+                EntityTimelineKind.Activity,
                 default,
                 queryId,
                 bucketStartsOn,
@@ -6776,7 +6776,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             labels ??= new ChangeTrackingList<string>();
 
             return new BookmarkTimelineItem(
-                default,
+                EntityTimelineKind.Bookmark,
                 default,
                 azureResourceId,
                 displayName,
@@ -6807,7 +6807,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             reasons ??= new ChangeTrackingList<string>();
 
             return new AnomalyTimelineItem(
-                default,
+                EntityTimelineKind.Anomaly,
                 default,
                 azureResourceId,
                 productName,
@@ -6840,7 +6840,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             techniques ??= new ChangeTrackingList<string>();
 
             return new SecurityAlertTimelineItem(
-                default,
+                EntityTimelineKind.SecurityAlert,
                 default,
                 azureResourceId,
                 productName,
@@ -7259,7 +7259,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.Fusion,
                 etag,
                 default,
                 alertRuleTemplateName is null && description is null && displayName is null && isEnabled is null && lastModifiedOn is null && severity is null && tactics is null && techniques is null ? default : new FusionAlertRuleProperties(
@@ -7301,7 +7301,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.Fusion,
                 default,
                 alertRulesCreatedByTemplateCount is null && createdOn is null && lastUpdatedOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && severity is null && tactics is null && techniques is null ? default : new FusionAlertRuleTemplateProperties(
                     alertRulesCreatedByTemplateCount,
@@ -7355,7 +7355,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.Scheduled,
                 etag,
                 default,
                 query is null && queryFrequency is null && queryPeriod is null && severity is null && triggerOperator is null && triggerThreshold is null && eventGroupingAggregationKind is null && customDetails is null && entityMappings is null && alertDetailsOverride is null && alertRuleTemplateName is null && templateVersion is null && description is null && displayName is null && isEnabled is null && lastModifiedOn is null && suppressionDuration is null && isSuppressionEnabled is null && tactics is null && techniques is null && incidentConfiguration is null ? default : new ScheduledAlertRuleProperties(
@@ -7419,7 +7419,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                AlertRuleKind.Scheduled,
                 default,
                 alertRulesCreatedByTemplateCount is null && createdDateUTC is null && lastUpdatedDateUTC is null && description is null && displayName is null && requiredDataConnectors is null && status is null && query is null && queryFrequency is null && queryPeriod is null && severity is null && triggerOperator is null && triggerThreshold is null && tactics is null && techniques is null && version is null && eventGroupingAggregationKind is null && customDetails is null && entityMappings is null && alertDetailsOverride is null ? default : new ScheduledAlertRuleTemplateProperties(
                     alertRulesCreatedByTemplateCount,
@@ -7464,7 +7464,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.AzureActiveDirectory,
                 etag,
                 default,
                 tenantId is null && alertsState is null ? default : new AadDataConnectorProperties(tenantId.GetValueOrDefault(), alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
@@ -7487,7 +7487,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.AzureAdvancedThreatProtection,
                 etag,
                 default,
                 tenantId is null && alertsState is null ? default : new AatpDataConnectorProperties(tenantId.GetValueOrDefault(), alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
@@ -7510,7 +7510,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.AzureSecurityCenter,
                 etag,
                 default,
                 alertsState is null && subscriptionId is null ? default : new AscDataConnectorProperties(alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default, subscriptionId));
@@ -7533,7 +7533,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection,
                 etag,
                 default,
                 tenantId is null && alertsState is null ? default : new MdatpDataConnectorProperties(tenantId.GetValueOrDefault(), alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
@@ -7572,7 +7572,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.IotDevice,
                 default,
                 additionalData is null && friendlyName is null && deviceId is null && deviceName is null && source is null && iotSecurityAgentId is null && deviceType is null && vendor is null && edgeId is null && macAddress is null && model is null && serialNumber is null && firmwareVersion is null && operatingSystem is null && iotHubEntityId is null && hostEntityId is null && ipAddressEntityId is null && threatIntelligence is null && protocols is null ? default : new IoTDeviceEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -7625,7 +7625,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                SecurityInsightsEntityKind.Uri,
                 default,
                 additionalData is null && friendlyName is null ? default : new UrlEntityProperties(additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName, default, default));
         }

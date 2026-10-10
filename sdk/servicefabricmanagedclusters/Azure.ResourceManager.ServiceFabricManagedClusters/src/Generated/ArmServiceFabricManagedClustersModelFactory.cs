@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 (scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>()).ToList(),
                 default,
                 provisioningState,
-                default,
+                serviceKind is null ? default : new ServiceKind(serviceKind),
                 serviceTypeName,
                 partitionDescription,
                 servicePackageActivationMode,
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ManagedServicePartitionScheme"/> instance for mocking. </returns>
         public static ManagedServicePartitionScheme ManagedServicePartitionScheme(string partitionScheme = default)
         {
-            return new UnknownPartition(default, default);
+            return new UnknownPartition(partitionScheme is null ? default : new PartitionScheme(partitionScheme), default);
         }
 
         /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
@@ -454,14 +454,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.UniformInt64RangePartitionScheme"/> instance for mocking. </returns>
         public static UniformInt64RangePartitionScheme UniformInt64RangePartitionScheme(int count = default, long lowKey = default, long highKey = default)
         {
-            return new UniformInt64RangePartitionScheme(default, default, count, lowKey, highKey);
+            return new UniformInt64RangePartitionScheme(PartitionScheme.UniformInt64Range, default, count, lowKey, highKey);
         }
 
         /// <summary> Describes the partition scheme of a singleton-partitioned, or non-partitioned service. </summary>
         /// <returns> A new <see cref="Models.SingletonPartitionScheme"/> instance for mocking. </returns>
         public static SingletonPartitionScheme SingletonPartitionScheme()
         {
-            return new SingletonPartitionScheme(default, default);
+            return new SingletonPartitionScheme(PartitionScheme.Singleton, default);
         }
 
         /// <summary> Describes the named partition scheme of the service. </summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             names ??= new ChangeTrackingList<string>();
 
-            return new NamedPartitionScheme(default, default, (names ?? new ChangeTrackingList<string>()).ToList());
+            return new NamedPartitionScheme(PartitionScheme.Named, default, (names ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> The common service resource properties. </summary>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ManagedServicePlacementPolicy"/> instance for mocking. </returns>
         public static ManagedServicePlacementPolicy ManagedServicePlacementPolicy(string @type = default)
         {
-            return new UnknownServicePlacementPolicy(default, default);
+            return new UnknownServicePlacementPolicy(@type is null ? default : new ServicePlacementPolicyType(@type), default);
         }
 
         /// <summary> Describes the policy to be used for placement of a Service Fabric service where a particular fault or upgrade domain should not be used for placement of the instances or replicas of that service. </summary>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ServicePlacementInvalidDomainPolicy"/> instance for mocking. </returns>
         public static ServicePlacementInvalidDomainPolicy ServicePlacementInvalidDomainPolicy(string domainName = default)
         {
-            return new ServicePlacementInvalidDomainPolicy(default, default, domainName);
+            return new ServicePlacementInvalidDomainPolicy(ServicePlacementPolicyType.InvalidDomain, default, domainName);
         }
 
         /// <summary> Describes the policy to be used for placement of a Service Fabric service where the instances or replicas of that service must be placed in a particular domain. </summary>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ServicePlacementRequiredDomainPolicy"/> instance for mocking. </returns>
         public static ServicePlacementRequiredDomainPolicy ServicePlacementRequiredDomainPolicy(string domainName = default)
         {
-            return new ServicePlacementRequiredDomainPolicy(default, default, domainName);
+            return new ServicePlacementRequiredDomainPolicy(ServicePlacementPolicyType.RequiredDomain, default, domainName);
         }
 
         /// <summary>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ServicePlacementPreferPrimaryDomainPolicy"/> instance for mocking. </returns>
         public static ServicePlacementPreferPrimaryDomainPolicy ServicePlacementPreferPrimaryDomainPolicy(string domainName = default)
         {
-            return new ServicePlacementPreferPrimaryDomainPolicy(default, default, domainName);
+            return new ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType.PreferredPrimaryDomain, default, domainName);
         }
 
         /// <summary>
@@ -583,14 +583,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ServicePlacementRequireDomainDistributionPolicy"/> instance for mocking. </returns>
         public static ServicePlacementRequireDomainDistributionPolicy ServicePlacementRequireDomainDistributionPolicy(string domainName = default)
         {
-            return new ServicePlacementRequireDomainDistributionPolicy(default, default, domainName);
+            return new ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType.RequiredDomainDistribution, default, domainName);
         }
 
         /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
         /// <returns> A new <see cref="Models.ServicePlacementNonPartiallyPlaceServicePolicy"/> instance for mocking. </returns>
         public static ServicePlacementNonPartiallyPlaceServicePolicy ServicePlacementNonPartiallyPlaceServicePolicy()
         {
-            return new ServicePlacementNonPartiallyPlaceServicePolicy(default, default);
+            return new ServicePlacementNonPartiallyPlaceServicePolicy(ServicePlacementPolicyType.NonPartiallyPlaceService, default);
         }
 
         /// <summary> Specifies a metric to load balance a service during runtime. </summary>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ManagedServiceScalingMechanism"/> instance for mocking. </returns>
         public static ManagedServiceScalingMechanism ManagedServiceScalingMechanism(string kind = default)
         {
-            return new UnknownScalingMechanism(default, default);
+            return new UnknownScalingMechanism(kind is null ? default : new ServiceScalingMechanismKind(kind), default);
         }
 
         /// <summary> Represents a scaling mechanism for adding or removing named partitions of a stateless service. Partition names are in the format '0','1'...'N-1'. </summary>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.NamedPartitionAddOrRemoveScalingMechanism"/> instance for mocking. </returns>
         public static NamedPartitionAddOrRemoveScalingMechanism NamedPartitionAddOrRemoveScalingMechanism(int minPartitionCount = default, int maxPartitionCount = default, int scaleIncrement = default)
         {
-            return new NamedPartitionAddOrRemoveScalingMechanism(default, default, minPartitionCount, maxPartitionCount, scaleIncrement);
+            return new NamedPartitionAddOrRemoveScalingMechanism(ServiceScalingMechanismKind.AddRemoveIncrementalNamedPartition, default, minPartitionCount, maxPartitionCount, scaleIncrement);
         }
 
         /// <summary> Represents a scaling mechanism for adding or removing instances of stateless service partition. </summary>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.PartitionInstanceCountScalingMechanism"/> instance for mocking. </returns>
         public static PartitionInstanceCountScalingMechanism PartitionInstanceCountScalingMechanism(int minInstanceCount = default, int maxInstanceCount = default, int scaleIncrement = default)
         {
-            return new PartitionInstanceCountScalingMechanism(default, default, minInstanceCount, maxInstanceCount, scaleIncrement);
+            return new PartitionInstanceCountScalingMechanism(ServiceScalingMechanismKind.ScalePartitionInstanceCount, default, minInstanceCount, maxInstanceCount, scaleIncrement);
         }
 
         /// <summary>
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ManagedServiceScalingTrigger"/> instance for mocking. </returns>
         public static ManagedServiceScalingTrigger ManagedServiceScalingTrigger(string kind = default)
         {
-            return new UnknownScalingTrigger(default, default);
+            return new UnknownScalingTrigger(kind is null ? default : new ServiceScalingTriggerKind(kind), default);
         }
 
         /// <summary> Represents a scaling trigger related to an average load of a metric/resource of a partition. </summary>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static AveragePartitionLoadScalingTrigger AveragePartitionLoadScalingTrigger(string metricName = default, double lowerLoadThreshold = default, double upperLoadThreshold = default, string scaleInterval = default)
         {
             return new AveragePartitionLoadScalingTrigger(
-                default,
+                ServiceScalingTriggerKind.AveragePartitionLoadTrigger,
                 default,
                 metricName,
                 lowerLoadThreshold,
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static AverageServiceLoadScalingTrigger AverageServiceLoadScalingTrigger(string metricName = default, double lowerLoadThreshold = default, double upperLoadThreshold = default, string scaleInterval = default, bool useOnlyPrimaryLoad = default)
         {
             return new AverageServiceLoadScalingTrigger(
-                default,
+                ServiceScalingTriggerKind.AverageServiceLoadTrigger,
                 default,
                 metricName,
                 lowerLoadThreshold,
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 (scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>()).ToList(),
                 default,
                 provisioningState,
-                default,
+                ServiceKind.Stateful,
                 serviceTypeName,
                 partitionDescription,
                 servicePackageActivationMode,
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 (scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>()).ToList(),
                 default,
                 provisioningState,
-                default,
+                ServiceKind.Stateless,
                 serviceTypeName,
                 partitionDescription,
                 servicePackageActivationMode,
