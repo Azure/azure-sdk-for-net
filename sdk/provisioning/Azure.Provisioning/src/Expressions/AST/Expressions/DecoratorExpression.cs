@@ -7,7 +7,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep decorator expression (e.g., <c>@description('...')</c>).
 /// </summary>
 /// <param name="value">The decorator value expression.</param>
-public class DecoratorExpression(BicepExpression value) : BicepExpression
+public partial class DecoratorExpression(BicepExpression value) : BicepExpression
 {
     /// <summary>
     /// Gets the decorator value expression.

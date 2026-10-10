@@ -10,7 +10,7 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 /// <param name="name">The property name.</param>
 /// <param name="value">The property value expression.</param>
-public class PropertyExpression(string name, BicepExpression value) : BicepExpression
+public partial class PropertyExpression(string name, BicepExpression value) : BicepExpression
 {
     /// <summary>
     /// Gets the property name.

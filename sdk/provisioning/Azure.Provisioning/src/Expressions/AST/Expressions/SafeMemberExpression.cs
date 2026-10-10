@@ -8,7 +8,7 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 /// <param name="value">The expression whose member is being accessed.</param>
 /// <param name="member">The member name.</param>
-public class SafeMemberExpression(BicepExpression value, string member) : BicepExpression
+public partial class SafeMemberExpression(BicepExpression value, string member) : BicepExpression
 {
     /// <summary>
     /// Gets the expression whose member is being accessed.

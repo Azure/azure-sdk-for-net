@@ -7,7 +7,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep Boolean literal expression (<c>true</c> or <c>false</c>).
 /// </summary>
 /// <param name="value">The Boolean value.</param>
-public class BoolLiteralExpression(bool value) : LiteralExpression(value)
+public partial class BoolLiteralExpression(bool value) : LiteralExpression(value)
 {
     /// <summary>
     /// Gets the Boolean value.
