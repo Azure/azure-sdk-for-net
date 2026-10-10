@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkTrackedResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTrackedResourceData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkTrackedResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             Location = location;
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,10 +50,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource name. </summary>
         [WirePath("name")]
         public string Name { get; }
-
-        /// <summary> Resource type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]

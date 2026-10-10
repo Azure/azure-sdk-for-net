@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkWritableResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkWritableResource(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkWritableResource(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource type. </summary>
         [WirePath("type")]
-        public string Type { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

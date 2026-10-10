@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the firewall policy. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of the firewall policy. </param>
-        internal FirewallPolicyData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, FirewallPolicyPropertiesFormat properties, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, FirewallPolicyPropertiesFormat properties, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;

@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Optional.IsCollectionDefined(ConfigurationPolicyGroupAssociations))
+            if (Optional.IsCollectionDefined(ConfigurationPolicyGroups))
             {
                 writer.WritePropertyName("configurationPolicyGroupAssociations"u8);
                 writer.WriteStartArray();
-                foreach (WritableSubResource item in ConfigurationPolicyGroupAssociations)
+                foreach (WritableSubResource item in ConfigurationPolicyGroups)
                 {
                     if (item == null)
                     {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkAddressSpace vpnClientAddressPool = default;
             RoutingConfigurationNfv routingConfiguration = default;
             bool? enableInternetSecurity = default;
-            IList<WritableSubResource> configurationPolicyGroupAssociations = default;
+            IList<WritableSubResource> configurationPolicyGroups = default;
             IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
                         }
                     }
-                    configurationPolicyGroupAssociations = array;
+                    configurationPolicyGroups = array;
                     continue;
                 }
                 if (prop.NameEquals("previousConfigurationPolicyGroupAssociations"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network.Models
                 vpnClientAddressPool,
                 routingConfiguration,
                 enableInternetSecurity,
-                configurationPolicyGroupAssociations ?? new ChangeTrackingList<WritableSubResource>(),
+                configurationPolicyGroups ?? new ChangeTrackingList<WritableSubResource>(),
                 previousConfigurationPolicyGroupAssociations ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>(),
                 provisioningState,
                 additionalBinaryDataProperties);

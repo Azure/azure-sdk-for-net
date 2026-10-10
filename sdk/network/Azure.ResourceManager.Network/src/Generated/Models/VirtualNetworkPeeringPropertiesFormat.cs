@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of the virtual network peering. </summary>
     internal partial class VirtualNetworkPeeringPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -42,12 +41,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        /// <param name="peerCompleteVnets"> Whether complete virtual network address space is peered. </param>
+        /// <param name="areCompleteVnetsPeered"> Whether complete virtual network address space is peered. </param>
         /// <param name="enableOnlyIPv6Peering"> Whether only Ipv6 address space is peered for subnet peering. </param>
         /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
         /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPeeringPropertiesFormat(bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, NetworkSubResource remoteVirtualNetwork, VirtualNetworkAddressSpace localAddressSpace, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace, VirtualNetworkAddressSpace remoteAddressSpace, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid, bool? peerCompleteVnets, bool? enableOnlyIPv6Peering, IList<string> localSubnetNames, IList<string> remoteSubnetNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPeeringPropertiesFormat(bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, VirtualNetworkAddressSpace localAddressSpace, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace, VirtualNetworkAddressSpace remoteAddressSpace, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid, bool? areCompleteVnetsPeered, bool? enableOnlyIPv6Peering, IList<string> localSubnetNames, IList<string> remoteSubnetNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
             AllowForwardedTraffic = allowForwardedTraffic;
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
             DoNotVerifyRemoteGateways = doNotVerifyRemoteGateways;
             ResourceGuid = resourceGuid;
-            PeerCompleteVnets = peerCompleteVnets;
+            AreCompleteVnetsPeered = areCompleteVnetsPeered;
             EnableOnlyIPv6Peering = enableOnlyIPv6Peering;
             LocalSubnetNames = localSubnetNames;
             RemoteSubnetNames = remoteSubnetNames;
@@ -87,10 +86,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </summary>
         [WirePath("useRemoteGateways")]
         public bool? UseRemoteGateways { get; set; }
-
-        /// <summary> The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering). </summary>
-        [WirePath("remoteVirtualNetwork")]
-        internal NetworkSubResource RemoteVirtualNetwork { get; set; }
 
         /// <summary> The local address space of the local virtual network that is peered. </summary>
         [WirePath("localAddressSpace")]
@@ -138,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether complete virtual network address space is peered. </summary>
         [WirePath("peerCompleteVnets")]
-        public bool? PeerCompleteVnets { get; set; }
+        public bool? AreCompleteVnetsPeered { get; set; }
 
         /// <summary> Whether only Ipv6 address space is peered for subnet peering. </summary>
         [WirePath("enableOnlyIPv6Peering")]
@@ -151,23 +146,5 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of remote subnet names from remote virtual network that are subnet peered. </summary>
         [WirePath("remoteSubnetNames")]
         public IList<string> RemoteSubnetNames { get; } = new ChangeTrackingList<string>();
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("remoteVirtualNetwork.id")]
-        public ResourceIdentifier RemoteVirtualNetworkId
-        {
-            get
-            {
-                return RemoteVirtualNetwork is null ? default : RemoteVirtualNetwork.Id;
-            }
-            set
-            {
-                if (RemoteVirtualNetwork is null)
-                {
-                    RemoteVirtualNetwork = new NetworkSubResource();
-                }
-                RemoteVirtualNetwork.Id = value;
-            }
-        }
     }
 }

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIPConfiguration"/>. </summary>
         /// <param name="properties"> Properties of the container network interface IP configuration. </param>
         /// <param name="name"> The name of the resource. This name can be used to access the resource. </param>
-        /// <param name="type"> Sub Resource type. </param>
+        /// <param name="containerNetworkInterfaceIpConfigurationType"> Sub Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerNetworkInterfaceIPConfiguration(ContainerNetworkInterfaceIPConfigurationPropertiesFormat properties, string name, string @type, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerNetworkInterfaceIPConfiguration(ContainerNetworkInterfaceIPConfigurationPropertiesFormat properties, string name, string containerNetworkInterfaceIpConfigurationType, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
-            Type = @type;
+            ContainerNetworkInterfaceIpConfigurationType = containerNetworkInterfaceIpConfigurationType;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Sub Resource type. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string ContainerNetworkInterfaceIpConfigurationType { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

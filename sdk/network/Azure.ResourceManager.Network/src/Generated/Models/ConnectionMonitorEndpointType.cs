@@ -11,14 +11,28 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Type of connection monitor. </summary>
+    /// <summary> The endpoint type. </summary>
     public readonly partial struct ConnectionMonitorEndpointType : IEquatable<ConnectionMonitorEndpointType>
     {
         private readonly string _value;
-        /// <summary> MultiEndpoint. </summary>
-        private const string MultiEndpointValue = "MultiEndpoint";
-        /// <summary> SingleSourceDestination. </summary>
-        private const string SingleSourceDestinationValue = "SingleSourceDestination";
+        /// <summary> AzureVM. </summary>
+        private const string AzureVmValue = "AzureVM";
+        /// <summary> AzureVNet. </summary>
+        private const string AzureVNetValue = "AzureVNet";
+        /// <summary> AzureSubnet. </summary>
+        private const string AzureSubnetValue = "AzureSubnet";
+        /// <summary> ExternalAddress. </summary>
+        private const string ExternalAddressValue = "ExternalAddress";
+        /// <summary> MMAWorkspaceMachine. </summary>
+        private const string MMAWorkspaceMachineValue = "MMAWorkspaceMachine";
+        /// <summary> MMAWorkspaceNetwork. </summary>
+        private const string MMAWorkspaceNetworkValue = "MMAWorkspaceNetwork";
+        /// <summary> AzureArcVM. </summary>
+        private const string AzureArcVmValue = "AzureArcVM";
+        /// <summary> AzureVMSS. </summary>
+        private const string AzureVmssValue = "AzureVMSS";
+        /// <summary> AzureArcNetwork. </summary>
+        private const string AzureArcNetworkValue = "AzureArcNetwork";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,11 +44,32 @@ namespace Azure.ResourceManager.Network.Models
             _value = value;
         }
 
-        /// <summary> MultiEndpoint. </summary>
-        public static ConnectionMonitorEndpointType MultiEndpoint { get; } = new ConnectionMonitorEndpointType(MultiEndpointValue);
+        /// <summary> AzureVM. </summary>
+        public static ConnectionMonitorEndpointType AzureVm { get; } = new ConnectionMonitorEndpointType(AzureVmValue);
 
-        /// <summary> SingleSourceDestination. </summary>
-        public static ConnectionMonitorEndpointType SingleSourceDestination { get; } = new ConnectionMonitorEndpointType(SingleSourceDestinationValue);
+        /// <summary> AzureVNet. </summary>
+        public static ConnectionMonitorEndpointType AzureVNet { get; } = new ConnectionMonitorEndpointType(AzureVNetValue);
+
+        /// <summary> AzureSubnet. </summary>
+        public static ConnectionMonitorEndpointType AzureSubnet { get; } = new ConnectionMonitorEndpointType(AzureSubnetValue);
+
+        /// <summary> ExternalAddress. </summary>
+        public static ConnectionMonitorEndpointType ExternalAddress { get; } = new ConnectionMonitorEndpointType(ExternalAddressValue);
+
+        /// <summary> MMAWorkspaceMachine. </summary>
+        public static ConnectionMonitorEndpointType MMAWorkspaceMachine { get; } = new ConnectionMonitorEndpointType(MMAWorkspaceMachineValue);
+
+        /// <summary> MMAWorkspaceNetwork. </summary>
+        public static ConnectionMonitorEndpointType MMAWorkspaceNetwork { get; } = new ConnectionMonitorEndpointType(MMAWorkspaceNetworkValue);
+
+        /// <summary> AzureArcVM. </summary>
+        public static ConnectionMonitorEndpointType AzureArcVm { get; } = new ConnectionMonitorEndpointType(AzureArcVmValue);
+
+        /// <summary> AzureVMSS. </summary>
+        public static ConnectionMonitorEndpointType AzureVmss { get; } = new ConnectionMonitorEndpointType(AzureVmssValue);
+
+        /// <summary> AzureArcNetwork. </summary>
+        public static ConnectionMonitorEndpointType AzureArcNetwork { get; } = new ConnectionMonitorEndpointType(AzureArcNetworkValue);
 
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

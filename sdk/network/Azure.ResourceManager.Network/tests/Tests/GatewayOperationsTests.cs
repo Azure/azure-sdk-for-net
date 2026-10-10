@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "key", "value" } },
                 EnableBgp = false,
-                Active = true,
+                ActiveActive = true,
                 GatewayDefaultSite = null,
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
@@ -1504,33 +1504,33 @@ namespace Azure.ResourceManager.Network.Tests
                 getVirtualNetworkGatewayResponse.Value.Id, getVirtualNetworkGatewayResponse.Value.Data.Name,
                 getVirtualNetworkGatewayResponse.Value.Data.GatewayType, getVirtualNetworkGatewayResponse.Value.Data.VpnType,
                 getVirtualNetworkGatewayResponse.Value.Data.Sku.Name, getVirtualNetworkGatewayResponse.Value.Data.Sku.Tier,
-                getVirtualNetworkGatewayResponse.Value.Data.Active);
+                getVirtualNetworkGatewayResponse.Value.Data.ActiveActive);
             Assert.AreEqual(VirtualNetworkGatewayType.Vpn, getVirtualNetworkGatewayResponse.Value.Data.GatewayType);
             Assert.AreEqual(VpnType.RouteBased, getVirtualNetworkGatewayResponse.Value.Data.VpnType);
             Assert.AreEqual(VirtualNetworkGatewaySkuTier.HighPerformance, getVirtualNetworkGatewayResponse.Value.Data.Sku.Tier);
             Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
-            Assert.True(getVirtualNetworkGatewayResponse.Value.Data.Active);
+            Assert.True(getVirtualNetworkGatewayResponse.Value.Data.ActiveActive);
 
             // 3. Update ActiveActive VirtualNetworkGatewayResource to ActiveStandby
-            getVirtualNetworkGatewayResponse.Value.Data.Active = false;
+            getVirtualNetworkGatewayResponse.Value.Data.ActiveActive = false;
             getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Remove(getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.First(config => config.Name.Equals(ipconfig2.Name)));
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
-            Assert.False(getVirtualNetworkGatewayResponse.Value.Data.Active);
+            Assert.False(getVirtualNetworkGatewayResponse.Value.Data.ActiveActive);
             Assert.AreEqual(1, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
 
             // 4. Update ActiveStandby VirtualNetworkGatewayResource to ActiveActive again
-            getVirtualNetworkGatewayResponse.Value.Data.Active = true;
+            getVirtualNetworkGatewayResponse.Value.Data.ActiveActive = true;
             getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Add(ipconfig2);
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data, System.Threading.CancellationToken.None);
             putVirtualNetworkGatewayResponse = await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putVirtualNetworkGatewayResponse.Value.Data.ProvisioningState.ToString());
 
             getVirtualNetworkGatewayResponse = await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
-            Assert.True(getVirtualNetworkGatewayResponse.Value.Data.Active);
+            Assert.True(getVirtualNetworkGatewayResponse.Value.Data.ActiveActive);
             Assert.AreEqual(2, getVirtualNetworkGatewayResponse.Value.Data.IPConfigurations.Count);
         }
 

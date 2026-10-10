@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ExpressRouteCircuit))
             {
                 writer.WritePropertyName("expressRouteCircuit"u8);
-                writer.WriteStringValue(ExpressRouteCircuit);
+                writer.WriteObjectValue(ExpressRouteCircuit, options);
             }
             if (Optional.IsDefined(ServiceProviderProvisioningState))
             {
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
             int? sTag = default;
             string peeringLocation = default;
             int? bandwidthInMbps = default;
-            ResourceIdentifier expressRouteCircuit = default;
+            ExpressRouteCircuitReference expressRouteCircuit = default;
             ServiceProviderProvisioningState? serviceProviderProvisioningState = default;
             string serviceProviderNotes = default;
             NetworkProvisioningState? provisioningState = default;
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    expressRouteCircuit = new ResourceIdentifier(prop.Value.GetString());
+                    expressRouteCircuit = ExpressRouteCircuitReference.DeserializeExpressRouteCircuitReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("serviceProviderProvisioningState"u8))

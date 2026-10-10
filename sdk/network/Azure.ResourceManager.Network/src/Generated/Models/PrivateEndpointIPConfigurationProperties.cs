@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="privateIPAddress"> A private ip address obtained from the private endpoint's subnet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointIPConfigurationProperties(string groupId, string memberName, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointIPConfigurationProperties(string groupId, string memberName, IPAddress privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupId = groupId;
             MemberName = memberName;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A private ip address obtained from the private endpoint's subnet. </summary>
         [WirePath("privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
     }
 }

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> TLSv1_0. </summary>
-        private const string TLSv10Value = "TLSv1_0";
+        private const string Tls1_0Value = "TLSv1_0";
         /// <summary> TLSv1_1. </summary>
-        private const string TLSv11Value = "TLSv1_1";
+        private const string Tls1_1Value = "TLSv1_1";
         /// <summary> TLSv1_2. </summary>
-        private const string TLSv12Value = "TLSv1_2";
+        private const string Tls1_2Value = "TLSv1_2";
         /// <summary> TLSv1_3. </summary>
-        private const string TLSv13Value = "TLSv1_3";
+        private const string Tls1_3Value = "TLSv1_3";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> TLSv1_0. </summary>
-        public static ApplicationGatewaySslProtocol TLSv10 { get; } = new ApplicationGatewaySslProtocol(TLSv10Value);
+        public static ApplicationGatewaySslProtocol Tls1_0 { get; } = new ApplicationGatewaySslProtocol(Tls1_0Value);
 
         /// <summary> TLSv1_1. </summary>
-        public static ApplicationGatewaySslProtocol TLSv11 { get; } = new ApplicationGatewaySslProtocol(TLSv11Value);
+        public static ApplicationGatewaySslProtocol Tls1_1 { get; } = new ApplicationGatewaySslProtocol(Tls1_1Value);
 
         /// <summary> TLSv1_2. </summary>
-        public static ApplicationGatewaySslProtocol TLSv12 { get; } = new ApplicationGatewaySslProtocol(TLSv12Value);
+        public static ApplicationGatewaySslProtocol Tls1_2 { get; } = new ApplicationGatewaySslProtocol(Tls1_2Value);
 
         /// <summary> TLSv1_3. </summary>
-        public static ApplicationGatewaySslProtocol TLSv13 { get; } = new ApplicationGatewaySslProtocol(TLSv13Value);
+        public static ApplicationGatewaySslProtocol Tls1_3 { get; } = new ApplicationGatewaySslProtocol(Tls1_3Value);
 
         /// <summary> Determines if two <see cref="ApplicationGatewaySslProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

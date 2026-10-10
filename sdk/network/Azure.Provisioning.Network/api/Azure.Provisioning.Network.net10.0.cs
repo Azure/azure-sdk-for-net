@@ -180,7 +180,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Network.ApplicationGatewayAdvancedRoutingConditionSetPropertiesFormat Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayAdvancedRoutingConditionSetPropertiesFormat : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -204,7 +204,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Network.ApplicationGatewayAdvancedRoutingMapPropertiesFormat Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayAdvancedRoutingMapPropertiesFormat : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -233,7 +233,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Network.ApplicationGatewayAdvancedRoutingRulePropertiesFormat Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayAdvancedRoutingRulePropertiesFormat : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -263,9 +263,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayAutoscaleConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -311,9 +309,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayBackendHttpSettings : Azure.Provisioning.Network.NetworkSubResource
@@ -337,11 +333,9 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ApplicationGatewayProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> RequestTimeoutInSeconds { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SniName { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> TrustedRootCertificates { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayBackendSettings : Azure.Provisioning.Network.NetworkSubResource
@@ -356,11 +350,9 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ProbeId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ApplicationGatewayProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> TrustedRootCertificates { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayClientAuthConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -501,10 +493,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateLinkConfigurationId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPAddressId { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayFrontendPort : Azure.Provisioning.Network.NetworkSubResource
@@ -514,9 +504,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Port { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayGlobalConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -549,11 +537,9 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ApplicationGatewayProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> RequireServerNameIndication { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SslCertificateId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SslProfileId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayIPConfiguration : Azure.Provisioning.Network.NetworkSubResource
@@ -562,10 +548,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayListener : Azure.Provisioning.Network.NetworkSubResource
@@ -578,11 +562,9 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ApplicationGatewayProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SslCertificateId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SslProfileId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ApplicationGatewayLoadDistributionAlgorithm
@@ -600,9 +582,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ApplicationGatewayLoadDistributionTarget> LoadDistributionTargets { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayLoadDistributionTarget : Azure.Provisioning.Network.NetworkSubResource
@@ -611,9 +591,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> BackendAddressPoolId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> WeightPerServer { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -643,10 +621,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<string> Paths { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RedirectConfigurationId { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RewriteRuleSetId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -679,9 +655,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ApplicationGatewayPrivateLinkIPConfiguration> IPConfigurations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayPrivateLinkIPConfiguration : Azure.Provisioning.Network.NetworkSubResource
@@ -693,10 +667,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayProbe : Azure.Provisioning.Network.NetworkSubResource
@@ -715,10 +687,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<int> Port { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ApplicationGatewayProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> UnhealthyThreshold { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -746,11 +716,9 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> PathRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ApplicationGatewayRedirectType> RedirectType { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> RequestRoutingRules { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetListenerId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> TargetUri { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> UrlPathMaps { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -776,11 +744,9 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<int> Priority { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RedirectConfigurationId { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RewriteRuleSetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ApplicationGatewayRequestRoutingRuleType> RuleType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> UrlPathMapId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -836,10 +802,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Priority { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ApplicationGatewayRequestRoutingRuleType> RuleType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ApplicationGatewayRuleSetStatusOption
@@ -898,9 +862,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.BinaryData> PublicCertData { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ApplicationGatewaySslCipherSuite
@@ -993,11 +955,9 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.Network.ApplicationGatewaySslPolicy SslPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> TrustedClientCertificates { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ApplicationGatewaySslProtocol
@@ -1045,9 +1005,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.BinaryData> ValidatedCertData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1059,9 +1017,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> KeyVaultSecretId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ApplicationGatewayUnAuthorizedRequestAction
@@ -1089,9 +1045,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ApplicationGatewayPathRule> PathRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationGatewayWafDynamicManifest : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1369,10 +1323,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPAddressId { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class AzureFirewallIPGroups : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1670,10 +1622,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPAddressId { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BastionHostIPRule : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2193,9 +2143,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerNetworkInterfaceConfiguration : Azure.Provisioning.Network.NetworkSubResource
@@ -2206,9 +2154,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkIPConfigurationProfile> IPConfigurations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerNetworkInterfaceIPConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2336,10 +2282,8 @@ namespace Azure.Provisioning.Network
         public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.Network.TrafficDetectionRule TrafficDetectionRule { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DdosProtectionPlan : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2934,7 +2878,7 @@ namespace Azure.Provisioning.Network
         public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Network.ExpressRouteLagLinkPropertiesFormat Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ExpressRouteLagLinkPropertiesFormat : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2955,7 +2899,7 @@ namespace Azure.Provisioning.Network
         public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Network.ExpressRouteLagMemberPropertiesFormat Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ExpressRouteLagMemberPropertiesFormat : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -4529,9 +4473,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.Network.LoadBalancerInboundNatPoolProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.LoadBalancingTransportProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class LoadBalancerInboundNatPoolProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -5435,10 +5377,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.Network.SubnetResource Subnet { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum NetworkIPVersion
@@ -5757,9 +5697,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateLinkServiceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RequestMessage { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class NetworkPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -6573,8 +6511,6 @@ namespace Azure.Provisioning.Network
     public partial class P2SConnectionConfiguration : Azure.Provisioning.Network.NetworkSubResource
     {
         public P2SConnectionConfiguration() { }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ConfigurationPolicyGroups instead.")]
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> ConfigurationPolicyGroupAssociations { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> ConfigurationPolicyGroups { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableInternetSecurity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
@@ -7074,10 +7010,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPVersion> PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.Network.SubnetResource Subnet { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ProbeNoHealthyBackendsBehavior
@@ -7563,9 +7497,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> LinkedResourceType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class RetentionPolicyParameters : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -8268,9 +8200,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Core.AzureLocation> Locations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ServiceDelegation : Azure.Provisioning.Network.NetworkWritableResourceData
@@ -9167,9 +9097,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPVersion> PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum VirtualNetworkApplianceIPVersionType

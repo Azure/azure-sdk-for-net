@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Network
         private ApplicationGatewayPrivateLinkIPConfigurationProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _type;
+        private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new ApplicationGatewayPrivateLinkIPConfiguration. </summary>
         public ApplicationGatewayPrivateLinkIPConfiguration()
@@ -64,13 +64,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Type. </summary>
-        public BicepValue<string> Type
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
         {
             get
             {
                 Initialize();
-                return _type;
+                return _resourceType;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ApplicationGatewayPrivateLinkIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

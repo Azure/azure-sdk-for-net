@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionMonitorType))
+            if (options.Format != "W" && Optional.IsDefined(MonitorType))
             {
                 writer.WritePropertyName("connectionMonitorType"u8);
-                writer.WriteStringValue(ConnectionMonitorType.Value.ToString());
+                writer.WriteStringValue(MonitorType.Value.ToString());
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             DateTimeOffset? startOn = default;
             string monitoringStatus = default;
-            ConnectionMonitorEndpointType? connectionMonitorType = default;
+            ConnectionMonitorType? monitorType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("source"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    connectionMonitorType = new ConnectionMonitorEndpointType(prop.Value.GetString());
+                    monitorType = new ConnectionMonitorType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState,
                 startOn,
                 monitoringStatus,
-                connectionMonitorType);
+                monitorType);
         }
     }
 }

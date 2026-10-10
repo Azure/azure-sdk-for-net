@@ -9,10 +9,10 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> VirtualNetworkGateway properties. </summary>
     internal partial class VirtualNetworkGatewayPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
         /// <param name="resiliencyModel"> Property to indicate if the Express Route Gateway has resiliency model of MultiHomed or SingleHomed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayPropertiesFormat(VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus, bool? activeActive, bool? enableHighBandwidthVpnGateway, bool? disableIPSecReplayProtection, NetworkSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, VirtualNetworkAddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkGatewayPropertiesFormat(VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus, bool? activeActive, bool? enableHighBandwidthVpnGateway, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, VirtualNetworkAddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoScaleConfiguration = autoScaleConfiguration;
             IPConfigurations = ipConfigurations;
@@ -132,10 +132,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> disableIPSecReplayProtection flag. </summary>
         [WirePath("disableIPSecReplayProtection")]
         public bool? DisableIPSecReplayProtection { get; set; }
-
-        /// <summary> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </summary>
-        [WirePath("gatewayDefaultSite")]
-        internal NetworkSubResource GatewayDefaultSite { get; set; }
 
         /// <summary> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </summary>
         [WirePath("sku")]
@@ -216,24 +212,6 @@ namespace Azure.ResourceManager.Network.Models
                     AutoScaleConfiguration = new VirtualNetworkGatewayAutoScaleConfiguration();
                 }
                 AutoScaleConfiguration.Bounds = value;
-            }
-        }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("gatewayDefaultSite.id")]
-        public ResourceIdentifier GatewayDefaultSiteId
-        {
-            get
-            {
-                return GatewayDefaultSite is null ? default : GatewayDefaultSite.Id;
-            }
-            set
-            {
-                if (GatewayDefaultSite is null)
-                {
-                    GatewayDefaultSite = new NetworkSubResource();
-                }
-                GatewayDefaultSite.Id = value;
             }
         }
     }

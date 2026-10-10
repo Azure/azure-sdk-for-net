@@ -76,6 +76,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> Route table usage mode defines which route table will be used by the configuration. If not defined, this will default to 'ManagedOnly'. </summary>
         [WirePath("properties.routeTableUsageMode")]
         public RouteTableUsageMode? RouteTableUsageMode
