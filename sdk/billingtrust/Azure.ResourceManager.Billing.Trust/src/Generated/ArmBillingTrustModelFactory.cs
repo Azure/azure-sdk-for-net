@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <returns> A new <see cref="Models.BillingTrustInitialRuleValueBase"/> instance for mocking. </returns>
         public static BillingTrustInitialRuleValueBase BillingTrustInitialRuleValueBase(string kind = default)
         {
-            return new UnknownBillingTrustInitialRuleValueBase(default, default);
+            return new UnknownBillingTrustInitialRuleValueBase(kind is null ? default : new RuleKind(kind), default);
         }
 
         /// <summary> Initial values for an education qualification rule. Per-domain entries (`domainNames` + `tenantId`) are used to populate the rule when the assessment is created. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         {
             domains ??= new ChangeTrackingList<BillingTrustDomainEntry>();
 
-            return new EduInitialValue(default, default, (domains ?? new ChangeTrackingList<BillingTrustDomainEntry>()).ToList());
+            return new EduInitialValue(RuleKind.EduQualification, default, (domains ?? new ChangeTrackingList<BillingTrustDomainEntry>()).ToList());
         }
 
         /// <summary> A domain entry within an education qualification rule. `domainNames` and `tenantId` are supplied on creation; `state` and `error` are returned by the service. </summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <returns> A new <see cref="Models.BillingTrustRuleProperties"/> instance for mocking. </returns>
         public static BillingTrustRuleProperties BillingTrustRuleProperties(string kind = default, BillingTrustRuleState? evaluationState = default, ResponseError error = default, BillingTrustProvisioningState? provisioningState = default)
         {
-            return new UnknownBillingTrustRuleProperties(default, evaluationState, error, provisioningState, default);
+            return new UnknownBillingTrustRuleProperties(kind is null ? default : new RuleKind(kind), evaluationState, error, provisioningState, default);
         }
 
         /// <summary> Properties of an eduQualification rule. Verifies education-domain ownership for a billing account. </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             supplementalDocuments ??= new ChangeTrackingList<Uri>();
 
             return new EduQualificationRuleProperties(
-                default,
+                RuleKind.EduQualification,
                 evaluationState,
                 error,
                 provisioningState,
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             supplementalDocuments ??= new ChangeTrackingList<Uri>();
 
             return new BusinessVerificationRuleProperties(
-                default,
+                RuleKind.BusinessVerification,
                 evaluationState,
                 error,
                 provisioningState,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <returns> A new <see cref="Models.BillingTrustRulePatch"/> instance for mocking. </returns>
         public static BillingTrustRulePatch BillingTrustRulePatch(string kind = default)
         {
-            return new UnknownRulePatchProperties(default, default);
+            return new UnknownRulePatchProperties(kind is null ? default : new RuleKind(kind), default);
         }
 
         /// <summary> Patch body for an eduQualification rule. Only `supplementalDocuments` is settable, and only when evaluationState == actionRequired. </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         {
             supplementalDocuments ??= new ChangeTrackingList<Uri>();
 
-            return new EduQualificationRulePatchProperties(default, default, (supplementalDocuments ?? new ChangeTrackingList<Uri>()).ToList());
+            return new EduQualificationRulePatchProperties(RuleKind.EduQualification, default, (supplementalDocuments ?? new ChangeTrackingList<Uri>()).ToList());
         }
 
         /// <summary> Patch body for a businessVerification rule. Settable while evaluationState is `pending` or `actionRequired`. `externalId` lets the customer disambiguate an ambiguous verification match (e.g. via DUNS); `supplementalDocuments` carries references to documents uploaded via the assessment-scoped upload-token action. </summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         {
             supplementalDocuments ??= new ChangeTrackingList<Uri>();
 
-            return new BusinessVerificationRulePatchProperties(default, default, externalId, (supplementalDocuments ?? new ChangeTrackingList<Uri>()).ToList());
+            return new BusinessVerificationRulePatchProperties(RuleKind.BusinessVerification, default, externalId, (supplementalDocuments ?? new ChangeTrackingList<Uri>()).ToList());
         }
     }
 }
