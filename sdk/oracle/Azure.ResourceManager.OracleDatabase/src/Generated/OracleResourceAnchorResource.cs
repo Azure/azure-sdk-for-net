@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string oracleResourceAnchorApiVersion);
             _resourceAnchorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _resourceAnchorsRestClient = new ResourceAnchors(_resourceAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleResourceAnchorApiVersion ?? "2025-09-01");
+            _resourceAnchorsRestClient = new ResourceAnchors(
+                _resourceAnchorsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                oracleResourceAnchorApiVersion ?? "2025-09-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

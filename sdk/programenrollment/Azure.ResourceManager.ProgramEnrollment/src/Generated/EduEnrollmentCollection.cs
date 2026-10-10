@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ProgramEnrollment
         {
             TryGetApiVersion(EduEnrollmentResource.ResourceType, out string eduEnrollmentApiVersion);
             _eduEnrollmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProgramEnrollment", EduEnrollmentResource.ResourceType.Namespace, Diagnostics);
-            _eduEnrollmentsRestClient = new EduEnrollments(_eduEnrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eduEnrollmentApiVersion ?? "2026-03-01-preview");
+            _eduEnrollmentsRestClient = new EduEnrollments(
+                _eduEnrollmentsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                eduEnrollmentApiVersion ?? "2026-03-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

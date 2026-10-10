@@ -39,11 +39,23 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Mocking
 
         private ClientDiagnostics GatewaysClientDiagnostics => _gatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProgrammableConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Gateways GatewaysRestClient => _gatewaysRestClient ??= new Gateways(GatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30-preview");
+        private Gateways GatewaysRestClient => _gatewaysRestClient ??= new Gateways(
+            GatewaysClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-03-30-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics OperatorApiConnectionsClientDiagnostics => _operatorApiConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProgrammableConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperatorApiConnections OperatorApiConnectionsRestClient => _operatorApiConnectionsRestClient ??= new OperatorApiConnections(OperatorApiConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-30-preview");
+        private OperatorApiConnections OperatorApiConnectionsRestClient => _operatorApiConnectionsRestClient ??= new OperatorApiConnections(
+            OperatorApiConnectionsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-03-30-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Gets a collection of OperatorApiPlans in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of OperatorApiPlans and their operations over a OperatorApiPlanResource. </returns>

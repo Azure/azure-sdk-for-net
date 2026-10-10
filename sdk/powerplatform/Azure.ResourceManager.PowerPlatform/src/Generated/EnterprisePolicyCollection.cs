@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.PowerPlatform
         {
             TryGetApiVersion(EnterprisePolicyResource.ResourceType, out string enterprisePolicyApiVersion);
             _enterprisePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerPlatform", EnterprisePolicyResource.ResourceType.Namespace, Diagnostics);
-            _enterprisePoliciesRestClient = new EnterprisePolicies(_enterprisePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enterprisePolicyApiVersion ?? "2020-10-30-preview");
+            _enterprisePoliciesRestClient = new EnterprisePolicies(
+                _enterprisePoliciesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                enterprisePolicyApiVersion ?? "2020-10-30-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

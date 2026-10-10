@@ -35,7 +35,13 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
 
         private ClientDiagnostics PrivateZonesClientDiagnostics => _privateZonesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrivateDns.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateZones PrivateZonesRestClient => _privateZonesRestClient ??= new PrivateZones(PrivateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-06-01");
+        private PrivateZones PrivateZonesRestClient => _privateZonesRestClient ??= new PrivateZones(
+            PrivateZonesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists the Private DNS zones in all resource groups in a subscription.

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
         {
             TryGetApiVersion(OperatorApiConnectionResource.ResourceType, out string operatorApiConnectionApiVersion);
             _operatorApiConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProgrammableConnectivity", OperatorApiConnectionResource.ResourceType.Namespace, Diagnostics);
-            _operatorApiConnectionsRestClient = new OperatorApiConnections(_operatorApiConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operatorApiConnectionApiVersion ?? "2025-03-30-preview");
+            _operatorApiConnectionsRestClient = new OperatorApiConnections(
+                _operatorApiConnectionsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                operatorApiConnectionApiVersion ?? "2025-03-30-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(OperationalInsightsClusterResource.ResourceType, out string operationalInsightsClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsClusterApiVersion ?? "2026-03-01");
+            _clustersRestClient = new Clusters(
+                _clustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                operationalInsightsClusterApiVersion ?? "2026-03-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
