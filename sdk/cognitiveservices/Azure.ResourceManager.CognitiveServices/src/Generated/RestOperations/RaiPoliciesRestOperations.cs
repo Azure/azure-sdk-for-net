@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string raiPolicyName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string raiPolicyName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -90,13 +90,17 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Uri = uri;
             request.Method = RequestMethod.Put;
             _userAgent.Apply(message);
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string raiPolicyName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string raiPolicyName, ETag? ifMatch, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -117,6 +121,10 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
             _userAgent.Apply(message);
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch.Value);
+            }
             return message;
         }
 

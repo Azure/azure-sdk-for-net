@@ -116,6 +116,24 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new SubscriptionRaiPolicyResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="RaiRegoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RaiRegoResource"/> object. </returns>
+        public virtual RaiRegoResource GetRaiRegoResource(ResourceIdentifier id)
+        {
+            RaiRegoResource.ValidateResourceId(id);
+            return new RaiRegoResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RaiBindingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RaiBindingResource"/> object. </returns>
+        public virtual RaiBindingResource GetRaiBindingResource(ResourceIdentifier id)
+        {
+            RaiBindingResource.ValidateResourceId(id);
+            return new RaiBindingResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="RaiBlocklistItemResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RaiBlocklistItemResource"/> object. </returns>
@@ -260,6 +278,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new CognitiveServicesManagedNetworkSettingsResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ArcDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArcDeploymentResource"/> object. </returns>
+        public virtual ArcDeploymentResource GetArcDeploymentResource(ResourceIdentifier id)
+        {
+            ArcDeploymentResource.ValidateResourceId(id);
+            return new ArcDeploymentResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="CognitiveServicesAgentApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CognitiveServicesAgentApplicationResource"/> object. </returns>
@@ -276,6 +303,51 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             CognitiveServicesAgentDeploymentResource.ValidateResourceId(id);
             return new CognitiveServicesAgentDeploymentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesManagedComputeDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesManagedComputeDeploymentResource"/> object. </returns>
+        public virtual CognitiveServicesManagedComputeDeploymentResource GetCognitiveServicesManagedComputeDeploymentResource(ResourceIdentifier id)
+        {
+            CognitiveServicesManagedComputeDeploymentResource.ValidateResourceId(id);
+            return new CognitiveServicesManagedComputeDeploymentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AdapterDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AdapterDeploymentResource"/> object. </returns>
+        public virtual AdapterDeploymentResource GetAdapterDeploymentResource(ResourceIdentifier id)
+        {
+            AdapterDeploymentResource.ValidateResourceId(id);
+            return new AdapterDeploymentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesComputeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesComputeResource"/> object. </returns>
+        public virtual CognitiveServicesComputeResource GetCognitiveServicesComputeResource(ResourceIdentifier id)
+        {
+            CognitiveServicesComputeResource.ValidateResourceId(id);
+            return new CognitiveServicesComputeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesWorkbenchResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesWorkbenchResource"/> object. </returns>
+        public virtual CognitiveServicesWorkbenchResource GetCognitiveServicesWorkbenchResource(ResourceIdentifier id)
+        {
+            CognitiveServicesWorkbenchResource.ValidateResourceId(id);
+            return new CognitiveServicesWorkbenchResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesAccountCostControlResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesAccountCostControlResource"/> object. </returns>
+        public virtual CognitiveServicesAccountCostControlResource GetCognitiveServicesAccountCostControlResource(ResourceIdentifier id)
+        {
+            CognitiveServicesAccountCostControlResource.ValidateResourceId(id);
+            return new CognitiveServicesAccountCostControlResource(Client, id);
         }
     }
 }
