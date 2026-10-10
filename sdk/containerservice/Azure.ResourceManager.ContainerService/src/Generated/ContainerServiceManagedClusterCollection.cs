@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ContainerServiceManagedClusterResource.ResourceType, out string containerServiceManagedClusterApiVersion);
             _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceManagedClusterApiVersion ?? "2026-07-01");
+            _managedClustersRestClient = new ManagedClusters(
+                _managedClustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                containerServiceManagedClusterApiVersion ?? "2026-07-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

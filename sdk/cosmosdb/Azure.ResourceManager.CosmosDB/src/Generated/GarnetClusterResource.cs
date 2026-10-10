@@ -52,7 +52,13 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string garnetClusterApiVersion);
             _garnetClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _garnetClustersRestClient = new GarnetClusters(_garnetClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, garnetClusterApiVersion ?? "2026-04-01-preview");
+            _garnetClustersRestClient = new GarnetClusters(
+                _garnetClustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                garnetClusterApiVersion ?? "2026-04-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

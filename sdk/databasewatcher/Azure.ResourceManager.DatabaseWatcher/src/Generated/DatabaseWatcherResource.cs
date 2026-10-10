@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(ResourceType, out string databaseWatcherApiVersion);
             _watchersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", ResourceType.Namespace, Diagnostics);
-            _watchersRestClient = new Watchers(_watchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherApiVersion ?? "2025-01-02");
+            _watchersRestClient = new Watchers(
+                _watchersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                databaseWatcherApiVersion ?? "2025-01-02",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
