@@ -14,7 +14,7 @@ namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary>
     /// Connection property base schema.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="PatAuthTypeConnectionProperties"/>, <see cref="ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="UsernamePasswordAuthTypeConnectionProperties"/>, <see cref="NoneAuthTypeConnectionProperties"/>, <see cref="SASAuthTypeConnectionProperties"/>, <see cref="AccountKeyAuthTypeConnectionProperties"/>, <see cref="ServicePrincipalAuthTypeConnectionProperties"/>, <see cref="AccessKeyAuthTypeConnectionProperties"/>, <see cref="ApiKeyAuthConnectionProperties"/>, <see cref="CustomKeysConnectionProperties"/>, <see cref="OAuth2AuthTypeConnectionProperties"/>, and <see cref="AadAuthTypeConnectionProperties"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AadAuthTypeConnectionProperties"/>, <see cref="AccessKeyAuthTypeConnectionProperties"/>, <see cref="AccountKeyAuthTypeConnectionProperties"/>, <see cref="ApiKeyAuthConnectionProperties"/>, <see cref="CustomKeysConnectionProperties"/>, <see cref="ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="NoneAuthTypeConnectionProperties"/>, <see cref="OAuth2AuthTypeConnectionProperties"/>, <see cref="PatAuthTypeConnectionProperties"/>, <see cref="SASAuthTypeConnectionProperties"/>, <see cref="ServicePrincipalAuthTypeConnectionProperties"/>, and <see cref="UsernamePasswordAuthTypeConnectionProperties"/>.
     /// </summary>
     public partial class CognitiveServicesConnectionProperties : ProvisionableConstruct
     {

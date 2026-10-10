@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary>
     /// Type representing an agent deployment as a management construct.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CognitiveServicesManagedAgentDeployment"/> and <see cref="CognitiveServicesHostedAgentDeployment"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CognitiveServicesHostedAgentDeployment"/> and <see cref="CognitiveServicesManagedAgentDeployment"/>.
     /// </summary>
     public partial class CognitiveServicesAgentDeploymentProperties : CognitiveServicesResourceBase
     {
